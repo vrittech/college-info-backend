@@ -1,0 +1,18 @@
+{
+    "sourceFile": "accountsmanagement/action.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1726555451907,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1726555451906,
+            "name": "Commit-0",
+            "content": "# from booking.models import DestinationBook\n# from django.utils.http import urlsafe_base64_encode\n# from django.utils.encoding import force_bytes\n# from django.db.models.signals import post_save\n# from django.dispatch import receiver\n# from django.core.mail import send_mail\n# from accounts.models import CustomUser\n# from accountsmanagement.views import send_booking_confirmation_email\n\n\n# @receiver(post_save, sender=DestinationBook)\n# def booking_created_handler(sender, instance, created, **kwargs):\n#     if created:\n#         # Construct the verification URL\n#         site_url = 'https://example.com'  \n#         verify_url = f\"{site_url}/user-verification-success?pk={urlsafe_base64_encode(force_bytes(instance.pk))}\"\n\n#         # Fetch the admin email from the User model\n#         admin_user = CustomUser.objects.filter(is_superuser=True).first()\n#         if admin_user:\n#             admin_name = admin_user.first_name\n#             admin_email = admin_user.email\n#         else:\n#             raise ValueError(\"Admin email not found.\")\n\n#         # Send the confirmation email\n#         subject = 'Booking Verification Email'\n#         send_booking_confirmation_email(instance.email, verify_url, subject, instance, admin_email, admin_name)\n\n"
+        }
+    ]
+}

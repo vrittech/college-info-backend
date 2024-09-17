@@ -1,0 +1,54 @@
+{
+    "sourceFile": "collegeinfo/urls.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 9,
+            "patches": [
+                {
+                    "date": 1726556507089,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1726556538334,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,7 +18,9 @@\n from django.urls import path\n \n urlpatterns = [\n     path('admin/', admin.site.urls),\n+        path('', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),\n+    path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),\n ]\n if settings.DEBUG:\n     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1726556560341,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,9 +18,11 @@\n from django.urls import path\n \n urlpatterns = [\n     path('admin/', admin.site.urls),\n-        path('', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),\n+    path('', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),\n     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),\n+        path('api-auth/', include('rest_framework.urls')),\n+    path('api/accounts/',include('accounts.urls')),\n ]\n if settings.DEBUG:\n     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1726556631998,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,13 +16,27 @@\n \"\"\"\n from django.contrib import admin\n from django.urls import path\n \n+schema_view = get_schema_view(\n+   openapi.Info(\n+      title=\"Everest Thrill API\",\n+      default_version='v1',\n+      description=\"Everest Thrill Trekking System\",\n+      terms_of_service=\"https://www.google.com/policies/terms/\",\n+      contact=openapi.Contact(email=\"prashantkarna21@gmail.com\"),\n+      license=openapi.License(name=\"No License\"),\n+      **{'x-logo': {'url': 'your-logo-url'}},\n+   ),\n+   public=True,\n+   permission_classes=[permissions.AllowAny],\n+)\n+\n urlpatterns = [\n     path('admin/', admin.site.urls),\n     path('', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),\n     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),\n-        path('api-auth/', include('rest_framework.urls')),\n+    path('api-auth/', include('rest_framework.urls')),\n     path('api/accounts/',include('accounts.urls')),\n ]\n if settings.DEBUG:\n     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1726556651968,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,9 +15,19 @@\n     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))\n \"\"\"\n from django.contrib import admin\n from django.urls import path\n+from django.contrib import admin\n+from django.urls import path,include\n \n+from django.urls import re_path\n+from rest_framework import permissions\n+from drf_yasg.views import get_schema_view\n+from drf_yasg import openapi\n+\n+from django.conf import settings\n+from django.conf.urls.static import static\n+\n schema_view = get_schema_view(\n    openapi.Info(\n       title=\"Everest Thrill API\",\n       default_version='v1',\n"
+                },
+                {
+                    "date": 1726556658024,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,10 +14,8 @@\n     1. Import the include() function: from django.urls import include, path\n     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))\n \"\"\"\n from django.contrib import admin\n-from django.urls import path\n-from django.contrib import admin\n from django.urls import path,include\n \n from django.urls import re_path\n from rest_framework import permissions\n"
+                },
+                {
+                    "date": 1726556881334,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -26,9 +26,9 @@\n from django.conf.urls.static import static\n \n schema_view = get_schema_view(\n    openapi.Info(\n-      title=\"Everest Thrill API\",\n+      title=\"ollege API\",\n       default_version='v1',\n       description=\"Everest Thrill Trekking System\",\n       terms_of_service=\"https://www.google.com/policies/terms/\",\n       contact=openapi.Contact(email=\"prashantkarna21@gmail.com\"),\n"
+                },
+                {
+                    "date": 1726556888739,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -26,9 +26,9 @@\n from django.conf.urls.static import static\n \n schema_view = get_schema_view(\n    openapi.Info(\n-      title=\"ollege API\",\n+      title=\"College Info API\",\n       default_version='v1',\n       description=\"Everest Thrill Trekking System\",\n       terms_of_service=\"https://www.google.com/policies/terms/\",\n       contact=openapi.Contact(email=\"prashantkarna21@gmail.com\"),\n"
+                },
+                {
+                    "date": 1726557246860,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -28,9 +28,9 @@\n schema_view = get_schema_view(\n    openapi.Info(\n       title=\"College Info API\",\n       default_version='v1',\n-      description=\"Everest Thrill Trekking System\",\n+      description=\"College Info System\",\n       terms_of_service=\"https://www.google.com/policies/terms/\",\n       contact=openapi.Contact(email=\"prashantkarna21@gmail.com\"),\n       license=openapi.License(name=\"No License\"),\n       **{'x-logo': {'url': 'your-logo-url'}},\n"
+                },
+                {
+                    "date": 1726557256174,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -28,9 +28,9 @@\n schema_view = get_schema_view(\n    openapi.Info(\n       title=\"College Info API\",\n       default_version='v1',\n-      description=\"College Info System\",\n+      description=\"College Info aBackend System\",\n       terms_of_service=\"https://www.google.com/policies/terms/\",\n       contact=openapi.Contact(email=\"prashantkarna21@gmail.com\"),\n       license=openapi.License(name=\"No License\"),\n       **{'x-logo': {'url': 'your-logo-url'}},\n"
+                }
+            ],
+            "date": 1726556507089,
+            "name": "Commit-0",
+            "content": "\"\"\"\nURL configuration for collegeinfo project.\n\nThe `urlpatterns` list routes URLs to views. For more information please see:\n    https://docs.djangoproject.com/en/4.2/topics/http/urls/\nExamples:\nFunction views\n    1. Add an import:  from my_app import views\n    2. Add a URL to urlpatterns:  path('', views.home, name='home')\nClass-based views\n    1. Add an import:  from other_app.views import Home\n    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')\nIncluding another URLconf\n    1. Import the include() function: from django.urls import include, path\n    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))\n\"\"\"\nfrom django.contrib import admin\nfrom django.urls import path\n\nurlpatterns = [\n    path('admin/', admin.site.urls),\n]\nif settings.DEBUG:\n    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)"
+        }
+    ]
+}
