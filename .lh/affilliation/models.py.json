@@ -1,0 +1,30 @@
+{
+    "sourceFile": "affilliation/models.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 3,
+            "patches": [
+                {
+                    "date": 1726653358262,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1726653389440,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,4 +1,11 @@\n from django.db import models\n \n # Create your models here.\n-class \n\\ No newline at end of file\n+class EventCategory(models.Model):\n+    name = models.CharField(max_length=100)\n+    created_date_time = models.DateTimeField(auto_now_add=True, null=True, blank=True)\n+    created_date = models.DateField(auto_now_add=True, null=True, blank=True)\n+    updated_date = models.DateTimeField(auto_now=True, null=True, blank=True)\n+    \n+    def __str__(self):\n+        return f\"{self.name}\"\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1726653411152,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,8 @@\n from django.db import models\n \n # Create your models here.\n-class EventCategory(models.Model):\n+class Affilliation(models.Model):\n     name = models.CharField(max_length=100)\n     created_date_time = models.DateTimeField(auto_now_add=True, null=True, blank=True)\n     created_date = models.DateField(auto_now_add=True, null=True, blank=True)\n     updated_date = models.DateTimeField(auto_now=True, null=True, blank=True)\n"
+                },
+                {
+                    "date": 1726653420332,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,8 @@\n from django.db import models\n \n # Create your models here.\n-class Affilliation(models.Model):\n+class Affiliation(models.Model):\n     name = models.CharField(max_length=100)\n     created_date_time = models.DateTimeField(auto_now_add=True, null=True, blank=True)\n     created_date = models.DateField(auto_now_add=True, null=True, blank=True)\n     updated_date = models.DateTimeField(auto_now=True, null=True, blank=True)\n"
+                }
+            ],
+            "date": 1726653358262,
+            "name": "Commit-0",
+            "content": "from django.db import models\n\n# Create your models here.\nclass "
+        }
+    ]
+}

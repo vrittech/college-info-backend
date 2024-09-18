@@ -1,0 +1,22 @@
+{
+    "sourceFile": "informationmanagement/forms.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 1,
+            "patches": [
+                {
+                    "date": 1726659932703,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1726660902928,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,17 +5,29 @@\n     class Meta:\n         model = Information\n         fields = '__all__'\n \n+    course_level_type = forms.ChoiceField(\n+        choices=[('Year', 'Year'), ('Semester', 'Semester')],\n+        widget=forms.Select(attrs={'id': 'course_level_type'})\n+    )\n+    years = forms.ModelMultipleChoiceField(\n+        queryset=Year.objects.all(),\n+        required=False,\n+        widget=forms.SelectMultiple(attrs={'id': 'year_options'})\n+    )\n+    semesters = forms.ModelMultipleChoiceField(\n+        queryset=Semester.objects.all(),\n+        required=False,\n+        widget=forms.SelectMultiple(attrs={'id': 'semester_options'})\n+    )\n+\n     def __init__(self, *args, **kwargs):\n         super().__init__(*args, **kwargs)\n+        self.fields['years'].queryset = Year.objects.none()\n+        self.fields['semesters'].queryset = Semester.objects.none()\n \n-        # Dynamically adjust the year and semester options based on course_level_type\n-        if self.instance.course_level_type == 'Year':\n-            self.fields['years'].queryset = Year.objects.all()\n-            self.fields['semesters'].queryset = Semester.objects.none()\n-        elif self.instance.course_level_type == 'Semester':\n-            self.fields['semesters'].queryset = Semester.objects.all()\n-            self.fields['years'].queryset = Year.objects.none()\n-        else:\n-            self.fields['years'].queryset = Year.objects.none()\n-            self.fields['semesters'].queryset = Semester.objects.none()\n+        if self.instance and self.instance.pk:\n+            if self.instance.course_level_type == 'Year':\n+                self.fields['years'].queryset = Year.objects.all()\n+            elif self.instance.course_level_type == 'Semester':\n+                self.fields['semesters'].queryset = Semester.objects.all()\n"
+                }
+            ],
+            "date": 1726659932703,
+            "name": "Commit-0",
+            "content": "from django import forms\nfrom .models import Information, Year, Semester\n\nclass InformationForm(forms.ModelForm):\n    class Meta:\n        model = Information\n        fields = '__all__'\n\n    def __init__(self, *args, **kwargs):\n        super().__init__(*args, **kwargs)\n\n        # Dynamically adjust the year and semester options based on course_level_type\n        if self.instance.course_level_type == 'Year':\n            self.fields['years'].queryset = Year.objects.all()\n            self.fields['semesters'].queryset = Semester.objects.none()\n        elif self.instance.course_level_type == 'Semester':\n            self.fields['semesters'].queryset = Semester.objects.all()\n            self.fields['years'].queryset = Year.objects.none()\n        else:\n            self.fields['years'].queryset = Year.objects.none()\n            self.fields['semesters'].queryset = Semester.objects.none()\n"
+        }
+    ]
+}

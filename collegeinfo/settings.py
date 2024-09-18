@@ -66,9 +66,18 @@ INSTALLED_APPS = [
     'accountsmanagement',
     'setupemail',
     'gallery',
+    'event',
+    'course',
+    'district',
+    'college',
+    'collegetype',
+    'informationmanagement',
+    'level',
+    'semester',
+    'affiliation',
+    'faculty',
 ]
 
-# ASGI_APPLICATION = 'trek.asgi.application'
 AUTH_USER_MODEL = 'accounts.CustomUser'
 
 CORS_ORIGIN_ALLOW_ALL = True

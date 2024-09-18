@@ -1,0 +1,18 @@
+{
+    "sourceFile": "affiliation/apps.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1726660569305,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1726660569305,
+            "name": "Commit-0",
+            "content": "from django.apps import AppConfig\n\n\nclass AffilliationConfig(AppConfig):\n    default_auto_field = 'django.db.models.BigAutoField'\n    name = 'affiliation'\n"
+        }
+    ]
+}

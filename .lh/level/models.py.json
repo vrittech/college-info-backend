@@ -1,0 +1,18 @@
+{
+    "sourceFile": "level/models.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1726653956970,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1726653956970,
+            "name": "Commit-0",
+            "content": "from django.db import models\n\n# Create your models here.\nclass Course(models.Model):\n    pass"
+        }
+    ]
+}

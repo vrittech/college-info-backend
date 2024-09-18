@@ -1,0 +1,66 @@
+{
+    "sourceFile": "event/admin.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 12,
+            "patches": [
+                {
+                    "date": 1726571205842,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1726571255146,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,3 +1,13 @@\n from django.contrib import admin\n-d\n+from ..class ModelName(models.Model):\n+    '''Model definition for ModelName.'''\n+\n+    class Meta:\n+        '''Meta definition for ModelName.'''\n+\n+        verbose_name = 'ModelName'\n+        verbose_name_plural = 'ModelNames'\n+\n+    def __str__(self):\n+        pass\n # Register your models here.\n"
+                },
+                {
+                    "date": 1726571264384,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,13 +1,3 @@\n from django.contrib import admin\n-from ..class ModelName(models.Model):\n-    '''Model definition for ModelName.'''\n-\n-    class Meta:\n-        '''Meta definition for ModelName.'''\n-\n-        verbose_name = 'ModelName'\n-        verbose_name_plural = 'ModelNames'\n-\n-    def __str__(self):\n-        pass\n+from ..model\n # Register your models here.\n"
+                },
+                {
+                    "date": 1726571275611,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,3 +1,3 @@\n from django.contrib import admin\n-from ..model\n+from .\n # Register your models here.\n"
+                },
+                {
+                    "date": 1726571281349,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,3 +1,3 @@\n from django.contrib import admin\n-from .\n+from .models import \n # Register your models here.\n"
+                },
+                {
+                    "date": 1726571287831,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,3 +1,3 @@\n from django.contrib import admin\n-from .models import \n+from .models import Event,Organizer,Category\n # Register your models here.\n"
+                },
+                {
+                    "date": 1726571299554,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,3 +1,4 @@\n from django.contrib import admin\n from .models import Event,Organizer,Category\n # Register your models here.\n+admin.site.register()\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1726571308134,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,4 +1,6 @@\n from django.contrib import admin\n from .models import Event,Organizer,Category\n # Register your models here.\n-admin.site.register()\n\\ No newline at end of file\n+admin.site.register(Event)\n+admin.site.register(Organizer)\n+admin.site.register(Event)\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1726571452447,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n from django.contrib import admin\n-from .models import Event,Organizer,Category\n+from .models import Event,Organizer,Organizer\n # Register your models here.\n admin.site.register(Event)\n admin.site.register(Organizer)\n\\ No newline at end of file\n-admin.site.register(Event)\n+admin.site.register(Ca)\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1726571460722,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n from django.contrib import admin\n-from .models import Event,Organizer,Organizer\n+from .models import Event,Organizer,\n # Register your models here.\n admin.site.register(Event)\n admin.site.register(Organizer)\n\\ No newline at end of file\n-admin.site.register(Ca)\n+admin.site.register(Cate)\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1726571466797,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n from django.contrib import admin\n-from .models import Event,Organizer,\n+from .models import Event,Organizer,Category\n # Register your models here.\n admin.site.register(Event)\n admin.site.register(Organizer)\n\\ No newline at end of file\n-admin.site.register(Cate)\n+admin.site.register(Category)\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1726660690469,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n from django.contrib import admin\n-from .models import Event,Organizer,Category\n+from .models import Event,EventOrganizer,Category\n # Register your models here.\n admin.site.register(Event)\n admin.site.register(Organizer)\n admin.site.register(Category)\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1726660695913,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n from django.contrib import admin\n-from .models import Event,EventOrganizer,Category\n+from .models import Event,EventOrganizer,EventCategory\n # Register your models here.\n admin.site.register(Event)\n-admin.site.register(Organizer)\n+admin.site.register(EventOrganizer)\n admin.site.register(Category)\n\\ No newline at end of file\n"
+                }
+            ],
+            "date": 1726571205842,
+            "name": "Commit-0",
+            "content": "from django.contrib import admin\nd\n# Register your models here.\n"
+        }
+    ]
+}

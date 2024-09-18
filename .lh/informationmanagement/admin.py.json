@@ -1,0 +1,18 @@
+{
+    "sourceFile": "informationmanagement/admin.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1726659958956,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1726659958956,
+            "name": "Commit-0",
+            "content": "from django.contrib import admin\n\n# Register your models here.\nfrom django.contrib import admin\nfrom .models import Information, Year, Semester, InformationTagging, InformationCategory\n\nadmin.site.register(Year)\nadmin.site.register(Semester)\nadmin.site.register(InformationTagging)\nadmin.site.register(InformationCategory)\n\nclass InformationAdmin(admin.ModelAdmin):\n    list_display = ('title', 'publish_date', 'course_level_type')\n    search_fields = ('title', 'description')\n    filter_horizontal = ('affiliation', 'course', 'level', 'district', 'college', 'faculty', 'years', 'semesters')\n\nadmin.site.register(Information, InformationAdmin)\n"
+        }
+    ]
+}
