@@ -76,6 +76,9 @@ INSTALLED_APPS = [
     'semester',
     'affiliation',
     'faculty',
+    'collegeleveltype',
+    'certification',
+    'socialmedia',
 ]
 
 AUTH_USER_MODEL = 'accounts.CustomUser'

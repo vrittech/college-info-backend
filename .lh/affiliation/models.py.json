@@ -3,11 +3,55 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 0,
+            "activePatchIndex": 11,
             "patches": [
                 {
                     "date": 1726653441030,
                     "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1726724124553,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,6 @@\n from django.db import models\n \n # Create your models here.\n class Affiliation(models.Model):\n+   \n     \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1726724134028,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n from django.db import models\n \n # Create your models here.\n class Affiliation(models.Model):\n-   \n+   name = \n     \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1726724139928,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,7 @@\n from django.db import models\n \n # Create your models here.\n class Affiliation(models.Model):\n-   name = \n+   name\n+   \n     \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1726724149842,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,6 +2,6 @@\n \n # Create your models here.\n class Affiliation(models.Model):\n    name\n-   \n+   date\n     \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1726724160262,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,5 +3,6 @@\n # Create your models here.\n class Affiliation(models.Model):\n    name\n    date\n+   address url(r'^REGEX/$', VIEW.as_view(), name=''),\n     \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1726724167349,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,6 +3,8 @@\n # Create your models here.\n class Affiliation(models.Model):\n    name\n    date\n-   address url(r'^REGEX/$', VIEW.as_view(), name=''),\n+   address url\n+   address\n+   \n     \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1726724175342,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,6 +5,6 @@\n    name\n    date\n    address url\n    address\n-   \n+   Location---\n     \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1726724183619,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,6 +5,6 @@\n    name\n    date\n    address url\n    address\n-   Location---\n+   Location--->foreign/Domestic\n     \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1726724191778,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,11 @@\n+from django.db import models\n+\n+# Create your models here.\n+class Affiliation(models.Model):\n+   name\n+   date\n+   address url\n+   address\n+   Location--->foreign/Domestic\n+   phone\n+    \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1726724197448,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,5 +8,6 @@\n    address\n    Location--->foreign/Domestic\n    phone_number\n    email\n+   \n     \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1726724815470,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,9 +27,9 @@\n     ]\n \n     name = models.CharField(max_length=255)\n     established_year = models.IntegerField()\n-    website_url = models.URLField(max_length=500, blank=True, null=True)\n+     = models.URLField(max_length=500, blank=True, null=True)\n     address = models.TextField()\n     location = models.CharField(max_length=10, choices=LOCATION_CHOICES)\n     phone_number = models.CharField(max_length=15, blank=True, null=True)\n     email = models.EmailField(blank=True, null=True)\n"
                 }
             ],
             "date": 1726653441030,

@@ -1,0 +1,50 @@
+{
+    "sourceFile": "socialmedia/models.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 8,
+            "patches": [
+                {
+                    "date": 1726725092271,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1726725752672,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,5 +5,5 @@\n     icon=models.ImageField(upload_to='components/banner',null = True,blank= True)\n     name= models.CharField(max_length=100,null= True,blank=True) \n     url = models.URLField(max_length=200)\n     created_date = models.DateTimeField(auto_now_add=True, null = True,blank = True)\n-    updated_date = models.DateTimeField(auto_now=True, null = True,blank = True)\n\\ No newline at end of file\n+    updated_date = models.DateTimeField(auto_now=True, null = True,blank = True)clear\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1726725896881,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,5 +5,7 @@\n     icon=models.ImageField(upload_to='components/banner',null = True,blank= True)\n     name= models.CharField(max_length=100,null= True,blank=True) \n     url = models.URLField(max_length=200)\n     created_date = models.DateTimeField(auto_now_add=True, null = True,blank = True)\n-    updated_date = models.DateTimeField(auto_now=True, null = True,blank = True)clear\n\\ No newline at end of file\n+    updated_date = models.DateTimeField(auto_now=True, null = True,blank = True)\n+    \n+    \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1726726012885,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,5 +7,6 @@\n     url = models.URLField(max_length=200)\n     created_date = models.DateTimeField(auto_now_add=True, null = True,blank = True)\n     updated_date = models.DateTimeField(auto_now=True, null = True,blank = True)\n     \n-    \n\\ No newline at end of file\n+       def __str__(self):\n+        return self.name\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1726726203086,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,9 +4,10 @@\n class SocialMedia(models.Model):\n     icon=models.ImageField(upload_to='components/banner',null = True,blank= True)\n     name= models.CharField(max_length=100,null= True,blank=True) \n     url = models.URLField(max_length=200)\n+    is\n     created_date = models.DateTimeField(auto_now_add=True, null = True,blank = True)\n     updated_date = models.DateTimeField(auto_now=True, null = True,blank = True)\n     \n-       def __str__(self):\n+    def __str__(self):\n         return self.name\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1726726259327,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,9 +4,9 @@\n class SocialMedia(models.Model):\n     icon=models.ImageField(upload_to='components/banner',null = True,blank= True)\n     name= models.CharField(max_length=100,null= True,blank=True) \n     url = models.URLField(max_length=200)\n-    is\n+    is_show\n     created_date = models.DateTimeField(auto_now_add=True, null = True,blank = True)\n     updated_date = models.DateTimeField(auto_now=True, null = True,blank = True)\n     \n     def __str__(self):\n"
+                },
+                {
+                    "date": 1726726267417,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,9 +4,9 @@\n class SocialMedia(models.Model):\n     icon=models.ImageField(upload_to='components/banner',null = True,blank= True)\n     name= models.CharField(max_length=100,null= True,blank=True) \n     url = models.URLField(max_length=200)\n-    is_show\n+    is_show = models.\n     created_date = models.DateTimeField(auto_now_add=True, null = True,blank = True)\n     updated_date = models.DateTimeField(auto_now=True, null = True,blank = True)\n     \n     def __str__(self):\n"
+                },
+                {
+                    "date": 1726726282213,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,9 +4,9 @@\n class SocialMedia(models.Model):\n     icon=models.ImageField(upload_to='components/banner',null = True,blank= True)\n     name= models.CharField(max_length=100,null= True,blank=True) \n     url = models.URLField(max_length=200)\n-    is_show = models.\n+    is_show = models.BooleanField\n     created_date = models.DateTimeField(auto_now_add=True, null = True,blank = True)\n     updated_date = models.DateTimeField(auto_now=True, null = True,blank = True)\n     \n     def __str__(self):\n"
+                },
+                {
+                    "date": 1726726287738,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,9 +4,9 @@\n class SocialMedia(models.Model):\n     icon=models.ImageField(upload_to='components/banner',null = True,blank= True)\n     name= models.CharField(max_length=100,null= True,blank=True) \n     url = models.URLField(max_length=200)\n-    is_show = models.BooleanField\n+    is_show = models.BooleanField(default=False)\n     created_date = models.DateTimeField(auto_now_add=True, null = True,blank = True)\n     updated_date = models.DateTimeField(auto_now=True, null = True,blank = True)\n     \n     def __str__(self):\n"
+                }
+            ],
+            "date": 1726725092271,
+            "name": "Commit-0",
+            "content": "from django.db import models\n\n# Create your models here.\nclass SocialMedia(models.Model):\n    icon=models.ImageField(upload_to='components/banner',null = True,blank= True)\n    name= models.CharField(max_length=100,null= True,blank=True) \n    url = models.URLField(max_length=200)\n    created_date = models.DateTimeField(auto_now_add=True, null = True,blank = True)\n    updated_date = models.DateTimeField(auto_now=True, null = True,blank = True)"
+        }
+    ]
+}

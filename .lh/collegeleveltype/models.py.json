@@ -1,0 +1,22 @@
+{
+    "sourceFile": "collegeleveltype/models.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 1,
+            "patches": [
+                {
+                    "date": 1726722362996,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1726722370766,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,8 @@\n from django.db import models\n \n # Create your models here.\n-class Year(models.Model):\n+class CollegeLve(models.Model):\n     name = models.CharField(max_length=20, unique=True)\n \n     def __str__(self):\n         return self.name\n\\ No newline at end of file\n"
+                }
+            ],
+            "date": 1726722362996,
+            "name": "Commit-0",
+            "content": "from django.db import models\n\n# Create your models here.\nclass Year(models.Model):\n    name = models.CharField(max_length=20, unique=True)\n\n    def __str__(self):\n        return self.name"
+        }
+    ]
+}

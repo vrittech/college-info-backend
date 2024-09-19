@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 29,
+            "activePatchIndex": 34,
             "patches": [
                 {
                     "date": 1726555899131,
@@ -124,6 +124,26 @@
                 {
                     "date": 1726660638710,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -69,9 +69,9 @@\n     'event',\n     'course',\n     'district',\n     'college',\n-    'college',\n+    'collegetype',\n     'informationmanagement',\n     'level',\n     'semester',\n     'affiliation',\n"
+                },
+                {
+                    "date": 1726726431077,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -75,8 +75,9 @@\n     'level',\n     'semester',\n     'affiliation',\n     'faculty',\n+    'faculty',\n ]\n \n AUTH_USER_MODEL = 'accounts.CustomUser'\n \n"
+                },
+                {
+                    "date": 1726726440202,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -75,9 +75,9 @@\n     'level',\n     'semester',\n     'affiliation',\n     'faculty',\n-    'faculty',\n+    'college',\n ]\n \n AUTH_USER_MODEL = 'accounts.CustomUser'\n \n"
+                },
+                {
+                    "date": 1726726446927,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -75,9 +75,10 @@\n     'level',\n     'semester',\n     'affiliation',\n     'faculty',\n-    'college',\n+    'collegeleveltype',\n+    'collegeleveltype',\n ]\n \n AUTH_USER_MODEL = 'accounts.CustomUser'\n \n"
+                },
+                {
+                    "date": 1726726458392,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -76,9 +76,9 @@\n     'semester',\n     'affiliation',\n     'faculty',\n     'collegeleveltype',\n-    'collegeleveltype',\n+    'certification',\n ]\n \n AUTH_USER_MODEL = 'accounts.CustomUser'\n \n"
+                },
+                {
+                    "date": 1726726468766,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -77,8 +77,9 @@\n     'affiliation',\n     'faculty',\n     'collegeleveltype',\n     'certification',\n+    'socialmedia',\n ]\n \n AUTH_USER_MODEL = 'accounts.CustomUser'\n \n"
                 }
             ],
             "date": 1726555899131,
