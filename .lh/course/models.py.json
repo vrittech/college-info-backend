@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 2,
+            "activePatchIndex": 18,
             "patches": [
                 {
                     "date": 1726653465387,
@@ -16,6 +16,70 @@
                 {
                     "date": 1726653900921,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n from django.db import models\n \n # Create your models here.\n-class course(models.Model):\n+class Course(models.Model):\n     pass\n     \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1726728232210,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,7 @@\n from django.db import models\n \n # Create your models here.\n class Course(models.Model):\n+    name = models.\n     pass\n     \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1726728261122,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n from django.db import models\n \n # Create your models here.\n class Course(models.Model):\n-    name = models.\n+    name = models.CharField(max)\n     pass\n     \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1726728267840,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n from django.db import models\n \n # Create your models here.\n class Course(models.Model):\n-    name = models.CharField(max)\n+    name = models.CharField(max_length=255)\n     pass\n     \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1726728526188,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,6 +2,6 @@\n \n # Create your models here.\n class Course(models.Model):\n     name = models.CharField(max_length=255)\n-    pass\n+\n     \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1726728531530,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,5 +3,6 @@\n # Create your models here.\n class Course(models.Model):\n     name = models.CharField(max_length=255)\n \n+def_-\n     \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1726728538269,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,6 +3,6 @@\n # Create your models here.\n class Course(models.Model):\n     name = models.CharField(max_length=255)\n \n-def_-\n+\n     \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1726728549425,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,7 +2,8 @@\n \n # Create your models here.\n class Course(models.Model):\n     name = models.CharField(max_length=255)\n+    description\n \n \n     \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1726728556852,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,8 +2,8 @@\n \n # Create your models here.\n class Course(models.Model):\n     name = models.CharField(max_length=255)\n-    description\n+    description = models.Te\n \n \n     \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1726728563536,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,8 +2,8 @@\n \n # Create your models here.\n class Course(models.Model):\n     name = models.CharField(max_length=255)\n-    description = models.Te\n+    description = models.TextField(max)\n \n \n     \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1726728569818,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,8 +2,8 @@\n \n # Create your models here.\n class Course(models.Model):\n     name = models.CharField(max_length=255)\n-    description = models.TextField(max)\n+    description = models.TextField(max_length=2)\n \n \n     \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1726728586835,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,8 +2,9 @@\n \n # Create your models here.\n class Course(models.Model):\n     name = models.CharField(max_length=255)\n-    description = models.TextField(max_length=2)\n+    description = models.TextField()\n+    image = models.ImageField(upload_to='information_tagging/',null=True,blank=True)\n \n \n     \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1726728595056,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,7 +4,9 @@\n class Course(models.Model):\n     name = models.CharField(max_length=255)\n     description = models.TextField()\n     image = models.ImageField(upload_to='information_tagging/',null=True,blank=True)\n+    \n+    \n \n \n     \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1726728600252,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,8 +5,9 @@\n     name = models.CharField(max_length=255)\n     description = models.TextField()\n     image = models.ImageField(upload_to='information_tagging/',null=True,blank=True)\n     \n-    \n+    def __str__(self):\n+        return self.name\n \n \n     \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1726728610930,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,9 @@\n # Create your models here.\n class Course(models.Model):\n     name = models.CharField(max_length=255)\n     description = models.TextField()\n-    image = models.ImageField(upload_to='information_tagging/',null=True,blank=True)\n+    image = models.ImageField(upload_to='course/',null=True,blank=True)\n     \n     def __str__(self):\n         return self.name\n \n"
+                },
+                {
+                    "date": 1726728863511,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,11 +1,11 @@\n from django.db import models\n \n # Create your models here.\n class Course(models.Model):\n-    name = models.CharField(max_length=255)\n-    description = models.TextField()\n-    image = models.ImageField(upload_to='course/',null=True,blank=True)\n+        name = models.CharField(max_length=255,null=True,blank=True)\n+    description = models.TextField(null=True,blank=True)\n+    image = models.ImageField(upload_to='college/',null=True,blank=True)\n     \n     def __str__(self):\n         return self.name\n \n"
+                },
+                {
+                    "date": 1726728877164,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,11 +1,11 @@\n from django.db import models\n \n # Create your models here.\n class Course(models.Model):\n-        name = models.CharField(max_length=255,null=True,blank=True)\n+    name = models.CharField(max_length=255,null=True,blank=True)\n     description = models.TextField(null=True,blank=True)\n-    image = models.ImageField(upload_to='college/',null=True,blank=True)\n+    image = models.ImageField(upload_to='course/',null=True,blank=True)\n     \n     def __str__(self):\n         return self.name\n \n"
                 }
             ],
             "date": 1726653465387,

@@ -1,7 +1,7 @@
 #DIGITAL OCEAN
 
 #SECRET_KEY
-SECRET_KEY='django-insecure-z^#)006uptp234kjj8092hpxe23#i^r(iz9ak8gc-4q_8-(z^2kja@t8e(dnz$2@md'
+SECRET_KEY='django-insecure-z^#)006uptp234kjj8092hpxe23#i^r(iz9ak8gc-4q_8-(z^2kja@t8e(dnz$2@prashanttab'
 
 ALLOWED_HOSTS = "127.0.0.1,localhost,0.0.0.0,192.168.1.10,*,"
 CORS_ORIGIN_WHITELIST = "http://localhost:4200,http://192.168.1.122:5173,http://192.168.1.122,http://localhost:3000,"#frontend ip
@@ -9,7 +9,7 @@ CSRF_TRUSTED_ORIGINS = "http://127.0.0.1,http://192.168.1.10,http://192.168.1.10
 
 #Database
 DATABASE_ENGINE=django.db.backends.postgresql
-DATABASES_NAME=trek
+DATABASES_NAME=collegeinfo
 DATABASE_USER=postgres
 DATABASE_PASSWORD=md
 DATABASE_HOST=localhost

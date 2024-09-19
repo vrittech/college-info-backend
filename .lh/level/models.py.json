@@ -3,11 +3,27 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 0,
+            "activePatchIndex": 4,
             "patches": [
                 {
                     "date": 1726653956970,
                     "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1726728737068,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,10 @@\n from django.db import models\n \n # Create your models here.\n-class Course(models.Model):\n-    pass\n\\ No newline at end of file\n+class Level(models.Model):\n+     name = models.CharField(max_length=255)\n+    description = models.TextField()\n+    image = models.ImageField(upload_to='college_type/',null=True,blank=True)\n+    \n+    def __str__(self):\n+        return self.name\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1726728743650,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,10 +1,10 @@\n from django.db import models\n \n # Create your models here.\n class Level(models.Model):\n-     name = models.CharField(max_length=255)\n+    name = models.CharField(max_length=255)\n     description = models.TextField()\n-    image = models.ImageField(upload_to='college_type/',null=True,blank=True)\n+    image = models.ImageField(upload_to='level/',null=True,blank=True)\n     \n     def __str__(self):\n         return self.name\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1726728930374,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,10 +1,10 @@\n from django.db import models\n \n # Create your models here.\n class Level(models.Model):\n-    name = models.CharField(max_length=255)\n-    description = models.TextField()\n-    image = models.ImageField(upload_to='level/',null=True,blank=True)\n+        name = models.CharField(max_length=255,null=True,blank=True)\n+    description = models.TextField(null=True,blank=True)\n+    image = models.ImageField(upload_to='college/',null=True,blank=True)\n     \n     def __str__(self):\n         return self.name\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1726728936032,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,10 +1,10 @@\n from django.db import models\n \n # Create your models here.\n class Level(models.Model):\n-        name = models.CharField(max_length=255,null=True,blank=True)\n+    name = models.CharField(max_length=255,null=True,blank=True)\n     description = models.TextField(null=True,blank=True)\n-    image = models.ImageField(upload_to='college/',null=True,blank=True)\n+    image = models.ImageField(upload_to='level/',null=True,blank=True)\n     \n     def __str__(self):\n         return self.name\n\\ No newline at end of file\n"
                 }
             ],
             "date": 1726653956970,
