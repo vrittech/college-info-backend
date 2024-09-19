@@ -48,3 +48,48 @@ urlpatterns = [
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+#*********This is affiliation router registered by autoapi*********
+from affiliation.routers.routers import router as affiliation_router
+urlpatterns.append(path('api/',include(affiliation_router.urls)))
+#*********This is certification router registered by autoapi*********
+from certification.routers.routers import router as certification_router
+urlpatterns.append(path('api/',include(certification_router.urls)))
+#*********This is college router registered by autoapi*********
+from college.routers.routers import router as college_router
+urlpatterns.append(path('api/',include(college_router.urls)))
+#*********This is collegeleveltype router registered by autoapi*********
+from collegeleveltype.routers.routers import router as collegeleveltype_router
+urlpatterns.append(path('api/',include(collegeleveltype_router.urls)))
+#*********This is collegetype router registered by autoapi*********
+from collegetype.routers.routers import router as collegetype_router
+urlpatterns.append(path('api/',include(collegetype_router.urls)))
+#*********This is course router registered by autoapi*********
+from course.routers.routers import router as course_router
+urlpatterns.append(path('api/',include(course_router.urls)))
+#*********This is district router registered by autoapi*********
+from district.routers.routers import router as district_router
+urlpatterns.append(path('api/',include(district_router.urls)))
+#*********This is event router registered by autoapi*********
+from event.routers.routers import router as event_router
+urlpatterns.append(path('api/',include(event_router.urls)))
+#*********This is faculty router registered by autoapi*********
+from faculty.routers.routers import router as faculty_router
+urlpatterns.append(path('api/',include(faculty_router.urls)))
+#*********This is gallery router registered by autoapi*********
+from gallery.routers.routers import router as gallery_router
+urlpatterns.append(path('api/',include(gallery_router.urls)))
+#*********This is informationmanagement router registered by autoapi*********
+from informationmanagement.routers.routers import router as informationmanagement_router
+urlpatterns.append(path('api/',include(informationmanagement_router.urls)))
+#*********This is level router registered by autoapi*********
+from level.routers.routers import router as level_router
+urlpatterns.append(path('api/',include(level_router.urls)))
+#*********This is semester router registered by autoapi*********
+from semester.routers.routers import router as semester_router
+urlpatterns.append(path('api/',include(semester_router.urls)))
+#*********This is setupemail router registered by autoapi*********
+from setupemail.routers.routers import router as setupemail_router
+urlpatterns.append(path('api/',include(setupemail_router.urls)))
+#*********This is socialmedia router registered by autoapi*********
+from socialmedia.routers.routers import router as socialmedia_router
+urlpatterns.append(path('api/',include(socialmedia_router.urls)))

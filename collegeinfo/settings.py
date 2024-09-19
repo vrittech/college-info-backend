@@ -79,6 +79,7 @@ INSTALLED_APPS = [
     'collegeleveltype',
     'certification',
     'socialmedia',
+    'drfapigenerator',
 ]
 
 AUTH_USER_MODEL = 'accounts.CustomUser'

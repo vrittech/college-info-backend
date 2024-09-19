@@ -5,7 +5,7 @@ from course.models import Course
 from district.models import District
 from faculty.models import Faculty
 from level.models import Level
-from semester.models import Semester  # Assume this stores semester details
+from semester.models import Semester  
 from collegetype.models import CollegeType
 from collegeleveltype.models import CollegeLevelType
 from certification.models import Certification
