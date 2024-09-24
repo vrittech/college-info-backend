@@ -1,0 +1,158 @@
+{
+    "sourceFile": "coursemanagement/models.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 35,
+            "patches": [
+                {
+                    "date": 1727071578528,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1727071584055,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,4 +1,4 @@\n from django.db import models\n \n # Create your models here.\n-class course\n\\ No newline at end of file\n+class course(models.Model)\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1727073015148,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,4 +1,5 @@\n from django.db import models\n \n # Create your models here.\n-class course(models.Model)\n\\ No newline at end of file\n+class course(models.Model):\n+    \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1727073020589,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n from django.db import models\n \n # Create your models here.\n class course(models.Model):\n-    \n\\ No newline at end of file\n+    NameError\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1727073029605,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,6 @@\n from django.db import models\n \n # Create your models here.\n class course(models.Model):\n-    NameError\n\\ No newline at end of file\n+    name \n+ \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1727073035126,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,6 @@\n from django.db import models\n+from le\n \n # Create your models here.\n class course(models.Model):\n     name \n"
+                },
+                {
+                    "date": 1727073044800,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n from django.db import models\n-from le\n+from level.models import Level\n \n # Create your models here.\n class course(models.Model):\n     name \n"
+                },
+                {
+                    "date": 1727073050480,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,5 +3,6 @@\n \n # Create your models here.\n class course(models.Model):\n     name \n+    level ---\n  \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1727073058713,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,6 +3,6 @@\n \n # Create your models here.\n class course(models.Model):\n     name \n-    level ---\n+    level --->foreignkey from level\n  \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1727073065973,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,6 +3,7 @@\n \n # Create your models here.\n class course(models.Model):\n     name \n-    level --->foreignkey from level\n+    level --->foreignkey from level \n+    a\n  \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1727073073118,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,6 +4,6 @@\n # Create your models here.\n class course(models.Model):\n     name \n     level --->foreignkey from level \n-    a\n+    faculties ----\n  \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1727073078265,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,6 +4,6 @@\n # Create your models here.\n class course(models.Model):\n     name \n     level --->foreignkey from level \n-    faculties ----\n+    faculties ---->foriegn key \n  \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1727073083724,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,7 @@\n from django.db import models\n from level.models import Level\n+from fac\n \n # Create your models here.\n class course(models.Model):\n     name \n"
+                },
+                {
+                    "date": 1727073091734,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n from django.db import models\n from level.models import Level\n-from fac\n+from faculty.models import Fa\n \n # Create your models here.\n class course(models.Model):\n     name \n"
+                },
+                {
+                    "date": 1727073113422,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,9 @@\n from django.db import models\n from level.models import Level\n-from faculty.models import Fa\n+from faculty.models import Faculty\n \n+\n # Create your models here.\n class course(models.Model):\n     name \n     level --->foreignkey from level \n"
+                },
+                {
+                    "date": 1727073135905,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,9 @@\n from django.db import models\n from level.models import Level\n from faculty.models import Faculty\n+from \n \n-\n # Create your models here.\n class course(models.Model):\n     name \n     level --->foreignkey from level \n"
+                },
+                {
+                    "date": 1727073144100,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,8 @@\n from django.db import models\n from level.models import Level\n from faculty.models import Faculty\n-from \n+from affiliation.models import Affiliation\n \n # Create your models here.\n class course(models.Model):\n     name \n"
+                },
+                {
+                    "date": 1727073163653,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,5 +7,7 @@\n class course(models.Model):\n     name \n     level --->foreignkey from level \n     faculties ---->foriegn key \n+    Affiliation---> manyToMnay\n+    \n  \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1727073171158,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,5 +9,6 @@\n     level --->foreignkey from level \n     faculties ---->foriegn key \n     Affiliation---> manyToMnay\n     \n+    \n  \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1727073178862,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,7 +8,7 @@\n     name \n     level --->foreignkey from level \n     faculties ---->foriegn key \n     Affiliation---> manyToMnay\n+    duration----.\n     \n-    \n  \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1727073188585,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,7 +8,8 @@\n     name \n     level --->foreignkey from level \n     faculties ---->foriegn key \n     Affiliation---> manyToMnay\n-    duration----.\n+    duration----> charfield\n     \n+    \n  \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1727073201981,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,7 +9,7 @@\n     level --->foreignkey from level \n     faculties ---->foriegn key \n     Affiliation---> manyToMnay\n     duration----> charfield\n+    image---> imagefo\n     \n-    \n  \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1727073224041,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,7 +9,8 @@\n     level --->foreignkey from level \n     faculties ---->foriegn key \n     Affiliation---> manyToMnay\n     duration----> charfield\n-    image---> imagefo\n+    des\n+    image---> imagefield\n     \n  \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1727073231316,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,8 +9,8 @@\n     level --->foreignkey from level \n     faculties ---->foriegn key \n     Affiliation---> manyToMnay\n     duration----> charfield\n-    des\n+    description ---->textfield\n     image---> imagefield\n     \n  \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1727073237053,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,7 +10,8 @@\n     faculties ---->foriegn key \n     Affiliation---> manyToMnay\n     duration----> charfield\n     description ---->textfield\n+    excerpt ----> \n     image---> imagefield\n     \n  \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1727073252326,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,8 +10,13 @@\n     faculties ---->foriegn key \n     Affiliation---> manyToMnay\n     duration----> charfield\n     description ---->textfield\n-    excerpt ----> \n+    excerpt ----> textfield\n     image---> imagefield\n+    created \n+    class MODEL_NAMEDetailView(DetailView):\n+        model = MODEL_NAME\n+        template_name = \"TEMPLATE_NAME\"\n     \n+    \n  \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1727073259026,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,11 +12,8 @@\n     duration----> charfield\n     description ---->textfield\n     excerpt ----> textfield\n     image---> imagefield\n-    created \n-    class MODEL_NAMEDetailView(DetailView):\n-        model = MODEL_NAME\n-        template_name = \"TEMPLATE_NAME\"\n+    created date  \n+    updated \n     \n-    \n  \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1727073302095,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,17 +3,21 @@\n from faculty.models import Faculty\n from affiliation.models import Affiliation\n \n # Create your models here.\n-class course(models.Model):\n-    name \n-    level --->foreignkey from level \n-    faculties ---->foriegn key \n-    Affiliation---> manyToMnay\n-    duration----> charfield\n-    description ---->textfield\n-    excerpt ----> textfield\n-    image---> imagefield\n-    created date  \n-    updated \n+class Course(models.Model):\n+    name = models.CharField(max_length=255)\n+    level = models.ForeignKey(Level, on_delete=models.CASCADE)\n+    faculties = models.ForeignKey(Faculty, on_delete=models.CASCADE)\n+    affiliations = models.ManyToManyField(Affiliation)\n+    duration = models.CharField(max_length=50)\n+    description = models.TextField()\n+    excerpt = models.TextField()\n+    image = models.ImageField(upload_to='courses/images/')\n+    created_date = models.DateTimeField(auto_now_add=True)\n+    updated_date = models.DateTimeField(auto_now=True)\n+\n+    def __str__(self):\n+        return self.name\n+\n     \n  \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1727073313495,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,9 +5,9 @@\n \n # Create your models here.\n class Course(models.Model):\n     name = models.CharField(max_length=255)\n-    level = models.ForeignKey(Level, on_delete=models.CASCADE)\n+    level = models.ForeignKey(Level, on_delete=models.CASCADE, related_name=)\n     faculties = models.ForeignKey(Faculty, on_delete=models.CASCADE)\n     affiliations = models.ManyToManyField(Affiliation)\n     duration = models.CharField(max_length=50)\n     description = models.TextField()\n"
+                },
+                {
+                    "date": 1727073323649,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,9 +5,9 @@\n \n # Create your models here.\n class Course(models.Model):\n     name = models.CharField(max_length=255)\n-    level = models.ForeignKey(Level, on_delete=models.CASCADE, related_name=)\n+    level = models.ForeignKey(Level, on_delete=models.CASCADE, related_name=course_level)\n     faculties = models.ForeignKey(Faculty, on_delete=models.CASCADE)\n     affiliations = models.ManyToManyField(Affiliation)\n     duration = models.CharField(max_length=50)\n     description = models.TextField()\n"
+                },
+                {
+                    "date": 1727073332371,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,9 +5,9 @@\n \n # Create your models here.\n class Course(models.Model):\n     name = models.CharField(max_length=255)\n-    level = models.ForeignKey(Level, on_delete=models.CASCADE, related_name=course_level)\n+    level = models.ForeignKey(Level, on_delete=models.CASCADE, related_name='course_level)\n     faculties = models.ForeignKey(Faculty, on_delete=models.CASCADE)\n     affiliations = models.ManyToManyField(Affiliation)\n     duration = models.CharField(max_length=50)\n     description = models.TextField()\n"
+                },
+                {
+                    "date": 1727073337819,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,10 +5,10 @@\n \n # Create your models here.\n class Course(models.Model):\n     name = models.CharField(max_length=255)\n-    level = models.ForeignKey(Level, on_delete=models.CASCADE, related_name='course_level)\n-    faculties = models.ForeignKey(Faculty, on_delete=models.CASCADE)\n+    level = models.ForeignKey(Level, on_delete=models.CASCADE, related_name='course_level')\n+    faculties = models.ForeignKey(Faculty, on_delete=models.CASCADE, related_name=course_level)\n     affiliations = models.ManyToManyField(Affiliation)\n     duration = models.CharField(max_length=50)\n     description = models.TextField()\n     excerpt = models.TextField()\n"
+                },
+                {
+                    "date": 1727073343815,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,9 +6,9 @@\n # Create your models here.\n class Course(models.Model):\n     name = models.CharField(max_length=255)\n     level = models.ForeignKey(Level, on_delete=models.CASCADE, related_name='course_level')\n-    faculties = models.ForeignKey(Faculty, on_delete=models.CASCADE, related_name=course_level)\n+    faculties = models.ForeignKey(Faculty, on_delete=models.CASCADE, related_name='')\n     affiliations = models.ManyToManyField(Affiliation)\n     duration = models.CharField(max_length=50)\n     description = models.TextField()\n     excerpt = models.TextField()\n"
+                },
+                {
+                    "date": 1727073349151,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,9 +6,9 @@\n # Create your models here.\n class Course(models.Model):\n     name = models.CharField(max_length=255)\n     level = models.ForeignKey(Level, on_delete=models.CASCADE, related_name='course_level')\n-    faculties = models.ForeignKey(Faculty, on_delete=models.CASCADE, related_name='')\n+    faculties = models.ForeignKey(Faculty, on_delete=models.CASCADE, related_name='faculties')\n     affiliations = models.ManyToManyField(Affiliation)\n     duration = models.CharField(max_length=50)\n     description = models.TextField()\n     excerpt = models.TextField()\n"
+                },
+                {
+                    "date": 1727073355863,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,9 +6,9 @@\n # Create your models here.\n class Course(models.Model):\n     name = models.CharField(max_length=255)\n     level = models.ForeignKey(Level, on_delete=models.CASCADE, related_name='course_level')\n-    faculties = models.ForeignKey(Faculty, on_delete=models.CASCADE, related_name='faculties')\n+    faculties = models.ForeignKey(Faculty, on_delete=models.CASCADE, related_name='course_faculties')\n     affiliations = models.ManyToManyField(Affiliation)\n     duration = models.CharField(max_length=50)\n     description = models.TextField()\n     excerpt = models.TextField()\n"
+                },
+                {
+                    "date": 1727073370296,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,9 +12,9 @@\n     duration = models.CharField(max_length=50)\n     description = models.TextField()\n     excerpt = models.TextField()\n     image = models.ImageField(upload_to='courses/images/')\n-    created_date = models.DateTimeField(auto_now_add=True)\n+    created_date = models.DateField(auto_now_add=True)\n     updated_date = models.DateTimeField(auto_now=True)\n \n     def __str__(self):\n         return self.name\n"
+                }
+            ],
+            "date": 1727071578528,
+            "name": "Commit-0",
+            "content": "from django.db import models\n\n# Create your models here.\nclass course"
+        }
+    ]
+}

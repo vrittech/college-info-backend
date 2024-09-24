@@ -5,7 +5,6 @@ from django.contrib import admin
 from .models import Information, Year, Semester, InformationTagging, InformationCategory
 
 admin.site.register(Year)
-admin.site.register(Semester)
 admin.site.register(InformationTagging)
 admin.site.register(InformationCategory)
 

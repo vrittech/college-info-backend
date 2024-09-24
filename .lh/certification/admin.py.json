@@ -1,0 +1,22 @@
+{
+    "sourceFile": "certification/admin.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 1,
+            "patches": [
+                {
+                    "date": 1726730740044,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1726730747745,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n from django.contrib import admin\n \n # Register your models here.\n-from .models import Affiliation\n-admin.site.register(Affiliation)\n\\ No newline at end of file\n+from .models import Certification\n+admin.site.register(Certification)\n\\ No newline at end of file\n"
+                }
+            ],
+            "date": 1726730740044,
+            "name": "Commit-0",
+            "content": "from django.contrib import admin\n\n# Register your models here.\nfrom .models import Affiliation\nadmin.site.register(Affiliation)"
+        }
+    ]
+}

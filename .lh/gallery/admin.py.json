@@ -1,0 +1,26 @@
+{
+    "sourceFile": "gallery/admin.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 2,
+            "patches": [
+                {
+                    "date": 1726730911603,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1726730917208,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n from django.contrib import admin\n-from gallery.models import  Gallery\n+from gallery.models import  Gallery,Ga\n \n # Register your models here.\n admin.site.register(Gallery)\n-admin.site.register(Gallery)\n+admin.site.register(GalleryC)\n"
+                },
+                {
+                    "date": 1726730923722,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n from django.contrib import admin\n-from gallery.models import  Gallery,Ga\n+from gallery.models import  Gallery,Album\n \n # Register your models here.\n admin.site.register(Gallery)\n-admin.site.register(GalleryC)\n+admin.site.register(Album)\n"
+                }
+            ],
+            "date": 1726730911603,
+            "name": "Commit-0",
+            "content": "from django.contrib import admin\nfrom gallery.models import  Gallery\n\n# Register your models here.\nadmin.site.register(Gallery)\nadmin.site.register(Gallery)\n"
+        }
+    ]
+}

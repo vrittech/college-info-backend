@@ -3,11 +3,15 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 0,
+            "activePatchIndex": 1,
             "patches": [
                 {
                     "date": 1726659958956,
                     "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1726731037388,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,9 +4,8 @@\n from django.contrib import admin\n from .models import Information, Year, Semester, InformationTagging, InformationCategory\n \n admin.site.register(Year)\n-admin.site.register(Semester)\n admin.site.register(InformationTagging)\n admin.site.register(InformationCategory)\n \n class InformationAdmin(admin.ModelAdmin):\n"
                 }
             ],
             "date": 1726659958956,

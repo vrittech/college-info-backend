@@ -1,0 +1,30 @@
+{
+    "sourceFile": "coursemanagement/admin.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 3,
+            "patches": [
+                {
+                    "date": 1727073486849,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1727073493278,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,3 +1,3 @@\n from django.contrib import admin\n-from .mod]\n+from .models import C\n # Register your models here.\n"
+                },
+                {
+                    "date": 1727073503308,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,3 +1,4 @@\n from django.contrib import admin\n-from .models import C\n+from .models import Course\n # Register your models here.\n+admin.site.\n"
+                },
+                {
+                    "date": 1727073510209,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,4 +1,4 @@\n from django.contrib import admin\n from .models import Course\n # Register your models here.\n-admin.site.\n+admin.site.register(Course)\n"
+                }
+            ],
+            "date": 1727073486849,
+            "name": "Commit-0",
+            "content": "from django.contrib import admin\nfrom .mod]\n# Register your models here.\n"
+        }
+    ]
+}

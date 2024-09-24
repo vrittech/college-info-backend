@@ -1,0 +1,18 @@
+{
+    "sourceFile": "facilities/models.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1727174504183,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1727174504183,
+            "name": "Commit-0",
+            "content": "from django.db import models\n\n# Create your models here.\n# Facilities Model\nclass Facility(models.Model):\n    facility_name = models.CharField(max_length=255)\n\n    def __str__(self):\n        return self.facility_name"
+        }
+    ]
+}

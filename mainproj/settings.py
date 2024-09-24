@@ -79,7 +79,13 @@ INSTALLED_APPS = [
     'collegeleveltype',
     'certification',
     'socialmedia',
+    'coursemanagement',
     'drfapigenerator',
+    'collegemanagement',
+    'facilities',
+    'admissionopen',
+    'coursesandfees',
+    'location',
 ]
 
 AUTH_USER_MODEL = 'accounts.CustomUser'
@@ -102,7 +108,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'collegeinfo.urls'
+ROOT_URLCONF = 'mainproj.urls'
 
 TEMPLATES = [
     {
@@ -120,7 +126,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'collegeinfo.wsgi.application'
+WSGI_APPLICATION = 'mainproj.wsgi.application'
 
 # Database
 #https://docs.djangoproject.com/en/4.1/ref/settings/#databases

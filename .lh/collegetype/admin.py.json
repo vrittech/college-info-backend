@@ -1,0 +1,26 @@
+{
+    "sourceFile": "collegetype/admin.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 2,
+            "patches": [
+                {
+                    "date": 1726730834106,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1726730840314,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n # Register your models here.\n from django.contrib import admin\n \n # Register your models here.\n-from .models import CollegeLevelType\n+from .models import Co\n admin.site.register(CollegeLevelType)\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1726730845587,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n # Register your models here.\n from django.contrib import admin\n \n # Register your models here.\n-from .models import Co\n-admin.site.register(CollegeLevelType)\n\\ No newline at end of file\n+from .models import CollegeType\n+admin.site.register(CollegeType)\n\\ No newline at end of file\n"
+                }
+            ],
+            "date": 1726730834106,
+            "name": "Commit-0",
+            "content": "# Register your models here.\nfrom django.contrib import admin\n\n# Register your models here.\nfrom .models import CollegeLevelType\nadmin.site.register(CollegeLevelType)"
+        }
+    ]
+}

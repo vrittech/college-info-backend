@@ -1,0 +1,330 @@
+{
+    "sourceFile": "collegemanagement/models.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 78,
+            "patches": [
+                {
+                    "date": 1727170911785,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1727170919102,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,4 +1,4 @@\n from django.db import models\n \n # Create your models here.\n-class \n\\ No newline at end of file\n+class College\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1727170928332,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,4 +1,4 @@\n from django.db import models\n \n # Create your models here.\n-class College\n\\ No newline at end of file\n+class College(models.Model)\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1727172612144,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,4 +1,5 @@\n from django.db import models\n \n # Create your models here.\n-class College(models.Model)\n\\ No newline at end of file\n+class College(models.Model):\n+    banner\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1727172622562,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n from django.db import models\n \n # Create your models here.\n class College(models.Model):\n-    banner\n\\ No newline at end of file\n+    banner---> imagefield\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1727172629916,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n from django.db import models\n \n # Create your models here.\n class College(models.Model):\n-    banner---> imagefield\n\\ No newline at end of file\n+    banner---> imagefield \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1727172638834,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,7 @@\n from django.db import models\n \n # Create your models here.\n class College(models.Model):\n-    banner---> imagefield \n\\ No newline at end of file\n+    banner---> imagefield \n+    dp---> imagefield \n+     \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1727172647741,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,5 +3,6 @@\n # Create your models here.\n class College(models.Model):\n     banner---> imagefield \n     dp---> imagefield \n-     \n\\ No newline at end of file\n+    name \n+    estd- \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1727172652896,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,5 +4,6 @@\n class College(models.Model):\n     banner---> imagefield \n     dp---> imagefield \n     name \n-    estd- \n\\ No newline at end of file\n+    estd_date\n+     \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1727172659797,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,5 +5,6 @@\n     banner---> imagefield \n     dp---> imagefield \n     name \n     estd_date\n+    website link \n      \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1727172667847,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,5 +6,7 @@\n     dp---> imagefield \n     name \n     estd_date\n     website link \n+    address \n+    location \n      \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1727172673297,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,5 +8,5 @@\n     estd_date\n     website link \n     address \n     location \n-     \n\\ No newline at end of file\n+    phonenumber \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1727172679563,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,5 +8,6 @@\n     estd_date\n     website link \n     address \n     location \n-    phonenumber \n\\ No newline at end of file\n+    phone_number \n+     \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1727172695736,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,5 +9,6 @@\n     website link \n     address \n     location \n     phone_number \n-     \n\\ No newline at end of file\n+    email \n+    affiliated --->from Affiliation Model \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1727172703853,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,5 +10,6 @@\n     address \n     location \n     phone_number \n     email \n-    affiliated --->from Affiliation Model \n\\ No newline at end of file\n+    affiliated --->from Affiliation Model \n+    college type \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1727172718083,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,5 +11,6 @@\n     location \n     phone_number \n     email \n     affiliated --->from Affiliation Model \n-    college type \n\\ No newline at end of file\n+    college type ---> cok\n+     \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1727172723982,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,6 +11,6 @@\n     location \n     phone_number \n     email \n     affiliated --->from Affiliation Model \n-    college type ---> cok\n+    college type ---> college type \n      \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1727172729437,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,6 +11,6 @@\n     location \n     phone_number \n     email \n     affiliated --->from Affiliation Model \n-    college type ---> college type \n+    college type ---> college type models\n      \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1727172737439,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,6 +11,7 @@\n     location \n     phone_number \n     email \n     affiliated --->from Affiliation Model \n-    college type ---> college type models\n+    college type ---> college type models \n+    googl\n      \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1727172744550,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,6 +12,7 @@\n     phone_number \n     email \n     affiliated --->from Affiliation Model \n     college type ---> college type models \n-    googl\n+    google_map_link \n+    \n      \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1727172756874,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,6 +13,6 @@\n     email \n     affiliated --->from Affiliation Model \n     college type ---> college type models \n     google_map_link \n-    \n+    latitude\n      \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1727172762183,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,6 +13,8 @@\n     email \n     affiliated --->from Affiliation Model \n     college type ---> college type models \n     google_map_link \n-    latitude\n+    latitude \n+    longitude \n+    \n      \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1727172769459,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,6 +15,6 @@\n     college type ---> college type models \n     google_map_link \n     latitude \n     longitude \n-    \n+    map_loca\n      \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1727172774670,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,6 +15,6 @@\n     college type ---> college type models \n     google_map_link \n     latitude \n     longitude \n-    map_loca\n+    map_location(lat)\n      \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1727172781390,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,6 +15,6 @@\n     college type ---> college type models \n     google_map_link \n     latitude \n     longitude \n-    map_location(lat)\n+    map_location(latitude,longitude)\n      \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1727172792134,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,5 +16,7 @@\n     google_map_link \n     latitude \n     longitude \n     map_location(latitude,longitude)\n+    about \n+    \n      \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1727172798227,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,6 +17,6 @@\n     latitude \n     longitude \n     map_location(latitude,longitude)\n     about \n-    \n+    courses and fees\n      \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1727172809026,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,6 +17,6 @@\n     latitude \n     longitude \n     map_location(latitude,longitude)\n     about \n-    courses and fees\n+    courses and fees ---> make new models courses a\n      \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1727172819729,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,6 +17,6 @@\n     latitude \n     longitude \n     map_location(latitude,longitude)\n     about \n-    courses and fees ---> make new models courses a\n+    courses and fees ---> make new models coursesandfeesadmission \n      \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1727172831978,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,6 +17,7 @@\n     latitude \n     longitude \n     map_location(latitude,longitude)\n     about \n-    courses and fees ---> make new models coursesandfeesadmission \n+    courses and fees ---> make new models coursesandfees\n+    admission open\n      \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1727172840896,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,6 +18,6 @@\n     longitude \n     map_location(latitude,longitude)\n     about \n     courses and fees ---> make new models coursesandfees\n-    admission open\n+    admission open --> \n      \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1727172860672,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,6 +18,8 @@\n     longitude \n     map_location(latitude,longitude)\n     about \n     courses and fees ---> make new models coursesandfees\n-    admission open --> \n+    admission open --> make new models\n+    fcilities ---> make new models \n+    \n      \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1727172869371,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,6 +20,6 @@\n     about \n     courses and fees ---> make new models coursesandfees\n     admission open --> make new models\n     fcilities ---> make new models \n-    \n+    college_gallery = \n      \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1727172875651,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,6 +20,6 @@\n     about \n     courses and fees ---> make new models coursesandfees\n     admission open --> make new models\n     fcilities ---> make new models \n-    college_gallery = \n-     \n\\ No newline at end of file\n+    college_gallery = model \n+         \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1727172885826,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -21,5 +21,6 @@\n     courses and fees ---> make new models coursesandfees\n     admission open --> make new models\n     fcilities ---> make new models \n     college_gallery = model \n+    featured video \n          \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1727172896412,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,5 +22,6 @@\n     admission open --> make new models\n     fcilities ---> make new models \n     college_gallery = model \n     featured video \n+    brochure - file uploads\n          \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1727172905508,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,5 +23,5 @@\n     fcilities ---> make new models \n     college_gallery = model \n     featured video \n     brochure - file uploads\n-         \n\\ No newline at end of file\n+    social med     \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1727172918697,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,5 +23,5 @@\n     fcilities ---> make new models \n     college_gallery = model \n     featured video \n     brochure - file uploads\n-    social med     \n\\ No newline at end of file\n+    collegge_social media --- make models      \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1727173090999,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,27 +1,27 @@\n from django.db import models\n \n # Create your models here.\n class College(models.Model):\n-    banner---> imagefield \n-    dp---> imagefield \n-    name \n-    estd_date\n-    website link \n-    address \n-    location \n-    phone_number \n-    email \n-    affiliated --->from Affiliation Model \n-    college type ---> college type models \n-    google_map_link \n-    latitude \n-    longitude \n-    map_location(latitude,longitude)\n-    about \n-    courses and fees ---> make new models coursesandfees\n-    admission open --> make new models\n-    fcilities ---> make new models \n-    college_gallery = model \n-    featured video \n-    brochure - file uploads\n-    collegge_social media --- make models      \n\\ No newline at end of file\n+    # banner---> imagefield \n+    # dp---> imagefield \n+    # name \n+    # estd_date\n+    # website link \n+    # address \n+    # location \n+    # phone_number \n+    # email \n+    # affiliated --->from Affiliation Model \n+    # college type ---> college type models \n+    # google_map_link \n+    # latitude \n+    # longitude \n+    # map_location(latitude,longitude)\n+    # about \n+    # courses and fees ---> make new models coursesandfees\n+    # admission open --> make new models\n+    # fcilities ---> make new models \n+    # college_gallery = model \n+    # featured video \n+    # brochure - file uploads\n+    # college_social media --- make models      \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1727173098801,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,4 @@\n-from django.db import models\n-\n-# Create your models here.\n-class College(models.Model):\n     # banner---> imagefield \n     # dp---> imagefield \n     # name \n     # estd_date\n@@ -23,5 +19,94 @@\n     # fcilities ---> make new models \n     # college_gallery = model \n     # featured video \n     # brochure - file uploads\n-    # college_social media --- make models      \n\\ No newline at end of file\n+    # college_social media --- make models      \n+from django.db import models\n+\n+# Create your models here.\n+class College(models.Model):\n+    from django.db import models\n+\n+# Affiliation Model\n+class Affiliation(models.Model):\n+    name = models.CharField(max_length=255)\n+\n+    def __str__(self):\n+        return self.name\n+\n+# CollegeType Model\n+class CollegeType(models.Model):\n+    type_name = models.CharField(max_length=100)\n+\n+    def __str__(self):\n+        return self.type_name\n+\n+# CoursesAndFees Model\n+class CoursesAndFees(models.Model):\n+    course_name = models.CharField(max_length=255)\n+    fee = models.DecimalField(max_digits=10, decimal_places=2)\n+\n+    def __str__(self):\n+        return f'{self.course_name} - {self.fee}'\n+\n+# AdmissionOpen Model\n+class AdmissionOpen(models.Model):\n+    admission_year = models.IntegerField()\n+    status = models.BooleanField(default=True)\n+\n+    def __str__(self):\n+        return f'Admission {self.admission_year} - {\"Open\" if self.status else \"Closed\"}'\n+\n+# Facilities Model\n+class Facility(models.Model):\n+    facility_name = models.CharField(max_length=255)\n+\n+    def __str__(self):\n+        return self.facility_name\n+\n+# CollegeGallery Model\n+class CollegeGallery(models.Model):\n+    image = models.ImageField(upload_to='college/gallery/')\n+    description = models.TextField(blank=True)\n+\n+    def __str__(self):\n+        return f'Gallery Image {self.id}'\n+\n+# CollegeSocialMedia Model\n+class CollegeSocialMedia(models.Model):\n+    platform_name = models.CharField(max_length=255)\n+    url = models.URLField()\n+\n+    def __str__(self):\n+        return self.platform_name\n+\n+# Main College Model\n+class College(models.Model):\n+    banner = models.ImageField(upload_to='college/banner/')\n+    dp = models.ImageField(upload_to='college/dp/')\n+    name = models.CharField(max_length=255)\n+    estd_date = models.DateField()\n+    website_link = models.URLField()\n+    address = models.CharField(max_length=255)\n+    location = models.CharField(max_length=255)\n+    phone_number = models.CharField(max_length=20)\n+    email = models.EmailField()\n+    affiliated = models.ForeignKey(Affiliation, on_delete=models.CASCADE)\n+    college_type = models.ForeignKey(CollegeType, on_delete=models.CASCADE)\n+    google_map_link = models.URLField(blank=True, null=True)\n+    latitude = models.DecimalField(max_digits=9, decimal_places=6)\n+    longitude = models.DecimalField(max_digits=9, decimal_places=6)\n+    about = models.TextField()\n+    courses_and_fees = models.ManyToManyField(CoursesAndFees)\n+    admission_open = models.ForeignKey(AdmissionOpen, on_delete=models.CASCADE)\n+    facilities = models.ManyToManyField(Facility)\n+    college_gallery = models.ManyToManyField(CollegeGallery)\n+    featured_video = models.URLField(blank=True, null=True)\n+    brochure = models.FileField(upload_to='college/brochure/')\n+    social_media = models.ManyToManyField(CollegeSocialMedia)\n+\n+    def map_location(self):\n+        return f'{self.latitude}, {self.longitude}'\n+\n+    def __str__(self):\n+        return self.name\n"
+                },
+                {
+                    "date": 1727173110303,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -84,9 +84,9 @@\n class College(models.Model):\n     banner = models.ImageField(upload_to='college/banner/')\n     dp = models.ImageField(upload_to='college/dp/')\n     name = models.CharField(max_length=255)\n-    estd_date = models.DateField()\n+    established_date = models.DateField()\n     website_link = models.URLField()\n     address = models.CharField(max_length=255)\n     location = models.CharField(max_length=255)\n     phone_number = models.CharField(max_length=20)\n"
+                },
+                {
+                    "date": 1727173232730,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -21,8 +21,9 @@\n     # featured video \n     # brochure - file uploads\n     # college_social media --- make models      \n from django.db import models\n+from affiliation.models import Affiliation\n \n # Create your models here.\n class College(models.Model):\n     from django.db import models\n"
+                },
+                {
+                    "date": 1727173238680,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,15 +27,9 @@\n # Create your models here.\n class College(models.Model):\n     from django.db import models\n \n-# Affiliation Model\n-class Affiliation(models.Model):\n-    name = models.CharField(max_length=255)\n \n-    def __str__(self):\n-        return self.name\n-\n # CollegeType Model\n class CollegeType(models.Model):\n     type_name = models.CharField(max_length=100)\n \n"
+                },
+                {
+                    "date": 1727173245451,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,12 +24,11 @@\n from django.db import models\n from affiliation.models import Affiliation\n \n # Create your models here.\n-class College(models.Model):\n-    from django.db import models\n \n \n+\n # CollegeType Model\n class CollegeType(models.Model):\n     type_name = models.CharField(max_length=100)\n \n"
+                },
+                {
+                    "date": 1727173691391,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,12 +23,9 @@\n     # college_social media --- make models      \n from django.db import models\n from affiliation.models import Affiliation\n \n-# Create your models here.\n \n-\n-\n # CollegeType Model\n class CollegeType(models.Model):\n     type_name = models.CharField(max_length=100)\n \n@@ -81,9 +78,9 @@\n     name = models.CharField(max_length=255)\n     established_date = models.DateField()\n     website_link = models.URLField()\n     address = models.CharField(max_length=255)\n-    location = models.CharField(max_length=255)\n+    location = models.\n     phone_number = models.CharField(max_length=20)\n     email = models.EmailField()\n     affiliated = models.ForeignKey(Affiliation, on_delete=models.CASCADE)\n     college_type = models.ForeignKey(CollegeType, on_delete=models.CASCADE)\n"
+                },
+                {
+                    "date": 1727173698716,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -78,9 +78,9 @@\n     name = models.CharField(max_length=255)\n     established_date = models.DateField()\n     website_link = models.URLField()\n     address = models.CharField(max_length=255)\n-    location = models.\n+    location = models.ForeignKey(Location)\n     phone_number = models.CharField(max_length=20)\n     email = models.EmailField()\n     affiliated = models.ForeignKey(Affiliation, on_delete=models.CASCADE)\n     college_type = models.ForeignKey(CollegeType, on_delete=models.CASCADE)\n"
+                },
+                {
+                    "date": 1727173710254,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -78,9 +78,9 @@\n     name = models.CharField(max_length=255)\n     established_date = models.DateField()\n     website_link = models.URLField()\n     address = models.CharField(max_length=255)\n-    location = models.ForeignKey(Location)\n+    location = models.ForeignKey(Location,on_delete=models.CASCADE)\n     phone_number = models.CharField(max_length=20)\n     email = models.EmailField()\n     affiliated = models.ForeignKey(Affiliation, on_delete=models.CASCADE)\n     college_type = models.ForeignKey(CollegeType, on_delete=models.CASCADE)\n"
+                },
+                {
+                    "date": 1727173718466,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -62,16 +62,10 @@\n \n     def __str__(self):\n         return f'Gallery Image {self.id}'\n \n-# CollegeSocialMedia Model\n-class CollegeSocialMedia(models.Model):\n-    platform_name = models.CharField(max_length=255)\n-    url = models.URLField()\n+on_delete=models.CASCADE\n \n-    def __str__(self):\n-        return self.platform_name\n-\n # Main College Model\n class College(models.Model):\n     banner = models.ImageField(upload_to='college/banner/')\n     dp = models.ImageField(upload_to='college/dp/')\n"
+                },
+                {
+                    "date": 1727173725417,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -62,10 +62,24 @@\n \n     def __str__(self):\n         return f'Gallery Image {self.id}'\n \n-on_delete=models.CASCADE\n+# CollegeSocialMedia Model\n+class CollegeSocialMedia(models.Model):\n+    platform_name = models.CharField(max_length=255)\n+    url = models.URLField()\n \n+    def __str__(self):\n+        return self.platform_name\n+    \n+# CollegeSocialMedia Model\n+class CollegeSocialMedia(models.Model):\n+    platform_name = models.CharField(max_length=255)\n+    url = models.URLField()\n+\n+    def __str__(self):\n+        return self.platform_name\n+\n # Main College Model\n class College(models.Model):\n     banner = models.ImageField(upload_to='college/banner/')\n     dp = models.ImageField(upload_to='college/dp/')\n"
+                },
+                {
+                    "date": 1727173734653,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -71,10 +71,10 @@\n     def __str__(self):\n         return self.platform_name\n     \n # CollegeSocialMedia Model\n-class CollegeSocialMedia(models.Model):\n-    platform_name = models.CharField(max_length=255)\n+class Location(models.Model):\n+    name = models.CharField(max_length=255)\n     url = models.URLField()\n \n     def __str__(self):\n         return self.platform_name\n"
+                },
+                {
+                    "date": 1727173746483,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -69,13 +69,12 @@\n     url = models.URLField()\n \n     def __str__(self):\n         return self.platform_name\n-    \n-# CollegeSocialMedia Model\n+\n class Location(models.Model):\n     name = models.CharField(max_length=255)\n-    url = models.URLField()\n+   \n \n     def __str__(self):\n         return self.platform_name\n \n"
+                },
+                {
+                    "date": 1727174332681,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -70,15 +70,9 @@\n \n     def __str__(self):\n         return self.platform_name\n \n-class Location(models.Model):\n-    name = models.CharField(max_length=255)\n-   \n \n-    def __str__(self):\n-        return self.platform_name\n-\n # Main College Model\n class College(models.Model):\n     banner = models.ImageField(upload_to='college/banner/')\n     dp = models.ImageField(upload_to='college/dp/')\n"
+                },
+                {
+                    "date": 1727174350046,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -62,15 +62,9 @@\n \n     def __str__(self):\n         return f'Gallery Image {self.id}'\n \n-# CollegeSocialMedia Model\n-class CollegeSocialMedia(models.Model):\n-    platform_name = models.CharField(max_length=255)\n-    url = models.URLField()\n \n-    def __str__(self):\n-        return self.platform_name\n \n \n # Main College Model\n class College(models.Model):\n"
+                },
+                {
+                    "date": 1727174499956,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -47,14 +47,9 @@\n \n     def __str__(self):\n         return f'Admission {self.admission_year} - {\"Open\" if self.status else \"Closed\"}'\n \n-# Facilities Model\n-class Facility(models.Model):\n-    facility_name = models.CharField(max_length=255)\n \n-    def __str__(self):\n-        return self.facility_name\n \n # CollegeGallery Model\n class CollegeGallery(models.Model):\n     image = models.ImageField(upload_to='college/gallery/')\n"
+                },
+                {
+                    "date": 1727174519352,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -39,15 +39,9 @@\n \n     def __str__(self):\n         return f'{self.course_name} - {self.fee}'\n \n-# AdmissionOpen Model\n-class AdmissionOpen(models.Model):\n-    admission_year = models.IntegerField()\n-    status = models.BooleanField(default=True)\n \n-    def __str__(self):\n-        return f'Admission {self.admission_year} - {\"Open\" if self.status else \"Closed\"}'\n \n \n \n # CollegeGallery Model\n"
+                },
+                {
+                    "date": 1727174536620,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -31,15 +31,9 @@\n \n     def __str__(self):\n         return self.type_name\n \n-# CoursesAndFees Model\n-class CoursesAndFees(models.Model):\n-    course_name = models.CharField(max_length=255)\n-    fee = models.DecimalField(max_digits=10, decimal_places=2)\n \n-    def __str__(self):\n-        return f'{self.course_name} - {self.fee}'\n \n \n \n \n"
+                },
+                {
+                    "date": 1727174562370,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,21 +24,14 @@\n from django.db import models\n from affiliation.models import Affiliation\n \n \n-# CollegeType Model\n-class CollegeType(models.Model):\n-    type_name = models.CharField(max_length=100)\n \n-    def __str__(self):\n-        return self.type_name\n \n \n \n \n \n-\n-\n # CollegeGallery Model\n class CollegeGallery(models.Model):\n     image = models.ImageField(upload_to='college/gallery/')\n     description = models.TextField(blank=True)\n"
+                },
+                {
+                    "date": 1727174640820,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,8 +22,9 @@\n     # brochure - file uploads\n     # college_social media --- make models      \n from django.db import models\n from affiliation.models import Affiliation\n+from \n \n \n \n \n"
+                },
+                {
+                    "date": 1727174650958,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,9 +22,9 @@\n     # brochure - file uploads\n     # college_social media --- make models      \n from django.db import models\n from affiliation.models import Affiliation\n-from \n+from admissionopen,models import A\n \n \n \n \n"
+                },
+                {
+                    "date": 1727174656205,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,9 +22,9 @@\n     # brochure - file uploads\n     # college_social media --- make models      \n from django.db import models\n from affiliation.models import Affiliation\n-from admissionopen,models import A\n+from admissionopen,models import \n \n \n \n \n"
+                },
+                {
+                    "date": 1727174690292,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,9 +22,9 @@\n     # brochure - file uploads\n     # college_social media --- make models      \n from django.db import models\n from affiliation.models import Affiliation\n-from admissionopen,models import \n+# from admissionopen,models import \n \n \n \n \n"
+                },
+                {
+                    "date": 1727174701311,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,9 +22,9 @@\n     # brochure - file uploads\n     # college_social media --- make models      \n from django.db import models\n from affiliation.models import Affiliation\n-# from admissionopen,models import \n+from admissionopen,models import \n \n \n \n \n"
+                },
+                {
+                    "date": 1727174710949,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,9 +22,10 @@\n     # brochure - file uploads\n     # college_social media --- make models      \n from django.db import models\n from affiliation.models import Affiliation\n-from admissionopen,models import \n+from admissionopen.models import AdmissionOpen\n+from  \n \n \n \n \n"
+                },
+                {
+                    "date": 1727174717255,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,9 +23,9 @@\n     # college_social media --- make models      \n from django.db import models\n from affiliation.models import Affiliation\n from admissionopen.models import AdmissionOpen\n-from  \n+from location \n \n \n \n \n"
+                },
+                {
+                    "date": 1727174723901,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,9 +23,9 @@\n     # college_social media --- make models      \n from django.db import models\n from affiliation.models import Affiliation\n from admissionopen.models import AdmissionOpen\n-from location \n+from location.models import  \n \n \n \n \n"
+                },
+                {
+                    "date": 1727174729375,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,9 +23,10 @@\n     # college_social media --- make models      \n from django.db import models\n from affiliation.models import Affiliation\n from admissionopen.models import AdmissionOpen\n-from location.models import  \n+from location.models import Location\n+from  \n \n \n \n \n"
+                },
+                {
+                    "date": 1727174748039,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,9 +24,9 @@\n from django.db import models\n from affiliation.models import Affiliation\n from admissionopen.models import AdmissionOpen\n from location.models import Location\n-from  \n+from colle \n \n \n \n \n"
+                },
+                {
+                    "date": 1727174761591,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,9 +24,9 @@\n from django.db import models\n from affiliation.models import Affiliation\n from admissionopen.models import AdmissionOpen\n from location.models import Location\n-from colle \n+from collegetype.models import CollegeType \n \n \n \n \n"
+                },
+                {
+                    "date": 1727174777448,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,9 +24,11 @@\n from django.db import models\n from affiliation.models import Affiliation\n from admissionopen.models import AdmissionOpen\n from location.models import Location\n-from collegetype.models import CollegeType \n+from collegetype.models import CollegeType\n+from cour\n+ \n \n \n \n \n"
+                },
+                {
+                    "date": 1727174784450,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -25,9 +25,9 @@\n from affiliation.models import Affiliation\n from admissionopen.models import AdmissionOpen\n from location.models import Location\n from collegetype.models import CollegeType\n-from cour\n+from coursesandfees.models import \n  \n \n \n \n"
+                },
+                {
+                    "date": 1727174791821,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -25,9 +25,10 @@\n from affiliation.models import Affiliation\n from admissionopen.models import AdmissionOpen\n from location.models import Location\n from collegetype.models import CollegeType\n-from coursesandfees.models import \n+from coursesandfees.models import CoursesAndFees\n+\n  \n \n \n \n"
+                },
+                {
+                    "date": 1727174797568,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -26,9 +26,9 @@\n from admissionopen.models import AdmissionOpen\n from location.models import Location\n from collegetype.models import CollegeType\n from coursesandfees.models import CoursesAndFees\n-\n+from facilities.models import Facilities\n  \n \n \n \n"
+                },
+                {
+                    "date": 1727174804396,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,8 +27,9 @@\n from location.models import Location\n from collegetype.models import CollegeType\n from coursesandfees.models import CoursesAndFees\n from facilities.models import Facilities\n+\n  \n \n \n \n"
+                },
+                {
+                    "date": 1727174819106,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -26,9 +26,10 @@\n from admissionopen.models import AdmissionOpen\n from location.models import Location\n from collegetype.models import CollegeType\n from coursesandfees.models import CoursesAndFees\n-from facilities.models import Facilities\n+from facilities.models import Facility\n+from socialmedia.models import Sc\n \n  \n \n \n"
+                },
+                {
+                    "date": 1727174825761,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,9 +27,9 @@\n from location.models import Location\n from collegetype.models import CollegeType\n from coursesandfees.models import CoursesAndFees\n from facilities.models import Facility\n-from socialmedia.models import Sc\n+from socialmedia.models import SocialMedia\n \n  \n \n \n@@ -72,9 +72,9 @@\n     facilities = models.ManyToManyField(Facility)\n     college_gallery = models.ManyToManyField(CollegeGallery)\n     featured_video = models.URLField(blank=True, null=True)\n     brochure = models.FileField(upload_to='college/brochure/')\n-    social_media = models.ManyToManyField(CollegeSocialMedia)\n+    social_media = models.ManyToManyField(SocialMedia)\n \n     def map_location(self):\n         return f'{self.latitude}, {self.longitude}'\n \n"
+                },
+                {
+                    "date": 1727174835587,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -52,9 +52,9 @@\n \n # Main College Model\n class College(models.Model):\n     banner = models.ImageField(upload_to='college/banner/')\n-    dp = models.ImageField(upload_to='college/dp/')\n+    dp_image = models.ImageField(upload_to='college/dp/')\n     name = models.CharField(max_length=255)\n     established_date = models.DateField()\n     website_link = models.URLField()\n     address = models.CharField(max_length=255)\n"
+                },
+                {
+                    "date": 1727174863899,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -51,9 +51,9 @@\n \n \n # Main College Model\n class College(models.Model):\n-    banner = models.ImageField(upload_to='college/banner/')\n+    banner_image = models.ImageField(upload_to='college/banner/')\n     dp_image = models.ImageField(upload_to='college/dp/')\n     name = models.CharField(max_length=255)\n     established_date = models.DateField()\n     website_link = models.URLField()\n"
+                },
+                {
+                    "date": 1727174870090,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -67,9 +67,9 @@\n     latitude = models.DecimalField(max_digits=9, decimal_places=6)\n     longitude = models.DecimalField(max_digits=9, decimal_places=6)\n     about = models.TextField()\n     courses_and_fees = models.ManyToManyField(CoursesAndFees)\n-    admission_open = models.ForeignKey(AdmissionOpen, on_delete=models.CASCADE)\n+    admission_open = models.ManyToManyField(AdmissionOpen, on_delete=models.CASCADE)\n     facilities = models.ManyToManyField(Facility)\n     college_gallery = models.ManyToManyField(CollegeGallery)\n     featured_video = models.URLField(blank=True, null=True)\n     brochure = models.FileField(upload_to='college/brochure/')\n"
+                },
+                {
+                    "date": 1727174875844,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -67,9 +67,9 @@\n     latitude = models.DecimalField(max_digits=9, decimal_places=6)\n     longitude = models.DecimalField(max_digits=9, decimal_places=6)\n     about = models.TextField()\n     courses_and_fees = models.ManyToManyField(CoursesAndFees)\n-    admission_open = models.ManyToManyField(AdmissionOpen, on_delete=models.CASCADE)\n+    admission_open = models.ManyToManyField(AdmissionOpen)\n     facilities = models.ManyToManyField(Facility)\n     college_gallery = models.ManyToManyField(CollegeGallery)\n     featured_video = models.URLField(blank=True, null=True)\n     brochure = models.FileField(upload_to='college/brochure/')\n"
+                }
+            ],
+            "date": 1727170911784,
+            "name": "Commit-0",
+            "content": "from django.db import models\n\n# Create your models here.\nclass "
+        }
+    ]
+}
