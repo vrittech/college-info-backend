@@ -17,7 +17,7 @@
 
 
 from django.db import models
-from course.models import Course
+from coursemanagement.models import Course
 from college.models import College
 from level.models import Level
 from location.models import Location

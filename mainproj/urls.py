@@ -37,7 +37,6 @@ from certification.routers.routers import router as certification_router
 from college.routers.routers import router as college_router
 from collegeleveltype.routers.routers import router as collegeleveltype_router
 from collegetype.routers.routers import router as collegetype_router
-from course.routers.routers import router as course_router
 from event.routers.routers import router as event_router
 from district.routers.routers import router as district_router
 from faculty.routers.routers import router as faculty_router
@@ -62,7 +61,6 @@ router.registry.extend(certification_router.registry)
 router.registry.extend(college_router.registry)
 router.registry.extend(collegeleveltype_router.registry)
 router.registry.extend(collegetype_router.registry)
-router.registry.extend(course_router.registry)
 router.registry.extend(event_router.registry)
 router.registry.extend(district_router.registry)
 router.registry.extend(faculty_router.registry)
@@ -93,27 +91,26 @@ urlpatterns = [
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
     path('api-auth/', include('rest_framework.urls')),
     path('api/accounts/',include('accounts.urls')),
-    path('api/',include(coursemanagement_router.urls)),
-    path('api/',include(socialmedia_router.urls)),
-    path('api/',include(setupemail_router.urls)),
-    path('api/',include(semester_router.urls)),
-    path('api/',include(level_router.urls)),
-    path('api/',include(informationmanagement_router.urls)),
-    path('api/',include(affiliation_router.urls)),
-    path('api/',include(certification_router.urls)),
-    path('api/',include(college_router.urls)),
-    path('api/',include(collegeleveltype_router.urls)),
-    path('api/',include(collegetype_router.urls)),
-    path('api/',include(course_router.urls)),
-    path('api/',include(district_router.urls)),
-    path('api/',include(event_router.urls)),
-    path('api/',include(faculty_router.urls)),
-    path('api/',include(gallery_router.urls)),
-    path('api/',include(collegemanagement_router.urls)),
-    path('api/',include(facilities_router.urls)),
-    path('api/',include(admissionopen_router.urls)),
-    path('api/',include(coursesandfees_router.urls)),
-    path('api/',include(location_router.urls)),
+    # path('api/',include(coursemanagement_router.urls)),
+    # path('api/',include(socialmedia_router.urls)),
+    # path('api/',include(setupemail_router.urls)),
+    # path('api/',include(semester_router.urls)),
+    # path('api/',include(level_router.urls)),
+    # path('api/',include(informationmanagement_router.urls)),
+    # path('api/',include(affiliation_router.urls)),
+    # path('api/',include(certification_router.urls)),
+    # path('api/',include(college_router.urls)),
+    # path('api/',include(collegeleveltype_router.urls)),
+    # path('api/',include(collegetype_router.urls)),
+    # path('api/',include(district_router.urls)),
+    # path('api/',include(event_router.urls)),
+    # path('api/',include(faculty_router.urls)),
+    # path('api/',include(gallery_router.urls)),
+    # path('api/',include(collegemanagement_router.urls)),
+    # path('api/',include(facilities_router.urls)),
+    # path('api/',include(admissionopen_router.urls)),
+    # path('api/',include(coursesandfees_router.urls)),
+    # path('api/',include(location_router.urls)),
     
 ]
 if settings.DEBUG:

@@ -1,0 +1,30 @@
+{
+    "sourceFile": "collegemanagement/admin.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 3,
+            "patches": [
+                {
+                    "date": 1727176327215,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1727176332494,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n from django.contrib import admin\n \n # Register your models here.\n-from .models import AdmissionOpen\n+from .models import CollegeGallery,C\n \n admin.site.register(AdmissionOpen)\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1727176338627,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n from django.contrib import admin\n \n # Register your models here.\n-from .models import CollegeGallery,C\n+from .models import CollegeGallery,College\n \n\\ No newline at end of file\n-admin.site.register(AdmissionOpen)\n+admin.site.register(CollegeGallery)\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1727176344847,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,5 +2,6 @@\n \n # Register your models here.\n from .models import CollegeGallery,College\n \n-admin.site.register(CollegeGallery)\n\\ No newline at end of file\n+admin.site.register(CollegeGallery)\n+admin.site.register(College)\n\\ No newline at end of file\n"
+                }
+            ],
+            "date": 1727176327215,
+            "name": "Commit-0",
+            "content": "from django.contrib import admin\n\n# Register your models here.\nfrom .models import AdmissionOpen\n\nadmin.site.register(AdmissionOpen)"
+        }
+    ]
+}

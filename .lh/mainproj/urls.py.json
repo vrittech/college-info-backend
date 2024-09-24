@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 81,
+            "activePatchIndex": 85,
             "patches": [
                 {
                     "date": 1727073810732,
@@ -332,6 +332,22 @@
                 {
                     "date": 1727176185483,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -70,8 +70,9 @@\n router.registry.extend(collegemanagement_router.registry)\n router.registry.extend(facilities_router.registry)\n router.registry.extend(admissionopen_router.registry)\n router.registry.extend(coursesandfees_router.registry)\n+router.registry.extend(location_router.registry)\n \n schema_view = get_schema_view(\n    openapi.Info(\n       title=\"College Info API\",\n"
+                },
+                {
+                    "date": 1727176456276,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -36,9 +36,8 @@\n from certification.routers.routers import router as certification_router\n from college.routers.routers import router as college_router\n from collegeleveltype.routers.routers import router as collegeleveltype_router\n from collegetype.routers.routers import router as collegetype_router\n-from course.routers.routers import router as course_router\n from event.routers.routers import router as event_router\n from district.routers.routers import router as district_router\n from faculty.routers.routers import router as faculty_router\n from gallery.routers.routers import router as gallery_router\n"
+                },
+                {
+                    "date": 1727176462199,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -60,9 +60,8 @@\n router.registry.extend(certification_router.registry)\n router.registry.extend(college_router.registry)\n router.registry.extend(collegeleveltype_router.registry)\n router.registry.extend(collegetype_router.registry)\n-router.registry.extend(course_router.registry)\n router.registry.extend(event_router.registry)\n router.registry.extend(district_router.registry)\n router.registry.extend(faculty_router.registry)\n router.registry.extend(gallery_router.registry)\n"
+                },
+                {
+                    "date": 1727176469566,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -101,9 +101,8 @@\n     path('api/',include(certification_router.urls)),\n     path('api/',include(college_router.urls)),\n     path('api/',include(collegeleveltype_router.urls)),\n     path('api/',include(collegetype_router.urls)),\n-    path('api/',include(course_router.urls)),\n     path('api/',include(district_router.urls)),\n     path('api/',include(event_router.urls)),\n     path('api/',include(faculty_router.urls)),\n     path('api/',include(gallery_router.urls)),\n"
+                },
+                {
+                    "date": 1727176477356,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -90,28 +90,28 @@\n     path('', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),\n     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),\n     path('api-auth/', include('rest_framework.urls')),\n     path('api/accounts/',include('accounts.urls')),\n-    path('api/',include(coursemanagement_router.urls)),\n-    path('api/',include(socialmedia_router.urls)),\n-    path('api/',include(setupemail_router.urls)),\n-    path('api/',include(semester_router.urls)),\n-    path('api/',include(level_router.urls)),\n-    path('api/',include(informationmanagement_router.urls)),\n-    path('api/',include(affiliation_router.urls)),\n-    path('api/',include(certification_router.urls)),\n-    path('api/',include(college_router.urls)),\n-    path('api/',include(collegeleveltype_router.urls)),\n-    path('api/',include(collegetype_router.urls)),\n-    path('api/',include(district_router.urls)),\n-    path('api/',include(event_router.urls)),\n-    path('api/',include(faculty_router.urls)),\n-    path('api/',include(gallery_router.urls)),\n-    path('api/',include(collegemanagement_router.urls)),\n-    path('api/',include(facilities_router.urls)),\n-    path('api/',include(admissionopen_router.urls)),\n-    path('api/',include(coursesandfees_router.urls)),\n-    path('api/',include(location_router.urls)),\n+    # path('api/',include(coursemanagement_router.urls)),\n+    # path('api/',include(socialmedia_router.urls)),\n+    # path('api/',include(setupemail_router.urls)),\n+    # path('api/',include(semester_router.urls)),\n+    # path('api/',include(level_router.urls)),\n+    # path('api/',include(informationmanagement_router.urls)),\n+    # path('api/',include(affiliation_router.urls)),\n+    # path('api/',include(certification_router.urls)),\n+    # path('api/',include(college_router.urls)),\n+    # path('api/',include(collegeleveltype_router.urls)),\n+    # path('api/',include(collegetype_router.urls)),\n+    # path('api/',include(district_router.urls)),\n+    # path('api/',include(event_router.urls)),\n+    # path('api/',include(faculty_router.urls)),\n+    # path('api/',include(gallery_router.urls)),\n+    # path('api/',include(collegemanagement_router.urls)),\n+    # path('api/',include(facilities_router.urls)),\n+    # path('api/',include(admissionopen_router.urls)),\n+    # path('api/',include(coursesandfees_router.urls)),\n+    # path('api/',include(location_router.urls)),\n     \n ]\n if settings.DEBUG:\n     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)\n"
                 }
             ],
             "date": 1727073810732,
