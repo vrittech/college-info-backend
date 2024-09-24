@@ -1,26 +1,3 @@
-    # banner---> imagefield 
-    # dp---> imagefield 
-    # name 
-    # estd_date
-    # website link 
-    # address 
-    # location 
-    # phone_number 
-    # email 
-    # affiliated --->from Affiliation Model 
-    # college type ---> college type models 
-    # google_map_link 
-    # latitude 
-    # longitude 
-    # map_location(latitude,longitude)
-    # about 
-    # courses and fees ---> make new models coursesandfees
-    # admission open --> make new models
-    # fcilities ---> make new models 
-    # college_gallery = model 
-    # featured video 
-    # brochure - file uploads
-    # college_social media --- make models      
 from django.db import models
 from affiliation.models import Affiliation
 from admissionopen.models import AdmissionOpen
@@ -31,14 +8,6 @@ from facilities.models import Facility
 from socialmedia.models import SocialMedia
 
  
-
-
-
-
-
-
-
-
 # CollegeGallery Model
 class CollegeGallery(models.Model):
     image = models.ImageField(upload_to='college/gallery/')
@@ -47,10 +16,6 @@ class CollegeGallery(models.Model):
     def __str__(self):
         return f'Gallery Image {self.id}'
 
-
-
-
-# Main College Model
 class College(models.Model):
     banner_image = models.ImageField(upload_to='college/banner/')
     dp_image = models.ImageField(upload_to='college/dp/')
@@ -71,9 +36,10 @@ class College(models.Model):
     admission_open = models.ManyToManyField(AdmissionOpen)
     facilities = models.ManyToManyField(Facility)
     college_gallery = models.ManyToManyField(CollegeGallery)
-    featured_video = models.URLField(blank=True, null=True)
+    featured_video = models.FileField(upload_to='college/featured_videos/', blank=True, null=True)
     brochure = models.FileField(upload_to='college/brochure/')
     social_media = models.ManyToManyField(SocialMedia)
+    scholarships = models.TextField()
 
     def map_location(self):
         return f'{self.latitude}, {self.longitude}'

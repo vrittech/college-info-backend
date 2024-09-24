@@ -20,18 +20,14 @@ from django.db import models
 from course.models import Course
 from college.models import College
 from level.models import Level
+from location.models import Location
 
 class Affiliation(models.Model):
-    LOCATION_CHOICES = [
-        ('foreign', 'Foreign'),
-        ('domestic', 'Domestic'),
-    ]
-
     name = models.CharField(max_length=255,null=True,blank=True)
     established_year = models.IntegerField(default=2024)
     google_map_embed_url = models.URLField(max_length=500, blank=True, null=True)
     address = models.TextField(max_length=500,null=True,blank=True)
-    location = models.CharField(max_length=10, choices=LOCATION_CHOICES,null=True,blank=True)
+    location = models.ForeignKey(Location,on_delete=models.CASCADE, related_name='affiliation_location')
     phone_number = models.CharField(max_length=15, blank=True, null=True)
     email = models.EmailField(blank=True, null=True)
     website_url = models.URLField(max_length=500, blank=True, null=True)

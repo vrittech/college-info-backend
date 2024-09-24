@@ -24,6 +24,7 @@ from drf_yasg import openapi
 
 from django.conf import settings
 from django.conf.urls.static import static
+from  rest_framework  import routers
 
 from coursemanagement.routers.routers import router as coursemanagement_router
 from socialmedia.routers.routers import router as socialmedia_router
@@ -41,6 +42,36 @@ from event.routers.routers import router as event_router
 from district.routers.routers import router as district_router
 from faculty.routers.routers import router as faculty_router
 from gallery.routers.routers import router as gallery_router
+from collegemanagement.routers.routers import router as collegemanagement_router
+from facilities.routers.routers import router as facilities_router
+from admissionopen.routers.routers import router as admissionopen_router
+from coursesandfees.routers.routers import router as coursesandfees_router
+from location.routers.routers import router as location_router
+
+
+router = routers.DefaultRouter()
+
+router.registry.extend(coursemanagement_router.registry)
+router.registry.extend(socialmedia_router.registry)
+router.registry.extend(setupemail_router.registry)
+router.registry.extend(semester_router.registry)
+router.registry.extend(level_router.registry)
+router.registry.extend(informationmanagement_router.registry)
+router.registry.extend(affiliation_router.registry)
+router.registry.extend(certification_router.registry)
+router.registry.extend(college_router.registry)
+router.registry.extend(collegeleveltype_router.registry)
+router.registry.extend(collegetype_router.registry)
+router.registry.extend(course_router.registry)
+router.registry.extend(event_router.registry)
+router.registry.extend(district_router.registry)
+router.registry.extend(faculty_router.registry)
+router.registry.extend(gallery_router.registry)
+router.registry.extend(collegemanagement_router.registry)
+router.registry.extend(facilities_router.registry)
+router.registry.extend(admissionopen_router.registry)
+router.registry.extend(coursesandfees_router.registry)
+router.registry.extend(location_router.registry)
 
 schema_view = get_schema_view(
    openapi.Info(
@@ -78,9 +109,12 @@ urlpatterns = [
     path('api/',include(event_router.urls)),
     path('api/',include(faculty_router.urls)),
     path('api/',include(gallery_router.urls)),
+    path('api/',include(collegemanagement_router.urls)),
+    path('api/',include(facilities_router.urls)),
+    path('api/',include(admissionopen_router.urls)),
+    path('api/',include(coursesandfees_router.urls)),
+    path('api/',include(location_router.urls)),
+    
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
-
-
