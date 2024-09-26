@@ -1,7 +1,7 @@
 from django.db import models
 from affiliation.models import Affiliation
 from college.models import College
-from course.models import Course
+from coursemanagement.models import Course
 from district.models import District
 from faculty.models import Faculty
 from level.models import Level
@@ -59,7 +59,7 @@ class Information(models.Model):
         max_length=10, 
         choices=COURSE_LEVEL_TYPE_CHOICES
     )
-    affiliation = models.ManyToManyField(Affiliation, blank=True)
+    affiliation = models.ManyToManyField(Affiliation)
     course = models.ManyToManyField(Course, blank=True)
     level = models.ManyToManyField(Level, blank=True)
     college_type = models.ForeignKey(CollegeType, on_delete=models.SET_NULL, null=True, blank=True)

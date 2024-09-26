@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 6,
+            "activePatchIndex": 7,
             "patches": [
                 {
                     "date": 1727073622967,
@@ -32,6 +32,10 @@
                 {
                     "date": 1727174615447,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -83,10 +83,10 @@\n     'drfapigenerator',\n     'collegemanagement',\n     'facilities',\n     'admissionopen',\n-    'admissionopen',\n-    'admissionopen',\n+    'coursesandfees',\n+    'location',\n ]\n \n AUTH_USER_MODEL = 'accounts.CustomUser'\n \n"
+                },
+                {
+                    "date": 1727176961603,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -66,9 +66,8 @@\n     'accountsmanagement',\n     'setupemail',\n     'gallery',\n     'event',\n-    'course',\n     'district',\n     'college',\n     'collegetype',\n     'informationmanagement',\n"
                 }
             ],
             "date": 1727073622967,

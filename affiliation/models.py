@@ -17,7 +17,7 @@
 
 
 from django.db import models
-from coursemanagement.models import Course
+# from coursemanagement.models import Course
 from college.models import College
 from level.models import Level
 from location.models import Location
@@ -31,7 +31,7 @@ class Affiliation(models.Model):
     phone_number = models.CharField(max_length=15, blank=True, null=True)
     email = models.EmailField(blank=True, null=True)
     website_url = models.URLField(max_length=500, blank=True, null=True)
-    courses = models.ManyToManyField(Course, related_name='affiliations_courses')
+    # courses = models.ManyToManyField(Course, related_name='affiliations_courses')
     affiliated_colleges = models.ManyToManyField(College, related_name='affiliations_college')
     level = models.ManyToManyField(Level, related_name='affiliations_level')
     salient_features = models.TextField(blank=True, null=True)

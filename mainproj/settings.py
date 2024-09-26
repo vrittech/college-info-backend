@@ -67,7 +67,6 @@ INSTALLED_APPS = [
     'setupemail',
     'gallery',
     'event',
-    'course',
     'district',
     'college',
     'collegetype',
