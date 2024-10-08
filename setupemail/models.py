@@ -11,3 +11,6 @@ class EmailSetup(models.Model):
     security = models.CharField(max_length = 200,choices = (('None','None'),('SSL','SSL'),('TSL','TSL')),default = 'None')
     smtp_username = models.CharField(max_length = 100,null = True,blank = True)
     verify_smtp_certificate = models.BooleanField(default = False)
+    
+    def __str__(self):
+        return self.email_address

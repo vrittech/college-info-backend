@@ -1,0 +1,26 @@
+{
+    "sourceFile": "setupemail/models.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 2,
+            "patches": [
+                {
+                    "date": 1728385819026,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1728385826115,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,5 +11,6 @@\n     security = models.CharField(max_length = 200,choices = (('None','None'),('SSL','SSL'),('TSL','TSL')),default = 'None')\n     smtp_username = models.CharField(max_length = 100,null = True,blank = True)\n     verify_smtp_certificate = models.BooleanField(default = False)\n     \n-    \n+    def __str__(self):\n+        return self.name\n"
+                },
+                {
+                    "date": 1728385836446,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,5 +12,5 @@\n     smtp_username = models.CharField(max_length = 100,null = True,blank = True)\n     verify_smtp_certificate = models.BooleanField(default = False)\n     \n     def __str__(self):\n-        return self.name\n+        return self.email_address\n"
+                }
+            ],
+            "date": 1728385819026,
+            "name": "Commit-0",
+            "content": "from django.db import models\n\n# Create your models here.\n\nclass EmailSetup(models.Model):\n    smtp_server_address = models.CharField(max_length=250)  #EMAIL_HOST\n    email_address = models.EmailField(max_length=250)\n    password = models.CharField(max_length=250) #app password\n    port = models.PositiveIntegerField()\n    required_authentication = models.BooleanField(default = True)\n    security = models.CharField(max_length = 200,choices = (('None','None'),('SSL','SSL'),('TSL','TSL')),default = 'None')\n    smtp_username = models.CharField(max_length = 100,null = True,blank = True)\n    verify_smtp_certificate = models.BooleanField(default = False)\n    \n    \n"
+        }
+    ]
+}
