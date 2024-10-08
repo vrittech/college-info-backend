@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 4,
+            "activePatchIndex": 8,
             "patches": [
                 {
                     "date": 1726653942928,
@@ -24,6 +24,22 @@
                 {
                     "date": 1726728912091,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,10 +1,10 @@\n from django.db import models\n \n # Create your models here.\n class Faculty(models.Model):\n-       name = models.CharField(max_length=255,null=True,blank=True)\n+    name = models.CharField(max_length=255,null=True,blank=True)\n     description = models.TextField(null=True,blank=True)\n-    image = models.ImageField(upload_to='college/',null=True,blank=True)\n+    image = models.ImageField(upload_to='faculty/',null=True,blank=True)\n     \n     def __str__(self):\n         return self.name\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1728373497421,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,7 +4,10 @@\n class Faculty(models.Model):\n     name = models.CharField(max_length=255,null=True,blank=True)\n     description = models.TextField(null=True,blank=True)\n     image = models.ImageField(upload_to='faculty/',null=True,blank=True)\n+    created_date = models.DateField(auto_now_add=True, null=True, blank=True)\n+    created_date_time = models.DateTimeField(auto_now_add=True, null=True, blank=True)\n+    updated_date = models.DateTimeField(auto_now=True, null=True, blank=True)\n     \n     def __str__(self):\n         return self.name\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1728377033127,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,8 +4,9 @@\n class Faculty(models.Model):\n     name = models.CharField(max_length=255,null=True,blank=True)\n     description = models.TextField(null=True,blank=True)\n     image = models.ImageField(upload_to='faculty/',null=True,blank=True)\n+    is\n     created_date = models.DateField(auto_now_add=True, null=True, blank=True)\n     created_date_time = models.DateTimeField(auto_now_add=True, null=True, blank=True)\n     updated_date = models.DateTimeField(auto_now=True, null=True, blank=True)\n     \n"
+                },
+                {
+                    "date": 1728377040374,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,9 +4,9 @@\n class Faculty(models.Model):\n     name = models.CharField(max_length=255,null=True,blank=True)\n     description = models.TextField(null=True,blank=True)\n     image = models.ImageField(upload_to='faculty/',null=True,blank=True)\n-    is\n+    is_show = models\n     created_date = models.DateField(auto_now_add=True, null=True, blank=True)\n     created_date_time = models.DateTimeField(auto_now_add=True, null=True, blank=True)\n     updated_date = models.DateTimeField(auto_now=True, null=True, blank=True)\n     \n"
+                },
+                {
+                    "date": 1728377048649,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,9 +4,9 @@\n class Faculty(models.Model):\n     name = models.CharField(max_length=255,null=True,blank=True)\n     description = models.TextField(null=True,blank=True)\n     image = models.ImageField(upload_to='faculty/',null=True,blank=True)\n-    is_show = models\n+    is_show = models.BooleanField(default=False)\n     created_date = models.DateField(auto_now_add=True, null=True, blank=True)\n     created_date_time = models.DateTimeField(auto_now_add=True, null=True, blank=True)\n     updated_date = models.DateTimeField(auto_now=True, null=True, blank=True)\n     \n"
                 }
             ],
             "date": 1726653942928,

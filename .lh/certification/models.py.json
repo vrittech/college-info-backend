@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 1,
+            "activePatchIndex": 3,
             "patches": [
                 {
                     "date": 1726722397895,
@@ -12,6 +12,14 @@
                 {
                     "date": 1726722407161,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,8 @@\n from django.db import models\n \n # Create your models here.\n-class Year(models.Model):\n+class Certification(models.Model):\n     name = models.CharField(max_length=20, unique=True)\n \n     def __str__(self):\n         return self.name\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1728373503119,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,7 +2,10 @@\n \n # Create your models here.\n class Certification(models.Model):\n     name = models.CharField(max_length=20, unique=True)\n+    created_date = models.DateField(auto_now_add=True, null=True, blank=True)\n+    created_date_time = models.DateTimeField(auto_now_add=True, null=True, blank=True)\n+    updated_date = models.DateTimeField(auto_now=True, null=True, blank=True)\n \n     def __str__(self):\n         return self.name\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1728377100930,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,8 +2,9 @@\n \n # Create your models here.\n class Certification(models.Model):\n     name = models.CharField(max_length=20, unique=True)\n+    is_show = models.BooleanField(default=False)\n     created_date = models.DateField(auto_now_add=True, null=True, blank=True)\n     created_date_time = models.DateTimeField(auto_now_add=True, null=True, blank=True)\n     updated_date = models.DateTimeField(auto_now=True, null=True, blank=True)\n \n"
                 }
             ],
             "date": 1726722397895,

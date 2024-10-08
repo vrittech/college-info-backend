@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 7,
+            "activePatchIndex": 10,
             "patches": [
                 {
                     "date": 1727073622967,
@@ -36,6 +36,18 @@
                 {
                     "date": 1727176961603,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -66,9 +66,8 @@\n     'accountsmanagement',\n     'setupemail',\n     'gallery',\n     'event',\n-    'course',\n     'district',\n     'college',\n     'collegetype',\n     'informationmanagement',\n"
+                },
+                {
+                    "date": 1728378045920,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -84,8 +84,9 @@\n     'facilities',\n     'admissionopen',\n     'coursesandfees',\n     'location',\n+    'location',\n ]\n \n AUTH_USER_MODEL = 'accounts.CustomUser'\n \n"
+                },
+                {
+                    "date": 1728378066819,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -84,9 +84,10 @@\n     'facilities',\n     'admissionopen',\n     'coursesandfees',\n     'location',\n-    'location',\n+    'preparationinquiries',\n+    'preparationinquiries',\n ]\n \n AUTH_USER_MODEL = 'accounts.CustomUser'\n \n"
+                },
+                {
+                    "date": 1728378073342,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -85,9 +85,9 @@\n     'admissionopen',\n     'coursesandfees',\n     'location',\n     'preparationinquiries',\n-    'preparationinquiries',\n+    'collegeandcourseinquiries',\n ]\n \n AUTH_USER_MODEL = 'accounts.CustomUser'\n \n"
                 }
             ],
             "date": 1727073622967,

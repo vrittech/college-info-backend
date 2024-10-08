@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 7,
+            "activePatchIndex": 10,
             "patches": [
                 {
                     "date": 1726657166644,
@@ -36,6 +36,18 @@
                 {
                     "date": 1726728984352,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,10 +1,10 @@\n from django.db import models\n \n # Create your models here.\n class CollegeType(models.Model):\n-    n    name = models.CharField(max_length=255,null=True,blank=True)\n+    name = models.CharField(max_length=255,null=True,blank=True)\n     description = models.TextField(null=True,blank=True)\n-    image = models.ImageField(upload_to='college/',null=True,blank=True)\n+    image = models.ImageField(upload_to='college_type/',null=True,blank=True)\n     \n     def __str__(self):\n         return self.name\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1728377147545,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,11 @@\n+from django.db import models\n+\n+# Create your models here.\n+class CollegeType(models.Model):\n+    name = models.CharField(max_length=255,null=True,blank=True)\n+    is_show = models.BooleanField(default=False)\n+    description = models.TextField(null=True,blank=True)\n+    image = models.ImageField(upload_to='college_type/',null=True,blank=True)\n+    \n+    def __str__(self):\n+        return self.name\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1728377157276,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,17 +5,10 @@\n     name = models.CharField(max_length=255,null=True,blank=True)\n     is_show = models.BooleanField(default=False)\n     description = models.TextField(null=True,blank=True)\n     image = models.ImageField(upload_to='college_type/',null=True,blank=True)\n+    created_date = models.DateField(auto_now_add=True, null=True, blank=True)\n+    created_date_time = models.DateTimeField(auto_now_add=True, null=True, blank=True)\n+    updated_date = models.DateTimeField(auto_now=True, null=True, blank=True)\n     \n     def __str__(self):\n-        return self.name\n-from django.db import models\n-\n-# Create your models here.\n-class CollegeType(models.Model):\n-    name = models.CharField(max_length=255,null=True,blank=True)\n-    description = models.TextField(null=True,blank=True)\n-    image = models.ImageField(upload_to='college_type/',null=True,blank=True)\n-    \n-    def __str__(self):\n         return self.name\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1728377171241,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,10 +3,10 @@\n # Create your models here.\n class CollegeType(models.Model):\n     name = models.CharField(max_length=255,null=True,blank=True)\n     is_show = models.BooleanField(default=False)\n-    description = models.TextField(null=True,blank=True)\n-    image = models.ImageField(upload_to='college_type/',null=True,blank=True)\n+    # description = models.TextField(null=True,blank=True)\n+    # image = models.ImageField(upload_to='college_type/',null=True,blank=True)\n     created_date = models.DateField(auto_now_add=True, null=True, blank=True)\n     created_date_time = models.DateTimeField(auto_now_add=True, null=True, blank=True)\n     updated_date = models.DateTimeField(auto_now=True, null=True, blank=True)\n     \n"
                 }
             ],
             "date": 1726657166644,

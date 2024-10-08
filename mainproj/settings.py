@@ -85,6 +85,8 @@ INSTALLED_APPS = [
     'admissionopen',
     'coursesandfees',
     'location',
+    'preparationinquiries',
+    'collegeandcourseinquiries',
 ]
 
 AUTH_USER_MODEL = 'accounts.CustomUser'

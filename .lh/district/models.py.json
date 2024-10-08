@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 6,
+            "activePatchIndex": 12,
             "patches": [
                 {
                     "date": 1726653910419,
@@ -32,6 +32,30 @@
                 {
                     "date": 1726728895454,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,8 +3,8 @@\n # Create your models here.\n class District(models.Model):\n     name = models.CharField(max_length=255,null=True,blank=True)\n     description = models.TextField(null=True,blank=True)\n-    image = models.ImageField(upload_to='college/',null=True,blank=True)\n+    image = models.ImageField(upload_to='district/',null=True,blank=True)\n     \n     def __str__(self):\n         return self.name\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1728377385906,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,9 @@\n \n # Create your models here.\n class District(models.Model):\n     name = models.CharField(max_length=255,null=True,blank=True)\n-    description = models.TextField(null=True,blank=True)\n-    image = models.ImageField(upload_to='district/',null=True,blank=True)\n+    # description = models.TextField(null=True,blank=True)\n+    # image = models.ImageField(upload_to='district/',null=True,blank=True)\n     \n     def __str__(self):\n         return self.name\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1728377394024,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,13 @@\n \n # Create your models here.\n class District(models.Model):\n     name = models.CharField(max_length=255,null=True,blank=True)\n+    is\n     # description = models.TextField(null=True,blank=True)\n     # image = models.ImageField(upload_to='district/',null=True,blank=True)\n+    created_date = models.DateField(auto_now_add=True, null=True, blank=True)\n+    created_date_time = models.DateTimeField(auto_now_add=True, null=True, blank=True)\n+    updated_date = models.DateTimeField(auto_now=True, null=True, blank=True)\n     \n     def __str__(self):\n         return self.name\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1728377399450,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,9 @@\n \n # Create your models here.\n class District(models.Model):\n     name = models.CharField(max_length=255,null=True,blank=True)\n-    is\n+    is_shown = Boole\n     # description = models.TextField(null=True,blank=True)\n     # image = models.ImageField(upload_to='district/',null=True,blank=True)\n     created_date = models.DateField(auto_now_add=True, null=True, blank=True)\n     created_date_time = models.DateTimeField(auto_now_add=True, null=True, blank=True)\n"
+                },
+                {
+                    "date": 1728377404524,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,14 @@\n+from django.db import models\n+\n+# Create your models here.\n+class District(models.Model):\n+    name = models.CharField(max_length=255,null=True,blank=True)\n+    is_shown = model\n+    # description = models.TextField(null=True,blank=True)\n+    # image = models.ImageField(upload_to='district/',null=True,blank=True)\n+    created_date = models.DateField(auto_now_add=True, null=True, blank=True)\n+    created_date_time = models.DateTimeField(auto_now_add=True, null=True, blank=True)\n+    updated_date = models.DateTimeField(auto_now=True, null=True, blank=True)\n+    \n+    def __str__(self):\n+        return self.name\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1728377412209,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,27 +2,13 @@\n \n # Create your models here.\n class District(models.Model):\n     name = models.CharField(max_length=255,null=True,blank=True)\n-    is_shown = model\n+    is_shown = models.BooleanField(defaulty)\n     # description = models.TextField(null=True,blank=True)\n     # image = models.ImageField(upload_to='district/',null=True,blank=True)\n     created_date = models.DateField(auto_now_add=True, null=True, blank=True)\n     created_date_time = models.DateTimeField(auto_now_add=True, null=True, blank=True)\n     updated_date = models.DateTimeField(auto_now=True, null=True, blank=True)\n     \n     def __str__(self):\n-        return self.name\n-from django.db import models\n-\n-# Create your models here.\n-class District(models.Model):\n-    name = models.CharField(max_length=255,null=True,blank=True)\n-    is_shown = Boole\n-    # description = models.TextField(null=True,blank=True)\n-    # image = models.ImageField(upload_to='district/',null=True,blank=True)\n-    created_date = models.DateField(auto_now_add=True, null=True, blank=True)\n-    created_date_time = models.DateTimeField(auto_now_add=True, null=True, blank=True)\n-    updated_date = models.DateTimeField(auto_now=True, null=True, blank=True)\n-    \n-    def __str__(self):\n         return self.name\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1728377419127,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,9 @@\n \n # Create your models here.\n class District(models.Model):\n     name = models.CharField(max_length=255,null=True,blank=True)\n-    is_shown = models.BooleanField(default=)\n+    is_shown = models.BooleanField(default=False)\n     # description = models.TextField(null=True,blank=True)\n     # image = models.ImageField(upload_to='district/',null=True,blank=True)\n     created_date = models.DateField(auto_now_add=True, null=True, blank=True)\n     created_date_time = models.DateTimeField(auto_now_add=True, null=True, blank=True)\n"
                 }
             ],
             "date": 1726653910419,

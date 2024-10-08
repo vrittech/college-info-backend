@@ -3,11 +3,15 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 0,
+            "activePatchIndex": 1,
             "patches": [
                 {
                     "date": 1727174504183,
                     "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1728373476669,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,22 @@\n from django.db import models\n \n-# Create your models here.\n-# Facilities Model\n+class Category(models.Model):\n+    name = models.CharField(max_length=255)\n+    image = models.ImageField(upload_to='facility_images/', blank=True, null=True)\n+    created_date_time = models.DateTimeField(auto_now_add=True, null=True, blank=True)\n+    updated_date = models.DateTimeField(auto_now=True, null=True, blank=True)\n\\ No newline at end of file\n+\n+    def __str__(self):\n+        return self.name\n+\n class Facility(models.Model):\n     facility_name = models.CharField(max_length=255)\n+    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='facilities')\n+    image = models.ImageField(upload_to='facility_images/', blank=True, null=True)\n+    created_date = models.DateField(auto_now_add=True, null=True, blank=True)\n+    created_date_time = models.DateTimeField(auto_now_add=True, null=True, blank=True)\n+    updated_date = models.DateTimeField(auto_now=True, null=True, blank=True)\n+    \n \n     def __str__(self):\n-        return self.facility_name\n+        return self.facility_name\n"
                 }
             ],
             "date": 1727174504183,
