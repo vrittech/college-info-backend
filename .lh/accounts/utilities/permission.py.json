@@ -1,0 +1,18 @@
+{
+    "sourceFile": "accounts/utilities/permission.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1728378543651,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1728378543651,
+            "name": "Commit-0",
+            "content": "from rest_framework.permissions import BasePermission\nfrom accountsmanagement import roles\n\ndef IsAuthenticated(request):\n    return bool(request.user and request.user.is_authenticated)\n\ndef AdminLevel(request):\n    return bool(IsAuthenticated(request) and request.user.role in [roles.ADMIN,roles.SUPER_ADMIN]) and request.user.is_superuser\n\ndef AllLevel(request):\n    return bool(IsAuthenticated(request) and request.user.role in [roles.ADMIN,roles.SUPER_ADMIN,roles.USER])  \n\ndef ownerPermission(request,view,label,is_destroy):\n    if request.user.role in [roles.ADMIN,roles.SUPER_ADMIN]:\n        return True\n    if is_destroy == False:\n        payload_user = request.data.get(label)\n        if request.user.id == payload_user:\n            return True\n        else:\n            False\n    else:\n        payload_user = view.get_object()\n        if request.user.id == getattr(payload_user, label, None).id:\n            return True\n        else:\n            False\n        \nclass AdminViewSetsPermission(BasePermission):\n    def has_permission(self, request, view):\n        return AdminLevel(request)\n\nclass ShippingAddressViewsetsPermission(BasePermission):\n    def has_permission(self, request, view):\n        if view.action in ['list','retrieve']:\n            return True\n        elif view.action in ['create','update','partial_update']:\n            return ownerPermission(request,view,'profile',is_destroy = False)\n        elif view.action == 'destroy':\n            return ownerPermission(request,view,'profile',is_destroy = True)\n        return False\n    \ndef SecureFields(self,model_fields,secure_fields,secure_method,exceptions_roles):\n    if self.context.get('request').method in secure_method and self.context.get('request').user.role not in exceptions_roles:\n        for field in secure_fields:\n            model_fields.get(field).read_only = True\n\n    #request where user authentication is present\n    #secure_fields which need to keep secure\n    #methoods need secure for method like update,partial_update,create\n    #roles: on which roles does not need strictions except given roles, all should need striction\n    pass\n        "
+        }
+    ]
+}

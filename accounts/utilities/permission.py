@@ -29,16 +29,6 @@ def ownerPermission(request,view,label,is_destroy):
 class AdminViewSetsPermission(BasePermission):
     def has_permission(self, request, view):
         return AdminLevel(request)
-
-class ShippingAddressViewsetsPermission(BasePermission):
-    def has_permission(self, request, view):
-        if view.action in ['list','retrieve']:
-            return True
-        elif view.action in ['create','update','partial_update']:
-            return ownerPermission(request,view,'profile',is_destroy = False)
-        elif view.action == 'destroy':
-            return ownerPermission(request,view,'profile',is_destroy = True)
-        return False
     
 def SecureFields(self,model_fields,secure_fields,secure_method,exceptions_roles):
     if self.context.get('request').method in secure_method and self.context.get('request').user.role not in exceptions_roles:

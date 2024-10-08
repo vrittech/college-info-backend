@@ -1,0 +1,18 @@
+{
+    "sourceFile": "accounts/custompermission.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1728378543651,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1728378543651,
+            "name": "Commit-0",
+            "content": "from rest_framework.permissions import BasePermission\nfrom ..accountsmanagement import roles\n\ndef IsAuthenticated(request):\n    return bool(request.user and request.user.is_authenticated)\n\ndef ownerPermission(request,view,label):\n    if request.user.role in [roles.ADMIN,roles.SUPER_ADMIN]:\n        return True\n    \n    payload_user = view.get_object()\n    if request.user.id == payload_user.id:\n        return True\n    else:\n        False\n\ndef AdminPermission(request):\n    return IsAuthenticated(request) and request.user.role in [roles.ADMIN, roles.SUPER_ADMIN]\n\nclass AccountPermission(BasePermission):\n    def has_permission(self, request, view):\n        method_name = view.action\n        if method_name in ['list', 'create', 'retrieve']:\n            return True\n        elif method_name in ['GetSelfDetail']:\n            return IsAuthenticated(request)\n    \n        elif method_name == 'partial_update':\n            return ownerPermission(request,view,'id')\n        elif method_name == 'update':\n            return IsAuthenticated(request) and ownerPermission(request,view,'id')\n        else:\n            return False\n\n\nclass AdminLevelPermission(BasePermission):\n    def has_permission(self, request, view):\n        method_name = view.action\n        if method_name in ['create', 'retrieve', 'update', 'partial_update']:\n            return AdminPermission(request)\n        elif method_name == 'list':\n            return True\n        else:\n            return False\n\n\nclass AllUserDataPermission(BasePermission):\n    def has_permission(self, request, view):\n        method_name = view.action\n        return AdminPermission(request) if method_name == 'list' else False\n\n    "
+        }
+    ]
+}

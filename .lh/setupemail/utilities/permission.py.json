@@ -1,0 +1,22 @@
+{
+    "sourceFile": "setupemail/utilities/permission.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 1,
+            "patches": [
+                {
+                    "date": 1728378543652,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1728378699728,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n from rest_framework.permissions import BasePermission\n-from accountsmanagement import roles\n+from accounts import roles\n \n def IsAuthenticated(request):\n     return bool(request.user and request.user.is_authenticated)\n \n"
+                }
+            ],
+            "date": 1728378543652,
+            "name": "Commit-0",
+            "content": "from rest_framework.permissions import BasePermission\nfrom accountsmanagement import roles\n\ndef IsAuthenticated(request):\n    return bool(request.user and request.user.is_authenticated)\n\ndef AdminLevel(request):\n    return bool(IsAuthenticated(request) and request.user.role in [roles.ADMIN,roles.SUPER_ADMIN])\n\ndef AdminEntrepreneurLevel(request):\n    return bool(IsAuthenticated(request) and request.user.role in [roles.ADMIN,roles.SUPER_ADMIN,roles.ENTREPRENEUR])\n\ndef isOwner(request):\n    if str(request.user.id) == str(request.data.get('user')):\n        return True\n    \n    elif len(request.data)==0 and len(request.POST)==0:\n        return True\n\n    return False\n\ndef isOwnerObject(request,object):\n    if object.user_id == request.user.id:\n        return True\n\n    return False\n\n\nclass AdminViewSetsPermission(BasePermission):\n    def has_permission(self, request, view):    \n        return AdminLevel(request)\n    \n\n"
+        }
+    ]
+}
