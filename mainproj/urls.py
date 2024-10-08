@@ -46,6 +46,8 @@ from facilities.routers.routers import router as facilities_router
 from admissionopen.routers.routers import router as admissionopen_router
 from coursesandfees.routers.routers import router as coursesandfees_router
 from location.routers.routers import router as location_router
+from preparationinquiries.routers.routers import router as preparationinquiries_router
+from collegeandcourseinquiries.routers.routers import router as collegeandcourseinquiries_router
 
 
 router = routers.DefaultRouter()
@@ -70,6 +72,8 @@ router.registry.extend(facilities_router.registry)
 router.registry.extend(admissionopen_router.registry)
 router.registry.extend(coursesandfees_router.registry)
 router.registry.extend(location_router.registry)
+router.registry.extend(preparationinquiries_router.registry)
+router.registry.extend(collegeandcourseinquiries_router.registry)
 
 schema_view = get_schema_view(
    openapi.Info(
@@ -111,6 +115,9 @@ urlpatterns = [
     # path('api/',include(admissionopen_router.urls)),
     # path('api/',include(coursesandfees_router.urls)),
     # path('api/',include(location_router.urls)),
+    # path('api/',include(preparationinquiries_router.urls)),
+    # path('api/',include(collegeandcourseinquiries_router.urls))
+    
     
 ]
 if settings.DEBUG:
