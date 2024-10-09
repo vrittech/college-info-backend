@@ -48,6 +48,7 @@ from coursesandfees.routers.routers import router as coursesandfees_router
 from location.routers.routers import router as location_router
 from preparationinquiries.routers.routers import router as preparationinquiries_router
 from collegeandcourseinquiries.routers.routers import router as collegeandcourseinquiries_router
+from discipline.routers.routers import router as discipline_router
 
 
 router = routers.DefaultRouter()
@@ -74,6 +75,7 @@ router.registry.extend(coursesandfees_router.registry)
 router.registry.extend(location_router.registry)
 router.registry.extend(preparationinquiries_router.registry)
 router.registry.extend(collegeandcourseinquiries_router.registry)
+router.registry.extend(discipline_router.registry)
 
 schema_view = get_schema_view(
    openapi.Info(

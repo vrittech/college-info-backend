@@ -1,0 +1,26 @@
+{
+    "sourceFile": "discipline/admin.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 2,
+            "patches": [
+                {
+                    "date": 1728468270852,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1728468277215,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,4 +1,4 @@\n from django.contrib import admin\n \n # Register your models here.\n-from.\\ \n\\ No newline at end of file\n+from .models import \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1728468289094,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,4 +1,5 @@\n from django.contrib import admin\n \n # Register your models here.\n-from .models import \n\\ No newline at end of file\n+from .models import Discipline\n+admin.site.register(Discipline)\n\\ No newline at end of file\n"
+                }
+            ],
+            "date": 1728468270852,
+            "name": "Commit-0",
+            "content": "from django.contrib import admin\n\n# Register your models here.\nfrom.\\ "
+        }
+    ]
+}

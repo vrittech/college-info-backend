@@ -82,6 +82,7 @@ INSTALLED_APPS = [
     'drfapigenerator',
     'collegemanagement',
     'facilities',
+    'discipline',
     'admissionopen',
     'coursesandfees',
     'location',
