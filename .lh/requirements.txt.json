@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 6,
+            "activePatchIndex": 9,
             "patches": [
                 {
                     "date": 1726554854462,
@@ -32,6 +32,18 @@
                 {
                     "date": 1727329367203,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,21 +18,5 @@\n \n django-admin-interface==0.28.5\n openpyxl\n whitenoise==6.7.0\n-faker\n-\n-\n-\n-# server {\n-#     server_name api.lifequestclinicallab.com.np;\n-    \n-#     location / {\n-#         proxy_pass http://localhost:8007;\n-#         proxy_http_version 1.1;\n-#         proxy_set_header Upgrade $http_upgrade;\n-#         proxy_set_header Connection 'upgrade';\n-#         proxy_set_header Host $host;\n-#         proxy_cache_bypass $http_upgrade;\n-#     }\n-# }\n-sudo certbot --nginx -d api.lifequestclinicallab.com.np -d www.yourdomain.com\n\\ No newline at end of file\n+faker\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1732864346940,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,22 +1,18 @@\n Django==4.2.15\n-django-cors-headers==4.3.1\n-\n+django-cors-headers==4.6.0\n djangorestframework==3.15.2\n django-filter==23.1\n djangorestframework-simplejwt==5.3.1\n python-dotenv==1.0.1\n daphne==4.0.0\n-# psycopg2==2.9.9\n-psycopg2-binary\n+psycopg2-binary==2.9.9\n drf-yasg==1.21.7\n-pillow==10.3.0\n-\n+Pillow==10.3.0\n google-auth==2.26.1\n-requests\n-pandas\n+requests==2.31.0\n+pandas==2.1.1\n phonenumbers==8.13.43\n\\ No newline at end of file\n-\n django-admin-interface==0.28.5\n-openpyxl\n+openpyxl==3.1.2\n whitenoise==6.7.0\n-faker\n+faker==19.8.0\n"
+                },
+                {
+                    "date": 1732864818190,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,18 +1,22 @@\n+pillow==11.0.0\n+django-filter==24.3\n Django==4.2.15\n-django-cors-headers==4.6.0\n+django-cors-headers==4.3.1\n djangorestframework==3.15.2\n-django-filter==23.1\n djangorestframework-simplejwt==5.3.1\n python-dotenv==1.0.1\n daphne==4.0.0\n psycopg2-binary==2.9.9\n drf-yasg==1.21.7\n-Pillow==10.3.0\n google-auth==2.26.1\n requests==2.31.0\n-pandas==2.1.1\n+pandas==2.2.3\n phonenumbers==8.13.43\n\\ No newline at end of file\n django-admin-interface==0.28.5\n-openpyxl==3.1.2\n+openpyxl==3.1.5\n whitenoise==6.7.0\n-faker==19.8.0\n+gunicorn==23.0.0\n+gevent==24.2.1\n+celery==5.4.0\n+redis==5.0.0\n+django-celery-beat\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1732864854807,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,9 +5,9 @@\n djangorestframework==3.15.2\n djangorestframework-simplejwt==5.3.1\n python-dotenv==1.0.1\n daphne==4.0.0\n-psycopg2-binary==2.9.9\n+psycopg2-binary\n drf-yasg==1.21.7\n google-auth==2.26.1\n requests==2.31.0\n pandas==2.2.3\n"
                 }
             ],
             "date": 1726554854462,
