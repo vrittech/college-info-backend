@@ -3,11 +3,151 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 0,
+            "activePatchIndex": 35,
             "patches": [
                 {
                     "date": 1727174542938,
                     "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1733294587090,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,9 @@\n from django.db import models\n \n-# Create your models here.\n # CoursesAndFees Model\n class CoursesAndFees(models.Model):\n+    college = \n     course_name = models.CharField(max_length=255)\n     fee = models.DecimalField(max_digits=10, decimal_places=2)\n \n     def __str__(self):\n"
+                },
+                {
+                    "date": 1733294592962,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,6 @@\n from django.db import models\n+from col\n \n # CoursesAndFees Model\n class CoursesAndFees(models.Model):\n     college = \n"
+                },
+                {
+                    "date": 1733294600416,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,10 +1,10 @@\n from django.db import models\n-from col\n+from collegemanagement.models import College\n \n # CoursesAndFees Model\n class CoursesAndFees(models.Model):\n-    college = \n+    college = mode\n     course_name = models.CharField(max_length=255)\n     fee = models.DecimalField(max_digits=10, decimal_places=2)\n \n     def __str__(self):\n"
+                },
+                {
+                    "date": 1733294608342,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,9 @@\n from collegemanagement.models import College\n \n # CoursesAndFees Model\n class CoursesAndFees(models.Model):\n-    college = mode\n+    college = models.ForeignKey(College, on_delete=models.CASCADE, related_name='courses_and_fees')\n     course_name = models.CharField(max_length=255)\n     fee = models.DecimalField(max_digits=10, decimal_places=2)\n \n     def __str__(self):\n"
+                },
+                {
+                    "date": 1733294625643,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,8 +4,8 @@\n # CoursesAndFees Model\n class CoursesAndFees(models.Model):\n     college = models.ForeignKey(College, on_delete=models.CASCADE, related_name='courses_and_fees')\n     course_name = models.CharField(max_length=255)\n-    fee = models.DecimalField(max_digits=10, decimal_places=2)\n+    amount = models.DecimalField(max_digits=10, decimal_places=2)\n \n     def __str__(self):\n         return f'{self.course_name} - {self.fee}'\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1733294713868,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,7 +5,8 @@\n class CoursesAndFees(models.Model):\n     college = models.ForeignKey(College, on_delete=models.CASCADE, related_name='courses_and_fees')\n     course_name = models.CharField(max_length=255)\n     amount = models.DecimalField(max_digits=10, decimal_places=2)\n+    created_date = \n \n     def __str__(self):\n         return f'{self.course_name} - {self.fee}'\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1733294719953,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,8 +5,8 @@\n class CoursesAndFees(models.Model):\n     college = models.ForeignKey(College, on_delete=models.CASCADE, related_name='courses_and_fees')\n     course_name = models.CharField(max_length=255)\n     amount = models.DecimalField(max_digits=10, decimal_places=2)\n-    created_date = \n+    created_date = models.DateField(auto_now_add=True)\n \n     def __str__(self):\n         return f'{self.course_name} - {self.fee}'\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1733294728328,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,7 +6,8 @@\n     college = models.ForeignKey(College, on_delete=models.CASCADE, related_name='courses_and_fees')\n     course_name = models.CharField(max_length=255)\n     amount = models.DecimalField(max_digits=10, decimal_places=2)\n     created_date = models.DateField(auto_now_add=True)\n+    updated_date = models.DateField(auto_now_add=True)\n \n     def __str__(self):\n         return f'{self.course_name} - {self.fee}'\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1733294769171,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,8 +5,9 @@\n class CoursesAndFees(models.Model):\n     college = models.ForeignKey(College, on_delete=models.CASCADE, related_name='courses_and_fees')\n     course_name = models.CharField(max_length=255)\n     amount = models.DecimalField(max_digits=10, decimal_places=2)\n+    is\n     created_date = models.DateField(auto_now_add=True)\n     updated_date = models.DateField(auto_now_add=True)\n \n     def __str__(self):\n"
+                },
+                {
+                    "date": 1733294777331,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,9 +5,9 @@\n class CoursesAndFees(models.Model):\n     college = models.ForeignKey(College, on_delete=models.CASCADE, related_name='courses_and_fees')\n     course_name = models.CharField(max_length=255)\n     amount = models.DecimalField(max_digits=10, decimal_places=2)\n-    is\n+    is_admission_fee = models.BooleanField(default=False)\n     created_date = models.DateField(auto_now_add=True)\n     updated_date = models.DateField(auto_now_add=True)\n \n     def __str__(self):\n"
+                },
+                {
+                    "date": 1733294816055,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,13 +1,14 @@\n from django.db import models\n from collegemanagement.models import College\n+from co\n \n # CoursesAndFees Model\n class CoursesAndFees(models.Model):\n     college = models.ForeignKey(College, on_delete=models.CASCADE, related_name='courses_and_fees')\n     course_name = models.CharField(max_length=255)\n     amount = models.DecimalField(max_digits=10, decimal_places=2)\n-    is_admission_fee = models.BooleanField(default=False)\n+    is_admission = models.BooleanField(default=False)\n     created_date = models.DateField(auto_now_add=True)\n     updated_date = models.DateField(auto_now_add=True)\n \n     def __str__(self):\n"
+                },
+                {
+                    "date": 1733294824064,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,12 +1,12 @@\n from django.db import models\n from collegemanagement.models import College\n-from co\n+from coursemanagement.models import Course\n \n # CoursesAndFees Model\n class CoursesAndFees(models.Model):\n     college = models.ForeignKey(College, on_delete=models.CASCADE, related_name='courses_and_fees')\n-    course_name = models.CharField(max_length=255)\n+    course_name = models.\n     amount = models.DecimalField(max_digits=10, decimal_places=2)\n     is_admission = models.BooleanField(default=False)\n     created_date = models.DateField(auto_now_add=True)\n     updated_date = models.DateField(auto_now_add=True)\n"
+                },
+                {
+                    "date": 1733294830418,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,9 +4,9 @@\n \n # CoursesAndFees Model\n class CoursesAndFees(models.Model):\n     college = models.ForeignKey(College, on_delete=models.CASCADE, related_name='courses_and_fees')\n-    course_name = models.\n+    course_name = models.fo\n     amount = models.DecimalField(max_digits=10, decimal_places=2)\n     is_admission = models.BooleanField(default=False)\n     created_date = models.DateField(auto_now_add=True)\n     updated_date = models.DateField(auto_now_add=True)\n"
+                },
+                {
+                    "date": 1733294835955,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,9 +4,9 @@\n \n # CoursesAndFees Model\n class CoursesAndFees(models.Model):\n     college = models.ForeignKey(College, on_delete=models.CASCADE, related_name='courses_and_fees')\n-    course_name = models.fo\n+    course_name = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='courses_and_fees')\n     amount = models.DecimalField(max_digits=10, decimal_places=2)\n     is_admission = models.BooleanField(default=False)\n     created_date = models.DateField(auto_now_add=True)\n     updated_date = models.DateField(auto_now_add=True)\n"
+                },
+                {
+                    "date": 1733294847863,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,9 +4,9 @@\n \n # CoursesAndFees Model\n class CoursesAndFees(models.Model):\n     college = models.ForeignKey(College, on_delete=models.CASCADE, related_name='courses_and_fees')\n-    course_name = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='courses_and_fees')\n+    course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='courses_and_fees')\n     amount = models.DecimalField(max_digits=10, decimal_places=2)\n     is_admission = models.BooleanField(default=False)\n     created_date = models.DateField(auto_now_add=True)\n     updated_date = models.DateField(auto_now_add=True)\n"
+                },
+                {
+                    "date": 1733294878645,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,5 +11,5 @@\n     created_date = models.DateField(auto_now_add=True)\n     updated_date = models.DateField(auto_now_add=True)\n \n     def __str__(self):\n-        return f'{self.course_name} - {self.fee}'\n\\ No newline at end of file\n+        return f'{self.course_name} - {self.amount}'\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1733294883848,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,5 +11,5 @@\n     created_date = models.DateField(auto_now_add=True)\n     updated_date = models.DateField(auto_now_add=True)\n \n     def __str__(self):\n-        return f'{self.course_name} - {self.amount}'\n\\ No newline at end of file\n+        return f'{self.cours} - {self.amount}'\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1733294890183,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,5 +11,5 @@\n     created_date = models.DateField(auto_now_add=True)\n     updated_date = models.DateField(auto_now_add=True)\n \n     def __str__(self):\n-        return f'{self.cours} - {self.amount}'\n\\ No newline at end of file\n+        return f'{self.} - {self.amount}'\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1733294898135,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,5 +11,5 @@\n     created_date = models.DateField(auto_now_add=True)\n     updated_date = models.DateField(auto_now_add=True)\n \n     def __str__(self):\n-        return f'{self.} - {self.amount}'\n\\ No newline at end of file\n+        return f'{self.crea} - {self.amount}'\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1733294971905,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,12 +4,15 @@\n \n # CoursesAndFees Model\n class CoursesAndFees(models.Model):\n     college = models.ForeignKey(College, on_delete=models.CASCADE, related_name='courses_and_fees')\n-    course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='courses_and_fees')\n+        college = models.ForeignKey(\n+        'collegemanagement.College',  # Use app_name.ModelName as a string\n+        on_delete=models.CASCADE\n+    )\n     amount = models.DecimalField(max_digits=10, decimal_places=2)\n     is_admission = models.BooleanField(default=False)\n     created_date = models.DateField(auto_now_add=True)\n\\ No newline at end of file\n     updated_date = models.DateField(auto_now_add=True)\n \n     def __str__(self):\n-        return f'{self.crea} - {self.amount}'\n+        return f'{self.created_date} - {self.amount}'\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1733294977337,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,9 +4,9 @@\n \n # CoursesAndFees Model\n class CoursesAndFees(models.Model):\n     college = models.ForeignKey(College, on_delete=models.CASCADE, related_name='courses_and_fees')\n-        college = models.ForeignKey(\n+    college = models.ForeignKey(\n         'collegemanagement.College',  # Use app_name.ModelName as a string\n         on_delete=models.CASCADE\n     )\n     amount = models.DecimalField(max_digits=10, decimal_places=2)\n"
+                },
+                {
+                    "date": 1733295001641,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,9 +6,10 @@\n class CoursesAndFees(models.Model):\n     college = models.ForeignKey(College, on_delete=models.CASCADE, related_name='courses_and_fees')\n     college = models.ForeignKey(\n         'collegemanagement.College',  # Use app_name.ModelName as a string\n-        on_delete=models.CASCADE\n+        on_delete=models.CASCADE,\n+        related_name=\"courses\"\n     )\n     amount = models.DecimalField(max_digits=10, decimal_places=2)\n     is_admission = models.BooleanField(default=False)\n     created_date = models.DateField(auto_now_add=True)\n"
+                },
+                {
+                    "date": 1733295007674,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,9 @@\n     college = models.ForeignKey(College, on_delete=models.CASCADE, related_name='courses_and_fees')\n     college = models.ForeignKey(\n         'collegemanagement.College',  # Use app_name.ModelName as a string\n         on_delete=models.CASCADE,\n-        related_name=\"courses\"\n+        related_name=\"courses_and_\"\n     )\n     amount = models.DecimalField(max_digits=10, decimal_places=2)\n     is_admission = models.BooleanField(default=False)\n     created_date = models.DateField(auto_now_add=True)\n"
+                },
+                {
+                    "date": 1733295023903,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,15 +1,15 @@\n from django.db import models\n-from collegemanagement.models import College\n+# from collegemanagement.models import College\n from coursemanagement.models import Course\n \n # CoursesAndFees Model\n class CoursesAndFees(models.Model):\n     college = models.ForeignKey(College, on_delete=models.CASCADE, related_name='courses_and_fees')\n     college = models.ForeignKey(\n         'collegemanagement.College',  # Use app_name.ModelName as a string\n         on_delete=models.CASCADE,\n-        related_name=\"courses_and_\"\n+        related_name=\"courses_and_fees\",\n     )\n     amount = models.DecimalField(max_digits=10, decimal_places=2)\n     is_admission = models.BooleanField(default=False)\n     created_date = models.DateField(auto_now_add=True)\n"
+                },
+                {
+                    "date": 1733295035828,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,16 +1,12 @@\n from django.db import models\n-# from collegemanagement.models import College\n+from collegemanagement.models import College\n from coursemanagement.models import Course\n \n # CoursesAndFees Model\n class CoursesAndFees(models.Model):\n     college = models.ForeignKey(College, on_delete=models.CASCADE, related_name='courses_and_fees')\n-    college = models.ForeignKey(\n-        'collegemanagement.College',  # Use app_name.ModelName as a string\n-        on_delete=models.CASCADE,\n-        related_name=\"courses_and_fees\",\n-    )\n+    course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='courses_and_fees')\n     amount = models.DecimalField(max_digits=10, decimal_places=2)\n     is_admission = models.BooleanField(default=False)\n     created_date = models.DateField(auto_now_add=True)\n     updated_date = models.DateField(auto_now_add=True)\n"
+                },
+                {
+                    "date": 1733295042929,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,13 @@\n from coursemanagement.models import Course\n \n # CoursesAndFees Model\n class CoursesAndFees(models.Model):\n-    college = models.ForeignKey(College, on_delete=models.CASCADE, related_name='courses_and_fees')\n+    college = models.ForeignKey(\n+        'collegemanagement.College',  # Use app_name.ModelName as a string\n+        on_delete=models.CASCADE,\n+        related_name=\"courses_and_fees\",\n+    )\n     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='courses_and_fees')\n     amount = models.DecimalField(max_digits=10, decimal_places=2)\n     is_admission = models.BooleanField(default=False)\n     created_date = models.DateField(auto_now_add=True)\n"
+                },
+                {
+                    "date": 1733295048128,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,5 +15,9 @@\n     created_date = models.DateField(auto_now_add=True)\n     updated_date = models.DateField(auto_now_add=True)\n \n     def __str__(self):\n+/*************  ✨ Codeium Command ⭐  *************/\n+    \"\"\"Return a string representation of the CoursesAndFees instance,\n+    displaying the created date and amount.\"\"\"\n+/******  35f22378-1879-4bcb-a0bc-817b7d6fcc0f  *******/\n         return f'{self.created_date} - {self.amount}'\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1733295063209,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,9 +15,6 @@\n     created_date = models.DateField(auto_now_add=True)\n     updated_date = models.DateField(auto_now_add=True)\n \n     def __str__(self):\n-/*************  ✨ Codeium Command ⭐  *************/\n-    \"\"\"Return a string representation of the CoursesAndFees instance,\n-    displaying the created date and amount.\"\"\"\n-/******  35f22378-1879-4bcb-a0bc-817b7d6fcc0f  *******/\n+        \n         return f'{self.created_date} - {self.amount}'\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1733295071916,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,9 +4,9 @@\n \n # CoursesAndFees Model\n class CoursesAndFees(models.Model):\n     college = models.ForeignKey(\n-        'collegemanagement.College',  # Use app_name.ModelName as a string\n+        'collegemanagement.College',  \n         on_delete=models.CASCADE,\n         related_name=\"courses_and_fees\",\n     )\n     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='courses_and_fees')\n"
+                },
+                {
+                    "date": 1733295085978,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n from django.db import models\n-from collegemanagement.models import College\n+# from collegemanagement.models import College\n from coursemanagement.models import Course\n \n # CoursesAndFees Model\n class CoursesAndFees(models.Model):\n"
+                },
+                {
+                    "date": 1733295789420,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,12 +1,12 @@\n from django.db import models\n-# from collegemanagement.models import College\n+from collegemanagement.models import College\n from coursemanagement.models import Course\n \n # CoursesAndFees Model\n class CoursesAndFees(models.Model):\n     college = models.ForeignKey(\n-        'collegemanagement.College',  \n+        'collegemanagement.College',  # Use app_name.ModelName as a string\n         on_delete=models.CASCADE,\n         related_name=\"courses_and_fees\",\n     )\n     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='courses_and_fees')\n@@ -15,6 +15,5 @@\n     created_date = models.DateField(auto_now_add=True)\n     updated_date = models.DateField(auto_now_add=True)\n \n     def __str__(self):\n-        \n         return f'{self.created_date} - {self.amount}'\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1733295794991,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,14 +2,9 @@\n from collegemanagement.models import College\n from coursemanagement.models import Course\n \n # CoursesAndFees Model\n-class CoursesAndFees(models.Model):\n-    college = models.ForeignKey(\n-        'collegemanagement.College',  # Use app_name.ModelName as a string\n-        on_delete=models.CASCADE,\n-        related_name=\"courses_and_fees\",\n-    )\n+class CoursesAndFees(models.Model):college = models.ForeignKey(College, on_delete=models.CASCADE, related_name='courses_and_fees')\n     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='courses_and_fees')\n     amount = models.DecimalField(max_digits=10, decimal_places=2)\n     is_admission = models.BooleanField(default=False)\n     created_date = models.DateField(auto_now_add=True)\n"
+                },
+                {
+                    "date": 1733295801967,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,9 @@\n from collegemanagement.models import College\n from coursemanagement.models import Course\n \n # CoursesAndFees Model\n-class CoursesAndFees(models.Model):college = models.ForeignKey(College, on_delete=models.CASCADE, related_name='courses_and_fees')\n+class CoursesAndFees(models.Model):\n     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='courses_and_fees')\n     amount = models.DecimalField(max_digits=10, decimal_places=2)\n     is_admission = models.BooleanField(default=False)\n     created_date = models.DateField(auto_now_add=True)\n"
+                },
+                {
+                    "date": 1733295807083,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,5 @@\n from django.db import models\n-from collegemanagement.models import College\n from coursemanagement.models import Course\n \n # CoursesAndFees Model\n class CoursesAndFees(models.Model):\n"
+                },
+                {
+                    "date": 1733295813290,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,6 @@\n from django.db import models\n+from collegemanagement.models import College\n from coursemanagement.models import Course\n \n # CoursesAndFees Model\n class CoursesAndFees(models.Model):\n"
                 }
             ],
             "date": 1727174542938,

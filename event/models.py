@@ -29,8 +29,8 @@ from django.db import models
 class EventOrganizer(models.Model):
     name = models.CharField(max_length=255)
     image = models.ImageField(upload_to='event_organizer/')
-    image_link = models.URLField(blank=True, null=True)
-    is_organizer = models.BooleanField(default=False)
+    link = models.URLField(blank=True, null=True)
+    is_show = models.BooleanField(default=False)
     
     created_date_time = models.DateTimeField(auto_now_add=True, null=True, blank=True)
     created_date = models.DateField(auto_now_add=True, null=True, blank=True)
@@ -58,22 +58,27 @@ class Event(models.Model):
         ('online', 'Online'),
         ('hybrid', 'Hybrid'),
     ]
-    type = models.CharField(max_length=10, choices=TYPE_CHOICES)
+    event_type = models.CharField(max_length=10, choices=TYPE_CHOICES)
+    venue = models.CharField(max_length=255, blank=True, null=True)
+    
     online_seat_limit = models.PositiveIntegerField(default=0)
     offline_seat_limit = models.PositiveIntegerField(default=0)
-    is_seat_limit = models.BooleanField(default=False)
-    venue = models.CharField(max_length=255, blank=True, null=True)
-    event_links = models.URLField(blank=True, null=True)
-    registration_link = models.URLField(blank=True, null=True)
+    is_offline_seat_limit = models.BooleanField(default=False)
+    is_online_seat_limit = models.BooleanField(default=False)
+    
     is_registration = models.BooleanField(default=False)
+    registration_link = models.URLField(blank=True, null=True)
+    # event_links = models.URLField(blank=True, null=True)
     REGISTRATION_TYPE_CHOICES = [
         ('paid', 'Paid'),
         ('free', 'Free'),
     ]
     registration_type = models.CharField(max_length=10, choices=REGISTRATION_TYPE_CHOICES, default='free')
+    
     amount = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
-    price_type = models.CharField(max_length=100, blank=True, null=True)
-    price_country = models.CharField(max_length=100, blank=True, null=True)
+    amount_type = models.CharField(max_length=100, blank=True, null=True)
+    amount_country = models.CharField(max_length=100, blank=True, null=True)
+    
     description = models.TextField(blank=True, null=True)
     is_featured_event = models.BooleanField(default=False)
     
@@ -84,10 +89,32 @@ class Event(models.Model):
     created_date = models.DateField(auto_now_add=True, null=True, blank=True)
     updated_date = models.DateTimeField(auto_now=True, null=True, blank=True)
     
+    # SEO Meta Tags
+    meta_title = models.CharField(max_length=255, blank=True, null=True, help_text="Title for search engines.")
+    meta_tag = models.CharField(max_length=255, blank=True, null=True, help_text="Primary meta tag for SEO.")
+    meta_description = models.TextField(blank=True, null=True, help_text="Short description for SEO.")
+    meta_keywords = models.TextField(blank=True, null=True, help_text="Comma-separated keywords for SEO.")
+    meta_author = models.CharField(max_length=255, blank=True, null=True, help_text="Author information for SEO.")
+    canonical_url = models.URLField(blank=True, null=True, help_text="Canonical URL to avoid duplicate content.")
+
+    # Open Graph (OG) Tags (Social Sharing)
+    og_title = models.CharField(max_length=255, blank=True, null=True, help_text="Title for social sharing.")
+    og_description = models.TextField(blank=True, null=True, help_text="Description for social sharing.")
+    og_url = models.URLField(blank=True, null=True, help_text="URL to share on social platforms.")
+    og_image =  models.ImageField(upload_to='college/og_image/',null=True,blank=True)
+    og_type = models.CharField(max_length=50, blank=True, null=True, help_text="Type of the OG content (e.g., website, article).")
+    og_locale = models.CharField(max_length=10, blank=True, null=True, default="en_US", help_text="Locale for OG tags (e.g., en_US).")
+    
+    # Dublin Core Metadata
+    dc_title = models.CharField(max_length=255, blank=True, null=True, help_text="Title for Dublin Core Metadata.")
+    dc_description = models.TextField(blank=True, null=True, help_text="Description for Dublin Core Metadata.")
+    dc_language = models.CharField(max_length=10, blank=True, null=True, default="en", help_text="Language code for Dublin Core Metadata (e.g., en, fr).")
+
+    
     def __str__(self):
         return f"{self.event_name}"
 
-class Image(models.Model):
+class EventGallery(models.Model):
     event = models.ManyToManyField(Event, related_name='images')
     is_featured_image = models.BooleanField(default=False)
     image = models.ImageField(upload_to='event_images/')

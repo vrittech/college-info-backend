@@ -1,0 +1,54 @@
+{
+    "sourceFile": "formprogress/models.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 9,
+            "patches": [
+                {
+                    "date": 1733287511101,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1733287523123,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,9 @@\n # Create your models here.\n class FormStepProgress(models.Model):\n     user = models.ForeignKey('auth.User', on_delete=models.SET_NULL, null=True, blank=True)  # Optional for logged-in users\n     session_id = models.CharField(max_length=255)  # Track users who are not logged in\n-    form_name = models.CharField(max_length=255, default=\"college_information_form\")  # Name of the form\n+    form_name = models.CharField(max_length=255, default=\"college_form\")  # Name of the form\n     current_step = models.IntegerField()  # Step number the user is currently on\n     completed = models.BooleanField(default=False)  # Whether the form was fully completed\n     timestamp = models.DateTimeField(auto_now=True)  # Automatically updates on each interaction\n \n"
+                },
+                {
+                    "date": 1733287531634,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,9 @@\n # Create your models here.\n class FormStepProgress(models.Model):\n     user = models.ForeignKey('auth.User', on_delete=models.SET_NULL, null=True, blank=True)  # Optional for logged-in users\n     session_id = models.CharField(max_length=255)  # Track users who are not logged in\n-    form_name = models.CharField(max_length=255, default=\"college_form\")  # Name of the form\n+    form_name = models.CharField(max_length=255, default=\"college_information\")  # Name of the form\n     current_step = models.IntegerField()  # Step number the user is currently on\n     completed = models.BooleanField(default=False)  # Whether the form was fully completed\n     timestamp = models.DateTimeField(auto_now=True)  # Automatically updates on each interaction\n \n"
+                },
+                {
+                    "date": 1733288902671,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,10 +1,9 @@\n from django.db import models\n \n # Create your models here.\n class FormStepProgress(models.Model):\n-    user = models.ForeignKey('auth.User', on_delete=models.SET_NULL, null=True, blank=True)  # Optional for logged-in users\n-    session_id = models.CharField(max_length=255)  # Track users who are not logged in\n+    user = models.ForeignKey('auth.User', on_delete=models.SET_NULL, null=True, blank=True)  # Optional for logged-in users # Track users who are not logged in\n     form_name = models.CharField(max_length=255, default=\"college_information\")  # Name of the form\n     current_step = models.IntegerField()  # Step number the user is currently on\n     completed = models.BooleanField(default=False)  # Whether the form was fully completed\n     timestamp = models.DateTimeField(auto_now=True)  # Automatically updates on each interaction\n"
+                },
+                {
+                    "date": 1733288913234,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,10 @@\n from django.db import models\n+from accounts\n \n # Create your models here.\n class FormStepProgress(models.Model):\n-    user = models.ForeignKey('auth.User', on_delete=models.SET_NULL, null=True, blank=True)  # Optional for logged-in users # Track users who are not logged in\n+    user = models.ForeignKey('auth.User', on_delete=models.SET_NULL, null=True, blank=True)  # Optional for logged-in users\n     form_name = models.CharField(max_length=255, default=\"college_information\")  # Name of the form\n     current_step = models.IntegerField()  # Step number the user is currently on\n     completed = models.BooleanField(default=False)  # Whether the form was fully completed\n     timestamp = models.DateTimeField(auto_now=True)  # Automatically updates on each interaction\n"
+                },
+                {
+                    "date": 1733288920906,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n from django.db import models\n-from accounts\n+from accounts.models import CustomUser\n \n # Create your models here.\n class FormStepProgress(models.Model):\n     user = models.ForeignKey('auth.User', on_delete=models.SET_NULL, null=True, blank=True)  # Optional for logged-in users\n"
+                },
+                {
+                    "date": 1733288927693,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,9 @@\n from accounts.models import CustomUser\n \n # Create your models here.\n class FormStepProgress(models.Model):\n-    user = models.ForeignKey('auth.User', on_delete=models.SET_NULL, null=True, blank=True)  # Optional for logged-in users\n+    user = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, null=True, blank=True)  # Optional for logged-in users\n     form_name = models.CharField(max_length=255, default=\"college_information\")  # Name of the form\n     current_step = models.IntegerField()  # Step number the user is currently on\n     completed = models.BooleanField(default=False)  # Whether the form was fully completed\n     timestamp = models.DateTimeField(auto_now=True)  # Automatically updates on each interaction\n"
+                },
+                {
+                    "date": 1733288934721,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,9 @@\n from accounts.models import CustomUser\n \n # Create your models here.\n class FormStepProgress(models.Model):\n-    user = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, null=True, blank=True)  # Optional for logged-in users\n+    user = models.ForeignKey(CustomUser, on_delete=models.Ca, null=True, blank=True)  # Optional for logged-in users\n     form_name = models.CharField(max_length=255, default=\"college_information\")  # Name of the form\n     current_step = models.IntegerField()  # Step number the user is currently on\n     completed = models.BooleanField(default=False)  # Whether the form was fully completed\n     timestamp = models.DateTimeField(auto_now=True)  # Automatically updates on each interaction\n"
+                },
+                {
+                    "date": 1733289110874,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,11 +2,11 @@\n from accounts.models import CustomUser\n \n # Create your models here.\n class FormStepProgress(models.Model):\n-    user = models.ForeignKey(CustomUser, on_delete=models.Ca, null=True, blank=True)  # Optional for logged-in users\n+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADEa, null=True, blank=True)  # Optional for logged-in users\n     form_name = models.CharField(max_length=255, default=\"college_information\")  # Name of the form\n-    current_step = models.IntegerField()  # Step number the user is currently on\n+    current_step = models.IntegerField(default=)  # Step number the user is currently on\n     completed = models.BooleanField(default=False)  # Whether the form was fully completed\n     timestamp = models.DateTimeField(auto_now=True)  # Automatically updates on each interaction\n \n     def __str__(self):\n"
+                },
+                {
+                    "date": 1733289166925,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,11 +2,11 @@\n from accounts.models import CustomUser\n \n # Create your models here.\n class FormStepProgress(models.Model):\n-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADEa, null=True, blank=True)  # Optional for logged-in users\n+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True, blank=True)  # Optional for logged-in users\n     form_name = models.CharField(max_length=255, default=\"college_information\")  # Name of the form\n-    current_step = models.IntegerField(default=)  # Step number the user is currently on\n+    current_step = models.IntegerField(default=1)  # Step number the user is currently on\n     completed = models.BooleanField(default=False)  # Whether the form was fully completed\n     timestamp = models.DateTimeField(auto_now=True)  # Automatically updates on each interaction\n \n     def __str__(self):\n"
+                }
+            ],
+            "date": 1733287511101,
+            "name": "Commit-0",
+            "content": "from django.db import models\n\n# Create your models here.\nclass FormStepProgress(models.Model):\n    user = models.ForeignKey('auth.User', on_delete=models.SET_NULL, null=True, blank=True)  # Optional for logged-in users\n    session_id = models.CharField(max_length=255)  # Track users who are not logged in\n    form_name = models.CharField(max_length=255, default=\"college_information_form\")  # Name of the form\n    current_step = models.IntegerField()  # Step number the user is currently on\n    completed = models.BooleanField(default=False)  # Whether the form was fully completed\n    timestamp = models.DateTimeField(auto_now=True)  # Automatically updates on each interaction\n\n    def __str__(self):\n        status = \"Completed\" if self.completed else f\"Step {self.current_step}\"\n        return f\"{self.user or self.session_id} - {self.form_name} - {status}\"\n"
+        }
+    ]
+}

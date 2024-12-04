@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 1,
+            "activePatchIndex": 4,
             "patches": [
                 {
                     "date": 1726659958956,
@@ -12,6 +12,18 @@
                 {
                     "date": 1726731037388,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,9 +4,8 @@\n from django.contrib import admin\n from .models import Information, Year, Semester, InformationTagging, InformationCategory\n \n admin.site.register(Year)\n-admin.site.register(Semester)\n admin.site.register(InformationTagging)\n admin.site.register(InformationCategory)\n \n class InformationAdmin(admin.ModelAdmin):\n"
+                },
+                {
+                    "date": 1733305756140,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,9 @@\n from django.contrib import admin\n \n # Register your models here.\n from django.contrib import admin\n-from .models import Information, Year, Semester, InformationTagging, InformationCategory\n+from .models import Information, InformationTagging, InformationCategory\n \n admin.site.register(Year)\n admin.site.register(InformationTagging)\n admin.site.register(InformationCategory)\n"
+                },
+                {
+                    "date": 1733305845716,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,14 +3,8 @@\n # Register your models here.\n from django.contrib import admin\n from .models import Information, InformationTagging, InformationCategory\n \n-admin.site.register(Year)\n admin.site.register(InformationTagging)\n admin.site.register(InformationCategory)\n \n-class InformationAdmin(admin.ModelAdmin):\n-    list_display = ('title', 'publish_date', 'course_level_type')\n-    search_fields = ('title', 'description')\n-    filter_horizontal = ('affiliation', 'course', 'level', 'district', 'college', 'faculty', 'years', 'semesters')\n-\n admin.site.register(Information, InformationAdmin)\n"
+                },
+                {
+                    "date": 1733305869982,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,5 +6,4 @@\n \n admin.site.register(InformationTagging)\n admin.site.register(InformationCategory)\n \n-admin.site.register(Information, InformationAdmin)\n"
                 }
             ],
             "date": 1726659958956,

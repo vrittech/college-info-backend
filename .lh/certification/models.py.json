@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 3,
+            "activePatchIndex": 4,
             "patches": [
                 {
                     "date": 1726722397895,
@@ -20,6 +20,10 @@
                 {
                     "date": 1728377100930,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,8 +2,9 @@\n \n # Create your models here.\n class Certification(models.Model):\n     name = models.CharField(max_length=20, unique=True)\n+    is_show = models.BooleanField(default=False)\n     created_date = models.DateField(auto_now_add=True, null=True, blank=True)\n     created_date_time = models.DateTimeField(auto_now_add=True, null=True, blank=True)\n     updated_date = models.DateTimeField(auto_now=True, null=True, blank=True)\n \n"
+                },
+                {
+                    "date": 1733311185851,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,8 +3,9 @@\n # Create your models here.\n class Certification(models.Model):\n     name = models.CharField(max_length=20, unique=True)\n     is_show = models.BooleanField(default=False)\n+    image=\n     created_date = models.DateField(auto_now_add=True, null=True, blank=True)\n     created_date_time = models.DateTimeField(auto_now_add=True, null=True, blank=True)\n     updated_date = models.DateTimeField(auto_now=True, null=True, blank=True)\n \n"
                 }
             ],
             "date": 1726722397895,

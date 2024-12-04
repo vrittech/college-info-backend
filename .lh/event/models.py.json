@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 106,
+            "activePatchIndex": 126,
             "patches": [
                 {
                     "date": 1726568467190,
@@ -432,6 +432,86 @@
                 {
                     "date": 1726660810337,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -76,9 +76,9 @@\n     price_country = models.CharField(max_length=100, blank=True, null=True)\n     description = models.TextField(blank=True, null=True)\n     is_featured_event = models.BooleanField(default=False)\n     \n-    category = models.ManyToManyField(EventCategory)\n+    category = models.ManyToManyField(EventCategory, related_name='event_category')\n     organizer = models.ManyToManyField(EventOrganizer, related_name='organizer')\n     \n     created_date_time = models.DateTimeField(auto_now_add=True, null=True, blank=True)\n     created_date = models.DateField(auto_now_add=True, null=True, blank=True)\n"
+                },
+                {
+                    "date": 1733306636066,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -86,9 +86,9 @@\n     \n     def __str__(self):\n         return f\"{self.event_name}\"\n \n-class Image(models.Model):\n+class Event(models.Model):\n     event = models.ManyToManyField(Event, related_name='images')\n     is_featured_image = models.BooleanField(default=False)\n     image = models.ImageField(upload_to='event_images/')\n     \n"
+                },
+                {
+                    "date": 1733306663853,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -86,9 +86,9 @@\n     \n     def __str__(self):\n         return f\"{self.event_name}\"\n \n-class Event(models.Model):\n+class EventGallery(models.Model):\n     event = models.ManyToManyField(Event, related_name='images')\n     is_featured_image = models.BooleanField(default=False)\n     image = models.ImageField(upload_to='event_images/')\n     \n"
+                },
+                {
+                    "date": 1733306780854,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -57,9 +57,9 @@\n         ('physical', 'Physical'),\n         ('online', 'Online'),\n         ('hybrid', 'Hybrid'),\n     ]\n-    type = models.CharField(max_length=10, choices=TYPE_CHOICES)\n+    eventtype = models.CharField(max_length=10, choices=TYPE_CHOICES)\n     online_seat_limit = models.PositiveIntegerField(default=0)\n     offline_seat_limit = models.PositiveIntegerField(default=0)\n     is_seat_limit = models.BooleanField(default=False)\n     venue = models.CharField(max_length=255, blank=True, null=True)\n"
+                },
+                {
+                    "date": 1733306811097,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -57,13 +57,13 @@\n         ('physical', 'Physical'),\n         ('online', 'Online'),\n         ('hybrid', 'Hybrid'),\n     ]\n-    eventtype = models.CharField(max_length=10, choices=TYPE_CHOICES)\n+    event_type = models.CharField(max_length=10, choices=TYPE_CHOICES)\n+    venue = models.CharField(max_length=255, blank=True, null=True)\n     online_seat_limit = models.PositiveIntegerField(default=0)\n     offline_seat_limit = models.PositiveIntegerField(default=0)\n     is_seat_limit = models.BooleanField(default=False)\n-    venue = models.CharField(max_length=255, blank=True, null=True)\n     event_links = models.URLField(blank=True, null=True)\n     registration_link = models.URLField(blank=True, null=True)\n     is_registration = models.BooleanField(default=False)\n     REGISTRATION_TYPE_CHOICES = [\n"
+                },
+                {
+                    "date": 1733306818255,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -59,8 +59,9 @@\n         ('hybrid', 'Hybrid'),\n     ]\n     event_type = models.CharField(max_length=10, choices=TYPE_CHOICES)\n     venue = models.CharField(max_length=255, blank=True, null=True)\n+    \n     online_seat_limit = models.PositiveIntegerField(default=0)\n     offline_seat_limit = models.PositiveIntegerField(default=0)\n     is_seat_limit = models.BooleanField(default=False)\n     event_links = models.URLField(blank=True, null=True)\n"
+                },
+                {
+                    "date": 1733306966390,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -62,9 +62,9 @@\n     venue = models.CharField(max_length=255, blank=True, null=True)\n     \n     online_seat_limit = models.PositiveIntegerField(default=0)\n     offline_seat_limit = models.PositiveIntegerField(default=0)\n-    is_seat_limit = models.BooleanField(default=False)\n+    is_offlineseat_limit = models.BooleanField(default=False)\n     event_links = models.URLField(blank=True, null=True)\n     registration_link = models.URLField(blank=True, null=True)\n     is_registration = models.BooleanField(default=False)\n     REGISTRATION_TYPE_CHOICES = [\n"
+                },
+                {
+                    "date": 1733306974782,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -62,9 +62,10 @@\n     venue = models.CharField(max_length=255, blank=True, null=True)\n     \n     online_seat_limit = models.PositiveIntegerField(default=0)\n     offline_seat_limit = models.PositiveIntegerField(default=0)\n-    is_offlineseat_limit = models.BooleanField(default=False)\n+    is_offline_seat_limit = models.BooleanField(default=False)\n+    is_online_seat_limit = models.BooleanField(default=False)\n     event_links = models.URLField(blank=True, null=True)\n     registration_link = models.URLField(blank=True, null=True)\n     is_registration = models.BooleanField(default=False)\n     REGISTRATION_TYPE_CHOICES = [\n"
+                },
+                {
+                    "date": 1733306982916,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -64,8 +64,9 @@\n     online_seat_limit = models.PositiveIntegerField(default=0)\n     offline_seat_limit = models.PositiveIntegerField(default=0)\n     is_offline_seat_limit = models.BooleanField(default=False)\n     is_online_seat_limit = models.BooleanField(default=False)\n+    \n     event_links = models.URLField(blank=True, null=True)\n     registration_link = models.URLField(blank=True, null=True)\n     is_registration = models.BooleanField(default=False)\n     REGISTRATION_TYPE_CHOICES = [\n"
+                },
+                {
+                    "date": 1733307016844,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -65,11 +65,11 @@\n     offline_seat_limit = models.PositiveIntegerField(default=0)\n     is_offline_seat_limit = models.BooleanField(default=False)\n     is_online_seat_limit = models.BooleanField(default=False)\n     \n+    is_registration = models.BooleanField(default=False)\n     event_links = models.URLField(blank=True, null=True)\n     registration_link = models.URLField(blank=True, null=True)\n-    is_registration = models.BooleanField(default=False)\n     REGISTRATION_TYPE_CHOICES = [\n         ('paid', 'Paid'),\n         ('free', 'Free'),\n     ]\n"
+                },
+                {
+                    "date": 1733307026551,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -66,9 +66,9 @@\n     is_offline_seat_limit = models.BooleanField(default=False)\n     is_online_seat_limit = models.BooleanField(default=False)\n     \n     is_registration = models.BooleanField(default=False)\n-    event_links = models.URLField(blank=True, null=True)\n+    e_links = models.URLField(blank=True, null=True)\n     registration_link = models.URLField(blank=True, null=True)\n     REGISTRATION_TYPE_CHOICES = [\n         ('paid', 'Paid'),\n         ('free', 'Free'),\n"
+                },
+                {
+                    "date": 1733307035356,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -66,9 +66,9 @@\n     is_offline_seat_limit = models.BooleanField(default=False)\n     is_online_seat_limit = models.BooleanField(default=False)\n     \n     is_registration = models.BooleanField(default=False)\n-    e_links = models.URLField(blank=True, null=True)\n+    event_links = models.URLField(blank=True, null=True)\n     registration_link = models.URLField(blank=True, null=True)\n     REGISTRATION_TYPE_CHOICES = [\n         ('paid', 'Paid'),\n         ('free', 'Free'),\n"
+                },
+                {
+                    "date": 1733307202373,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -66,15 +66,16 @@\n     is_offline_seat_limit = models.BooleanField(default=False)\n     is_online_seat_limit = models.BooleanField(default=False)\n     \n     is_registration = models.BooleanField(default=False)\n-    event_links = models.URLField(blank=True, null=True)\n     registration_link = models.URLField(blank=True, null=True)\n+    # event_links = models.URLField(blank=True, null=True)\n     REGISTRATION_TYPE_CHOICES = [\n         ('paid', 'Paid'),\n         ('free', 'Free'),\n     ]\n     registration_type = models.CharField(max_length=10, choices=REGISTRATION_TYPE_CHOICES, default='free')\n+    \n     amount = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)\n     price_type = models.CharField(max_length=100, blank=True, null=True)\n     price_country = models.CharField(max_length=100, blank=True, null=True)\n     description = models.TextField(blank=True, null=True)\n"
+                },
+                {
+                    "date": 1733307228313,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -76,9 +76,8 @@\n     registration_type = models.CharField(max_length=10, choices=REGISTRATION_TYPE_CHOICES, default='free')\n     \n     amount = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)\n     price_type = models.CharField(max_length=100, blank=True, null=True)\n-    price_country = models.CharField(max_length=100, blank=True, null=True)\n     description = models.TextField(blank=True, null=True)\n     is_featured_event = models.BooleanField(default=False)\n     \n     category = models.ManyToManyField(EventCategory, related_name='event_category')\n"
+                },
+                {
+                    "date": 1733307299155,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -75,9 +75,10 @@\n     ]\n     registration_type = models.CharField(max_length=10, choices=REGISTRATION_TYPE_CHOICES, default='free')\n     \n     amount = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)\n-    price_type = models.CharField(max_length=100, blank=True, null=True)\n+    amount_type = models.CharField(max_length=100, blank=True, null=True)\n+    amount_type = models.CharField(max_length=100, blank=True, null=True)\n     description = models.TextField(blank=True, null=True)\n     is_featured_event = models.BooleanField(default=False)\n     \n     category = models.ManyToManyField(EventCategory, related_name='event_category')\n"
+                },
+                {
+                    "date": 1733307306052,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -76,9 +76,10 @@\n     registration_type = models.CharField(max_length=10, choices=REGISTRATION_TYPE_CHOICES, default='free')\n     \n     amount = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)\n     amount_type = models.CharField(max_length=100, blank=True, null=True)\n-    amount_type = models.CharField(max_length=100, blank=True, null=True)\n+    amount_country = models.CharField(max_length=100, blank=True, null=True)\n+    \n     description = models.TextField(blank=True, null=True)\n     is_featured_event = models.BooleanField(default=False)\n     \n     category = models.ManyToManyField(EventCategory, related_name='event_category')\n"
+                },
+                {
+                    "date": 1733307376321,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -79,9 +79,9 @@\n     amount_type = models.CharField(max_length=100, blank=True, null=True)\n     amount_country = models.CharField(max_length=100, blank=True, null=True)\n     \n     description = models.TextField(blank=True, null=True)\n-    is_featured_event = models.BooleanField(default=False)\n+    # is_featured_event = models.BooleanField(default=False)\n     \n     category = models.ManyToManyField(EventCategory, related_name='event_category')\n     organizer = models.ManyToManyField(EventOrganizer, related_name='organizer')\n     \n"
+                },
+                {
+                    "date": 1733307415316,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -79,17 +79,19 @@\n     amount_type = models.CharField(max_length=100, blank=True, null=True)\n     amount_country = models.CharField(max_length=100, blank=True, null=True)\n     \n     description = models.TextField(blank=True, null=True)\n-    # is_featured_event = models.BooleanField(default=False)\n+    is_featured_event = models.BooleanField(default=False)\n     \n     category = models.ManyToManyField(EventCategory, related_name='event_category')\n     organizer = models.ManyToManyField(EventOrganizer, related_name='organizer')\n     \n     created_date_time = models.DateTimeField(auto_now_add=True, null=True, blank=True)\n     created_date = models.DateField(auto_now_add=True, null=True, blank=True)\n     updated_date = models.DateTimeField(auto_now=True, null=True, blank=True)\n     \n+    \n+    \n     def __str__(self):\n         return f\"{self.event_name}\"\n \n class EventGallery(models.Model):\n"
+                },
+                {
+                    "date": 1733307503446,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -88,9 +88,29 @@\n     created_date_time = models.DateTimeField(auto_now_add=True, null=True, blank=True)\n     created_date = models.DateField(auto_now_add=True, null=True, blank=True)\n     updated_date = models.DateTimeField(auto_now=True, null=True, blank=True)\n     \n+    # SEO Meta Tags\n+    meta_title = models.CharField(max_length=255, blank=True, null=True, help_text=\"Title for search engines.\")\n+    meta_tag = models.CharField(max_length=255, blank=True, null=True, help_text=\"Primary meta tag for SEO.\")\n+    meta_description = models.TextField(blank=True, null=True, help_text=\"Short description for SEO.\")\n+    meta_keywords = models.TextField(blank=True, null=True, help_text=\"Comma-separated keywords for SEO.\")\n+    meta_author = models.CharField(max_length=255, blank=True, null=True, help_text=\"Author information for SEO.\")\n+    canonical_url = models.URLField(blank=True, null=True, help_text=\"Canonical URL to avoid duplicate content.\")\n+\n+    # Open Graph (OG) Tags (Social Sharing)\n+    og_title = models.CharField(max_length=255, blank=True, null=True, help_text=\"Title for social sharing.\")\n+    og_description = models.TextField(blank=True, null=True, help_text=\"Description for social sharing.\")\n+    og_url = models.URLField(blank=True, null=True, help_text=\"URL to share on social platforms.\")\n+    og_image =  models.ImageField(upload_to='college/og_image/',null=True,blank=True)\n+    og_type = models.CharField(max_length=50, blank=True, null=True, help_text=\"Type of the OG content (e.g., website, article).\")\n+    og_locale = models.CharField(max_length=10, blank=True, null=True, default=\"en_US\", help_text=\"Locale for OG tags (e.g., en_US).\")\n     \n+    # Dublin Core Metadata\n+    dc_title = models.CharField(max_length=255, blank=True, null=True, help_text=\"Title for Dublin Core Metadata.\")\n+    dc_description = models.TextField(blank=True, null=True, help_text=\"Description for Dublin Core Metadata.\")\n+    dc_language = models.CharField(max_length=10, blank=True, null=True, default=\"en\", help_text=\"Language code for Dublin Core Metadata (e.g., en, fr).\")\n+\n     \n     def __str__(self):\n         return f\"{self.event_name}\"\n \n"
+                },
+                {
+                    "date": 1733307663167,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -28,9 +28,9 @@\n \n class EventOrganizer(models.Model):\n     name = models.CharField(max_length=255)\n     image = models.ImageField(upload_to='event_organizer/')\n-    image_link = models.URLField(blank=True, null=True)\n+    link = models.URLField(blank=True, null=True)\n     is_organizer = models.BooleanField(default=False)\n     \n     created_date_time = models.DateTimeField(auto_now_add=True, null=True, blank=True)\n     created_date = models.DateField(auto_now_add=True, null=True, blank=True)\n"
+                },
+                {
+                    "date": 1733307673100,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -29,9 +29,9 @@\n class EventOrganizer(models.Model):\n     name = models.CharField(max_length=255)\n     image = models.ImageField(upload_to='event_organizer/')\n     link = models.URLField(blank=True, null=True)\n-    is_organizer = models.BooleanField(default=False)\n+    is_show = models.BooleanField(default=False)\n     \n     created_date_time = models.DateTimeField(auto_now_add=True, null=True, blank=True)\n     created_date = models.DateField(auto_now_add=True, null=True, blank=True)\n     updated_date = models.DateTimeField(auto_now=True, null=True, blank=True)\n"
                 }
             ],
             "date": 1726568467190,

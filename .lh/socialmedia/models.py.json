@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 8,
+            "activePatchIndex": 11,
             "patches": [
                 {
                     "date": 1726725092271,
@@ -40,6 +40,18 @@
                 {
                     "date": 1726726287738,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,9 +4,9 @@\n class SocialMedia(models.Model):\n     icon=models.ImageField(upload_to='components/banner',null = True,blank= True)\n     name= models.CharField(max_length=100,null= True,blank=True) \n     url = models.URLField(max_length=200)\n-    is_show = models.BooleanField\n+    is_show = models.BooleanField(default=False)\n     created_date = models.DateTimeField(auto_now_add=True, null = True,blank = True)\n     updated_date = models.DateTimeField(auto_now=True, null = True,blank = True)\n     \n     def __str__(self):\n"
+                },
+                {
+                    "date": 1733306434828,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,10 +1,10 @@\n from django.db import models\n \n # Create your models here.\n class SocialMedia(models.Model):\n+    name= models.CharField(max_length=100,null= True,blank=True) \n     icon=models.ImageField(upload_to='components/banner',null = True,blank= True)\n-    name= models.CharField(max_length=100,null= True,blank=True) \n     url = models.URLField(max_length=200)\n     is_show = models.BooleanField(default=False)\n     created_date = models.DateTimeField(auto_now_add=True, null = True,blank = True)\n     updated_date = models.DateTimeField(auto_now=True, null = True,blank = True)\n"
+                },
+                {
+                    "date": 1733306446075,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,10 +1,10 @@\n from django.db import models\n \n # Create your models here.\n class SocialMedia(models.Model):\n+    icon=models.ImageField(upload_to='components/banner',null = True,blank= True)\n     name= models.CharField(max_length=100,null= True,blank=True) \n-    icon=models.ImageField(upload_to='components/banner',null = True,blank= True)\n     url = models.URLField(max_length=200)\n     is_show = models.BooleanField(default=False)\n     created_date = models.DateTimeField(auto_now_add=True, null = True,blank = True)\n     updated_date = models.DateTimeField(auto_now=True, null = True,blank = True)\n"
+                },
+                {
+                    "date": 1733306459468,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,11 +1,11 @@\n from django.db import models\n \n # Create your models here.\n class SocialMedia(models.Model):\n+    name= models.CharField(max_length=100,null= True,blank=True) \n+    link = models.URLField(max_length=200)\n     icon=models.ImageField(upload_to='components/banner',null = True,blank= True)\n-    name= models.CharField(max_length=100,null= True,blank=True) \n-    url = models.URLField(max_length=200)\n     is_show = models.BooleanField(default=False)\n     created_date = models.DateTimeField(auto_now_add=True, null = True,blank = True)\n     updated_date = models.DateTimeField(auto_now=True, null = True,blank = True)\n     \n"
                 }
             ],
             "date": 1726725092271,

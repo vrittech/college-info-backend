@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 41,
+            "activePatchIndex": 82,
             "patches": [
                 {
                     "date": 1727071578528,
@@ -172,6 +172,170 @@
                 {
                     "date": 1727330841693,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,9 @@\n class Course(models.Model):\n     name = models.CharField(max_length=255)\n     level = models.ForeignKey(Level, on_delete=models.CASCADE, related_name='course_level')\n     faculties = models.ForeignKey(Faculty, on_delete=models.CASCADE, related_name='course_faculties')\n-    # affiliations = models.ManyToManyField('affiliation.Affiliation')\n+    affiliations = models.ManyToManyField('affiliation.Affiliation')\n     duration = models.CharField(max_length=50)\n     description = models.TextField()\n     excerpt = models.TextField()\n     image = models.ImageField(upload_to='courses/images/')\n"
+                },
+                {
+                    "date": 1733035576351,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,8 +8,9 @@\n     name = models.CharField(max_length=255)\n     level = models.ForeignKey(Level, on_delete=models.CASCADE, related_name='course_level')\n     faculties = models.ForeignKey(Faculty, on_delete=models.CASCADE, related_name='course_faculties')\n     affiliations = models.ManyToManyField('affiliation.Affiliation')\n+    \n     duration = models.CharField(max_length=50)\n     description = models.TextField()\n     excerpt = models.TextField()\n     image = models.ImageField(upload_to='courses/images/')\n"
+                },
+                {
+                    "date": 1733035582825,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,9 @@\n     name = models.CharField(max_length=255)\n     level = models.ForeignKey(Level, on_delete=models.CASCADE, related_name='course_level')\n     faculties = models.ForeignKey(Faculty, on_delete=models.CASCADE, related_name='course_faculties')\n     affiliations = models.ManyToManyField('affiliation.Affiliation')\n-    \n+    discipline = \n     duration = models.CharField(max_length=50)\n     description = models.TextField()\n     excerpt = models.TextField()\n     image = models.ImageField(upload_to='courses/images/')\n"
+                },
+                {
+                    "date": 1733035591615,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,9 @@\n from django.db import models\n from level.models import Level\n from faculty.models import Faculty\n from affiliation.models import Affiliation\n+from discipline.models import Discipline\n \n # Create your models here.\n class Course(models.Model):\n     name = models.CharField(max_length=255)\n"
+                },
+                {
+                    "date": 1733035601459,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,9 +9,9 @@\n     name = models.CharField(max_length=255)\n     level = models.ForeignKey(Level, on_delete=models.CASCADE, related_name='course_level')\n     faculties = models.ForeignKey(Faculty, on_delete=models.CASCADE, related_name='course_faculties')\n     affiliations = models.ManyToManyField('affiliation.Affiliation')\n-    discipline = \n+    discipline = models.\n     duration = models.CharField(max_length=50)\n     description = models.TextField()\n     excerpt = models.TextField()\n     image = models.ImageField(upload_to='courses/images/')\n"
+                },
+                {
+                    "date": 1733035607049,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,9 +9,9 @@\n     name = models.CharField(max_length=255)\n     level = models.ForeignKey(Level, on_delete=models.CASCADE, related_name='course_level')\n     faculties = models.ForeignKey(Faculty, on_delete=models.CASCADE, related_name='course_faculties')\n     affiliations = models.ManyToManyField('affiliation.Affiliation')\n-    discipline = models.\n+    discipline = models.Man\n     duration = models.CharField(max_length=50)\n     description = models.TextField()\n     excerpt = models.TextField()\n     image = models.ImageField(upload_to='courses/images/')\n"
+                },
+                {
+                    "date": 1733199172691,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,12 +6,12 @@\n \n # Create your models here.\n class Course(models.Model):\n     name = models.CharField(max_length=255)\n+    faculties = models.ForeignKey(Faculty, on_delete=models.CASCADE, related_name='course_faculties')\n     level = models.ForeignKey(Level, on_delete=models.CASCADE, related_name='course_level')\n-    faculties = models.ForeignKey(Faculty, on_delete=models.CASCADE, related_name='course_faculties')\n     affiliations = models.ManyToManyField('affiliation.Affiliation')\n-    discipline = models.Man\n+    discipline = models.ManyToManyField(Discipline)\n     duration = models.CharField(max_length=50)\n     description = models.TextField()\n     excerpt = models.TextField()\n     image = models.ImageField(upload_to='courses/images/')\n"
+                },
+                {
+                    "date": 1733199270927,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,8 +6,9 @@\n \n # Create your models here.\n class Course(models.Model):\n     name = models.CharField(max_length=255)\n+    name = models.CharField(max_length=255)\n     faculties = models.ForeignKey(Faculty, on_delete=models.CASCADE, related_name='course_faculties')\n     level = models.ForeignKey(Level, on_delete=models.CASCADE, related_name='course_level')\n     affiliations = models.ManyToManyField('affiliation.Affiliation')\n     discipline = models.ManyToManyField(Discipline)\n"
+                },
+                {
+                    "date": 1733199276384,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,9 +6,9 @@\n \n # Create your models here.\n class Course(models.Model):\n     name = models.CharField(max_length=255)\n-    name = models.CharField(max_length=255)\n+    abbreviation = models.CharField(max_length=255)\n     faculties = models.ForeignKey(Faculty, on_delete=models.CASCADE, related_name='course_faculties')\n     level = models.ForeignKey(Level, on_delete=models.CASCADE, related_name='course_level')\n     affiliations = models.ManyToManyField('affiliation.Affiliation')\n     discipline = models.ManyToManyField(Discipline)\n"
+                },
+                {
+                    "date": 1733199305679,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,10 +8,10 @@\n class Course(models.Model):\n     name = models.CharField(max_length=255)\n     abbreviation = models.CharField(max_length=255)\n     faculties = models.ForeignKey(Faculty, on_delete=models.CASCADE, related_name='course_faculties')\n+    affiliations = models.ManyToManyField('affiliation.Affiliation')\n     level = models.ForeignKey(Level, on_delete=models.CASCADE, related_name='course_level')\n-    affiliations = models.ManyToManyField('affiliation.Affiliation')\n     discipline = models.ManyToManyField(Discipline)\n     duration = models.CharField(max_length=50)\n     description = models.TextField()\n     excerpt = models.TextField()\n"
+                },
+                {
+                    "date": 1733199313680,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,13 +7,13 @@\n # Create your models here.\n class Course(models.Model):\n     name = models.CharField(max_length=255)\n     abbreviation = models.CharField(max_length=255)\n+    affiliations = models.ManyToManyField('affiliation.Affiliation')\n+    duration = models.CharField(max_length=50)\n     faculties = models.ForeignKey(Faculty, on_delete=models.CASCADE, related_name='course_faculties')\n-    affiliations = models.ManyToManyField('affiliation.Affiliation')\n     level = models.ForeignKey(Level, on_delete=models.CASCADE, related_name='course_level')\n     discipline = models.ManyToManyField(Discipline)\n-    duration = models.CharField(max_length=50)\n     description = models.TextField()\n     excerpt = models.TextField()\n     image = models.ImageField(upload_to='courses/images/')\n     created_date = models.DateField(auto_now_add=True)\n"
+                },
+                {
+                    "date": 1733199770871,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,8 +13,9 @@\n     faculties = models.ForeignKey(Faculty, on_delete=models.CASCADE, related_name='course_faculties')\n     level = models.ForeignKey(Level, on_delete=models.CASCADE, related_name='course_level')\n     discipline = models.ManyToManyField(Discipline)\n     description = models.TextField()\n+    description = models.TextField()\n     excerpt = models.TextField()\n     image = models.ImageField(upload_to='courses/images/')\n     created_date = models.DateField(auto_now_add=True)\n     updated_date = models.DateTimeField(auto_now=True)\n"
+                },
+                {
+                    "date": 1733199777770,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,9 +13,9 @@\n     faculties = models.ForeignKey(Faculty, on_delete=models.CASCADE, related_name='course_faculties')\n     level = models.ForeignKey(Level, on_delete=models.CASCADE, related_name='course_level')\n     discipline = models.ManyToManyField(Discipline)\n     description = models.TextField()\n-    description = models.TextField()\n+    course_shortdescription = models.TextField()\n     excerpt = models.TextField()\n     image = models.ImageField(upload_to='courses/images/')\n     created_date = models.DateField(auto_now_add=True)\n     updated_date = models.DateTimeField(auto_now=True)\n"
+                },
+                {
+                    "date": 1733199785436,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,9 +13,9 @@\n     faculties = models.ForeignKey(Faculty, on_delete=models.CASCADE, related_name='course_faculties')\n     level = models.ForeignKey(Level, on_delete=models.CASCADE, related_name='course_level')\n     discipline = models.ManyToManyField(Discipline)\n     description = models.TextField()\n-    course_shortdescription = models.TextField()\n+    course_shortdescription = models.TextField(default = \"\")\n     excerpt = models.TextField()\n     image = models.ImageField(upload_to='courses/images/')\n     created_date = models.DateField(auto_now_add=True)\n     updated_date = models.DateTimeField(auto_now=True)\n"
+                },
+                {
+                    "date": 1733199797198,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,9 +12,9 @@\n     duration = models.CharField(max_length=50)\n     faculties = models.ForeignKey(Faculty, on_delete=models.CASCADE, related_name='course_faculties')\n     level = models.ForeignKey(Level, on_delete=models.CASCADE, related_name='course_level')\n     discipline = models.ManyToManyField(Discipline)\n-    description = models.TextField()\n+    description = models.TextField(default = \"\")\n     course_shortdescription = models.TextField(default = \"\")\n     excerpt = models.TextField()\n     image = models.ImageField(upload_to='courses/images/')\n     created_date = models.DateField(auto_now_add=True)\n"
+                },
+                {
+                    "date": 1733199802628,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,9 +14,9 @@\n     level = models.ForeignKey(Level, on_delete=models.CASCADE, related_name='course_level')\n     discipline = models.ManyToManyField(Discipline)\n     description = models.TextField(default = \"\")\n     course_shortdescription = models.TextField(default = \"\")\n-    excerpt = models.TextField()\n+    excerpt = models.TextField(default = \"\")\n     image = models.ImageField(upload_to='courses/images/')\n     created_date = models.DateField(auto_now_add=True)\n     updated_date = models.DateTimeField(auto_now=True)\n \n"
+                },
+                {
+                    "date": 1733199808734,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,8 +14,9 @@\n     level = models.ForeignKey(Level, on_delete=models.CASCADE, related_name='course_level')\n     discipline = models.ManyToManyField(Discipline)\n     description = models.TextField(default = \"\")\n     course_shortdescription = models.TextField(default = \"\")\n+    course_shortdescription = models.TextField(default = \"\")\n     excerpt = models.TextField(default = \"\")\n     image = models.ImageField(upload_to='courses/images/')\n     created_date = models.DateField(auto_now_add=True)\n     updated_date = models.DateTimeField(auto_now=True)\n"
+                },
+                {
+                    "date": 1733199816126,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,9 +14,9 @@\n     level = models.ForeignKey(Level, on_delete=models.CASCADE, related_name='course_level')\n     discipline = models.ManyToManyField(Discipline)\n     description = models.TextField(default = \"\")\n     course_shortdescription = models.TextField(default = \"\")\n-    course_shortdescription = models.TextField(default = \"\")\n+    course_outcome = models.TextField(default = \"\")\n     excerpt = models.TextField(default = \"\")\n     image = models.ImageField(upload_to='courses/images/')\n     created_date = models.DateField(auto_now_add=True)\n     updated_date = models.DateTimeField(auto_now=True)\n"
+                },
+                {
+                    "date": 1733199835418,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,8 +15,9 @@\n     discipline = models.ManyToManyField(Discipline)\n     description = models.TextField(default = \"\")\n     course_shortdescription = models.TextField(default = \"\")\n     course_outcome = models.TextField(default = \"\")\n+    course_outcome = models.TextField(default = \"\")\n     excerpt = models.TextField(default = \"\")\n     image = models.ImageField(upload_to='courses/images/')\n     created_date = models.DateField(auto_now_add=True)\n     updated_date = models.DateTimeField(auto_now=True)\n"
+                },
+                {
+                    "date": 1733199842719,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,9 +15,9 @@\n     discipline = models.ManyToManyField(Discipline)\n     description = models.TextField(default = \"\")\n     course_shortdescription = models.TextField(default = \"\")\n     course_outcome = models.TextField(default = \"\")\n-    course_outcome = models.TextField(default = \"\")\n+    eligibility criteria = models.TextField(default = \"\")\n     excerpt = models.TextField(default = \"\")\n     image = models.ImageField(upload_to='courses/images/')\n     created_date = models.DateField(auto_now_add=True)\n     updated_date = models.DateTimeField(auto_now=True)\n"
+                },
+                {
+                    "date": 1733199858844,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,9 +15,9 @@\n     discipline = models.ManyToManyField(Discipline)\n     description = models.TextField(default = \"\")\n     course_shortdescription = models.TextField(default = \"\")\n     course_outcome = models.TextField(default = \"\")\n-    eligibility criteria = models.TextField(default = \"\")\n+    eligibility_criteria = models.TextField(default = \"\")\n     excerpt = models.TextField(default = \"\")\n     image = models.ImageField(upload_to='courses/images/')\n     created_date = models.DateField(auto_now_add=True)\n     updated_date = models.DateTimeField(auto_now=True)\n"
+                },
+                {
+                    "date": 1733199871762,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,8 +15,9 @@\n     discipline = models.ManyToManyField(Discipline)\n     description = models.TextField(default = \"\")\n     course_shortdescription = models.TextField(default = \"\")\n     course_outcome = models.TextField(default = \"\")\n+    course_outcome = models.TextField(default = \"\")\n     eligibility_criteria = models.TextField(default = \"\")\n     excerpt = models.TextField(default = \"\")\n     image = models.ImageField(upload_to='courses/images/')\n     created_date = models.DateField(auto_now_add=True)\n"
+                },
+                {
+                    "date": 1733199878767,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,9 +15,9 @@\n     discipline = models.ManyToManyField(Discipline)\n     description = models.TextField(default = \"\")\n     course_shortdescription = models.TextField(default = \"\")\n     course_outcome = models.TextField(default = \"\")\n-    course_outcome = models.TextField(default = \"\")\n+    course_curriculum = models.TextField(default = \"\")\n     eligibility_criteria = models.TextField(default = \"\")\n     excerpt = models.TextField(default = \"\")\n     image = models.ImageField(upload_to='courses/images/')\n     created_date = models.DateField(auto_now_add=True)\n"
+                },
+                {
+                    "date": 1733199895548,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,10 +17,10 @@\n     course_shortdescription = models.TextField(default = \"\")\n     course_outcome = models.TextField(default = \"\")\n     course_curriculum = models.TextField(default = \"\")\n     eligibility_criteria = models.TextField(default = \"\")\n+    image = models.ImageField(upload_to='courses/images/')\n     excerpt = models.TextField(default = \"\")\n-    image = models.ImageField(upload_to='courses/images/')\n     created_date = models.DateField(auto_now_add=True)\n     updated_date = models.DateTimeField(auto_now=True)\n \n     def __str__(self):\n"
+                },
+                {
+                    "date": 1733199935137,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,9 +18,8 @@\n     course_outcome = models.TextField(default = \"\")\n     course_curriculum = models.TextField(default = \"\")\n     eligibility_criteria = models.TextField(default = \"\")\n     image = models.ImageField(upload_to='courses/images/')\n-    excerpt = models.TextField(default = \"\")\n     created_date = models.DateField(auto_now_add=True)\n     updated_date = models.DateTimeField(auto_now=True)\n \n     def __str__(self):\n"
+                },
+                {
+                    "date": 1733199941795,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,8 +18,9 @@\n     course_outcome = models.TextField(default = \"\")\n     course_curriculum = models.TextField(default = \"\")\n     eligibility_criteria = models.TextField(default = \"\")\n     image = models.ImageField(upload_to='courses/images/')\n+    image = models.ImageField(upload_to='courses/images/')\n     created_date = models.DateField(auto_now_add=True)\n     updated_date = models.DateTimeField(auto_now=True)\n \n     def __str__(self):\n"
+                },
+                {
+                    "date": 1733199950455,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,9 +18,9 @@\n     course_outcome = models.TextField(default = \"\")\n     course_curriculum = models.TextField(default = \"\")\n     eligibility_criteria = models.TextField(default = \"\")\n     image = models.ImageField(upload_to='courses/images/')\n-    image = models.ImageField(upload_to='courses/images/')\n+    curriculum = models.ImageField(upload_to='courses/images/')\n     created_date = models.DateField(auto_now_add=True)\n     updated_date = models.DateTimeField(auto_now=True)\n \n     def __str__(self):\n"
+                },
+                {
+                    "date": 1733199961256,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,9 +18,9 @@\n     course_outcome = models.TextField(default = \"\")\n     course_curriculum = models.TextField(default = \"\")\n     eligibility_criteria = models.TextField(default = \"\")\n     image = models.ImageField(upload_to='courses/images/')\n-    curriculum = models.ImageField(upload_to='courses/images/')\n+    curriculum_file_upload = models.F(upload_to='courses/images/')\n     created_date = models.DateField(auto_now_add=True)\n     updated_date = models.DateTimeField(auto_now=True)\n \n     def __str__(self):\n"
+                },
+                {
+                    "date": 1733199968159,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,9 +18,9 @@\n     course_outcome = models.TextField(default = \"\")\n     course_curriculum = models.TextField(default = \"\")\n     eligibility_criteria = models.TextField(default = \"\")\n     image = models.ImageField(upload_to='courses/images/')\n-    curriculum_file_upload = models.F(upload_to='courses/images/')\n+    curriculum_file_upload = models.FileF(upload_to='courses/images/')\n     created_date = models.DateField(auto_now_add=True)\n     updated_date = models.DateTimeField(auto_now=True)\n \n     def __str__(self):\n"
+                },
+                {
+                    "date": 1733199977045,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,9 +18,9 @@\n     course_outcome = models.TextField(default = \"\")\n     course_curriculum = models.TextField(default = \"\")\n     eligibility_criteria = models.TextField(default = \"\")\n     image = models.ImageField(upload_to='courses/images/')\n-    curriculum_file_upload = models.FileF(upload_to='courses/images/')\n+    curriculum_file_upload = models.FileField(upload_to='courses//')\n     created_date = models.DateField(auto_now_add=True)\n     updated_date = models.DateTimeField(auto_now=True)\n \n     def __str__(self):\n"
+                },
+                {
+                    "date": 1733200056370,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,9 @@\n # Create your models here.\n class Course(models.Model):\n     name = models.CharField(max_length=255)\n     abbreviation = models.CharField(max_length=255)\n-    affiliations = models.ManyToManyField('affiliation.Affiliation')\n+    affiliations = models.ManyToManyField(Aff)\n     duration = models.CharField(max_length=50)\n     faculties = models.ForeignKey(Faculty, on_delete=models.CASCADE, related_name='course_faculties')\n     level = models.ForeignKey(Level, on_delete=models.CASCADE, related_name='course_level')\n     discipline = models.ManyToManyField(Discipline)\n@@ -18,9 +18,9 @@\n     course_outcome = models.TextField(default = \"\")\n     course_curriculum = models.TextField(default = \"\")\n     eligibility_criteria = models.TextField(default = \"\")\n     image = models.ImageField(upload_to='courses/images/')\n-    curriculum_file_upload = models.FileField(upload_to='courses//')\n+    curriculum_file_upload = models.FileField(upload_to='courses/pdf/')\n     created_date = models.DateField(auto_now_add=True)\n     updated_date = models.DateTimeField(auto_now=True)\n \n     def __str__(self):\n"
+                },
+                {
+                    "date": 1733200064700,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,9 @@\n # Create your models here.\n class Course(models.Model):\n     name = models.CharField(max_length=255)\n     abbreviation = models.CharField(max_length=255)\n-    affiliations = models.ManyToManyField(Aff)\n+    affiliations = models.ManyToManyField(Affiliation,re)\n     duration = models.CharField(max_length=50)\n     faculties = models.ForeignKey(Faculty, on_delete=models.CASCADE, related_name='course_faculties')\n     level = models.ForeignKey(Level, on_delete=models.CASCADE, related_name='course_level')\n     discipline = models.ManyToManyField(Discipline)\n"
+                },
+                {
+                    "date": 1733200083574,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,13 +7,13 @@\n # Create your models here.\n class Course(models.Model):\n     name = models.CharField(max_length=255)\n     abbreviation = models.CharField(max_length=255)\n-    affiliations = models.ManyToManyField(Affiliation,re)\n+    affiliations = models.ManyToManyField(Affiliation,related_name='course_affiliations')\n     duration = models.CharField(max_length=50)\n     faculties = models.ForeignKey(Faculty, on_delete=models.CASCADE, related_name='course_faculties')\n     level = models.ForeignKey(Level, on_delete=models.CASCADE, related_name='course_level')\n-    discipline = models.ManyToManyField(Discipline)\n+    discipline = models.ManyToManyField(Discipline, re)\n     description = models.TextField(default = \"\")\n     course_shortdescription = models.TextField(default = \"\")\n     course_outcome = models.TextField(default = \"\")\n     course_curriculum = models.TextField(default = \"\")\n"
+                },
+                {
+                    "date": 1733286461624,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,13 +7,13 @@\n # Create your models here.\n class Course(models.Model):\n     name = models.CharField(max_length=255)\n     abbreviation = models.CharField(max_length=255)\n-    affiliations = models.ManyToManyField(Affiliation,related_name='course_affiliations')\n+    affiliations = models.For(Affiliation,related_name='course_affiliations')\n     duration = models.CharField(max_length=50)\n     faculties = models.ForeignKey(Faculty, on_delete=models.CASCADE, related_name='course_faculties')\n     level = models.ForeignKey(Level, on_delete=models.CASCADE, related_name='course_level')\n-    discipline = models.ManyToManyField(Discipline, re)\n+    discipline = models.ManyToManyField(Discipline, related_name='course_discipline')\n     description = models.TextField(default = \"\")\n     course_shortdescription = models.TextField(default = \"\")\n     course_outcome = models.TextField(default = \"\")\n     course_curriculum = models.TextField(default = \"\")\n"
+                },
+                {
+                    "date": 1733286473641,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,9 @@\n # Create your models here.\n class Course(models.Model):\n     name = models.CharField(max_length=255)\n     abbreviation = models.CharField(max_length=255)\n-    affiliations = models.For(Affiliation,related_name='course_affiliations')\n+    affiliations = models.ForeignKey(Affiliation,on_delete=models.CASCADE,related_name='course_affiliations')\n     duration = models.CharField(max_length=50)\n     faculties = models.ForeignKey(Faculty, on_delete=models.CASCADE, related_name='course_faculties')\n     level = models.ForeignKey(Level, on_delete=models.CASCADE, related_name='course_level')\n     discipline = models.ManyToManyField(Discipline, related_name='course_discipline')\n"
+                },
+                {
+                    "date": 1733286480726,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,9 @@\n # Create your models here.\n class Course(models.Model):\n     name = models.CharField(max_length=255)\n     abbreviation = models.CharField(max_length=255)\n-    affiliations = models.ForeignKey(Affiliation,on_delete=models.CASCADE,related_name='course_affiliations')\n+    affiliation = models.ForeignKey(Affiliation,on_delete=models.CASCADE,related_name='course_affiliations')\n     duration = models.CharField(max_length=50)\n     faculties = models.ForeignKey(Faculty, on_delete=models.CASCADE, related_name='course_faculties')\n     level = models.ForeignKey(Level, on_delete=models.CASCADE, related_name='course_level')\n     discipline = models.ManyToManyField(Discipline, related_name='course_discipline')\n"
+                },
+                {
+                    "date": 1733286500789,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,9 @@\n class Course(models.Model):\n     name = models.CharField(max_length=255)\n     abbreviation = models.CharField(max_length=255)\n     affiliation = models.ForeignKey(Affiliation,on_delete=models.CASCADE,related_name='course_affiliations')\n-    duration = models.CharField(max_length=50)\n+    duration = models.\n     faculties = models.ForeignKey(Faculty, on_delete=models.CASCADE, related_name='course_faculties')\n     level = models.ForeignKey(Level, on_delete=models.CASCADE, related_name='course_level')\n     discipline = models.ManyToManyField(Discipline, related_name='course_discipline')\n     description = models.TextField(default = \"\")\n"
+                },
+                {
+                    "date": 1733286505947,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,9 @@\n class Course(models.Model):\n     name = models.CharField(max_length=255)\n     abbreviation = models.CharField(max_length=255)\n     affiliation = models.ForeignKey(Affiliation,on_delete=models.CASCADE,related_name='course_affiliations')\n-    duration = models.\n+    duration = models.F\n     faculties = models.ForeignKey(Faculty, on_delete=models.CASCADE, related_name='course_faculties')\n     level = models.ForeignKey(Level, on_delete=models.CASCADE, related_name='course_level')\n     discipline = models.ManyToManyField(Discipline, related_name='course_discipline')\n     description = models.TextField(default = \"\")\n"
+                },
+                {
+                    "date": 1733286514336,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,15 +2,15 @@\n from level.models import Level\n from faculty.models import Faculty\n from affiliation.models import Affiliation\n from discipline.models import Discipline\n-\n+from duration\n # Create your models here.\n class Course(models.Model):\n     name = models.CharField(max_length=255)\n     abbreviation = models.CharField(max_length=255)\n     affiliation = models.ForeignKey(Affiliation,on_delete=models.CASCADE,related_name='course_affiliations')\n-    duration = models.F\n+    duration = models.ForeignKey\n     faculties = models.ForeignKey(Faculty, on_delete=models.CASCADE, related_name='course_faculties')\n     level = models.ForeignKey(Level, on_delete=models.CASCADE, related_name='course_level')\n     discipline = models.ManyToManyField(Discipline, related_name='course_discipline')\n     description = models.TextField(default = \"\")\n"
+                },
+                {
+                    "date": 1733286524900,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,15 +2,15 @@\n from level.models import Level\n from faculty.models import Faculty\n from affiliation.models import Affiliation\n from discipline.models import Discipline\n-from duration\n+from duration.models import Duration\n # Create your models here.\n class Course(models.Model):\n     name = models.CharField(max_length=255)\n     abbreviation = models.CharField(max_length=255)\n     affiliation = models.ForeignKey(Affiliation,on_delete=models.CASCADE,related_name='course_affiliations')\n-    duration = models.ForeignKey\n+    duration = models.ForeignKey()\n     faculties = models.ForeignKey(Faculty, on_delete=models.CASCADE, related_name='course_faculties')\n     level = models.ForeignKey(Level, on_delete=models.CASCADE, related_name='course_level')\n     discipline = models.ManyToManyField(Discipline, related_name='course_discipline')\n     description = models.TextField(default = \"\")\n"
+                },
+                {
+                    "date": 1733286530755,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,9 @@\n class Course(models.Model):\n     name = models.CharField(max_length=255)\n     abbreviation = models.CharField(max_length=255)\n     affiliation = models.ForeignKey(Affiliation,on_delete=models.CASCADE,related_name='course_affiliations')\n-    duration = models.ForeignKey()\n+    duration = models.ForeignKey(``Duration``,on_delete=models.CASCADE,related_name='course_duration')\n     faculties = models.ForeignKey(Faculty, on_delete=models.CASCADE, related_name='course_faculties')\n     level = models.ForeignKey(Level, on_delete=models.CASCADE, related_name='course_level')\n     discipline = models.ManyToManyField(Discipline, related_name='course_discipline')\n     description = models.TextField(default = \"\")\n"
+                },
+                {
+                    "date": 1733286537176,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,9 @@\n class Course(models.Model):\n     name = models.CharField(max_length=255)\n     abbreviation = models.CharField(max_length=255)\n     affiliation = models.ForeignKey(Affiliation,on_delete=models.CASCADE,related_name='course_affiliations')\n-    duration = models.ForeignKey(``Duration``,on_delete=models.CASCADE,related_name='course_duration')\n+    duration = models.ForeignKey(Duration,on_delete=models.CASCADE,related_name='course_duration')\n     faculties = models.ForeignKey(Faculty, on_delete=models.CASCADE, related_name='course_faculties')\n     level = models.ForeignKey(Level, on_delete=models.CASCADE, related_name='course_level')\n     discipline = models.ManyToManyField(Discipline, related_name='course_discipline')\n     description = models.TextField(default = \"\")\n"
                 }
             ],
             "date": 1727071578528,

@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 4,
+            "activePatchIndex": 13,
             "patches": [
                 {
                     "date": 1726653956970,
@@ -24,6 +24,42 @@
                 {
                     "date": 1726728936032,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,10 +1,10 @@\n from django.db import models\n \n # Create your models here.\n class Level(models.Model):\n-        name = models.CharField(max_length=255,null=True,blank=True)\n+    name = models.CharField(max_length=255,null=True,blank=True)\n     description = models.TextField(null=True,blank=True)\n-    image = models.ImageField(upload_to='college/',null=True,blank=True)\n+    image = models.ImageField(upload_to='level/',null=True,blank=True)\n     \n     def __str__(self):\n         return self.name\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1733303344827,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,9 @@\n from django.db import models\n \n # Create your models here.\n class Level(models.Model):\n+     main_category = models.ForeignKey('self', on_delete=models.CASCADE,related_name=\"sub_categories\", null=True, blank=True)\n     name = models.CharField(max_length=255,null=True,blank=True)\n     description = models.TextField(null=True,blank=True)\n     image = models.ImageField(upload_to='level/',null=True,blank=True)\n     \n"
+                },
+                {
+                    "date": 1733303353456,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,9 @@\n from django.db import models\n \n # Create your models here.\n class Level(models.Model):\n-     main_category = models.ForeignKey('self', on_delete=models.CASCADE,related_name=\"sub_categories\", null=True, blank=True)\n+    main_category = models.ForeignKey('self', on_delete=models.CASCADE,related_name=\"sub_categories\", null=True, blank=True)\n     name = models.CharField(max_length=255,null=True,blank=True)\n     description = models.TextField(null=True,blank=True)\n     image = models.ImageField(upload_to='level/',null=True,blank=True)\n     \n"
+                },
+                {
+                    "date": 1733303359201,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,9 @@\n from django.db import models\n \n # Create your models here.\n class Level(models.Model):\n-    main_category = models.ForeignKey('self', on_delete=models.CASCADE,related_name=\"sub_categories\", null=True, blank=True)\n+     = models.ForeignKey('self', on_delete=models.CASCADE,related_name=\"sub_categories\", null=True, blank=True)\n     name = models.CharField(max_length=255,null=True,blank=True)\n     description = models.TextField(null=True,blank=True)\n     image = models.ImageField(upload_to='level/',null=True,blank=True)\n     \n"
+                },
+                {
+                    "date": 1733303364680,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,9 @@\n from django.db import models\n \n # Create your models here.\n class Level(models.Model):\n-     = models.ForeignKey('self', on_delete=models.CASCADE,related_name=\"sub_categories\", null=True, blank=True)\n+    Level = models.ForeignKey('self', on_delete=models.CASCADE,related_name=\"sub_categories\", null=True, blank=True)\n     name = models.CharField(max_length=255,null=True,blank=True)\n     description = models.TextField(null=True,blank=True)\n     image = models.ImageField(upload_to='level/',null=True,blank=True)\n     \n"
+                },
+                {
+                    "date": 1733303423170,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,5 +7,6 @@\n     description = models.TextField(null=True,blank=True)\n     image = models.ImageField(upload_to='level/',null=True,blank=True)\n     \n     def __str__(self):\n+        \n         return self.name\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1733303434572,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,8 @@\n from django.db import models\n \n # Create your models here.\n class Level(models.Model):\n-    Level = models.ForeignKey('self', on_delete=models.CASCADE,related_name=\"sub_categories\", null=True, blank=True)\n     name = models.CharField(max_length=255,null=True,blank=True)\n     description = models.TextField(null=True,blank=True)\n     image = models.ImageField(upload_to='level/',null=True,blank=True)\n     \n"
+                },
+                {
+                    "date": 1733303452448,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,5 +7,14 @@\n     image = models.ImageField(upload_to='level/',null=True,blank=True)\n     \n     def __str__(self):\n         \n+        return self.name\n+    \n+class Level(models.Model):\n+    name = models.CharField(max_length=255,null=True,blank=True)\n+    description = models.TextField(null=True,blank=True)\n+    image = models.ImageField(upload_to='level/',null=True,blank=True)\n+    \n+    def __str__(self):\n+        \n         return self.name\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1733303464614,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,9 +9,10 @@\n     def __str__(self):\n         \n         return self.name\n     \n-class Level(models.Model):\n+class SubLevel(models.Model):\n+    \n     name = models.CharField(max_length=255,null=True,blank=True)\n     description = models.TextField(null=True,blank=True)\n     image = models.ImageField(upload_to='level/',null=True,blank=True)\n     \n"
+                },
+                {
+                    "date": 1733303471822,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,9 @@\n         \n         return self.name\n     \n class SubLevel(models.Model):\n-    \n+    level = m\n     name = models.CharField(max_length=255,null=True,blank=True)\n     description = models.TextField(null=True,blank=True)\n     image = models.ImageField(upload_to='level/',null=True,blank=True)\n     \n"
                 }
             ],
             "date": 1726653956970,

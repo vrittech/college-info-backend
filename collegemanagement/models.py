@@ -6,16 +6,41 @@ from collegetype.models import CollegeType
 from coursesandfees.models import CoursesAndFees
 from facilities.models import Facility
 from socialmedia.models import SocialMedia
+from district.models import District
+from discipline.models import Discipline
+from gallery.models import Gallery
+from accounts.models import CustomUser
+from formprogress.models import FormStepProgress
+# from faqs.models import FAQs
 
  
 # CollegeGallery Model
 class CollegeGallery(models.Model):
     image = models.ImageField(upload_to='college/gallery/')
     description = models.TextField(blank=True)
+    created_date = models.DateField(auto_now_add=True)
+    updated_date = models.DateField(auto_now=True)
 
     def __str__(self):
         return f'Gallery Image {self.id}'
+    
+class Placement(models.Model):
+    description = models.TextField(blank=True)
+    created_date = models.DateField(auto_now_add=True)
+    updated_date = models.DateField(auto_now=True)
 
+    def __str__(self):
+        return f'Placement {self.id}'
+
+class CollegeFaqs(models.Model):
+    question = models.CharField(max_length=255)
+    answer = models.TextField(blank=True)
+    created_date = models.DateField(auto_now_add=True)
+    updated_date = models.DateField(auto_now=True)
+
+    def __str__(self):
+        return f'Placement {self.id}'
+    
 class College(models.Model):
     banner_image = models.ImageField(upload_to='college/banner/')
     dp_image = models.ImageField(upload_to='college/dp/')
@@ -23,23 +48,54 @@ class College(models.Model):
     established_date = models.DateField()
     website_link = models.URLField()
     address = models.CharField(max_length=255)
-    location = models.ForeignKey(Location,on_delete=models.CASCADE)
+    district = models.ForeignKey(District,on_delete=models.CASCADE,related_name='college_district')
+    # location = models.ForeignKey(Location,on_delete=models.CASCADE)
     phone_number = models.CharField(max_length=20)
     email = models.EmailField()
-    affiliated = models.ForeignKey(Affiliation, on_delete=models.CASCADE)
-    college_type = models.ForeignKey(CollegeType, on_delete=models.CASCADE)
+    affiliated = models.ForeignKey(Affiliation, on_delete=models.CASCADE,related_name='college_affiliation')
+    college_type = models.ForeignKey(CollegeType, on_delete=models.CASCADE,related_name='college_type')
+    discipline = models.ManyToManyField(Discipline, related_name='college_discipline')
+    social_media = models.ManyToManyField(SocialMedia)
     google_map_link = models.URLField(blank=True, null=True)
     latitude = models.DecimalField(max_digits=9, decimal_places=6)
     longitude = models.DecimalField(max_digits=9, decimal_places=6)
     about = models.TextField()
-    courses_and_fees = models.ManyToManyField(CoursesAndFees)
+    brochure = models.FileField(upload_to='college/brochure/',null=True,blank=True)
+    step_counter= models.ForeignKey(FormStepProgress, on_delete=models.CASCADE,related_name='step_counter')
+    
+    # SEO Meta Tags
+    meta_title = models.CharField(max_length=255, blank=True, null=True, help_text="Title for search engines.")
+    meta_tag = models.CharField(max_length=255, blank=True, null=True, help_text="Primary meta tag for SEO.")
+    meta_description = models.TextField(blank=True, null=True, help_text="Short description for SEO.")
+    meta_keywords = models.TextField(blank=True, null=True, help_text="Comma-separated keywords for SEO.")
+    meta_author = models.CharField(max_length=255, blank=True, null=True, help_text="Author information for SEO.")
+    canonical_url = models.URLField(blank=True, null=True, help_text="Canonical URL to avoid duplicate content.")
+
+    # Open Graph (OG) Tags (Social Sharing)
+    og_title = models.CharField(max_length=255, blank=True, null=True, help_text="Title for social sharing.")
+    og_description = models.TextField(blank=True, null=True, help_text="Description for social sharing.")
+    og_url = models.URLField(blank=True, null=True, help_text="URL to share on social platforms.")
+    og_image =  models.ImageField(upload_to='college/og_image/',null=True,blank=True)
+    og_type = models.CharField(max_length=50, blank=True, null=True, help_text="Type of the OG content (e.g., website, article).")
+    og_locale = models.CharField(max_length=10, blank=True, null=True, default="en_US", help_text="Locale for OG tags (e.g., en_US).")
+    
+    # Dublin Core Metadata
+    dc_title = models.CharField(max_length=255, blank=True, null=True, help_text="Title for Dublin Core Metadata.")
+    dc_description = models.TextField(blank=True, null=True, help_text="Description for Dublin Core Metadata.")
+    dc_language = models.CharField(max_length=10, blank=True, null=True, default="en", help_text="Language code for Dublin Core Metadata (e.g., en, fr).")
+
+
+    courses_and_fees = models.ManyToManyField(CoursesAndFees,related_name='college_courses_and_fees')
     admission_open = models.ManyToManyField(AdmissionOpen)
-    facilities = models.ManyToManyField(Facility)
+    facilities = models.ManyToManyField(Facility,related_name='college_facilities')
     college_gallery = models.ManyToManyField(CollegeGallery)
-    featured_video = models.FileField(upload_to='college/featured_videos/', blank=True, null=True)
-    brochure = models.FileField(upload_to='college/brochure/')
-    social_media = models.ManyToManyField(SocialMedia)
+    placement = models.TextField(null=True,blank=True)
+    scholarship = models.TextField(null=True,blank=True)
+    
+    # featured_video = models.FileField(upload_to='college/featured_videos/', blank=True, null=True)
     scholarships = models.TextField()
+    faqs = models.ManyToManyField(CollegeFaqs)
+    college_admin = models.ForeignKey(CustomUser, on_delete=models.CASCADE,related_name='college_admin')
 
     def map_location(self):
         return f'{self.latitude}, {self.longitude}'
