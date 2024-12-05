@@ -1,26 +1,35 @@
-from django.contrib.auth.models import Group, Permission
-from django.contrib import admin
-
-from .models import CustomUser
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
+from django.contrib.auth.models import Group
+from .models import CustomUser, GroupExtension
 
-class UserAdmin(BaseUserAdmin):
-    # list_display = ['role',] # this display in outer list form
+class CustomUserAdmin(BaseUserAdmin):
     exclude = ('user_permissions',)
+    
+    # Only include fields that are present in the model
     fieldsets = (
         (None, {'fields': ('username', 'password')}),
-        ('Personal info', {'fields': ('first_name', 'last_name', 'email','avatar','department','position')}),
-        ('Permissions', {'fields': ('is_active','is_staff', 'is_superuser','groups')}),
-        # ('Social sites',{'fields':('facebook','twitter','tiktok','instagram','youtube')})
-        # Add your custom fields here
+        ('Personal info', {'fields': ('first_name', 'last_name', 'email','roles','phone', 'avatar', 'professional_image', 'position',)}),
+        ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser','groups')}),
     )
-    pass
-    # Your custom admin configurations
+    
+    list_display = ['username', 'email', 'position','roles','phone', 'is_active', 'is_staff', 'professional_image', 'avatar']
+    search_fields = ['username', 'email', 'full_name','roles',]
 
-admin.site.register(CustomUser, UserAdmin)
-
-admin.site.register(Permission)
-
+admin.site.register(CustomUser, CustomUserAdmin)
 
 
+@admin.register(GroupExtension)
+class GroupExtensionAdmin(admin.ModelAdmin):
+    list_display = ['group', 'position']
+    search_fields = ['group__name']
+    list_filter = ['position']
+    ordering = ['position']
+
+    def save_model(self, request, obj, form, change):
+        # Override save_model to handle custom position saving logic if needed
+        super().save_model(request, obj, form, change)
+
+# Unregister and register Group to customize admin panel if necessary
+admin.site.unregister(Group)
+admin.site.register(Group)

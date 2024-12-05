@@ -12,10 +12,19 @@ from accounts.models import CustomUser
 from django.contrib.auth import authenticate,login
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.decorators import action
+# from accounts.utilities.filters import CustomUserFilter
+# accounts/utilities/filters.py
+from rest_framework.filters import SearchFilter, OrderingFilter
+from django_filters.rest_framework import DjangoFilterBackend
 
 class CustomUserViewSet(viewsets.ModelViewSet):
-    queryset = CustomUser.objects.all()
+    queryset = CustomUser.objects.all().order_by('position')
     permission_classes = [permissions.IsAuthenticated]
+    # filterset_class = CustomUserFilter
+    filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]
+    
+    search_fields = ['position', 'email', 'full_name','first_name','last_name']
+    ordering_fields =['position', 'email', 'full_name','first_name','last_name']
 
     def get_serializer_class(self):
         if self.action in ['list']:
@@ -39,3 +48,9 @@ class CustomUserViewSet(viewsets.ModelViewSet):
             return Response({"detail": "Password changed successfully"}, status=status.HTTP_200_OK)
         
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    @action(detail=False, methods=['get'], name="GetSelfDetail", url_path="me")
+    def GetSelfDetail(self, request, *args, **kwargs):
+        self.object = request.user  # Set the object directly to the current user
+        serializer = self.get_serializer(self.object)
+        return Response(serializer.data)

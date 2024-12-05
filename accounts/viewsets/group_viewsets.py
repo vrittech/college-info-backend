@@ -4,7 +4,7 @@ from rest_framework.permissions import IsAdminUser
 from ..serializers.group_serializers import GroupSerializer
 
 class GroupViewSet(viewsets.ModelViewSet):
-    queryset = Group.objects.all()
+    queryset = Group.objects.all().order_by('-id')
     serializer_class = GroupSerializer
     permission_classes = [IsAdminUser]
 
