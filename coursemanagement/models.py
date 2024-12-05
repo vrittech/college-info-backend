@@ -4,8 +4,9 @@ from faculty.models import Faculty
 from affiliation.models import Affiliation
 from discipline.models import Discipline
 from duration.models import Duration
+from mainproj.utilities.seo import SEOFields
 # Create your models here.
-class Course(models.Model):
+class Course(SEOFields):
     name = models.CharField(max_length=255)
     abbreviation = models.CharField(max_length=255)
     affiliation = models.ForeignKey(Affiliation,on_delete=models.CASCADE,related_name='course_affiliations')

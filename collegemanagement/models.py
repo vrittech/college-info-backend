@@ -11,6 +11,7 @@ from discipline.models import Discipline
 from gallery.models import Gallery
 # from accounts.models import CustomUser
 from formprogress.models import FormStepProgress
+from mainproj.utilities.seo import SEOFields
 # from faqs.models import FAQs
 
  
@@ -41,7 +42,7 @@ class CollegeFaqs(models.Model):
     def __str__(self):
         return f'Placement {self.id}'
     
-class College(models.Model):
+class College(SEOFields):
     banner_image = models.ImageField(upload_to='college/banner/')
     dp_image = models.ImageField(upload_to='college/dp/')
     name = models.CharField(max_length=255)
@@ -63,26 +64,26 @@ class College(models.Model):
     brochure = models.FileField(upload_to='college/brochure/',null=True,blank=True)
     step_counter= models.ForeignKey(FormStepProgress, on_delete=models.CASCADE,related_name='step_counter')
     
-    # SEO Meta Tags
-    meta_title = models.CharField(max_length=255, blank=True, null=True, help_text="Title for search engines.")
-    meta_tag = models.CharField(max_length=255, blank=True, null=True, help_text="Primary meta tag for SEO.")
-    meta_description = models.TextField(blank=True, null=True, help_text="Short description for SEO.")
-    meta_keywords = models.TextField(blank=True, null=True, help_text="Comma-separated keywords for SEO.")
-    meta_author = models.CharField(max_length=255, blank=True, null=True, help_text="Author information for SEO.")
-    canonical_url = models.URLField(blank=True, null=True, help_text="Canonical URL to avoid duplicate content.")
+    # # SEO Meta Tags
+    # meta_title = models.CharField(max_length=255, blank=True, null=True, help_text="Title for search engines.")
+    # meta_tag = models.CharField(max_length=255, blank=True, null=True, help_text="Primary meta tag for SEO.")
+    # meta_description = models.TextField(blank=True, null=True, help_text="Short description for SEO.")
+    # meta_keywords = models.TextField(blank=True, null=True, help_text="Comma-separated keywords for SEO.")
+    # meta_author = models.CharField(max_length=255, blank=True, null=True, help_text="Author information for SEO.")
+    # canonical_url = models.URLField(blank=True, null=True, help_text="Canonical URL to avoid duplicate content.")
 
-    # Open Graph (OG) Tags (Social Sharing)
-    og_title = models.CharField(max_length=255, blank=True, null=True, help_text="Title for social sharing.")
-    og_description = models.TextField(blank=True, null=True, help_text="Description for social sharing.")
-    og_url = models.URLField(blank=True, null=True, help_text="URL to share on social platforms.")
-    og_image =  models.ImageField(upload_to='college/og_image/',null=True,blank=True)
-    og_type = models.CharField(max_length=50, blank=True, null=True, help_text="Type of the OG content (e.g., website, article).")
-    og_locale = models.CharField(max_length=10, blank=True, null=True, default="en_US", help_text="Locale for OG tags (e.g., en_US).")
+    # # Open Graph (OG) Tags (Social Sharing)
+    # og_title = models.CharField(max_length=255, blank=True, null=True, help_text="Title for social sharing.")
+    # og_description = models.TextField(blank=True, null=True, help_text="Description for social sharing.")
+    # og_url = models.URLField(blank=True, null=True, help_text="URL to share on social platforms.")
+    # og_image =  models.ImageField(upload_to='college/og_image/',null=True,blank=True)
+    # og_type = models.CharField(max_length=50, blank=True, null=True, help_text="Type of the OG content (e.g., website, article).")
+    # og_locale = models.CharField(max_length=10, blank=True, null=True, default="en_US", help_text="Locale for OG tags (e.g., en_US).")
     
-    # Dublin Core Metadata
-    dc_title = models.CharField(max_length=255, blank=True, null=True, help_text="Title for Dublin Core Metadata.")
-    dc_description = models.TextField(blank=True, null=True, help_text="Description for Dublin Core Metadata.")
-    dc_language = models.CharField(max_length=10, blank=True, null=True, default="en", help_text="Language code for Dublin Core Metadata (e.g., en, fr).")
+    # # Dublin Core Metadata
+    # dc_title = models.CharField(max_length=255, blank=True, null=True, help_text="Title for Dublin Core Metadata.")
+    # dc_description = models.TextField(blank=True, null=True, help_text="Description for Dublin Core Metadata.")
+    # dc_language = models.CharField(max_length=10, blank=True, null=True, default="en", help_text="Language code for Dublin Core Metadata (e.g., en, fr).")
 
 
     courses_and_fees = models.ManyToManyField(CoursesAndFees,related_name='college_courses_and_fees')

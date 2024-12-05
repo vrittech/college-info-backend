@@ -25,6 +25,7 @@ from collegetype.models import CollegeType
 from django.utils.timezone import now
 from django.core.exceptions import ValidationError
 from certification.models import Certification
+from mainproj.utilities.seo import SEOFields
 
 
 def validate_year(value):
@@ -32,7 +33,7 @@ def validate_year(value):
         if value > current_year or value < 1800:  # Define a reasonable range
             raise ValidationError(f"{value} is not a valid year. Please provide a year between 1800 and {current_year}.")
 
-class Affiliation(models.Model):
+class Affiliation(SEOFields):
     UNIVERSITY_TYPE_CHOICES = [
         ('local', 'Local'),
         ('foreign', 'Foreign'),
