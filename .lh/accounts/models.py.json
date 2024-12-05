@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 10,
+            "activePatchIndex": 12,
             "patches": [
                 {
                     "date": 1728378543650,
@@ -48,6 +48,14 @@
                 {
                     "date": 1733381846921,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,9 +5,9 @@\n \n # Create your models here.\n class CustomUser(AbstractUser):\n     roles = models.CharField(max_length = 250,null = True)\n-    # college = models.ForeignKey(College,null = True,on_delete = models.SET_NULL)\n+    college = models.ForeignKey(College,null = True,on_delete = models.SET_NULL)\n     email = models.EmailField(max_length = 250,unique = True)\n     full_name = models.CharField(max_length = 250,null = True)\n     # social_links = models.ManyToManyField(SocialMedia,blank=True)\n     position = models.PositiveIntegerField(default=0)\n"
+                },
+                {
+                    "date": 1733382989004,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,9 @@\n from django.db import models\n from django.contrib.auth.models import AbstractUser\n from collegemanagement.models import College\n from django.contrib.auth.models import Group, Permission\n+from socialmedia\n \n # Create your models here.\n class CustomUser(AbstractUser):\n     roles = models.CharField(max_length = 250,null = True)\n"
+                },
+                {
+                    "date": 1733382996549,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,9 @@\n from django.db import models\n from django.contrib.auth.models import AbstractUser\n from collegemanagement.models import College\n from django.contrib.auth.models import Group, Permission\n-from socialmedia.models\n+from socialmedia.models import SocialMedia\n \n # Create your models here.\n class CustomUser(AbstractUser):\n     roles = models.CharField(max_length = 250,null = True)\n"
                 }
             ],
             "date": 1728378543650,
