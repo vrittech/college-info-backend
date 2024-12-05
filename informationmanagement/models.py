@@ -2,7 +2,7 @@ from django.db import models
 from affiliation.models import Affiliation
 # from college.models import College
 from coursemanagement.models import Course
-# from collegemanagement.models import College
+from collegemanagement.models import College
 from district.models import District
 from faculty.models import Faculty
 from level.models import Level, SubLevel
@@ -68,7 +68,7 @@ class Information(models.Model):
     affiliation = models.ManyToManyField(Affiliation)
     college_type = models.ForeignKey(CollegeType, on_delete=models.SET_NULL, null=True, blank=True)
     district = models.ManyToManyField(District, blank=True)
-    # college = models.ManyToManyField('collegemanagement.College', blank=True)
+    college = models.ManyToManyField(College, blank=True)
     faculty = models.ManyToManyField(Faculty, blank=True)
     
     information_tagging = models.ManyToManyField(InformationTagging, blank=True)
