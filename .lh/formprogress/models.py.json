@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 11,
+            "activePatchIndex": 13,
             "patches": [
                 {
                     "date": 1733287511101,
@@ -52,6 +52,14 @@
                 {
                     "date": 1733381585178,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,10 +1,10 @@\n from django.db import models\n-from accounts.models import CustomUser\n+# from accounts.models import CustomUser\n \n # Create your models here.\n class FormStepProgress(models.Model):\n-    # user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True, blank=True)  # Optional for logged-in users\n+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True, blank=True)  # Optional for logged-in users\n     form_name = models.CharField(max_length=255, default=\"college_information\")  # Name of the form\n     current_step = models.IntegerField(default=1)  # Step number the user is currently on\n     completed = models.BooleanField(default=False)  # Whether the form was fully completed\n     timestamp = models.DateTimeField(auto_now=True)  # Automatically updates on each interaction\n"
+                },
+                {
+                    "date": 1733381875696,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,10 +1,10 @@\n from django.db import models\n-# from accounts.models import CustomUser\n+from accounts.models import CustomUser\n \n # Create your models here.\n class FormStepProgress(models.Model):\n-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True, blank=True)  # Optional for logged-in users\n+    # user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True, blank=True)  # Optional for logged-in users\n     form_name = models.CharField(max_length=255, default=\"college_information\")  # Name of the form\n     current_step = models.IntegerField(default=1)  # Step number the user is currently on\n     completed = models.BooleanField(default=False)  # Whether the form was fully completed\n     timestamp = models.DateTimeField(auto_now=True)  # Automatically updates on each interaction\n"
+                },
+                {
+                    "date": 1733381880918,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n from django.db import models\n-from accounts.models import CustomUser\n+# from accounts.models import CustomUser\n \n # Create your models here.\n class FormStepProgress(models.Model):\n     # user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True, blank=True)  # Optional for logged-in users\n"
                 }
             ],
             "date": 1733287511101,

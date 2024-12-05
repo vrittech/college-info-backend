@@ -9,7 +9,7 @@ from socialmedia.models import SocialMedia
 from district.models import District
 from discipline.models import Discipline
 from gallery.models import Gallery
-from accounts.models import CustomUser
+# from accounts.models import CustomUser
 from formprogress.models import FormStepProgress
 # from faqs.models import FAQs
 
@@ -95,7 +95,7 @@ class College(models.Model):
     # featured_video = models.FileField(upload_to='college/featured_videos/', blank=True, null=True)
     scholarships = models.TextField()
     faqs = models.ManyToManyField(CollegeFaqs)
-    college_admin = models.ForeignKey(CustomUser, on_delete=models.CASCADE,related_name='college_admin')
+    # college_admin = models.ForeignKey(CustomUser, on_delete=models.CASCADE,related_name='college_admin')
 
     def map_location(self):
         return f'{self.latitude}, {self.longitude}'

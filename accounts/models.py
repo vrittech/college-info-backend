@@ -1,12 +1,12 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-# from collegemanagement.models import College
+from collegemanagement.models import College
 from django.contrib.auth.models import Group, Permission
 
 # Create your models here.
 class CustomUser(AbstractUser):
     roles = models.CharField(max_length = 250,null = True)
-    # college = models.ForeignKey(College,null = True,on_delete = models.SET_NULL)
+    college = models.ForeignKey(College,null = True,on_delete = models.SET_NULL)
     email = models.EmailField(max_length = 250,unique = True)
     full_name = models.CharField(max_length = 250,null = True)
     # social_links = models.ManyToManyField(SocialMedia,blank=True)
