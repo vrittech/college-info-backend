@@ -29,6 +29,15 @@ from  rest_framework  import routers
 from coursemanagement.routers.routers import router as coursemanagement_router
 from socialmedia.routers.routers import router as socialmedia_router
 from setupemail.routers.routers import router as setupemail_router
+
+from accounts.routers.routers import router as accounts_router
+from contact.routers.routers import router as contact_router
+from advertisement.routers.routers import router as advertisement_router
+from duration.routers.routers import router as duration_router
+from formprogress.routers.routers import router as formprogress_router
+from inquiry.routers.routers import router as inquiry_router
+from superadmindetails.routers.routers import router as superadmindetails_router
+
 # from semester.routers.routers import router as semester_router
 from level.routers.routers import router as level_router
 from informationmanagement.routers.routers import router as informationmanagement_router
@@ -74,7 +83,15 @@ router.registry.extend(coursesandfees_router.registry)
 # router.registry.extend(location_router.registry)
 # router.registry.extend(preparationinquiries_router.registry)
 # router.registry.extend(collegeandcourseinquiries_router.registry)
+
 router.registry.extend(discipline_router.registry)
+router.registry.extend(accounts_router.registry)
+router.registry.extend(contact_router.registry)
+router.registry.extend(advertisement_router.registry)
+router.registry.extend(duration_router.registry)
+router.registry.extend(formprogress_router.registry)
+router.registry.extend(inquiry_router.registry)
+router.registry.extend(superadmindetails_router.registry)
 
 schema_view = get_schema_view(
    openapi.Info(
@@ -92,6 +109,8 @@ schema_view = get_schema_view(
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api/', include(router.urls)),
+    path('api/',include('accountsmanagement.urls')),
     path('', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
     path('api-auth/', include('rest_framework.urls')),
@@ -123,3 +142,4 @@ urlpatterns = [
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)  # for development

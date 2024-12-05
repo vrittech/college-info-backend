@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import EmailCheckView, CustomPasswordResetView , VerifyUserPasswordToken,ContactmeView,EmailChangeGetOtpView,EmailResetView
-from .views import PasswordResetView,SendEmailForBookingVerification
+from .views import PasswordResetView
 
 
 
