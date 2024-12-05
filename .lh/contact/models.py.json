@@ -1,0 +1,114 @@
+{
+    "sourceFile": "contact/models.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 24,
+            "patches": [
+                {
+                    "date": 1733383238378,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1733383245839,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,4 +1,4 @@\n from django.db import models\n \n # Create your models here.\n-name \n\\ No newline at end of file\n+class\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1733383252266,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,4 +1,7 @@\n from django.db import models\n \n # Create your models here.\n-class\n\\ No newline at end of file\n+class Contact(models.Model):\n+    name = models.CharField(max_length=100)\n+    email = models.EmailField()\n+    message = models.TextField()\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1733383267539,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,5 +3,6 @@\n # Create your models here.\n class Contact(models.Model):\n     name = models.CharField(max_length=100)\n     email = models.EmailField()\n+    con\n     message = models.TextField()\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1733383277774,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,6 +3,6 @@\n # Create your models here.\n class Contact(models.Model):\n     name = models.CharField(max_length=100)\n     email = models.EmailField()\n-    con\n+    phone_number\n     message = models.TextField()\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1733383284789,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,6 +3,7 @@\n # Create your models here.\n class Contact(models.Model):\n     name = models.CharField(max_length=100)\n     email = models.EmailField()\n-    phone_number\n+    phone_number = models.CharField(max_length=15)\n+    tags\n     message = models.TextField()\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1733383290563,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,6 +4,6 @@\n class Contact(models.Model):\n     name = models.CharField(max_length=100)\n     email = models.EmailField()\n     phone_number = models.CharField(max_length=15)\n-    tags\n+    tag=\n     message = models.TextField()\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1733383296156,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,6 +4,6 @@\n class Contact(models.Model):\n     name = models.CharField(max_length=100)\n     email = models.EmailField()\n     phone_number = models.CharField(max_length=15)\n-    tag=\n+    tag=models.Choices\n     message = models.TextField()\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1733383307018,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,6 +4,6 @@\n class Contact(models.Model):\n     name = models.CharField(max_length=100)\n     email = models.EmailField()\n     phone_number = models.CharField(max_length=15)\n-    tag=models.Choices\n+    tag=models.ChoicesField(student,others,)\n     message = models.TextField()\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1733383312497,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,6 +4,6 @@\n class Contact(models.Model):\n     name = models.CharField(max_length=100)\n     email = models.EmailField()\n     phone_number = models.CharField(max_length=15)\n-    tag=models.ChoicesField(student,others,)\n+    tag=models.ChoicesField(student,others,collge)\n     message = models.TextField()\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1733383323948,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,6 +4,6 @@\n class Contact(models.Model):\n     name = models.CharField(max_length=100)\n     email = models.EmailField()\n     phone_number = models.CharField(max_length=15)\n-    tag=models.ChoicesField(student,others,collge)\n+\n     message = models.TextField()\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1733383446607,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,6 +4,16 @@\n class Contact(models.Model):\n     name = models.CharField(max_length=100)\n     email = models.EmailField()\n     phone_number = models.CharField(max_length=15)\n+    class Role(models.TextChoices):\n+        STUDENT = 'student', 'Student'\n+        OTHERS = 'others', 'Others'\n+        COLLEGE_ADMIN = 'college_admin', 'College Admin'\n \n+    role = models.CharField(\n+        max_length=20,\n+        choices=Role.choices,\n+        default=Role.OTHERS,\n+    )\n+\n     message = models.TextField()\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1733383459401,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,16 +1,17 @@\n from django.db import models\n \n # Create your models here.\n class Contact(models.Model):\n+    STUDENT = 'student', 'Student'\n+        OTHERS = 'others', 'Others'\n+        COLLEGE_ADMIN = 'college_admin', 'College Admin'\n+\n     name = models.CharField(max_length=100)\n     email = models.EmailField()\n     phone_number = models.CharField(max_length=15)\n     class Role(models.TextChoices):\n-        STUDENT = 'student', 'Student'\n-        OTHERS = 'others', 'Others'\n-        COLLEGE_ADMIN = 'college_admin', 'College Admin'\n-\n+        \n     role = models.CharField(\n         max_length=20,\n         choices=Role.choices,\n         default=Role.OTHERS,\n"
+                },
+                {
+                    "date": 1733383466650,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,17 +2,17 @@\n \n # Create your models here.\n class Contact(models.Model):\n     STUDENT = 'student', 'Student'\n-        OTHERS = 'others', 'Others'\n-        COLLEGE_ADMIN = 'college_admin', 'College Admin'\n+    OTHERS = 'others', 'Others'\n+    COLLEGE_ADMIN = 'college_admin', 'College Admin'\n \n     name = models.CharField(max_length=100)\n     email = models.EmailField()\n     phone_number = models.CharField(max_length=15)\n     class Role(models.TextChoices):\n         \n-    role = models.CharField(\n+    tag = models.CharField(\n         max_length=20,\n         choices=Role.choices,\n         default=Role.OTHERS,\n     )\n"
+                },
+                {
+                    "date": 1733383474201,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,10 +7,9 @@\n     COLLEGE_ADMIN = 'college_admin', 'College Admin'\n \n     name = models.CharField(max_length=100)\n     email = models.EmailField()\n-    phone_number = models.CharField(max_length=15)\n-    class Role(models.TextChoices):\n+    phone_number = models.CharField(max_length=15\n         \n     tag = models.CharField(\n         max_length=20,\n         choices=Role.choices,\n"
+                },
+                {
+                    "date": 1733383480093,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,10 +7,9 @@\n     COLLEGE_ADMIN = 'college_admin', 'College Admin'\n \n     name = models.CharField(max_length=100)\n     email = models.EmailField()\n-    phone_number = models.CharField(max_length=15\n-        \n+    phone_number = models.CharField(max_length=15)    \n     tag = models.CharField(\n         max_length=20,\n         choices=Role.choices,\n         default=Role.OTHERS,\n"
+                },
+                {
+                    "date": 1733383489713,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,12 +1,9 @@\n from django.db import models\n \n # Create your models here.\n class Contact(models.Model):\n-    STUDENT = 'student', 'Student'\n-    OTHERS = 'others', 'Others'\n-    COLLEGE_ADMIN = 'college_admin', 'College Admin'\n-\n+  \n     name = models.CharField(max_length=100)\n     email = models.EmailField()\n     phone_number = models.CharField(max_length=15)    \n     tag = models.CharField(\n"
+                },
+                {
+                    "date": 1733383549873,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,14 @@\n from django.db import models\n \n # Create your models here.\n class Contact(models.Model):\n+    ROLE_CHOICES = [\n+    ('student', 'Student'),\n+    ('others', 'Others'),\n+    ('college_admin', 'College Admin'),\n+]\n+\n   \n     name = models.CharField(max_length=100)\n     email = models.EmailField()\n     phone_number = models.CharField(max_length=15)    \n"
+                },
+                {
+                    "date": 1733383555643,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,10 +6,8 @@\n     ('student', 'Student'),\n     ('others', 'Others'),\n     ('college_admin', 'College Admin'),\n ]\n-\n-  \n     name = models.CharField(max_length=100)\n     email = models.EmailField()\n     phone_number = models.CharField(max_length=15)    \n     tag = models.CharField(\n"
+                },
+                {
+                    "date": 1733383562847,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,10 +10,11 @@\n     name = models.CharField(max_length=100)\n     email = models.EmailField()\n     phone_number = models.CharField(max_length=15)    \n     tag = models.CharField(\n-        max_length=20,\n-        choices=Role.choices,\n-        default=Role.OTHERS,\n-    )\n+    max_length=20,\n+    choices=ROLE_CHOICES,\n+    default='others',\n+)\n \n+\n     message = models.TextField()\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1733383572204,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,7 +14,5 @@\n     max_length=20,\n     choices=ROLE_CHOICES,\n     default='others',\n )\n-\n-\n     message = models.TextField()\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1733383627874,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,5 +14,7 @@\n     max_length=20,\n     choices=ROLE_CHOICES,\n     default='others',\n )\n-    message = models.TextField()\n\\ No newline at end of file\n+    message = models.TextField()\n+    created_date = models.DateTimeField(auto_now_add=True)\n+    \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1733383633689,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,5 +16,7 @@\n     default='others',\n )\n     message = models.TextField()\n     created_date = models.DateTimeField(auto_now_add=True)\n+    updated_date = models.DateTimeField(auto_now=True)\n+    \n     \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1733383653614,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,9 +14,11 @@\n     max_length=20,\n     choices=ROLE_CHOICES,\n     default='others',\n )\n+    subject\n     message = models.TextField()\n     created_date = models.DateTimeField(auto_now_add=True)\n     updated_date = models.DateTimeField(auto_now=True)\n     \n\\ No newline at end of file\n-    \n+    def __str__(self):\n+        return self.name\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1733383658806,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,9 +14,9 @@\n     max_length=20,\n     choices=ROLE_CHOICES,\n     default='others',\n )\n-    subject\n+    subject = models.CharField(max_length=1000)\n     message = models.TextField()\n     created_date = models.DateTimeField(auto_now_add=True)\n     updated_date = models.DateTimeField(auto_now=True)\n     \n"
+                }
+            ],
+            "date": 1733383238378,
+            "name": "Commit-0",
+            "content": "from django.db import models\n\n# Create your models here.\nname "
+        }
+    ]
+}

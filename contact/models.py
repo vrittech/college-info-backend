@@ -1,0 +1,24 @@
+from django.db import models
+
+# Create your models here.
+class Contact(models.Model):
+    ROLE_CHOICES = [
+    ('student', 'Student'),
+    ('others', 'Others'),
+    ('college_admin', 'College Admin'),
+]
+    name = models.CharField(max_length=100)
+    email = models.EmailField()
+    phone_number = models.CharField(max_length=15)    
+    tag = models.CharField(
+    max_length=20,
+    choices=ROLE_CHOICES,
+    default='others',
+)
+    subject = models.CharField(max_length=1000)
+    message = models.TextField()
+    created_date = models.DateTimeField(auto_now_add=True)
+    updated_date = models.DateTimeField(auto_now=True)
+    
+    def __str__(self):
+        return self.name

@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 28,
+            "activePatchIndex": 29,
             "patches": [
                 {
                     "date": 1727073622967,
@@ -120,6 +120,10 @@
                 {
                     "date": 1733379315871,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -70,9 +70,8 @@\n     'district',\n     'collegetype',\n     'informationmanagement',\n     'level',\n-    'semester',\n     'affiliation',\n     'faculty',\n     'certification',\n     'socialmedia',\n"
+                },
+                {
+                    "date": 1733383225132,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -85,8 +85,9 @@\n     'formprogress',\n     'inquiry',\n     'superadmindetails',\n     'advertisement',\n+    'contact'\n ]\n \n AUTH_USER_MODEL = 'accounts.CustomUser'\n \n"
                 }
             ],
             "date": 1727073622967,
