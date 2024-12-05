@@ -34,7 +34,7 @@ from level.routers.routers import router as level_router
 from informationmanagement.routers.routers import router as informationmanagement_router
 from affiliation.routers.routers import router as affiliation_router
 from certification.routers.routers import router as certification_router
-from college.routers.routers import router as college_router
+# from college.routers.routers import router as college_router
 from collegeleveltype.routers.routers import router as collegeleveltype_router
 from collegetype.routers.routers import router as collegetype_router
 from event.routers.routers import router as event_router
@@ -61,7 +61,6 @@ router.registry.extend(level_router.registry)
 router.registry.extend(informationmanagement_router.registry)
 router.registry.extend(affiliation_router.registry)
 router.registry.extend(certification_router.registry)
-router.registry.extend(college_router.registry)
 router.registry.extend(collegeleveltype_router.registry)
 router.registry.extend(collegetype_router.registry)
 router.registry.extend(event_router.registry)

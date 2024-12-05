@@ -1,0 +1,22 @@
+{
+    "sourceFile": "advertisement/admin.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 1,
+            "patches": [
+                {
+                    "date": 1733374862082,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1733374867347,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,5 @@\n from django.contrib import admin\n-\n-# Register your models here.\n-from django.contrib import admin\n from .models import PlacementPosition, Advertisement\n \n admin.site.register(PlacementPosition)\n admin.site.register(Advertisement)\n"
+                }
+            ],
+            "date": 1733374862082,
+            "name": "Commit-0",
+            "content": "from django.contrib import admin\n\n# Register your models here.\nfrom django.contrib import admin\nfrom .models import PlacementPosition, Advertisement\n\nadmin.site.register(PlacementPosition)\nadmin.site.register(Advertisement)\n"
+        }
+    ]
+}

@@ -68,7 +68,6 @@ INSTALLED_APPS = [
     'gallery',
     'event',
     'district',
-    'college',
     'collegetype',
     'informationmanagement',
     'level',
@@ -90,6 +89,9 @@ INSTALLED_APPS = [
     'preparationinquiries',
     'collegeandcourseinquiries',
     'formprogress',
+    'inquiry',
+    'superadmindetails',
+    'advertisement',
 ]
 
 AUTH_USER_MODEL = 'accounts.CustomUser'

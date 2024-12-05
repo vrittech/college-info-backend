@@ -1,0 +1,58 @@
+{
+    "sourceFile": "inquiry/models.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 10,
+            "patches": [
+                {
+                    "date": 1733312045672,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1733312054097,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,4 +1,4 @@\n from django.db import models\n-from colle\n+from collegemanagement\n \n # Create your models here.\n"
+                },
+                {
+                    "date": 1733312064447,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,4 +1,5 @@\n from django.db import models\n-from collegemanagement\n+from collegemanagement.models import College\n+from coursemanagement.models import Course\n \n # Create your models here.\n"
+                },
+                {
+                    "date": 1733312071654,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,7 @@\n from django.db import models\n from collegemanagement.models import College\n from coursemanagement.models import Course\n \n+\n+\n # Create your models here.\n"
+                },
+                {
+                    "date": 1733312078536,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n from django.db import models\n from collegemanagement.models import College\n from coursemanagement.models import Course\n \n+full_name\n \n-\n # Create your models here.\n"
+                },
+                {
+                    "date": 1733312086135,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,6 +2,6 @@\n from collegemanagement.models import College\n from coursemanagement.models import Course\n \n full_name\n-\n+email\n # Create your models here.\n"
+                },
+                {
+                    "date": 1733312095335,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,5 +3,6 @@\n from coursemanagement.models import Course\n \n full_name\n email\n+PythonFinalizationError\n # Create your models here.\n"
+                },
+                {
+                    "date": 1733312104121,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,6 +3,8 @@\n from coursemanagement.models import Course\n \n full_name\n email\n-PythonFinalizationError\n+phone \n+courses\n+\n # Create your models here.\n"
+                },
+                {
+                    "date": 1733312114240,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,6 +5,7 @@\n full_name\n email\n phone \n courses\n-\n+colleges\n+message\n # Create your models here.\n"
+                },
+                {
+                    "date": 1733312128940,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,11 +1,10 @@\n from django.db import models\n from collegemanagement.models import College\n from coursemanagement.models import Course\n \n-full_name\n-email\n-phone \n-courses\n-colleges\n-message\n-# Create your models here.\n+# full_name\n+# email\n+# phone \n+# courses\n+# colleges\n+# message\n"
+                },
+                {
+                    "date": 1733312244824,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,4 +7,27 @@\n # phone \n # courses\n # colleges\n # message\n+from django.db import models\n+from collegemanagement.models import College\n+from coursemanagement.models import Course\n+\n+class Inquiry(models.Model):\n+    # Personal Information\n+    full_name = models.CharField(max_length=255, help_text=\"Full name of the inquirer.\")\n+    email = models.EmailField(help_text=\"Email address of the inquirer.\")\n+    phone = models.CharField(max_length=15, help_text=\"Phone number of the inquirer.\")\n+\n+    # Relationships to College and Course\n+    courses = models.ManyToManyField(Course, related_name=\"inquiries\", help_text=\"Courses the user is interested in.\")\n+    colleges = models.ManyToManyField(College, related_name=\"inquiries\", help_text=\"Colleges the user is interested in.\")\n+\n+    # Additional Message\n+    message = models.TextField(blank=True, null=True, help_text=\"Message or query from the user.\")\n+\n+    # Timestamps\n+    created_at = models.DateTimeField(auto_now_add=True, help_text=\"The time when the inquiry was created.\")\n+    updated_at = models.DateTimeField(auto_now=True, help_text=\"The last time the inquiry was updated.\")\n+\n+    def __str__(self):\n+        return f\"Inquiry from {self.full_name} - {self.email}\"\n"
+                }
+            ],
+            "date": 1733312045672,
+            "name": "Commit-0",
+            "content": "from django.db import models\nfrom colle\n\n# Create your models here.\n"
+        }
+    ]
+}
