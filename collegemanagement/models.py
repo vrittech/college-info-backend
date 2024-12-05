@@ -1,7 +1,7 @@
 from django.db import models
 from affiliation.models import Affiliation
-from admissionopen.models import AdmissionOpen
-from location.models import Location
+# from admissionopen.models import AdmissionOpen
+# from location.models import Location
 from collegetype.models import CollegeType
 from coursesandfees.models import CoursesAndFees
 from facilities.models import Facility
@@ -86,7 +86,7 @@ class College(models.Model):
 
 
     courses_and_fees = models.ManyToManyField(CoursesAndFees,related_name='college_courses_and_fees')
-    admission_open = models.ManyToManyField(AdmissionOpen)
+    # admission_open = models.ManyToManyField(AdmissionOpen)
     facilities = models.ManyToManyField(Facility,related_name='college_facilities')
     college_gallery = models.ManyToManyField(CollegeGallery)
     placement = models.TextField(null=True,blank=True)

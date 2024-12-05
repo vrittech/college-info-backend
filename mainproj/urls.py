@@ -29,13 +29,13 @@ from  rest_framework  import routers
 from coursemanagement.routers.routers import router as coursemanagement_router
 from socialmedia.routers.routers import router as socialmedia_router
 from setupemail.routers.routers import router as setupemail_router
-from semester.routers.routers import router as semester_router
+# from semester.routers.routers import router as semester_router
 from level.routers.routers import router as level_router
 from informationmanagement.routers.routers import router as informationmanagement_router
 from affiliation.routers.routers import router as affiliation_router
 from certification.routers.routers import router as certification_router
 # from college.routers.routers import router as college_router
-from collegeleveltype.routers.routers import router as collegeleveltype_router
+# from collegeleveltype.routers.routers import router as collegeleveltype_router
 from collegetype.routers.routers import router as collegetype_router
 from event.routers.routers import router as event_router
 from district.routers.routers import router as district_router
@@ -43,11 +43,11 @@ from faculty.routers.routers import router as faculty_router
 from gallery.routers.routers import router as gallery_router
 from collegemanagement.routers.routers import router as collegemanagement_router
 from facilities.routers.routers import router as facilities_router
-from admissionopen.routers.routers import router as admissionopen_router
+# from admissionopen.routers.routers import router as admissionopen_router
 from coursesandfees.routers.routers import router as coursesandfees_router
-from location.routers.routers import router as location_router
-from preparationinquiries.routers.routers import router as preparationinquiries_router
-from collegeandcourseinquiries.routers.routers import router as collegeandcourseinquiries_router
+# from location.routers.routers import router as location_router
+# from preparationinquiries.routers.routers import router as preparationinquiries_router
+# from collegeandcourseinquiries.routers.routers import router as collegeandcourseinquiries_router
 from discipline.routers.routers import router as discipline_router
 
 
@@ -56,12 +56,12 @@ router = routers.DefaultRouter()
 router.registry.extend(coursemanagement_router.registry)
 router.registry.extend(socialmedia_router.registry)
 router.registry.extend(setupemail_router.registry)
-router.registry.extend(semester_router.registry)
+# router.registry.extend(semester_router.registry)
 router.registry.extend(level_router.registry)
 router.registry.extend(informationmanagement_router.registry)
 router.registry.extend(affiliation_router.registry)
 router.registry.extend(certification_router.registry)
-router.registry.extend(collegeleveltype_router.registry)
+# router.registry.extend(collegeleveltype_router.registry)
 router.registry.extend(collegetype_router.registry)
 router.registry.extend(event_router.registry)
 router.registry.extend(district_router.registry)
@@ -69,11 +69,11 @@ router.registry.extend(faculty_router.registry)
 router.registry.extend(gallery_router.registry)
 router.registry.extend(collegemanagement_router.registry)
 router.registry.extend(facilities_router.registry)
-router.registry.extend(admissionopen_router.registry)
+# router.registry.extend(admissionopen_router.registry)
 router.registry.extend(coursesandfees_router.registry)
-router.registry.extend(location_router.registry)
-router.registry.extend(preparationinquiries_router.registry)
-router.registry.extend(collegeandcourseinquiries_router.registry)
+# router.registry.extend(location_router.registry)
+# router.registry.extend(preparationinquiries_router.registry)
+# router.registry.extend(collegeandcourseinquiries_router.registry)
 router.registry.extend(discipline_router.registry)
 
 schema_view = get_schema_view(

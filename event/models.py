@@ -101,7 +101,7 @@ class Event(models.Model):
     og_title = models.CharField(max_length=255, blank=True, null=True, help_text="Title for social sharing.")
     og_description = models.TextField(blank=True, null=True, help_text="Description for social sharing.")
     og_url = models.URLField(blank=True, null=True, help_text="URL to share on social platforms.")
-    og_image =  models.ImageField(upload_to='college/og_image/',null=True,blank=True)
+    og_image =  models.ImageField(upload_to='event/og_image/',null=True,blank=True)
     og_type = models.CharField(max_length=50, blank=True, null=True, help_text="Type of the OG content (e.g., website, article).")
     og_locale = models.CharField(max_length=10, blank=True, null=True, default="en_US", help_text="Locale for OG tags (e.g., en_US).")
     

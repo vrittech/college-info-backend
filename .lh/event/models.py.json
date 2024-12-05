@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 126,
+            "activePatchIndex": 127,
             "patches": [
                 {
                     "date": 1726568467190,
@@ -512,6 +512,10 @@
                 {
                     "date": 1733307673100,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -29,9 +29,9 @@\n class EventOrganizer(models.Model):\n     name = models.CharField(max_length=255)\n     image = models.ImageField(upload_to='event_organizer/')\n     link = models.URLField(blank=True, null=True)\n-    is_organizer = models.BooleanField(default=False)\n+    is_show = models.BooleanField(default=False)\n     \n     created_date_time = models.DateTimeField(auto_now_add=True, null=True, blank=True)\n     created_date = models.DateField(auto_now_add=True, null=True, blank=True)\n     updated_date = models.DateTimeField(auto_now=True, null=True, blank=True)\n"
+                },
+                {
+                    "date": 1733378135680,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -100,9 +100,9 @@\n     # Open Graph (OG) Tags (Social Sharing)\n     og_title = models.CharField(max_length=255, blank=True, null=True, help_text=\"Title for social sharing.\")\n     og_description = models.TextField(blank=True, null=True, help_text=\"Description for social sharing.\")\n     og_url = models.URLField(blank=True, null=True, help_text=\"URL to share on social platforms.\")\n-    og_image =  models.ImageField(upload_to='college/og_image/',null=True,blank=True)\n+    og_image =  models.ImageField(upload_to='event/og_image/',null=True,blank=True)\n     og_type = models.CharField(max_length=50, blank=True, null=True, help_text=\"Type of the OG content (e.g., website, article).\")\n     og_locale = models.CharField(max_length=10, blank=True, null=True, default=\"en_US\", help_text=\"Locale for OG tags (e.g., en_US).\")\n     \n     # Dublin Core Metadata\n"
                 }
             ],
             "date": 1726568467190,

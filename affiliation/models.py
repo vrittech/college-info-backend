@@ -18,9 +18,8 @@
 
 from django.db import models
 # from coursemanagement.models import Course
-from college.models import College
 from level.models import Level
-from location.models import Location
+# from location.models import Location
 from district.models import District
 from collegetype.models import CollegeType
 from django.utils.timezone import now
