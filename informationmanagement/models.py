@@ -100,10 +100,6 @@ class Information(models.Model):
     dc_description = models.TextField(blank=True, null=True, help_text="Description for Dublin Core Metadata.")
     dc_language = models.CharField(max_length=10, blank=True, null=True, default="en", help_text="Language code for Dublin Core Metadata (e.g., en, fr).")
 
-    
-    
-    
-    
     created_date = models.DateField(auto_now_add=True, null=True, blank=True)
     updated_date = models.DateTimeField(auto_now=True, null=True, blank=True)
 
