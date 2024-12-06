@@ -50,8 +50,8 @@ class EventCategory(models.Model):
 
 class Event(SEOFields):
     event_name = models.CharField(max_length=255)
-    start_date = models.DateTimeField()
-    end_date = models.DateTimeField()
+    start_date = models.DateTimeField(null=True,blank=True)
+    end_date = models.DateTimeField(null=True,blank=True)
     duration = models.CharField(max_length=255)
     TYPE_CHOICES = [
         ('physical', 'Physical'),

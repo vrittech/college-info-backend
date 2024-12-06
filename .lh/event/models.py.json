@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 132,
+            "activePatchIndex": 135,
             "patches": [
                 {
                     "date": 1726568467190,
@@ -536,6 +536,18 @@
                 {
                     "date": 1733393887081,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -47,9 +47,9 @@\n     \n     def __str__(self):\n         return f\"{self.name}\"\n \n-class Event(models.Model):\n+class Event(SEOFields):\n     event_name = models.CharField(max_length=255)\n     start_date = models.DateTimeField()\n     end_date = models.DateTimeField()\n     duration = models.CharField(max_length=255)\n"
+                },
+                {
+                    "date": 1733468793299,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -50,9 +50,9 @@\n \n class Event(SEOFields):\n     event_name = models.CharField(max_length=255)\n     start_date = models.DateTimeField()\n-    end_date = models.DateTimeField()\n+    end_date = models.DateTimeField(null=True)\n     duration = models.CharField(max_length=255)\n     TYPE_CHOICES = [\n         ('physical', 'Physical'),\n         ('online', 'Online'),\n@@ -93,9 +93,9 @@\n     def __str__(self):\n         return f\"{self.event_name}\"\n \n class EventGallery(models.Model):\n-    event = models.ManyToManyField(Event, related_name='images')\n+    event = models.ForeignKey\n     is_featured_image = models.BooleanField(default=False)\n     image = models.ImageField(upload_to='event_images/')\n     \n     created_date_time = models.DateTimeField(auto_now_add=True, null=True, blank=True)\n"
+                },
+                {
+                    "date": 1733468799974,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -50,9 +50,9 @@\n \n class Event(SEOFields):\n     event_name = models.CharField(max_length=255)\n     start_date = models.DateTimeField()\n-    end_date = models.DateTimeField(null=True)\n+    end_date = models.DateTimeField(null=True,blank=True)\n     duration = models.CharField(max_length=255)\n     TYPE_CHOICES = [\n         ('physical', 'Physical'),\n         ('online', 'Online'),\n"
+                },
+                {
+                    "date": 1733468810785,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -49,9 +49,9 @@\n         return f\"{self.name}\"\n \n class Event(SEOFields):\n     event_name = models.CharField(max_length=255)\n-    start_date = models.DateTimeField()\n+    start_date = models.DateTimeField(null=True,blank=True))\n     end_date = models.DateTimeField(null=True,blank=True)\n     duration = models.CharField(max_length=255)\n     TYPE_CHOICES = [\n         ('physical', 'Physical'),\n"
                 }
             ],
             "date": 1726568467190,

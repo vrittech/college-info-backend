@@ -21,7 +21,7 @@ from django.db import models
 from level.models import Level
 # from location.models import Location
 from district.models import District
-from collegetype.models import CollegeType
+# from collegetype.models import CollegeType
 from django.utils.timezone import now
 from django.core.exceptions import ValidationError
 from certification.models import Certification

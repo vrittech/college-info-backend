@@ -33,24 +33,16 @@ class Placement(models.Model):
     def __str__(self):
         return f'Placement {self.id}'
 
-class CollegeFaqs(models.Model):
-    question = models.CharField(max_length=255)
-    answer = models.TextField(blank=True)
-    created_date = models.DateField(auto_now_add=True)
-    updated_date = models.DateField(auto_now=True)
 
-    def __str__(self):
-        return f'Placement {self.id}'
     
 class College(SEOFields):
     banner_image = models.ImageField(upload_to='college/banner/')
     dp_image = models.ImageField(upload_to='college/dp/')
     name = models.CharField(max_length=255)
-    established_date = models.DateField()
-    website_link = models.URLField()
+    established_date = models.DateField(null= True,blank=True)
+    website_link = models.URLField(null= True,blank=True)
     address = models.CharField(max_length=255)
     district = models.ForeignKey(District,on_delete=models.CASCADE,related_name='college_district')
-    # location = models.ForeignKey(Location,on_delete=models.CASCADE)
     phone_number = models.CharField(max_length=20)
     email = models.EmailField()
     affiliated = models.ForeignKey(Affiliation, on_delete=models.CASCADE,related_name='college_affiliation')
@@ -63,15 +55,15 @@ class College(SEOFields):
     about = models.TextField()
     brochure = models.FileField(upload_to='college/brochure/',null=True,blank=True)
     step_counter= models.ForeignKey(FormStepProgress, on_delete=models.CASCADE,related_name='step_counter')
-    # admission_open = models.ManyToManyField(AdmissionOpen)
     facilities = models.ManyToManyField(Facility,related_name='college_facilities')
-    # college_gallery = models.ManyToManyField(CollegeGallery)
     placement = models.TextField(null=True,blank=True)
     scholarship = models.TextField(null=True,blank=True)
-    
-    # featured_video = models.FileField(upload_to='college/featured_videos/', blank=True, null=True)
-    scholarships = models.TextField()
-    faqs = models.ManyToManyField(CollegeFaqs)
+    created_date = models.DateField(auto_now_add=True)
+    updated_date = models.DateField(auto_now=True)
+    # location = models.ForeignKey(Location,on_delete=models.CASCADE)
+    # admission_open = models.ManyToManyField(AdmissionOpen)
+    # college_gallery = models.ManyToManyField(CollegeGallery)
+    # faqs = models.ManyToManyField(CollegeFaqs)
     # college_admin = models.ForeignKey(CustomUser, on_delete=models.CASCADE,related_name='college_admin')
 
     def map_location(self):
@@ -80,3 +72,14 @@ class College(SEOFields):
 
     def __str__(self):
         return self.name
+
+
+class CollegeFaqs(models.Model):
+    college = models.ForeignKey(College, on_delete=models.CASCADE,related_name='college_faq')
+    question = models.CharField(max_length=255)
+    answer = models.TextField(blank=True)
+    created_date = models.DateField(auto_now_add=True)
+    updated_date = models.DateField(auto_now=True)
+
+    def __str__(self):
+        return f'Placement {self.id}'

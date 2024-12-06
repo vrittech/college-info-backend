@@ -1,0 +1,70 @@
+{
+    "sourceFile": "coursesandfees/serializers/coursesandfees_serializers.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 13,
+            "patches": [
+                {
+                    "date": 1733470542468,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1733470547550,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n from rest_framework import serializers\n from ..models import CoursesAndFees\n-from \n+from collegemanagement.serializers.collegemanagement_serializers import CollegeListSerializers\n class CoursesAndFeesListSerializers(serializers.ModelSerializer):\n     class Meta:\n         model = CoursesAndFees\n         fields = '__all__'\n"
+                },
+                {
+                    "date": 1733470557926,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n from rest_framework import serializers\n from ..models import CoursesAndFees\n-from collegemanagement.serializers.collegemanagement_serializers import CollegeListSerializers\n+from collegemanagement.models import C\n class CoursesAndFeesListSerializers(serializers.ModelSerializer):\n     class Meta:\n         model = CoursesAndFees\n         fields = '__all__'\n"
+                },
+                {
+                    "date": 1733470565534,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,8 @@\n from rest_framework import serializers\n from ..models import CoursesAndFees\n-from collegemanagement.models import C\n+from collegemanagement.models import College\n+from coursemanagement.models import Course\n class CoursesAndFeesListSerializers(serializers.ModelSerializer):\n     class Meta:\n         model = CoursesAndFees\n         fields = '__all__'\n"
+                },
+                {
+                    "date": 1733470573913,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,12 +1,20 @@\n from rest_framework import serializers\n from ..models import CoursesAndFees\n from collegemanagement.models import College\n from coursemanagement.models import Course\n+\n class CoursesAndFeesListSerializers(serializers.ModelSerializer):\n     class Meta:\n         model = CoursesAndFees\n+        fields = '__all__'class CoursesAndFeesListSerializers(serializers.ModelSerializer):\n+    class Meta:\n+        model = CoursesAndFees\n         fields = '__all__'\n+class CoursesAndFeesListSerializers(serializers.ModelSerializer):\n+    class Meta:\n+        model = CoursesAndFees\n+        fields = '__all__'\n \n class CoursesAndFeesRetrieveSerializers(serializers.ModelSerializer):\n     class Meta:\n         model = CoursesAndFees\n"
+                },
+                {
+                    "date": 1733470579096,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,12 +5,16 @@\n \n class CoursesAndFeesListSerializers(serializers.ModelSerializer):\n     class Meta:\n         model = CoursesAndFees\n-        fields = '__all__'class CoursesAndFeesListSerializers(serializers.ModelSerializer):\n+        fields = '__all__'\n+        \n+        class CoursesAndFeesListSerializers(serializers.ModelSerializer):\n     class Meta:\n         model = CoursesAndFees\n         fields = '__all__'\n+        \n+        \n class CoursesAndFeesListSerializers(serializers.ModelSerializer):\n     class Meta:\n         model = CoursesAndFees\n         fields = '__all__'\n"
+                },
+                {
+                    "date": 1733470591638,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,14 +2,14 @@\n from ..models import CoursesAndFees\n from collegemanagement.models import College\n from coursemanagement.models import Course\n \n-class CoursesAndFeesListSerializers(serializers.ModelSerializer):\n+class CollegeSerializers(serializers.ModelSerializer):\n     class Meta:\n         model = CoursesAndFees\n         fields = '__all__'\n         \n-        class CoursesAndFeesListSerializers(serializers.ModelSerializer):\n+class CoursesAndFeesListSerializers(serializers.ModelSerializer):\n     class Meta:\n         model = CoursesAndFees\n         fields = '__all__'\n         \n"
+                },
+                {
+                    "date": 1733470598005,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,9 @@\n     class Meta:\n         model = CoursesAndFees\n         fields = '__all__'\n         \n-class CoursesAndFeesListSerializers(serializers.ModelSerializer):\n+class CourseSerializers(serializers.ModelSerializer):\n     class Meta:\n         model = CoursesAndFees\n         fields = '__all__'\n         \n"
+                },
+                {
+                    "date": 1733470605562,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,9 +9,9 @@\n         fields = '__all__'\n         \n class CourseSerializers(serializers.ModelSerializer):\n     class Meta:\n-        model = CoursesAndFees\n+        model = C\n         fields = '__all__'\n         \n         \n class CoursesAndFeesListSerializers(serializers.ModelSerializer):\n"
+                },
+                {
+                    "date": 1733470612854,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,14 +4,14 @@\n from coursemanagement.models import Course\n \n class CollegeSerializers(serializers.ModelSerializer):\n     class Meta:\n-        model = CoursesAndFees\n+        model = Coll\n         fields = '__all__'\n         \n class CourseSerializers(serializers.ModelSerializer):\n     class Meta:\n-        model = C\n+        model = Course\n         fields = '__all__'\n         \n         \n class CoursesAndFeesListSerializers(serializers.ModelSerializer):\n"
+                },
+                {
+                    "date": 1733470619719,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,9 +4,9 @@\n from coursemanagement.models import Course\n \n class CollegeSerializers(serializers.ModelSerializer):\n     class Meta:\n-        model = Coll\n+        model = College\n         fields = '__all__'\n         \n class CourseSerializers(serializers.ModelSerializer):\n     class Meta:\n@@ -14,8 +14,9 @@\n         fields = '__all__'\n         \n         \n class CoursesAndFeesListSerializers(serializers.ModelSerializer):\n+    college = CollegeSerializers(read_only=True)\n     class Meta:\n         model = CoursesAndFees\n         fields = '__all__'\n \n"
+                },
+                {
+                    "date": 1733470625145,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,8 +15,9 @@\n         \n         \n class CoursesAndFeesListSerializers(serializers.ModelSerializer):\n     college = CollegeSerializers(read_only=True)\n+    course = CourseSerializers(read_only=True)\n     class Meta:\n         model = CoursesAndFees\n         fields = '__all__'\n \n"
+                },
+                {
+                    "date": 1733470630830,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -21,8 +21,9 @@\n         model = CoursesAndFees\n         fields = '__all__'\n \n class CoursesAndFeesRetrieveSerializers(serializers.ModelSerializer):\n+    \n     class Meta:\n         model = CoursesAndFees\n         fields = '__all__'\n \n"
+                },
+                {
+                    "date": 1733470637582,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -21,9 +21,10 @@\n         model = CoursesAndFees\n         fields = '__all__'\n \n class CoursesAndFeesRetrieveSerializers(serializers.ModelSerializer):\n-    \n+    college = CollegeSerializers(read_only=True)\n+    course = CourseSerializers(read_only=True)\n     class Meta:\n         model = CoursesAndFees\n         fields = '__all__'\n \n"
+                }
+            ],
+            "date": 1733470542468,
+            "name": "Commit-0",
+            "content": "from rest_framework import serializers\nfrom ..models import CoursesAndFees\nfrom \nclass CoursesAndFeesListSerializers(serializers.ModelSerializer):\n    class Meta:\n        model = CoursesAndFees\n        fields = '__all__'\n\nclass CoursesAndFeesRetrieveSerializers(serializers.ModelSerializer):\n    class Meta:\n        model = CoursesAndFees\n        fields = '__all__'\n\nclass CoursesAndFeesWriteSerializers(serializers.ModelSerializer):\n    class Meta:\n        model = CoursesAndFees\n        fields = '__all__'"
+        }
+    ]
+}

@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 174,
+            "activePatchIndex": 183,
             "patches": [
                 {
                     "date": 1727170911785,
@@ -704,6 +704,42 @@
                 {
                     "date": 1733467594171,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,9 @@\n from affiliation.models import Affiliation\n # from admissionopen.models import AdmissionOpen\n # from location.models import Location\n from collegetype.models import CollegeType\n-from coursesandfees.models import CoursesAndFees\n+# from coursesandfees.models import CoursesAndFees\n from facilities.models import Facility\n from socialmedia.models import SocialMedia\n from district.models import District\n from discipline.models import Discipline\n"
+                },
+                {
+                    "date": 1733468314727,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -68,10 +68,8 @@\n     # college_gallery = models.ManyToManyField(CollegeGallery)\n     placement = models.TextField(null=True,blank=True)\n     scholarship = models.TextField(null=True,blank=True)\n     \n-    # featured_video = models.FileField(upload_to='college/featured_videos/', blank=True, null=True)\n-    scholarships = models.TextField()\n     faqs = models.ManyToManyField(CollegeFaqs)\n     # college_admin = models.ForeignKey(CustomUser, on_delete=models.CASCADE,related_name='college_admin')\n \n     def map_location(self):\n"
+                },
+                {
+                    "date": 1733468321837,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -67,10 +67,9 @@\n     facilities = models.ManyToManyField(Facility,related_name='college_facilities')\n     # college_gallery = models.ManyToManyField(CollegeGallery)\n     placement = models.TextField(null=True,blank=True)\n     scholarship = models.TextField(null=True,blank=True)\n-    \n-    faqs = models.ManyToManyField(CollegeFaqs)\n+    # faqs = models.ManyToManyField(CollegeFaqs)\n     # college_admin = models.ForeignKey(CustomUser, on_delete=models.CASCADE,related_name='college_admin')\n \n     def map_location(self):\n         \n"
+                },
+                {
+                    "date": 1733468328781,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -33,8 +33,9 @@\n     def __str__(self):\n         return f'Placement {self.id}'\n \n class CollegeFaqs(models.Model):\n+    college\n     question = models.CharField(max_length=255)\n     answer = models.TextField(blank=True)\n     created_date = models.DateField(auto_now_add=True)\n     updated_date = models.DateField(auto_now=True)\n"
+                },
+                {
+                    "date": 1733468339515,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -32,17 +32,9 @@\n \n     def __str__(self):\n         return f'Placement {self.id}'\n \n-class CollegeFaqs(models.Model):\n-    college\n-    question = models.CharField(max_length=255)\n-    answer = models.TextField(blank=True)\n-    created_date = models.DateField(auto_now_add=True)\n-    updated_date = models.DateField(auto_now=True)\n \n-    def __str__(self):\n-        return f'Placement {self.id}'\n     \n class College(SEOFields):\n     banner_image = models.ImageField(upload_to='college/banner/')\n     dp_image = models.ImageField(upload_to='college/dp/')\n"
+                },
+                {
+                    "date": 1733468403430,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -39,9 +39,9 @@\n     banner_image = models.ImageField(upload_to='college/banner/')\n     dp_image = models.ImageField(upload_to='college/dp/')\n     name = models.CharField(max_length=255)\n     established_date = models.DateField()\n-    website_link = models.URLField()\n+    website_link = models.URLField(null= True)\n     address = models.CharField(max_length=255)\n     district = models.ForeignKey(District,on_delete=models.CASCADE,related_name='college_district')\n     # location = models.ForeignKey(Location,on_delete=models.CASCADE)\n     phone_number = models.CharField(max_length=20)\n@@ -69,4 +69,15 @@\n         return f'{self.latitude}, {self.longitude}'\n \n     def __str__(self):\n         return self.name\n+\n+\n+class CollegeFaqs(models.Model):\n+    college = models.ForeignKey(College, on_delete=models.CASCADE,related_name='college_faq')\n+    question = models.CharField(max_length=255)\n+    answer = models.TextField(blank=True)\n+    created_date = models.DateField(auto_now_add=True)\n+    updated_date = models.DateField(auto_now=True)\n+\n+    def __str__(self):\n+        return f'Placement {self.id}'\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1733468413787,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -38,10 +38,10 @@\n class College(SEOFields):\n     banner_image = models.ImageField(upload_to='college/banner/')\n     dp_image = models.ImageField(upload_to='college/dp/')\n     name = models.CharField(max_length=255)\n-    established_date = models.DateField()\n-    website_link = models.URLField(null= True)\n+    established_date = models.DateField(null= True,blank=True)\n+    website_link = models.URLField(null= True,blank=True)\n     address = models.CharField(max_length=255)\n     district = models.ForeignKey(District,on_delete=models.CASCADE,related_name='college_district')\n     # location = models.ForeignKey(Location,on_delete=models.CASCADE)\n     phone_number = models.CharField(max_length=20)\n"
+                },
+                {
+                    "date": 1733468589065,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -60,8 +60,10 @@\n     facilities = models.ManyToManyField(Facility,related_name='college_facilities')\n     # college_gallery = models.ManyToManyField(CollegeGallery)\n     placement = models.TextField(null=True,blank=True)\n     scholarship = models.TextField(null=True,blank=True)\n+    created_date = models.DateField(auto_now_add=True)\n+    updated_date = models.DateField(auto_now=True)\n     # faqs = models.ManyToManyField(CollegeFaqs)\n     # college_admin = models.ForeignKey(CustomUser, on_delete=models.CASCADE,related_name='college_admin')\n \n     def map_location(self):\n"
+                },
+                {
+                    "date": 1733468894144,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -57,13 +57,13 @@\n     brochure = models.FileField(upload_to='college/brochure/',null=True,blank=True)\n     step_counter= models.ForeignKey(FormStepProgress, on_delete=models.CASCADE,related_name='step_counter')\n     # admission_open = models.ManyToManyField(AdmissionOpen)\n     facilities = models.ManyToManyField(Facility,related_name='college_facilities')\n-    # college_gallery = models.ManyToManyField(CollegeGallery)\n     placement = models.TextField(null=True,blank=True)\n     scholarship = models.TextField(null=True,blank=True)\n     created_date = models.DateField(auto_now_add=True)\n     updated_date = models.DateField(auto_now=True)\n+    # college_gallery = models.ManyToManyField(CollegeGallery)\n     # faqs = models.ManyToManyField(CollegeFaqs)\n     # college_admin = models.ForeignKey(CustomUser, on_delete=models.CASCADE,related_name='college_admin')\n \n     def map_location(self):\n"
+                },
+                {
+                    "date": 1733468903968,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -42,9 +42,8 @@\n     established_date = models.DateField(null= True,blank=True)\n     website_link = models.URLField(null= True,blank=True)\n     address = models.CharField(max_length=255)\n     district = models.ForeignKey(District,on_delete=models.CASCADE,related_name='college_district')\n-    # location = models.ForeignKey(Location,on_delete=models.CASCADE)\n     phone_number = models.CharField(max_length=20)\n     email = models.EmailField()\n     affiliated = models.ForeignKey(Affiliation, on_delete=models.CASCADE,related_name='college_affiliation')\n     college_type = models.ForeignKey(CollegeType, on_delete=models.CASCADE,related_name='college_type')\n@@ -55,14 +54,15 @@\n     longitude = models.DecimalField(max_digits=9, decimal_places=6)\n     about = models.TextField()\n     brochure = models.FileField(upload_to='college/brochure/',null=True,blank=True)\n     step_counter= models.ForeignKey(FormStepProgress, on_delete=models.CASCADE,related_name='step_counter')\n-    # admission_open = models.ManyToManyField(AdmissionOpen)\n     facilities = models.ManyToManyField(Facility,related_name='college_facilities')\n     placement = models.TextField(null=True,blank=True)\n     scholarship = models.TextField(null=True,blank=True)\n     created_date = models.DateField(auto_now_add=True)\n     updated_date = models.DateField(auto_now=True)\n+    # location = models.ForeignKey(Location,on_delete=models.CASCADE)\n+    # admission_open = models.ManyToManyField(AdmissionOpen)\n     # college_gallery = models.ManyToManyField(CollegeGallery)\n     # faqs = models.ManyToManyField(CollegeFaqs)\n     # college_admin = models.ForeignKey(CustomUser, on_delete=models.CASCADE,related_name='college_admin')\n \n"
                 }
             ],
             "date": 1727170911784,
