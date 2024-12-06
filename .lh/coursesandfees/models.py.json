@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 35,
+            "activePatchIndex": 40,
             "patches": [
                 {
                     "date": 1727174542938,
@@ -148,6 +148,26 @@
                 {
                     "date": 1733295813290,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,6 @@\n from django.db import models\n+from collegemanagement.models import College\n from coursemanagement.models import Course\n \n # CoursesAndFees Model\n class CoursesAndFees(models.Model):\n"
+                },
+                {
+                    "date": 1733467326009,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,11 +1,12 @@\n from django.db import models\n-from collegemanagement.models import College\n from coursemanagement.models import Course\n \n # CoursesAndFees Model\n-class CoursesAndFees(models.Model):\n+class CoursesAndFees(models.Model): #CollegeHaveCourse\n     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='courses_and_fees')\n+    level = Bachelor, Master\n+    college = models.ForeignKey(college)\n     amount = models.DecimalField(max_digits=10, decimal_places=2)\n     is_admission = models.BooleanField(default=False)\n     created_date = models.DateField(auto_now_add=True)\n     updated_date = models.DateField(auto_now_add=True)\n"
+                },
+                {
+                    "date": 1733467335270,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,11 +1,11 @@\n from django.db import models\n from coursemanagement.models import Course\n+from colle\n \n # CoursesAndFees Model\n class CoursesAndFees(models.Model): #CollegeHaveCourse\n     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='courses_and_fees')\n-    level = Bachelor, Master\n     college = models.ForeignKey(college)\n     amount = models.DecimalField(max_digits=10, decimal_places=2)\n     is_admission = models.BooleanField(default=False)\n     created_date = models.DateField(auto_now_add=True)\n"
+                },
+                {
+                    "date": 1733467342095,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n from django.db import models\n from coursemanagement.models import Course\n-from colle\n+from collegemanagement.models import College\n \n # CoursesAndFees Model\n class CoursesAndFees(models.Model): #CollegeHaveCourse\n     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='courses_and_fees')\n"
+                },
+                {
+                    "date": 1733467347381,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,9 +4,9 @@\n \n # CoursesAndFees Model\n class CoursesAndFees(models.Model): #CollegeHaveCourse\n     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='courses_and_fees')\n-    college = models.ForeignKey(college)\n+    college = models.ForeignKey(College)\n     amount = models.DecimalField(max_digits=10, decimal_places=2)\n     is_admission = models.BooleanField(default=False)\n     created_date = models.DateField(auto_now_add=True)\n     updated_date = models.DateField(auto_now_add=True)\n"
+                },
+                {
+                    "date": 1733467357836,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,9 +4,9 @@\n \n # CoursesAndFees Model\n class CoursesAndFees(models.Model): #CollegeHaveCourse\n     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='courses_and_fees')\n-    college = models.ForeignKey(College)\n+    college = models.ForeignKey(College, on_delete=models.CASCADE, related_name='college_courses_and_fees')\n     amount = models.DecimalField(max_digits=10, decimal_places=2)\n     is_admission = models.BooleanField(default=False)\n     created_date = models.DateField(auto_now_add=True)\n     updated_date = models.DateField(auto_now_add=True)\n"
                 }
             ],
             "date": 1727174542938,

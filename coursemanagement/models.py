@@ -20,6 +20,7 @@ class Course(SEOFields):
     eligibility_criteria = models.TextField(default = "")
     image = models.ImageField(upload_to='courses/images/')
     curriculum_file_upload = models.FileField(upload_to='courses/pdf/')
+    
     created_date = models.DateField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
 

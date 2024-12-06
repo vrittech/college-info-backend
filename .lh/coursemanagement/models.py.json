@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 85,
+            "activePatchIndex": 86,
             "patches": [
                 {
                     "date": 1727071578528,
@@ -348,6 +348,10 @@
                 {
                     "date": 1733393722112,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,9 +5,9 @@\n from discipline.models import Discipline\n from duration.models import Duration\n from mainproj.utilities.seo import SEOFields\n # Create your models here.\n-class Course(models.Model):\n+class Course(l):\n     name = models.CharField(max_length=255)\n     abbreviation = models.CharField(max_length=255)\n     affiliation = models.ForeignKey(Affiliation,on_delete=models.CASCADE,related_name='course_affiliations')\n     duration = models.ForeignKey(Duration,on_delete=models.CASCADE,related_name='course_duration')\n"
+                },
+                {
+                    "date": 1733467647847,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,12 +5,11 @@\n from discipline.models import Discipline\n from duration.models import Duration\n from mainproj.utilities.seo import SEOFields\n # Create your models here.\n-class Course(l):\n+class Course(SEOFields):\n     name = models.CharField(max_length=255)\n     abbreviation = models.CharField(max_length=255)\n-    affiliation = models.ForeignKey(Affiliation,on_delete=models.CASCADE,related_name='course_affiliations')\n     duration = models.ForeignKey(Duration,on_delete=models.CASCADE,related_name='course_duration')\n     faculties = models.ForeignKey(Faculty, on_delete=models.CASCADE, related_name='course_faculties')\n     level = models.ForeignKey(Level, on_delete=models.CASCADE, related_name='course_level')\n     discipline = models.ManyToManyField(Discipline, related_name='course_discipline')\n@@ -20,8 +19,9 @@\n     course_curriculum = models.TextField(default = \"\")\n     eligibility_criteria = models.TextField(default = \"\")\n     image = models.ImageField(upload_to='courses/images/')\n     curriculum_file_upload = models.FileField(upload_to='courses/pdf/')\n+    \n     created_date = models.DateField(auto_now_add=True)\n     updated_date = models.DateTimeField(auto_now=True)\n \n     def __str__(self):\n"
                 }
             ],
             "date": 1727071578528,

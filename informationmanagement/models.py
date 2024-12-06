@@ -48,14 +48,7 @@ class InformationGallery(models.Model):
     def __str__(self):
         return self.created_date
     
-class InformationFiles(models.Model):
-    Information  = models.ForeignKey
-    file = models.FileField(upload_to='information_docs/',null=True,blank=True)
-    
-    created_date = models.DateField(auto_now_add=True, null=True, blank=True)
-    updated_date = models.DateTimeField(auto_now=True, null=True, blank=True)
-    def __str__(self):
-        return self.created_date
+
 
 
 class Information(SEOFields):
@@ -91,3 +84,13 @@ class Information(SEOFields):
 
     def get_active_period(self):
         return f"{self.active_period_start} to {self.active_period_end}"
+
+
+class InformationFiles(models.Model):
+    information  = models.ForeignKey(Information, on_delete=models.CASCADE,related_name='information_files')
+    file = models.FileField(upload_to='information_docs/',null=True,blank=True)
+    
+    created_date = models.DateField(auto_now_add=True, null=True, blank=True)
+    updated_date = models.DateTimeField(auto_now=True, null=True, blank=True)
+    def __str__(self):
+        return self.created_date
