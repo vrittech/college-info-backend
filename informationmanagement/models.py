@@ -38,6 +38,7 @@ class InformationCategory(models.Model):
         return self.name
     
 class InformationGallery(models.Model):
+    Information = models.ForeignKey
     image = models.ImageField(upload_to='information_category/',null=True,blank=True)
     is_featured = models.BooleanField(default=False)
     created_date = models.DateField(auto_now_add=True, null=True, blank=True)
@@ -48,6 +49,7 @@ class InformationGallery(models.Model):
         return self.created_date
     
 class InformationFiles(models.Model):
+    Information  = models.ForeignKey
     file = models.FileField(upload_to='information_docs/',null=True,blank=True)
     
     created_date = models.DateField(auto_now_add=True, null=True, blank=True)
@@ -67,7 +69,7 @@ class Information(SEOFields):
     sublevel = models.ManyToManyField(SubLevel, blank=True)
     course = models.ManyToManyField(Course, blank=True)
     affiliation = models.ManyToManyField(Affiliation)
-    college_type = models.ForeignKey(CollegeType, on_delete=models.SET_NULL, null=True, blank=True)
+  
     district = models.ManyToManyField(District, blank=True)
     college = models.ManyToManyField(College, blank=True)
     faculty = models.ManyToManyField(Faculty, blank=True)
@@ -78,7 +80,7 @@ class Information(SEOFields):
     short_description = models.TextField()
     description = models.TextField()
     image = models.ManyToManyField(InformationGallery, blank=True)
-    file = models.ManyToManyField(InformationFiles, blank=True)
+    # file = models.ManyToManyField(InformationFiles, blank=True)
     # is_view = models.BooleanField(default=False)
 
     created_date = models.DateField(auto_now_add=True, null=True, blank=True)

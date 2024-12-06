@@ -94,7 +94,7 @@ class Event(SEOFields):
         return f"{self.event_name}"
 
 class EventGallery(models.Model):
-    event = models.ManyToManyField(Event, related_name='images')
+    event = models.ForeignKey
     is_featured_image = models.BooleanField(default=False)
     image = models.ImageField(upload_to='event_images/')
     

@@ -1,7 +1,7 @@
 from django.db import models
 
 class PlacementPosition(models.Model):
-    placement_name = models.CharField(max_length=255)
+    placement_name = models.CharField(max_length=255) 
     duration_in_seconds = models.IntegerField(default=0)  # Time in seconds
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)

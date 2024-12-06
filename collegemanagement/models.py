@@ -86,10 +86,10 @@ class College(SEOFields):
     # dc_language = models.CharField(max_length=10, blank=True, null=True, default="en", help_text="Language code for Dublin Core Metadata (e.g., en, fr).")
 
 
-    courses_and_fees = models.ManyToManyField(CoursesAndFees,related_name='college_courses_and_fees')
+    
     # admission_open = models.ManyToManyField(AdmissionOpen)
     facilities = models.ManyToManyField(Facility,related_name='college_facilities')
-    college_gallery = models.ManyToManyField(CollegeGallery)
+    # college_gallery = models.ManyToManyField(CollegeGallery)
     placement = models.TextField(null=True,blank=True)
     scholarship = models.TextField(null=True,blank=True)
     
