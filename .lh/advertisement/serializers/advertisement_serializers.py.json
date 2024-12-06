@@ -1,0 +1,34 @@
+{
+    "sourceFile": "advertisement/serializers/advertisement_serializers.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 4,
+            "patches": [
+                {
+                    "date": 1733479747479,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1733479756716,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,8 @@\n from rest_framework import serializers\n-from ..models import Advertisement\n+from ..models import Advertisement,PlacementPosition\n \n-class PlacementPositionListSerializers(serializers.ModelSerializer):\n+class PlacementPositionSerializers(serializers.ModelSerializer):\n     class Meta:\n         model = PlacementPosition\n         fields = '__all__'\n \n"
+                },
+                {
+                    "date": 1733479763735,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,8 +6,9 @@\n         model = PlacementPosition\n         fields = '__all__'\n \n class AdvertisementListSerializers(serializers.ModelSerializer):\n+    placement_position = PlacementPositionSerializers(many=True,read_only=True)\n     class Meta:\n         model = Advertisement\n         fields = '__all__'\n \n"
+                },
+                {
+                    "date": 1733479769560,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,9 +6,9 @@\n         model = PlacementPosition\n         fields = '__all__'\n \n class AdvertisementListSerializers(serializers.ModelSerializer):\n-    placement_position = PlacementPositionSerializers(many=True,read_only=True)\n+    placement_position = PlacementPositionSerializers(read_only=True)\n     class Meta:\n         model = Advertisement\n         fields = '__all__'\n \n"
+                },
+                {
+                    "date": 1733479774684,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,8 +12,9 @@\n         model = Advertisement\n         fields = '__all__'\n \n class AdvertisementRetrieveSerializers(serializers.ModelSerializer):\n+    placement_position = PlacementPositionSerializers(read_only=True)\n     class Meta:\n         model = Advertisement\n         fields = '__all__'\n \n"
+                }
+            ],
+            "date": 1733479747479,
+            "name": "Commit-0",
+            "content": "from rest_framework import serializers\nfrom ..models import Advertisement\n\nclass PlacementPositionListSerializers(serializers.ModelSerializer):\n    class Meta:\n        model = PlacementPosition\n        fields = '__all__'\n\nclass AdvertisementListSerializers(serializers.ModelSerializer):\n    class Meta:\n        model = Advertisement\n        fields = '__all__'\n\nclass AdvertisementRetrieveSerializers(serializers.ModelSerializer):\n    class Meta:\n        model = Advertisement\n        fields = '__all__'\n\nclass AdvertisementWriteSerializers(serializers.ModelSerializer):\n    class Meta:\n        model = Advertisement\n        fields = '__all__'"
+        }
+    ]
+}

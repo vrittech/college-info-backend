@@ -10,7 +10,7 @@ class eventcategoryViewsets(viewsets.ModelViewSet):
     # permission_classes = [eventPermission]
     # authentication_classes = [JWTAuthentication]
     #pagination_class = MyPageNumberPagination
-    queryset = EventCategory.objects.all()
+    queryset = EventCategory.objects.all().order_by('-id')
 
     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]
     search_fields = ['id']
@@ -22,7 +22,7 @@ class eventcategoryViewsets(viewsets.ModelViewSet):
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        #return queryset.filter(user_id=self.request.user.id)
+        return queryset
 
     def get_serializer_class(self):
         if self.action in ['create', 'update', 'partial_update']:

@@ -20,5 +20,6 @@ class Gallery(models.Model):
     updated_date_time = models.DateTimeField(auto_now=True, null = True,blank = True)\
     
     def __str__(self):
+        
         return self.created_date
 

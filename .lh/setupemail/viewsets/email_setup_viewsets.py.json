@@ -1,0 +1,18 @@
+{
+    "sourceFile": "setupemail/viewsets/email_setup_viewsets.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1733481958429,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1733481958429,
+            "name": "Commit-0",
+            "content": "from ..models import EmailSetup\nfrom ..serializers.email_setup_serializers import EmailSetupListSerializers,EmailSetupRetrieveSerializers,EmailSetupWriteSerializers\nfrom ..utilities.importbase import *\nfrom rest_framework.decorators import action\n\nclass EmailSetupViewset(viewsets.ModelViewSet):\n    serializer_class = EmailSetupListSerializers\n    permission_classes = [AdminViewSetsPermission]\n    # authentication_classes = [JWTAuthentication]\n    pagination_class = MyPageNumberPagination\n    queryset  = EmailSetup.objects.all().order_by\n\n    filter_backends = [SearchFilter,DjangoFilterBackend,OrderingFilter]\n    search_fields = ['id']\n    ordering_fields = ['id']\n\n    # filterset_fields = {\n    #     'user':['exact'],\n    # }\n    def get_queryset(self):\n        queryset = super().get_queryset()\n        return queryset\n    \n    def get_serializer_class(self):\n        if self.action in ['create','update','partial_update']:\n            return EmailSetupWriteSerializers\n        elif self.action in ['retrieve']:\n            return EmailSetupRetrieveSerializers\n        return super().get_serializer_class()\n    \n    # @action(detail=False, methods=['get'], name=\"EmailSetups\", url_path=\"job-seekers\")\n    # def EmailSetups(self, request, *args, **kwargs):\n    #     return super().list(request, *args, **kwargs)\n    "
+        }
+    ]
+}

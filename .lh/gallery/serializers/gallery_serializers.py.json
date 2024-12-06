@@ -1,0 +1,18 @@
+{
+    "sourceFile": "gallery/serializers/gallery_serializers.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1733477583982,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1733477583982,
+            "name": "Commit-0",
+            "content": "from rest_framework import serializers\nfrom ..models import Gallery, Album\nfrom django.core.exceptions import ValidationError as DjangoValidationError\nfrom rest_framework.exceptions import ValidationError as DRFValidationError\nfrom rest_framework import serializers\n\n\nclass AlbumSerializer(serializers.ModelSerializer):\n    class Meta:\n        model = Album\n        fields = ['id', 'name', 'featured_image', 'created_date', 'updated_date']\n\n\nclass GalleryListSerializers(serializers.ModelSerializer):\n    album = AlbumSerializer(many=True)  # Nested Album objects for the gallery\n\n    class Meta:\n        model = Gallery\n        fields = ['id', 'image', 'album', 'is_cover', 'created_date', 'created_date_time', 'updated_date_time']\n\n\nclass GalleryRetrieveSerializers(serializers.ModelSerializer):\n    album = AlbumSerializer(many=True)  # Nested Album objects for the gallery\n\n    class Meta:\n        model = Gallery\n        fields = ['id', 'image', 'album', 'is_cover', 'created_date', 'created_date_time', 'updated_date_time']\n\n\nclass GalleryWriteSerializers(serializers.ModelSerializer):\n    # The `album` field is written as an integer ID, but the details will be fetched via nested serializer\n    album = serializers.PrimaryKeyRelatedField(queryset=Album.objects.all(), many=True)\n    \n    class Meta:\n        model = Gallery\n        fields = ['id', 'image', 'album', 'is_cover', 'created_date', 'created_date_time', 'updated_date_time']\n    \n    def validate_album(self, value):\n        # Validation to ensure album(s) exist\n        for album in value:\n            if not Album.objects.filter(id=album.id).exists():\n                raise serializers.ValidationError(f\"Album with id {album.id} does not exist.\")\n        return value\n    \n    def create(self, validated_data):\n        # Handle the creation of the Gallery instance\n        album_data = validated_data.pop('album')\n        gallery_instance = Gallery.objects.create(**validated_data)\n        \n        # Add the albums to the gallery (Many-to-Many relationship)\n        gallery_instance.album.set(album_data)\n        gallery_instance.save()\n        \n        return gallery_instance\n    \n    def update(self, instance, validated_data):\n        # Handle the update of an existing Gallery instance\n        album_data = validated_data.pop('album', None)\n        \n        # Update fields\n        for attr, value in validated_data.items():\n            setattr(instance, attr, value)\n        \n        # If `album` is provided, update the many-to-many relationship\n        if album_data is not None:\n            instance.album.set(album_data)  # Update the albums associated with the gallery\n        \n        instance.save()\n        return instance\n"
+        }
+    ]
+}

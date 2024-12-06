@@ -1,0 +1,26 @@
+{
+    "sourceFile": "level/serializers/level_serializers.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 2,
+            "patches": [
+                {
+                    "date": 1733478156754,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1733478163583,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,12 @@\n from rest_framework import serializers\n from ..models import Level, SubLevel\n \n+class SubLevelSerializers(serializers.ModelSerializer):\n+    class Meta:\n+        model = SubLevel\n+        fields = '__all__'\n+\n class LevelListSerializers(serializers.ModelSerializer):\n     class Meta:\n         model = Level\n         fields = '__all__'\n"
+                },
+                {
+                    "date": 1733478169834,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,8 +6,9 @@\n         model = SubLevel\n         fields = '__all__'\n \n class LevelListSerializers(serializers.ModelSerializer):\n+    sublevel = SubLevelSerializers(many=True, read_only=True\n     class Meta:\n         model = Level\n         fields = '__all__'\n \n"
+                }
+            ],
+            "date": 1733478156754,
+            "name": "Commit-0",
+            "content": "from rest_framework import serializers\nfrom ..models import Level, SubLevel\n\nclass LevelListSerializers(serializers.ModelSerializer):\n    class Meta:\n        model = Level\n        fields = '__all__'\n\nclass LevelRetrieveSerializers(serializers.ModelSerializer):\n    class Meta:\n        model = Level\n        fields = '__all__'\n\nclass LevelWriteSerializers(serializers.ModelSerializer):\n    class Meta:\n        model = Level\n        fields = '__all__'"
+        }
+    ]
+}
