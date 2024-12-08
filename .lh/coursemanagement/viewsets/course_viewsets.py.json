@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 1,
+            "activePatchIndex": 2,
             "patches": [
                 {
                     "date": 1733481275577,
@@ -12,6 +12,10 @@
                 {
                     "date": 1733481281717,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,9 +9,9 @@\n     serializer_class = CourseListSerializers\n     # permission_classes = [coursemanagementPermission]\n     # authentication_classes = [JWTAuthentication]\n     #pagination_class = MyPageNumberPagination\n-    queryset = Course.objects.all().order_by\n+    queryset = Course.objects.all().order_by('-id')\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     search_fields = ['id']\n     ordering_fields = ['id']\n@@ -21,9 +21,9 @@\n     # }\n \n     def get_queryset(self):\n         queryset = super().get_queryset()\n-        #return queryset.filter(user_id=self.request.user.id)\n+        return queryse\n \n     def get_serializer_class(self):\n         if self.action in ['create', 'update', 'partial_update']:\n             return CourseWriteSerializers\n"
+                },
+                {
+                    "date": 1733637896988,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -21,9 +21,9 @@\n     # }\n \n     def get_queryset(self):\n         queryset = super().get_queryset()\n-        return queryse\n+        return queryset\n \n     def get_serializer_class(self):\n         if self.action in ['create', 'update', 'partial_update']:\n             return CourseWriteSerializers\n"
                 }
             ],
             "date": 1733481275577,
