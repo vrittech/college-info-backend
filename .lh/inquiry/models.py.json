@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 10,
+            "activePatchIndex": 14,
             "patches": [
                 {
                     "date": 1733312045672,
@@ -48,6 +48,22 @@
                 {
                     "date": 1733312244824,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,4 +7,27 @@\n # phone \n # courses\n # colleges\n # message\n+from django.db import models\n+from collegemanagement.models import College\n+from coursemanagement.models import Course\n+\n+class Inquiry(models.Model):\n+    # Personal Information\n+    full_name = models.CharField(max_length=255, help_text=\"Full name of the inquirer.\")\n+    email = models.EmailField(help_text=\"Email address of the inquirer.\")\n+    phone = models.CharField(max_length=15, help_text=\"Phone number of the inquirer.\")\n+\n+    # Relationships to College and Course\n+    courses = models.ManyToManyField(Course, related_name=\"inquiries\", help_text=\"Courses the user is interested in.\")\n+    colleges = models.ManyToManyField(College, related_name=\"inquiries\", help_text=\"Colleges the user is interested in.\")\n+\n+    # Additional Message\n+    message = models.TextField(blank=True, null=True, help_text=\"Message or query from the user.\")\n+\n+    # Timestamps\n+    created_at = models.DateTimeField(auto_now_add=True, help_text=\"The time when the inquiry was created.\")\n+    updated_at = models.DateTimeField(auto_now=True, help_text=\"The last time the inquiry was updated.\")\n+\n+    def __str__(self):\n+        return f\"Inquiry from {self.full_name} - {self.email}\"\n"
+                },
+                {
+                    "date": 1733642613945,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -30,4 +30,7 @@\n     updated_at = models.DateTimeField(auto_now=True, help_text=\"The last time the inquiry was updated.\")\n \n     def __str__(self):\n         return f\"Inquiry from {self.full_name} - {self.email}\"\n+    \n+    class Meta:\n+        \n"
+                },
+                {
+                    "date": 1733642620947,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -32,5 +32,5 @@\n     def __str__(self):\n         return f\"Inquiry from {self.full_name} - {self.email}\"\n     \n     class Meta:\n-        \n+        permissions = \n"
+                },
+                {
+                    "date": 1733642626646,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -32,5 +32,7 @@\n     def __str__(self):\n         return f\"Inquiry from {self.full_name} - {self.email}\"\n     \n     class Meta:\n-        permissions = \n+        permissions = [\n+            ('manage')\n+        ]\n"
+                },
+                {
+                    "date": 1733642631897,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -33,6 +33,6 @@\n         return f\"Inquiry from {self.full_name} - {self.email}\"\n     \n     class Meta:\n         permissions = [\n-            ('manage')\n+            ('manage_inquiry', 'Manage Inquiry'),\n         ]\n"
                 }
             ],
             "date": 1733312045672,

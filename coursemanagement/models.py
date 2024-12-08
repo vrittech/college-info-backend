@@ -26,6 +26,11 @@ class Course(SEOFields):
 
     def __str__(self):
         return self.name
+    
+    class Meta:
+        permissions = [
+            ('manage_course', 'Manage course'),
+        ]
 
     
  

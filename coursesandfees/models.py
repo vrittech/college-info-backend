@@ -13,3 +13,8 @@ class CoursesAndFees(models.Model): #CollegeHaveCourse
 
     def __str__(self):
         return f'{self.created_date} - {self.amount}'
+    
+    class Meta:
+        permissions = [
+            ('manage_courses_and_fees', 'Manage courses and fees'),
+        ]

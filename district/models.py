@@ -12,3 +12,8 @@ class District(models.Model):
     
     def __str__(self):
         return self.name
+    
+    class Meta:
+        permissions = [
+            ('manage_district', 'Manage District'),
+        ]

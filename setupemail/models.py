@@ -13,4 +13,9 @@ class EmailSetup(models.Model):
     verify_smtp_certificate = models.BooleanField(default = False)
     
     def __str__(self):
-        return self.email_address
+        return f"{self.email_address}: {self.smtp_server_address} -> {self.port}"
+    
+    class Meta:
+        permissions=[
+            ('manage_email_setup','Manage Email Setup')
+        ]

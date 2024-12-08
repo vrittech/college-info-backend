@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 3,
+            "activePatchIndex": 5,
             "patches": [
                 {
                     "date": 1733312873798,
@@ -20,6 +20,14 @@
                 {
                     "date": 1733312900151,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,8 +8,9 @@\n     email = models.EmailField()\n     phone_number = models.CharField(max_length=15)\n     location = models.CharField(max_length=255)\n     social_media_links = models.JSONField(blank=True, null=True)\n+    \n     created_at = models.DateTimeField(auto_now_add=True)\n     updated_at = models.DateTimeField(auto_now=True)\n \n     def __str__(self):\n"
+                },
+                {
+                    "date": 1733642768882,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,5 +13,7 @@\n     created_at = models.DateTimeField(auto_now_add=True)\n     updated_at = models.DateTimeField(auto_now=True)\n \n     def __str__(self):\n-        return self.contact_person_name\n+        return self.name\n+    \n+    \n"
+                },
+                {
+                    "date": 1733642775941,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,5 +15,6 @@\n \n     def __str__(self):\n         return self.name\n     \n-    \n+    class Meta:\n+        permissions\n"
                 }
             ],
             "date": 1733312873798,

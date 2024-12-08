@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 86,
+            "activePatchIndex": 89,
             "patches": [
                 {
                     "date": 1727071578528,
@@ -352,6 +352,18 @@
                 {
                     "date": 1733467647847,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,12 +5,11 @@\n from discipline.models import Discipline\n from duration.models import Duration\n from mainproj.utilities.seo import SEOFields\n # Create your models here.\n-class Course(l):\n+class Course(SEOFields):\n     name = models.CharField(max_length=255)\n     abbreviation = models.CharField(max_length=255)\n-    affiliation = models.ForeignKey(Affiliation,on_delete=models.CASCADE,related_name='course_affiliations')\n     duration = models.ForeignKey(Duration,on_delete=models.CASCADE,related_name='course_duration')\n     faculties = models.ForeignKey(Faculty, on_delete=models.CASCADE, related_name='course_faculties')\n     level = models.ForeignKey(Level, on_delete=models.CASCADE, related_name='course_level')\n     discipline = models.ManyToManyField(Discipline, related_name='course_discipline')\n@@ -20,8 +19,9 @@\n     course_curriculum = models.TextField(default = \"\")\n     eligibility_criteria = models.TextField(default = \"\")\n     image = models.ImageField(upload_to='courses/images/')\n     curriculum_file_upload = models.FileField(upload_to='courses/pdf/')\n+    \n     created_date = models.DateField(auto_now_add=True)\n     updated_date = models.DateTimeField(auto_now=True)\n \n     def __str__(self):\n"
+                },
+                {
+                    "date": 1733642091463,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -25,7 +25,9 @@\n     updated_date = models.DateTimeField(auto_now=True)\n \n     def __str__(self):\n         return self.name\n+    \n+    class Me\n \n     \n  \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1733642097201,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -26,8 +26,9 @@\n \n     def __str__(self):\n         return self.name\n     \n-    class Me\n+    class Meta:\n+        \n \n     \n  \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1733642102530,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,8 +27,8 @@\n     def __str__(self):\n         return self.name\n     \n     class Meta:\n-        \n+        permissions = [\n \n     \n  \n\\ No newline at end of file\n"
                 }
             ],
             "date": 1727071578528,

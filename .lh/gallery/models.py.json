@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 26,
+            "activePatchIndex": 30,
             "patches": [
                 {
                     "date": 1726649624074,
@@ -112,6 +112,22 @@
                 {
                     "date": 1733477505830,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,13 +12,14 @@\n \n class Gallery(models.Model):\n     image = models.ImageField(max_length = 500,upload_to = 'gallery/images')\n     album = models.ManyToManyField(Album,related_name =\"gallery\")\n-    is_cover = \n+    is_cover = models.BooleanField(default = False)\n     \n     created_date = models.DateField(auto_now_add=True, null = True,blank = True)\n     created_date_time = models.DateTimeField(auto_now_add=True, null = True,blank = True)\n     updated_date_time = models.DateTimeField(auto_now=True, null = True,blank = True)\\\n     \n     def __str__(self):\n+        \n         return self.created_date\n \n"
+                },
+                {
+                    "date": 1733642495181,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,8 +8,10 @@\n     updated_date = models.DateTimeField(auto_now=True, null = True,blank = True)\n     \n     def __str__(self):\n         return self.name\n+    \n+    \n \n class Gallery(models.Model):\n     image = models.ImageField(max_length = 500,upload_to = 'gallery/images')\n     album = models.ManyToManyField(Album,related_name =\"gallery\")\n"
+                },
+                {
+                    "date": 1733642502821,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,9 +9,10 @@\n     \n     def __str__(self):\n         return self.name\n     \n-    \n+    class Meta:\n+        permissions\n \n class Gallery(models.Model):\n     image = models.ImageField(max_length = 500,upload_to = 'gallery/images')\n     album = models.ManyToManyField(Album,related_name =\"gallery\")\n"
+                },
+                {
+                    "date": 1733642510507,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,11 @@\n     def __str__(self):\n         return self.name\n     \n     class Meta:\n-        permissions\n+        permissions = [\n+            ('manage_album', 'Manage Album'),\n+        ]\n \n class Gallery(models.Model):\n     image = models.ImageField(max_length = 500,upload_to = 'gallery/images')\n     album = models.ManyToManyField(Album,related_name =\"gallery\")\n@@ -24,5 +26,7 @@\n     \n     def __str__(self):\n         \n         return self.created_date\n+    \n+    \n \n"
+                },
+                {
+                    "date": 1733642516573,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,6 +27,9 @@\n     def __str__(self):\n         \n         return self.created_date\n     \n-    \n+    class Meta:\n+        permissions = [\n+            ('manage_gallery', 'Manage Gallery'),\n+        ]\n \n"
                 }
             ],
             "date": 1726649624074,

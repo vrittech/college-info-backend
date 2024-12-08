@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 10,
+            "activePatchIndex": 13,
             "patches": [
                 {
                     "date": 1726653942928,
@@ -48,6 +48,18 @@
                 {
                     "date": 1733311082233,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,11 +2,11 @@\n \n # Create your models here.\n class Faculty(models.Model):\n     name = models.CharField(max_length=255,null=True,blank=True)\n+    is_show = models.BooleanField(default=False)\n     # description = models.TextField(null=True,blank=True)\n-    image = models.ImageField(upload_to='faculty/',null=True,blank=True)\n-    is_show = models.BooleanField(default=False)\n+    # image = models.ImageField(upload_to='faculty/',null=True,blank=True)\n     created_date = models.DateField(auto_now_add=True, null=True, blank=True)\n     created_date_time = models.DateTimeField(auto_now_add=True, null=True, blank=True)\n     updated_date = models.DateTimeField(auto_now=True, null=True, blank=True)\n     \n"
+                },
+                {
+                    "date": 1733642396155,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,5 +10,7 @@\n     created_date_time = models.DateTimeField(auto_now_add=True, null=True, blank=True)\n     updated_date = models.DateTimeField(auto_now=True, null=True, blank=True)\n     \n     def __str__(self):\n-        return self.name\n\\ No newline at end of file\n+        return self.name\n+    \n+    \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1733642402264,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,5 +12,5 @@\n     \n     def __str__(self):\n         return self.name\n     \n-    \n\\ No newline at end of file\n+    class FIELDNAME = models.FilePathField(, path=None, match=None, recursive=recursive, max_length=100)\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1733642407581,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,5 +12,8 @@\n     \n     def __str__(self):\n         return self.name\n     \n-    class FIELDNAME = models.FilePathField(, path=None, match=None, recursive=recursive, max_length=100)\n\\ No newline at end of file\n+    class Meta:\n+        permissions = [\n+            ('manage_faculty', 'Manage faculty'),\n+        ]\n\\ No newline at end of file\n"
                 }
             ],
             "date": 1726653942928,

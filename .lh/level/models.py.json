@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 27,
+            "activePatchIndex": 31,
             "patches": [
                 {
                     "date": 1726653956970,
@@ -116,6 +116,22 @@
                 {
                     "date": 1733478237018,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,8 +18,6 @@\n     name = models.CharField(max_length=255,null=True,blank=True)\n     description = models.TextField(null=True,blank=True)\n     image = models.ImageField(upload_to='level/',null=True,blank=True)\n     \n-    def __str__(self):\n-        \n-        \n+    def __str__(self):        \n         return self.name\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1733642640690,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,8 +12,10 @@\n     def __str__(self):\n         \n         return self.name\n     \n+    \n+    \n class Level(models.Model):\n     sublevel = models.ManyToManyField(SubLevel,related_name='sublevel_level')\n     name = models.CharField(max_length=255,null=True,blank=True)\n     description = models.TextField(null=True,blank=True)\n"
+                },
+                {
+                    "date": 1733642647805,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,10 +12,11 @@\n     def __str__(self):\n         \n         return self.name\n     \n+    class Meta:\n+        permissions\n     \n-    \n class Level(models.Model):\n     sublevel = models.ManyToManyField(SubLevel,related_name='sublevel_level')\n     name = models.CharField(max_length=255,null=True,blank=True)\n     description = models.TextField(null=True,blank=True)\n"
+                },
+                {
+                    "date": 1733642654938,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,9 +13,11 @@\n         \n         return self.name\n     \n     class Meta:\n-        permissions\n+        permissions = [\n+            ('manage_sublevel', 'Manage SubLevel'),\n+        ]\n     \n class Level(models.Model):\n     sublevel = models.ManyToManyField(SubLevel,related_name='sublevel_level')\n     name = models.CharField(max_length=255,null=True,blank=True)\n"
+                },
+                {
+                    "date": 1733642667100,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,5 +24,10 @@\n     description = models.TextField(null=True,blank=True)\n     image = models.ImageField(upload_to='level/',null=True,blank=True)\n     \n     def __str__(self):        \n-        return self.name\n\\ No newline at end of file\n+        return self.name\n+    \n+    class Meta:\n+        permissions = [\n+            ('manage_level', 'Manage Level'),\n+        ]\n\\ No newline at end of file\n"
                 }
             ],
             "date": 1726653956970,

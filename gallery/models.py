@@ -9,6 +9,11 @@ class Album(models.Model):
     
     def __str__(self):
         return self.name
+    
+    class Meta:
+        permissions = [
+            ('manage_album', 'Manage Album'),
+        ]
 
 class Gallery(models.Model):
     image = models.ImageField(max_length = 500,upload_to = 'gallery/images')
@@ -22,4 +27,9 @@ class Gallery(models.Model):
     def __str__(self):
         
         return self.created_date
+    
+    class Meta:
+        permissions = [
+            ('manage_gallery', 'Manage Gallery'),
+        ]
 

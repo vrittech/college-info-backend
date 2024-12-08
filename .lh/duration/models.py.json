@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 6,
+            "activePatchIndex": 8,
             "patches": [
                 {
                     "date": 1733199415037,
@@ -32,6 +32,14 @@
                 {
                     "date": 1733199464812,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,4 +8,5 @@\n     updated_date = models.DateTimeField(auto_now=True)\n     \n     def __str__(self):\n         return self.name\n+p\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1733642209740,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,5 +8,6 @@\n     updated_date = models.DateTimeField(auto_now=True)\n     \n     def __str__(self):\n         return self.name\n-p\n\\ No newline at end of file\n+    \n+    class Meta:\n"
+                },
+                {
+                    "date": 1733642215110,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,4 +10,7 @@\n     def __str__(self):\n         return self.name\n     \n     class Meta:\n+        permissions = [\n+            \n+        ]\n"
                 }
             ],
             "date": 1733199415037,

@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 24,
+            "activePatchIndex": 26,
             "patches": [
                 {
                     "date": 1733383238378,
@@ -104,6 +104,14 @@
                 {
                     "date": 1733383658806,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,9 +14,9 @@\n     max_length=20,\n     choices=ROLE_CHOICES,\n     default='others',\n )\n-    subject\n+    subject = models.CharField(max_length=1000)\n     message = models.TextField()\n     created_date = models.DateTimeField(auto_now_add=True)\n     updated_date = models.DateTimeField(auto_now=True)\n     \n"
+                },
+                {
+                    "date": 1733640759120,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,5 +20,7 @@\n     created_date = models.DateTimeField(auto_now_add=True)\n     updated_date = models.DateTimeField(auto_now=True)\n     \n     def __str__(self):\n-        return self.name\n\\ No newline at end of file\n+        return self.name\n+    \n+    class Me\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1733640765808,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,5 +22,6 @@\n     \n     def __str__(self):\n         return self.name\n     \n-    class Me\n\\ No newline at end of file\n+    class Meta:\n+        permissions\n\\ No newline at end of file\n"
                 }
             ],
             "date": 1733383238378,

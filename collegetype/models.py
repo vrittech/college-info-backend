@@ -12,3 +12,9 @@ class CollegeType(models.Model):
     
     def __str__(self):
         return self.name
+    
+    class Meta:
+        permissions = [
+            ('manage_college_type', 'Manage college type'),
+        ]
+   

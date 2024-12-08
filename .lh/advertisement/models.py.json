@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 23,
+            "activePatchIndex": 35,
             "patches": [
                 {
                     "date": 1733373617417,
@@ -100,6 +100,54 @@
                 {
                     "date": 1733375243363,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,8 @@\n from django.db import models\n \n class PlacementPosition(models.Model):\n     placement_name = models.CharField(max_length=255)\n-    # order = models.IntegerField(default=0)\n     duration_in_seconds = models.IntegerField(default=0)  # Time in seconds\n     created_date = models.DateTimeField(auto_now_add=True)\n     updated_date = models.DateTimeField(auto_now=True)\n \n@@ -14,9 +13,9 @@\n class Advertisement(models.Model):\n     name = models.CharField(max_length=255)\n     link = models.URLField()\n     image = models.ImageField(upload_to='ads/')\n-    placement_position = models.ForeignKey(PlacementPosition, on_delete=models.CASCADE)\n+    placement = models.ForeignKey(PlacementPosition, on_delete=models.CASCADE)\n     created_date = models.DateTimeField(auto_now_add=True)\n     updated_date = models.DateTimeField(auto_now=True)\n     # duration_in_seconds = models.IntegerField(default=0)  # Time in seconds for the ad\n \n"
+                },
+                {
+                    "date": 1733640306326,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,14 +1,16 @@\n from django.db import models\n \n class PlacementPosition(models.Model):\n-    placement_name = models.CharField(max_length=255)\n+    placement_name = models.CharField(max_length=255) \n     duration_in_seconds = models.IntegerField(default=0)  # Time in seconds\n     created_date = models.DateTimeField(auto_now_add=True)\n     updated_date = models.DateTimeField(auto_now=True)\n \n     def __str__(self):\n         return self.position_name\n+    \n+    class\n \n \n class Advertisement(models.Model):\n     name = models.CharField(max_length=255)\n"
+                },
+                {
+                    "date": 1733640311887,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,10 @@\n \n     def __str__(self):\n         return self.position_name\n     \n-    class\n+    class meta:\n+        per\n \n \n class Advertisement(models.Model):\n     name = models.CharField(max_length=255)\n"
+                },
+                {
+                    "date": 1733640334499,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,9 +9,9 @@\n     def __str__(self):\n         return self.position_name\n     \n     class meta:\n-        per\n+        permissions\n \n \n class Advertisement(models.Model):\n     name = models.CharField(max_length=255)\n"
+                },
+                {
+                    "date": 1733640343444,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,9 +9,11 @@\n     def __str__(self):\n         return self.position_name\n     \n     class meta:\n-        permissions\n+        permissions = [\n+            ()\n+        ]\n \n \n class Advertisement(models.Model):\n     name = models.CharField(max_length=255)\n"
+                },
+                {
+                    "date": 1733640351227,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,9 @@\n         return self.position_name\n     \n     class meta:\n         permissions = [\n-            ()\n+            ('can_placement')\n         ]\n \n \n class Advertisement(models.Model):\n"
+                },
+                {
+                    "date": 1733640356920,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,9 @@\n         return self.position_name\n     \n     class meta:\n         permissions = [\n-            ('can_placement')\n+            ('can_placement_posi')\n         ]\n \n \n class Advertisement(models.Model):\n"
+                },
+                {
+                    "date": 1733640363090,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,9 @@\n         return self.position_name\n     \n     class meta:\n         permissions = [\n-            ('can_placement_posi')\n+            ('can_placement_position', 'Can add placement position'),\n         ]\n \n \n class Advertisement(models.Model):\n@@ -25,4 +25,6 @@\n     # duration_in_seconds = models.IntegerField(default=0)  # Time in seconds for the ad\n \n     def __str__(self):\n         return self.name\n+    \n+    \n"
+                },
+                {
+                    "date": 1733640374163,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -26,5 +26,8 @@\n \n     def __str__(self):\n         return self.name\n     \n-    \n+    class meta:\n+        permissions = [\n+            ('can_advertisement', 'Can advertisement'),\n+        ]\n"
+                },
+                {
+                    "date": 1733640380281,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -28,6 +28,6 @@\n         return self.name\n     \n     class meta:\n         permissions = [\n-            ('can_advertisement', 'Can advertisement'),\n+            ('can_advertisement', 'manage advertisement'),\n         ]\n"
+                },
+                {
+                    "date": 1733640387560,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -28,6 +28,6 @@\n         return self.name\n     \n     class meta:\n         permissions = [\n-            ('can_advertisement', 'manage advertisement'),\n+            ('manage_advertisement', 'Manage advertisement'),\n         ]\n"
+                },
+                {
+                    "date": 1733640393538,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,9 @@\n         return self.position_name\n     \n     class meta:\n         permissions = [\n-            ('can_placement_position', 'Can add placement position'),\n+            ('manage_placement_position', 'Can add placement position'),\n         ]\n \n \n class Advertisement(models.Model):\n"
+                },
+                {
+                    "date": 1733640398739,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,9 @@\n         return self.position_name\n     \n     class meta:\n         permissions = [\n-            ('manage_placement_position', 'Can add placement position'),\n+            ('manage_placement_position', 'Manage placement position'),\n         ]\n \n \n class Advertisement(models.Model):\n"
                 }
             ],
             "date": 1733373617417,

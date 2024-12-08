@@ -58,6 +58,11 @@ class GroupExtension(models.Model):
     
     def __int__(self):
         return self.position
+    
+    class Meta:
+        permissions = [
+            ('manage_group_extension', 'Manage group extension'),
+        ]
 
     # def save(self, *args, **kwargs):
     #     # Set position to the Group ID if position is 0 (or could be None)

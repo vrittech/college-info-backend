@@ -31,3 +31,8 @@ class Inquiry(models.Model):
 
     def __str__(self):
         return f"Inquiry from {self.full_name} - {self.email}"
+    
+    class Meta:
+        permissions = [
+            ('manage_inquiry', 'Manage Inquiry'),
+        ]

@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 135,
+            "activePatchIndex": 141,
             "patches": [
                 {
                     "date": 1726568467190,
@@ -548,6 +548,30 @@
                 {
                     "date": 1733468810785,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -49,9 +49,9 @@\n         return f\"{self.name}\"\n \n class Event(SEOFields):\n     event_name = models.CharField(max_length=255)\n-    start_date = models.DateTimeField()\n+    start_date = models.DateTimeField(null=True,blank=True))\n     end_date = models.DateTimeField(null=True,blank=True)\n     duration = models.CharField(max_length=255)\n     TYPE_CHOICES = [\n         ('physical', 'Physical'),\n"
+                },
+                {
+                    "date": 1733642232693,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -49,9 +49,9 @@\n         return f\"{self.name}\"\n \n class Event(SEOFields):\n     event_name = models.CharField(max_length=255)\n-    start_date = models.DateTimeField(null=True,blank=True))\n+    start_date = models.DateTimeField(null=True,blank=True)\n     end_date = models.DateTimeField(null=True,blank=True)\n     duration = models.CharField(max_length=255)\n     TYPE_CHOICES = [\n         ('physical', 'Physical'),\n@@ -91,8 +91,10 @@\n \n     \n     def __str__(self):\n         return f\"{self.event_name}\"\n+    \n+    class Meta:\n \n class EventGallery(models.Model):\n     event = models.ForeignKey\n     is_featured_image = models.BooleanField(default=False)\n"
+                },
+                {
+                    "date": 1733642238103,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -93,8 +93,11 @@\n     def __str__(self):\n         return f\"{self.event_name}\"\n     \n     class Meta:\n+        permissions = [\n+            \n+        ]\n \n class EventGallery(models.Model):\n     event = models.ForeignKey\n     is_featured_image = models.BooleanField(default=False)\n"
+                },
+                {
+                    "date": 1733642247701,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -94,9 +94,9 @@\n         return f\"{self.event_name}\"\n     \n     class Meta:\n         permissions = [\n-            \n+            (\"manageevent\", \"Can view event\"),\n         ]\n \n class EventGallery(models.Model):\n     event = models.ForeignKey\n"
+                },
+                {
+                    "date": 1733642254717,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -94,9 +94,9 @@\n         return f\"{self.event_name}\"\n     \n     class Meta:\n         permissions = [\n-            (\"manageevent\", \"Can view event\"),\n+            (\"manage_event\", \"Manage event\"),\n         ]\n \n class EventGallery(models.Model):\n     event = models.ForeignKey\n"
+                },
+                {
+                    "date": 1733642260081,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -94,9 +94,9 @@\n         return f\"{self.event_name}\"\n     \n     class Meta:\n         permissions = [\n-            (\"manage_event\", \"Manage event\"),\n+            (\"manage_event\", \"Manage Event\"),\n         ]\n \n class EventGallery(models.Model):\n     event = models.ForeignKey\n@@ -107,5 +107,7 @@\n     created_date = models.DateField(auto_now_add=True, null=True, blank=True)\n     updated_date = models.DateTimeField(auto_now=True, null=True, blank=True)\n     \n     def __str__(self):\n-        return f\"{self.image.url} - {'Featured' if self.is_featured_image else 'Standard'}\"\n\\ No newline at end of file\n+        return f\"{self.image.url} - {'Featured' if self.is_featured_image else 'Standard'}\"\n+    \n+    \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1733642265251,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -109,5 +109,8 @@\n     \n     def __str__(self):\n         return f\"{self.image.url} - {'Featured' if self.is_featured_image else 'Standard'}\"\n     \n-    \n\\ No newline at end of file\n+    class Meta:\n+        permissions = [\n+            (\"manage_event_gallery\", \"Manage Event Gallery\"),\n+        ]\n\\ No newline at end of file\n"
                 }
             ],
             "date": 1726568467190,

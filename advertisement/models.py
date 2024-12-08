@@ -8,6 +8,11 @@ class PlacementPosition(models.Model):
 
     def __str__(self):
         return self.position_name
+    
+    class meta:
+        permissions = [
+            ('manage_placement_position', 'Manage placement position'),
+        ]
 
 
 class Advertisement(models.Model):
@@ -21,3 +26,8 @@ class Advertisement(models.Model):
 
     def __str__(self):
         return self.name
+    
+    class meta:
+        permissions = [
+            ('manage_advertisement', 'Manage advertisement'),
+        ]

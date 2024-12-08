@@ -3,11 +3,15 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 0,
+            "activePatchIndex": 1,
             "patches": [
                 {
                     "date": 1733481958429,
                     "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1733638975882,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,9 @@\n     serializer_class = EmailSetupListSerializers\n     permission_classes = [AdminViewSetsPermission]\n     # authentication_classes = [JWTAuthentication]\n     pagination_class = MyPageNumberPagination\n-    queryset  = EmailSetup.objects.all().order_by\n+    queryset  = EmailSetup.objects.all().order_by('-id')\n \n     filter_backends = [SearchFilter,DjangoFilterBackend,OrderingFilter]\n     search_fields = ['id']\n     ordering_fields = ['id']\n"
                 }
             ],
             "date": 1733481958429,

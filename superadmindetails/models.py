@@ -15,3 +15,8 @@ class SuperAdminDetails(models.Model):
 
     def __str__(self):
         return self.name
+    
+    class Meta:
+        permissions=[
+            ('manage_super_admin_details', 'Manage Super Admin Details'),
+        ]

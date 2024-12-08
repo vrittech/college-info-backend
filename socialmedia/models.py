@@ -11,3 +11,8 @@ class SocialMedia(models.Model):
     
     def __str__(self):
         return self.name
+    
+    class Meta:
+        permissions = [
+            ('manage_social_media', 'Manage Social Media'),
+        ]

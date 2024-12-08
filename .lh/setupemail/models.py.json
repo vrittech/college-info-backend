@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 2,
+            "activePatchIndex": 6,
             "patches": [
                 {
                     "date": 1728385819026,
@@ -16,6 +16,22 @@
                 {
                     "date": 1728385836446,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,5 +12,5 @@\n     smtp_username = models.CharField(max_length = 100,null = True,blank = True)\n     verify_smtp_certificate = models.BooleanField(default = False)\n     \n     def __str__(self):\n-        return self.name\n+        return self.email_address\n"
+                },
+                {
+                    "date": 1733642680294,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,5 +12,7 @@\n     smtp_username = models.CharField(max_length = 100,null = True,blank = True)\n     verify_smtp_certificate = models.BooleanField(default = False)\n     \n     def __str__(self):\n-        return self.email_address\n+        return f\"{self.email_address}: {self.smtp_server_address} -> {self.port}\"\n+    \n+    \n"
+                },
+                {
+                    "date": 1733642689469,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,5 +14,5 @@\n     \n     def __str__(self):\n         return f\"{self.email_address}: {self.smtp_server_address} -> {self.port}\"\n     \n-    \n+    class Meta:\n"
+                },
+                {
+                    "date": 1733642694930,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,4 +15,5 @@\n     def __str__(self):\n         return f\"{self.email_address}: {self.smtp_server_address} -> {self.port}\"\n     \n     class Meta:\n+        permissions``\n"
+                },
+                {
+                    "date": 1733642701510,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,5 +15,7 @@\n     def __str__(self):\n         return f\"{self.email_address}: {self.smtp_server_address} -> {self.port}\"\n     \n     class Meta:\n-        permissions``\n+        permissions=[\n+            ('manage_email_setup','Manage Email Setup')\n+        ]\n"
                 }
             ],
             "date": 1728385819026,

@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 3,
+            "activePatchIndex": 11,
             "patches": [
                 {
                     "date": 1728468246559,
@@ -20,6 +20,38 @@
                 {
                     "date": 1732864441541,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-from  import models\n+from django.db import models\n \n # Create your models here.\n class Discipline(models.Model):\n     name = models.CharField(max_length=255,null=True,blank=True)\n"
+                },
+                {
+                    "date": 1733642131314,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,5 +10,7 @@\n     created_date_time = models.DateTimeField(auto_now_add=True, null=True, blank=True)\n     updated_date = models.DateTimeField(auto_now=True, null=True, blank=True)\n     \n     def __str__(self):\n-        return self.name\n\\ No newline at end of file\n+        return self.name\n+    \n+    manage\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1733642136613,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,5 +12,6 @@\n     \n     def __str__(self):\n         return self.name\n     \n-    manage\n\\ No newline at end of file\n+    class Meta:\n+        \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1733642142053,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,5 +13,7 @@\n     def __str__(self):\n         return self.name\n     \n     class Meta:\n-        \n\\ No newline at end of file\n+        permissions: [\n+            ('manage_discipline', 'Manage discipline'),\n+        ]\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1733642151165,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,6 +14,6 @@\n         return self.name\n     \n     class Meta:\n         permissions: [\n-            ('manage_discipline', 'Manage discipline'),\n+            ('manage_discipline', 'Manage discipline')\n         ]\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1733642156496,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,6 +14,6 @@\n         return self.name\n     \n     class Meta:\n         permissions: [\n-            ('manage_discipline', 'Manage discipline')\n+            ('manage_discipline', 'Manage discipline'),\n         ]\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1733642161819,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,7 +13,5 @@\n     def __str__(self):\n         return self.name\n     \n     class Meta:\n-        permissions: [\n-            ('manage_discipline', 'Manage discipline'),\n-        ]\n\\ No newline at end of file\n+        permissions:\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1733642169964,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,5 +13,7 @@\n     def __str__(self):\n         return self.name\n     \n     class Meta:\n-        permissions:\n\\ No newline at end of file\n+        permissions = [\n+            \n+        ]\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1733642180243,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,6 +14,6 @@\n         return self.name\n     \n     class Meta:\n         permissions = [\n-            \n+            ('manage_discipline', 'Manage Discipline'),\n         ]\n\\ No newline at end of file\n"
                 }
             ],
             "date": 1728468246559,

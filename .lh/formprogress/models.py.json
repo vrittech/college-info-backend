@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 13,
+            "activePatchIndex": 19,
             "patches": [
                 {
                     "date": 1733287511101,
@@ -60,6 +60,30 @@
                 {
                     "date": 1733381880918,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n from django.db import models\n-from accounts.models import CustomUser\n+# from accounts.models import CustomUser\n \n # Create your models here.\n class FormStepProgress(models.Model):\n     # user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True, blank=True)  # Optional for logged-in users\n"
+                },
+                {
+                    "date": 1733642417785,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,4 +11,5 @@\n \n     def __str__(self):\n         status = \"Completed\" if self.completed else f\"Step {self.current_step}\"\n         return f\"{self.user or self.session_id} - {self.form_name} - {status}\"\n+    \n"
+                },
+                {
+                    "date": 1733642435538,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,6 +10,6 @@\n     timestamp = models.DateTimeField(auto_now=True)  # Automatically updates on each interaction\n \n     def __str__(self):\n         status = \"Completed\" if self.completed else f\"Step {self.current_step}\"\n-        return f\"{self.user or self.session_id} - {self.form_name} - {status}\"\n+        return f\"{self.user or self.form_name} - {self.form_name} - {status}\"\n     \n"
+                },
+                {
+                    "date": 1733642444251,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,6 +10,6 @@\n     timestamp = models.DateTimeField(auto_now=True)  # Automatically updates on each interaction\n \n     def __str__(self):\n         status = \"Completed\" if self.completed else f\"Step {self.current_step}\"\n-        return f\"{self.user or self.form_name} - {self.form_name} - {status}\"\n+        return f\"{{self.form_name} - {status}\"\n     \n"
+                },
+                {
+                    "date": 1733642467059,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,6 +10,8 @@\n     timestamp = models.DateTimeField(auto_now=True)  # Automatically updates on each interaction\n \n     def __str__(self):\n         status = \"Completed\" if self.completed else f\"Step {self.current_step}\"\n-        return f\"{{self.form_name} - {status}\"\n+        return f\"{self.timestamp} - {self.form_name} - {status}\"\n     \n+    \n+    \n"
+                },
+                {
+                    "date": 1733642473632,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,6 +12,7 @@\n     def __str__(self):\n         status = \"Completed\" if self.completed else f\"Step {self.current_step}\"\n         return f\"{self.timestamp} - {self.form_name} - {status}\"\n     \n+    class Meta:\n+        permissions\n     \n-    \n"
+                },
+                {
+                    "date": 1733642479741,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,6 +13,8 @@\n         status = \"Completed\" if self.completed else f\"Step {self.current_step}\"\n         return f\"{self.timestamp} - {self.form_name} - {status}\"\n     \n     class Meta:\n-        permissions\n+        permissions = [\n+            ('')\n+        ]\n     \n"
                 }
             ],
             "date": 1733287511101,

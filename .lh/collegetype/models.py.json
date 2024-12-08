@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 10,
+            "activePatchIndex": 16,
             "patches": [
                 {
                     "date": 1726657166644,
@@ -48,6 +48,30 @@
                 {
                     "date": 1728377171241,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,10 +3,10 @@\n # Create your models here.\n class CollegeType(models.Model):\n     name = models.CharField(max_length=255,null=True,blank=True)\n     is_show = models.BooleanField(default=False)\n-    description = models.TextField(null=True,blank=True)\n-    image = models.ImageField(upload_to='college_type/',null=True,blank=True)\n+    # description = models.TextField(null=True,blank=True)\n+    # image = models.ImageField(upload_to='college_type/',null=True,blank=True)\n     created_date = models.DateField(auto_now_add=True, null=True, blank=True)\n     created_date_time = models.DateTimeField(auto_now_add=True, null=True, blank=True)\n     updated_date = models.DateTimeField(auto_now=True, null=True, blank=True)\n     \n"
+                },
+                {
+                    "date": 1733640614615,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,5 +10,7 @@\n     created_date_time = models.DateTimeField(auto_now_add=True, null=True, blank=True)\n     updated_date = models.DateTimeField(auto_now=True, null=True, blank=True)\n     \n     def __str__(self):\n-        return self.name\n\\ No newline at end of file\n+        return self.name\n+    \n+    class Me\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1733640619877,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,5 +12,7 @@\n     \n     def __str__(self):\n         return self.name\n     \n-    class Me\n\\ No newline at end of file\n+    class Meta:\n+        verbose_name = 'College Type'\n+        verbose_name_plural = 'College Types\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1733640625537,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,6 +13,5 @@\n     def __str__(self):\n         return self.name\n     \n     class Meta:\n-        verbose_name = 'College Type'\n-        verbose_name_plural = 'College Types\n\\ No newline at end of file\n+        per\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1733640632323,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,6 +12,6 @@\n     \n     def __str__(self):\n         return self.name\n     \n-    class Meta:\n-        per\n\\ No newline at end of file\n+    class Meta:[]\n+   \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1733640642793,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,6 +12,9 @@\n     \n     def __str__(self):\n         return self.name\n     \n-    class Meta:[]\n+    class Meta:[\n+        permissions\n+        \n+    ]\n    \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1733640706359,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,8 +13,8 @@\n     def __str__(self):\n         return self.name\n     \n     class Meta:[\n-        permissions\n-        \n-    ]\n+        permissions = [\n+            ('manage_college_type', 'Manage college type'),\n+        ]\n    \n\\ No newline at end of file\n"
                 }
             ],
             "date": 1726657166644,

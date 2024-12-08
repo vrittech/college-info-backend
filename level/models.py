@@ -13,6 +13,11 @@ class SubLevel(models.Model):
         
         return self.name
     
+    class Meta:
+        permissions = [
+            ('manage_sublevel', 'Manage SubLevel'),
+        ]
+    
 class Level(models.Model):
     sublevel = models.ManyToManyField(SubLevel,related_name='sublevel_level')
     name = models.CharField(max_length=255,null=True,blank=True)
@@ -21,3 +26,8 @@ class Level(models.Model):
     
     def __str__(self):        
         return self.name
+    
+    class Meta:
+        permissions = [
+            ('manage_level', 'Manage Level'),
+        ]

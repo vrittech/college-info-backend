@@ -11,4 +11,10 @@ class FormStepProgress(models.Model):
 
     def __str__(self):
         status = "Completed" if self.completed else f"Step {self.current_step}"
-        return f"{self.user or self.session_id} - {self.form_name} - {status}"
+        return f"{self.timestamp} - {self.form_name} - {status}"
+    
+    class Meta:
+        permissions = [
+            ('manage_form_progress', 'Manage Form Progress'),
+        ]
+    

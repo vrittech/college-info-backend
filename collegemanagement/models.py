@@ -24,6 +24,10 @@ class CollegeGallery(models.Model):
 
     def __str__(self):
         return f'Gallery Image {self.id}'
+    class Meta:
+        permissions = [
+            ('manage_college_gallery', 'Manage college gallery'),
+        ]
     
 class Placement(models.Model):
     description = models.TextField(blank=True)
@@ -32,6 +36,11 @@ class Placement(models.Model):
 
     def __str__(self):
         return f'Placement {self.id}'
+    
+    class Meta:
+        permissions = [
+            ('manage_placement', 'Manage placement'),
+        ]
 
 
     
@@ -72,6 +81,11 @@ class College(SEOFields):
 
     def __str__(self):
         return self.name
+    
+    class Meta:
+        permissions = [
+            ('manage_college', 'Manage college'),
+        ]
 
 
 class CollegeFaqs(models.Model):
@@ -83,3 +97,8 @@ class CollegeFaqs(models.Model):
 
     def __str__(self):
         return f'Placement {self.id}'
+    
+    class Meta:
+        permissions = [
+            ('manage_faq', 'Manage faq'),
+        ]

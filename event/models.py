@@ -92,6 +92,11 @@ class Event(SEOFields):
     
     def __str__(self):
         return f"{self.event_name}"
+    
+    class Meta:
+        permissions = [
+            ("manage_event", "Manage Event"),
+        ]
 
 class EventGallery(models.Model):
     event = models.ForeignKey
@@ -104,3 +109,8 @@ class EventGallery(models.Model):
     
     def __str__(self):
         return f"{self.image.url} - {'Featured' if self.is_featured_image else 'Standard'}"
+    
+    class Meta:
+        permissions = [
+            ("manage_event_gallery", "Manage Event Gallery"),
+        ]

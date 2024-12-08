@@ -24,6 +24,11 @@ class InformationTagging(models.Model):
 
     def __str__(self):
         return self.name
+    
+    class Meta:
+        permissions = [
+            ('manage_information_tagging', 'Manage Information Tagging'),
+        ]
 
 
 class InformationCategory(models.Model):
@@ -37,6 +42,11 @@ class InformationCategory(models.Model):
     def __str__(self):
         return self.name
     
+    class Meta:
+        permissions = [
+            ('manage_information_category', 'Manage Information Category'),
+        ]
+    
 class InformationGallery(models.Model):
     Information = models.ForeignKey
     image = models.ImageField(upload_to='information_category/',null=True,blank=True)
@@ -47,6 +57,11 @@ class InformationGallery(models.Model):
 
     def __str__(self):
         return self.created_date
+    
+    class Meta:
+        permissions = [
+            ('manage_information_gallery', 'Manage Information Gallery'),
+        ]
     
 
 
@@ -81,6 +96,11 @@ class Information(SEOFields):
 
     def __str__(self):
         return self.title
+    
+    class Meta:
+        permissions = [
+            ('manage_information', 'Manage Information'),
+        ]
 
     def get_active_period(self):
         return f"{self.active_period_start} to {self.active_period_end}"
@@ -94,3 +114,8 @@ class InformationFiles(models.Model):
     updated_date = models.DateTimeField(auto_now=True, null=True, blank=True)
     def __str__(self):
         return self.created_date
+    
+    class Meta:
+        permissions = [
+            ('manage_information_files', 'Manage Information Files'),
+        ]

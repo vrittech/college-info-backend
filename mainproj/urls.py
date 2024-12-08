@@ -28,7 +28,7 @@ from  rest_framework  import routers
 
 from coursemanagement.routers.routers import router as coursemanagement_router
 from socialmedia.routers.routers import router as socialmedia_router
-from setupemail.routers.routers import router as setupemail_router
+# from setupemail.routers.routers import router as setupemail_router
 
 from accounts.routers.routers import router as accounts_router
 from contact.routers.routers import router as contact_router
@@ -64,7 +64,7 @@ router = routers.DefaultRouter()
 
 router.registry.extend(coursemanagement_router.registry)
 router.registry.extend(socialmedia_router.registry)
-router.registry.extend(setupemail_router.registry)
+# router.registry.extend(setupemail_router.registry)
 # router.registry.extend(semester_router.registry)
 router.registry.extend(level_router.registry)
 router.registry.extend(informationmanagement_router.registry)

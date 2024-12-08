@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 183,
+            "activePatchIndex": 190,
             "patches": [
                 {
                     "date": 1727170911785,
@@ -740,6 +740,34 @@
                 {
                     "date": 1733468903968,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -42,9 +42,8 @@\n     established_date = models.DateField(null= True,blank=True)\n     website_link = models.URLField(null= True,blank=True)\n     address = models.CharField(max_length=255)\n     district = models.ForeignKey(District,on_delete=models.CASCADE,related_name='college_district')\n-    # location = models.ForeignKey(Location,on_delete=models.CASCADE)\n     phone_number = models.CharField(max_length=20)\n     email = models.EmailField()\n     affiliated = models.ForeignKey(Affiliation, on_delete=models.CASCADE,related_name='college_affiliation')\n     college_type = models.ForeignKey(CollegeType, on_delete=models.CASCADE,related_name='college_type')\n@@ -55,14 +54,15 @@\n     longitude = models.DecimalField(max_digits=9, decimal_places=6)\n     about = models.TextField()\n     brochure = models.FileField(upload_to='college/brochure/',null=True,blank=True)\n     step_counter= models.ForeignKey(FormStepProgress, on_delete=models.CASCADE,related_name='step_counter')\n-    # admission_open = models.ManyToManyField(AdmissionOpen)\n     facilities = models.ManyToManyField(Facility,related_name='college_facilities')\n     placement = models.TextField(null=True,blank=True)\n     scholarship = models.TextField(null=True,blank=True)\n     created_date = models.DateField(auto_now_add=True)\n     updated_date = models.DateField(auto_now=True)\n+    # location = models.ForeignKey(Location,on_delete=models.CASCADE)\n+    # admission_open = models.ManyToManyField(AdmissionOpen)\n     # college_gallery = models.ManyToManyField(CollegeGallery)\n     # faqs = models.ManyToManyField(CollegeFaqs)\n     # college_admin = models.ForeignKey(CustomUser, on_delete=models.CASCADE,related_name='college_admin')\n \n"
+                },
+                {
+                    "date": 1733640551435,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,8 +24,9 @@\n \n     def __str__(self):\n         return f'Gallery Image {self.id}'\n     \n+    \n class Placement(models.Model):\n     description = models.TextField(blank=True)\n     created_date = models.DateField(auto_now_add=True)\n     updated_date = models.DateField(auto_now=True)\n"
+                },
+                {
+                    "date": 1733640556954,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,10 +23,11 @@\n     updated_date = models.DateField(auto_now=True)\n \n     def __str__(self):\n         return f'Gallery Image {self.id}'\n+    class Meta:\n+        \n     \n-    \n class Placement(models.Model):\n     description = models.TextField(blank=True)\n     created_date = models.DateField(auto_now_add=True)\n     updated_date = models.DateField(auto_now=True)\n"
+                },
+                {
+                    "date": 1733640564838,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,9 +24,11 @@\n \n     def __str__(self):\n         return f'Gallery Image {self.id}'\n     class Meta:\n-        \n+        permissions = [\n+            \n+        ]\n     \n class Placement(models.Model):\n     description = models.TextField(blank=True)\n     created_date = models.DateField(auto_now_add=True)\n"
+                },
+                {
+                    "date": 1733640572127,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -25,9 +25,9 @@\n     def __str__(self):\n         return f'Gallery Image {self.id}'\n     class Meta:\n         permissions = [\n-            \n+            ('manage_college_gallery', 'Manage college gallery'),\n         ]\n     \n class Placement(models.Model):\n     description = models.TextField(blank=True)\n@@ -35,8 +35,10 @@\n     updated_date = models.DateField(auto_now=True)\n \n     def __str__(self):\n         return f'Placement {self.id}'\n+    \n+    \n \n \n     \n class College(SEOFields):\n"
+                },
+                {
+                    "date": 1733640578319,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -36,9 +36,12 @@\n \n     def __str__(self):\n         return f'Placement {self.id}'\n     \n-    \n+    class Meta:\n+        permissions = [\n+            ('manage_placement', 'Manage placement'),\n+        ]\n \n \n     \n class College(SEOFields):\n"
+                },
+                {
+                    "date": 1733640584836,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -80,8 +80,10 @@\n         return f'{self.latitude}, {self.longitude}'\n \n     def __str__(self):\n         return self.name\n+    \n+    class\n \n \n class CollegeFaqs(models.Model):\n     college = models.ForeignKey(College, on_delete=models.CASCADE,related_name='college_faq')\n"
+                },
+                {
+                    "date": 1733640592083,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -81,9 +81,12 @@\n \n     def __str__(self):\n         return self.name\n     \n-    class\n+    class Meta:\n+        permissions = [\n+            ('manage_college', 'Manage college'),\n+        ]\n \n \n class CollegeFaqs(models.Model):\n     college = models.ForeignKey(College, on_delete=models.CASCADE,related_name='college_faq')\n@@ -92,5 +95,7 @@\n     created_date = models.DateField(auto_now_add=True)\n     updated_date = models.DateField(auto_now=True)\n \n     def __str__(self):\n-        return f'Placement {self.id}'\n\\ No newline at end of file\n+        return f'Placement {self.id}'\n+    \n+    \n\\ No newline at end of file\n"
                 }
             ],
             "date": 1727170911784,

@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 4,
+            "activePatchIndex": 7,
             "patches": [
                 {
                     "date": 1726722397895,
@@ -24,6 +24,18 @@
                 {
                     "date": 1733311185851,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,8 +3,9 @@\n # Create your models here.\n class Certification(models.Model):\n     name = models.CharField(max_length=20, unique=True)\n     is_show = models.BooleanField(default=False)\n+    image=\n     created_date = models.DateField(auto_now_add=True, null=True, blank=True)\n     created_date_time = models.DateTimeField(auto_now_add=True, null=True, blank=True)\n     updated_date = models.DateTimeField(auto_now=True, null=True, blank=True)\n \n"
+                },
+                {
+                    "date": 1733640500192,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,11 +3,13 @@\n # Create your models here.\n class Certification(models.Model):\n     name = models.CharField(max_length=20, unique=True)\n     is_show = models.BooleanField(default=False)\n-    image=\n+    image= models.ImageField(upload_to='certification/',null=True,blank=True)\n     created_date = models.DateField(auto_now_add=True, null=True, blank=True)\n     created_date_time = models.DateTimeField(auto_now_add=True, null=True, blank=True)\n     updated_date = models.DateTimeField(auto_now=True, null=True, blank=True)\n \n     def __str__(self):\n\\ No newline at end of file\n-        return self.name\n+        return self.name\n+    \n+    class \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1733640506341,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,5 +11,6 @@\n \n     def __str__(self):\n         return self.name\n     \n-    class \n\\ No newline at end of file\n+    class Meta:\n+        permiss\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1733640512066,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,5 +12,7 @@\n     def __str__(self):\n         return self.name\n     \n     class Meta:\n-        permiss\n\\ No newline at end of file\n+        permissions = [\n+            ('manage_certification', 'Manage certification'),\n+        ]\n\\ No newline at end of file\n"
                 }
             ],
             "date": 1726722397895,

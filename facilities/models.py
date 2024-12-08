@@ -20,3 +20,8 @@ class Facility(models.Model):
 
     def __str__(self):
         return self.facility_name
+    
+    class Meta:
+        permissions = [
+            ('manage_facility', 'Manage facility'),
+        ]

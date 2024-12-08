@@ -8,7 +8,7 @@ class EmailSetupViewset(viewsets.ModelViewSet):
     permission_classes = [AdminViewSetsPermission]
     # authentication_classes = [JWTAuthentication]
     pagination_class = MyPageNumberPagination
-    queryset  = EmailSetup.objects.all().order_by('-id')
+    queryset  = EmailSetup.objects.all()
 
     filter_backends = [SearchFilter,DjangoFilterBackend,OrderingFilter]
     search_fields = ['id']

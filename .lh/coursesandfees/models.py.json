@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 40,
+            "activePatchIndex": 42,
             "patches": [
                 {
                     "date": 1727174542938,
@@ -168,6 +168,14 @@
                 {
                     "date": 1733467357836,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,9 +4,9 @@\n \n # CoursesAndFees Model\n class CoursesAndFees(models.Model): #CollegeHaveCourse\n     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='courses_and_fees')\n-    college = models.ForeignKey(College)\n+    college = models.ForeignKey(College, on_delete=models.CASCADE, related_name='college_courses_and_fees')\n     amount = models.DecimalField(max_digits=10, decimal_places=2)\n     is_admission = models.BooleanField(default=False)\n     created_date = models.DateField(auto_now_add=True)\n     updated_date = models.DateField(auto_now_add=True)\n"
+                },
+                {
+                    "date": 1733642115558,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,5 +11,8 @@\n     created_date = models.DateField(auto_now_add=True)\n     updated_date = models.DateField(auto_now_add=True)\n \n     def __str__(self):\n-        return f'{self.created_date} - {self.amount}'\n\\ No newline at end of file\n+        return f'{self.created_date} - {self.amount}'\n+    \n+    class Meta:\n+        \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1733642121695,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,5 +14,7 @@\n     def __str__(self):\n         return f'{self.created_date} - {self.amount}'\n     \n     class Meta:\n-        \n\\ No newline at end of file\n+        permissions = [\n+            ('manage_courses_and_fees', 'Manage courses and fees'),\n+        ]\n\\ No newline at end of file\n"
                 }
             ],
             "date": 1727174542938,
