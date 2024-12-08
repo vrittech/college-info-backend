@@ -3,11 +3,19 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 0,
+            "activePatchIndex": 2,
             "patches": [
                 {
                     "date": 1733643783199,
                     "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1733643900692,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,9 +13,9 @@\n         ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser','groups')}),\n     )\n     \n     list_display = ['username', 'email', 'position','phone', 'is_active', 'is_staff', 'professional_image', 'avatar']\n-    search_fields = ['username', 'email', 'full_name','roles',]\n+    search_fields = ['username', 'email', 'full_name']\n \n admin.site.register(CustomUser, CustomUserAdmin)\n \n \n"
+                },
+                {
+                    "date": 1733643906712,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,9 @@\n     \n     # Only include fields that are present in the model\n     fieldsets = (\n         (None, {'fields': ('username', 'password')}),\n-        ('Personal info', {'fields': ('first_name', 'last_name', 'email','roles','phone', 'avatar', 'professional_image', 'position',)}),\n+        ('Personal info', {'fields': ('first_name', 'last_name', 'email','phone', 'avatar', 'professional_image', 'position',)}),\n         ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser','groups')}),\n     )\n     \n     list_display = ['username', 'email', 'position','phone', 'is_active', 'is_staff', 'professional_image', 'avatar']\n"
                 }
             ],
             "date": 1733643783199,
