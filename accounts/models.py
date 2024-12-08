@@ -6,7 +6,7 @@ from socialmedia.models import SocialMedia
 
 # Create your models here.
 class CustomUser(AbstractUser):
-    roles = models.CharField(max_length = 250,null = True)
+    # roles = models.CharField(max_length = 250,null = True) 
     college = models.ForeignKey(College,null = True,on_delete = models.SET_NULL)
     social_media = models.ManyToManyField(SocialMedia,blank=True)
     email = models.EmailField(max_length = 250,unique = True)

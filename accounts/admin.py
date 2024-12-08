@@ -13,7 +13,7 @@ class CustomUserAdmin(BaseUserAdmin):
         ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser','groups')}),
     )
     
-    list_display = ['username', 'email', 'position','roles','phone', 'is_active', 'is_staff', 'professional_image', 'avatar']
+    list_display = ['username', 'email', 'position','phone', 'is_active', 'is_staff', 'professional_image', 'avatar']
     search_fields = ['username', 'email', 'full_name','roles',]
 
 admin.site.register(CustomUser, CustomUserAdmin)

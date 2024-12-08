@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 190,
+            "activePatchIndex": 191,
             "patches": [
                 {
                     "date": 1727170911785,
@@ -768,6 +768,10 @@
                 {
                     "date": 1733640592083,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -81,9 +81,12 @@\n \n     def __str__(self):\n         return self.name\n     \n-    class\n+    class Meta:\n+        permissions = [\n+            ('manage_college', 'Manage college'),\n+        ]\n \n \n class CollegeFaqs(models.Model):\n     college = models.ForeignKey(College, on_delete=models.CASCADE,related_name='college_faq')\n@@ -92,5 +95,7 @@\n     created_date = models.DateField(auto_now_add=True)\n     updated_date = models.DateField(auto_now=True)\n \n     def __str__(self):\n-        return f'Placement {self.id}'\n\\ No newline at end of file\n+        return f'Placement {self.id}'\n+    \n+    \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1733643672771,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -28,20 +28,20 @@\n         permissions = [\n             ('manage_college_gallery', 'Manage college gallery'),\n         ]\n     \n-class Placement(models.Model):\n-    description = models.TextField(blank=True)\n-    created_date = models.DateField(auto_now_add=True)\n-    updated_date = models.DateField(auto_now=True)\n+# class Placement(models.Model):\n+#     description = models.TextField(blank=True)\n+#     created_date = models.DateField(auto_now_add=True)\n+#     updated_date = models.DateField(auto_now=True)\n \n-    def __str__(self):\n-        return f'Placement {self.id}'\n+#     def __str__(self):\n+#         return f'Placement {self.id}'\n     \n-    class Meta:\n-        permissions = [\n-            ('manage_placement', 'Manage placement'),\n-        ]\n+#     class Meta:\n+#         permissions = [\n+#             ('manage_placement', 'Manage placement'),\n+#         ]\n \n \n     \n class College(SEOFields):\n@@ -97,5 +97,8 @@\n \n     def __str__(self):\n         return f'Placement {self.id}'\n     \n-    \n\\ No newline at end of file\n+    class Meta:\n+        permissions = [\n+            ('manage_faq', 'Manage faq'),\n+        ]\n\\ No newline at end of file\n"
                 }
             ],
             "date": 1727170911784,

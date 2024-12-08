@@ -1,0 +1,18 @@
+{
+    "sourceFile": "collegemanagement/serializers/placement_serializers.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1733643680405,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1733643680405,
+            "name": "Commit-0",
+            "content": "# from rest_framework import serializers\n# from ..models import Placement\n\n# class PlacementListSerializers(serializers.ModelSerializer):\n#     class Meta:\n#         model = Placement\n#         fields = '__all__'\n\n# class PlacementRetrieveSerializers(serializers.ModelSerializer):\n#     class Meta:\n#         model = Placement\n#         fields = '__all__'\n\n# class PlacementWriteSerializers(serializers.ModelSerializer):\n#     class Meta:\n#         model = Placement\n#         fields = '__all__'"
+        }
+    ]
+}

@@ -29,18 +29,18 @@ class CollegeGallery(models.Model):
             ('manage_college_gallery', 'Manage college gallery'),
         ]
     
-class Placement(models.Model):
-    description = models.TextField(blank=True)
-    created_date = models.DateField(auto_now_add=True)
-    updated_date = models.DateField(auto_now=True)
+# class Placement(models.Model):
+#     description = models.TextField(blank=True)
+#     created_date = models.DateField(auto_now_add=True)
+#     updated_date = models.DateField(auto_now=True)
 
-    def __str__(self):
-        return f'Placement {self.id}'
+#     def __str__(self):
+#         return f'Placement {self.id}'
     
-    class Meta:
-        permissions = [
-            ('manage_placement', 'Manage placement'),
-        ]
+#     class Meta:
+#         permissions = [
+#             ('manage_placement', 'Manage placement'),
+#         ]
 
 
     

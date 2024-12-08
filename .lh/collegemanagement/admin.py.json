@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 3,
+            "activePatchIndex": 7,
             "patches": [
                 {
                     "date": 1727176327215,
@@ -20,6 +20,22 @@
                 {
                     "date": 1727176344847,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,5 +2,6 @@\n \n # Register your models here.\n from .models import CollegeGallery,College\n \n-admin.site.register(CollegeGallery)\n\\ No newline at end of file\n+admin.site.register(CollegeGallery)\n+admin.site.register(College)\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1733643698976,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n from django.contrib import admin\n \n # Register your models here.\n-from .models import CollegeGallery,College\n+from .models import CollegeGallery,College,\n \n admin.site.register(CollegeGallery)\n admin.site.register(College)\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1733643705436,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n from django.contrib import admin\n \n # Register your models here.\n-from .models import CollegeGallery,College,\n+from .models import CollegeGallery,College,CollegeFaqs,CollegeGallery,\n \n admin.site.register(CollegeGallery)\n admin.site.register(College)\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1733643714700,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,5 +3,7 @@\n # Register your models here.\n from .models import CollegeGallery,College,CollegeFaqs,CollegeGallery,\n \n admin.site.register(CollegeGallery)\n+admin.site.register(College)\n+admin.site.register(CollegeFaqs)\n admin.site.register(College)\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1733643720116,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,8 @@\n from django.contrib import admin\n \n # Register your models here.\n-from .models import CollegeGallery,College,CollegeFaqs,CollegeGallery,\n+from .models import CollegeGallery,College,CollegeFaqs\n \n admin.site.register(CollegeGallery)\n admin.site.register(College)\n admin.site.register(CollegeFaqs)\n"
                 }
             ],
             "date": 1727176327215,
