@@ -24,6 +24,7 @@ class DisciplineSerializer(serializers.ModelSerializer):
     class Meta:
         model = Discipline
         fields = '__all__'
+        ref_name = 'Disciplines'
 
 # Nested serializer for SocialMedia
 class SocialMediaSerializer(serializers.ModelSerializer):

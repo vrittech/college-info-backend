@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 5,
+            "activePatchIndex": 8,
             "patches": [
                 {
                     "date": 1733477116456,
@@ -28,6 +28,18 @@
                 {
                     "date": 1733477158118,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -72,14 +72,9 @@\n     facilities = FacilitySerializer(many=True)  # Include full objects for many-to-many relationships\n \n     class Meta:\n         model = College\n-        fields = [\n-            'banner_image', 'dp_image', 'name', 'established_date', 'website_link', 'address', 'district',\n-            'phone_number', 'email', 'affiliated', 'college_type', 'discipline', 'social_media',\n-            'google_map_link', 'latitude', 'longitude', 'about', 'brochure', 'step_counter', 'facilities',\n-            'placement', 'scholarship', 'created_date', 'updated_date'\n-        ]\n+        fields = '__'\n \n     # Custom method to handle creation of College instances\n     def create(self, validated_data):\n         district_data = validated_data.pop('district')\n"
+                },
+                {
+                    "date": 1733638798475,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,8 +23,9 @@\n class DisciplineSerializer(serializers.ModelSerializer):\n     class Meta:\n         model = Discipline\n         fields = '__all__'\n+        \n \n # Nested serializer for SocialMedia\n class SocialMediaSerializer(serializers.ModelSerializer):\n     class Meta:\n@@ -72,9 +73,9 @@\n     facilities = FacilitySerializer(many=True)  # Include full objects for many-to-many relationships\n \n     class Meta:\n         model = College\n-        fields = '__'\n+        fields = '__all__'\n \n     # Custom method to handle creation of College instances\n     def create(self, validated_data):\n         district_data = validated_data.pop('district')\n"
+                },
+                {
+                    "date": 1733638803711,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,9 +23,9 @@\n class DisciplineSerializer(serializers.ModelSerializer):\n     class Meta:\n         model = Discipline\n         fields = '__all__'\n-        \n+        ref\n \n # Nested serializer for SocialMedia\n class SocialMediaSerializer(serializers.ModelSerializer):\n     class Meta:\n"
+                },
+                {
+                    "date": 1733638810251,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,9 +23,9 @@\n class DisciplineSerializer(serializers.ModelSerializer):\n     class Meta:\n         model = Discipline\n         fields = '__all__'\n-        ref\n+        ref_name\n \n # Nested serializer for SocialMedia\n class SocialMediaSerializer(serializers.ModelSerializer):\n     class Meta:\n"
                 }
             ],
             "date": 1733477116456,
