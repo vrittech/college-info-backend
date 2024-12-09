@@ -1,7 +1,9 @@
 from django.db import models
+from accounts.models import CustomUser
 
 # Create your models here.
 class Contact(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE,null=True,blank=True)
     ROLE_CHOICES = [
     ('student', 'Student'),
     ('others', 'Others'),

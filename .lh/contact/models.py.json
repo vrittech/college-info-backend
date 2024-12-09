@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 26,
+            "activePatchIndex": 31,
             "patches": [
                 {
                     "date": 1733383238378,
@@ -112,6 +112,26 @@
                 {
                     "date": 1733640765808,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,5 +22,6 @@\n     \n     def __str__(self):\n         return self.name\n     \n-    class Me\n\\ No newline at end of file\n+    class Meta:\n+        permissions\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1733741851219,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,9 @@\n from django.db import models\n \n # Create your models here.\n class Contact(models.Model):\n+    user \n     ROLE_CHOICES = [\n     ('student', 'Student'),\n     ('others', 'Others'),\n     ('college_admin', 'College Admin'),\n@@ -23,5 +24,7 @@\n     def __str__(self):\n         return self.name\n     \n     class Meta:\n-        permissions\n\\ No newline at end of file\n+        permissions = [\n+            ('manage_contact', 'Manage contact'),\n+        ]\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1733741856827,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,6 @@\n from django.db import models\n+from \n \n # Create your models here.\n class Contact(models.Model):\n     user \n"
+                },
+                {
+                    "date": 1733741863586,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n from django.db import models\n-from \n+from accounts.models import CustomUser\n \n # Create your models here.\n class Contact(models.Model):\n     user \n"
+                },
+                {
+                    "date": 1733741868902,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,9 @@\n from accounts.models import CustomUser\n \n # Create your models here.\n class Contact(models.Model):\n-    user \n+    user = \n     ROLE_CHOICES = [\n     ('student', 'Student'),\n     ('others', 'Others'),\n     ('college_admin', 'College Admin'),\n"
+                },
+                {
+                    "date": 1733741877723,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,9 @@\n from accounts.models import CustomUser\n \n # Create your models here.\n class Contact(models.Model):\n-    user = \n+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE,null=)\n     ROLE_CHOICES = [\n     ('student', 'Student'),\n     ('others', 'Others'),\n     ('college_admin', 'College Admin'),\n"
                 }
             ],
             "date": 1733383238378,
