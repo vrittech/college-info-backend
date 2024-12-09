@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 1,
+            "activePatchIndex": 8,
             "patches": [
                 {
                     "date": 1733481372824,
@@ -12,6 +12,34 @@
                 {
                     "date": 1733481378749,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,9 +9,9 @@\n     serializer_class = EventListSerializers\n     # permission_classes = [eventPermission]\n     # authentication_classes = [JWTAuthentication]\n     #pagination_class = MyPageNumberPagination\n-    queryset = Event.objects.all().order_by\n+    queryset = Event.objects.all().order_by('-id')\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     search_fields = ['id']\n     ordering_fields = ['id']\n@@ -21,9 +21,9 @@\n     # }\n \n     def get_queryset(self):\n         queryset = super().get_queryset()\n-        #return queryset.filter(user_id=self.request.user.id)\n+        return queryset\n \n     def get_serializer_class(self):\n         if self.action in ['create', 'update', 'partial_update']:\n             return EventWriteSerializers\n"
+                },
+                {
+                    "date": 1733728736108,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,15 +15,15 @@\n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     search_fields = ['id']\n     ordering_fields = ['id']\n \n-    # filterset_fields = {\n-    #     'id': ['exact'],\n-    # }\n+    filterset_fields = {\n+        'id': ['exact'],\n+    }\n \n     def get_queryset(self):\n         queryset = super().get_queryset()\n-        return queryset\n+        return querysets\n \n     def get_serializer_class(self):\n         if self.action in ['create', 'update', 'partial_update']:\n             return EventWriteSerializers\n"
+                },
+                {
+                    "date": 1733728790891,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,11 +15,11 @@\n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     search_fields = ['id']\n     ordering_fields = ['id']\n \n-    filterset_fields = {\n-        'id': ['exact'],\n-    }\n+    # filterset_fields = {\n+    #     'id': ['exact'],\n+    # }\n \n     def get_queryset(self):\n         queryset = super().get_queryset()\n         return querysets\n"
+                },
+                {
+                    "date": 1733728800237,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,8 +3,9 @@\n from django_filters.rest_framework import DjangoFilterBackend\n from ..models import Event\n from ..serializers.event_serializers import EventListSerializers, EventRetrieveSerializers, EventWriteSerializers\n from ..utilities.importbase import *\n+from ..utilities.importbase import *\n \n class eventViewsets(viewsets.ModelViewSet):\n     serializer_class = EventListSerializers\n     # permission_classes = [eventPermission]\n@@ -14,8 +15,9 @@\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     search_fields = ['id']\n     ordering_fields = ['id']\n+    filterset_class = EventFilter\n \n     # filterset_fields = {\n     #     'id': ['exact'],\n     # }\n"
+                },
+                {
+                    "date": 1733728808176,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,9 @@\n from django_filters.rest_framework import DjangoFilterBackend\n from ..models import Event\n from ..serializers.event_serializers import EventListSerializers, EventRetrieveSerializers, EventWriteSerializers\n from ..utilities.importbase import *\n-from ..utilities.importbase import *\n+from ..utilities.filter import E\n \n class eventViewsets(viewsets.ModelViewSet):\n     serializer_class = EventListSerializers\n     # permission_classes = [eventPermission]\n"
+                },
+                {
+                    "date": 1733728848799,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,9 @@\n from django_filters.rest_framework import DjangoFilterBackend\n from ..models import Event\n from ..serializers.event_serializers import EventListSerializers, EventRetrieveSerializers, EventWriteSerializers\n from ..utilities.importbase import *\n-from ..utilities.filter import E\n+from ..utilities.filter import EventFilter\n \n class eventViewsets(viewsets.ModelViewSet):\n     serializer_class = EventListSerializers\n     # permission_classes = [eventPermission]\n@@ -13,10 +13,11 @@\n     #pagination_class = MyPageNumberPagination\n     queryset = Event.objects.all().order_by('-id')\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n-    search_fields = ['id']\n-    ordering_fields = ['id']\n+    search_fields = ['id', 'event_name', 'venue', 'category__name', 'organizer__name']  # Fields to search\n+    ordering_fields = ['id', 'event_name', 'start_date', 'end_date', 'is_featured_event']  # Fields to sort\n+    ordering = ['id']  # Default ordering\n     filterset_class = EventFilter\n \n     # filterset_fields = {\n     #     'id': ['exact'],\n"
+                },
+                {
+                    "date": 1733728859069,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,16 +15,17 @@\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     search_fields = ['id', 'event_name', 'venue', 'category__name', 'organizer__name']  # Fields to search\n     ordering_fields = ['id', 'event_name', 'start_date', 'end_date', 'is_featured_event']  # Fields to sort\n-    ordering = ['id']  # Default ordering\n+    ordering = ['-id']  # Default ordering\n     filterset_class = EventFilter\n \n     # filterset_fields = {\n     #     'id': ['exact'],\n     # }\n \n     def get_queryset(self):\n+        \n         queryset = super().get_queryset()\n         return querysets\n \n     def get_serializer_class(self):\n"
+                },
+                {
+                    "date": 1733729804662,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,11 +23,10 @@\n     #     'id': ['exact'],\n     # }\n \n     def get_queryset(self):\n-        \n         queryset = super().get_queryset()\n-        return querysets\n+        return queryset\n \n     def get_serializer_class(self):\n         if self.action in ['create', 'update', 'partial_update']:\n             return EventWriteSerializers\n"
                 }
             ],
             "date": 1733481372824,

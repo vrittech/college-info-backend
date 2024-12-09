@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 1,
+            "activePatchIndex": 8,
             "patches": [
                 {
                     "date": 1733481590443,
@@ -12,6 +12,34 @@
                 {
                     "date": 1733481595888,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,9 +9,9 @@\n     serializer_class = InformationCategoryListSerializers\n     # permission_classes = [informationmanagementPermission]\n     # authentication_classes = [JWTAuthentication]\n     #pagination_class = MyPageNumberPagination\n-    queryset = InformationCategory.objects.all().order_by\n+    queryset = InformationCategory.objects.all().order_by('-id')\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     search_fields = ['id']\n     ordering_fields = ['id']\n@@ -21,9 +21,9 @@\n     # }\n \n     def get_queryset(self):\n         queryset = super().get_queryset()\n-        #return queryset.filter(user_id=self.request.user.id)\n+        return queryset\n \n     def get_serializer_class(self):\n         if self.action in ['create', 'update', 'partial_update']:\n             return InformationCategoryWriteSerializers\n"
+                },
+                {
+                    "date": 1733728177529,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,9 +14,9 @@\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     search_fields = ['id']\n     ordering_fields = ['id']\n-\n+('title', 'publish_date', 'active_period_start', 'active_period_end', 'level', 'sublevel', 'course', 'affiliation', 'district', 'college', 'faculty', 'information_tagging', 'information_category', 'short_description', 'description', 'image', 'file', 'state', 'created_date', 'updated_date', )\n     # filterset_fields = {\n     #     'id': ['exact'],\n     # }\n \n"
+                },
+                {
+                    "date": 1733728201506,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,9 +14,9 @@\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     search_fields = ['id']\n     ordering_fields = ['id']\n-('title', 'publish_date', 'active_period_start', 'active_period_end', 'level', 'sublevel', 'course', 'affiliation', 'district', 'college', 'faculty', 'information_tagging', 'information_category', 'short_description', 'description', 'image', 'file', 'state', 'created_date', 'updated_date', )\n+\n     # filterset_fields = {\n     #     'id': ['exact'],\n     # }\n \n"
+                },
+                {
+                    "date": 1733728228279,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,9 +14,9 @@\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     search_fields = ['id']\n     ordering_fields = ['id']\n-\n+('name', 'is_show', 'image', 'created_date', 'updated_date', )\n     # filterset_fields = {\n     #     'id': ['exact'],\n     # }\n \n"
+                },
+                {
+                    "date": 1733728235956,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,9 +12,9 @@\n     #pagination_class = MyPageNumberPagination\n     queryset = InformationCategory.objects.all().order_by('-id')\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n-    search_fields = ['id']\n+    search_fields = ['id','name', 'is_show', 'image', 'created_date', 'updated_date']\n     ordering_fields = ['id']\n ('name', 'is_show', 'image', 'created_date', 'updated_date', )\n     # filterset_fields = {\n     #     'id': ['exact'],\n"
+                },
+                {
+                    "date": 1733728242913,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,11 +12,11 @@\n     #pagination_class = MyPageNumberPagination\n     queryset = InformationCategory.objects.all().order_by('-id')\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n-    search_fields = ['id','name', 'is_show', 'image', 'created_date', 'updated_date']\n+    search_fields = ['id','name', 'is_show', 'created_date', 'updated_date']\n     ordering_fields = ['id']\n-('name', 'is_show', 'image', 'created_date', 'updated_date', )\n+# ('name', 'is_show', 'image', 'created_date', 'updated_date', )\n     # filterset_fields = {\n     #     'id': ['exact'],\n     # }\n \n"
+                },
+                {
+                    "date": 1733728250737,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,9 +13,9 @@\n     queryset = InformationCategory.objects.all().order_by('-id')\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     search_fields = ['id','name', 'is_show', 'created_date', 'updated_date']\n-    ordering_fields = ['id']\n+    ordering_fields = ['id','name', 'is_show', 'created_date', 'updated_date']\n # ('name', 'is_show', 'image', 'created_date', 'updated_date', )\n     # filterset_fields = {\n     #     'id': ['exact'],\n     # }\n"
+                },
+                {
+                    "date": 1733728282302,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,8 +15,9 @@\n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     search_fields = ['id','name', 'is_show', 'created_date', 'updated_date']\n     ordering_fields = ['id','name', 'is_show', 'created_date', 'updated_date']\n # ('name', 'is_show', 'image', 'created_date', 'updated_date', )\n+   \n     # filterset_fields = {\n     #     'id': ['exact'],\n     # }\n \n"
                 }
             ],
             "date": 1733481590443,

@@ -9,16 +9,19 @@ class contactViewsets(viewsets.ModelViewSet):
     serializer_class = ContactListSerializers
     # permission_classes = [contactPermission]
     # authentication_classes = [JWTAuthentication]
-    #pagination_class = MyPageNumberPagination
+    pagination_class = MyPageNumberPagination
     queryset = Contact.objects.all().order_by('-id')
 
     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]
-    search_fields = ['id']
-    ordering_fields = ['id']
-
-    # filterset_fields = {
-    #     'id': ['exact'],
-    # }
+    search_fields = ['id','name', 'email', 'phone_number',]
+    ordering_fields = ['id','name', 'email', 'phone_number',]
+# ('name', 'email', 'phone_number', )
+    filterset_fields = {
+        'id': ['exact'],
+        'tag': ['exact'],
+        'created_date': ['exact','gte','lte'],
+        'updated_date': ['exact','gte','lte'],
+    }
 
     def get_queryset(self):
         queryset = super().get_queryset()

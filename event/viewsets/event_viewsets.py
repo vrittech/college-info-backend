@@ -4,6 +4,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 from ..models import Event
 from ..serializers.event_serializers import EventListSerializers, EventRetrieveSerializers, EventWriteSerializers
 from ..utilities.importbase import *
+from ..utilities.filter import EventFilter
 
 class eventViewsets(viewsets.ModelViewSet):
     serializer_class = EventListSerializers
@@ -13,8 +14,10 @@ class eventViewsets(viewsets.ModelViewSet):
     queryset = Event.objects.all().order_by('-id')
 
     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]
-    search_fields = ['id']
-    ordering_fields = ['id']
+    search_fields = ['id', 'event_name', 'venue', 'category__name', 'organizer__name']  # Fields to search
+    ordering_fields = ['id', 'event_name', 'start_date', 'end_date', 'is_featured_event']  # Fields to sort
+    ordering = ['-id']  # Default ordering
+    filterset_class = EventFilter
 
     # filterset_fields = {
     #     'id': ['exact'],
@@ -22,7 +25,7 @@ class eventViewsets(viewsets.ModelViewSet):
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        return querysets
+        return queryset
 
     def get_serializer_class(self):
         if self.action in ['create', 'update', 'partial_update']:

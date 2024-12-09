@@ -13,9 +13,10 @@ class informationcategoryViewsets(viewsets.ModelViewSet):
     queryset = InformationCategory.objects.all().order_by('-id')
 
     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]
-    search_fields = ['id']
-    ordering_fields = ['id']
-
+    search_fields = ['id','name', 'is_show', 'created_date', 'updated_date']
+    ordering_fields = ['id','name', 'is_show', 'created_date', 'updated_date']
+# ('name', 'is_show', 'image', 'created_date', 'updated_date', )
+   
     # filterset_fields = {
     #     'id': ['exact'],
     # }

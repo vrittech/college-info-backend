@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 26,
+            "activePatchIndex": 27,
             "patches": [
                 {
                     "date": 1733481192866,
@@ -112,6 +112,10 @@
                 {
                     "date": 1733726875945,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,9 @@\n class affiliationViewsets(viewsets.ModelViewSet):\n     serializer_class = AffiliationListSerializers\n     # permission_classes = [affiliationPermission]\n     # authentication_classes = [JWTAuthentication]\n-    #pagination_class = MyPageNumberPagination\n+    pagination_class = MyPageNumberPagination\n     queryset = Affiliation.objects.all().order_by('-id')\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     search_fields = ['id','name','district','address']\n"
+                },
+                {
+                    "date": 1733730249316,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,9 +22,8 @@\n         'address': ['exact'],\n         'district': ['exact'],\n         'university_type': ['exact'],\n         'certification': ['exact'],\n-        'level': ['exact'],\n         'created_date': ['exact','gte','lte'],\n         'established_year': ['exact','gte','lte'],\n         'updated_date': ['exact','gte','lte'],\n     }\n"
                 }
             ],
             "date": 1733481192866,

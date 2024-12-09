@@ -1,0 +1,18 @@
+{
+    "sourceFile": "event/viewsets/eventgallery_viewsets.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1733729892743,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1733729892743,
+            "name": "Commit-0",
+            "content": "from rest_framework import viewsets\nfrom rest_framework.filters import SearchFilter, OrderingFilter\nfrom django_filters.rest_framework import DjangoFilterBackend\nfrom ..models import EventGallery\nfrom ..serializers.eventgallery_serializers import EventGalleryListSerializers, EventGalleryRetrieveSerializers, EventGalleryWriteSerializers\nfrom ..utilities.importbase import *\n\nclass eventgalleryViewsets(viewsets.ModelViewSet):\n    serializer_class = EventGalleryListSerializers\n    # permission_classes = [eventPermission]\n    # authentication_classes = [JWTAuthentication]\n    #pagination_class = MyPageNumberPagination\n    queryset = EventGallery.objects.all()\n\n    filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n    search_fields = ['id']\n    ordering_fields = ['id']\n\n    # filterset_fields = {\n    #     'id': ['exact'],\n    # }\n\n    def get_queryset(self):\n        queryset = super().get_queryset()\n        return queryset\n\n    def get_serializer_class(self):\n        if self.action in ['create', 'update', 'partial_update']:\n            return EventGalleryWriteSerializers\n        elif self.action == 'retrieve':\n            return EventGalleryRetrieveSerializers\n        return super().get_serializer_class()\n\n    # @action(detail=False, methods=['get'], name=\"action_name\", url_path=\"url_path\")\n    # def action_name(self, request, *args, **kwargs):\n    #     return super().list(request, *args, **kwargs)\n\n"
+        }
+    ]
+}

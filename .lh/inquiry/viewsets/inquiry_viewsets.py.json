@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 1,
+            "activePatchIndex": 4,
             "patches": [
                 {
                     "date": 1733481893066,
@@ -12,6 +12,18 @@
                 {
                     "date": 1733481898282,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,9 +9,9 @@\n     serializer_class = InquiryListSerializers\n     # permission_classes = [inquiryPermission]\n     # authentication_classes = [JWTAuthentication]\n     #pagination_class = MyPageNumberPagination\n-    queryset = Inquiry.objects.all(),\n+    queryset = Inquiry.objects.all().order_by('-id')\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     search_fields = ['id']\n     ordering_fields = ['id']\n"
+                },
+                {
+                    "date": 1733729053488,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,18 +12,16 @@\n     #pagination_class = MyPageNumberPagination\n     queryset = Inquiry.objects.all().order_by('-id')\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n-    search_fields = ['id']\n-    ordering_fields = ['id']\n+    filterset_class = InquiryFilter\n+    search_fields = ['id', 'full_name', 'email', 'phone', 'courses__name', 'colleges__name']  # Searchable fields\n+    ordering_fields = ['id', 'full_name', 'created_at', 'updated_at']  # Orderable fields\n+    ordering = ['id']  # Default ordering\n \n-    # filterset_fields = {\n-    #     'id': ['exact'],\n-    # }\n-\n     def get_queryset(self):\n         queryset = super().get_queryset()\n-        #return queryset.filter(user_id=self.request.user.id)\n+        return queryset\n \n     def get_serializer_class(self):\n         if self.action in ['create', 'update', 'partial_update']:\n             return InquiryWriteSerializers\n"
+                },
+                {
+                    "date": 1733729059614,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,8 +3,9 @@\n from django_filters.rest_framework import DjangoFilterBackend\n from ..models import Inquiry\n from ..serializers.inquiry_serializers import InquiryListSerializers, InquiryRetrieveSerializers, InquiryWriteSerializers\n from ..utilities.importbase import *\n+from ..\n \n class inquiryViewsets(viewsets.ModelViewSet):\n     serializer_class = InquiryListSerializers\n     # permission_classes = [inquiryPermission]\n"
+                },
+                {
+                    "date": 1733729091103,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,15 +3,15 @@\n from django_filters.rest_framework import DjangoFilterBackend\n from ..models import Inquiry\n from ..serializers.inquiry_serializers import InquiryListSerializers, InquiryRetrieveSerializers, InquiryWriteSerializers\n from ..utilities.importbase import *\n-from ..\n+from ..utilities.filter import InquiryFilter\n \n class inquiryViewsets(viewsets.ModelViewSet):\n     serializer_class = InquiryListSerializers\n     # permission_classes = [inquiryPermission]\n     # authentication_classes = [JWTAuthentication]\n-    #pagination_class = MyPageNumberPagination\n+    pagination_class = MyPageNumberPagination\n     queryset = Inquiry.objects.all().order_by('-id')\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     filterset_class = InquiryFilter\n"
                 }
             ],
             "date": 1733481893066,

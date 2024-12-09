@@ -23,7 +23,6 @@ class affiliationViewsets(viewsets.ModelViewSet):
         'district': ['exact'],
         'university_type': ['exact'],
         'certification': ['exact'],
-        'level': ['exact'],
         'created_date': ['exact','gte','lte'],
         'established_year': ['exact','gte','lte'],
         'updated_date': ['exact','gte','lte'],

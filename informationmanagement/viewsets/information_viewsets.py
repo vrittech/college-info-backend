@@ -13,8 +13,8 @@ class informationViewsets(viewsets.ModelViewSet):
     queryset = Information.objects.all().order_by('-id')
 
     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]
-    search_fields = ['id','title', 'publish_date', 'active_period_start', 'active_period_end', 'level__name', 'sublevel__name', 'course__name','created_date', 'updated_date',]
-    ordering_fields =  ['id','title', 'publish_date', 'active_period_start', 'active_period_end', 'level__name', 'sublevel__name', 'course__name','created_date', 'updated_date',]
+    search_fields = ['id','title', 'publish_date', 'active_period_start', 'active_period_end', 'sublevel__name', 'course__name','created_date', 'updated_date',]
+    ordering_fields =  ['id','title', 'publish_date', 'active_period_start', 'active_period_end', 'sublevel__name', 'course__name','created_date', 'updated_date',]
 
     filterset_fields = {
     'id': ['exact'],
@@ -23,7 +23,7 @@ class informationViewsets(viewsets.ModelViewSet):
     'publish_date': ['exact', 'gte', 'lte'],
     'active_period_start': ['exact', 'gte', 'lte'],
     'active_period_end': ['exact', 'gte', 'lte'],
-    'level__name': ['exact', 'icontains'],
+    # 'level__name': ['exact', 'icontains'],
     'sublevel__name': ['exact', 'icontains'],
     'course__name': ['exact', 'icontains'],
     'created_date': ['exact', 'gte', 'lte'],

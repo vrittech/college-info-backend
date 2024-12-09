@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 1,
+            "activePatchIndex": 10,
             "patches": [
                 {
                     "date": 1733481253846,
@@ -12,6 +12,42 @@
                 {
                     "date": 1733481260056,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,9 +9,9 @@\n     serializer_class = ContactListSerializers\n     # permission_classes = [contactPermission]\n     # authentication_classes = [JWTAuthentication]\n     #pagination_class = MyPageNumberPagination\n-    queryset = Contact.objects.all().order_by\n+    queryset = Contact.objects.all().order_by('-id')\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     search_fields = ['id']\n     ordering_fields = ['id']\n@@ -21,9 +21,9 @@\n     # }\n \n     def get_queryset(self):\n         queryset = super().get_queryset()\n-        #return queryset.filter(user_id=self.request.user.id)\n+        return queryset\n \n     def get_serializer_class(self):\n         if self.action in ['create', 'update', 'partial_update']:\n             return ContactWriteSerializers\n"
+                },
+                {
+                    "date": 1733729198673,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,11 +15,11 @@\n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     search_fields = ['id']\n     ordering_fields = ['id']\n \n-    # filterset_fields = {\n-    #     'id': ['exact'],\n-    # }\n+    filterset_fields = {\n+        'id': ['exact'],\n+    }\n \n     def get_queryset(self):\n         queryset = super().get_queryset()\n         return queryset\n"
+                },
+                {
+                    "date": 1733729204060,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,8 +17,9 @@\n     ordering_fields = ['id']\n \n     filterset_fields = {\n         'id': ['exact'],\n+        'tag': ['exact'],\n     }\n \n     def get_queryset(self):\n         queryset = super().get_queryset()\n"
+                },
+                {
+                    "date": 1733729224363,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,9 +14,9 @@\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     search_fields = ['id']\n     ordering_fields = ['id']\n-\n+('name', 'email', 'phone_number', )\n     filterset_fields = {\n         'id': ['exact'],\n         'tag': ['exact'],\n     }\n"
+                },
+                {
+                    "date": 1733729507099,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,10 +13,10 @@\n     queryset = Contact.objects.all().order_by('-id')\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     search_fields = ['id']\n-    ordering_fields = ['id']\n-('name', 'email', 'phone_number', )\n+    ordering_fields = ['id','name', 'email', 'phone_number',]\n+# ('name', 'email', 'phone_number', )\n     filterset_fields = {\n         'id': ['exact'],\n         'tag': ['exact'],\n     }\n"
+                },
+                {
+                    "date": 1733729513354,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,14 +12,16 @@\n     #pagination_class = MyPageNumberPagination\n     queryset = Contact.objects.all().order_by('-id')\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n-    search_fields = ['id']\n+    search_fields = ['id','name', 'email', 'phone_number',]\n     ordering_fields = ['id','name', 'email', 'phone_number',]\n # ('name', 'email', 'phone_number', )\n     filterset_fields = {\n         'id': ['exact'],\n         'tag': ['exact'],\n+        'tag': ['exact'],\n+        'tag': ['exact'],\n     }\n \n     def get_queryset(self):\n         queryset = super().get_queryset()\n"
+                },
+                {
+                    "date": 1733729518710,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,10 +18,10 @@\n # ('name', 'email', 'phone_number', )\n     filterset_fields = {\n         'id': ['exact'],\n         'tag': ['exact'],\n+        'created_date': ['exact'],\n         'tag': ['exact'],\n-        'tag': ['exact'],\n     }\n \n     def get_queryset(self):\n         queryset = super().get_queryset()\n"
+                },
+                {
+                    "date": 1733729527481,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,9 +18,10 @@\n # ('name', 'email', 'phone_number', )\n     filterset_fields = {\n         'id': ['exact'],\n         'tag': ['exact'],\n-        'created_date': ['exact'],\n+        'created_date': ['exact','gte','lte'],\n+        'created_date': ['exact','gte','lte'],\n         'tag': ['exact'],\n     }\n \n     def get_queryset(self):\n"
+                },
+                {
+                    "date": 1733729535758,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,10 +19,9 @@\n     filterset_fields = {\n         'id': ['exact'],\n         'tag': ['exact'],\n         'created_date': ['exact','gte','lte'],\n-        'created_date': ['exact','gte','lte'],\n-        'tag': ['exact'],\n+        'update_date': ['exact','gte','lte'],\n     }\n \n     def get_queryset(self):\n         queryset = super().get_queryset()\n"
+                },
+                {
+                    "date": 1733729569669,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,9 @@\n class contactViewsets(viewsets.ModelViewSet):\n     serializer_class = ContactListSerializers\n     # permission_classes = [contactPermission]\n     # authentication_classes = [JWTAuthentication]\n-    #pagination_class = MyPageNumberPagination\n+    pagination_class = MyPageNumberPagination\n     queryset = Contact.objects.all().order_by('-id')\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     search_fields = ['id','name', 'email', 'phone_number',]\n@@ -19,9 +19,9 @@\n     filterset_fields = {\n         'id': ['exact'],\n         'tag': ['exact'],\n         'created_date': ['exact','gte','lte'],\n-        'update_date': ['exact','gte','lte'],\n+        'updated_date': ['exact','gte','lte'],\n     }\n \n     def get_queryset(self):\n         queryset = super().get_queryset()\n"
                 }
             ],
             "date": 1733481253846,

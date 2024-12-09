@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 16,
+            "activePatchIndex": 18,
             "patches": [
                 {
                     "date": 1733481577467,
@@ -72,6 +72,14 @@
                 {
                     "date": 1733727596817,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,8 +17,9 @@\n     ordering_fields =  ['id','title', 'publish_date', 'active_period_start', 'active_period_end', 'level__name', 'sublevel__name', 'course__name','created_date', 'updated_date',]\n \n     filterset_fields = {\n     'id': ['exact'],\n+    'id': ['exact'],\n     'title': ['exact', 'icontains'],\n     'publish_date': ['exact', 'gte', 'lte'],\n     'active_period_start': ['exact', 'gte', 'lte'],\n     'active_period_end': ['exact', 'gte', 'lte'],\n"
+                },
+                {
+                    "date": 1733730053433,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,14 +17,14 @@\n     ordering_fields =  ['id','title', 'publish_date', 'active_period_start', 'active_period_end', 'level__name', 'sublevel__name', 'course__name','created_date', 'updated_date',]\n \n     filterset_fields = {\n     'id': ['exact'],\n-    'id': ['exact'],\n+    'state': ['exact'],\n     'title': ['exact', 'icontains'],\n     'publish_date': ['exact', 'gte', 'lte'],\n     'active_period_start': ['exact', 'gte', 'lte'],\n     'active_period_end': ['exact', 'gte', 'lte'],\n-    'level__name': ['exact', 'icontains'],\n+    # 'level__name': ['exact', 'icontains'],\n     'sublevel__name': ['exact', 'icontains'],\n     'course__name': ['exact', 'icontains'],\n     'created_date': ['exact', 'gte', 'lte'],\n     'updated_date': ['exact', 'gte', 'lte'],\n"
+                },
+                {
+                    "date": 1733730065898,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,9 +12,9 @@\n     pagination_class = MyPageNumberPagination\n     queryset = Information.objects.all().order_by('-id')\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n-    search_fields = ['id','title', 'publish_date', 'active_period_start', 'active_period_end', 'level__name', 'sublevel__name', 'course__name','created_date', 'updated_date',]\n+    search_fields = ['id','title', 'publish_date', 'active_period_start', 'active_period_end', 'sublevel__name', 'course__name','created_date', 'updated_date',]\n     ordering_fields =  ['id','title', 'publish_date', 'active_period_start', 'active_period_end', 'level__name', 'sublevel__name', 'course__name','created_date', 'updated_date',]\n \n     filterset_fields = {\n     'id': ['exact'],\n"
                 }
             ],
             "date": 1733481577467,

@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 25,
+            "activePatchIndex": 32,
             "patches": [
                 {
                     "date": 1733481275577,
@@ -108,6 +108,34 @@
                 {
                     "date": 1733718869691,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -29,9 +29,9 @@\n         'course_shortdescription': ['exact'],\n         'course_outcome': ['exact'],\n         'eligibility_criteria': ['exact'],\n         'created_date': ['exact','gte','lte'],\n-        'updated_date': ['exact',],\n+        'updated_date': ['exact','gte','lte'],\n     }\n \n     def get_queryset(self):\n         queryset = super().get_queryset()\n"
+                },
+                {
+                    "date": 1733729697419,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,9 +12,9 @@\n     #pagination_class = MyPageNumberPagination\n     queryset = Course.objects.all().order_by('-id')\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n-    search_fields = ['id','name', 'abbreviation', 'duration', 'faculties', 'level', 'discipline', 'description', 'course_shortdescription', 'course_outcome', 'course_curriculum', 'eligibility_criteria', 'created_date', 'updated_date' ]\n+    search_fields = ['id','name', 'abbreviation', , 'description', 'course_shortdescription', 'course_outcome', 'course_curriculum', 'eligibility_criteria', 'created_date', 'updated_date' ]\n     ordering_fields = ['id','name', 'abbreviation', 'duration', 'faculties', 'level', 'discipline', 'description', 'course_shortdescription', 'course_outcome', 'course_curriculum', 'eligibility_criteria', 'created_date', 'updated_date' ]\n     \n     # ('name', 'abbreviation', 'duration', 'faculties', 'level', 'discipline', 'description', 'course_shortdescription', 'course_outcome', 'course_curriculum', 'eligibility_criteria', 'image', 'curriculum_file_upload', 'created_date', 'updated_date', )\n \n"
+                },
+                {
+                    "date": 1733729705608,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,9 +13,9 @@\n     queryset = Course.objects.all().order_by('-id')\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     search_fields = ['id','name', 'abbreviation', , 'description', 'course_shortdescription', 'course_outcome', 'course_curriculum', 'eligibility_criteria', 'created_date', 'updated_date' ]\n-    ordering_fields = ['id','name', 'abbreviation', 'duration', 'faculties', 'level', 'discipline', 'description', 'course_shortdescription', 'course_outcome', 'course_curriculum', 'eligibility_criteria', 'created_date', 'updated_date' ]\n+    ordering_fields = ['id','name', 'abbreviation', 'description', 'course_shortdescription', 'course_outcome', 'course_curriculum', 'eligibility_criteria', 'created_date', 'updated_date' ]\n     \n     # ('name', 'abbreviation', 'duration', 'faculties', 'level', 'discipline', 'description', 'course_shortdescription', 'course_outcome', 'course_curriculum', 'eligibility_criteria', 'image', 'curriculum_file_upload', 'created_date', 'updated_date', )\n \n     filterset_fields = {\n"
+                },
+                {
+                    "date": 1733729715311,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,9 +12,9 @@\n     #pagination_class = MyPageNumberPagination\n     queryset = Course.objects.all().order_by('-id')\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n-    search_fields = ['id','name', 'abbreviation', , 'description', 'course_shortdescription', 'course_outcome', 'course_curriculum', 'eligibility_criteria', 'created_date', 'updated_date' ]\n+    search_fields = ['id','name', 'abbreviation', 'description', 'course_shortdescription', 'course_outcome', 'course_curriculum', 'eligibility_criteria', 'created_date', 'updated_date' ]\n     ordering_fields = ['id','name', 'abbreviation', 'description', 'course_shortdescription', 'course_outcome', 'course_curriculum', 'eligibility_criteria', 'created_date', 'updated_date' ]\n     \n     # ('name', 'abbreviation', 'duration', 'faculties', 'level', 'discipline', 'description', 'course_shortdescription', 'course_outcome', 'course_curriculum', 'eligibility_criteria', 'image', 'curriculum_file_upload', 'created_date', 'updated_date', )\n \n"
+                },
+                {
+                    "date": 1733729729394,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,9 +23,8 @@\n         'name': ['exact'],\n         'abbreviation': ['exact'],\n         'duration': ['exact'],\n         'faculties': ['exact'],\n-        'level': ['exact'],\n         'description': ['exact'],\n         'course_shortdescription': ['exact'],\n         'course_outcome': ['exact'],\n         'eligibility_criteria': ['exact'],\n"
+                },
+                {
+                    "date": 1733729743404,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,8 +23,9 @@\n         'name': ['exact'],\n         'abbreviation': ['exact'],\n         'duration': ['exact'],\n         'faculties': ['exact'],\n+        'level': ['exact'],\n         'description': ['exact'],\n         'course_shortdescription': ['exact'],\n         'course_outcome': ['exact'],\n         'eligibility_criteria': ['exact'],\n"
+                },
+                {
+                    "date": 1733729991005,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,9 +23,9 @@\n         'name': ['exact'],\n         'abbreviation': ['exact'],\n         'duration': ['exact'],\n         'faculties': ['exact'],\n-        'level': ['exact'],\n+        # 'level': ['exact'],\n         'description': ['exact'],\n         'course_shortdescription': ['exact'],\n         'course_outcome': ['exact'],\n         'eligibility_criteria': ['exact'],\n"
+                },
+                {
+                    "date": 1733730261642,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,9 +23,9 @@\n         'name': ['exact'],\n         'abbreviation': ['exact'],\n         'duration': ['exact'],\n         'faculties': ['exact'],\n-        # 'level': ['exact'],\n+        'level': ['exact'],\n         'description': ['exact'],\n         'course_shortdescription': ['exact'],\n         'course_outcome': ['exact'],\n         'eligibility_criteria': ['exact'],\n"
                 }
             ],
             "date": 1733481275577,
