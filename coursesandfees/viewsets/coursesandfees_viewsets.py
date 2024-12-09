@@ -19,9 +19,10 @@ class coursesandfeesViewsets(viewsets.ModelViewSet):
     search_fields = ['id']
     ordering_fields = ['id']
 
-    # filterset_fields = {
-    #     'id': ['exact'],
-    # }
+    filterset_fields = {
+        'id': ['exact'],
+        'is_admission': ['exact'],
+    }
 
     def get_queryset(self):
         queryset = super().get_queryset()
