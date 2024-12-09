@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 23,
+            "activePatchIndex": 25,
             "patches": [
                 {
                     "date": 1733718920520,
@@ -100,6 +100,14 @@
                 {
                     "date": 1733735574433,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -42,9 +42,9 @@\n     # @action(detail=False, methods=['get'], name=\"action_name\", url_path=\"url_path\")\n     # def action_name(self, request, *args, **kwargs):\n     #     return super().list(request, *args, **kwargs)\n     \n-    @action(detail=True, methods=['get'], url_path=\"dp-image\")\n+    @action(detail=True, methods=['get'], url_path=\"college-\")\n     def get_dp_image(self, request, pk=None):\n         try:\n             # Fetch the college by primary key\n             college = self.get_object()\n"
+                },
+                {
+                    "date": 1733735626352,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -42,9 +42,9 @@\n     # @action(detail=False, methods=['get'], name=\"action_name\", url_path=\"url_path\")\n     # def action_name(self, request, *args, **kwargs):\n     #     return super().list(request, *args, **kwargs)\n     \n-    @action(detail=True, methods=['get'], url_path=\"college-\")\n+    @action(detail=True, methods=['get'], url_path=\"college-logo\")\n     def get_dp_image(self, request, pk=None):\n         try:\n             # Fetch the college by primary key\n             college = self.get_object()\n"
+                },
+                {
+                    "date": 1733735640941,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -29,9 +29,9 @@\n     }\n \n     def get_queryset(self):\n         queryset = super().get_queryset()\n-        #return queryset.filter(user_id=self.request.user.id)\n+        return queryset\n \n     def get_serializer_class(self):\n         if self.action in ['create', 'update', 'partial_update']:\n             return CollegeWriteSerializers\n"
                 }
             ],
             "date": 1733718920520,
