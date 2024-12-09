@@ -12,7 +12,7 @@ class coursesandfeesViewsets(viewsets.ModelViewSet):
     serializer_class = CoursesAndFeesListSerializers
     # permission_classes = [coursesandfeesPermission]
     # authentication_classes = [JWTAuthentication]
-    #pagination_class = MyPageNumberPagination
+    pagination_class = MyPageNumberPagination
     queryset = CoursesAndFees.objects.all().order_by('-id')
 
     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]

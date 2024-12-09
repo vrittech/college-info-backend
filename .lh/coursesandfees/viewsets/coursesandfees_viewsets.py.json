@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 11,
+            "activePatchIndex": 12,
             "patches": [
                 {
                     "date": 1733481293986,
@@ -52,6 +52,10 @@
                 {
                     "date": 1733734886484,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,8 @@\n from django_filters.rest_framework import DjangoFilterBackend\n from ..models import CoursesAndFees\n from ..serializers.coursesandfees_serializers import CoursesAndFeesListSerializers, CoursesAndFeesRetrieveSerializers, CoursesAndFeesWriteSerializers\n from ..utilities.importbase import *\n-from coursemanagement.models import Course\n from rest_framework.decorators import action\n from rest_framework.response import Response\n from django.db.models import Avg\n \n"
+                },
+                {
+                    "date": 1733734913615,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,9 +11,9 @@\n class coursesandfeesViewsets(viewsets.ModelViewSet):\n     serializer_class = CoursesAndFeesListSerializers\n     # permission_classes = [coursesandfeesPermission]\n     # authentication_classes = [JWTAuthentication]\n-    #pagination_class = MyPageNumberPagination\n+    pagination_class = MyPageNumberPagination\n     queryset = CoursesAndFees.objects.all().order_by('-id')\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     search_fields = ['id']\n"
                 }
             ],
             "date": 1733481293986,
