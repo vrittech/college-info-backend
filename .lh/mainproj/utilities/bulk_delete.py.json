@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 29,
+            "activePatchIndex": 35,
             "patches": [
                 {
                     "date": 1733737051062,
@@ -124,6 +124,30 @@
                 {
                     "date": 1733739983225,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,23 +18,27 @@\n from facilities.models import Facility\n from faculty.models import Faculty\n from level.models import Level\n from socialmedia.models import SocialMedia\n-from superadmindetails         \n+from superadmindetails.models import SuperAdminDetails         \n \n VALID_TYPES = {\n-    \n-#     \"blog\": Blog,\n-#     \"booking-service\": BookingService,\n-#     \"branch\": Branch,\n-#     \"customer-inquiries\": CustomerInquiries,\n-#     \"gallery-group\": GalleryGroup,\n-#     \"gallery\": Gallery,\n-#     \"quotation\": Quotation,\n-#     \"service-category\": Category,\n-#     \"service\": Service,\n-#     \"meetteam\": MeetTeam,\n-#     \"faqs\": Faqs,\n+    \"advertisement\": Advertisement,\n+    \"affiliation\": Affiliation,\n+    \"certification\": Certification,\n+    \"information\": Information,\n+    \"college\": College,\n+    \"college-gallery\": CollegeGallery,\n+    \"college-faqs\": CollegeFaqs,\n+    \"college-type\": CollegeType,\n+    \"contact\": Contact,\n+    \"course\": Course,\n+    \"district\": District,\n+    \"facility\": Facility,\n+    \"faculty\": Faculty,\n+    \"level\": Level,\n+    \"social-media\": SocialMedia,\n+    \"super-admin-details\": SuperAdminDetails,\n }\n \n class BulkDelete(APIView):\n     @swagger_auto_schema(\n"
+                },
+                {
+                    "date": 1733740410650,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,8 +10,9 @@\n from affiliation.models import Affiliation\n from certification.models import Certification\n from informationmanagement.models import Information\n from collegemanagement.models import College, CollegeGallery, CollegeFaqs, CollegeType\n+from \n from collegetype.models import CollegeType\n from contact.models import Contact\n from coursemanagement.models import Course\n from district.models import District\n"
+                },
+                {
+                    "date": 1733740418644,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,9 @@\n from affiliation.models import Affiliation\n from certification.models import Certification\n from informationmanagement.models import Information\n from collegemanagement.models import College, CollegeGallery, CollegeFaqs, CollegeType\n-from \n+from course\n from collegetype.models import CollegeType\n from contact.models import Contact\n from coursemanagement.models import Course\n from district.models import District\n"
+                },
+                {
+                    "date": 1733740433771,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,9 @@\n from affiliation.models import Affiliation\n from certification.models import Certification\n from informationmanagement.models import Information\n from collegemanagement.models import College, CollegeGallery, CollegeFaqs, CollegeType\n-from course\n+from coursesandfees.models import CoursesAndFees\n from collegetype.models import CollegeType\n from contact.models import Contact\n from coursemanagement.models import Course\n from district.models import District\n@@ -24,8 +24,9 @@\n \n VALID_TYPES = {\n     \"advertisement\": Advertisement,\n     \"affiliation\": Affiliation,\n+    \"affiliation\": Affiliation,\n     \"certification\": Certification,\n     \"information\": Information,\n     \"college\": College,\n     \"college-gallery\": CollegeGallery,\n"
+                },
+                {
+                    "date": 1733740441026,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,9 +24,9 @@\n \n VALID_TYPES = {\n     \"advertisement\": Advertisement,\n     \"affiliation\": Affiliation,\n-    \"affiliation\": Affiliation,\n+    \"coursesandFees\": Affiliation,\n     \"certification\": Certification,\n     \"information\": Information,\n     \"college\": College,\n     \"college-gallery\": CollegeGallery,\n"
+                },
+                {
+                    "date": 1733740446147,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,9 +24,9 @@\n \n VALID_TYPES = {\n     \"advertisement\": Advertisement,\n     \"affiliation\": Affiliation,\n-    \"coursesandFees\": Affiliation,\n+    \"coursesandfees\": CoursesAndFees,\n     \"certification\": Certification,\n     \"information\": Information,\n     \"college\": College,\n     \"college-gallery\": CollegeGallery,\n"
+                },
+                {
+                    "date": 1733740457698,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,9 +24,9 @@\n \n VALID_TYPES = {\n     \"advertisement\": Advertisement,\n     \"affiliation\": Affiliation,\n-    \"coursesandfees\": CoursesAndFees,\n+    \"courses-andfees\": CoursesAndFees,\n     \"certification\": Certification,\n     \"information\": Information,\n     \"college\": College,\n     \"college-gallery\": CollegeGallery,\n"
                 }
             ],
             "date": 1733737051062,

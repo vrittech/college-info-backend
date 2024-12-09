@@ -11,6 +11,7 @@ from affiliation.models import Affiliation
 from certification.models import Certification
 from informationmanagement.models import Information
 from collegemanagement.models import College, CollegeGallery, CollegeFaqs, CollegeType
+from coursesandfees.models import CoursesAndFees
 from collegetype.models import CollegeType
 from contact.models import Contact
 from coursemanagement.models import Course
@@ -24,6 +25,7 @@ from superadmindetails.models import SuperAdminDetails
 VALID_TYPES = {
     "advertisement": Advertisement,
     "affiliation": Affiliation,
+    "courses-and-fees": CoursesAndFees,
     "certification": Certification,
     "information": Information,
     "college": College,
