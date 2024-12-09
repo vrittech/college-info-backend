@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 20,
+            "activePatchIndex": 23,
             "patches": [
                 {
                     "date": 1733718920520,
@@ -88,6 +88,18 @@
                 {
                     "date": 1733719148638,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -21,9 +21,9 @@\n     filterset_fields = {\n         'id': ['exact'],\n         'college_type': ['exact'],\n         'affiliated': ['exact'],\n-        'established_date': ['exact'],\n+        'established_date': ['exact','gte','lte'],\n         'created_date': ['exact','gte','lte'],\n         'updated_date': ['exact','gte','lte'],\n     }\n \n"
+                },
+                {
+                    "date": 1733735549748,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -40,5 +40,22 @@\n \n     # @action(detail=False, methods=['get'], name=\"action_name\", url_path=\"url_path\")\n     # def action_name(self, request, *args, **kwargs):\n     #     return super().list(request, *args, **kwargs)\n+    \n+    @action(detail=True, methods=['get'], url_path=\"dp-image\")\n+    def get_dp_image(self, request, pk=None):\n+        try:\n+            # Fetch the college by primary key\n+            college = self.get_object()\n+        except College.DoesNotExist:\n+            return Response({\"error\": \"College not found.\"}, status=404)\n \n+        # Check if dp_image exists\n+        if not college.dp_image:\n+            return Response({\"message\": \"No display image available for this college.\"}, status=404)\n+\n+        # Construct the absolute URL for the dp_image\n+        dp_image_url = request.build_absolute_uri(college.dp_image.url)\n+\n+        return Response({\"college_name\": college.name, \"dp_image_url\": dp_image_url}, status=200)\n+\n"
+                },
+                {
+                    "date": 1733735563239,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,10 @@\n from django_filters.rest_framework import DjangoFilterBackend\n from ..models import College\n from ..serializers.college_serializers import CollegeListSerializers, CollegeRetrieveSerializers, CollegeWriteSerializers\n from ..utilities.importbase import *\n-\n+from rest_framework.decorators import action\n+from rest_framework.response import Response\n class collegeViewsets(viewsets.ModelViewSet):\n     serializer_class = CollegeListSerializers\n     # permission_classes = [collegemanagementPermission]\n     # authentication_classes = [JWTAuthentication]\n"
+                },
+                {
+                    "date": 1733735574433,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -42,9 +42,9 @@\n     # @action(detail=False, methods=['get'], name=\"action_name\", url_path=\"url_path\")\n     # def action_name(self, request, *args, **kwargs):\n     #     return super().list(request, *args, **kwargs)\n     \n-    @action(detail=True, methods=['get'], url_path=\"dp-image\")\n+    @action(detail=True, methods=['get'], url_path=\"college-\")\n     def get_dp_image(self, request, pk=None):\n         try:\n             # Fetch the college by primary key\n             college = self.get_object()\n"
                 }
             ],
             "date": 1733718920520,
