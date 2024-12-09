@@ -87,6 +87,7 @@ INSTALLED_APPS = [
     'superadmindetails',
     'advertisement',
     'contact',
+    'requestsubmission',
 ]
 
 AUTH_USER_MODEL = 'accounts.CustomUser'

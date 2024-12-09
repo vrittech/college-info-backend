@@ -37,6 +37,7 @@ from duration.routers.routers import router as duration_router
 from formprogress.routers.routers import router as formprogress_router
 from inquiry.routers.routers import router as inquiry_router
 from superadmindetails.routers.routers import router as superadmindetails_router
+from requestsubmission.routers.routers import router as requestsubmission_router
 
 # from semester.routers.routers import router as semester_router
 from level.routers.routers import router as level_router
@@ -62,6 +63,7 @@ from discipline.routers.routers import router as discipline_router
 
 router = routers.DefaultRouter()
 
+router.registry.extend(requestsubmission_router.registry)
 router.registry.extend(coursemanagement_router.registry)
 router.registry.extend(socialmedia_router.registry)
 # router.registry.extend(setupemail_router.registry)
@@ -115,6 +117,7 @@ urlpatterns = [
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
     path('api-auth/', include('rest_framework.urls')),
     path('api/accounts/',include('accounts.urls')),
+    # path('api/',include(requestsubmission_router.urls)),
     # path('api/',include(coursemanagement_router.urls)),
     # path('api/',include(socialmedia_router.urls)),
     # path('api/',include(setupemail_router.urls)),

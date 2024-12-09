@@ -1,0 +1,42 @@
+{
+    "sourceFile": "requestsubmission/models.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 6,
+            "patches": [
+                {
+                    "date": 1733741080442,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1733741087622,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,4 +1,5 @@\n from django.db import models\n \n # Create your models here.\n-class \n\\ No newline at end of file\n+class RequestSubmission(models.Model):\n+    subjec\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1733741093088,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n from django.db import models\n \n # Create your models here.\n class RequestSubmission(models.Model):\n-    subjec\n\\ No newline at end of file\n+    subject = models.CharField(max_length=255)\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1733741098648,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,8 @@\n from django.db import models\n \n # Create your models here.\n class RequestSubmission(models.Model):\n-    subject = models.CharField(max_length=255)\n\\ No newline at end of file\n+    subject = models.CharField(max_length=255)\n+    message = models.TextField()\n+    created_date = models.DateField(auto_now_add=True)\n+    updated_date = models.DateField(auto_now=True)\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1733741106923,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,5 +4,8 @@\n class RequestSubmission(models.Model):\n     subject = models.CharField(max_length=255)\n     message = models.TextField()\n     created_date = models.DateField(auto_now_add=True)\n-    updated_date = models.DateField(auto_now=True)\n\\ No newline at end of file\n+    updated_date = models.DateField(auto_now=True)\n+    \n+    def __str__(self):\n+        return self.subject z\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1733741112010,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,5 +7,5 @@\n     created_date = models.DateField(auto_now_add=True)\n     updated_date = models.DateField(auto_now=True)\n     \n     def __str__(self):\n-        return self.subject z\n\\ No newline at end of file\n+        return self.subject \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1733741120974,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,9 @@\n \n # Create your models here.\n class RequestSubmission(models.Model):\n     subject = models.CharField(max_length=255)\n-    message = models.TextField()\n+    message =models.TextField()\n     created_date = models.DateField(auto_now_add=True)\n     updated_date = models.DateField(auto_now=True)\n     \n     def __str__(self):\n"
+                }
+            ],
+            "date": 1733741080442,
+            "name": "Commit-0",
+            "content": "from django.db import models\n\n# Create your models here.\nclass "
+        }
+    ]
+}
