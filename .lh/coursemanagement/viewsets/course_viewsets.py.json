@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 2,
+            "activePatchIndex": 25,
             "patches": [
                 {
                     "date": 1733481275577,
@@ -16,6 +16,98 @@
                 {
                     "date": 1733637896988,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -21,9 +21,9 @@\n     # }\n \n     def get_queryset(self):\n         queryset = super().get_queryset()\n-        return queryse\n+        return queryset\n \n     def get_serializer_class(self):\n         if self.action in ['create', 'update', 'partial_update']:\n             return CourseWriteSerializers\n"
+                },
+                {
+                    "date": 1733718495197,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,8 +14,10 @@\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     search_fields = ['id']\n     ordering_fields = ['id']\n+    \n+    \n \n     # filterset_fields = {\n     #     'id': ['exact'],\n     # }\n"
+                },
+                {
+                    "date": 1733718500555,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,9 +15,9 @@\n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     search_fields = ['id']\n     ordering_fields = ['id']\n     \n-    \n+    # ('name', 'abbreviation', 'duration', 'faculties', 'level', 'discipline', 'description', 'course_shortdescription', 'course_outcome', 'course_curriculum', 'eligibility_criteria', 'image', 'curriculum_file_upload', 'created_date', 'updated_date', )\n \n     # filterset_fields = {\n     #     'id': ['exact'],\n     # }\n"
+                },
+                {
+                    "date": 1733718514472,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,9 +12,9 @@\n     #pagination_class = MyPageNumberPagination\n     queryset = Course.objects.all().order_by('-id')\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n-    search_fields = ['id']\n+    search_fields = ['id','name', 'abbreviation', 'duration', 'faculties', 'level', 'discipline', 'description', 'course_shortdescription', 'course_outcome', 'course_curriculum', 'eligibility_criteria', 'image', 'curriculum_file_upload', 'created_date', 'updated_date', ]\n     ordering_fields = ['id']\n     \n     # ('name', 'abbreviation', 'duration', 'faculties', 'level', 'discipline', 'description', 'course_shortdescription', 'course_outcome', 'course_curriculum', 'eligibility_criteria', 'image', 'curriculum_file_upload', 'created_date', 'updated_date', )\n \n"
+                },
+                {
+                    "date": 1733718527639,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,39 @@\n+from rest_framework import viewsets\n+from rest_framework.filters import SearchFilter, OrderingFilter\n+from django_filters.rest_framework import DjangoFilterBackend\n+from ..models import Course\n+from ..serializers.course_serializers import CourseListSerializers, CourseRetrieveSerializers, CourseWriteSerializers\n+from ..utilities.importbase import *\n+\n+class courseViewsets(viewsets.ModelViewSet):\n+    serializer_class = CourseListSerializers\n+    # permission_classes = [coursemanagementPermission]\n+    # authentication_classes = [JWTAuthentication]\n+    #pagination_class = MyPageNumberPagination\n+    queryset = Course.objects.all().order_by('-id')\n+\n+    filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n+    search_fields = ['id','name', 'abbreviation', 'duration', 'faculties', 'level', 'discipline', 'description', 'course_shortdescription', 'course_outcome', 'course_curriculum', 'eligibility_criteria', 'created_date', 'updated_date', ]\n+    ordering_fields = ['id']\n+    \n+    # ('name', 'abbreviation', 'duration', 'faculties', 'level', 'discipline', 'description', 'course_shortdescription', 'course_outcome', 'course_curriculum', 'eligibility_criteria', 'image', 'curriculum_file_upload', 'created_date', 'updated_date', )\n+\n+    # filterset_fields = {\n+    #     'id': ['exact'],\n+    # }\n+\n+    def get_queryset(self):\n+        queryset = super().get_queryset()\n+        return queryset\n+\n+    def get_serializer_class(self):\n+        if self.action in ['create', 'update', 'partial_update']:\n+            return CourseWriteSerializers\n+        elif self.action == 'retrieve':\n+            return CourseRetrieveSerializers\n+        return super().get_serializer_class()\n+\n+    # @action(detail=False, methods=['get'], name=\"action_name\", url_path=\"url_path\")\n+    # def action_name(self, request, *args, **kwargs):\n+    #     return super().list(request, *args, **kwargs)\n+\n"
+                },
+                {
+                    "date": 1733718541706,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,9 +13,9 @@\n     queryset = Course.objects.all().order_by('-id')\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     search_fields = ['id','name', 'abbreviation', 'duration', 'faculties', 'level', 'discipline', 'description', 'course_shortdescription', 'course_outcome', 'course_curriculum', 'eligibility_criteria', 'created_date', 'updated_date', ]\n-    ordering_fields = ['id']\n+    ordering_fields = ['id','name', 'abbreviation', 'duration', 'faculties', 'level', 'discipline', 'description', 'course_shortdescription', 'course_outcome', 'course_curriculum', 'eligibility_criteria', 'created_date', 'updated_date', ]\n     \n     # ('name', 'abbreviation', 'duration', 'faculties', 'level', 'discipline', 'description', 'course_shortdescription', 'course_outcome', 'course_curriculum', 'eligibility_criteria', 'image', 'curriculum_file_upload', 'created_date', 'updated_date', )\n \n     # filterset_fields = {\n@@ -36,43 +36,4 @@\n     # @action(detail=False, methods=['get'], name=\"action_name\", url_path=\"url_path\")\n     # def action_name(self, request, *args, **kwargs):\n     #     return super().list(request, *args, **kwargs)\n \n-from rest_framework import viewsets\n-from rest_framework.filters import SearchFilter, OrderingFilter\n-from django_filters.rest_framework import DjangoFilterBackend\n-from ..models import Course\n-from ..serializers.course_serializers import CourseListSerializers, CourseRetrieveSerializers, CourseWriteSerializers\n-from ..utilities.importbase import *\n-\n-class courseViewsets(viewsets.ModelViewSet):\n-    serializer_class = CourseListSerializers\n-    # permission_classes = [coursemanagementPermission]\n-    # authentication_classes = [JWTAuthentication]\n-    #pagination_class = MyPageNumberPagination\n-    queryset = Course.objects.all().order_by('-id')\n-\n-    filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n-    search_fields = ['id','name', 'abbreviation', 'duration', 'faculties', 'level', 'discipline', 'description', 'course_shortdescription', 'course_outcome', 'course_curriculum', 'eligibility_criteria', 'image', 'curriculum_file_upload', 'created_date', 'updated_date', ]\n-    ordering_fields = ['id']\n-    \n-    # ('name', 'abbreviation', 'duration', 'faculties', 'level', 'discipline', 'description', 'course_shortdescription', 'course_outcome', 'course_curriculum', 'eligibility_criteria', 'image', 'curriculum_file_upload', 'created_date', 'updated_date', )\n-\n-    # filterset_fields = {\n-    #     'id': ['exact'],\n-    # }\n-\n-    def get_queryset(self):\n-        queryset = super().get_queryset()\n-        return queryset\n-\n-    def get_serializer_class(self):\n-        if self.action in ['create', 'update', 'partial_update']:\n-            return CourseWriteSerializers\n-        elif self.action == 'retrieve':\n-            return CourseRetrieveSerializers\n-        return super().get_serializer_class()\n-\n-    # @action(detail=False, methods=['get'], name=\"action_name\", url_path=\"url_path\")\n-    # def action_name(self, request, *args, **kwargs):\n-    #     return super().list(request, *args, **kwargs)\n-\n"
+                },
+                {
+                    "date": 1733718549749,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,10 +12,10 @@\n     #pagination_class = MyPageNumberPagination\n     queryset = Course.objects.all().order_by('-id')\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n-    search_fields = ['id','name', 'abbreviation', 'duration', 'faculties', 'level', 'discipline', 'description', 'course_shortdescription', 'course_outcome', 'course_curriculum', 'eligibility_criteria', 'created_date', 'updated_date', ]\n-    ordering_fields = ['id','name', 'abbreviation', 'duration', 'faculties', 'level', 'discipline', 'description', 'course_shortdescription', 'course_outcome', 'course_curriculum', 'eligibility_criteria', 'created_date', 'updated_date', ]\n+    search_fields = ['id','name', 'abbreviation', 'duration', 'faculties', 'level', 'discipline', 'description', 'course_shortdescription', 'course_outcome', 'course_curriculum', 'eligibility_criteria', 'created_date', 'updated_date' ]\n+    ordering_fields = ['id','name', 'abbreviation', 'duration', 'faculties', 'level', 'discipline', 'description', 'course_shortdescription', 'course_outcome', 'course_curriculum', 'eligibility_criteria', 'created_date', 'updated_date' ]\n     \n     # ('name', 'abbreviation', 'duration', 'faculties', 'level', 'discipline', 'description', 'course_shortdescription', 'course_outcome', 'course_curriculum', 'eligibility_criteria', 'image', 'curriculum_file_upload', 'created_date', 'updated_date', )\n \n     # filterset_fields = {\n"
+                },
+                {
+                    "date": 1733718557572,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,11 +17,11 @@\n     ordering_fields = ['id','name', 'abbreviation', 'duration', 'faculties', 'level', 'discipline', 'description', 'course_shortdescription', 'course_outcome', 'course_curriculum', 'eligibility_criteria', 'created_date', 'updated_date' ]\n     \n     # ('name', 'abbreviation', 'duration', 'faculties', 'level', 'discipline', 'description', 'course_shortdescription', 'course_outcome', 'course_curriculum', 'eligibility_criteria', 'image', 'curriculum_file_upload', 'created_date', 'updated_date', )\n \n-    # filterset_fields = {\n-    #     'id': ['exact'],\n-    # }\n+    filterset_fields = {\n+        'id': ['exact'],\n+    }\n \n     def get_queryset(self):\n         queryset = super().get_queryset()\n         return queryset\n"
+                },
+                {
+                    "date": 1733718571836,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,8 +19,14 @@\n     # ('name', 'abbreviation', 'duration', 'faculties', 'level', 'discipline', 'description', 'course_shortdescription', 'course_outcome', 'course_curriculum', 'eligibility_criteria', 'image', 'curriculum_file_upload', 'created_date', 'updated_date', )\n \n     filterset_fields = {\n         'id': ['exact'],\n+        'id': ['exact'],\n+        'id': ['exact'],\n+        'id': ['exact'],\n+        'id': ['exact'],\n+        'id': ['exact'],\n+        'id': ['exact'],\n     }\n \n     def get_queryset(self):\n         queryset = super().get_queryset()\n"
+                },
+                {
+                    "date": 1733718577860,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,14 +19,14 @@\n     # ('name', 'abbreviation', 'duration', 'faculties', 'level', 'discipline', 'description', 'course_shortdescription', 'course_outcome', 'course_curriculum', 'eligibility_criteria', 'image', 'curriculum_file_upload', 'created_date', 'updated_date', )\n \n     filterset_fields = {\n         'id': ['exact'],\n+        'name': ['exact'],\n         'id': ['exact'],\n         'id': ['exact'],\n         'id': ['exact'],\n         'id': ['exact'],\n         'id': ['exact'],\n-        'id': ['exact'],\n     }\n \n     def get_queryset(self):\n         queryset = super().get_queryset()\n"
+                },
+                {
+                    "date": 1733718589475,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,13 +20,13 @@\n \n     filterset_fields = {\n         'id': ['exact'],\n         'name': ['exact'],\n+        'abbreviation': ['exact'],\n         'id': ['exact'],\n         'id': ['exact'],\n         'id': ['exact'],\n         'id': ['exact'],\n-        'id': ['exact'],\n     }\n \n     def get_queryset(self):\n         queryset = super().get_queryset()\n"
+                },
+                {
+                    "date": 1733718595716,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -21,12 +21,12 @@\n     filterset_fields = {\n         'id': ['exact'],\n         'name': ['exact'],\n         'abbreviation': ['exact'],\n+        'duration': ['exact'],\n         'id': ['exact'],\n         'id': ['exact'],\n         'id': ['exact'],\n-        'id': ['exact'],\n     }\n \n     def get_queryset(self):\n         queryset = super().get_queryset()\n"
+                },
+                {
+                    "date": 1733718600906,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,11 +22,11 @@\n         'id': ['exact'],\n         'name': ['exact'],\n         'abbreviation': ['exact'],\n         'duration': ['exact'],\n+        'faculties': ['exact'],\n         'id': ['exact'],\n         'id': ['exact'],\n-        'id': ['exact'],\n     }\n \n     def get_queryset(self):\n         queryset = super().get_queryset()\n"
+                },
+                {
+                    "date": 1733718606662,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,10 +23,10 @@\n         'name': ['exact'],\n         'abbreviation': ['exact'],\n         'duration': ['exact'],\n         'faculties': ['exact'],\n+        'level': ['exact'],\n         'id': ['exact'],\n-        'id': ['exact'],\n     }\n \n     def get_queryset(self):\n         queryset = super().get_queryset()\n"
+                },
+                {
+                    "date": 1733718618278,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,9 +24,9 @@\n         'abbreviation': ['exact'],\n         'duration': ['exact'],\n         'faculties': ['exact'],\n         'level': ['exact'],\n-        'id': ['exact'],\n+        'description': ['exact'],\n     }\n \n     def get_queryset(self):\n         queryset = super().get_queryset()\n"
+                },
+                {
+                    "date": 1733718798287,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -25,8 +25,10 @@\n         'duration': ['exact'],\n         'faculties': ['exact'],\n         'level': ['exact'],\n         'description': ['exact'],\n+        'course_shortdescription': ['exact'],\n+        'description': ['exact'],\n     }\n \n     def get_queryset(self):\n         queryset = super().get_queryset()\n"
+                },
+                {
+                    "date": 1733718805079,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -26,9 +26,9 @@\n         'faculties': ['exact'],\n         'level': ['exact'],\n         'description': ['exact'],\n         'course_shortdescription': ['exact'],\n-        'description': ['exact'],\n+        'course_outcome': ['exact'],\n     }\n \n     def get_queryset(self):\n         queryset = super().get_queryset()\n"
+                },
+                {
+                    "date": 1733718813374,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,8 +27,9 @@\n         'level': ['exact'],\n         'description': ['exact'],\n         'course_shortdescription': ['exact'],\n         'course_outcome': ['exact'],\n+        'course_outcome': ['exact'],\n     }\n \n     def get_queryset(self):\n         queryset = super().get_queryset()\n"
+                },
+                {
+                    "date": 1733718822717,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,9 +27,11 @@\n         'level': ['exact'],\n         'description': ['exact'],\n         'course_shortdescription': ['exact'],\n         'course_outcome': ['exact'],\n-        'course_outcome': ['exact'],\n+        'eligibility_criteria': ['exact'],\n+        'created_date': ['exact'],\n+        'eligibility_criteria': ['exact'],\n     }\n \n     def get_queryset(self):\n         queryset = super().get_queryset()\n"
+                },
+                {
+                    "date": 1733718828471,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -29,9 +29,9 @@\n         'course_shortdescription': ['exact'],\n         'course_outcome': ['exact'],\n         'eligibility_criteria': ['exact'],\n         'created_date': ['exact'],\n-        'eligibility_criteria': ['exact'],\n+        'updated_date': ['exact'],\n     }\n \n     def get_queryset(self):\n         queryset = super().get_queryset()\n"
+                },
+                {
+                    "date": 1733718842408,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -28,9 +28,9 @@\n         'description': ['exact'],\n         'course_shortdescription': ['exact'],\n         'course_outcome': ['exact'],\n         'eligibility_criteria': ['exact'],\n-        'created_date': ['exact'],\n+        'created_date': ['exact','get'],\n         'updated_date': ['exact'],\n     }\n \n     def get_queryset(self):\n"
+                },
+                {
+                    "date": 1733718848214,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -28,9 +28,9 @@\n         'description': ['exact'],\n         'course_shortdescription': ['exact'],\n         'course_outcome': ['exact'],\n         'eligibility_criteria': ['exact'],\n-        'created_date': ['exact','get'],\n+        'created_date': ['exact','gte',],\n         'updated_date': ['exact'],\n     }\n \n     def get_queryset(self):\n"
+                },
+                {
+                    "date": 1733718853987,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -28,10 +28,10 @@\n         'description': ['exact'],\n         'course_shortdescription': ['exact'],\n         'course_outcome': ['exact'],\n         'eligibility_criteria': ['exact'],\n-        'created_date': ['exact','gte',],\n-        'updated_date': ['exact'],\n+        'created_date': ['exact','gte','lte'],\n+        'updated_date': ['exact',],\n     }\n \n     def get_queryset(self):\n         queryset = super().get_queryset()\n"
+                },
+                {
+                    "date": 1733718869691,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -29,9 +29,9 @@\n         'course_shortdescription': ['exact'],\n         'course_outcome': ['exact'],\n         'eligibility_criteria': ['exact'],\n         'created_date': ['exact','gte','lte'],\n-        'updated_date': ['exact',],\n+        'updated_date': ['exact','gte','lte'],\n     }\n \n     def get_queryset(self):\n         queryset = super().get_queryset()\n"
                 }
             ],
             "date": 1733481275577,

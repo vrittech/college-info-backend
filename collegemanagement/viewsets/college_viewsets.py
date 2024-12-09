@@ -10,15 +10,22 @@ class collegeViewsets(viewsets.ModelViewSet):
     # permission_classes = [collegemanagementPermission]
     # authentication_classes = [JWTAuthentication]
     #pagination_class = MyPageNumberPagination
-    queryset = College.objects.all()
+    queryset = College.objects.all().order_by('-id')
 
     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]
-    search_fields = ['id']
-    ordering_fields = ['id']
+    search_fields = ['id','name', 'established_date', 'website_link', 'address', 'district', 'phone_number', 'email', 'affiliated', 'college_type', 'discipline', 'social_media', 'google_map_link', 'latitude', 'longitude', 'about', 'brochure', 'step_counter', 'facilities', 'placement', 'scholarship', 'created_date', 'updated_date']
+    ordering_fields = ['id','name', 'established_date', 'website_link', 'address', 'district__name', 'phone_number', 'email', 'latitude', 'longitude', 'about', 'brochure', 'step_counter', 'facilities', 'placement', 'scholarship', 'created_date', 'updated_date']
+    
+    # ('name', 'established_date', 'website_link', 'address', 'district', 'phone_number', 'email', 'affiliated', 'college_type', 'discipline', 'social_media', 'google_map_link', 'latitude', 'longitude', 'about', 'brochure', 'step_counter', 'facilities', 'placement', 'scholarship', 'created_date', 'updated_date', )
 
-    # filterset_fields = {
-    #     'id': ['exact'],
-    # }
+    filterset_fields = {
+        'id': ['exact'],
+        'college_type': ['exact'],
+        'affiliated': ['exact'],
+        'established_date': ['exact','gte','lte'],
+        'created_date': ['exact','gte','lte'],
+        'updated_date': ['exact','gte','lte'],
+    }
 
     def get_queryset(self):
         queryset = super().get_queryset()

@@ -9,17 +9,28 @@ class informationViewsets(viewsets.ModelViewSet):
     serializer_class = InformationListSerializers
     # permission_classes = [informationmanagementPermission]
     # authentication_classes = [JWTAuthentication]
-    #pagination_class = MyPageNumberPagination
+    pagination_class = MyPageNumberPagination
     queryset = Information.objects.all().order_by('-id')
 
     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]
-    search_fields = ['id']
-    ordering_fields = ['id']
+    search_fields = ['id','title', 'publish_date', 'active_period_start', 'active_period_end', 'level__name', 'sublevel__name', 'course__name','created_date', 'updated_date',]
+    ordering_fields =  ['id','title', 'publish_date', 'active_period_start', 'active_period_end', 'level__name', 'sublevel__name', 'course__name','created_date', 'updated_date',]
 
-    # filterset_fields = {
-    #     'id': ['exact'],
-    # }
+    filterset_fields = {
+    'id': ['exact'],
+    'state': ['exact'],
+    'title': ['exact', 'icontains'],
+    'publish_date': ['exact', 'gte', 'lte'],
+    'active_period_start': ['exact', 'gte', 'lte'],
+    'active_period_end': ['exact', 'gte', 'lte'],
+    'level__name': ['exact', 'icontains'],
+    'sublevel__name': ['exact', 'icontains'],
+    'course__name': ['exact', 'icontains'],
+    'created_date': ['exact', 'gte', 'lte'],
+    'updated_date': ['exact', 'gte', 'lte'],
+    }
 
+# ('title', 'publish_date', 'active_period_start', 'active_period_end', 'level', 'sublevel', 'course', 'affiliation', 'district', 'college', 'faculty', 'information_tagging', 'information_category', 'short_description', 'description', 'image', 'file', 'is_view', 'created_date', 'updated_date', )
     def get_queryset(self):
         queryset = super().get_queryset()
         return queryset

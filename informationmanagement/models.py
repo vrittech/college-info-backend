@@ -89,7 +89,7 @@ class Information(SEOFields):
     description = models.TextField()
     image = models.ManyToManyField(InformationGallery, blank=True)
     # file = models.ManyToManyField(InformationFiles, blank=True)
-    # is_view = models.BooleanField(default=False)
+    state = models.BooleanField(default=False)
 
     created_date = models.DateField(auto_now_add=True, null=True, blank=True)
     updated_date = models.DateTimeField(auto_now=True, null=True, blank=True)
