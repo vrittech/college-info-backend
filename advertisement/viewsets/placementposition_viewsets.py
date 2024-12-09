@@ -9,7 +9,7 @@ class placementpositionViewsets(viewsets.ModelViewSet):
     serializer_class = PlacementPositionListSerializers
     # permission_classes = [advertisementPermission]
     # authentication_classes = [JWTAuthentication]
-    #pagination_class = MyPageNumberPagination
+    pagination_class = MyPageNumberPagination
     queryset = PlacementPosition.objects.all().order_by('-id')
 
     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]
@@ -23,6 +23,7 @@ class placementpositionViewsets(viewsets.ModelViewSet):
     def get_queryset(self):
         queryset = super().get_queryset()
         return queryset
+    
     def get_serializer_class(self):
         if self.action in ['create', 'update', 'partial_update']:
             return PlacementPositionWriteSerializers

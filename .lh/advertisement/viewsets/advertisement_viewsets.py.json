@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 1,
+            "activePatchIndex": 12,
             "patches": [
                 {
                     "date": 1733481075583,
@@ -12,6 +12,50 @@
                 {
                     "date": 1733481082352,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,9 +9,9 @@\n     serializer_class = AdvertisementListSerializers\n     # permission_classes = [advertisementPermission]\n     # authentication_classes = [JWTAuthentication]\n     #pagination_class = MyPageNumberPagination\n-    queryset = Advertisement.objects.all().order\n+    queryset = Advertisement.objects.all().order_by('-id')\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     search_fields = ['id']\n     ordering_fields = ['id']\n@@ -21,9 +21,9 @@\n     # }\n \n     def get_queryset(self):\n         queryset = super().get_queryset()\n-        #return queryset.filter(user_id=self.request.user.id)\n+        return queryset\n \n     def get_serializer_class(self):\n         if self.action in ['create', 'update', 'partial_update']:\n             return AdvertisementWriteSerializers\n"
+                },
+                {
+                    "date": 1733733922343,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,9 +18,9 @@\n \n     # filterset_fields = {\n     #     'id': ['exact'],\n     # }\n-\n+('name', 'link', 'image', 'placement', 'created_date', 'updated_date', )\n     def get_queryset(self):\n         queryset = super().get_queryset()\n         return queryset\n \n"
+                },
+                {
+                    "date": 1733733934338,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,15 +12,15 @@\n     #pagination_class = MyPageNumberPagination\n     queryset = Advertisement.objects.all().order_by('-id')\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n-    search_fields = ['id']\n+    search_fields = ['id','name', 'link', 'image', 'placement', 'created_date', 'updated_date']\n     ordering_fields = ['id']\n \n     # filterset_fields = {\n     #     'id': ['exact'],\n     # }\n-('name', 'link', 'image', 'placement', 'created_date', 'updated_date', )\n+# ('name', 'link', 'image', 'placement', 'created_date', 'updated_date', )\n     def get_queryset(self):\n         queryset = super().get_queryset()\n         return queryset\n \n"
+                },
+                {
+                    "date": 1733734026511,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,9 +12,9 @@\n     #pagination_class = MyPageNumberPagination\n     queryset = Advertisement.objects.all().order_by('-id')\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n-    search_fields = ['id','name', 'link', 'image', 'placement', 'created_date', 'updated_date']\n+    search_fields = ['id','name', 'link','placement', 'created_date', 'updated_date']\n     ordering_fields = ['id']\n \n     # filterset_fields = {\n     #     'id': ['exact'],\n"
+                },
+                {
+                    "date": 1733734037585,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,9 +13,9 @@\n     queryset = Advertisement.objects.all().order_by('-id')\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     search_fields = ['id','name', 'link','placement', 'created_date', 'updated_date']\n-    ordering_fields = ['id']\n+    ordering_fields =['id','name', 'link','placement', 'created_date', 'updated_date']\n \n     # filterset_fields = {\n     #     'id': ['exact'],\n     # }\n"
+                },
+                {
+                    "date": 1733734057959,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,13 +13,13 @@\n     queryset = Advertisement.objects.all().order_by('-id')\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     search_fields = ['id','name', 'link','placement', 'created_date', 'updated_date']\n-    ordering_fields =['id','name', 'link','placement', 'created_date', 'updated_date']\n+    ordering_fields = ['id','name', 'link','placement', 'created_date', 'updated_date']\n \n-    # filterset_fields = {\n-    #     'id': ['exact'],\n-    # }\n+    filterset_fields = {\n+        'id': ['exact'],\n+    }\n # ('name', 'link', 'image', 'placement', 'created_date', 'updated_date', )\n     def get_queryset(self):\n         queryset = super().get_queryset()\n         return queryset\n"
+                },
+                {
+                    "date": 1733734065622,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,8 +17,9 @@\n     ordering_fields = ['id','name', 'link','placement', 'created_date', 'updated_date']\n \n     filterset_fields = {\n         'id': ['exact'],\n+        'name': ['exact'],\n     }\n # ('name', 'link', 'image', 'placement', 'created_date', 'updated_date', )\n     def get_queryset(self):\n         queryset = super().get_queryset()\n"
+                },
+                {
+                    "date": 1733734071924,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,8 +18,9 @@\n \n     filterset_fields = {\n         'id': ['exact'],\n         'name': ['exact'],\n+        'placement': ['exact'],\n     }\n # ('name', 'link', 'image', 'placement', 'created_date', 'updated_date', )\n     def get_queryset(self):\n         queryset = super().get_queryset()\n"
+                },
+                {
+                    "date": 1733734079411,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,8 +19,9 @@\n     filterset_fields = {\n         'id': ['exact'],\n         'name': ['exact'],\n         'placement': ['exact'],\n+        'placement': ['exact'],\n     }\n # ('name', 'link', 'image', 'placement', 'created_date', 'updated_date', )\n     def get_queryset(self):\n         queryset = super().get_queryset()\n"
+                },
+                {
+                    "date": 1733734085235,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n     filterset_fields = {\n         'id': ['exact'],\n         'name': ['exact'],\n         'placement': ['exact'],\n-        'placement': ['exact'],\n+        'created_date': ['exact',],\n     }\n # ('name', 'link', 'image', 'placement', 'created_date', 'updated_date', )\n     def get_queryset(self):\n         queryset = super().get_queryset()\n"
+                },
+                {
+                    "date": 1733734091687,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,10 @@\n     filterset_fields = {\n         'id': ['exact'],\n         'name': ['exact'],\n         'placement': ['exact'],\n-        'created_date': ['exact',],\n+        'created_date': ['exact','gte','lte'],\n+        'updated_date': ['exact','gte','lte'],\n     }\n # ('name', 'link', 'image', 'placement', 'created_date', 'updated_date', )\n     def get_queryset(self):\n         queryset = super().get_queryset()\n"
+                },
+                {
+                    "date": 1733734119922,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,9 @@\n class advertisementViewsets(viewsets.ModelViewSet):\n     serializer_class = AdvertisementListSerializers\n     # permission_classes = [advertisementPermission]\n     # authentication_classes = [JWTAuthentication]\n-    #pagination_class = MyPageNumberPagination\n+    pagination_class = MyPageNumberPagination\n     queryset = Advertisement.objects.all().order_by('-id')\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     search_fields = ['id','name', 'link','placement', 'created_date', 'updated_date']\n"
                 }
             ],
             "date": 1733481075583,

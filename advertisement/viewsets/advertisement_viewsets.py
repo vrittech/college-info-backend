@@ -9,17 +9,21 @@ class advertisementViewsets(viewsets.ModelViewSet):
     serializer_class = AdvertisementListSerializers
     # permission_classes = [advertisementPermission]
     # authentication_classes = [JWTAuthentication]
-    #pagination_class = MyPageNumberPagination
+    pagination_class = MyPageNumberPagination
     queryset = Advertisement.objects.all().order_by('-id')
 
     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]
-    search_fields = ['id']
-    ordering_fields = ['id']
+    search_fields = ['id','name', 'link','placement', 'created_date', 'updated_date']
+    ordering_fields = ['id','name', 'link','placement', 'created_date', 'updated_date']
 
-    # filterset_fields = {
-    #     'id': ['exact'],
-    # }
-
+    filterset_fields = {
+        'id': ['exact'],
+        'name': ['exact'],
+        'placement': ['exact'],
+        'created_date': ['exact','gte','lte'],
+        'updated_date': ['exact','gte','lte'],
+    }
+# ('name', 'link', 'image', 'placement', 'created_date', 'updated_date', )
     def get_queryset(self):
         queryset = super().get_queryset()
         return queryset
