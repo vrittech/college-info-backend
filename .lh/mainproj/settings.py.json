@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 33,
+            "activePatchIndex": 35,
             "patches": [
                 {
                     "date": 1727073622967,
@@ -140,6 +140,14 @@
                 {
                     "date": 1733741211349,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -75,9 +75,9 @@\n     'faculty',\n     'certification',\n     'socialmedia',\n     'coursemanagement',\n-    'drfapigenerator',\n+    # 'drfapigenerator',\n     'collegemanagement',\n     'facilities',\n     'discipline',\n     'coursesandfees',\n"
+                },
+                {
+                    "date": 1733812319977,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -170,9 +170,9 @@\n # https://docs.djangoproject.com/en/4.1/topics/i18n/\n \n LANGUAGE_CODE = 'en-us'\n \n-TIME_ZONE = 'UTC'\n+TIME_ZONE = 'Asia'\n \n USE_I18N = True\n \n USE_TZ = True\n"
+                },
+                {
+                    "date": 1733812326179,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -170,9 +170,9 @@\n # https://docs.djangoproject.com/en/4.1/topics/i18n/\n \n LANGUAGE_CODE = 'en-us'\n \n-TIME_ZONE = 'Asia'\n+TIME_ZONE = 'Asia/Kathmandu'\n \n USE_I18N = True\n \n USE_TZ = True\n"
                 }
             ],
             "date": 1727073622967,
