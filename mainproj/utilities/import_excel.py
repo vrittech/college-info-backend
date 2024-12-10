@@ -23,7 +23,7 @@ from district.serializers.district_serializers import DistrictWriteSerializers
 from duration.serializers.duration_serializers import DurationWriteSerializers
 
 
-class ImportExel(APIView):
+class ImportExcel(APIView):
     @swagger_auto_schema(
         request_body=openapi.Schema(
             type=openapi.TYPE_OBJECT,

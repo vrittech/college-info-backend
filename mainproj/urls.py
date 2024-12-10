@@ -95,6 +95,8 @@ router.registry.extend(formprogress_router.registry)
 router.registry.extend(inquiry_router.registry)
 router.registry.extend(superadmindetails_router.registry)
 
+from mainproj.utilities.import_excel import ImportExcel
+
 schema_view = get_schema_view(
    openapi.Info(
       title="College Info API",
@@ -117,6 +119,7 @@ urlpatterns = [
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
     path('api-auth/', include('rest_framework.urls')),
     path('api/accounts/',include('accounts.urls')),
+     path('api/import-excel/<str:type>/',ImportExcel.as_view(),name="import_excel"),
     # path('api/',include(requestsubmission_router.urls)),
     # path('api/',include(coursemanagement_router.urls)),
     # path('api/',include(socialmedia_router.urls)),
