@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 31,
+            "activePatchIndex": 32,
             "patches": [
                 {
                     "date": 1733383238378,
@@ -132,6 +132,10 @@
                 {
                     "date": 1733741877723,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,9 @@\n from accounts.models import CustomUser\n \n # Create your models here.\n class Contact(models.Model):\n-    user = \n+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE,null=)\n     ROLE_CHOICES = [\n     ('student', 'Student'),\n     ('others', 'Others'),\n     ('college_admin', 'College Admin'),\n"
+                },
+                {
+                    "date": 1733803497555,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,9 @@\n from accounts.models import CustomUser\n \n # Create your models here.\n class Contact(models.Model):\n-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE,null=)\n+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE,null=True,blank=True)\n     ROLE_CHOICES = [\n     ('student', 'Student'),\n     ('others', 'Others'),\n     ('college_admin', 'College Admin'),\n"
                 }
             ],
             "date": 1733383238378,
