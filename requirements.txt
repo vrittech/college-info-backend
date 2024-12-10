@@ -9,7 +9,7 @@ daphne==4.0.0
 psycopg2-binary
 drf-yasg==1.21.7
 google-auth==2.26.1
-requests==2.31.0
+requests==2.32.2
 pandas==2.2.3
 phonenumbers==8.13.43
 django-admin-interface==0.28.5
