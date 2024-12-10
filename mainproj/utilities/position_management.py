@@ -12,7 +12,7 @@ class PositionManagementViewSet(viewsets.ViewSet):
     # Mapping of frontend identifiers to actual model names
     MODEL_MAP = {
         # 'meet-team':('components','MeetTeam'),
-        'faqs':('components','Faqs'),
+        'duration':('duration','Duration'),
         # 'gallery': ('gallery', 'Gallery'),
         # 'gallery-group': ('gallery', 'GalleryGroup'),
         # 'quotation': ('quotationmanagement', 'Quotation'),
