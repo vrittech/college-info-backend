@@ -59,4 +59,32 @@ class collegeViewsets(viewsets.ModelViewSet):
         dp_image_url = request.build_absolute_uri(college.dp_image.url)
 
         return Response({"college_name": college.name, "dp_image_url": dp_image_url}, status=200)
+    
+    
+    @action(detail=True, methods=['get'], name="calculate_completion_percentage", url_path="completion-percentage")
+    def calculate_completion_percentage(self, request, pk=None):
+        try:
+            college_instance = self.get_object()  # Get the College instance by primary key
+        except College.DoesNotExist:
+            return Response({"error": "College not found"}, status=404)
+
+        # Calculate the completion percentage
+        required_fields = [
+            field.name for field in College._meta.get_fields()
+            if isinstance(field, Field) and not field.blank and not field.null
+        ]
+
+        completed_fields_count = 0
+        for field_name in required_fields:
+            value = getattr(college_instance, field_name, None)
+            if value:  # Field is considered filled if it's not None or empty
+                completed_fields_count += 1
+
+        total_required_fields = len(required_fields)
+        if total_required_fields == 0:  # Avoid division by zero
+            completion_percentage = 100
+        else:
+            completion_percentage = (completed_fields_count / total_required_fields) * 100
+
+        return Response({"completion_percentage": round(completion_percentage, 2)})
 
