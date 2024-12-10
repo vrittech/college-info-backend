@@ -43,48 +43,46 @@ class collegeViewsets(viewsets.ModelViewSet):
     # def action_name(self, request, *args, **kwargs):
     #     return super().list(request, *args, **kwargs)
     
-    @action(detail=True, methods=['get'], url_path="college-logo")
+    @action(detail=False, methods=['get'], url_path="college-logo")
     def get_dp_image(self, request, pk=None):
-        try:
-            # Fetch the college by primary key
-            college = self.get_object()
-        except College.DoesNotExist:
-            return Response({"error": "College not found."}, status=404)
+        colleges = College.objects.all()  # Fetch all colleges
+        if not colleges.exists():
+            return Response({"error": "No colleges available."}, status=404)
 
-        # Check if dp_image exists
-        if not college.dp_image:
-            return Response({"message": "No display image available for this college."}, status=404)
+        logos = []
+        for college in colleges:
+            if college.dp_image:
+                dp_image_url = request.build_absolute_uri(college.dp_image.url)
+                logos.append({"college_name": college.name, "dp_image_url": dp_image_url})
 
-        # Construct the absolute URL for the dp_image
-        dp_image_url = request.build_absolute_uri(college.dp_image.url)
+        if not logos:
+            return Response({"message": "No display images available."}, status=404)
 
-        return Response({"college_name": college.name, "dp_image_url": dp_image_url}, status=200)
+        return Response(logos, status=200)
+
     
     
-    @action(detail=True, methods=['get'], name="calculate_completion_percentage", url_path="completion-percentage")
-    def calculate_completion_percentage(self, request, pk=None):
-        try:
-            college_instance = self.get_object()  # Get the College instance by primary key
-        except College.DoesNotExist:
-            return Response({"error": "College not found"}, status=404)
+    @action(detail=False, methods=['get'], name="calculate_completion_percentage", url_path="completion-percentage")
+    def calculate_completion_percentage(self, request, *args, **kwargs):
+        queryset = self.get_queryset()
+        total_colleges = queryset.count()
+        completion_data = []
 
-        # Calculate the completion percentage
-        required_fields = [
-            field.name for field in College._meta.get_fields()
-            if isinstance(field, Field) and not field.blank and not field.null
-        ]
+        for college in queryset:
+            required_fields = [
+                field.name for field in College._meta.get_fields()
+                if isinstance(field, Field) and not field.blank and not field.null
+            ]
 
-        completed_fields_count = 0
-        for field_name in required_fields:
-            value = getattr(college_instance, field_name, None)
-            if value:  # Field is considered filled if it's not None or empty
-                completed_fields_count += 1
+            completed_fields_count = sum(1 for field in required_fields if getattr(college, field, None))
+            total_required_fields = len(required_fields)
+            completion_percentage = (completed_fields_count / total_required_fields * 100) if total_required_fields else 100
 
-        total_required_fields = len(required_fields)
-        if total_required_fields == 0:  # Avoid division by zero
-            completion_percentage = 100
-        else:
-            completion_percentage = (completed_fields_count / total_required_fields) * 100
+            completion_data.append({
+                "college_id": college.id,
+                "college_name": college.name,
+                "completion_percentage": round(completion_percentage, 2),
+            })
 
-        return Response({"completion_percentage": round(completion_percentage, 2)})
+        return Response(completion_data)
 
