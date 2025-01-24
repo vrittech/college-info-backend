@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 1,
+            "activePatchIndex": 3,
             "patches": [
                 {
                     "date": 1726730938264,
@@ -12,6 +12,14 @@
                 {
                     "date": 1726730944182,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n # Register your models here.\n from django.contrib import admin\n \n # Register your models here.\n-from .models import CollegeLevelType\n-admin.site.register(CollegeLevelType)\n\\ No newline at end of file\n+from .models import Level\n+admin.site.register(Level)\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1737698728295,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n # Register your models here.\n from django.contrib import admin\n \n # Register your models here.\n-from .models import Level\n+from .models import Level,S\n admin.site.register(Level)\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1737698736275,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,7 @@\n # Register your models here.\n from django.contrib import admin\n \n # Register your models here.\n-from .models import Level,S\n-admin.site.register(Level)\n\\ No newline at end of file\n+from .models import Level,SubLevel\n+admin.site.register(Level)\n+admin.site.register(SubLevel)\n\\ No newline at end of file\n"
                 }
             ],
             "date": 1726730938264,
