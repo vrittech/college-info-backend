@@ -9,8 +9,8 @@ class collegegalleryViewsets(viewsets.ModelViewSet):
     serializer_class = CollegeGalleryListSerializers
     # permission_classes = [collegemanagementPermission]
     # authentication_classes = [JWTAuthentication]
-    #pagination_class = MyPageNumberPagination
-    queryset = CollegeGallery.objects.all()
+    pagination_class = MyPageNumberPagination
+    queryset = CollegeGallery.objects.all().order_by(-id)
 
     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]
     search_fields = ['id']
@@ -22,7 +22,7 @@ class collegegalleryViewsets(viewsets.ModelViewSet):
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        #return queryset.filter(user_id=self.request.user.id)
+        return queryset
 
     def get_serializer_class(self):
         if self.action in ['create', 'update', 'partial_update']:

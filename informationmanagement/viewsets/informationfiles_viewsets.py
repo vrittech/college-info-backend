@@ -9,7 +9,7 @@ class informationfilesViewsets(viewsets.ModelViewSet):
     serializer_class = InformationFilesListSerializers
     # permission_classes = [informationmanagementPermission]
     # authentication_classes = [JWTAuthentication]
-    #pagination_class = MyPageNumberPagination
+    pagination_class = MyPageNumberPagination
     queryset = InformationFiles.objects.all().order_by('-id')
 
     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]

@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 10,
+            "activePatchIndex": 11,
             "patches": [
                 {
                     "date": 1733481372824,
@@ -48,6 +48,10 @@
                 {
                     "date": 1733730375335,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -37,44 +37,4 @@\n     # @action(detail=False, methods=['get'], name=\"action_name\", url_path=\"url_path\")\n     # def action_name(self, request, *args, **kwargs):\n     #     return super().list(request, *args, **kwargs)\n \n-from rest_framework import viewsets\n-from rest_framework.filters import SearchFilter, OrderingFilter\n-from django_filters.rest_framework import DjangoFilterBackend\n-from ..models import Event\n-from ..serializers.event_serializers import EventListSerializers, EventRetrieveSerializers, EventWriteSerializers\n-from ..utilities.importbase import *\n-from ..utilities.filter import EventFilter\n-\n-class eventViewsets(viewsets.ModelViewSet):\n-    serializer_class = EventListSerializers\n-    # permission_classes = [eventPermission]\n-    # authentication_classes = [JWTAuthentication]\n-    #pagination_class = MyPageNumberPagination\n-    queryset = Event.objects.all().order_by('-id')\n-\n-    filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n-    search_fields = ['id', 'event_name', 'venue', 'category__name', 'organizer__name']  # Fields to search\n-    ordering_fields = ['id', 'event_name', 'start_date', 'end_date', 'is_featured_event']  # Fields to sort\n-    ordering = ['-id']  # Default ordering\n-    filterset_class = EventFilter\n-\n-    # filterset_fields = {\n-    #     'id': ['exact'],\n-    # }\n-\n-    def get_queryset(self):\n-        queryset = super().get_queryset()\n-        return queryset\n-\n-    def get_serializer_class(self):\n-        if self.action in ['create', 'update', 'partial_update']:\n-            return EventWriteSerializers\n-        elif self.action == 'retrieve':\n-            return EventRetrieveSerializers\n-        return super().get_serializer_class()\n-\n-    # @action(detail=False, methods=['get'], name=\"action_name\", url_path=\"url_path\")\n-    # def action_name(self, request, *args, **kwargs):\n-    #     return super().list(request, *args, **kwargs)\n-\n"
+                },
+                {
+                    "date": 1737963508871,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,9 +9,9 @@\n class eventViewsets(viewsets.ModelViewSet):\n     serializer_class = EventListSerializers\n     # permission_classes = [eventPermission]\n     # authentication_classes = [JWTAuthentication]\n-    #pagination_class = MyPageNumberPagination\n+    pagination_class = MyPageNumberPagination\n     queryset = Event.objects.all().order_by('-id')\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     search_fields = ['id', 'event_name', 'venue', 'category__name', 'organizer__name']  # Fields to search\n"
                 }
             ],
             "date": 1733481372824,

@@ -10,7 +10,7 @@ class eventViewsets(viewsets.ModelViewSet):
     serializer_class = EventListSerializers
     # permission_classes = [eventPermission]
     # authentication_classes = [JWTAuthentication]
-    #pagination_class = MyPageNumberPagination
+    pagination_class = MyPageNumberPagination
     queryset = Event.objects.all().order_by('-id')
 
     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]

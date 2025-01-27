@@ -9,7 +9,7 @@ class informationcategoryViewsets(viewsets.ModelViewSet):
     serializer_class = InformationCategoryListSerializers
     # permission_classes = [informationmanagementPermission]
     # authentication_classes = [JWTAuthentication]
-    #pagination_class = MyPageNumberPagination
+    pagination_class = MyPageNumberPagination
     queryset = InformationCategory.objects.all().order_by('-id')
 
     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]

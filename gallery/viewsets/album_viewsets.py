@@ -9,7 +9,7 @@ class albumViewsets(viewsets.ModelViewSet):
     serializer_class = AlbumListSerializers
     # permission_classes = [galleryPermission]
     # authentication_classes = [JWTAuthentication]
-    #pagination_class = MyPageNumberPagination
+    pagination_class = MyPageNumberPagination
     queryset = Album.objects.all().order_by('-id')
 
     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]

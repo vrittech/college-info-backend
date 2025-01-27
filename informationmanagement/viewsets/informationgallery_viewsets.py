@@ -9,7 +9,7 @@ class informationgalleryViewsets(viewsets.ModelViewSet):
     serializer_class = InformationGalleryListSerializers
     # permission_classes = [informationmanagementPermission]
     # authentication_classes = [JWTAuthentication]
-    #pagination_class = MyPageNumberPagination
+    pagination_class = MyPageNumberPagination
     queryset = InformationGallery.objects.all().order_by('-id')
 
     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]

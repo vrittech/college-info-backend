@@ -9,7 +9,7 @@ class superadmindetailsViewsets(viewsets.ModelViewSet):
     serializer_class = SuperAdminDetailsListSerializers
     # permission_classes = [superadmindetailsPermission]
     # authentication_classes = [JWTAuthentication]
-    #pagination_class = MyPageNumberPagination
+    pagination_class = MyPageNumberPagination
     queryset = SuperAdminDetails.objects.all().order_by('-id')
 
     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]

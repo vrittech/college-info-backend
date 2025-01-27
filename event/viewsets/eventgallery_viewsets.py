@@ -9,8 +9,8 @@ class eventgalleryViewsets(viewsets.ModelViewSet):
     serializer_class = EventGalleryListSerializers
     # permission_classes = [eventPermission]
     # authentication_classes = [JWTAuthentication]
-    #pagination_class = MyPageNumberPagination
-    queryset = EventGallery.objects.all()
+    pagination_class = MyPageNumberPagination
+    queryset = EventGallery.objects.all().order_by(-id)
 
     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]
     search_fields = ['id']

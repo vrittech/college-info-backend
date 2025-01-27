@@ -9,7 +9,7 @@ class formstepprogressViewsets(viewsets.ModelViewSet):
     serializer_class = FormStepProgressListSerializers
     # permission_classes = [formprogressPermission]
     # authentication_classes = [JWTAuthentication]
-    #pagination_class = MyPageNumberPagination
+    pagination_class = MyPageNumberPagination
     queryset = FormStepProgress.objects.all().order_by('-id')
 
     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]

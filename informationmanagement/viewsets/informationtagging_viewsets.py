@@ -9,7 +9,7 @@ class informationtaggingViewsets(viewsets.ModelViewSet):
     serializer_class = InformationTaggingListSerializers
     # permission_classes = [informationmanagementPermission]
     # authentication_classes = [JWTAuthentication]
-    #pagination_class = MyPageNumberPagination
+    pagination_class = MyPageNumberPagination
     queryset = InformationTagging.objects.all().order_by('-id')
 
     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]
