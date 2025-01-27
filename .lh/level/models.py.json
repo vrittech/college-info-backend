@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 31,
+            "activePatchIndex": 32,
             "patches": [
                 {
                     "date": 1726653956970,
@@ -132,6 +132,10 @@
                 {
                     "date": 1733642667100,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,5 +24,10 @@\n     description = models.TextField(null=True,blank=True)\n     image = models.ImageField(upload_to='level/',null=True,blank=True)\n     \n     def __str__(self):        \n-        return self.name\n\\ No newline at end of file\n+        return self.name\n+    \n+    class Meta:\n+        permissions = [\n+            ('manage_level', 'Manage Level'),\n+        ]\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1737961748225,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,9 +5,9 @@\n     \n class SubLevel(models.Model):\n     \n     name = models.CharField(max_length=255,null=True,blank=True)\n-    description = models.TextField(null=True,blank=True)\n+    # description = models.TextField(null=True,blank=True)\n     image = models.ImageField(upload_to='level/',null=True,blank=True)\n     \n     def __str__(self):\n         \n"
                 }
             ],
             "date": 1726653956970,
