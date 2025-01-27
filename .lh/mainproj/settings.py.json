@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 35,
+            "activePatchIndex": 43,
             "patches": [
                 {
                     "date": 1727073622967,
@@ -148,6 +148,38 @@
                 {
                     "date": 1733812326179,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -170,9 +170,9 @@\n # https://docs.djangoproject.com/en/4.1/topics/i18n/\n \n LANGUAGE_CODE = 'en-us'\n \n-TIME_ZONE = 'Asia'\n+TIME_ZONE = 'Asia/Kathmandu'\n \n USE_I18N = True\n \n USE_TZ = True\n"
+                },
+                {
+                    "date": 1737957706839,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -93,9 +93,9 @@\n AUTH_USER_MODEL = 'accounts.CustomUser'\n \n CORS_ORIGIN_ALLOW_ALL = True\n CORS_ORIGIN_WHITELIST = [white for white in os.getenv('CORS_ORIGIN_WHITELIST').split(',') if white != '']\n-CSRF_TRUSTED_ORIGINS = [trusted for trusted in os.getenv('CSRF_TRUSTED_ORIGINS').split(',') if trusted != '']\n+# CSRF_TRUSTED_ORIGINS = [trusted for trusted in os.getenv('CSRF_TRUSTED_ORIGINS').split(',') if trusted != '']\n \n MIDDLEWARE = [\n     'corsheaders.middleware.CorsMiddleware',\n     'django.middleware.common.CommonMiddleware',\n"
+                },
+                {
+                    "date": 1737957716063,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -94,8 +94,11 @@\n \n CORS_ORIGIN_ALLOW_ALL = True\n CORS_ORIGIN_WHITELIST = [white for white in os.getenv('CORS_ORIGIN_WHITELIST').split(',') if white != '']\n # CSRF_TRUSTED_ORIGINS = [trusted for trusted in os.getenv('CSRF_TRUSTED_ORIGINS').split(',') if trusted != '']\n+CORS_ORIGIN_ALLOW_ALL = True\n+CORS_ALLOW_CREDENTIALS = True\n+CSRF_TRUSTED_ORIGINS = ['']\n \n MIDDLEWARE = [\n     'corsheaders.middleware.CorsMiddleware',\n     'django.middleware.common.CommonMiddleware',\n"
+                },
+                {
+                    "date": 1737957726731,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -96,9 +96,9 @@\n CORS_ORIGIN_WHITELIST = [white for white in os.getenv('CORS_ORIGIN_WHITELIST').split(',') if white != '']\n # CSRF_TRUSTED_ORIGINS = [trusted for trusted in os.getenv('CSRF_TRUSTED_ORIGINS').split(',') if trusted != '']\n CORS_ORIGIN_ALLOW_ALL = True\n CORS_ALLOW_CREDENTIALS = True\n-CSRF_TRUSTED_ORIGINS = ['']\n+CSRF_TRUSTED_ORIGINS = ['https://collegeinfoapi.vrittechnologies.com', 'http://127.0.0.1:8000', 'http://localhost:8000']\n \n MIDDLEWARE = [\n     'corsheaders.middleware.CorsMiddleware',\n     'django.middleware.common.CommonMiddleware',\n"
+                },
+                {
+                    "date": 1737957739087,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -96,9 +96,9 @@\n CORS_ORIGIN_WHITELIST = [white for white in os.getenv('CORS_ORIGIN_WHITELIST').split(',') if white != '']\n # CSRF_TRUSTED_ORIGINS = [trusted for trusted in os.getenv('CSRF_TRUSTED_ORIGINS').split(',') if trusted != '']\n CORS_ORIGIN_ALLOW_ALL = True\n CORS_ALLOW_CREDENTIALS = True\n-CSRF_TRUSTED_ORIGINS = ['https://collegeinfoapi.vrittechnologies.com', 'http://127.0.0.1:8000', 'http://localhost:8000']\n+CSRF_TRUSTED_ORIGINS = ['https://collegeinfoapi.vrittechnologies.com', 'http://127.0.0.1:8000', 'http://localhost:8000',htt]\n \n MIDDLEWARE = [\n     'corsheaders.middleware.CorsMiddleware',\n     'django.middleware.common.CommonMiddleware',\n"
+                },
+                {
+                    "date": 1737957747161,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -96,9 +96,9 @@\n CORS_ORIGIN_WHITELIST = [white for white in os.getenv('CORS_ORIGIN_WHITELIST').split(',') if white != '']\n # CSRF_TRUSTED_ORIGINS = [trusted for trusted in os.getenv('CSRF_TRUSTED_ORIGINS').split(',') if trusted != '']\n CORS_ORIGIN_ALLOW_ALL = True\n CORS_ALLOW_CREDENTIALS = True\n-CSRF_TRUSTED_ORIGINS = ['https://collegeinfoapi.vrittechnologies.com', 'http://127.0.0.1:8000', 'http://localhost:8000',htt]\n+CSRF_TRUSTED_ORIGINS = ['https://collegeinfoapi.vrittechnologies.com', 'http://127.0.0.1:8000', 'http://localhost:8000','http://142]\n \n MIDDLEWARE = [\n     'corsheaders.middleware.CorsMiddleware',\n     'django.middleware.common.CommonMiddleware',\n"
+                },
+                {
+                    "date": 1737957759817,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -96,9 +96,9 @@\n CORS_ORIGIN_WHITELIST = [white for white in os.getenv('CORS_ORIGIN_WHITELIST').split(',') if white != '']\n # CSRF_TRUSTED_ORIGINS = [trusted for trusted in os.getenv('CSRF_TRUSTED_ORIGINS').split(',') if trusted != '']\n CORS_ORIGIN_ALLOW_ALL = True\n CORS_ALLOW_CREDENTIALS = True\n-CSRF_TRUSTED_ORIGINS = ['https://collegeinfoapi.vrittechnologies.com', 'http://127.0.0.1:8000', 'http://localhost:8000','http://142]\n+CSRF_TRUSTED_ORIGINS = ['https://collegeinfoapi.vrittechnologies.com', 'http://127.0.0.1:8000', 'http://localhost:8000',http://142.171.168.136]\n \n MIDDLEWARE = [\n     'corsheaders.middleware.CorsMiddleware',\n     'django.middleware.common.CommonMiddleware',\n"
+                },
+                {
+                    "date": 1737957765461,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -96,9 +96,9 @@\n CORS_ORIGIN_WHITELIST = [white for white in os.getenv('CORS_ORIGIN_WHITELIST').split(',') if white != '']\n # CSRF_TRUSTED_ORIGINS = [trusted for trusted in os.getenv('CSRF_TRUSTED_ORIGINS').split(',') if trusted != '']\n CORS_ORIGIN_ALLOW_ALL = True\n CORS_ALLOW_CREDENTIALS = True\n-CSRF_TRUSTED_ORIGINS = ['https://collegeinfoapi.vrittechnologies.com', 'http://127.0.0.1:8000', 'http://localhost:8000',http://142.171.168.136]\n+CSRF_TRUSTED_ORIGINS = ['https://collegeinfoapi.vrittechnologies.com', 'http://127.0.0.1:8000', 'http://localhost:8000','http://142.171.168.136']\n \n MIDDLEWARE = [\n     'corsheaders.middleware.CorsMiddleware',\n     'django.middleware.common.CommonMiddleware',\n"
+                },
+                {
+                    "date": 1737957775689,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -94,9 +94,9 @@\n \n CORS_ORIGIN_ALLOW_ALL = True\n CORS_ORIGIN_WHITELIST = [white for white in os.getenv('CORS_ORIGIN_WHITELIST').split(',') if white != '']\n # CSRF_TRUSTED_ORIGINS = [trusted for trusted in os.getenv('CSRF_TRUSTED_ORIGINS').split(',') if trusted != '']\n-CORS_ORIGIN_ALLOW_ALL = True\n+\n CORS_ALLOW_CREDENTIALS = True\n CSRF_TRUSTED_ORIGINS = ['https://collegeinfoapi.vrittechnologies.com', 'http://127.0.0.1:8000', 'http://localhost:8000','http://142.171.168.136']\n \n MIDDLEWARE = [\n"
                 }
             ],
             "date": 1727073622967,
