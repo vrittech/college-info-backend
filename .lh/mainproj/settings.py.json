@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 46,
+            "activePatchIndex": 47,
             "patches": [
                 {
                     "date": 1727073622967,
@@ -192,6 +192,10 @@
                 {
                     "date": 1737958054433,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -203,13 +203,9 @@\n \n DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'\n \n \n-CORS_ORIGIN_ALLOW_ALL = True #if True then allow only for whitelist ip.(frontend request)\n-CORS_ORIGIN_WHITELIST = [white for white in os.getenv('CORS_ORIGIN_WHITELIST').split(',') if white != '']\n-# CSRF_TRUSTED_ORIGINS = [trusted for trusted in os.getenv('CSRF_TRUSTED_ORIGINS').split(',') if trusted != '']\n \n-\n from datetime import timedelta\n \n # SIMPLE_JWT = {\n #     \"ACCESS_TOKEN_LIFETIME\": timedelta(days=7),\n"
+                },
+                {
+                    "date": 1737960551379,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -255,4 +255,5 @@\n ]\n \n SMS_KEY_PASSWORD = ''\n \n+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')\n"
                 }
             ],
             "date": 1727073622967,
