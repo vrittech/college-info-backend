@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 43,
+            "activePatchIndex": 44,
             "patches": [
                 {
                     "date": 1727073622967,
@@ -180,6 +180,10 @@
                 {
                     "date": 1737957775689,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -94,9 +94,9 @@\n \n CORS_ORIGIN_ALLOW_ALL = True\n CORS_ORIGIN_WHITELIST = [white for white in os.getenv('CORS_ORIGIN_WHITELIST').split(',') if white != '']\n # CSRF_TRUSTED_ORIGINS = [trusted for trusted in os.getenv('CSRF_TRUSTED_ORIGINS').split(',') if trusted != '']\n-CORS_ORIGIN_ALLOW_ALL = True\n+\n CORS_ALLOW_CREDENTIALS = True\n CSRF_TRUSTED_ORIGINS = ['https://collegeinfoapi.vrittechnologies.com', 'http://127.0.0.1:8000', 'http://localhost:8000','http://142.171.168.136']\n \n MIDDLEWARE = [\n"
+                },
+                {
+                    "date": 1737957908733,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -96,9 +96,9 @@\n CORS_ORIGIN_WHITELIST = [white for white in os.getenv('CORS_ORIGIN_WHITELIST').split(',') if white != '']\n # CSRF_TRUSTED_ORIGINS = [trusted for trusted in os.getenv('CSRF_TRUSTED_ORIGINS').split(',') if trusted != '']\n \n CORS_ALLOW_CREDENTIALS = True\n-CSRF_TRUSTED_ORIGINS = ['https://collegeinfoapi.vrittechnologies.com', 'http://127.0.0.1:8000', 'http://localhost:8000','http://142.171.168.136']\n+CSRF_TRUSTED_ORIGINS = ['https://collegeinfoapi.vrittechnologies.com']\n \n MIDDLEWARE = [\n     'corsheaders.middleware.CorsMiddleware',\n     'django.middleware.common.CommonMiddleware',\n"
                 }
             ],
             "date": 1727073622967,
