@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 1,
+            "activePatchIndex": 2,
             "patches": [
                 {
                     "date": 1737957070194,
@@ -12,6 +12,10 @@
                 {
                     "date": 1737961306109,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,10 +3,10 @@\n #SECRET_KEY\n SECRET_KEY='django-insecure-z^#)006uptp234kjj8092hpxe23#i^r(iz9ak8gc-4q_8-(z^2kja@t8e(dnz$2@prashanttab'\n \n ALLOWED_HOSTS = \"127.0.0.1,localhost,0.0.0.0,192.168.1.10,*,\"\n-CORS_ORIGIN_WHITELIST = \"http://localhost:4200,http://192.168.1.122:5173,http://192.168.1.122,http://localhost:3000,\"#frontend ip\n-CSRF_TRUSTED_ORIGINS = \"http://127.0.0.1,http://192.168.1.10,http://192.168.1.103,https://collegeinfoapi.vrittechnologies.com\"#backend ip\n+CORS_ORIGIN_WHITELIST = \"http://localhost:4200,http://192.168.1.122:5173,http://192.168.1.122,http://localhost:3000,https://collegeinfoapi.vrittechnologies.com,\"#frontend ip\n+CSRF_TRUSTED_ORIGINS = \"http://127.0.0.1,http://192.168.1.10,http://192.168.1.103,https://collegeinfoapi.vrittechnologies.com,\"#backend ip\n \n #Database\n DATABASE_ENGINE=django.db.backends.postgresql\n DATABASES_NAME=collegeinfo\n@@ -14,8 +14,11 @@\n DATABASE_PASSWORD=md\n DATABASE_HOST=localhost\n DATABASE_PORT=5432\n \n+ENVIRONMENT=development\n+API_URL=http://localhost:8000\n \n \n \n \n+\n"
+                },
+                {
+                    "date": 1737962230066,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,10 +14,10 @@\n DATABASE_PASSWORD=md\n DATABASE_HOST=localhost\n DATABASE_PORT=5432\n \n-ENVIRONMENT=development\n-API_URL=http://localhost:8000\n+# ENVIRONMENT=development\n+# API_URL=http://localhost:8000\n \n \n \n \n"
                 }
             ],
             "date": 1737957070194,
