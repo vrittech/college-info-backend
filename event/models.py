@@ -101,7 +101,7 @@ class Event(SEOFields):
 class EventGallery(models.Model):
     event = models.ForeignKey
     is_featured_image = models.BooleanField(default=False)
-    image = models.ImageField(upload_to='event_images/')
+    image = models.ImageField(upload_to='event_images/',null=True,blank=True)
     
     created_date_time = models.DateTimeField(auto_now_add=True, null=True, blank=True)
     created_date = models.DateField(auto_now_add=True, null=True, blank=True)

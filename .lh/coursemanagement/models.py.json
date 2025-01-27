@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 89,
+            "activePatchIndex": 92,
             "patches": [
                 {
                     "date": 1727071578528,
@@ -364,6 +364,18 @@
                 {
                     "date": 1733642102530,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,8 +27,8 @@\n     def __str__(self):\n         return self.name\n     \n     class Meta:\n-        \n+        permissions = [\n \n     \n  \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1737953019987,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,9 +17,9 @@\n     course_shortdescription = models.TextField(default = \"\")\n     course_outcome = models.TextField(default = \"\")\n     course_curriculum = models.TextField(default = \"\")\n     eligibility_criteria = models.TextField(default = \"\")\n-    image = models.ImageField(upload_to='courses/images/')\n+    image = models.ImageField(upload_to='courses/images/',null=)\n     curriculum_file_upload = models.FileField(upload_to='courses/pdf/')\n     \n     created_date = models.DateField(auto_now_add=True)\n     updated_date = models.DateTimeField(auto_now=True)\n@@ -28,7 +28,9 @@\n         return self.name\n     \n     class Meta:\n         permissions = [\n+            ('manage_course', 'Manage course'),\n+        ]\n \n     \n  \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1737953066224,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,10 +17,10 @@\n     course_shortdescription = models.TextField(default = \"\")\n     course_outcome = models.TextField(default = \"\")\n     course_curriculum = models.TextField(default = \"\")\n     eligibility_criteria = models.TextField(default = \"\")\n-    image = models.ImageField(upload_to='courses/images/',null=)\n-    curriculum_file_upload = models.FileField(upload_to='courses/pdf/')\n+    image = models.ImageField(upload_to='courses/images/',null=True,blank=True)\n+    curriculum_file_upload = models.FileField(upload_to='courses/pdf/'null=True,blank=True)\n     \n     created_date = models.DateField(auto_now_add=True)\n     updated_date = models.DateTimeField(auto_now=True)\n \n"
+                },
+                {
+                    "date": 1737953078518,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,10 +18,9 @@\n     course_outcome = models.TextField(default = \"\")\n     course_curriculum = models.TextField(default = \"\")\n     eligibility_criteria = models.TextField(default = \"\")\n     image = models.ImageField(upload_to='courses/images/',null=True,blank=True)\n-    curriculum_file_upload = models.FileField(upload_to='courses/pdf/'null=True,blank=True)\n-    \n+    curriculum_file_upload = models.FileField(upload_to='courses/pdf/',null=True,blank=True)\n     created_date = models.DateField(auto_now_add=True)\n     updated_date = models.DateTimeField(auto_now=True)\n \n     def __str__(self):\n"
                 }
             ],
             "date": 1727071578528,

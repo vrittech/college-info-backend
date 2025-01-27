@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 30,
+            "activePatchIndex": 32,
             "patches": [
                 {
                     "date": 1726649624074,
@@ -128,6 +128,14 @@
                 {
                     "date": 1733642516573,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,6 +27,9 @@\n     def __str__(self):\n         \n         return self.created_date\n     \n-    \n+    class Meta:\n+        permissions = [\n+            ('manage_gallery', 'Manage Gallery'),\n+        ]\n \n"
+                },
+                {
+                    "date": 1737953238841,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,9 @@\n \n # Create your models here.\n class Album(models.Model):\n     name = models.CharField(max_length = 500 , null = True,blank = True)\n-    featured_image = models.ImageField(max_length = 500,upload_to = 'gallery/feature_images')\n+    featured_image = models.ImageField(max_length = 500,upload_to = 'gallery/feature_images',null)\n     created_date = models.DateField(auto_now_add=True, null = True,blank = True)\n     updated_date = models.DateTimeField(auto_now=True, null = True,blank = True)\n     \n     def __str__(self):\n"
+                },
+                {
+                    "date": 1737953298747,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,9 @@\n \n # Create your models here.\n class Album(models.Model):\n     name = models.CharField(max_length = 500 , null = True,blank = True)\n-    featured_image = models.ImageField(max_length = 500,upload_to = 'gallery/feature_images',null)\n+    featured_image = models.ImageField(max_length = 500,upload_to = 'gallery/feature_images',null=True,blank=True)\n     created_date = models.DateField(auto_now_add=True, null = True,blank = True)\n     updated_date = models.DateTimeField(auto_now=True, null = True,blank = True)\n     \n     def __str__(self):\n@@ -15,9 +15,9 @@\n             ('manage_album', 'Manage Album'),\n         ]\n \n class Gallery(models.Model):\n-    image = models.ImageField(max_length = 500,upload_to = 'gallery/images')\n+    image = models.ImageField(max_length = 500,upload_to = 'gallery/images',null)\n     album = models.ManyToManyField(Album,related_name =\"gallery\")\n     is_cover = models.BooleanField(default = False)\n     \n     created_date = models.DateField(auto_now_add=True, null = True,blank = True)\n"
                 }
             ],
             "date": 1726649624074,

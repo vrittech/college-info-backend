@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 191,
+            "activePatchIndex": 193,
             "patches": [
                 {
                     "date": 1727170911785,
@@ -772,6 +772,14 @@
                 {
                     "date": 1733643672771,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -28,20 +28,20 @@\n         permissions = [\n             ('manage_college_gallery', 'Manage college gallery'),\n         ]\n     \n-class Placement(models.Model):\n-    description = models.TextField(blank=True)\n-    created_date = models.DateField(auto_now_add=True)\n-    updated_date = models.DateField(auto_now=True)\n+# class Placement(models.Model):\n+#     description = models.TextField(blank=True)\n+#     created_date = models.DateField(auto_now_add=True)\n+#     updated_date = models.DateField(auto_now=True)\n \n-    def __str__(self):\n-        return f'Placement {self.id}'\n+#     def __str__(self):\n+#         return f'Placement {self.id}'\n     \n-    class Meta:\n-        permissions = [\n-            ('manage_placement', 'Manage placement'),\n-        ]\n+#     class Meta:\n+#         permissions = [\n+#             ('manage_placement', 'Manage placement'),\n+#         ]\n \n \n     \n class College(SEOFields):\n@@ -97,5 +97,8 @@\n \n     def __str__(self):\n         return f'Placement {self.id}'\n     \n-    \n\\ No newline at end of file\n+    class Meta:\n+        permissions = [\n+            ('manage_faq', 'Manage faq'),\n+        ]\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1737953091401,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,9 +16,9 @@\n \n  \n # CollegeGallery Model\n class CollegeGallery(models.Model):\n-    image = models.ImageField(upload_to='college/gallery/')\n+    image = models.ImageField(upload_to='college/gallery/',null=)\n     description = models.TextField(blank=True)\n     created_date = models.DateField(auto_now_add=True)\n     updated_date = models.DateField(auto_now=True)\n \n"
+                },
+                {
+                    "date": 1737953099222,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,9 +16,9 @@\n \n  \n # CollegeGallery Model\n class CollegeGallery(models.Model):\n-    image = models.ImageField(upload_to='college/gallery/',null=)\n+    image = models.ImageField(upload_to='college/gallery/',null=True,blank=True)\n     description = models.TextField(blank=True)\n     created_date = models.DateField(auto_now_add=True)\n     updated_date = models.DateField(auto_now=True)\n \n@@ -45,9 +45,9 @@\n \n     \n class College(SEOFields):\n     banner_image = models.ImageField(upload_to='college/banner/')\n-    dp_image = models.ImageField(upload_to='college/dp/')\n+    dp_image = models.ImageField(upload_to='college/dp/',nu)\n     name = models.CharField(max_length=255)\n     established_date = models.DateField(null= True,blank=True)\n     website_link = models.URLField(null= True,blank=True)\n     address = models.CharField(max_length=255)\n"
                 }
             ],
             "date": 1727170911784,

@@ -3,7 +3,7 @@ from django.db import models
 # Create your models here.
 class Album(models.Model):
     name = models.CharField(max_length = 500 , null = True,blank = True)
-    featured_image = models.ImageField(max_length = 500,upload_to = 'gallery/feature_images')
+    featured_image = models.ImageField(max_length = 500,upload_to = 'gallery/feature_images',null=True,blank=True)
     created_date = models.DateField(auto_now_add=True, null = True,blank = True)
     updated_date = models.DateTimeField(auto_now=True, null = True,blank = True)
     
@@ -16,7 +16,7 @@ class Album(models.Model):
         ]
 
 class Gallery(models.Model):
-    image = models.ImageField(max_length = 500,upload_to = 'gallery/images')
+    image = models.ImageField(max_length = 500,upload_to = 'gallery/images',null=True,blank=True)
     album = models.ManyToManyField(Album,related_name ="gallery")
     is_cover = models.BooleanField(default = False)
     

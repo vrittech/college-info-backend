@@ -17,7 +17,7 @@ from mainproj.utilities.seo import SEOFields
  
 # CollegeGallery Model
 class CollegeGallery(models.Model):
-    image = models.ImageField(upload_to='college/gallery/')
+    image = models.ImageField(upload_to='college/gallery/',null=True,blank=True)
     description = models.TextField(blank=True)
     created_date = models.DateField(auto_now_add=True)
     updated_date = models.DateField(auto_now=True)
@@ -46,7 +46,7 @@ class CollegeGallery(models.Model):
     
 class College(SEOFields):
     banner_image = models.ImageField(upload_to='college/banner/')
-    dp_image = models.ImageField(upload_to='college/dp/')
+    dp_image = models.ImageField(upload_to='college/dp/',null=True,blank=True)
     name = models.CharField(max_length=255)
     established_date = models.DateField(null= True,blank=True)
     website_link = models.URLField(null= True,blank=True)
