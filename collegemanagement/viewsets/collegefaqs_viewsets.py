@@ -10,7 +10,7 @@ class collegefaqsViewsets(viewsets.ModelViewSet):
     # permission_classes = [collegemanagementPermission]
     # authentication_classes = [JWTAuthentication]
     pagination_class = MyPageNumberPagination
-    queryset = CollegeFaqs.objects.all()
+    queryset = CollegeFaqs.objects.all().order_by('-id')
 
     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]
     search_fields = ['id']
