@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 2,
+            "activePatchIndex": 3,
             "patches": [
                 {
                     "date": 1733729892743,
@@ -16,6 +16,10 @@
                 {
                     "date": 1737963522014,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,9 +9,9 @@\n     serializer_class = EventGalleryListSerializers\n     # permission_classes = [eventPermission]\n     # authentication_classes = [JWTAuthentication]\n     pagination_class = MyPageNumberPagination\n-    queryset = EventGallery.objects.all()\n+    queryset = EventGallery.objects.all().order_by(-id)\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     search_fields = ['id']\n     ordering_fields = ['id']\n"
+                },
+                {
+                    "date": 1737963787118,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,9 +9,9 @@\n     serializer_class = EventGalleryListSerializers\n     # permission_classes = [eventPermission]\n     # authentication_classes = [JWTAuthentication]\n     pagination_class = MyPageNumberPagination\n-    queryset = EventGallery.objects.all().order_by(-id)\n+    queryset = EventGallery.objects.all().order_by(/-id)\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     search_fields = ['id']\n     ordering_fields = ['id']\n"
                 }
             ],
             "date": 1733729892743,

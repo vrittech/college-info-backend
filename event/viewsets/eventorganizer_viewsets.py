@@ -10,7 +10,7 @@ class eventorganizerViewsets(viewsets.ModelViewSet):
     # permission_classes = [eventPermission]
     # authentication_classes = [JWTAuthentication]
     pagination_class = MyPageNumberPagination
-    queryset = EventOrganizer.objects.all().order_by(-id)
+    queryset = EventOrganizer.objects.all().order_by('-id')
 
     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]
     search_fields = ['id']
