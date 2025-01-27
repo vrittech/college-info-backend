@@ -1,0 +1,18 @@
+{
+    "sourceFile": "coursemanagement/utilities/pagination.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1737962831114,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1737962831114,
+            "name": "Commit-0",
+            "content": "from rest_framework.pagination import PageNumberPagination\n\nclass MyPageNumberPagination(PageNumberPagination):\n    page_size = 10\n    page_query_param = 'page'\n    page_size_query_param = 'size'\n    max_page_size = 5000"
+        }
+    ]
+}
