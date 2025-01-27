@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 33,
+            "activePatchIndex": 34,
             "patches": [
                 {
                     "date": 1733481275577,
@@ -140,6 +140,10 @@
                 {
                     "date": 1737955357209,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,9 +22,9 @@\n         'id': ['exact'],\n         'name': ['exact'],\n         'abbreviation': ['exact'],\n         'duration': ['exact'],\n-        'faculties': ['exact'],\n+        'facul': ['exact'],\n         'level': ['exact'],\n         'description': ['exact'],\n         'course_shortdescription': ['exact'],\n         'course_outcome': ['exact'],\n"
+                },
+                {
+                    "date": 1737961844224,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,9 @@\n class courseViewsets(viewsets.ModelViewSet):\n     serializer_class = CourseListSerializers\n     # permission_classes = [coursemanagementPermission]\n     # authentication_classes = [JWTAuthentication]\n-    #pagination_class = MyPageNumberPagination\n+    pagination_class = MyPageNumberPagination\n     queryset = Course.objects.all().order_by('-id')\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     search_fields = ['id','name', 'abbreviation', 'description', 'course_shortdescription', 'course_outcome', 'course_curriculum', 'eligibility_criteria', 'created_date', 'updated_date' ]\n@@ -22,9 +22,9 @@\n         'id': ['exact'],\n         'name': ['exact'],\n         'abbreviation': ['exact'],\n         'duration': ['exact'],\n-        'facul': ['exact'],\n+        'faculty': ['exact'],\n         'level': ['exact'],\n         'description': ['exact'],\n         'course_shortdescription': ['exact'],\n         'course_outcome': ['exact'],\n"
                 }
             ],
             "date": 1733481275577,
