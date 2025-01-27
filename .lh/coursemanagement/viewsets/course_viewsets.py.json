@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 32,
+            "activePatchIndex": 33,
             "patches": [
                 {
                     "date": 1733481275577,
@@ -136,6 +136,10 @@
                 {
                     "date": 1733730261642,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,9 +23,9 @@\n         'name': ['exact'],\n         'abbreviation': ['exact'],\n         'duration': ['exact'],\n         'faculties': ['exact'],\n-        # 'level': ['exact'],\n+        'level': ['exact'],\n         'description': ['exact'],\n         'course_shortdescription': ['exact'],\n         'course_outcome': ['exact'],\n         'eligibility_criteria': ['exact'],\n"
+                },
+                {
+                    "date": 1737955357209,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,9 +22,9 @@\n         'id': ['exact'],\n         'name': ['exact'],\n         'abbreviation': ['exact'],\n         'duration': ['exact'],\n-        'faculties': ['exact'],\n+        'facul': ['exact'],\n         'level': ['exact'],\n         'description': ['exact'],\n         'course_shortdescription': ['exact'],\n         'course_outcome': ['exact'],\n"
                 }
             ],
             "date": 1733481275577,

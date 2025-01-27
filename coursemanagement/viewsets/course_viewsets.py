@@ -23,7 +23,7 @@ class courseViewsets(viewsets.ModelViewSet):
         'name': ['exact'],
         'abbreviation': ['exact'],
         'duration': ['exact'],
-        'faculties': ['exact'],
+        'faculty': ['exact'],
         'level': ['exact'],
         'description': ['exact'],
         'course_shortdescription': ['exact'],

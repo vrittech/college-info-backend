@@ -10,7 +10,7 @@ class Course(SEOFields):
     name = models.CharField(max_length=255)
     abbreviation = models.CharField(max_length=255)
     duration = models.ForeignKey(Duration,on_delete=models.CASCADE,related_name='course_duration')
-    faculties = models.ForeignKey(Faculty, on_delete=models.CASCADE, related_name='course_faculties')
+    faculty = models.ForeignKey(Faculty, on_delete=models.CASCADE, related_name='course_faculties')
     level = models.ForeignKey(Level, on_delete=models.CASCADE, related_name='course_level')
     discipline = models.ManyToManyField(Discipline, related_name='course_discipline')
     description = models.TextField(default = "")
