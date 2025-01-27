@@ -96,27 +96,45 @@ router.registry.extend(inquiry_router.registry)
 router.registry.extend(superadmindetails_router.registry)
 
 from mainproj.utilities.import_excel import ImportExcel
+import os
+
+# Get the environment-based API URL
+ENVIRONMENT = os.getenv('ENVIRONMENT', 'development')
+API_URL = os.getenv('API_URL', 'http://localhost:8000')
 
 schema_view = get_schema_view(
-   openapi.Info(
-      title="College Info API",
-      default_version='v1',
-      description="College Info Backend System",
-      terms_of_service="https://www.google.com/policies/terms/",
-      contact=openapi.Contact(email="prashantkarna21@gmail.com"),
-      license=openapi.License(name="No License"),
-      **{'x-logo': {'url': 'your-logo-url'}},
-   ),
-   public=True,
-   permission_classes=[permissions.AllowAny],
+    openapi.Info(
+        title="College Info API",
+        default_version='v1',
+        description="College Info Backend System",
+        terms_of_service="https://www.google.com/policies/terms/",
+        contact=openapi.Contact(email="prashantkarna21@gmail.com"),
+        license=openapi.License(name="No License"),
+        **{'x-logo': {'url': 'your-logo-url'}},
+    ),
+    public=True,
+    permission_classes=[permissions.AllowAny],
+    url=API_URL,  # Dynamically set the base URL
 )
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
     path('api/',include('accountsmanagement.urls')),
+    # path('', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+    # path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
+    
+     # Swagger UI (default)
     path('', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+
+    # ReDoc UI
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
+
+    # JSON/YAML Schema Endpoints
+    re_path(r'^swagger(?P<format>\.json|\.yaml)$', 
+            schema_view.without_ui(cache_timeout=0), 
+            name='schema-json'),
+    
     path('api-auth/', include('rest_framework.urls')),
     path('api/accounts/',include('accounts.urls')),
      path('api/import-excel/<str:type>/',ImportExcel.as_view(),name="import_excel"),

@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 47,
+            "activePatchIndex": 51,
             "patches": [
                 {
                     "date": 1727073622967,
@@ -196,6 +196,22 @@
                 {
                     "date": 1737960551379,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -255,4 +255,5 @@\n ]\n \n SMS_KEY_PASSWORD = ''\n \n+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')\n"
+                },
+                {
+                    "date": 1737961193485,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -256,4 +256,5 @@\n \n SMS_KEY_PASSWORD = ''\n \n SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')\n+SECURE_SSL_REDIRECT = True\n"
+                },
+                {
+                    "date": 1737961199389,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -255,6 +255,6 @@\n ]\n \n SMS_KEY_PASSWORD = ''\n \n-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')\n-SECURE_SSL_REDIRECT = True\n+# SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')\n+# SECURE_SSL_REDIRECT = True\n"
+                },
+                {
+                    "date": 1737961345283,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -257,4 +257,8 @@\n SMS_KEY_PASSWORD = ''\n \n # SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')\n # SECURE_SSL_REDIRECT = True\n+from decouple import config\n+\n+ENVIRONMENT = config('ENVIRONMENT', default='development')\n+API_URL = config('API_URL', default='http://localhost:8000')\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1737961429631,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -259,6 +259,40 @@\n # SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')\n # SECURE_SSL_REDIRECT = True\n from decouple import config\n \n-ENVIRONMENT = config('ENVIRONMENT', default='development')\n-API_URL = config('API_URL', default='http://localhost:8000')\n\\ No newline at end of file\n+import os\n+\n+# Load environment variables\n+ENVIRONMENT = os.getenv('ENVIRONMENT', 'development')  # Default to development if not set\n+API_URL = os.getenv('API_URL', 'http://localhost:8000')  # Default to localhost in development\n+\n+# Swagger settings based on environment\n+if ENVIRONMENT == 'production':\n+    SWAGGER_SETTINGS = {\n+        'USE_SESSION_AUTH': False,\n+        'SECURITY_DEFINITIONS': {\n+            'Bearer': {\n+                'type': 'apiKey',\n+                'name': 'Authorization',\n+                'in': 'header'\n+            }\n+        },\n+        'SCHEMES': ['https'],  # Enforce HTTPS in production\n+    }\n+    # Secure production settings\n+    SECURE_SSL_REDIRECT = True  # Redirect HTTP to HTTPS\n+    CSRF_COOKIE_SECURE = True  # Ensure CSRF cookies are sent only over HTTPS\n+    SESSION_COOKIE_SECURE = True  # Ensure session cookies are sent only over HTTPS\n+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')  # Trust HTTPS from proxy\n+else:\n+    SWAGGER_SETTINGS = {\n+        'USE_SESSION_AUTH': False,\n+        'SECURITY_DEFINITIONS': {\n+            'Bearer': {\n+                'type': 'apiKey',\n+                'name': 'Authorization',\n+                'in': 'header'\n+            }\n+        },\n+        'SCHEMES': ['http'],  # Use HTTP in development\n+    }\n"
                 }
             ],
             "date": 1727073622967,

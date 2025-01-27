@@ -256,4 +256,43 @@ INTERNAL_IPS = [
 
 SMS_KEY_PASSWORD = ''
 
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+# SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+# SECURE_SSL_REDIRECT = True
+from decouple import config
+
+import os
+
+# Load environment variables
+ENVIRONMENT = os.getenv('ENVIRONMENT', 'development')  # Default to development if not set
+API_URL = os.getenv('API_URL', 'http://localhost:8000')  # Default to localhost in development
+
+# Swagger settings based on environment
+if ENVIRONMENT == 'production':
+    SWAGGER_SETTINGS = {
+        'USE_SESSION_AUTH': False,
+        'SECURITY_DEFINITIONS': {
+            'Bearer': {
+                'type': 'apiKey',
+                'name': 'Authorization',
+                'in': 'header'
+            }
+        },
+        'SCHEMES': ['https'],  # Enforce HTTPS in production
+    }
+    # Secure production settings
+    SECURE_SSL_REDIRECT = True  # Redirect HTTP to HTTPS
+    CSRF_COOKIE_SECURE = True  # Ensure CSRF cookies are sent only over HTTPS
+    SESSION_COOKIE_SECURE = True  # Ensure session cookies are sent only over HTTPS
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')  # Trust HTTPS from proxy
+else:
+    SWAGGER_SETTINGS = {
+        'USE_SESSION_AUTH': False,
+        'SECURITY_DEFINITIONS': {
+            'Bearer': {
+                'type': 'apiKey',
+                'name': 'Authorization',
+                'in': 'header'
+            }
+        },
+        'SCHEMES': ['http'],  # Use HTTP in development
+    }
