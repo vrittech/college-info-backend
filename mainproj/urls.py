@@ -96,6 +96,7 @@ router.registry.extend(inquiry_router.registry)
 router.registry.extend(superadmindetails_router.registry)
 
 from mainproj.utilities.import_excel import ImportExcel
+from mainproj.utilities.bulk_delete import BulkDelete
 
 schema_view = get_schema_view(
    openapi.Info(
@@ -119,7 +120,8 @@ urlpatterns = [
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
     path('api-auth/', include('rest_framework.urls')),
     path('api/accounts/',include('accounts.urls')),
-     path('api/import-excel/<str:type>/',ImportExcel.as_view(),name="import_excel"),
+    path('api/import-excel/<str:type>/',ImportExcel.as_view(),name="import_excel"),
+    path('api/bulk-delete/<str:delete_type>/',BulkDelete.as_view(),name="bulk_delete"),
     # path('api/',include(requestsubmission_router.urls)),
     # path('api/',include(coursemanagement_router.urls)),
     # path('api/',include(socialmedia_router.urls)),
