@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 53,
+            "activePatchIndex": 54,
             "patches": [
                 {
                     "date": 1727073622967,
@@ -220,6 +220,10 @@
                 {
                     "date": 1737962255331,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -256,8 +256,5 @@\n \n SMS_KEY_PASSWORD = ''\n \n # SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')\n-# SECURE_SSL_REDIRECT = True\n-from decouple import config\n-\n-import os\n+# SECURE_SSL_REDIRECT = True\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1738045185883,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -255,6 +255,6 @@\n ]\n \n SMS_KEY_PASSWORD = ''\n \n-# SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')\n-# SECURE_SSL_REDIRECT = True\n\\ No newline at end of file\n+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')\n+SECURE_SSL_REDIRECT = True\n\\ No newline at end of file\n"
                 }
             ],
             "date": 1727073622967,
