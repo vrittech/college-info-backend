@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 54,
+            "activePatchIndex": 55,
             "patches": [
                 {
                     "date": 1727073622967,
@@ -224,6 +224,10 @@
                 {
                     "date": 1738045185883,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -255,6 +255,6 @@\n ]\n \n SMS_KEY_PASSWORD = ''\n \n-# SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')\n-# SECURE_SSL_REDIRECT = True\n\\ No newline at end of file\n+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')\n+SECURE_SSL_REDIRECT = True\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1738045464351,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -255,6 +255,6 @@\n ]\n \n SMS_KEY_PASSWORD = ''\n \n-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')\n-SECURE_SSL_REDIRECT = True\n\\ No newline at end of file\n+# SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')\n+# SECURE_SSL_REDIRECT = True\n\\ No newline at end of file\n"
                 }
             ],
             "date": 1727073622967,
