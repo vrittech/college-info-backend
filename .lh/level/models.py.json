@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 32,
+            "activePatchIndex": 34,
             "patches": [
                 {
                     "date": 1726653956970,
@@ -136,6 +136,14 @@
                 {
                     "date": 1737961748225,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,9 +5,9 @@\n     \n class SubLevel(models.Model):\n     \n     name = models.CharField(max_length=255,null=True,blank=True)\n-    description = models.TextField(null=True,blank=True)\n+    # description = models.TextField(null=True,blank=True)\n     image = models.ImageField(upload_to='level/',null=True,blank=True)\n     \n     def __str__(self):\n         \n"
+                },
+                {
+                    "date": 1738044712321,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,9 +18,9 @@\n             ('manage_sublevel', 'Manage SubLevel'),\n         ]\n     \n class Level(models.Model):\n-    sublevel = models.ManyToManyField(SubLevel,related_name='sublevel_level')\n+    sublevel = models.ManyToManyField(SubLevel,related_name='sublevel_level',nu)\n     name = models.CharField(max_length=255,null=True,blank=True)\n     description = models.TextField(null=True,blank=True)\n     image = models.ImageField(upload_to='level/',null=True,blank=True)\n     \n"
+                },
+                {
+                    "date": 1738044717861,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,9 +18,9 @@\n             ('manage_sublevel', 'Manage SubLevel'),\n         ]\n     \n class Level(models.Model):\n-    sublevel = models.ManyToManyField(SubLevel,related_name='sublevel_level',nu)\n+    sublevel = models.ManyToManyField(SubLevel,related_name='sublevel_level',blank=True)\n     name = models.CharField(max_length=255,null=True,blank=True)\n     description = models.TextField(null=True,blank=True)\n     image = models.ImageField(upload_to='level/',null=True,blank=True)\n     \n"
                 }
             ],
             "date": 1726653956970,
