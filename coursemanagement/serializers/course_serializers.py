@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from ..models import Duration, Faculty, Level, Discipline, Course
+from ..models import Duration, Faculty, Level, Discipline, Course,  Affiliation
 import ast
 from django.core.exceptions import ValidationError
 
@@ -67,6 +67,12 @@ class LevelSerializer(serializers.ModelSerializer):
         model = Level
         fields = ['id', 'name']  
 
+class AffiliationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Affiliation
+        ref_name = 'course'
+        fields = ['id', 'name']  
+
 # Serializer for Discipline model
 class DisciplineSerializer(serializers.ModelSerializer):
     class Meta:
@@ -75,6 +81,7 @@ class DisciplineSerializer(serializers.ModelSerializer):
 
 class CourseListSerializers(serializers.ModelSerializer):
     # Nested serializers for related fields
+    affiliation = AffiliationSerializer(read_only=True)
     duration = DurationSerializer(read_only=True)
     faculties = FacultySerializer(read_only=True)
     level = LevelSerializer(read_only=True)
@@ -87,6 +94,7 @@ class CourseListSerializers(serializers.ModelSerializer):
 
 class CourseRetrieveSerializers(serializers.ModelSerializer):
     # Nested serializers for related fields
+    affiliation = AffiliationSerializer(read_only=True)
     duration = DurationSerializer(read_only=True)
     faculties = FacultySerializer(read_only=True)
     level = LevelSerializer(read_only=True)

@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 33,
+            "activePatchIndex": 34,
             "patches": [
                 {
                     "date": 1733469089488,
@@ -140,6 +140,10 @@
                 {
                     "date": 1737955243929,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -100,45 +100,5 @@\n class CourseWriteSerializers(serializers.ModelSerializer):\n     class Meta:\n         model = Course\n         fields = '__all__'\n-         \n-    def to_internal_value(self, data):\n-        \"\"\"\n-        Override to handle discipline field conversion before standard validation.\n-        \"\"\"\n-        # Use the str_to_list utility function to convert 'discipline' field\n-        data = str_to_list(data, 'discipline')\n-        return super().to_internal_value(data)\n-    \n-    def create(self, validated_data):\n-        \"\"\"\n-        Override the default create method to handle Many-to-Many relationships.\n-        \"\"\"\n-        # Extract 'discipline' data from validated_data\n-        disciplines = validated_data.pop('discipline', [])\n-        \n-        # Create the Course instance\n-        course = Course.objects.create(**validated_data)\n-        \n-        # Set the Many-to-Many relationships\n-        course.discipline.set(disciplines)\n-        \n-        return course\n-    \n-    def update(self, instance, validated_data):\n-        \"\"\"\n-        Override the default update method to handle Many-to-Many relationships.\n-        \"\"\"\n-        # Extract 'discipline' data from validated_data, if present\n-        disciplines = validated_data.pop('discipline', None)\n-        \n-        # Update the instance fields\n-        for attr, value in validated_data.items():\n-            setattr(instance, attr, value)\n-        instance.save()\n-        \n-        if disciplines is not None:\n-            # Update the Many-to-Many relationships\n-            instance.discipline.set(disciplines)\n-        \n-        return instance\n\\ No newline at end of file\n+         \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1738141871168,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -60,9 +60,13 @@\n     class Meta:\n         model = Faculty\n         fields = ['id', 'name']  \n \n-# Serializer for Level modelhttp://0.0.0.0:8004/\n+# Serializer for Level model\n+class LevelSerializer(serializers.ModelSerializer):\n+    class Meta:\n+        model = Level\n+        fields = ['id', 'name']  \n \n # Serializer for Discipline model\n class DisciplineSerializer(serializers.ModelSerializer):\n     class Meta:\n"
                 }
             ],
             "date": 1733469089488,

@@ -25,6 +25,7 @@ class courseViewsets(viewsets.ModelViewSet):
         'duration': ['exact'],
         'faculty': ['exact'],
         'level': ['exact'],
+        'affiliation': ['exact'],
         'description': ['exact'],
         'course_shortdescription': ['exact'],
         'course_outcome': ['exact'],
