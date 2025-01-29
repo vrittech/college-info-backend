@@ -11,9 +11,14 @@ class AffiliationRetrieveSerializers(serializers.ModelSerializer):
         model = Affiliation
         fields = '__all__'
 
+from rest_framework import serializers
+
 class AffiliationWriteSerializers(serializers.ModelSerializer):
-    # Accept `certification` as a comma-separated string from form data
+    # Accept `certification` as a comma-separated string for input
     certification = serializers.CharField(write_only=True, required=False)
+
+    # Include `certification` as a read-only field for the response
+    certifications = serializers.SerializerMethodField()
 
     class Meta:
         model = Affiliation
@@ -25,7 +30,7 @@ class AffiliationWriteSerializers(serializers.ModelSerializer):
         """
         if value:
             try:
-                # Split the string and convert each value to an integer
+                # Split the string and convert to integers
                 certification_ids = [int(pk.strip()) for pk in value.split(",") if pk.strip()]
                 return certification_ids
             except ValueError:
@@ -59,3 +64,9 @@ class AffiliationWriteSerializers(serializers.ModelSerializer):
             instance.certification.set(certifications)
 
         return instance
+
+    def get_certifications(self, obj):
+        """
+        Get the certifications for the response.
+        """
+        return [cert.id for cert in obj.certification.all()]

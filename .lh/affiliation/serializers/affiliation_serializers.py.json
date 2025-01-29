@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 3,
+            "activePatchIndex": 4,
             "patches": [
                 {
                     "date": 1738133415027,
@@ -20,6 +20,10 @@
                 {
                     "date": 1738134462322,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,14 +11,28 @@\n         model = Affiliation\n         fields = '__all__'\n \n class AffiliationWriteSerializers(serializers.ModelSerializer):\n+    # Accept `certification` as a comma-separated string from form data\n     certification = serializers.CharField(write_only=True, required=False)\n \n     class Meta:\n         model = Affiliation\n         fields = '__all__'\n \n+    def validate_certification(self, value):\n+        \"\"\"\n+        Converts a comma-separated string into a list of integers.\n+        \"\"\"\n+        if value:\n+            try:\n+                # Split the string and convert each value to an integer\n+                certification_ids = [int(pk.strip()) for pk in value.split(\",\") if pk.strip()]\n+                return certification_ids\n+            except ValueError:\n+                raise serializers.ValidationError(\"Certification must be a comma-separated list of valid integers.\")\n+        return []\n+\n     def create(self, validated_data):\n         # Extract certifications from the validated data\n         certifications = validated_data.pop('certification', [])\n         \n"
+                },
+                {
+                    "date": 1738135815005,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,12 +10,17 @@\n     class Meta:\n         model = Affiliation\n         fields = '__all__'\n \n+from rest_framework import serializers\n+\n class AffiliationWriteSerializers(serializers.ModelSerializer):\n-    # Accept `certification` as a comma-separated string from form data\n+    # Accept `certification` as a comma-separated string for input\n     certification = serializers.CharField(write_only=True, required=False)\n \n+    # Include `certification` as a read-only field for the response\n+    certifications = serializers.SerializerMethodField()\n+\n     class Meta:\n         model = Affiliation\n         fields = '__all__'\n \n@@ -24,9 +29,9 @@\n         Converts a comma-separated string into a list of integers.\n         \"\"\"\n         if value:\n             try:\n-                # Split the string and convert each value to an integer\n+                # Split the string and convert to integers\n                 certification_ids = [int(pk.strip()) for pk in value.split(\",\") if pk.strip()]\n                 return certification_ids\n             except ValueError:\n                 raise serializers.ValidationError(\"Certification must be a comma-separated list of valid integers.\")\n@@ -57,5 +62,11 @@\n         # Update certifications if provided\n         if certifications is not None:\n             instance.certification.set(certifications)\n \n-        return instance\n\\ No newline at end of file\n+        return instance\n+\n+    def get_certifications(self, obj):\n+        \"\"\"\n+        Get the certifications for the response.\n+        \"\"\"\n+        return [cert.id for cert in obj.certification.all()]\n"
                 }
             ],
             "date": 1738133415027,
