@@ -13,11 +13,15 @@ class disciplineViewsets(viewsets.ModelViewSet):
     queryset = Discipline.objects.all().order_by('-id')
 
     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]
-    search_fields = ['id']
-    ordering_fields = ['id']
+    search_fields = ['id', 'name']
+    ordering_fields = ['id','name']
 
     filterset_fields = {
         'id': ['exact'],
+        'name': ['exact'],
+        'is_show': ['exact'],
+        'created_date': ['exact', 'lte', 'gte'],
+        'updated_date': ['exact', 'lte', 'gte'],
     }
 
     def get_queryset(self):

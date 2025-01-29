@@ -65,7 +65,7 @@ class InformationCategory(models.Model):
 
 class Information(SEOFields):
     # template_name  = models.CharField(max_length=255,null=True,blank=True)
-    title = models.CharField(max_length=255)
+    title = models.CharField(max_length=510)
     publish_date = models.DateTimeField()
     active_period_start = models.DateField()
     active_period_end = models.DateField()
@@ -91,8 +91,6 @@ class Information(SEOFields):
     created_date = models.DateField(auto_now_add=True, null=True, blank=True)
     updated_date = models.DateTimeField(auto_now=True, null=True, blank=True)
 
-    def __str__(self):
-        return self.title
     
     class Meta:
         permissions = [
