@@ -33,7 +33,7 @@ class InformationRetrieveSerializers(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class InformationWriteSerializer(serializers.ModelSerializer):
+class InformationWriteSerializers(serializers.ModelSerializer):
     """
     Serializer for handling Many-to-Many fields as comma-separated values
     and handling binary image uploads in form-data.
