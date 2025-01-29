@@ -1,0 +1,22 @@
+{
+    "sourceFile": "certification/serializers/certification_serializers.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 1,
+            "patches": [
+                {
+                    "date": 1738133325556,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1738133331930,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,40 +10,8 @@\n     class Meta:\n         model = Certification\n         fields = '__all__'\n \n-class AffiliationWriteSerializers(serializers.ModelSerializer):\n-    certification = serializers.ListField(\n-        child=serializers.IntegerField(), required=False, write_only=True\n-    )\n-\n+class CertificationWriteSerializers(serializers.ModelSerializer):\n     class Meta:\n-        model = Affiliation\n-        fields = '__all__'\n-\n-    def create(self, validated_data):\n-        # Extract certifications from the validated data\n-        certifications = validated_data.pop('certification', [])\n-        \n-        # Create the Affiliation instance\n-        affiliation = Affiliation.objects.create(**validated_data)\n-\n-        # Add certifications if provided\n-        if certifications:\n-            affiliation.certification.set(certifications)\n-\n-        return affiliation\n-\n-    def update(self, instance, validated_data):\n-        # Extract certifications from the validated data\n-        certifications = validated_data.pop('certification', None)\n-\n-        # Update the instance fields\n-        for attr, value in validated_data.items():\n-            setattr(instance, attr, value)\n-        instance.save()\n-\n-        # Update certifications if provided\n-        if certifications is not None:\n-            instance.certification.set(certifications)\n-\n\\ No newline at end of file\n-        return instance\n+        model = Certification\n+        fields = '__all__'\n\\ No newline at end of file\n"
+                }
+            ],
+            "date": 1738133325556,
+            "name": "Commit-0",
+            "content": "from rest_framework import serializers\nfrom ..models import Certification\n\nclass CertificationListSerializers(serializers.ModelSerializer):\n    class Meta:\n        model = Certification\n        fields = '__all__'\n\nclass CertificationRetrieveSerializers(serializers.ModelSerializer):\n    class Meta:\n        model = Certification\n        fields = '__all__'\n\nclass AffiliationWriteSerializers(serializers.ModelSerializer):\n    certification = serializers.ListField(\n        child=serializers.IntegerField(), required=False, write_only=True\n    )\n\n    class Meta:\n        model = Affiliation\n        fields = '__all__'\n\n    def create(self, validated_data):\n        # Extract certifications from the validated data\n        certifications = validated_data.pop('certification', [])\n        \n        # Create the Affiliation instance\n        affiliation = Affiliation.objects.create(**validated_data)\n\n        # Add certifications if provided\n        if certifications:\n            affiliation.certification.set(certifications)\n\n        return affiliation\n\n    def update(self, instance, validated_data):\n        # Extract certifications from the validated data\n        certifications = validated_data.pop('certification', None)\n\n        # Update the instance fields\n        for attr, value in validated_data.items():\n            setattr(instance, attr, value)\n        instance.save()\n\n        # Update certifications if provided\n        if certifications is not None:\n            instance.certification.set(certifications)\n\n        return instance"
+        }
+    ]
+}

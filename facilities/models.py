@@ -15,6 +15,7 @@ class Facility(models.Model):
     image = models.ImageField(upload_to='facility_images/', blank=True, null=True)
     created_date = models.DateField(auto_now_add=True, null=True, blank=True)
     created_date_time = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+    is_show = models.BooleanField(default=False)
     updated_date = models.DateTimeField(auto_now=True, null=True, blank=True)
     
 

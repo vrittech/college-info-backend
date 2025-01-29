@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 2,
+            "activePatchIndex": 6,
             "patches": [
                 {
                     "date": 1733481992065,
@@ -16,6 +16,22 @@
                 {
                     "date": 1737963658962,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,9 @@\n class socialmediaViewsets(viewsets.ModelViewSet):\n     serializer_class = SocialMediaListSerializers\n     # permission_classes = [socialmediaPermission]\n     # authentication_classes = [JWTAuthentication]\n-    #pagination_class = MyPageNumberPagination\n+    pagination_class = MyPageNumberPagination\n     queryset = SocialMedia.objects.all().order_by('-id')\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     search_fields = ['id']\n"
+                },
+                {
+                    "date": 1738131876478,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,11 +15,11 @@\n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     search_fields = ['id']\n     ordering_fields = ['id']\n \n-    # filterset_fields = {\n-    #     'id': ['exact'],\n-    # }\n+    filterset_fields = {\n+        'id': ['exact'],\n+    }\n \n     def get_queryset(self):\n         queryset = super().get_queryset()\n         return queryset\n"
+                },
+                {
+                    "date": 1738131907344,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,9 @@\n     # permission_classes = [socialmediaPermission]\n     # authentication_classes = [JWTAuthentication]\n     pagination_class = MyPageNumberPagination\n     queryset = SocialMedia.objects.all().order_by('-id')\n-\n+name\n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     search_fields = ['id']\n     ordering_fields = ['id']\n \n"
+                },
+                {
+                    "date": 1738131913855,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,17 +10,17 @@\n     # permission_classes = [socialmediaPermission]\n     # authentication_classes = [JWTAuthentication]\n     pagination_class = MyPageNumberPagination\n     queryset = SocialMedia.objects.all().order_by('-id')\n-name\n+\n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     search_fields = ['id']\n     ordering_fields = ['id']\n \n     filterset_fields = {\n         'id': ['exact'],\n     }\n-\n+('name', 'link', 'icon=models.ImageField(upload_to='components/banner',null', 'created_date', 'updated_date', )\n     def get_queryset(self):\n         queryset = super().get_queryset()\n         return queryset\n \n"
+                },
+                {
+                    "date": 1738131922400,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,15 +12,15 @@\n     pagination_class = MyPageNumberPagination\n     queryset = SocialMedia.objects.all().order_by('-id')\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n-    search_fields = ['id']\n+    search_fields = ['id','name']\n     ordering_fields = ['id']\n \n     filterset_fields = {\n         'id': ['exact'],\n     }\n-('name', 'link', 'icon=models.ImageField(upload_to='components/banner',null', 'created_date', 'updated_date', )\n+# ('name', 'link', 'icon=models.ImageField(upload_to='components/banner',null', 'created_date', 'updated_date', )\n     def get_queryset(self):\n         queryset = super().get_queryset()\n         return queryset\n \n"
                 }
             ],
             "date": 1733481992065,

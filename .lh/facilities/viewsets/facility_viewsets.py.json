@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 2,
+            "activePatchIndex": 7,
             "patches": [
                 {
                     "date": 1733481416906,
@@ -16,6 +16,26 @@
                 {
                     "date": 1737963544496,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,9 @@\n class facilityViewsets(viewsets.ModelViewSet):\n     serializer_class = FacilityListSerializers\n     # permission_classes = [facilitiesPermission]\n     # authentication_classes = [JWTAuthentication]\n-    #pagination_class = MyPageNumberPagination\n+    pagination_class = MyPageNumberPagination\n     queryset = Facility.objects.all().order_by('-id')\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     search_fields = ['id']\n"
+                },
+                {
+                    "date": 1738131685560,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,11 +15,11 @@\n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     search_fields = ['id']\n     ordering_fields = ['id']\n \n-    # filterset_fields = {\n-    #     'id': ['exact'],\n-    # }\n+    filterset_fields = {\n+        'id': ['exact'],\n+    }\n \n     def get_queryset(self):\n         queryset = super().get_queryset()\n         return queryset\n"
+                },
+                {
+                    "date": 1738131697597,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,8 +17,9 @@\n     ordering_fields = ['id']\n \n     filterset_fields = {\n         'id': ['exact'],\n+        \n     }\n \n     def get_queryset(self):\n         queryset = super().get_queryset()\n"
+                },
+                {
+                    "date": 1738131705986,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,8 +17,9 @@\n     ordering_fields = ['id']\n \n     filterset_fields = {\n         'id': ['exact'],\n+        'name': ['exact'],\n         \n     }\n \n     def get_queryset(self):\n"
+                },
+                {
+                    "date": 1738131719244,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,9 +12,9 @@\n     pagination_class = MyPageNumberPagination\n     queryset = Facility.objects.all().order_by('-id')\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n-    search_fields = ['id']\n+    search_fields = ['id',]\n     ordering_fields = ['id']\n \n     filterset_fields = {\n         'id': ['exact'],\n"
+                },
+                {
+                    "date": 1738131727020,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,15 +12,15 @@\n     pagination_class = MyPageNumberPagination\n     queryset = Facility.objects.all().order_by('-id')\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n-    search_fields = ['id',]\n-    ordering_fields = ['id']\n+    search_fields = ['id','name']\n+    ordering_fields = ['id','']\n \n     filterset_fields = {\n         'id': ['exact'],\n         'name': ['exact'],\n-        \n+        'is_show': ['exact'],\n     }\n \n     def get_queryset(self):\n         queryset = super().get_queryset()\n"
                 }
             ],
             "date": 1733481416906,

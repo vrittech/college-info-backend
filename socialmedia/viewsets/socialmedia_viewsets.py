@@ -13,13 +13,13 @@ class socialmediaViewsets(viewsets.ModelViewSet):
     queryset = SocialMedia.objects.all().order_by('-id')
 
     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]
-    search_fields = ['id']
+    search_fields = ['id','name']
     ordering_fields = ['id']
 
-    # filterset_fields = {
-    #     'id': ['exact'],
-    # }
-
+    filterset_fields = {
+        'id': ['exact'],
+    }
+# ('name', 'link', 'icon=models.ImageField(upload_to='components/banner',null', 'created_date', 'updated_date', )
     def get_queryset(self):
         queryset = super().get_queryset()
         return queryset
