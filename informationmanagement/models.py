@@ -25,7 +25,7 @@ class InformationTagging(models.Model):
 
 
     def __str__(self):
-        return self.name
+        return self.name if self.name else "Unnamed"
     
     class Meta:
         permissions = [
@@ -42,7 +42,7 @@ class InformationCategory(models.Model):
 
 
     def __str__(self):
-        return self.name
+       return self.name if self.name else "Unnamed"
     
     def save(self, *args, **kwargs):
         # If is_show is being set to True, check the current count of True entries
@@ -92,7 +92,7 @@ class Information(SEOFields):
     updated_date = models.DateTimeField(auto_now=True, null=True, blank=True)
     
     def __str__(self):
-        return self.title
+        return self.title if self.title else "Unnamed"
 
     
     class Meta:
@@ -110,9 +110,7 @@ class InformationFiles(models.Model):
     
     created_date = models.DateField(auto_now_add=True, null=True, blank=True)
     updated_date = models.DateTimeField(auto_now=True, null=True, blank=True)
-    def __str__(self):
-        return self.created_date
-    
+   
     class Meta:
         permissions = [
             ('manage_information_files', 'Manage Information Files'),
@@ -124,8 +122,7 @@ class InformationGallery(models.Model):
     is_featured = models.BooleanField(default=False)
     created_date = models.DateField(auto_now_add=True, null=True, blank=True)
     updated_date = models.DateTimeField(auto_now=True, null=True, blank=True)
-    def __str__(self):
-        return self.created_date
+
     
     class Meta:
         permissions = [

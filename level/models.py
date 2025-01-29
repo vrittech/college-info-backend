@@ -10,7 +10,7 @@ class SubLevel(models.Model):
     image = models.ImageField(upload_to='level/',null=True,blank=True)
     
     def __str__(self):
-        return self.name
+        return self.name if self.name else "Unnamed Sub Level"
     
     class Meta:
         permissions = [
@@ -27,7 +27,7 @@ class Level(models.Model):
     updated_date = models.DateTimeField(auto_now=True, null=True, blank=True)
     
     def __str__(self):        
-        return self.name
+        return self.name if self.name else "Unnamed Level"
     
     class Meta:
         permissions = [

@@ -80,7 +80,7 @@ class College(SEOFields):
         return f'{self.latitude}, {self.longitude}'
 
     def __str__(self):
-        return self.name
+          return self.name if self.name else "Unnamed"
     
     class Meta:
         permissions = [

@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 97,
+            "activePatchIndex": 99,
             "patches": [
                 {
                     "date": 1727071578528,
@@ -396,6 +396,14 @@
                 {
                     "date": 1738144614027,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,9 +11,9 @@\n     abbreviation = models.CharField(max_length=255)\n     duration = models.ForeignKey(Duration,on_delete=models.CASCADE,related_name='course_duration')\n     faculty = models.ForeignKey(Faculty, on_delete=models.CASCADE, related_name='course_faculties')\n     level = models.ForeignKey(Level, on_delete=models.CASCADE, related_name='course_level')\n-    affiliation = models.ForeignKey(Affiliation, on_delete=models.CASCADE,related_name='course_affiliation')\n+    affiliation = models.ForeignKey(Affiliation, on_delete=models.CASCADE,related_name='course_affiliation',b)\n     discipline = models.ManyToManyField(Discipline, related_name='course_discipline')\n     description = models.TextField(default = \"\")\n     course_shortdescription = models.TextField(default = \"\")\n     course_outcome = models.TextField(default = \"\")\n"
+                },
+                {
+                    "date": 1738149165211,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,9 +11,9 @@\n     abbreviation = models.CharField(max_length=255)\n     duration = models.ForeignKey(Duration,on_delete=models.CASCADE,related_name='course_duration')\n     faculty = models.ForeignKey(Faculty, on_delete=models.CASCADE, related_name='course_faculties')\n     level = models.ForeignKey(Level, on_delete=models.CASCADE, related_name='course_level')\n-    affiliation = models.ForeignKey(Affiliation, on_delete=models.CASCADE,related_name='course_affiliation',b)\n+    affiliation = models.ForeignKey(Affiliation, on_delete=models.CASCADE,related_name='course_affiliation',blank=True,null=True)\n     discipline = models.ManyToManyField(Discipline, related_name='course_discipline')\n     description = models.TextField(default = \"\")\n     course_shortdescription = models.TextField(default = \"\")\n     course_outcome = models.TextField(default = \"\")\n@@ -24,9 +24,9 @@\n     created_date = models.DateField(auto_now_add=True)\n     updated_date = models.DateTimeField(auto_now=True)\n \n     def __str__(self):\n-        return self.name\n+          return self.name if self.name else \"Unnamed Level\"\n     \n     class Meta:\n         permissions = [\n             ('manage_course', 'Manage course'),\n"
+                },
+                {
+                    "date": 1738149171871,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,9 +24,9 @@\n     created_date = models.DateField(auto_now_add=True)\n     updated_date = models.DateTimeField(auto_now=True)\n \n     def __str__(self):\n-          return self.name if self.name else \"Unnamed Level\"\n+        return self.name if self.name else \"Unnamed COurse\"\n     \n     class Meta:\n         permissions = [\n             ('manage_course', 'Manage course'),\n"
                 }
             ],
             "date": 1727071578528,

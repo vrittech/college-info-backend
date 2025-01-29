@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 13,
+            "activePatchIndex": 14,
             "patches": [
                 {
                     "date": 1726653942928,
@@ -60,6 +60,10 @@
                 {
                     "date": 1733642407581,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,5 +12,8 @@\n     \n     def __str__(self):\n         return self.name\n     \n-    class FIELDNAME = models.FilePathField(, path=None, match=None, recursive=recursive, max_length=100)\n\\ No newline at end of file\n+    class Meta:\n+        permissions = [\n+            ('manage_faculty', 'Manage faculty'),\n+        ]\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1738149255419,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,9 @@\n     created_date_time = models.DateTimeField(auto_now_add=True, null=True, blank=True)\n     updated_date = models.DateTimeField(auto_now=True, null=True, blank=True)\n     \n     def __str__(self):\n-        return self.name\n+        return self.name if self.name else \"Unnamed\"\n     \n     class Meta:\n         permissions = [\n             ('manage_faculty', 'Manage faculty'),\n"
                 }
             ],
             "date": 1726653942928,

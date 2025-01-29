@@ -62,7 +62,7 @@ class Affiliation(SEOFields):
     updated_date = models.DateTimeField(auto_now=True, null=True, blank=True)
 
     def __str__(self):
-        return self.name
+          return self.name if self.name else "Unnamed Affiliation"
     
     class Meta:
         permissions = [
