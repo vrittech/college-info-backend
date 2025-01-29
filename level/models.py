@@ -10,7 +10,6 @@ class SubLevel(models.Model):
     image = models.ImageField(upload_to='level/',null=True,blank=True)
     
     def __str__(self):
-        
         return self.name
     
     class Meta:

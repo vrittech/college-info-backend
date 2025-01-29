@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 36,
+            "activePatchIndex": 37,
             "patches": [
                 {
                     "date": 1726653956970,
@@ -152,6 +152,10 @@
                 {
                     "date": 1738147109236,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,9 +22,11 @@\n     sublevel = models.ManyToManyField(SubLevel,related_name='sublevel_level',blank=True)\n     name = models.CharField(max_length=255,null=True,blank=True)\n     description = models.TextField(null=True,blank=True)\n     image = models.ImageField(upload_to='level/',null=True,blank=True)\n-    created\n+    created_date = models.DateField(auto_now_add=True, null=True, blank=True)\n+    created_date_time = models.DateTimeField(auto_now_add=True, null=True, blank=True)\n+    updated_date = models.DateTimeField(auto_now=True, null=True, blank=True)\n     \n     def __str__(self):        \n         return self.name\n     \n"
+                },
+                {
+                    "date": 1738148840758,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,9 +9,8 @@\n     # description = models.TextField(null=True,blank=True)\n     image = models.ImageField(upload_to='level/',null=True,blank=True)\n     \n     def __str__(self):\n-        \n         return self.name\n     \n     class Meta:\n         permissions = [\n"
                 }
             ],
             "date": 1726653956970,
