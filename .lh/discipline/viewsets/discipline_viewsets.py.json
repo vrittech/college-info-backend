@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 2,
+            "activePatchIndex": 3,
             "patches": [
                 {
                     "date": 1733481310606,
@@ -16,6 +16,10 @@
                 {
                     "date": 1737963482991,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,9 @@\n class disciplineViewsets(viewsets.ModelViewSet):\n     serializer_class = DisciplineListSerializers\n     # permission_classes = [disciplinePermission]\n     # authentication_classes = [JWTAuthentication]\n-    #pagination_class = MyPageNumberPagination\n+    pagination_class = MyPageNumberPagination\n     queryset = Discipline.objects.all().order_by('-id')\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     search_fields = ['id']\n"
+                },
+                {
+                    "date": 1738144536573,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,11 +15,11 @@\n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     search_fields = ['id']\n     ordering_fields = ['id']\n \n-    # filterset_fields = {\n-    #     'id': ['exact'],\n-    # }\n+    filterset_fields = {\n+        'id': ['exact'],\n+    }\n \n     def get_queryset(self):\n         queryset = super().get_queryset()\n         return queryset\n"
                 }
             ],
             "date": 1733481310606,

@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 11,
+            "activePatchIndex": 12,
             "patches": [
                 {
                     "date": 1728468246559,
@@ -52,6 +52,10 @@
                 {
                     "date": 1733642180243,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,6 +14,6 @@\n         return self.name\n     \n     class Meta:\n         permissions = [\n-            \n+            ('manage_discipline', 'Manage Discipline'),\n         ]\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1738144545108,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,9 @@\n \n # Create your models here.\n class Discipline(models.Model):\n     name = models.CharField(max_length=255,null=True,blank=True)\n-    is_shown = models.BooleanField(default=False)\n+    is_show = models.BooleanField(default=False)\n     # description = models.TextField(null=True,blank=True)\n     # image = models.ImageField(upload_to='district/',null=True,blank=True)\n     created_date = models.DateField(auto_now_add=True, null=True, blank=True)\n     created_date_time = models.DateTimeField(auto_now_add=True, null=True, blank=True)\n"
                 }
             ],
             "date": 1728468246559,

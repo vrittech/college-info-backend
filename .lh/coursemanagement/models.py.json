@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 96,
+            "activePatchIndex": 97,
             "patches": [
                 {
                     "date": 1727071578528,
@@ -392,6 +392,10 @@
                 {
                     "date": 1738141847851,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,9 +11,9 @@\n     abbreviation = models.CharField(max_length=255)\n     duration = models.ForeignKey(Duration,on_delete=models.CASCADE,related_name='course_duration')\n     faculty = models.ForeignKey(Faculty, on_delete=models.CASCADE, related_name='course_faculties')\n     level = models.ForeignKey(Level, on_delete=models.CASCADE, related_name='course_level')\n-    affiliation\n+    affiliation = models.ForeignKey(Affiliation, on_delete=models.CASCADE,related_name='course_affiliation')\n     discipline = models.ManyToManyField(Discipline, related_name='course_discipline')\n     description = models.TextField(default = \"\")\n     course_shortdescription = models.TextField(default = \"\")\n     course_outcome = models.TextField(default = \"\")\n"
+                },
+                {
+                    "date": 1738144614027,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,9 +11,9 @@\n     abbreviation = models.CharField(max_length=255)\n     duration = models.ForeignKey(Duration,on_delete=models.CASCADE,related_name='course_duration')\n     faculty = models.ForeignKey(Faculty, on_delete=models.CASCADE, related_name='course_faculties')\n     level = models.ForeignKey(Level, on_delete=models.CASCADE, related_name='course_level')\n-    affiliation = models.ForeignKey(Affiliation, on_delete=models.CASCADE,related_name='course_affiliation')\n+    affiliation = models.ForeignKey(Affiliation, on_delete=models.CASCADE,related_name='course_affiliation',b)\n     discipline = models.ManyToManyField(Discipline, related_name='course_discipline')\n     description = models.TextField(default = \"\")\n     course_shortdescription = models.TextField(default = \"\")\n     course_outcome = models.TextField(default = \"\")\n"
                 }
             ],
             "date": 1727071578528,
