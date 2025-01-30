@@ -12,6 +12,7 @@ class eventViewsets(viewsets.ModelViewSet):
     # authentication_classes = [JWTAuthentication]
     pagination_class = MyPageNumberPagination
     queryset = Event.objects.all().order_by('-id')
+    lookup_field = "slug"
 
     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]
     search_fields = ['id', 'event_name', 'venue', 'category__name', 'organizer__name']  # Fields to search

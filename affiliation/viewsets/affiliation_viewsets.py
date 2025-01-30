@@ -11,6 +11,8 @@ class affiliationViewsets(viewsets.ModelViewSet):
     # authentication_classes = [JWTAuthentication]
     pagination_class = MyPageNumberPagination
     queryset = Affiliation.objects.all().order_by('-id')
+    lookup_field = "slug"
+
 
     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]
     search_fields = ['id','name','district','address']

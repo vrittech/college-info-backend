@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 99,
+            "activePatchIndex": 105,
             "patches": [
                 {
                     "date": 1727071578528,
@@ -404,6 +404,30 @@
                 {
                     "date": 1738149171871,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,9 +24,9 @@\n     created_date = models.DateField(auto_now_add=True)\n     updated_date = models.DateTimeField(auto_now=True)\n \n     def __str__(self):\n-          return self.name if self.name else \"Unnamed Level\"\n+        return self.name if self.name else \"Unnamed COurse\"\n     \n     class Meta:\n         permissions = [\n             ('manage_course', 'Manage course'),\n"
+                },
+                {
+                    "date": 1738211905884,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,8 +6,9 @@\n from duration.models import Duration\n from mainproj.utilities.seo import SEOFields\n # Create your models here.\n class Course(SEOFields):\n+    \n     name = models.CharField(max_length=255)\n     abbreviation = models.CharField(max_length=255)\n     duration = models.ForeignKey(Duration,on_delete=models.CASCADE,related_name='course_duration')\n     faculty = models.ForeignKey(Faculty, on_delete=models.CASCADE, related_name='course_faculties')\n@@ -24,9 +25,9 @@\n     created_date = models.DateField(auto_now_add=True)\n     updated_date = models.DateTimeField(auto_now=True)\n \n     def __str__(self):\n-        return self.name if self.name else \"Unnamed COurse\"\n+        return self.name if self.name else \"Unnamed Course\"\n     \n     class Meta:\n         permissions = [\n             ('manage_course', 'Manage course'),\n"
+                },
+                {
+                    "date": 1738211917544,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,11 +4,13 @@\n from affiliation.models import Affiliation\n from discipline.models import Discipline\n from duration.models import Duration\n from mainproj.utilities.seo import SEOFields\n+import uuid\n # Create your models here.\n class Course(SEOFields):\n-    \n+    public_id = models.UUIDField(default=uuid.uuid4,editable=False,unique=True)\n+    slug = models.SlugField(max_length=255, unique=True, null=True, blank=True)\n     name = models.CharField(max_length=255)\n     abbreviation = models.CharField(max_length=255)\n     duration = models.ForeignKey(Duration,on_delete=models.CASCADE,related_name='course_duration')\n     faculty = models.ForeignKey(Faculty, on_delete=models.CASCADE, related_name='course_faculties')\n"
+                },
+                {
+                    "date": 1738211922741,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,8 +5,10 @@\n from discipline.models import Discipline\n from duration.models import Duration\n from mainproj.utilities.seo import SEOFields\n import uuid\n+from django.utils.text import slugify\n+\n # Create your models here.\n class Course(SEOFields):\n     public_id = models.UUIDField(default=uuid.uuid4,editable=False,unique=True)\n     slug = models.SlugField(max_length=255, unique=True, null=True, blank=True)\n"
+                },
+                {
+                    "date": 1738211928103,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -31,8 +31,10 @@\n \n     def __str__(self):\n         return self.name if self.name else \"Unnamed Course\"\n     \n+    \n+    \n     class Meta:\n         permissions = [\n             ('manage_course', 'Manage course'),\n         ]\n"
+                },
+                {
+                    "date": 1738211940471,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -31,10 +31,13 @@\n \n     def __str__(self):\n         return self.name if self.name else \"Unnamed Course\"\n     \n+    def save(self, *args, **kwargs):\n+        if not self.slug:\n+            self.slug = slugify(self.name)+'-'+str(self.public_id)[1:5] + str(self.public_id)[-1:-5]\n+        super().save(*args, **kwargs)\n     \n-    \n     class Meta:\n         permissions = [\n             ('manage_course', 'Manage course'),\n         ]\n"
+                },
+                {
+                    "date": 1738212585240,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,9 +11,9 @@\n # Create your models here.\n class Course(SEOFields):\n     public_id = models.UUIDField(default=uuid.uuid4,editable=False,unique=True)\n     slug = models.SlugField(max_length=255, unique=True, null=True, blank=True)\n-    name = models.CharField(max_length=255)\n+    name = models.CharField(max_length=255,unique=)\n     abbreviation = models.CharField(max_length=255)\n     duration = models.ForeignKey(Duration,on_delete=models.CASCADE,related_name='course_duration')\n     faculty = models.ForeignKey(Faculty, on_delete=models.CASCADE, related_name='course_faculties')\n     level = models.ForeignKey(Level, on_delete=models.CASCADE, related_name='course_level')\n"
                 }
             ],
             "date": 1727071578528,

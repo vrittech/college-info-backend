@@ -11,6 +11,7 @@ class collegeViewsets(viewsets.ModelViewSet):
     # permission_classes = [collegemanagementPermission]
     # authentication_classes = [JWTAuthentication]
     pagination_class = MyPageNumberPagination
+    lookup_field = "slug"
     queryset = College.objects.all().order_by('-id')
 
     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]

@@ -13,6 +13,7 @@ class informationViewsets(viewsets.ModelViewSet):
     pagination_class = MyPageNumberPagination
     queryset = Information.objects.all().order_by('-id')
     filterset_class = InformationFilter
+    lookup_field = "slug"
 
     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]
     search_fields = ['id','title', 'publish_date', 'active_period_start', 'active_period_end', 'sublevel__name', 'course__name','created_date', 'updated_date',]

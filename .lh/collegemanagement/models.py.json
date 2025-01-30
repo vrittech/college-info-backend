@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 195,
+            "activePatchIndex": 203,
             "patches": [
                 {
                     "date": 1727170911785,
@@ -788,6 +788,38 @@
                 {
                     "date": 1738149237972,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -79,9 +79,9 @@\n         \n         return f'{self.latitude}, {self.longitude}'\n \n     def __str__(self):\n-          return self.name if self.name else \"Unnamed Level\"\n+            return self.name if self.name else \"Unnamed Level\"\n     \n     class Meta:\n         permissions = [\n             ('manage_college', 'Manage college'),\n"
+                },
+                {
+                    "date": 1738211807686,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -44,8 +44,9 @@\n \n \n     \n class College(SEOFields):\n+    \n     banner_image = models.ImageField(upload_to='college/banner/')\n     dp_image = models.ImageField(upload_to='college/dp/',null=True,blank=True)\n     name = models.CharField(max_length=255)\n     established_date = models.DateField(null= True,blank=True)\n@@ -79,9 +80,9 @@\n         \n         return f'{self.latitude}, {self.longitude}'\n \n     def __str__(self):\n-            return self.name if self.name else \"Unnamed Level\"\n+          return self.name if self.name else \"Unnamed\"\n     \n     class Meta:\n         permissions = [\n             ('manage_college', 'Manage college'),\n"
+                },
+                {
+                    "date": 1738211812931,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -44,9 +44,10 @@\n \n \n     \n class College(SEOFields):\n-    \n+    public_id = models.UUIDField(default=uuid.uuid4,editable=False,unique=True)\n+    slug = models.SlugField(max_length=255, unique=True, null=True, blank=True)\n     banner_image = models.ImageField(upload_to='college/banner/')\n     dp_image = models.ImageField(upload_to='college/dp/',null=True,blank=True)\n     name = models.CharField(max_length=255)\n     established_date = models.DateField(null= True,blank=True)\n"
+                },
+                {
+                    "date": 1738211821085,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,8 +11,9 @@\n from gallery.models import Gallery\n # from accounts.models import CustomUser\n from formprogress.models import FormStepProgress\n from mainproj.utilities.seo import SEOFields\n+import \n # from faqs.models import FAQs\n \n  \n # CollegeGallery Model\n"
+                },
+                {
+                    "date": 1738211828285,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,9 +11,10 @@\n from gallery.models import Gallery\n # from accounts.models import CustomUser\n from formprogress.models import FormStepProgress\n from mainproj.utilities.seo import SEOFields\n-import \n+import uuid\n+\n # from faqs.models import FAQs\n \n  \n # CollegeGallery Model\n"
+                },
+                {
+                    "date": 1738211843999,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,8 +12,9 @@\n # from accounts.models import CustomUser\n from formprogress.models import FormStepProgress\n from mainproj.utilities.seo import SEOFields\n import uuid\n+from django.utils.text import slugify\n \n # from faqs.models import FAQs\n \n  \n@@ -85,8 +86,10 @@\n \n     def __str__(self):\n           return self.name if self.name else \"Unnamed\"\n     \n+    \n+    \n     class Meta:\n         permissions = [\n             ('manage_college', 'Manage college'),\n         ]\n"
+                },
+                {
+                    "date": 1738211856784,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -86,8 +86,12 @@\n \n     def __str__(self):\n           return self.name if self.name else \"Unnamed\"\n     \n+    def save(self, *args, **kwargs):\n+        if not self.slug:\n+            self.slug = slugify(self.name)+'-'+str(self.public_id)[1:5] + str(self.public_id)[-1:-5]\n+        super().save(*args, **kwargs)\n     \n     \n     class Meta:\n         permissions = [\n"
+                },
+                {
+                    "date": 1738212535922,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -88,9 +88,9 @@\n           return self.name if self.name else \"Unnamed\"\n     \n     def save(self, *args, **kwargs):\n         if not self.slug:\n-            self.slug = slugify(self.name)+'-'+str(self.public_id)[1:5] + str(self.public_id)[-1:-5]\n+            self.slug = slugify(self.name)\n         super().save(*args, **kwargs)\n     \n     \n     class Meta:\n"
+                },
+                {
+                    "date": 1738212547195,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -51,9 +51,9 @@\n     public_id = models.UUIDField(default=uuid.uuid4,editable=False,unique=True)\n     slug = models.SlugField(max_length=255, unique=True, null=True, blank=True)\n     banner_image = models.ImageField(upload_to='college/banner/')\n     dp_image = models.ImageField(upload_to='college/dp/',null=True,blank=True)\n-    name = models.CharField(max_length=255)\n+    name = models.CharField(max_length=255,)\n     established_date = models.DateField(null= True,blank=True)\n     website_link = models.URLField(null= True,blank=True)\n     address = models.CharField(max_length=255)\n     district = models.ForeignKey(District,on_delete=models.CASCADE,related_name='college_district')\n"
                 }
             ],
             "date": 1727170911784,

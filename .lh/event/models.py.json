@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 142,
+            "activePatchIndex": 150,
             "patches": [
                 {
                     "date": 1726568467190,
@@ -576,6 +576,38 @@
                 {
                     "date": 1737953207811,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -100,9 +100,9 @@\n \n class EventGallery(models.Model):\n     event = models.ForeignKey\n     is_featured_image = models.BooleanField(default=False)\n-    image = models.ImageField(upload_to='event_images/')\n+    image = models.ImageField(upload_to='event_images/',null)\n     \n     created_date_time = models.DateTimeField(auto_now_add=True, null=True, blank=True)\n     created_date = models.DateField(auto_now_add=True, null=True, blank=True)\n     updated_date = models.DateTimeField(auto_now=True, null=True, blank=True)\n"
+                },
+                {
+                    "date": 1738211993977,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -48,8 +48,9 @@\n     def __str__(self):\n         return f\"{self.name}\"\n \n class Event(SEOFields):\n+    \n     event_name = models.CharField(max_length=255)\n     start_date = models.DateTimeField(null=True,blank=True)\n     end_date = models.DateTimeField(null=True,blank=True)\n     duration = models.CharField(max_length=255)\n@@ -100,9 +101,9 @@\n \n class EventGallery(models.Model):\n     event = models.ForeignKey\n     is_featured_image = models.BooleanField(default=False)\n-    image = models.ImageField(upload_to='event_images/',null)\n+    image = models.ImageField(upload_to='event_images/',null=True,blank=True)\n     \n     created_date_time = models.DateTimeField(auto_now_add=True, null=True, blank=True)\n     created_date = models.DateField(auto_now_add=True, null=True, blank=True)\n     updated_date = models.DateTimeField(auto_now=True, null=True, blank=True)\n"
+                },
+                {
+                    "date": 1738212007902,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -48,9 +48,10 @@\n     def __str__(self):\n         return f\"{self.name}\"\n \n class Event(SEOFields):\n-    \n+    public_id = models.UUIDField(default=uuid.uuid4,editable=False,unique=True)\n+    slug = models.SlugField(max_length=255, unique=True, null=True, blank=True)\n     event_name = models.CharField(max_length=255)\n     start_date = models.DateTimeField(null=True,blank=True)\n     end_date = models.DateTimeField(null=True,blank=True)\n     duration = models.CharField(max_length=255)\n"
+                },
+                {
+                    "date": 1738212017008,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,8 +22,9 @@\n #  organizer name foreign key from model\n #  categories name foreign key from model\n from django.db import models\n from mainproj.utilities.seo import SEOFields\n+import uuid\n \n \n \n class EventOrganizer(models.Model):\n"
+                },
+                {
+                    "date": 1738212022704,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,11 +23,13 @@\n #  categories name foreign key from model\n from django.db import models\n from mainproj.utilities.seo import SEOFields\n import uuid\n+from django.utils.text import slugify\n \n \n \n+\n class EventOrganizer(models.Model):\n     name = models.CharField(max_length=255)\n     image = models.ImageField(upload_to='event_organizer/')\n     link = models.URLField(blank=True, null=True)\n"
+                },
+                {
+                    "date": 1738212031835,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -97,8 +97,10 @@\n     \n     def __str__(self):\n         return f\"{self.event_name}\"\n     \n+    \n+    \n     class Meta:\n         permissions = [\n             (\"manage_event\", \"Manage Event\"),\n         ]\n"
+                },
+                {
+                    "date": 1738212050522,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -97,8 +97,12 @@\n     \n     def __str__(self):\n         return f\"{self.event_name}\"\n     \n+    def save(self, *args, **kwargs):\n+        if not self.slug:\n+            self.slug = slugify(self.event_name)+'-'+str(self.public_id)[1:5] + str(self.public_id)[-1:-5]\n+        super().save(*args, **kwargs)\n     \n     \n     class Meta:\n         permissions = [\n"
+                },
+                {
+                    "date": 1738212599245,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -99,9 +99,9 @@\n         return f\"{self.event_name}\"\n     \n     def save(self, *args, **kwargs):\n         if not self.slug:\n-            self.slug = slugify(self.event_name)+'-'+str(self.public_id)[1:5] + str(self.public_id)[-1:-5]\n+            self.slug = slugify(self.event_name)\n         super().save(*args, **kwargs)\n     \n     \n     class Meta:\n"
+                },
+                {
+                    "date": 1738212607790,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -53,9 +53,9 @@\n \n class Event(SEOFields):\n     public_id = models.UUIDField(default=uuid.uuid4,editable=False,unique=True)\n     slug = models.SlugField(max_length=255, unique=True, null=True, blank=True)\n-    event_name = models.CharField(max_length=255)\n+    event_name = models.CharField(max_length=255,unique)\n     start_date = models.DateTimeField(null=True,blank=True)\n     end_date = models.DateTimeField(null=True,blank=True)\n     duration = models.CharField(max_length=255)\n     TYPE_CHOICES = [\n"
                 }
             ],
             "date": 1726568467190,

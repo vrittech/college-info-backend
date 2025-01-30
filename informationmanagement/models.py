@@ -12,6 +12,9 @@ from collegetype.models import CollegeType
 from certification.models import Certification
 from mainproj.utilities.seo import SEOFields
 from django.core.exceptions import ValidationError
+from django.utils.text import slugify
+import uuid
+
 
 
 
@@ -65,7 +68,9 @@ class InformationCategory(models.Model):
 
 class Information(SEOFields):
     # template_name  = models.CharField(max_length=255,null=True,blank=True)
-    title = models.CharField(max_length=510)
+    public_id = models.UUIDField(default=uuid.uuid4,editable=False,unique=True)
+    slug = models.SlugField(max_length=255, unique=True, null=True, blank=True)
+    title = models.CharField(max_length=510,unique=True)
     publish_date = models.DateTimeField()
     active_period_start = models.DateField()
     active_period_end = models.DateField()
@@ -93,7 +98,11 @@ class Information(SEOFields):
     
     def __str__(self):
         return self.title if self.title else "Unnamed"
-
+    
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
     
     class Meta:
         permissions = [

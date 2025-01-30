@@ -23,6 +23,9 @@
 #  categories name foreign key from model
 from django.db import models
 from mainproj.utilities.seo import SEOFields
+import uuid
+from django.utils.text import slugify
+
 
 
 
@@ -49,7 +52,9 @@ class EventCategory(models.Model):
         return f"{self.name}"
 
 class Event(SEOFields):
-    event_name = models.CharField(max_length=255)
+    public_id = models.UUIDField(default=uuid.uuid4,editable=False,unique=True)
+    slug = models.SlugField(max_length=255, unique=True, null=True, blank=True)
+    event_name = models.CharField(max_length=255,unique=True)
     start_date = models.DateTimeField(null=True,blank=True)
     end_date = models.DateTimeField(null=True,blank=True)
     duration = models.CharField(max_length=255)
@@ -92,6 +97,12 @@ class Event(SEOFields):
     
     def __str__(self):
         return f"{self.event_name}"
+    
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.event_name)
+        super().save(*args, **kwargs)
+    
     
     class Meta:
         permissions = [

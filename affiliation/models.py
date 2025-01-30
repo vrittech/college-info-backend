@@ -26,6 +26,9 @@ from django.utils.timezone import now
 from django.core.exceptions import ValidationError
 from certification.models import Certification
 from mainproj.utilities.seo import SEOFields
+import uuid
+from django.utils.text import slugify
+
 
 
 def validate_year(value):
@@ -34,11 +37,14 @@ def validate_year(value):
             raise ValidationError(f"{value} is not a valid year. Please provide a year between 1800 and {current_year}.")
 
 class Affiliation(SEOFields):
+    
     UNIVERSITY_TYPE_CHOICES = [
         ('local', 'Local'),
         ('foreign', 'Foreign'),
     ]
-    name = models.CharField(max_length=255,null=True,blank=True)
+    public_id = models.UUIDField(default=uuid.uuid4,editable=False,unique=True)
+    slug = models.SlugField(max_length=255, unique=True, null=True, blank=True)
+    name = models.CharField(max_length=255,null=True,blank=True,unique=True)
     established_year = models.IntegerField(default=now().year,validators=[validate_year])
     website_url = models.URLField(max_length=500, blank=True, null=True)
     google_map_embed_url = models.URLField(max_length=500, blank=True, null=True)
@@ -69,5 +75,9 @@ class Affiliation(SEOFields):
             ('manage_affiliation', 'Manage Affiliation'),
         ]
     
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
     
     

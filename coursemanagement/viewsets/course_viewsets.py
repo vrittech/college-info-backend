@@ -11,6 +11,7 @@ class courseViewsets(viewsets.ModelViewSet):
     # authentication_classes = [JWTAuthentication]
     pagination_class = MyPageNumberPagination
     queryset = Course.objects.all().order_by('-id')
+    lookup_field = "slug"
 
     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]
     search_fields = ['id','name', 'abbreviation', 'description', 'course_shortdescription', 'course_outcome', 'course_curriculum', 'eligibility_criteria', 'created_date', 'updated_date' ]

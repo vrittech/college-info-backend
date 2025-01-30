@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 36,
+            "activePatchIndex": 37,
             "patches": [
                 {
                     "date": 1733481275577,
@@ -152,6 +152,10 @@
                 {
                     "date": 1738142037520,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,9 +24,9 @@\n         'abbreviation': ['exact'],\n         'duration': ['exact'],\n         'faculty': ['exact'],\n         'level': ['exact'],\n-        \n+        'affiliation': ['exact'],\n         'description': ['exact'],\n         'course_shortdescription': ['exact'],\n         'course_outcome': ['exact'],\n         'eligibility_criteria': ['exact'],\n"
+                },
+                {
+                    "date": 1738211966940,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,8 +10,9 @@\n     # permission_classes = [coursemanagementPermission]\n     # authentication_classes = [JWTAuthentication]\n     pagination_class = MyPageNumberPagination\n     queryset = Course.objects.all().order_by('-id')\n+    lookup_field = \"slug\"\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     search_fields = ['id','name', 'abbreviation', 'description', 'course_shortdescription', 'course_outcome', 'course_curriculum', 'eligibility_criteria', 'created_date', 'updated_date' ]\n     ordering_fields = ['id','name', 'abbreviation', 'description', 'course_shortdescription', 'course_outcome', 'course_curriculum', 'eligibility_criteria', 'created_date', 'updated_date' ]\n"
                 }
             ],
             "date": 1733481275577,

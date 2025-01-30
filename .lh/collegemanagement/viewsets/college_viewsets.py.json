@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 37,
+            "activePatchIndex": 38,
             "patches": [
                 {
                     "date": 1733718920520,
@@ -156,6 +156,10 @@
                 {
                     "date": 1733813689969,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -42,24 +42,24 @@\n     # @action(detail=False, methods=['get'], name=\"action_name\", url_path=\"url_path\")\n     # def action_name(self, request, *args, **kwargs):\n     #     return super().list(request, *args, **kwargs)\n     \n-@action(detail=False, methods=['get'], url_path=\"college-logo\")\n-def get_dp_image(self, request, pk=None):\n-    colleges = College.objects.all()  # Fetch all colleges\n-    if not colleges.exists():\n-        return Response({\"error\": \"No colleges available.\"}, status=404)\n+    @action(detail=False, methods=['get'], url_path=\"college-logo\")\n+    def get_dp_image(self, request, pk=None):\n+        colleges = College.objects.all()  # Fetch all colleges\n+        if not colleges.exists():\n+            return Response({\"error\": \"No colleges available.\"}, status=404)\n \n-    logos = []\n-    for college in colleges:\n-        if college.dp_image:\n-            dp_image_url = request.build_absolute_uri(college.dp_image.url)\n-            logos.append({\"college_name\": college.name, \"dp_image_url\": dp_image_url})\n+        logos = []\n+        for college in colleges:\n+            if college.dp_image:\n+                dp_image_url = request.build_absolute_uri(college.dp_image.url)\n+                logos.append({\"college_name\": college.name, \"dp_image_url\": dp_image_url})\n \n-    if not logos:\n-        return Response({\"message\": \"No display images available.\"}, status=404)\n+        if not logos:\n+            return Response({\"message\": \"No display images available.\"}, status=404)\n \n-    return Response(logos, status=200)\n+        return Response(logos, status=200)\n \n     \n     \n     @action(detail=False, methods=['get'], name=\"calculate_completion_percentage\", url_path=\"completion-percentage\")\n"
+                },
+                {
+                    "date": 1738211869612,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,8 +10,9 @@\n     serializer_class = CollegeListSerializers\n     # permission_classes = [collegemanagementPermission]\n     # authentication_classes = [JWTAuthentication]\n     pagination_class = MyPageNumberPagination\n+    lookup_field\n     queryset = College.objects.all().order_by('-id')\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     search_fields = ['id','name', 'established_date', 'website_link', 'address', 'district', 'phone_number', 'email', 'affiliated', 'college_type', 'discipline', 'social_media', 'google_map_link', 'latitude', 'longitude', 'about', 'brochure', 'step_counter', 'facilities', 'placement', 'scholarship', 'created_date', 'updated_date']\n"
                 }
             ],
             "date": 1733718920520,

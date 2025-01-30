@@ -12,6 +12,9 @@ from gallery.models import Gallery
 # from accounts.models import CustomUser
 from formprogress.models import FormStepProgress
 from mainproj.utilities.seo import SEOFields
+import uuid
+from django.utils.text import slugify
+
 # from faqs.models import FAQs
 
  
@@ -45,9 +48,11 @@ class CollegeGallery(models.Model):
 
     
 class College(SEOFields):
+    public_id = models.UUIDField(default=uuid.uuid4,editable=False,unique=True)
+    slug = models.SlugField(max_length=255, unique=True, null=True, blank=True)
     banner_image = models.ImageField(upload_to='college/banner/')
     dp_image = models.ImageField(upload_to='college/dp/',null=True,blank=True)
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255,unique=True)
     established_date = models.DateField(null= True,blank=True)
     website_link = models.URLField(null= True,blank=True)
     address = models.CharField(max_length=255)
@@ -81,6 +86,12 @@ class College(SEOFields):
 
     def __str__(self):
           return self.name if self.name else "Unnamed"
+    
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
+    
     
     class Meta:
         permissions = [
