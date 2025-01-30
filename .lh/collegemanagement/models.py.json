@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 203,
+            "activePatchIndex": 205,
             "patches": [
                 {
                     "date": 1727170911785,
@@ -820,6 +820,14 @@
                 {
                     "date": 1738212547195,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -51,9 +51,9 @@\n     public_id = models.UUIDField(default=uuid.uuid4,editable=False,unique=True)\n     slug = models.SlugField(max_length=255, unique=True, null=True, blank=True)\n     banner_image = models.ImageField(upload_to='college/banner/')\n     dp_image = models.ImageField(upload_to='college/dp/',null=True,blank=True)\n-    name = models.CharField(max_length=255)\n+    name = models.CharField(max_length=255,)\n     established_date = models.DateField(null= True,blank=True)\n     website_link = models.URLField(null= True,blank=True)\n     address = models.CharField(max_length=255)\n     district = models.ForeignKey(District,on_delete=models.CASCADE,related_name='college_district')\n"
+                },
+                {
+                    "date": 1738217084506,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -51,9 +51,10 @@\n     public_id = models.UUIDField(default=uuid.uuid4,editable=False,unique=True)\n     slug = models.SlugField(max_length=255, unique=True, null=True, blank=True)\n     banner_image = models.ImageField(upload_to='college/banner/')\n     dp_image = models.ImageField(upload_to='college/dp/',null=True,blank=True)\n-    name = models.CharField(max_length=255,)\n+    name = models.CharField(max_length=255,unique=True)\n+    \n     established_date = models.DateField(null= True,blank=True)\n     website_link = models.URLField(null= True,blank=True)\n     address = models.CharField(max_length=255)\n     district = models.ForeignKey(District,on_delete=models.CASCADE,related_name='college_district')\n"
+                },
+                {
+                    "date": 1738217090521,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -52,9 +52,9 @@\n     slug = models.SlugField(max_length=255, unique=True, null=True, blank=True)\n     banner_image = models.ImageField(upload_to='college/banner/')\n     dp_image = models.ImageField(upload_to='college/dp/',null=True,blank=True)\n     name = models.CharField(max_length=255,unique=True)\n-    \n+    is_show\\_on_home = models.BooleanField(default=False)\n     established_date = models.DateField(null= True,blank=True)\n     website_link = models.URLField(null= True,blank=True)\n     address = models.CharField(max_length=255)\n     district = models.ForeignKey(District,on_delete=models.CASCADE,related_name='college_district')\n"
                 }
             ],
             "date": 1727170911784,

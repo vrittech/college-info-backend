@@ -53,6 +53,7 @@ class College(SEOFields):
     banner_image = models.ImageField(upload_to='college/banner/')
     dp_image = models.ImageField(upload_to='college/dp/',null=True,blank=True)
     name = models.CharField(max_length=255,unique=True)
+    is_show = models.BooleanField(default=False)
     established_date = models.DateField(null= True,blank=True)
     website_link = models.URLField(null= True,blank=True)
     address = models.CharField(max_length=255)
