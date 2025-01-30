@@ -137,6 +137,7 @@ class InformationWriteSerializers(serializers.ModelSerializer):
         model = Information
         fields = '__all__'
 
+    
     @transaction.atomic
     def create(self, validated_data):
         """
@@ -153,7 +154,7 @@ class InformationWriteSerializers(serializers.ModelSerializer):
                 files_data.append(file)
 
         # Create the Information instance
-        information = Information.objects.create(**validated_data)
+        information = super().create(validated_data)
 
         # Save image uploads
         for image_file in images_data:

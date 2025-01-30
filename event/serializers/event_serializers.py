@@ -76,7 +76,7 @@ class EventWriteSerializers(serializers.ModelSerializer):
                 images_data.append(file)
 
         # Create the Event instance
-        event = Event.objects.create(**validated_data)
+        event = super().create(validated_data)
 
         # Assign Many-to-Many relationships
         event.category.set(category_ids)

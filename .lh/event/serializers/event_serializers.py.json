@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 7,
+            "activePatchIndex": 9,
             "patches": [
                 {
                     "date": 1733477390024,
@@ -36,6 +36,14 @@
                 {
                     "date": 1738236672809,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,9 @@\n from rest_framework import serializers\n from ..models import Event, EventCategory, EventOrganizer, EventGallery\n+from django.db import transaction\n \n+\n # Serializer for EventCategory\n class EventCategorySerializer(serializers.ModelSerializer):\n     class Meta:\n         model = EventCategory\n"
+                },
+                {
+                    "date": 1738237881446,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -75,10 +75,11 @@\n             if key.startswith('images['):  # Accepts multiple images\n                 images_data.append(file)\n \n         # Create the Event instance\n-        event = Event.objects.create(**validated_data)\n+        event = super().create(validated_data)\n \n+\n         # Assign Many-to-Many relationships\n         event.category.set(category_ids)\n         event.organizer.set(organizer_ids)\n \n"
+                },
+                {
+                    "date": 1738237895187,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -77,9 +77,8 @@\n \n         # Create the Event instance\n         event = super().create(validated_data)\n \n-\n         # Assign Many-to-Many relationships\n         event.category.set(category_ids)\n         event.organizer.set(organizer_ids)\n \n"
                 }
             ],
             "date": 1733477390024,
