@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 205,
+            "activePatchIndex": 206,
             "patches": [
                 {
                     "date": 1727170911785,
@@ -828,6 +828,10 @@
                 {
                     "date": 1738217090521,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -52,9 +52,9 @@\n     slug = models.SlugField(max_length=255, unique=True, null=True, blank=True)\n     banner_image = models.ImageField(upload_to='college/banner/')\n     dp_image = models.ImageField(upload_to='college/dp/',null=True,blank=True)\n     name = models.CharField(max_length=255,unique=True)\n-    \n+    is_show\\_on_home = models.BooleanField(default=False)\n     established_date = models.DateField(null= True,blank=True)\n     website_link = models.URLField(null= True,blank=True)\n     address = models.CharField(max_length=255)\n     district = models.ForeignKey(District,on_delete=models.CASCADE,related_name='college_district')\n"
+                },
+                {
+                    "date": 1738233606085,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -52,9 +52,9 @@\n     slug = models.SlugField(max_length=255, unique=True, null=True, blank=True)\n     banner_image = models.ImageField(upload_to='college/banner/')\n     dp_image = models.ImageField(upload_to='college/dp/',null=True,blank=True)\n     name = models.CharField(max_length=255,unique=True)\n-    is_show\\_on_home = models.BooleanField(default=False)\n+    is_show = models.BooleanField(default=False)\n     established_date = models.DateField(null= True,blank=True)\n     website_link = models.URLField(null= True,blank=True)\n     address = models.CharField(max_length=255)\n     district = models.ForeignKey(District,on_delete=models.CASCADE,related_name='college_district')\n"
                 }
             ],
             "date": 1727170911784,

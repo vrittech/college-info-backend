@@ -76,7 +76,7 @@ class Affiliation(SEOFields):
         ]
     
     def save(self, *args, **kwargs):
-        if not self.slug:
+        if not self.slug and self.name:
             self.slug = slugify(self.name)
         super().save(*args, **kwargs)
     

@@ -15,9 +15,6 @@ from django.core.exceptions import ValidationError
 from django.utils.text import slugify
 import uuid
 
-
-
-
 class InformationTagging(models.Model):
     name = models.CharField(max_length=100,null=True,blank = True)
     url = models.URLField(blank=True, null=True)
@@ -61,11 +58,6 @@ class InformationCategory(models.Model):
             ('manage_information_category', 'Manage Information Category'),
         ]
     
-
-    
-
-
-
 class Information(SEOFields):
     # template_name  = models.CharField(max_length=255,null=True,blank=True)
     public_id = models.UUIDField(default=uuid.uuid4,editable=False,unique=True)
