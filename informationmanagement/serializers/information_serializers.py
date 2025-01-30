@@ -3,6 +3,62 @@ from django.db import transaction
 
 from ..models import Information, Level, SubLevel, Course, Affiliation, District, College, Faculty, InformationTagging, InformationCategory, InformationGallery, InformationFiles
 
+class LevelSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Level
+        fields = '__all__'
+
+class SubLevelSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SubLevel
+        fields = '__all__'
+
+class CourseSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Course
+        fields = '__all__'
+
+class AffiliationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Affiliation
+        fields = '__all__'
+
+class DistrictSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = District
+        fields = '__all__'
+
+class CollegeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = College
+        fields = '__all__'
+
+class FacultySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Faculty
+        fields = '__all__'
+
+class InformationTaggingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = InformationTagging
+        fields = '__all__'
+
+class InformationCategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = InformationCategory
+        fields = '__all__'
+
+# 🔹 Serializers for File & Image Uploads
+class InformationGallerySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = InformationGallery
+        fields = '__all__'
+
+class InformationFilesSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = InformationFiles
+        fields = '__all__'
+
 class InformationTaggingSerializer(serializers.ModelSerializer):
     class Meta:
         model = InformationTagging
@@ -22,12 +78,37 @@ class InformationGallerySerializer(serializers.ModelSerializer):
 
 
 class InformationListSerializers(serializers.ModelSerializer):
+    level = LevelSerializer(many=True, read_only=True)
+    sublevel = SubLevelSerializer(many=True, read_only=True)
+    course = CourseSerializer(many=True, read_only=True)
+    affiliation = AffiliationSerializer(many=True, read_only=True)
+    district = DistrictSerializer(many=True, read_only=True)
+    college = CollegeSerializer(many=True, read_only=True)
+    faculty = FacultySerializer(many=True, read_only=True)
+    information_tagging = InformationTaggingSerializer(many=True, read_only=True)
+    information_category = InformationCategorySerializer(many=True, read_only=True)
+    
+    information_gallery = InformationGallerySerializer(many=True, read_only=True, source='informationgallery_set')
+    information_files = InformationFilesSerializer(many=True, read_only=True, source='informationfiles_set')
+
     class Meta:
         model = Information
         fields = '__all__'
 
 
 class InformationRetrieveSerializers(serializers.ModelSerializer):
+    level = LevelSerializer(many=True, read_only=True)
+    sublevel = SubLevelSerializer(many=True, read_only=True)
+    course = CourseSerializer(many=True, read_only=True)
+    affiliation = AffiliationSerializer(many=True, read_only=True)
+    district = DistrictSerializer(many=True, read_only=True)
+    college = CollegeSerializer(many=True, read_only=True)
+    faculty = FacultySerializer(many=True, read_only=True)
+    information_tagging = InformationTaggingSerializer(many=True, read_only=True)
+    information_category = InformationCategorySerializer(many=True, read_only=True)
+    
+    information_gallery = InformationGallerySerializer(many=True, read_only=True, source='informationgallery_set')
+    information_files = InformationFilesSerializer(many=True, read_only=True, source='informationfiles_set')
     class Meta:
         model = Information
         fields = '__all__'
@@ -37,6 +118,7 @@ class InformationWriteSerializers(serializers.ModelSerializer):
     Serializer for handling binary image & file uploads in form-data.
     Many-to-Many fields are managed automatically by Django.
     """
+    
 
     class Meta:
         model = Information
@@ -54,7 +136,7 @@ class InformationWriteSerializers(serializers.ModelSerializer):
         for key, file in self.context['request'].FILES.items():
             if key.startswith('images['):  # Images in array format
                 images_data.append(file)
-            elif key.startswith('curriculum_file_upload['):  # Files in array format
+            elif key.startswith('files['):  # Files in array format
                 files_data.append(file)
 
         # Create the Information instance
@@ -82,7 +164,7 @@ class InformationWriteSerializers(serializers.ModelSerializer):
         for key, file in self.context['request'].FILES.items():
             if key.startswith('images['):  # Images in array format
                 images_data.append(file)
-            elif key.startswith('curriculum_file_upload['):  # Files in array format
+            elif key.startswith('files['):  # Files in array format
                 files_data.append(file)
 
         # Update instance fields
