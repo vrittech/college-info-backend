@@ -1,5 +1,7 @@
 from rest_framework import serializers
 from ..models import Event, EventCategory, EventOrganizer, EventGallery
+from django.db import transaction
+
 
 # Serializer for EventCategory
 class EventCategorySerializer(serializers.ModelSerializer):
@@ -43,55 +45,75 @@ class EventRetrieveSerializers(serializers.ModelSerializer):
         fields = '__all__'
 
 
+
 class EventWriteSerializers(serializers.ModelSerializer):
-    # Accept IDs instead of nested objects for many-to-many relationships
-    category = serializers.PrimaryKeyRelatedField(
-        many=True, queryset=EventCategory.objects.all()
-    )
-    organizer = serializers.PrimaryKeyRelatedField(
-        many=True, queryset=EventOrganizer.objects.all()
-    )
-    gallery = serializers.PrimaryKeyRelatedField(
-        many=True, queryset=EventGallery.objects.all()
-    )
+    """
+    Serializer for handling event creation and image uploads.
+    Many-to-Many fields are assigned using IDs, while images are uploaded separately to `EventGallery`.
+    """
+
+    category = serializers.PrimaryKeyRelatedField(many=True, queryset=EventCategory.objects.all())
+    organizer = serializers.PrimaryKeyRelatedField(many=True, queryset=EventOrganizer.objects.all())
+    gallery_images = EventGallerySerializer(many=True, read_only=True, source='eventgallery_set')
 
     class Meta:
         model = Event
         fields = '__all__'
 
+    @transaction.atomic
     def create(self, validated_data):
-        # Extract related many-to-many field IDs
+        """
+        Handles creation of an Event and uploads images to the gallery.
+        """
+        # Extract Many-to-Many fields
         category_ids = validated_data.pop('category', [])
         organizer_ids = validated_data.pop('organizer', [])
-        gallery_ids = validated_data.pop('gallery', [])
+
+        # Extract images from request FILES
+        images_data = []
+        for key, file in self.context['request'].FILES.items():
+            if key.startswith('images['):  # Accepts multiple images
+                images_data.append(file)
 
         # Create the Event instance
         event = Event.objects.create(**validated_data)
 
-        # Assign existing many-to-many objects using IDs
+        # Assign Many-to-Many relationships
         event.category.set(category_ids)
         event.organizer.set(organizer_ids)
-        event.gallery.set(gallery_ids)
+
+        # Save images in EventGallery
+        for image_file in images_data:
+            EventGallery.objects.create(event=event, image=image_file)
 
         return event
 
+    @transaction.atomic
     def update(self, instance, validated_data):
-        # Extract related many-to-many field IDs
+        """
+        Handles updating of an Event and uploads new images to the gallery.
+        """
+        # Extract Many-to-Many fields
         category_ids = validated_data.pop('category', None)
         organizer_ids = validated_data.pop('organizer', None)
-        gallery_ids = validated_data.pop('gallery', None)
 
-        # Update normal fields
-        for attr, value in validated_data.items():
-            setattr(instance, attr, value)
+        # Extract images from request FILES
+        images_data = []
+        for key, file in self.context['request'].FILES.items():
+            if key.startswith('images['):  # Accepts multiple images
+                images_data.append(file)
 
-        # Update many-to-many relationships only if provided
+        # Update instance fields
+        instance = super().update(instance, validated_data)
+
+        # Update Many-to-Many relationships if provided
         if category_ids is not None:
             instance.category.set(category_ids)
         if organizer_ids is not None:
             instance.organizer.set(organizer_ids)
-        if gallery_ids is not None:
-            instance.gallery.set(gallery_ids)
 
-        instance.save()
+        # Save new images in EventGallery
+        for image_file in images_data:
+            EventGallery.objects.create(event=instance, image=image_file)
+
         return instance

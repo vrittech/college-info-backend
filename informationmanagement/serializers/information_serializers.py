@@ -6,11 +6,13 @@ from ..models import Information, Level, SubLevel, Course, Affiliation, District
 class LevelSerializer(serializers.ModelSerializer):
     class Meta:
         model = Level
+        ref_name = 'levels'
         fields = '__all__'
 
 class SubLevelSerializer(serializers.ModelSerializer):
     class Meta:
         model = SubLevel
+        ref_name = 'sublevels'
         fields = '__all__'
 
 class CourseSerializer(serializers.ModelSerializer):
@@ -21,59 +23,70 @@ class CourseSerializer(serializers.ModelSerializer):
 class AffiliationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Affiliation
+        ref_name = 'affiliations'
         fields = '__all__'
 
 class DistrictSerializer(serializers.ModelSerializer):
     class Meta:
         model = District
+        ref_name = 'districts'
         fields = '__all__'
 
 class CollegeSerializer(serializers.ModelSerializer):
     class Meta:
         model = College
+        ref_name = 'colleges'
         fields = '__all__'
 
 class FacultySerializer(serializers.ModelSerializer):
     class Meta:
         model = Faculty
+        ref_name = 'faculties'
         fields = '__all__'
 
 class InformationTaggingSerializer(serializers.ModelSerializer):
     class Meta:
         model = InformationTagging
+        ref_name = 'information_taggings'
         fields = '__all__'
 
 class InformationCategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = InformationCategory
+        ref_name = 'information_categories'
         fields = '__all__'
 
 # 🔹 Serializers for File & Image Uploads
 class InformationGallerySerializer(serializers.ModelSerializer):
     class Meta:
         model = InformationGallery
+        ref_name = 'information_galleries'
         fields = '__all__'
 
 class InformationFilesSerializer(serializers.ModelSerializer):
     class Meta:
         model = InformationFiles
+        ref_name = 'information_files'
         fields = '__all__'
 
 class InformationTaggingSerializer(serializers.ModelSerializer):
     class Meta:
         model = InformationTagging
+        ref_name = 'information_taggings'
         fields = '__all__'
 
 
 class InformationCategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = InformationCategory
+        ref_name = 'information_categories'
         fields = '__all__'
 
 
 class InformationGallerySerializer(serializers.ModelSerializer):
     class Meta:
         model = InformationGallery
+        ref_name = 'information_galleries'
         fields = '__all__'
 
 
