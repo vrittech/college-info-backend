@@ -68,51 +68,46 @@ class CustomUserWriteSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError({"position": "A user with this position already exists."})
         return data
 
-    def create(self, validated_data):
-        groups = validated_data.pop('groups', [])
-        social_media_data = validated_data.pop('social_media', [])
-        password = validated_data.pop('password', None)
+    # def create(self, validated_data):
+    #     groups = validated_data.pop('groups', [])
+    #     print(groups,"---------------------")
+    #     social_media_data = validated_data.pop('social_media', [])
+    #     password = validated_data.pop('password', None)
 
-        # Create user
-        user = User.objects.create(**validated_data)
-        if password:
-            user.set_password(password)
-        user.groups.set(groups)
-        user.save()
+    #     # Create user
+    #     user = User.objects.create(**validated_data)
+        
+    #     if password:
+    #         user.set_password(password)
 
-        # # Create social media records
-        # for sm_data in social_media_data:
-        #     StaffHaveSocialMedia.objects.create(
-        #         staff=user,
-        #         social_media=sm_data['social_media'],
-        #         social_media_url=sm_data['social_media_url']
-        #     )
+    #     # Ensure groups only contain IDs
+    #     if groups:
+    #         print(groups,"!!!!!!!!!!!!!!!!!!!!")
+    #         group_ids = [group.id if hasattr(group, 'id') else group for group in groups]
+    #         user.groups.set(group_ids)  
 
-        return user
+    #     user.save()
+    #     return user
 
-    def update(self, instance, validated_data):
-        groups = validated_data.pop('groups', [])
-        social_media_data = validated_data.pop('social_media', [])
-        password = validated_data.pop('password', None)
+    # def update(self, instance, validated_data):
+    #     groups = validated_data.pop('groups', [])
+    #     social_media_data = validated_data.pop('social_media', [])
+    #     password = validated_data.pop('password', None)
 
-        # Update user fields
-        for attr, value in validated_data.items():
-            setattr(instance, attr, value)
+    #     # Update user fields
+    #     for attr, value in validated_data.items():
+    #         setattr(instance, attr, value)
 
-        if password:
-            instance.set_password(password)
-        instance.groups.set(groups)
-        instance.save()
+    #     if password:
+    #         instance.set_password(password)
 
-        # Update or create social media records
-        # for sm_data in social_media_data:
-        #     StaffHaveSocialMedia.objects.update_or_create(
-        #         staff=instance,
-        #         social_media=sm_data['social_media'],
-        #         defaults={'social_media_url': sm_data['social_media_url']}
-        #     )
+    #     # Convert groups into primary keys if they are objects
+    #     group_ids = [group.id if hasattr(group, 'id') else group for group in groups]
 
-        return instance
+    #     instance.groups.set(group_ids)  # ✅ Ensure only IDs are passed
+    #     instance.save()
+
+    #     return instance
 
 class CustomUserRetrieveSerializer(serializers.ModelSerializer):
     # usersocial = StaffSocialMediaSerializer(many=True,read_only = True)
