@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 25,
+            "activePatchIndex": 26,
             "patches": [
                 {
                     "date": 1733481577467,
@@ -108,6 +108,10 @@
                 {
                     "date": 1738307427812,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,8 +4,10 @@\n from ..models import Information\n from ..serializers.information_serializers import InformationListSerializers, InformationRetrieveSerializers, InformationWriteSerializers\n from ..utilities.importbase import *\n from ..utilities.filters import InformationFilter\n+from rest_framework import viewsets, status\n+from rest_framework.response import Response\n \n class informationViewsets(viewsets.ModelViewSet):\n     serializer_class = InformationListSerializers\n     # permission_classes = [informationmanagementPermission]\n"
+                },
+                {
+                    "date": 1738323356134,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -51,24 +51,24 @@\n     # def action_name(self, request, *args, **kwargs):\n     #     return super().list(request, *args, **kwargs)\n \n \n-    def create(self, request, *args, **kwargs):\n-        \"\"\"\n-        Override the create method to return the request data as the response.\n-        \"\"\"\n-        response = super().create(request, *args, **kwargs)\n-        return Response(request.data, status=response.status_code)\n+    # def create(self, request, *args, **kwargs):\n+    #     \"\"\"\n+    #     Override the create method to return the request data as the response.\n+    #     \"\"\"\n+    #     response = super().create(request, *args, **kwargs)\n+    #     return Response(request.data, status=response.status_code)\n \n-    def update(self, request, *args, **kwargs):\n-        \"\"\"\n-        Override the update method to return the request data as the response.\n-        \"\"\"\n-        response = super().update(request, *args, **kwargs)\n-        return Response(request.data, status=response.status_code)\n+    # def update(self, request, *args, **kwargs):\n\\ No newline at end of file\n+    #     \"\"\"\n+    #     Override the update method to return the request data as the response.\n+    #     \"\"\"\n+    #     response = super().update(request, *args, **kwargs)\n+    #     return Response(request.data, status=response.status_code)\n \n-    def partial_update(self, request, *args, **kwargs):\n-        \"\"\"\n-        Override the partial_update method to return the request data as the response.\n-        \"\"\"\n-        response = super().partial_update(request, *args, **kwargs)\n-        return Response(request.data, status=response.status_code)\n+    # def partial_update(self, request, *args, **kwargs):\n+    #     \"\"\"\n+    #     Override the partial_update method to return the request data as the response.\n+    #     \"\"\"\n+    #     response = super().partial_update(request, *args, **kwargs)\n+    #     return Response(request.data, status=response.status_code)\n\\ No newline at end of file\n"
                 }
             ],
             "date": 1733481577467,

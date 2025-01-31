@@ -3,7 +3,7 @@ name: CI/CD Pipeline
 on:
   push:
     branches:
-      - main
+      - test
 
 jobs:
   build-and-deploy:
@@ -43,9 +43,9 @@ jobs:
         BACKEND_PASSWORD: backend
         SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         SERVER_IP: "142.171.168.136"
-        PORT: "8007"
-        SCREEN_NAME: "collegeinfo"
-        PROJECT_FOLDER: "/home/collegeinfo"
+        PORT: "8002"
+        SCREEN_NAME: "testcollegeinfo"
+        PROJECT_FOLDER: "/home/testcollegeinfo"
 
       run: |
         mkdir -p ~/.ssh

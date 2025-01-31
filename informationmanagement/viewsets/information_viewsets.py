@@ -52,23 +52,23 @@ class informationViewsets(viewsets.ModelViewSet):
     #     return super().list(request, *args, **kwargs)
 
 
-    def create(self, request, *args, **kwargs):
-        """
-        Override the create method to return the request data as the response.
-        """
-        response = super().create(request, *args, **kwargs)
-        return Response(request.data, status=response.status_code)
+    # def create(self, request, *args, **kwargs):
+    #     """
+    #     Override the create method to return the request data as the response.
+    #     """
+    #     response = super().create(request, *args, **kwargs)
+    #     return Response(request.data, status=response.status_code)
 
-    def update(self, request, *args, **kwargs):
-        """
-        Override the update method to return the request data as the response.
-        """
-        response = super().update(request, *args, **kwargs)
-        return Response(request.data, status=response.status_code)
+    # def update(self, request, *args, **kwargs):
+    #     """
+    #     Override the update method to return the request data as the response.
+    #     """
+    #     response = super().update(request, *args, **kwargs)
+    #     return Response(request.data, status=response.status_code)
 
-    def partial_update(self, request, *args, **kwargs):
-        """
-        Override the partial_update method to return the request data as the response.
-        """
-        response = super().partial_update(request, *args, **kwargs)
-        return Response(request.data, status=response.status_code)
+    # def partial_update(self, request, *args, **kwargs):
+    #     """
+    #     Override the partial_update method to return the request data as the response.
+    #     """
+    #     response = super().partial_update(request, *args, **kwargs)
+    #     return Response(request.data, status=response.status_code)
