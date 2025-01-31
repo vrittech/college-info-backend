@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 8,
+            "activePatchIndex": 9,
             "patches": [
                 {
                     "date": 1727174504183,
@@ -40,6 +40,10 @@
                 {
                     "date": 1738131657907,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,9 +14,9 @@\n     # category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='facilities')\n     image = models.ImageField(upload_to='facility_images/', blank=True, null=True)\n     created_date = models.DateField(auto_now_add=True, null=True, blank=True)\n     created_date_time = models.DateTimeField(auto_now_add=True, null=True, blank=True)\n-    \n+    is\n     updated_date = models.DateTimeField(auto_now=True, null=True, blank=True)\n     \n \n     def __str__(self):\n"
+                },
+                {
+                    "date": 1738317987872,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,14 +14,14 @@\n     # category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='facilities')\n     image = models.ImageField(upload_to='facility_images/', blank=True, null=True)\n     created_date = models.DateField(auto_now_add=True, null=True, blank=True)\n     created_date_time = models.DateTimeField(auto_now_add=True, null=True, blank=True)\n-    is\n+    is_show = models.BooleanField(default=False)\n     updated_date = models.DateTimeField(auto_now=True, null=True, blank=True)\n     \n \n     def __str__(self):\n-        return self.facility_name\n+        return self.name\n     \n     class Meta:\n         permissions = [\n             ('manage_facility', 'Manage facility'),\n"
                 }
             ],
             "date": 1727174504183,
