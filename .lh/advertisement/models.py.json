@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 35,
+            "activePatchIndex": 36,
             "patches": [
                 {
                     "date": 1733373617417,
@@ -148,6 +148,10 @@
                 {
                     "date": 1733640398739,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,9 @@\n         return self.position_name\n     \n     class meta:\n         permissions = [\n-            ('manage_placement_position', 'Can add placement position'),\n+            ('manage_placement_position', 'Manage placement position'),\n         ]\n \n \n class Advertisement(models.Model):\n"
+                },
+                {
+                    "date": 1738315342207,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,9 +6,9 @@\n     created_date = models.DateTimeField(auto_now_add=True)\n     updated_date = models.DateTimeField(auto_now=True)\n \n     def __str__(self):\n-        return self.position_name\n+        return self.placement_name\n     \n     class meta:\n         permissions = [\n             ('manage_placement_position', 'Manage placement position'),\n"
                 }
             ],
             "date": 1733373617417,
