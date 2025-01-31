@@ -5,6 +5,8 @@ from ..models import Information
 from ..serializers.information_serializers import InformationListSerializers, InformationRetrieveSerializers, InformationWriteSerializers
 from ..utilities.importbase import *
 from ..utilities.filters import InformationFilter
+from rest_framework import viewsets, status
+from rest_framework.response import Response
 
 class informationViewsets(viewsets.ModelViewSet):
     serializer_class = InformationListSerializers
@@ -49,3 +51,24 @@ class informationViewsets(viewsets.ModelViewSet):
     # def action_name(self, request, *args, **kwargs):
     #     return super().list(request, *args, **kwargs)
 
+
+    def create(self, request, *args, **kwargs):
+        """
+        Override the create method to return the request data as the response.
+        """
+        response = super().create(request, *args, **kwargs)
+        return Response(request.data, status=response.status_code)
+
+    def update(self, request, *args, **kwargs):
+        """
+        Override the update method to return the request data as the response.
+        """
+        response = super().update(request, *args, **kwargs)
+        return Response(request.data, status=response.status_code)
+
+    def partial_update(self, request, *args, **kwargs):
+        """
+        Override the partial_update method to return the request data as the response.
+        """
+        response = super().partial_update(request, *args, **kwargs)
+        return Response(request.data, status=response.status_code)
