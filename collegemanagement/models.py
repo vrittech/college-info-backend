@@ -69,7 +69,7 @@ class College(SEOFields):
     longitude = models.DecimalField(max_digits=9, decimal_places=6)
     about = models.TextField(null = True,blank=True)
     brochure = models.FileField(upload_to='college/brochure/',null=True,blank=True)
-    step_counter= models.ForeignKey(FormStepProgress, on_delete=models.CASCADE,related_name='step_counter')
+    step_counter= models.ForeignKey(FormStepProgress, on_delete=models.CASCADE,related_name='step_counter',null=True,blank=True)
     facilities = models.ManyToManyField(Facility,related_name='college_facilities')
     placement = models.TextField(null=True,blank=True)
     scholarship = models.TextField(null=True,blank=True)

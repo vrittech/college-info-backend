@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 207,
+            "activePatchIndex": 208,
             "patches": [
                 {
                     "date": 1727170911785,
@@ -836,6 +836,10 @@
                 {
                     "date": 1738317792935,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -66,9 +66,9 @@\n     social_media = models.ManyToManyField(SocialMedia)\n     google_map_link = models.URLField(blank=True, null=True)\n     latitude = models.DecimalField(max_digits=9, decimal_places=6)\n     longitude = models.DecimalField(max_digits=9, decimal_places=6)\n-    about = models.TextField()\n+    about = models.TextField(null )\n     brochure = models.FileField(upload_to='college/brochure/',null=True,blank=True)\n     step_counter= models.ForeignKey(FormStepProgress, on_delete=models.CASCADE,related_name='step_counter')\n     facilities = models.ManyToManyField(Facility,related_name='college_facilities')\n     placement = models.TextField(null=True,blank=True)\n"
+                },
+                {
+                    "date": 1738318421932,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -66,11 +66,11 @@\n     social_media = models.ManyToManyField(SocialMedia)\n     google_map_link = models.URLField(blank=True, null=True)\n     latitude = models.DecimalField(max_digits=9, decimal_places=6)\n     longitude = models.DecimalField(max_digits=9, decimal_places=6)\n-    about = models.TextField(null )\n+    about = models.TextField(null = True,blank=True)\n     brochure = models.FileField(upload_to='college/brochure/',null=True,blank=True)\n-    step_counter= models.ForeignKey(FormStepProgress, on_delete=models.CASCADE,related_name='step_counter')\n+    step_counter= models.ForeignKey(FormStepProgress, on_delete=models.CASCADE,related_name='step_counter',)\n     facilities = models.ManyToManyField(Facility,related_name='college_facilities')\n     placement = models.TextField(null=True,blank=True)\n     scholarship = models.TextField(null=True,blank=True)\n     created_date = models.DateField(auto_now_add=True)\n"
                 }
             ],
             "date": 1727170911784,

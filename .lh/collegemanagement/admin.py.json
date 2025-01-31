@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 7,
+            "activePatchIndex": 8,
             "patches": [
                 {
                     "date": 1727176327215,
@@ -36,6 +36,10 @@
                 {
                     "date": 1733643720116,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,8 @@\n from django.contrib import admin\n \n # Register your models here.\n-from .models import CollegeGallery,College,CollegeFaqs,CollegeGallery,\n+from .models import CollegeGallery,College,CollegeFaqs\n \n admin.site.register(CollegeGallery)\n admin.site.register(College)\n admin.site.register(CollegeFaqs)\n"
+                },
+                {
+                    "date": 1738318431000,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,6 +4,5 @@\n from .models import CollegeGallery,College,CollegeFaqs\n \n admin.site.register(CollegeGallery)\n admin.site.register(College)\n-admin.site.register(CollegeFaqs)\n-admin.site.register(College)\n\\ No newline at end of file\n+admin.site.register(CollegeFaqs)\n\\ No newline at end of file\n"
                 }
             ],
             "date": 1727176327215,
