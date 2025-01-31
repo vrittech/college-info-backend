@@ -67,7 +67,7 @@ class College(SEOFields):
     google_map_link = models.URLField(blank=True, null=True)
     latitude = models.DecimalField(max_digits=9, decimal_places=6)
     longitude = models.DecimalField(max_digits=9, decimal_places=6)
-    about = models.TextField()
+    about = models.TextField(null = True,blank=True)
     brochure = models.FileField(upload_to='college/brochure/',null=True,blank=True)
     step_counter= models.ForeignKey(FormStepProgress, on_delete=models.CASCADE,related_name='step_counter')
     facilities = models.ManyToManyField(Facility,related_name='college_facilities')
