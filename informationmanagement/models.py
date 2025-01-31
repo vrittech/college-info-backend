@@ -79,8 +79,8 @@ class Information(SEOFields):
     information_tagging = models.ManyToManyField(InformationTagging, blank=True)
     information_category = models.ManyToManyField(InformationCategory, blank=True)
     
-    short_description = models.TextField()
-    description = models.TextField()
+    short_description = models.TextField(null=True, blank=True)
+    description = models.TextField(null=True, blank=True)
     # image = models.ManyToManyField(InformationGallery, blank=True)
     # file = models.ManyToManyField(InformationFiles, blank=True)
     state = models.BooleanField(default=False)
