@@ -93,5 +93,3 @@ jobs:
         #     python manage.py populate_cat &&
         #     python manage.py populate_ser
         # "
-
-#AmazonEC2FullAccess

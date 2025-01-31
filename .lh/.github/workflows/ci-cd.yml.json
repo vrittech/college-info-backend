@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 14,
+            "activePatchIndex": 15,
             "patches": [
                 {
                     "date": 1733397109290,
@@ -64,6 +64,10 @@
                 {
                     "date": 1738323700719,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -42,11 +42,11 @@\n         BACKEND_USER: backend\n         BACKEND_PASSWORD: backend\n         SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}\n         SERVER_IP: \"142.171.168.136\"\n-        PORT: \"8007\"\n-        SCREEN_NAME: \"collegeinfo\"\n-        PROJECT_FOLDER: \"/home/collegeinfo\"\n+        PORT: \"8002\"\n+        SCREEN_NAME: \"testcollegeinfo\"\n+        PROJECT_FOLDER: \"/home/testcollegeinfo\"\n \n       run: |\n         mkdir -p ~/.ssh\n         echo \"${{ secrets.SSH_PRIVATE_KEY }}\" > ~/.ssh/id_rsa\n"
+                },
+                {
+                    "date": 1738324026650,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -91,7 +91,5 @@\n         #     python manage.py populate_inquiry &&\n         #     python manage.py populate_quot &&\n         #     python manage.py populate_cat &&\n         #     python manage.py populate_ser\n-        # \"\n-\n-#AmazonEC2FullAccess\n\\ No newline at end of file\n+        # \"\n\\ No newline at end of file\n"
                 }
             ],
             "date": 1733397109290,
