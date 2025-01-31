@@ -34,7 +34,7 @@ class Course(SEOFields):
     
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = slugify(self.name)+'-'+str(self.public_id)[1:5] + str(self.public_id)[-1:-5]
+            self.slug = slugify(self.name)
         super().save(*args, **kwargs)
     
     class Meta:
