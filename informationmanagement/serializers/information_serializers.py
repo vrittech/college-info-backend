@@ -126,6 +126,7 @@ class InformationRetrieveSerializers(serializers.ModelSerializer):
     class Meta:
         model = Information
         fields = '__all__'
+        
 
 # class InformationWriteSerializers(serializers.ModelSerializer):
 #     """
@@ -194,54 +195,62 @@ class InformationRetrieveSerializers(serializers.ModelSerializer):
 #             InformationFiles.objects.create(information=instance, file=file_item)
 
 #         return instance
+
+class IntegerListField(serializers.ListField):
+    """ Converts comma-separated form-data lists into Python lists """
+    def to_internal_value(self, data):
+        if isinstance(data, str):
+            try:
+                return list(map(int, data.strip("[]").split(',')))  # Convert "[2,3]" -> [2,3]
+            except ValueError:
+                raise serializers.ValidationError("Invalid format. Expected comma-separated numbers.")
+        return super().to_internal_value(data)
+
 class InformationWriteSerializers(serializers.ModelSerializer):
-    """
-    Serializer for handling Information creation and Many-to-Many fields correctly.
-    Accepts only IDs for many-to-many fields, handles file and image uploads.
-    """
+    """ Handles Many-to-Many fields and file/image uploads """
 
-    level = serializers.ListSerializer(child=serializers.IntegerField(), required=False)
-    sublevel = serializers.ListSerializer(child=serializers.IntegerField(), required=False)
-    course = serializers.ListSerializer(child=serializers.IntegerField(), required=False)
-    affiliation = serializers.ListSerializer(child=serializers.IntegerField(), required=False)
-    district = serializers.ListSerializer(child=serializers.IntegerField(), required=False)
-    college = serializers.ListSerializer(child=serializers.IntegerField(), required=False)
-    faculty = serializers.ListSerializer(child=serializers.IntegerField(), required=False)
-    information_tagging = serializers.ListSerializer(child=serializers.IntegerField(), required=False)
-    information_category = serializers.ListSerializer(child=serializers.IntegerField(), required=False)
+    level = IntegerListField(child=serializers.IntegerField(), required=False)
+    sublevel = IntegerListField(child=serializers.IntegerField(), required=False)
+    course = IntegerListField(child=serializers.IntegerField(), required=False)
+    affiliation = IntegerListField(child=serializers.IntegerField(), required=False)
+    district = IntegerListField(child=serializers.IntegerField(), required=False)
+    college = IntegerListField(child=serializers.IntegerField(), required=False)
+    faculty = IntegerListField(child=serializers.IntegerField(), required=False)
+    information_tagging = IntegerListField(child=serializers.IntegerField(), required=False)
+    information_category = IntegerListField(child=serializers.IntegerField(), required=False)
 
-    # Return uploaded images and files
-    information_gallery = InformationGallerySerializer(many=True, read_only=True)
-    information_files = InformationFilesSerializer(many=True, read_only=True)
+    # Read-only for returned images and files
+    information_gallery = serializers.SerializerMethodField()
+    information_files = serializers.SerializerMethodField()
 
     class Meta:
         model = Information
         fields = '__all__'
 
+    def get_information_gallery(self, obj):
+        return [img.image.url for img in obj.information_gallery.all()]
+
+    def get_information_files(self, obj):
+        return [file.file.url for file in obj.information_files.all()]
+
     def extract_images_and_files(self):
-        """
-        Extracts multiple image and file uploads from request.FILES.
-        Handles formats like information_gallery[0], information_gallery[1], information_files[0], information_files[1]
-        """
-        images_data = []
-        files_data = []
+        """ Extract multiple images and files from `image[0]`, `image[1]` keys in request.FILES """
+        images_data, files_data = [], []
         request = self.context.get('request')
 
         if request and hasattr(request, 'FILES'):
             for key, file in request.FILES.items():
-                if key.startswith('information_gallery['):  # Accept multiple images
+                if key.startswith('image['):  # Accept multiple images as `image[0]`, `image[1]`
                     images_data.append(file)
-                elif key.startswith('information_files['):  # Accept multiple files
+                elif key.startswith('file['):  # Accept multiple files as `file[0]`, `file[1]`
                     files_data.append(file)
 
         return images_data, files_data
 
     @transaction.atomic
     def create(self, validated_data):
-        """
-        Handles creation of Information instance, Many-to-Many relationships,
-        and uploads images & files.
-        """
+        """ Handles Many-to-Many relationships and image/file uploads """
+
         # Extract Many-to-Many field IDs
         level_ids = validated_data.pop('level', [])
         sublevel_ids = validated_data.pop('sublevel', [])
@@ -256,19 +265,19 @@ class InformationWriteSerializers(serializers.ModelSerializer):
         # Extract images & files from request FILES
         images_data, files_data = self.extract_images_and_files()
 
-        # Create the Information instance
+        # Create Information instance
         information = Information.objects.create(**validated_data)
 
-        # Assign Many-to-Many relationships using .set()
-        information.level.set(Level.objects.filter(id__in=level_ids))
-        information.sublevel.set(SubLevel.objects.filter(id__in=sublevel_ids))
-        information.course.set(Course.objects.filter(id__in=course_ids))
-        information.affiliation.set(Affiliation.objects.filter(id__in=affiliation_ids))
-        information.district.set(District.objects.filter(id__in=district_ids))
-        information.college.set(College.objects.filter(id__in=college_ids))
-        information.faculty.set(Faculty.objects.filter(id__in=faculty_ids))
-        information.information_tagging.set(InformationTagging.objects.filter(id__in=information_tagging_ids))
-        information.information_category.set(InformationCategory.objects.filter(id__in=information_category_ids))
+        # Assign Many-to-Many relationships
+        information.level.add(*level_ids)
+        information.sublevel.add(*sublevel_ids)
+        information.course.add(*course_ids)
+        information.affiliation.add(*affiliation_ids)
+        information.district.add(*district_ids)
+        information.college.add(*college_ids)
+        information.faculty.add(*faculty_ids)
+        information.information_tagging.add(*information_tagging_ids)
+        information.information_category.add(*information_category_ids)
 
         # Save images to InformationGallery
         for image_file in images_data:
@@ -282,10 +291,8 @@ class InformationWriteSerializers(serializers.ModelSerializer):
 
     @transaction.atomic
     def update(self, instance, validated_data):
-        """
-        Handles updating of Information instance, Many-to-Many relationships,
-        and uploads new images & files.
-        """
+        """ Handles updates for Many-to-Many relationships and file uploads """
+
         # Extract Many-to-Many field IDs
         level_ids = validated_data.pop('level', None)
         sublevel_ids = validated_data.pop('sublevel', None)
@@ -303,25 +310,25 @@ class InformationWriteSerializers(serializers.ModelSerializer):
         # Update instance fields
         instance = super().update(instance, validated_data)
 
-        # Update Many-to-Many relationships if provided
+        # Update Many-to-Many relationships
         if level_ids is not None:
-            instance.level.set(Level.objects.filter(id__in=level_ids))
+            instance.level.set(level_ids)
         if sublevel_ids is not None:
-            instance.sublevel.set(SubLevel.objects.filter(id__in=sublevel_ids))
+            instance.sublevel.set(sublevel_ids)
         if course_ids is not None:
-            instance.course.set(Course.objects.filter(id__in=course_ids))
+            instance.course.set(course_ids)
         if affiliation_ids is not None:
-            instance.affiliation.set(Affiliation.objects.filter(id__in=affiliation_ids))
+            instance.affiliation.set(affiliation_ids)
         if district_ids is not None:
-            instance.district.set(District.objects.filter(id__in=district_ids))
+            instance.district.set(district_ids)
         if college_ids is not None:
-            instance.college.set(College.objects.filter(id__in=college_ids))
+            instance.college.set(college_ids)
         if faculty_ids is not None:
-            instance.faculty.set(Faculty.objects.filter(id__in=faculty_ids))
+            instance.faculty.set(faculty_ids)
         if information_tagging_ids is not None:
-            instance.information_tagging.set(InformationTagging.objects.filter(id__in=information_tagging_ids))
+            instance.information_tagging.set(information_tagging_ids)
         if information_category_ids is not None:
-            instance.information_category.set(InformationCategory.objects.filter(id__in=information_category_ids))
+            instance.information_category.set(information_category_ids)
 
         # Save new images to InformationGallery
         for image_file in images_data:
