@@ -101,8 +101,8 @@ class InformationListSerializers(serializers.ModelSerializer):
     information_tagging = InformationTaggingSerializer(many=True, read_only=True)
     information_category = InformationCategorySerializer(many=True, read_only=True)
     
-    information_gallery = InformationGallerySerializer(many=True, read_only=True, source='informationgallery_set')
-    information_files = InformationFilesSerializer(many=True, read_only=True, source='informationfiles_set')
+    information_gallery = InformationGallerySerializer(many=True, read_only=True)
+    information_files = InformationFilesSerializer(many=True, read_only=True)
 
     class Meta:
         model = Information
@@ -120,8 +120,9 @@ class InformationRetrieveSerializers(serializers.ModelSerializer):
     information_tagging = InformationTaggingSerializer(many=True, read_only=True)
     information_category = InformationCategorySerializer(many=True, read_only=True)
     
-    information_gallery = InformationGallerySerializer(many=True, read_only=True, source='informationgallery_set')
-    information_files = InformationFilesSerializer(many=True, read_only=True, source='informationfiles_set')
+    information_gallery = InformationGallerySerializer(many=True, read_only=True)
+    information_files = InformationFilesSerializer(many=True, read_only=True)
+
     class Meta:
         model = Information
         fields = '__all__'
@@ -193,13 +194,10 @@ class InformationRetrieveSerializers(serializers.ModelSerializer):
 #             InformationFiles.objects.create(information=instance, file=file_item)
 
 #         return instance
-from rest_framework import serializers
-from django.db import transaction
-
 class InformationWriteSerializers(serializers.ModelSerializer):
     """
     Serializer for handling Information creation and Many-to-Many fields correctly.
-    Accepts only IDs for many-to-many fields.
+    Accepts only IDs for many-to-many fields, handles file and image uploads.
     """
 
     level = serializers.ListSerializer(child=serializers.IntegerField(), required=False)
@@ -212,12 +210,31 @@ class InformationWriteSerializers(serializers.ModelSerializer):
     information_tagging = serializers.ListSerializer(child=serializers.IntegerField(), required=False)
     information_category = serializers.ListSerializer(child=serializers.IntegerField(), required=False)
 
-    gallery_images = InformationGallerySerializer(many=True, read_only=True, source='informationgallery_set')
-    uploaded_files = InformationFilesSerializer(many=True, read_only=True, source='informationfiles_set')
+    # Return uploaded images and files
+    information_gallery = InformationGallerySerializer(many=True, read_only=True)
+    information_files = InformationFilesSerializer(many=True, read_only=True)
 
     class Meta:
         model = Information
         fields = '__all__'
+
+    def extract_images_and_files(self):
+        """
+        Extracts multiple image and file uploads from request.FILES.
+        Handles formats like information_gallery[0], information_gallery[1], information_files[0], information_files[1]
+        """
+        images_data = []
+        files_data = []
+        request = self.context.get('request')
+
+        if request and hasattr(request, 'FILES'):
+            for key, file in request.FILES.items():
+                if key.startswith('information_gallery['):  # Accept multiple images
+                    images_data.append(file)
+                elif key.startswith('information_files['):  # Accept multiple files
+                    files_data.append(file)
+
+        return images_data, files_data
 
     @transaction.atomic
     def create(self, validated_data):
@@ -237,14 +254,7 @@ class InformationWriteSerializers(serializers.ModelSerializer):
         information_category_ids = validated_data.pop('information_category', [])
 
         # Extract images & files from request FILES
-        images_data = []
-        files_data = []
-
-        for key, file in self.context['request'].FILES.items():
-            if key.startswith('images['):  # Accept multiple images
-                images_data.append(file)
-            elif key.startswith('files['):  # Accept multiple files
-                files_data.append(file)
+        images_data, files_data = self.extract_images_and_files()
 
         # Create the Information instance
         information = Information.objects.create(**validated_data)
@@ -288,14 +298,7 @@ class InformationWriteSerializers(serializers.ModelSerializer):
         information_category_ids = validated_data.pop('information_category', None)
 
         # Extract images & files from request FILES
-        images_data = []
-        files_data = []
-
-        for key, file in self.context['request'].FILES.items():
-            if key.startswith('images['):  # Accept multiple images
-                images_data.append(file)
-            elif key.startswith('files['):  # Accept multiple files
-                files_data.append(file)
+        images_data, files_data = self.extract_images_and_files()
 
         # Update instance fields
         instance = super().update(instance, validated_data)

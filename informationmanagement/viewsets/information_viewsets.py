@@ -50,25 +50,42 @@ class informationViewsets(viewsets.ModelViewSet):
     # @action(detail=False, methods=['get'], name="action_name", url_path="url_path")
     # def action_name(self, request, *args, **kwargs):
     #     return super().list(request, *args, **kwargs)
-
+    def get_serializer_class(self):
+            """
+            Returns the appropriate serializer class based on the request type.
+            """
+            if self.action in ['create', 'update', 'partial_update']:
+                return InformationWriteSerializers
+            elif self.action == 'retrieve':
+                return InformationRetrieveSerializers
+            return InformationListSerializers
 
     def create(self, request, *args, **kwargs):
         """
-        Override the create method to return the request data as the response.
+        Handles creating a new Information object.
+        Returns the full object data using InformationRetrieveSerializers.
         """
-        response = super().create(request, *args, **kwargs)
-        return Response(request.data, status=response.status_code)
+        serializer = self.get_serializer(data=request.data, context={'request': request})
+        serializer.is_valid(raise_exception=True)
+        instance = serializer.save()
+
+        return Response(InformationRetrieveSerializers(instance).data, status=status.HTTP_201_CREATED)
 
     def update(self, request, *args, **kwargs):
         """
-        Override the update method to return the request data as the response.
+        Handles updating an existing Information object.
+        Returns the updated object data using InformationRetrieveSerializers.
         """
-        response = super().update(request, *args, **kwargs)
-        return Response(request.data, status=response.status_code)
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data, context={'request': request}, partial=True)
+        serializer.is_valid(raise_exception=True)
+        instance = serializer.save()
 
-    def partial_update(self, request, *args, **kwargs):
+        return Response(InformationRetrieveSerializers(instance).data, status=status.HTTP_200_OK)
+
+    def get_queryset(self):
         """
-        Override the partial_update method to return the request data as the response.
+        Allows additional filtering logic if needed.
         """
-        response = super().partial_update(request, *args, **kwargs)
-        return Response(request.data, status=response.status_code)
+        queryset = super().get_queryset()
+        return queryset
