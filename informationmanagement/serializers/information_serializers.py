@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from django.db import transaction
+import ast
 
 from ..models import Information, Level, SubLevel, Course, Affiliation, District, College, Faculty, InformationTagging, InformationCategory, InformationGallery, InformationFiles
 
@@ -197,16 +198,22 @@ class InformationRetrieveSerializers(serializers.ModelSerializer):
 #         return instance
 
 class IntegerListField(serializers.ListField):
-    """ Converts form-data list-like strings (e.g., '[2,3]') into actual Python lists of integers. """
+    """ Converts stringified lists from form-data (e.g., '[2,3]') into real Python lists of integers. """
+    
     def to_internal_value(self, data):
         if isinstance(data, list):  
-            return [int(i) for i in data]  # Ensure each value is an integer
+            return [int(i) for i in data]  # Already a list, convert values to integers
         
         if isinstance(data, str):  
             try:
-                # Handles form-data where data is sent as a string (e.g., "[2,3]")
-                clean_data = data.strip("[]").replace(" ", "")  # Remove brackets & spaces
-                return list(map(int, clean_data.split(',')))  # Convert to list of integers
+                # Handle data sent as: "2,3" or "[2,3]"
+                clean_data = data.strip("[]").replace(" ", "")  # Remove brackets and spaces
+                
+                if "," in clean_data:  # "2,3" case
+                    return list(map(int, clean_data.split(',')))  # Convert to list of integers
+                
+                return [int(clean_data)]  # Handle single integer case (e.g., "2" -> [2])
+
             except ValueError:
                 raise serializers.ValidationError("Invalid format. Expected comma-separated integers.")
         

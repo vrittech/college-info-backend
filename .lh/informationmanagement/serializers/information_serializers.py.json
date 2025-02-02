@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 87,
+            "activePatchIndex": 89,
             "patches": [
                 {
                     "date": 1733485840683,
@@ -356,6 +356,14 @@
                 {
                     "date": 1738487863104,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -200,9 +200,9 @@\n     \"\"\" Converts form-data list-like strings (e.g., '[2,3]') into actual Python lists of integers. \"\"\"\n     def to_internal_value(self, data):\n         if isinstance(data, list):  \n             return [int(i) for i in data]  # Ensure each value is an integer\n-        \n+        z\n         if isinstance(data, str):  \n             try:\n                 # Handles form-data where data is sent as a string (e.g., \"[2,3]\")\n                 clean_data = data.strip(\"[]\").replace(\" \", \"\")  # Remove brackets & spaces\n"
+                },
+                {
+                    "date": 1738488950123,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -196,18 +196,24 @@\n \n #         return instance\n \n class IntegerListField(serializers.ListField):\n-    \"\"\" Converts form-data list-like strings (e.g., '[2,3]') into actual Python lists of integers. \"\"\"\n+    \"\"\" Converts stringified lists from form-data (e.g., '[2,3]') into real Python lists of integers. \"\"\"\n+    \n     def to_internal_value(self, data):\n         if isinstance(data, list):  \n-            return [int(i) for i in data]  # Ensure each value is an integer\n-        z\n+            return [int(i) for i in data]  # Already a list, convert values to integers\n+        \n         if isinstance(data, str):  \n             try:\n-                # Handles form-data where data is sent as a string (e.g., \"[2,3]\")\n-                clean_data = data.strip(\"[]\").replace(\" \", \"\")  # Remove brackets & spaces\n-                return list(map(int, clean_data.split(',')))  # Convert to list of integers\n+                # Handle data sent as: \"2,3\" or \"[2,3]\"\n+                clean_data = data.strip(\"[]\").replace(\" \", \"\")  # Remove brackets and spaces\n+                \n+                if \",\" in clean_data:  # \"2,3\" case\n+                    return list(map(int, clean_data.split(',')))  # Convert to list of integers\n+                \n+                return [int(clean_data)]  # Handle single integer case (e.g., \"2\" -> [2])\n+\n             except ValueError:\n                 raise serializers.ValidationError(\"Invalid format. Expected comma-separated integers.\")\n         \n         return super().to_internal_value(data)\n"
+                },
+                {
+                    "date": 1738488956302,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,7 @@\n from rest_framework import serializers\n from django.db import transaction\n+import ast\n \n from ..models import Information, Level, SubLevel, Course, Affiliation, District, College, Faculty, InformationTagging, InformationCategory, InformationGallery, InformationFiles\n \n class LevelSerializer(serializers.ModelSerializer):\n"
                 }
             ],
             "date": 1733485840683,
