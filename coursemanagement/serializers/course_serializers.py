@@ -83,7 +83,7 @@ class CourseListSerializers(serializers.ModelSerializer):
     # Nested serializers for related fields
     affiliation = AffiliationSerializer(read_only=True)
     duration = DurationSerializer(read_only=True)
-    faculties = FacultySerializer(many=True, read_only=True)
+    faculty = FacultySerializer(read_only=True)
     level = LevelSerializer(read_only=True)
     discipline = DisciplineSerializer(many=True,read_only=True)
 
@@ -96,7 +96,7 @@ class CourseRetrieveSerializers(serializers.ModelSerializer):
     # Nested serializers for related fields
     affiliation = AffiliationSerializer(read_only=True)
     duration = DurationSerializer(read_only=True)
-    faculties = FacultySerializer(many=True, read_only=True)
+    faculty = FacultySerializer(read_only=True)
     level = LevelSerializer(read_only=True)
     discipline = DisciplineSerializer(many=True,read_only=True)
 
