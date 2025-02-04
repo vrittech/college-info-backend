@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 14,
+            "activePatchIndex": 19,
             "patches": [
                 {
                     "date": 1733477390024,
@@ -64,6 +64,26 @@
                 {
                     "date": 1738651974446,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -53,9 +53,9 @@\n     \"\"\"\n \n     category = serializers.PrimaryKeyRelatedField(many=True, queryset=EventCategory.objects.all())\n     organizer = serializers.PrimaryKeyRelatedField(many=True, queryset=EventOrganizer.objects.all())\n-    gallery_images = EventGallerySerializer(many=True, read_only=True, source='eventgallery_set')\n+    image = EventGallerySerializer(many=True, read_only=True, source='eventgallery_set')\n \n     class Meta:\n         model = Event\n         fields = '__all__'\n"
+                },
+                {
+                    "date": 1738666501931,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,9 +23,9 @@\n \n # Serializer for listing event details (basic view)\n class EventListSerializers(serializers.ModelSerializer):\n     # Nested fields for related models (full object details)\n-    category = EventCategorySerializer(many=True)  # Full details of categories\n+    category = EventCategorySerializer(many=True,read)  # Full details of categories\n     organizer = EventOrganizerSerializer(many=True)  # Full details of organizers\n     image = EventGallerySerializer(many=True)  # Full details of gallery images\n     \n     class Meta:\n"
+                },
+                {
+                    "date": 1738666507294,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,9 +23,9 @@\n \n # Serializer for listing event details (basic view)\n class EventListSerializers(serializers.ModelSerializer):\n     # Nested fields for related models (full object details)\n-    category = EventCategorySerializer(many=True,read)  # Full details of categories\n+    category = EventCategorySerializer(many=True,read_only=True)  # Full details of categories\n     organizer = EventOrganizerSerializer(many=True)  # Full details of organizers\n     image = EventGallerySerializer(many=True)  # Full details of gallery images\n     \n     class Meta:\n"
+                },
+                {
+                    "date": 1738666513939,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,9 +24,9 @@\n # Serializer for listing event details (basic view)\n class EventListSerializers(serializers.ModelSerializer):\n     # Nested fields for related models (full object details)\n     category = EventCategorySerializer(many=True,read_only=True)  # Full details of categories\n-    organizer = EventOrganizerSerializer(many=True)  # Full details of organizers\n+    organizer = EventOrganizerSerializer(many=True,read_only=True)  # Full details of organizers\n     image = EventGallerySerializer(many=True)  # Full details of gallery images\n     \n     class Meta:\n         model = Event\n"
+                },
+                {
+                    "date": 1738666522012,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -25,22 +25,20 @@\n class EventListSerializers(serializers.ModelSerializer):\n     # Nested fields for related models (full object details)\n     category = EventCategorySerializer(many=True,read_only=True)  # Full details of categories\n     organizer = EventOrganizerSerializer(many=True,read_only=True)  # Full details of organizers\n-    image = EventGallerySerializer(many=True)  # Full details of gallery images\n+    image = EventGallerySerializer(many=True,read_only=True)  # Full details of gallery images\n     \n     class Meta:\n         model = Event\n         fields = '__all__'\n \n \n # Serializer for retrieving complete event details (detailed view)\n class EventRetrieveSerializers(serializers.ModelSerializer):\n-    # Nested fields for related models (full object details)\n-    category = EventCategorySerializer(many=True)\n-    organizer = EventOrganizerSerializer(many=True)\n-    image = EventGallerySerializer(many=True)  # Optional: For retrieving related images\n-\n+   category = EventCategorySerializer(many=True,read_only=True)  # Full details of categories\n+    organizer = EventOrganizerSerializer(many=True,read_only=True)  # Full details of organizers\n+    image = EventGallerySerializer(many=True,read_only=True)  # Full details of gallery images\n     class Meta:\n         model = Event\n         fields = '__all__'\n \n"
+                },
+                {
+                    "date": 1738666536453,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -34,9 +34,9 @@\n \n \n # Serializer for retrieving complete event details (detailed view)\n class EventRetrieveSerializers(serializers.ModelSerializer):\n-   category = EventCategorySerializer(many=True,read_only=True)  # Full details of categories\n+    category = EventCategorySerializer(many=True,read_only=True)  # Full details of categories\n     organizer = EventOrganizerSerializer(many=True,read_only=True)  # Full details of organizers\n     image = EventGallerySerializer(many=True,read_only=True)  # Full details of gallery images\n     class Meta:\n         model = Event\n"
                 }
             ],
             "date": 1733477390024,
