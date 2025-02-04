@@ -15,8 +15,6 @@ from mainproj.utilities.seo import SEOFields
 import uuid
 from django.utils.text import slugify
 
-# from faqs.models import FAQs
-
  
 # CollegeGallery Model
 class CollegeGallery(models.Model):

@@ -198,7 +198,7 @@ class InformationRetrieveSerializers(serializers.ModelSerializer):
 #         return instance
 
 class IntegerListField(serializers.ListField):
-    """ Converts stringified lists from form-data (e.g., '[2,3]') into real Python lists of integers. """
+    """ Handles Many-to-Many fields in form-data correctly (e.g., '[2,3]', '2,3'). """
     
     def to_internal_value(self, data):
         if isinstance(data, list):  
@@ -206,17 +206,18 @@ class IntegerListField(serializers.ListField):
         
         if isinstance(data, str):  
             try:
-                # Handle data sent as: "2,3" or "[2,3]"
-                clean_data = data.strip("[]").replace(" ", "")  # Remove brackets and spaces
-                
-                if "," in clean_data:  # "2,3" case
-                    return list(map(int, clean_data.split(',')))  # Convert to list of integers
-                
-                return [int(clean_data)]  # Handle single integer case (e.g., "2" -> [2])
+                clean_data = data.strip("[]").replace(" ", "")  # Remove brackets & spaces
+
+                # If string is like "2,3", split and convert to list
+                if "," in clean_data:
+                    return list(map(int, clean_data.split(',')))
+
+                # If single number, return as list
+                return [int(clean_data)]  
 
             except ValueError:
                 raise serializers.ValidationError("Invalid format. Expected comma-separated integers.")
-        
+
         return super().to_internal_value(data)
 
 class InformationWriteSerializers(serializers.ModelSerializer):
