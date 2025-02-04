@@ -6,14 +6,14 @@ from certification.models import Certification
 class DistrictSerializers(serializers.ModelSerializer):
     class Meta:
         model = District
-        ref_name='Affiliation'
+        ref_name='Affiliation_district'
         fields = '__all__'
         
 class CertificationSerializers(serializers.ModelSerializer):
     class Meta:
         model = Certification
         fields = '__all__'
-        ref_name='Affiliation'
+        ref_name='Affiliation_certification'
         
         
 class AffiliationListSerializers(serializers.ModelSerializer):
