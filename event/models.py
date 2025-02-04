@@ -110,7 +110,7 @@ class Event(SEOFields):
         ]
 
 class EventGallery(models.Model):
-    event = models.ForeignKey
+    event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name='image')
     is_featured_image = models.BooleanField(default=False)
     image = models.ImageField(upload_to='event_images/',null=True,blank=True)
     
