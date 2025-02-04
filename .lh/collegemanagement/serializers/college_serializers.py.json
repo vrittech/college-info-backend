@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 12,
+            "activePatchIndex": 22,
             "patches": [
                 {
                     "date": 1733477116456,
@@ -56,6 +56,46 @@
                 {
                     "date": 1738651547095,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -61,9 +61,8 @@\n \n \n # Serializer for creating/updating college details (with nested objects for foreign keys and many-to-many)\n class CollegeWriteSerializers(serializers.ModelSerializer):\n-\n-\n+    \n     class Meta:\n         model = College\n         fields = '__all__'\n"
+                },
+                {
+                    "date": 1738652200366,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,24 @@\n from rest_framework import serializers\n from ..models import College, District, Affiliation, CollegeType, Discipline, SocialMedia, Facility\n \n+\n+\n+def str_to_list(data,value_to_convert):\n+    try:\n+        mutable_data = data.dict()\n+    except Exception:\n+        mutable_data = data\n+    value_to_convert_data = mutable_data[value_to_convert]\n+    if isinstance(value_to_convert_data,list):# type(value_to_convert_data) == list:\n+\n+        return mutable_data\n+    try:\n+        variations = ast.literal_eval(value_to_convert_data)\n+        mutable_data[value_to_convert] = variations\n+        return mutable_data\n+    except ValueError as e:\n+        raise serializers.ValidationError({f'{value_to_convert}': str(e)}) from e\n # Nested serializer for District\n class DistrictSerializer(serializers.ModelSerializer):\n     class Meta:\n         model = District\n"
+                },
+                {
+                    "date": 1738652205839,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,9 @@\n from rest_framework import serializers\n from ..models import College, District, Affiliation, CollegeType, Discipline, SocialMedia, Facility\n+import ast\n \n \n-\n def str_to_list(data,value_to_convert):\n     try:\n         mutable_data = data.dict()\n     except Exception:\n"
+                },
+                {
+                    "date": 1738652211829,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,8 +17,9 @@\n         mutable_data[value_to_convert] = variations\n         return mutable_data\n     except ValueError as e:\n         raise serializers.ValidationError({f'{value_to_convert}': str(e)}) from e\n+    \n # Nested serializer for District\n class DistrictSerializer(serializers.ModelSerializer):\n     class Meta:\n         model = District\n"
+                },
+                {
+                    "date": 1738652278939,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -80,7 +80,13 @@\n \n # Serializer for creating/updating college details (with nested objects for foreign keys and many-to-many)\n class CollegeWriteSerializers(serializers.ModelSerializer):\n     \n+    def to_internal_value(self, data):\n+        if data.get('packages'):\n+            data = str_to_list(data,'packages')\n+            return super().to_internal_value(data)\n+        return super().to_internal_value(data)\n+    \n     class Meta:\n         model = College\n         fields = '__all__'\n"
+                },
+                {
+                    "date": 1738652308103,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -81,8 +81,9 @@\n # Serializer for creating/updating college details (with nested objects for foreign keys and many-to-many)\n class CollegeWriteSerializers(serializers.ModelSerializer):\n     \n     def to_internal_value(self, data):\n+        \n         if data.get('packages'):\n             data = str_to_list(data,'packages')\n             return super().to_internal_value(data)\n         return super().to_internal_value(data)\n"
+                },
+                {
+                    "date": 1738652392524,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -79,11 +79,19 @@\n \n \n # Serializer for creating/updating college details (with nested objects for foreign keys and many-to-many)\n class CollegeWriteSerializers(serializers.ModelSerializer):\n+    # Use PrimaryKeyRelatedField to accept only IDs\n+    district = serializers.PrimaryKeyRelatedField(queryset=District.objects.all())\n+    affiliated = serializers.PrimaryKeyRelatedField(queryset=Affiliation.objects.all())\n+    college_type = serializers.PrimaryKeyRelatedField(queryset=CollegeType.objects.all())\n+\n+    discipline = serializers.PrimaryKeyRelatedField(queryset=Discipline.objects.all(), many=True)\n+    social_media = serializers.PrimaryKeyRelatedField(queryset=SocialMedia.objects.all(), many=True)\n+    facilities = serializers.PrimaryKeyRelatedField(queryset=Facility.objects.all(), many=True)\n+\n     \n     def to_internal_value(self, data):\n-        \n         if data.get('packages'):\n             data = str_to_list(data,'packages')\n             return super().to_internal_value(data)\n         return super().to_internal_value(data)\n"
+                },
+                {
+                    "date": 1738652398942,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -89,13 +89,9 @@\n     social_media = serializers.PrimaryKeyRelatedField(queryset=SocialMedia.objects.all(), many=True)\n     facilities = serializers.PrimaryKeyRelatedField(queryset=Facility.objects.all(), many=True)\n \n     \n-    def to_internal_value(self, data):\n-        if data.get('packages'):\n-            data = str_to_list(data,'packages')\n-            return super().to_internal_value(data)\n-        return super().to_internal_value(data)\n     \n+    \n     class Meta:\n         model = College\n         fields = '__all__'\n"
+                },
+                {
+                    "date": 1738652404621,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -87,8 +87,13 @@\n \n     discipline = serializers.PrimaryKeyRelatedField(queryset=Discipline.objects.all(), many=True)\n     social_media = serializers.PrimaryKeyRelatedField(queryset=SocialMedia.objects.all(), many=True)\n     facilities = serializers.PrimaryKeyRelatedField(queryset=Facility.objects.all(), many=True)\n+    def to_internal_value(self, data):\n+        if data.get('packages'):\n+            data = str_to_list(data,'packages')\n+            return super().to_internal_value(data)\n+        return super().to_internal_value(data)\n \n     \n     \n     \n"
+                },
+                {
+                    "date": 1738652413450,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -93,10 +93,9 @@\n             data = str_to_list(data,'packages')\n             return super().to_internal_value(data)\n         return super().to_internal_value(data)\n \n-    \n-    \n-    \n     class Meta:\n         model = College\n         fields = '__all__'\n+        \n+    \n"
+                },
+                {
+                    "date": 1738652422067,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -97,5 +97,38 @@\n     class Meta:\n         model = College\n         fields = '__all__'\n         \n-    \n+    def create(self, validated_data):\n+        discipline_ids = validated_data.pop('discipline', [])\n+        social_media_ids = validated_data.pop('social_media', [])\n+        facilities_ids = validated_data.pop('facilities', [])\n+\n+        # Create College instance with ForeignKey relationships\n+        college = College.objects.create(**validated_data)\n+\n+        # Add ManyToMany relationships using IDs\n+        college.discipline.set(discipline_ids)\n+        college.social_media.set(social_media_ids)\n+        college.facilities.set(facilities_ids)\n+\n+        return college\n+\n+    def update(self, instance, validated_data):\n+        discipline_ids = validated_data.pop('discipline', None)\n+        social_media_ids = validated_data.pop('social_media', None)\n+        facilities_ids = validated_data.pop('facilities', None)\n+\n+        # Update ForeignKey relationships\n+        for attr, value in validated_data.items():\n+            setattr(instance, attr, value)\n+        instance.save()\n+\n+        # Update ManyToMany relationships if provided\n+        if discipline_ids is not None:\n+            instance.discipline.set(discipline_ids)\n+        if social_media_ids is not None:\n+            instance.social_media.set(social_media_ids)\n+        if facilities_ids is not None:\n+            instance.facilities.set(facilities_ids)\n+\n+        return instance\n"
                 }
             ],
             "date": 1733477116456,
