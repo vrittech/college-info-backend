@@ -1,17 +1,35 @@
 from rest_framework import serializers
 from ..models import Affiliation
+from district.models import District
+from certification.models import Certification
 
+class DistrictSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = District
+        ref_name='Affiliation'
+        fields = '__all__'
+        
+class CertificationSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = Certification
+        fields = '__all__'
+        ref_name='Affiliation'
+        
+        
 class AffiliationListSerializers(serializers.ModelSerializer):
+    district = DistrictSerializers(read_only=True)
+    certification = CertificationSerializers(read_only=True,many = True)
     class Meta:
         model = Affiliation
         fields = '__all__'
 
 class AffiliationRetrieveSerializers(serializers.ModelSerializer):
+    district = DistrictSerializers(read_only=True)
+    certification = CertificationSerializers(read_only=True,many = True)
     class Meta:
         model = Affiliation
         fields = '__all__'
 
-from rest_framework import serializers
 
 class AffiliationWriteSerializers(serializers.ModelSerializer):
     # Accept `certification` as a comma-separated string for input

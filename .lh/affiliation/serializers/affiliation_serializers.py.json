@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 4,
+            "activePatchIndex": 8,
             "patches": [
                 {
                     "date": 1738133415027,
@@ -24,6 +24,22 @@
                 {
                     "date": 1738135815005,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,12 +10,17 @@\n     class Meta:\n         model = Affiliation\n         fields = '__all__'\n \n+from rest_framework import serializers\n+\n class AffiliationWriteSerializers(serializers.ModelSerializer):\n-    # Accept `certification` as a comma-separated string from form data\n+    # Accept `certification` as a comma-separated string for input\n     certification = serializers.CharField(write_only=True, required=False)\n \n+    # Include `certification` as a read-only field for the response\n+    certifications = serializers.SerializerMethodField()\n+\n     class Meta:\n         model = Affiliation\n         fields = '__all__'\n \n@@ -24,9 +29,9 @@\n         Converts a comma-separated string into a list of integers.\n         \"\"\"\n         if value:\n             try:\n-                # Split the string and convert each value to an integer\n+                # Split the string and convert to integers\n                 certification_ids = [int(pk.strip()) for pk in value.split(\",\") if pk.strip()]\n                 return certification_ids\n             except ValueError:\n                 raise serializers.ValidationError(\"Certification must be a comma-separated list of valid integers.\")\n@@ -57,5 +62,11 @@\n         # Update certifications if provided\n         if certifications is not None:\n             instance.certification.set(certifications)\n \n-        return instance\n\\ No newline at end of file\n+        return instance\n+\n+    def get_certifications(self, obj):\n+        \"\"\"\n+        Get the certifications for the response.\n+        \"\"\"\n+        return [cert.id for cert in obj.certification.all()]\n"
+                },
+                {
+                    "date": 1738666577365,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,9 +17,9 @@\n     # Accept `certification` as a comma-separated string for input\n     certification = serializers.CharField(write_only=True, required=False)\n \n     # Include `certification` as a read-only field for the response\n-    certifications = serializers.SerializerMethodField()\n+    certifications = serializers.SerializerMethodField(read_only)\n \n     class Meta:\n         model = Affiliation\n         fields = '__all__'\n"
+                },
+                {
+                    "date": 1738666645944,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,7 @@\n from rest_framework import serializers\n from ..models import Affiliation\n+from dist\n \n class AffiliationListSerializers(serializers.ModelSerializer):\n     class Meta:\n         model = Affiliation\n@@ -17,9 +18,9 @@\n     # Accept `certification` as a comma-separated string for input\n     certification = serializers.CharField(write_only=True, required=False)\n \n     # Include `certification` as a read-only field for the response\n-    certifications = serializers.SerializerMethodField(read_only)\n+    certifications = serializers.SerializerMethodField()\n \n     class Meta:\n         model = Affiliation\n         fields = '__all__'\n"
+                },
+                {
+                    "date": 1738666653636,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n from rest_framework import serializers\n from ..models import Affiliation\n-from dist\n+from district.models\n \n class AffiliationListSerializers(serializers.ModelSerializer):\n     class Meta:\n         model = Affiliation\n"
+                },
+                {
+                    "date": 1738666662689,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,10 @@\n from rest_framework import serializers\n from ..models import Affiliation\n from district.models import District\n+from certification.models import Certification\n \n+\n class AffiliationListSerializers(serializers.ModelSerializer):\n     class Meta:\n         model = Affiliation\n         fields = '__all__'\n"
                 }
             ],
             "date": 1738133415027,
