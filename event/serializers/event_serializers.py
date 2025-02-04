@@ -26,7 +26,7 @@ class EventListSerializers(serializers.ModelSerializer):
     # Nested fields for related models (full object details)
     category = EventCategorySerializer(many=True)  # Full details of categories
     organizer = EventOrganizerSerializer(many=True)  # Full details of organizers
-    gallery = EventGallerySerializer(many=True)  # Full details of gallery images
+    image = EventGallerySerializer(many=True)  # Full details of gallery images
     
     class Meta:
         model = Event
@@ -38,7 +38,7 @@ class EventRetrieveSerializers(serializers.ModelSerializer):
     # Nested fields for related models (full object details)
     category = EventCategorySerializer(many=True)
     organizer = EventOrganizerSerializer(many=True)
-    gallery = EventGallerySerializer(many=True)  # Optional: For retrieving related images
+    image = EventGallerySerializer(many=True)  # Optional: For retrieving related images
 
     class Meta:
         model = Event
@@ -54,7 +54,7 @@ class EventWriteSerializers(serializers.ModelSerializer):
 
     category = serializers.PrimaryKeyRelatedField(many=True, queryset=EventCategory.objects.all())
     organizer = serializers.PrimaryKeyRelatedField(many=True, queryset=EventOrganizer.objects.all())
-    gallery_images = EventGallerySerializer(many=True, read_only=True, source='eventgallery_set')
+    image = EventGallerySerializer(many=True, read_only=True, source='eventgallery_set')
 
     class Meta:
         model = Event

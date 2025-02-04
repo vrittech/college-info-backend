@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 9,
+            "activePatchIndex": 14,
             "patches": [
                 {
                     "date": 1733477390024,
@@ -44,6 +44,26 @@
                 {
                     "date": 1738237895187,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -77,9 +77,8 @@\n \n         # Create the Event instance\n         event = super().create(validated_data)\n \n-\n         # Assign Many-to-Many relationships\n         event.category.set(category_ids)\n         event.organizer.set(organizer_ids)\n \n"
+                },
+                {
+                    "date": 1738651944769,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -25,9 +25,9 @@\n class EventListSerializers(serializers.ModelSerializer):\n     # Nested fields for related models (full object details)\n     category = EventCategorySerializer(many=True)  # Full details of categories\n     organizer = EventOrganizerSerializer(many=True)  # Full details of organizers\n-    gallery = EventGallerySerializer(many=True)  # Full details of gallery images\n+    image = EventGallerySerializer(many=True)  # Full details of gallery images\n     \n     class Meta:\n         model = Event\n         fields = '__all__'\n"
+                },
+                {
+                    "date": 1738651950241,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -37,9 +37,9 @@\n class EventRetrieveSerializers(serializers.ModelSerializer):\n     # Nested fields for related models (full object details)\n     category = EventCategorySerializer(many=True)\n     organizer = EventOrganizerSerializer(many=True)\n-    gallery = EventGallerySerializer(many=True)  # Optional: For retrieving related images\n+    image = EventGallerySerializer(many=True)  # Optional: For retrieving related images\n \n     class Meta:\n         model = Event\n         fields = '__all__'\n"
+                },
+                {
+                    "date": 1738651955477,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -53,9 +53,9 @@\n     \"\"\"\n \n     category = serializers.PrimaryKeyRelatedField(many=True, queryset=EventCategory.objects.all())\n     organizer = serializers.PrimaryKeyRelatedField(many=True, queryset=EventOrganizer.objects.all())\n-    gallery_images = EventGallerySerializer(many=True, read_only=True, source='eventgallery_set')\n+    image = EventGallerySerializer(many=True, read_only=True, source='eventgallery_set')\n \n     class Meta:\n         model = Event\n         fields = '__all__'\n"
+                },
+                {
+                    "date": 1738651969262,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -53,9 +53,9 @@\n     \"\"\"\n \n     category = serializers.PrimaryKeyRelatedField(many=True, queryset=EventCategory.objects.all())\n     organizer = serializers.PrimaryKeyRelatedField(many=True, queryset=EventOrganizer.objects.all())\n-    image = EventGallerySerializer(many=True, read_only=True, source='eventgallery_set')\n+    gallery_images = EventGallerySerializer(many=True, read_only=True, source='eventgallery_set')\n \n     class Meta:\n         model = Event\n         fields = '__all__'\n"
+                },
+                {
+                    "date": 1738651974446,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -53,9 +53,9 @@\n     \"\"\"\n \n     category = serializers.PrimaryKeyRelatedField(many=True, queryset=EventCategory.objects.all())\n     organizer = serializers.PrimaryKeyRelatedField(many=True, queryset=EventOrganizer.objects.all())\n-    gallery_images = EventGallerySerializer(many=True, read_only=True, source='eventgallery_set')\n+    image = EventGallerySerializer(many=True, read_only=True, source='eventgallery_set')\n \n     class Meta:\n         model = Event\n         fields = '__all__'\n"
                 }
             ],
             "date": 1733477390024,
