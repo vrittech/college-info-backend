@@ -59,6 +59,13 @@ class FacilitySerializer(serializers.ModelSerializer):
 
 # Serializer for listing college details (basic view)
 class CollegeListSerializers(serializers.ModelSerializer):
+    district = DistrictSerializer(read_only=True)  # Nested object for related model
+    affiliated = AffiliationSerializer(read_only=True)  # Nested object for related model
+    college_type = CollegeTypeSerializer(read_only=True)  # Nested object for related model
+    discipline = DisciplineSerializer(many=True,read_only=True)  # Nested objects for ManyToMany
+    social_media = SocialMediaSerializer(many=True,read_only=True)  # Nested objects for ManyToMany
+    facilities = FacilitySerializer(many=True,read_only=True)  # Nested objects for ManyToMany
+
     class Meta:
         model = College
         fields = '__all__'
@@ -66,12 +73,12 @@ class CollegeListSerializers(serializers.ModelSerializer):
 
 # Serializer for retrieving complete college details (detailed view)
 class CollegeRetrieveSerializers(serializers.ModelSerializer):
-    district = DistrictSerializer()  # Nested object for related model
-    affiliated = AffiliationSerializer()  # Nested object for related model
-    college_type = CollegeTypeSerializer()  # Nested object for related model
-    discipline = DisciplineSerializer(many=True)  # Nested objects for ManyToMany
-    social_media = SocialMediaSerializer(many=True)  # Nested objects for ManyToMany
-    facilities = FacilitySerializer(many=True)  # Nested objects for ManyToMany
+    district = DistrictSerializer(read_only=True)  # Nested object for related model
+    affiliated = AffiliationSerializer(read_only=True)  # Nested object for related model
+    college_type = CollegeTypeSerializer(read_only=True)  # Nested object for related model
+    discipline = DisciplineSerializer(many=True,read_only=True)  # Nested objects for ManyToMany
+    social_media = SocialMediaSerializer(many=True,read_only=True)  # Nested objects for ManyToMany
+    facilities = FacilitySerializer(many=True,read_only=True)  # Nested objects for ManyToMany
 
     class Meta:
         model = College
