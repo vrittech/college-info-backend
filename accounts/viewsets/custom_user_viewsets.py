@@ -12,6 +12,7 @@ from accounts.models import CustomUser
 from django.contrib.auth import authenticate,login
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.decorators import action
+from ..utilities.pagination import MyPageNumberPagination
 # from accounts.utilities.filters import CustomUserFilter
 # accounts/utilities/filters.py
 from rest_framework.filters import SearchFilter, OrderingFilter
@@ -21,6 +22,7 @@ class CustomUserViewSet(viewsets.ModelViewSet):
     queryset = CustomUser.objects.all().order_by('position')
     permission_classes = [permissions.IsAuthenticated]
     # filterset_class = CustomUserFilter
+    pagination_class = MyPageNumberPagination
     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]
     
     search_fields = ['position', 'email', 'full_name','first_name','last_name']

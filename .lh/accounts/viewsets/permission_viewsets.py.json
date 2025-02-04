@@ -1,0 +1,30 @@
+{
+    "sourceFile": "accounts/viewsets/permission_viewsets.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 3,
+            "patches": [
+                {
+                    "date": 1738669134215,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1738669146799,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,9 +6,9 @@\n from rest_framework.response import Response\n from rest_framework.decorators import action\n from rest_framework import viewsets\n from collections import defaultdict\n-from \n+from ..utilities\n from ..serializers.permission_serializers import PermissionSerializer\n \n \n class PermissionViewSet(viewsets.ReadOnlyModelViewSet):\n"
+                },
+                {
+                    "date": 1738669153726,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,9 +6,9 @@\n from rest_framework.response import Response\n from rest_framework.decorators import action\n from rest_framework import viewsets\n from collections import defaultdict\n-from ..utilities\n+from ..utilities.pagination import MyPageNumberPagination\n from ..serializers.permission_serializers import PermissionSerializer\n \n \n class PermissionViewSet(viewsets.ReadOnlyModelViewSet):\n@@ -24,8 +24,9 @@\n         'id': ['exact'],\n         'name': ['exact', 'icontains'],\n         'codename': ['exact', 'icontains']\n     }\n+    \n \n     def get_queryset(self):\n         \"\"\"\n         Dynamically fetch permissions for custom apps.\n"
+                },
+                {
+                    "date": 1738669158993,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,9 +24,9 @@\n         'id': ['exact'],\n         'name': ['exact', 'icontains'],\n         'codename': ['exact', 'icontains']\n     }\n-    \n+    pagination_class = MyPageNumberPagination\n \n     def get_queryset(self):\n         \"\"\"\n         Dynamically fetch permissions for custom apps.\n"
+                }
+            ],
+            "date": 1738669134215,
+            "name": "Commit-0",
+            "content": "from django.apps import apps\nfrom django.contrib.auth.models import Permission\nfrom django_filters.rest_framework import DjangoFilterBackend\nfrom rest_framework.filters import SearchFilter, OrderingFilter\nfrom rest_framework.permissions import IsAdminUser\nfrom rest_framework.response import Response\nfrom rest_framework.decorators import action\nfrom rest_framework import viewsets\nfrom collections import defaultdict\nfrom \nfrom ..serializers.permission_serializers import PermissionSerializer\n\n\nclass PermissionViewSet(viewsets.ReadOnlyModelViewSet):\n    \"\"\"\n    ViewSet to list permissions and provide an additional grouped-by-apps view.\n    \"\"\"\n    serializer_class = PermissionSerializer\n    permission_classes = [IsAdminUser]\n\n    filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n    search_fields = ['codename', 'id', 'name']\n    filterset_fields = {\n        'id': ['exact'],\n        'name': ['exact', 'icontains'],\n        'codename': ['exact', 'icontains']\n    }\n\n    def get_queryset(self):\n        \"\"\"\n        Dynamically fetch permissions for custom apps.\n        \"\"\"\n        # Define excluded apps (Django built-in and third-party)\n        excluded_apps = [\n            'django.contrib.admin',\n            'django.contrib.auth',\n            'django.contrib.contenttypes',\n            'django.contrib.sessions',\n            'django.contrib.messages',\n            'django.contrib.staticfiles',\n            'corsheaders',\n            'rest_framework',\n            'drf_yasg',\n            'django_celery_beat',\n            'django_filters',\n        ]\n\n        # Dynamically identify custom app labels\n        custom_app_labels = [\n            app.label for app in apps.get_app_configs()\n            if app.name not in excluded_apps\n        ]\n\n        # Fetch permissions related to these custom apps\n        return Permission.objects.filter(\n            content_type__app_label__in=custom_app_labels\n        ).select_related('content_type')\n\n    @action(detail=False, methods=['get'])\n    def grouped_by_model(self, request):\n        \"\"\"\n        Group permissions by models only.\n        \"\"\"\n        # Fetch permissions and group by model\n        permissions = self.get_queryset()\n        grouped_permissions = defaultdict(list)\n\n        for permission in permissions:\n            model_name = permission.content_type.model\n            grouped_permissions[model_name].append({\n                'id': permission.id,\n                'name': permission.name,\n                'codename': permission.codename,\n            })\n\n        # Convert grouped data to a serializable dict\n        return Response(dict(grouped_permissions))"
+        }
+    ]
+}

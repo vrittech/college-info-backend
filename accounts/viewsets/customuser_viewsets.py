@@ -9,7 +9,7 @@ class customuserViewsets(viewsets.ModelViewSet):
     serializer_class = CustomUserListSerializers
     # permission_classes = [accountsPermission]
     # authentication_classes = [JWTAuthentication]
-    #pagination_class = MyPageNumberPagination
+    pagination_class = MyPageNumberPagination
     queryset = CustomUser.objects.all()
 
     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]

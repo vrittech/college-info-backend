@@ -7,6 +7,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import action
 from rest_framework import viewsets
 from collections import defaultdict
+from ..utilities.pagination import MyPageNumberPagination
 from ..serializers.permission_serializers import PermissionSerializer
 
 
@@ -24,6 +25,7 @@ class PermissionViewSet(viewsets.ReadOnlyModelViewSet):
         'name': ['exact', 'icontains'],
         'codename': ['exact', 'icontains']
     }
+    pagination_class = MyPageNumberPagination
 
     def get_queryset(self):
         """
