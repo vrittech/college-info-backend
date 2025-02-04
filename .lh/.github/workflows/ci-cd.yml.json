@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 13,
+            "activePatchIndex": 14,
             "patches": [
                 {
                     "date": 1733397109290,
@@ -60,6 +60,10 @@
                 {
                     "date": 1738652710419,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -68,13 +68,13 @@\n         #scp -r -o StrictHostKeyChecking=no ./* root@$SERVER_IP:$PROJECT_FOLDER/\n \n         # Run deployment commands on the server\n         echo \"Running deployment commands on the server\"\n-        # ssh -o StrictHostKeyChecking=no root@$SERVER_IP \"cd $PROJECT_FOLDER && virtualenv venv && source venv/bin/activate && pip install -r requirements.txt && python manage.py migrate && python manage.py collectstatic --noinput \"\n+        ssh -o StrictHostKeyChecking=no root@$SERVER_IP \"cd $PROJECT_FOLDER && virtualenv venv && source venv/bin/activate && pip install -r requirements.txt && python manage.py migrate && python manage.py collectstatic --noinput \"\n         \n \n         #echo \"Running deployment commands on the server\" && \n-        # ssh -o StrictHostKeyChecking=no root@$SERVER_IP \"cd $PROJECT_FOLDER && virtualenv venv && source venv/bin/activate && pip install -r requirements.txt && python manage.py migrate && python manage.py collectstatic --noinput && screen -ls | grep $SCREEN_NAME | awk '{print $1}' | xargs -r -I{} screen -X -S {} quit && screen -dmS $SCREEN_NAME bash -c 'source venv/bin/activate && python manage.py runserver 0.0.0.0:$PORT'\"\n+        ssh -o StrictHostKeyChecking=no root@$SERVER_IP \"cd $PROJECT_FOLDER && virtualenv venv && source venv/bin/activate && pip install -r requirements.txt && python manage.py migrate && python manage.py collectstatic --noinput && screen -ls | grep $SCREEN_NAME | awk '{print $1}' | xargs -r -I{} screen -X -S {} quit && screen -dmS $SCREEN_NAME bash -c 'source venv/bin/activate && python manage.py runserver 0.0.0.0:$PORT'\"\n \n \n \n \n"
+                },
+                {
+                    "date": 1738659011294,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -72,9 +72,10 @@\n         ssh -o StrictHostKeyChecking=no root@$SERVER_IP \"cd $PROJECT_FOLDER && virtualenv venv && source venv/bin/activate && pip install -r requirements.txt && python manage.py migrate && python manage.py collectstatic --noinput \"\n         \n \n         #echo \"Running deployment commands on the server\" && \n-        ssh -o StrictHostKeyChecking=no root@$SERVER_IP \"cd $PROJECT_FOLDER && virtualenv venv && source venv/bin/activate && pip install -r requirements.txt && python manage.py migrate && python manage.py collectstatic --noinput && screen -ls | grep $SCREEN_NAME | awk '{print $1}' | xargs -r -I{} screen -X -S {} quit && screen -dmS $SCREEN_NAME bash -c 'source venv/bin/activate && python manage.py runserver 0.0.0.0:$PORT'\"\n+        # ssh -o StrictHostKeyChecking=no root@$SERVER_IP \"c\n+        d $PROJECT_FOLDER && virtualenv venv && source venv/bin/activate && pip install -r requirements.txt && python manage.py migrate && python manage.py collectstatic --noinput && screen -ls | grep $SCREEN_NAME | awk '{print $1}' | xargs -r -I{} screen -X -S {} quit && screen -dmS $SCREEN_NAME bash -c 'source venv/bin/activate && python manage.py runserver 0.0.0.0:$PORT'\"\n \n \n \n \n"
                 }
             ],
             "date": 1733397109290,
