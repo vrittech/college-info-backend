@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 19,
+            "activePatchIndex": 21,
             "patches": [
                 {
                     "date": 1733477390024,
@@ -84,6 +84,14 @@
                 {
                     "date": 1738666536453,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -34,9 +34,9 @@\n \n \n # Serializer for retrieving complete event details (detailed view)\n class EventRetrieveSerializers(serializers.ModelSerializer):\n-   category = EventCategorySerializer(many=True,read_only=True)  # Full details of categories\n+    category = EventCategorySerializer(many=True,read_only=True)  # Full details of categories\n     organizer = EventOrganizerSerializer(many=True,read_only=True)  # Full details of organizers\n     image = EventGallerySerializer(many=True,read_only=True)  # Full details of gallery images\n     class Meta:\n         model = Event\n"
+                },
+                {
+                    "date": 1738669570153,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -51,9 +51,9 @@\n     \"\"\"\n \n     category = serializers.PrimaryKeyRelatedField(many=True, queryset=EventCategory.objects.all())\n     organizer = serializers.PrimaryKeyRelatedField(many=True, queryset=EventOrganizer.objects.all())\n-    image = EventGallerySerializer(many=True, read_only=True, source='eventgallery_set')\n+    image = EventGallerySerializer(many=True, source='eventgallery_set')\n \n     class Meta:\n         model = Event\n         fields = '__all__'\n"
+                },
+                {
+                    "date": 1738669591128,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -51,9 +51,9 @@\n     \"\"\"\n \n     category = serializers.PrimaryKeyRelatedField(many=True, queryset=EventCategory.objects.all())\n     organizer = serializers.PrimaryKeyRelatedField(many=True, queryset=EventOrganizer.objects.all())\n-    image = EventGallerySerializer(many=True, source='eventgallery_set')\n+    image = EventGallerySerializer(many=True, source='image')\n \n     class Meta:\n         model = Event\n         fields = '__all__'\n"
                 }
             ],
             "date": 1733477390024,

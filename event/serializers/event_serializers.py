@@ -52,7 +52,7 @@ class EventWriteSerializers(serializers.ModelSerializer):
 
     category = serializers.PrimaryKeyRelatedField(many=True, queryset=EventCategory.objects.all())
     organizer = serializers.PrimaryKeyRelatedField(many=True, queryset=EventOrganizer.objects.all())
-    image = EventGallerySerializer(many=True, read_only=True, source='eventgallery_set')
+    image = EventGallerySerializer(many=True)
 
     class Meta:
         model = Event
