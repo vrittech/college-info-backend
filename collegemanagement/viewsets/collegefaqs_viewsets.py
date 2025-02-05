@@ -8,7 +8,7 @@ from ..utilities.importbase import *
 class collegefaqsViewsets(viewsets.ModelViewSet):
     serializer_class = CollegeFaqsListSerializers
     # permission_classes = [collegemanagementPermission]
-    # authentication_classes = [JWTAuthentication]
+    authentication_classes = [JWTAuthentication]
     pagination_class = MyPageNumberPagination
     queryset = CollegeFaqs.objects.all().order_by('-id')
 

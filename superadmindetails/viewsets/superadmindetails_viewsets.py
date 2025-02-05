@@ -8,17 +8,21 @@ from ..utilities.importbase import *
 class superadmindetailsViewsets(viewsets.ModelViewSet):
     serializer_class = SuperAdminDetailsListSerializers
     # permission_classes = [superadmindetailsPermission]
-    # authentication_classes = [JWTAuthentication]
+    authentication_classes = [JWTAuthentication]
     pagination_class = MyPageNumberPagination
     queryset = SuperAdminDetails.objects.all().order_by('-id')
-
+# ('name', 'email', 'phone_number', 'location', 'social_media_links', 'created_at', 'updated_at', )
     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]
-    search_fields = ['id']
-    ordering_fields = ['id']
+    search_fields = ['id','name', 'email', 'phone_number', 'location', 'social_media_links', 'created_at', 'updated_at']
+    ordering_fields = ['id','name', 'phone_number', 'location', 'social_media_links', 'created_at', 'updated_at']
 
-    # filterset_fields = {
-    #     'id': ['exact'],
-    # }
+    filterset_fields = {
+        'id': ['exact'],
+        'name': ['exact'],
+        'location': ['exact'],
+        'created_at': ['exact'],
+        'updated_at': ['exact'],
+    }
 
     def get_queryset(self):
         queryset = super().get_queryset()

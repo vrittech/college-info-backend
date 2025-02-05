@@ -9,7 +9,7 @@ from ..utilities.filter import InquiryFilter
 class inquiryViewsets(viewsets.ModelViewSet):
     serializer_class = InquiryListSerializers
     # permission_classes = [inquiryPermission]
-    # authentication_classes = [JWTAuthentication]
+    authentication_classes = [JWTAuthentication]
     pagination_class = MyPageNumberPagination
     queryset = Inquiry.objects.all().order_by('-id')
 

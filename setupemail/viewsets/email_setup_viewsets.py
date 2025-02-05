@@ -6,7 +6,7 @@ from rest_framework.decorators import action
 class EmailSetupViewset(viewsets.ModelViewSet):
     serializer_class = EmailSetupListSerializers
     permission_classes = [AdminViewSetsPermission]
-    # authentication_classes = [JWTAuthentication]
+    authentication_classes = [JWTAuthentication]
     pagination_class = MyPageNumberPagination
     queryset  = EmailSetup.objects.all()
 

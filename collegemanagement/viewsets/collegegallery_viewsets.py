@@ -8,7 +8,7 @@ from ..utilities.importbase import *
 class collegegalleryViewsets(viewsets.ModelViewSet):
     serializer_class = CollegeGalleryListSerializers
     # permission_classes = [collegemanagementPermission]
-    # authentication_classes = [JWTAuthentication]
+    authentication_classes = [JWTAuthentication]
     pagination_class = MyPageNumberPagination
     queryset = CollegeGallery.objects.all().order_by('-id')
 

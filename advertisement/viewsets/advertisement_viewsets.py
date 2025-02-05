@@ -8,7 +8,7 @@ from ..utilities.importbase import *
 class advertisementViewsets(viewsets.ModelViewSet):
     serializer_class = AdvertisementListSerializers
     # permission_classes = [advertisementPermission]
-    # authentication_classes = [JWTAuthentication]
+    authentication_classes = [JWTAuthentication]
     pagination_class = MyPageNumberPagination
     queryset = Advertisement.objects.all().order_by('-id')
 

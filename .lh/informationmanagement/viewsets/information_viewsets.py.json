@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 28,
+            "activePatchIndex": 29,
             "patches": [
                 {
                     "date": 1733481577467,
@@ -120,6 +120,10 @@
                 {
                     "date": 1738481764952,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -49,17 +49,17 @@\n \n     # @action(detail=False, methods=['get'], name=\"action_name\", url_path=\"url_path\")\n     # def action_name(self, request, *args, **kwargs):\n     #     return super().list(request, *args, **kwargs)\n-def get_serializer_class(self):\n-        \"\"\"\n-        Returns the appropriate serializer class based on the request type.\n-        \"\"\"\n-        if self.action in ['create', 'update', 'partial_update']:\n-            return InformationWriteSerializers\n-        elif self.action == 'retrieve':\n-            return InformationRetrieveSerializers\n-        return InformationListSerializers\n+    def get_serializer_class(self):\n+            \"\"\"\n+            Returns the appropriate serializer class based on the request type.\n+            \"\"\"\n+            if self.action in ['create', 'update', 'partial_update']:\n+                return InformationWriteSerializers\n+            elif self.action == 'retrieve':\n+                return InformationRetrieveSerializers\n+            return InformationListSerializers\n \n     def create(self, request, *args, **kwargs):\n         \"\"\"\n         Handles creating a new Information object.\n"
+                },
+                {
+                    "date": 1738748550520,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,9 @@\n \n class informationViewsets(viewsets.ModelViewSet):\n     serializer_class = InformationListSerializers\n     # permission_classes = [informationmanagementPermission]\n-    # authentication_classes = [JWTAuthentication]\n+    authentication_classes = [JWTAuthentication]\n     pagination_class = MyPageNumberPagination\n     queryset = Information.objects.all().order_by('-id')\n     filterset_class = InformationFilter\n     lookup_field = \"slug\"\n"
                 }
             ],
             "date": 1733481577467,

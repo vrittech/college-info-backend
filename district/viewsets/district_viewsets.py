@@ -8,7 +8,7 @@ from ..utilities.importbase import *
 class districtViewsets(viewsets.ModelViewSet):
     serializer_class = DistrictListSerializers
     # permission_classes = [districtPermission]
-    # authentication_classes = [JWTAuthentication]
+    authentication_classes = [JWTAuthentication]
     pagination_class = MyPageNumberPagination
     queryset = District.objects.all().order_by('-id')
 

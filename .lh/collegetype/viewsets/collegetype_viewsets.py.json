@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 7,
+            "activePatchIndex": 8,
             "patches": [
                 {
                     "date": 1733481234724,
@@ -36,6 +36,10 @@
                 {
                     "date": 1738147012864,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,14 +13,16 @@\n     queryset = CollegeType.objects.all().order_by('-id')\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     search_fields = ['id', 'name']\n-    ordering_fields = ['id',]\n+    ordering_fields = ['id', 'name']\n \n-    filterset_fields = {\n+   filterset_fields = {\n         'id': ['exact'],\n         'name': ['exact'],\n         'is_show': ['exact'],\n+        'created_date': ['exact', 'lte', 'gte'],\n+        'updated_date': ['exact', 'lte', 'gte'],\n     }\n \n     def get_queryset(self):\n         queryset = super().get_queryset()\n"
+                },
+                {
+                    "date": 1738748861002,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,23 +7,23 @@\n \n class collegetypeViewsets(viewsets.ModelViewSet):\n     serializer_class = CollegeTypeListSerializers\n     # permission_classes = [collegetypePermission]\n-    # authentication_classes = [JWTAuthentication]\n+    authentication_classes = [JWTAuthentication]\n     pagination_class = MyPageNumberPagination\n     queryset = CollegeType.objects.all().order_by('-id')\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     search_fields = ['id', 'name']\n     ordering_fields = ['id', 'name']\n \n-   filterset_fields = {\n-        'id': ['exact'],\n-        'name': ['exact'],\n-        'is_show': ['exact'],\n-        'created_date': ['exact', 'lte', 'gte'],\n-        'updated_date': ['exact', 'lte', 'gte'],\n-    }\n+    filterset_fields = {\n+            'id': ['exact'],\n+            'name': ['exact'],\n+            'is_show': ['exact'],\n+            'created_date': ['exact', 'lte', 'gte'],\n+            'updated_date': ['exact', 'lte', 'gte'],\n+        }\n \n     def get_queryset(self):\n         queryset = super().get_queryset()\n         return queryset\n"
                 }
             ],
             "date": 1733481234724,

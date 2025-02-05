@@ -8,7 +8,7 @@ from ..utilities.importbase import *
 class facilityViewsets(viewsets.ModelViewSet):
     serializer_class = FacilityListSerializers
     # permission_classes = [facilitiesPermission]
-    # authentication_classes = [JWTAuthentication]
+    authentication_classes = [JWTAuthentication]
     pagination_class = MyPageNumberPagination
     queryset = Facility.objects.all().order_by('-id')
 

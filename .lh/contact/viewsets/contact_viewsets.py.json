@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 10,
+            "activePatchIndex": 11,
             "patches": [
                 {
                     "date": 1733481253846,
@@ -48,6 +48,10 @@
                 {
                     "date": 1733729569669,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,9 @@\n class contactViewsets(viewsets.ModelViewSet):\n     serializer_class = ContactListSerializers\n     # permission_classes = [contactPermission]\n     # authentication_classes = [JWTAuthentication]\n-    #pagination_class = MyPageNumberPagination\n+    pagination_class = MyPageNumberPagination\n     queryset = Contact.objects.all().order_by('-id')\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     search_fields = ['id','name', 'email', 'phone_number',]\n@@ -19,9 +19,9 @@\n     filterset_fields = {\n         'id': ['exact'],\n         'tag': ['exact'],\n         'created_date': ['exact','gte','lte'],\n-        'update_date': ['exact','gte','lte'],\n+        'updated_date': ['exact','gte','lte'],\n     }\n \n     def get_queryset(self):\n         queryset = super().get_queryset()\n"
+                },
+                {
+                    "date": 1738748854614,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,9 @@\n \n class contactViewsets(viewsets.ModelViewSet):\n     serializer_class = ContactListSerializers\n     # permission_classes = [contactPermission]\n-    # authentication_classes = [JWTAuthentication]\n+    authentication_classes = [JWTAuthentication]\n     pagination_class = MyPageNumberPagination\n     queryset = Contact.objects.all().order_by('-id')\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n"
                 }
             ],
             "date": 1733481253846,

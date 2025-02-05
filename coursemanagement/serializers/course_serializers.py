@@ -48,6 +48,7 @@ def str_to_list(data, value_to_convert):
         # Return unchanged data if value_to_convert is not in the data
         return data
     
+    
 
 # Serializer for Duration model
 class DurationSerializer(serializers.ModelSerializer):

@@ -8,7 +8,7 @@ from ..utilities.importbase import *
 class informationtaggingViewsets(viewsets.ModelViewSet):
     serializer_class = InformationTaggingListSerializers
     # permission_classes = [informationmanagementPermission]
-    # authentication_classes = [JWTAuthentication]
+    authentication_classes = [JWTAuthentication]
     pagination_class = MyPageNumberPagination
     queryset = InformationTagging.objects.all().order_by('-id')
 

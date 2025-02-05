@@ -8,7 +8,7 @@ from ..utilities.importbase import *
 class informationcategoryViewsets(viewsets.ModelViewSet):
     serializer_class = InformationCategoryListSerializers
     # permission_classes = [informationmanagementPermission]
-    # authentication_classes = [JWTAuthentication]
+    authentication_classes = [JWTAuthentication]
     pagination_class = MyPageNumberPagination
     queryset = InformationCategory.objects.all().order_by('-id')
 

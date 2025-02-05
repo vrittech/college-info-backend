@@ -8,17 +8,21 @@ from ..utilities.importbase import *
 class certificationViewsets(viewsets.ModelViewSet):
     serializer_class = CertificationListSerializers
     # permission_classes = [certificationPermission]
-    # authentication_classes = [JWTAuthentication]
+    authentication_classes = [JWTAuthentication]
     pagination_class = MyPageNumberPagination
     queryset = Certification.objects.all().order_by('-id')
-
+# ('name', 'is_show', 'image', 'created_date', 'created_date_time', 'updated_date', )
     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]
-    search_fields = ['id']
-    ordering_fields = ['id']
+    search_fields = ['id','name', 'is_show','created_date']
+    ordering_fields = ['id','name', 'is_show']
 
-    # filterset_fields = {
-    #     'id': ['exact'],
-    # }
+    filterset_fields = {
+        'id': ['exact'],
+        'name': ['exact'],
+        'is_show': ['exact'],
+        'created_date': ['exact', 'lte', 'gte'],
+        'updated_date': ['exact', 'lte', 'gte'],
+    }
 
     def get_queryset(self):
         queryset = super().get_queryset()

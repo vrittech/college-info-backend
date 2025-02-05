@@ -8,7 +8,7 @@ from ..utilities.importbase import *
 class levelViewsets(viewsets.ModelViewSet):
     serializer_class = LevelListSerializers
     # permission_classes = [levelPermission]
-    # authentication_classes = [JWTAuthentication]
+    authentication_classes = [JWTAuthentication]
     pagination_class = MyPageNumberPagination
     queryset = Level.objects.all().order_by('-id')
 
