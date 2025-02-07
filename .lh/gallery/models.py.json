@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 32,
+            "activePatchIndex": 37,
             "patches": [
                 {
                     "date": 1726649624074,
@@ -136,6 +136,26 @@
                 {
                     "date": 1737953298747,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,9 @@\n \n # Create your models here.\n class Album(models.Model):\n     name = models.CharField(max_length = 500 , null = True,blank = True)\n-    featured_image = models.ImageField(max_length = 500,upload_to = 'gallery/feature_images',null)\n+    featured_image = models.ImageField(max_length = 500,upload_to = 'gallery/feature_images',null=True,blank=True)\n     created_date = models.DateField(auto_now_add=True, null = True,blank = True)\n     updated_date = models.DateTimeField(auto_now=True, null = True,blank = True)\n     \n     def __str__(self):\n@@ -15,9 +15,9 @@\n             ('manage_album', 'Manage Album'),\n         ]\n \n class Gallery(models.Model):\n-    image = models.ImageField(max_length = 500,upload_to = 'gallery/images')\n+    image = models.ImageField(max_length = 500,upload_to = 'gallery/images',null)\n     album = models.ManyToManyField(Album,related_name =\"gallery\")\n     is_cover = models.BooleanField(default = False)\n     \n     created_date = models.DateField(auto_now_add=True, null = True,blank = True)\n"
+                },
+                {
+                    "date": 1738832227658,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,10 +15,10 @@\n             ('manage_album', 'Manage Album'),\n         ]\n \n class Gallery(models.Model):\n-    image = models.ImageField(max_length = 500,upload_to = 'gallery/images',null)\n-    album = models.ManyToManyField(Album,related_name =\"gallery\")\n+    image = models.ImageField(max_length = 500,upload_to = 'gallery/images',null=True,blank=True)\n+    album = models.ForeignKey(Album,related_name =\"gallery\")\n     is_cover = models.BooleanField(default = False)\n     \n     created_date = models.DateField(auto_now_add=True, null = True,blank = True)\n     created_date_time = models.DateTimeField(auto_now_add=True, null = True,blank = True)\n"
+                },
+                {
+                    "date": 1738832252863,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,9 +16,9 @@\n         ]\n \n class Gallery(models.Model):\n     image = models.ImageField(max_length = 500,upload_to = 'gallery/images',null=True,blank=True)\n-    album = models.ForeignKey(Album,related_name =\"gallery\")\n+    album = models.ForeignKey(Album,related_name =\"gallery\",)\n     is_cover = models.BooleanField(default = False)\n     \n     created_date = models.DateField(auto_now_add=True, null = True,blank = True)\n     created_date_time = models.DateTimeField(auto_now_add=True, null = True,blank = True)\n"
+                },
+                {
+                    "date": 1738832258679,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,9 +16,9 @@\n         ]\n \n class Gallery(models.Model):\n     image = models.ImageField(max_length = 500,upload_to = 'gallery/images',null=True,blank=True)\n-    album = models.ForeignKey(Album,related_name =\"gallery\",)\n+    album = models.ForeignKey(Album,related_name =\"gallery\",on_delete = models.CASCADE)\n     is_cover = models.BooleanField(default = False)\n     \n     created_date = models.DateField(auto_now_add=True, null = True,blank = True)\n     created_date_time = models.DateTimeField(auto_now_add=True, null = True,blank = True)\n"
+                },
+                {
+                    "date": 1738832291769,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,9 +16,9 @@\n         ]\n \n class Gallery(models.Model):\n     image = models.ImageField(max_length = 500,upload_to = 'gallery/images',null=True,blank=True)\n-    album = models.ForeignKey(Album,related_name =\"gallery\",on_delete = models.CASCADE)\n+    album = models.ForeignKey(Album,related_name =\"gallery\",on_delete = models.CASCADE,null )\n     is_cover = models.BooleanField(default = False)\n     \n     created_date = models.DateField(auto_now_add=True, null = True,blank = True)\n     created_date_time = models.DateTimeField(auto_now_add=True, null = True,blank = True)\n"
+                },
+                {
+                    "date": 1738832595582,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,14 +16,14 @@\n         ]\n \n class Gallery(models.Model):\n     image = models.ImageField(max_length = 500,upload_to = 'gallery/images',null=True,blank=True)\n-    album = models.ForeignKey(Album,related_name =\"gallery\",on_delete = models.CASCADE,null )\n+    album = models.ForeignKey(Album,related_name =\"gallery\",on_delete = models.CASCADE,null = True,blank = True)\n     is_cover = models.BooleanField(default = False)\n     \n     created_date = models.DateField(auto_now_add=True, null = True,blank = True)\n     created_date_time = models.DateTimeField(auto_now_add=True, null = True,blank = True)\n-    updated_date_time = models.DateTimeField(auto_now=True, null = True,blank = True)\\\n+    updated_date_time = models.DateTimeField(auto_now=True, null = True,blank = True)\n     \n     def __str__(self):\n         \n         return self.created_date\n"
                 }
             ],
             "date": 1726649624074,

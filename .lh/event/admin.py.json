@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 12,
+            "activePatchIndex": 14,
             "patches": [
                 {
                     "date": 1726571205842,
@@ -56,6 +56,14 @@
                 {
                     "date": 1726660695913,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n from django.contrib import admin\n-from .models import Event,EventOrganizer,Category\n+from .models import Event,EventOrganizer,EventCategory\n # Register your models here.\n admin.site.register(Event)\n-admin.site.register(Organizer)\n+admin.site.register(EventOrganizer)\n admin.site.register(Category)\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1738833643452,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n from django.contrib import admin\n-from .models import Event,EventOrganizer,EventCategory\n+from .models import Event,EventOrganizer,EventCategory,E\n # Register your models here.\n admin.site.register(Event)\n admin.site.register(EventOrganizer)\n\\ No newline at end of file\n-admin.site.register(Category)\n+admin.site.register(EventCategory)\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1738833648680,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,7 @@\n from django.contrib import admin\n-from .models import Event,EventOrganizer,EventCategory,E\n+from .models import Event,EventOrganizer,EventCategory,EventGallery\n # Register your models here.\n admin.site.register(Event)\n admin.site.register(EventOrganizer)\n\\ No newline at end of file\n-admin.site.register(EventCategory)\n+admin.site.register(EventCategory)\n+admin.site.register(EventGallery)\n\\ No newline at end of file\n"
                 }
             ],
             "date": 1726571205842,

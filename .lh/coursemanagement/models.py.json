@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 106,
+            "activePatchIndex": 108,
             "patches": [
                 {
                     "date": 1727071578528,
@@ -432,6 +432,14 @@
                 {
                     "date": 1738318700907,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,9 +11,9 @@\n # Create your models here.\n class Course(SEOFields):\n     public_id = models.UUIDField(default=uuid.uuid4,editable=False,unique=True)\n     slug = models.SlugField(max_length=255, unique=True, null=True, blank=True)\n-    name = models.CharField(max_length=255,unique=)\n+    name = models.CharField(max_length=255,unique=True)\n     abbreviation = models.CharField(max_length=255)\n     duration = models.ForeignKey(Duration,on_delete=models.CASCADE,related_name='course_duration')\n     faculty = models.ForeignKey(Faculty, on_delete=models.CASCADE, related_name='course_faculties')\n     level = models.ForeignKey(Level, on_delete=models.CASCADE, related_name='course_level')\n@@ -33,9 +33,9 @@\n         return self.name if self.name else \"Unnamed Course\"\n     \n     def save(self, *args, **kwargs):\n         if not self.slug:\n-            self.slug = slugify(self.name)+'-'+str(self.public_id)[1:5] + str(self.public_id)[-1:-5]\n+            self.slug = slugify(self.name)\n         super().save(*args, **kwargs)\n     \n     class Meta:\n         permissions = [\n"
+                },
+                {
+                    "date": 1738826935807,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -42,5 +42,11 @@\n             ('manage_course', 'Manage course'),\n         ]\n \n     \n- \n\\ No newline at end of file\n+ class CourseCurriculumFile(models.Model):\n+    course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name=\"curriculum_files\")\n+    curriculum_file_upload = models.FileField(upload_to=\"courses/curriculum_files/\")\n+    uploaded_at = models.DateTimeField(auto_now_add=True)\n+\n+    def __str__(self):\n+        return f\"File for {self.course.name} - {self.file.name}\"\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1738826951239,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,9 +24,9 @@\n     course_outcome = models.TextField(default = \"\")\n     course_curriculum = models.TextField(default = \"\")\n     eligibility_criteria = models.TextField(default = \"\")\n     image = models.ImageField(upload_to='courses/images/',null=True,blank=True)\n-    curriculum_file_upload = models.FileField(upload_to='courses/pdf/',null=True,blank=True)\n+    # curriculum_file_upload = models.FileField(upload_to='courses/pdf/',null=True,blank=True)\n     created_date = models.DateField(auto_now_add=True)\n     updated_date = models.DateTimeField(auto_now=True)\n \n     def __str__(self):\n@@ -42,9 +42,9 @@\n             ('manage_course', 'Manage course'),\n         ]\n \n     \n- class CourseCurriculumFile(models.Model):\n+class CourseCurriculumFile(models.Model):\n     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name=\"curriculum_files\")\n     curriculum_file_upload = models.FileField(upload_to=\"courses/curriculum_files/\")\n     uploaded_at = models.DateTimeField(auto_now_add=True)\n \n"
                 }
             ],
             "date": 1727071578528,

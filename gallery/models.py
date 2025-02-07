@@ -17,12 +17,12 @@ class Album(models.Model):
 
 class Gallery(models.Model):
     image = models.ImageField(max_length = 500,upload_to = 'gallery/images',null=True,blank=True)
-    album = models.ManyToManyField(Album,related_name ="gallery")
+    album = models.ForeignKey(Album,related_name ="gallery",on_delete = models.CASCADE,null = True,blank = True)
     is_cover = models.BooleanField(default = False)
     
     created_date = models.DateField(auto_now_add=True, null = True,blank = True)
     created_date_time = models.DateTimeField(auto_now_add=True, null = True,blank = True)
-    updated_date_time = models.DateTimeField(auto_now=True, null = True,blank = True)\
+    updated_date_time = models.DateTimeField(auto_now=True, null = True,blank = True)
     
     def __str__(self):
         

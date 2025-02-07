@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from ..models import Event, EventCategory, EventOrganizer, EventGallery
 from django.db import transaction
+import ast
 
 
 # Serializer for EventCategory
@@ -44,34 +45,66 @@ class EventRetrieveSerializers(serializers.ModelSerializer):
 
 
 
+def str_to_list(data, value_to_convert):
+    """
+    Converts a string representation of a list into an actual list if necessary.
+    """
+    try:
+        mutable_data = data.dict()  # Convert QueryDict to standard dict if necessary
+    except Exception:
+        mutable_data = data
+
+    value_to_convert_data = mutable_data.get(value_to_convert)
+
+    if isinstance(value_to_convert_data, list):
+        return mutable_data  # If already a list, return unchanged
+
+    try:
+        variations = ast.literal_eval(value_to_convert_data)  # Convert string to list
+        mutable_data[value_to_convert] = variations
+        return mutable_data
+    except ValueError as e:
+        raise serializers.ValidationError({f'{value_to_convert}': str(e)}) from e
+
+
 class EventWriteSerializers(serializers.ModelSerializer):
     """
-    Serializer for handling event creation and image uploads.
-    Many-to-Many fields are assigned using IDs, while images are uploaded separately to `EventGallery`.
+    Serializer for handling event creation with multiple images.
+    Uses `str_to_list()` to convert `category` and `organizer` from string to list.
     """
 
     category = serializers.PrimaryKeyRelatedField(many=True, queryset=EventCategory.objects.all())
     organizer = serializers.PrimaryKeyRelatedField(many=True, queryset=EventOrganizer.objects.all())
-    image = EventGallerySerializer(many=True)
 
     class Meta:
         model = Event
         fields = '__all__'
 
+    def to_internal_value(self, data):
+        """
+        Converts `category` and `organizer` from string to list using `str_to_list()`.
+        """
+        if data.get("category"):
+            data = str_to_list(data, "category")
+
+        if data.get("organizer"):
+            data = str_to_list(data, "organizer")
+
+        return super().to_internal_value(data)
+
     @transaction.atomic
     def create(self, validated_data):
         """
-        Handles creation of an Event and uploads images to the gallery.
+        Handles event creation and image uploads.
         """
-        # Extract Many-to-Many fields
-        category_ids = validated_data.pop('category', [])
-        organizer_ids = validated_data.pop('organizer', [])
+        request = self.context.get("request")
 
-        # Extract images from request FILES
-        images_data = []
-        for key, file in self.context['request'].FILES.items():
-            if key.startswith('images['):  # Accepts multiple images
-                images_data.append(file)
+        # Extract Many-to-Many fields
+        category_ids = validated_data.pop("category", [])
+        organizer_ids = validated_data.pop("organizer", [])
+
+        # Extract multiple images from `images[0]`, `images[1]`, ...
+        images_data = [file for key, file in request.FILES.items() if key.startswith("images[")]
 
         # Create the Event instance
         event = super().create(validated_data)
@@ -89,19 +122,19 @@ class EventWriteSerializers(serializers.ModelSerializer):
     @transaction.atomic
     def update(self, instance, validated_data):
         """
-        Handles updating of an Event and uploads new images to the gallery.
+        Handles full (PUT) and partial (PATCH) updates for events.
+        Supports new image uploads and Many-to-Many relationship updates.
         """
+        request = self.context.get("request")
+
         # Extract Many-to-Many fields
-        category_ids = validated_data.pop('category', None)
-        organizer_ids = validated_data.pop('organizer', None)
+        category_ids = validated_data.pop("category", None)
+        organizer_ids = validated_data.pop("organizer", None)
 
-        # Extract images from request FILES
-        images_data = []
-        for key, file in self.context['request'].FILES.items():
-            if key.startswith('images['):  # Accepts multiple images
-                images_data.append(file)
+        # Extract multiple images from `images[0]`, `images[1]`, ...
+        images_data = [file for key, file in request.FILES.items() if key.startswith("images[")]
 
-        # Update instance fields
+        # Update the event instance
         instance = super().update(instance, validated_data)
 
         # Update Many-to-Many relationships if provided

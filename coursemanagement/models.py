@@ -25,7 +25,7 @@ class Course(SEOFields):
     course_curriculum = models.TextField(default = "")
     eligibility_criteria = models.TextField(default = "")
     image = models.ImageField(upload_to='courses/images/',null=True,blank=True)
-    curriculum_file_upload = models.FileField(upload_to='courses/pdf/',null=True,blank=True)
+    # curriculum_file_upload = models.FileField(upload_to='courses/pdf/',null=True,blank=True
     created_date = models.DateField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
 
@@ -43,4 +43,10 @@ class Course(SEOFields):
         ]
 
     
- 
+class CourseCurriculumFile(models.Model):
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name="curriculum_files")
+    curriculum_file_upload = models.FileField(upload_to="courses/curriculum_files/")
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"File for {self.course.name} - {self.file.name}"

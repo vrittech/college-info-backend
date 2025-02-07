@@ -3,7 +3,8 @@ from ..models import Gallery, Album
 from django.core.exceptions import ValidationError as DjangoValidationError
 from rest_framework.exceptions import ValidationError as DRFValidationError
 from rest_framework import serializers
-
+from rest_framework import serializers
+from django.core.files.uploadedfile import InMemoryUploadedFile
 
 class AlbumSerializer(serializers.ModelSerializer):
     class Meta:
@@ -12,7 +13,7 @@ class AlbumSerializer(serializers.ModelSerializer):
 
 
 class GalleryListSerializers(serializers.ModelSerializer):
-    album = AlbumSerializer(many=True)  # Nested Album objects for the gallery
+    album = AlbumSerializer(read_only=True)
 
     class Meta:
         model = Gallery
@@ -20,7 +21,7 @@ class GalleryListSerializers(serializers.ModelSerializer):
 
 
 class GalleryRetrieveSerializers(serializers.ModelSerializer):
-    album = AlbumSerializer(many=True)  # Nested Album objects for the gallery
+    album = AlbumSerializer(read_only=True)  # Nested Album objects for the gallery
 
     class Meta:
         model = Gallery
@@ -28,42 +29,64 @@ class GalleryRetrieveSerializers(serializers.ModelSerializer):
 
 
 class GalleryWriteSerializers(serializers.ModelSerializer):
-    # The `album` field is written as an integer ID, but the details will be fetched via nested serializer
-    album = serializers.PrimaryKeyRelatedField(queryset=Album.objects.all(), many=True)
-    
+    """
+    Serializer for handling gallery image uploads.
+    - Accepts `album` as an ID in the request.
+    - Accepts multiple images using `image[0]`, `image[1]`, etc.
+    """
+
+    album = serializers.PrimaryKeyRelatedField(
+        queryset=Album.objects.all(),
+        write_only=True
+    )
+
     class Meta:
         model = Gallery
         fields = ['id', 'image', 'album', 'is_cover', 'created_date', 'created_date_time', 'updated_date_time']
-    
-    def validate_album(self, value):
-        # Validation to ensure album(s) exist
-        for album in value:
-            if not Album.objects.filter(id=album.id).exists():
-                raise serializers.ValidationError(f"Album with id {album.id} does not exist.")
-        return value
-    
+
     def create(self, validated_data):
-        # Handle the creation of the Gallery instance
-        album_data = validated_data.pop('album')
-        gallery_instance = Gallery.objects.create(**validated_data)
-        
-        # Add the albums to the gallery (Many-to-Many relationship)
-        gallery_instance.album.set(album_data)
-        gallery_instance.save()
-        
-        return gallery_instance
-    
+        """
+        Handles multiple image uploads and links them to the same album.
+        """
+        request = self.context.get("request")
+
+        # Retrieve album ID from request data
+        album_id = request.data.get("album")  # Gets album ID from request
+        if not album_id:
+            raise serializers.ValidationError({"album": "This field is required."})
+
+        # Fetch album object
+        try:
+            album = Album.objects.get(id=album_id)
+        except Album.DoesNotExist:
+            raise serializers.ValidationError({"album": "Invalid album ID."})
+
+        # Extract multiple images using keys like `image[0]`, `image[1]`
+        uploaded_files = [
+            request.FILES[key] for key in request.FILES if key.startswith("image[")
+        ]
+
+        if not uploaded_files:
+            raise serializers.ValidationError({"images": "At least one image is required."})
+
+        gallery_instances = []
+        for image_file in uploaded_files:
+            if isinstance(image_file, InMemoryUploadedFile):
+                # Create a separate Gallery instance for each uploaded image
+                gallery_instance = Gallery.objects.create(
+                    album=album,  # Manually assigning album here
+                    image=image_file,
+                    is_cover=validated_data.get("is_cover", False)
+                )
+                gallery_instances.append(gallery_instance)
+
+        return gallery_instances
+
     def update(self, instance, validated_data):
-        # Handle the update of an existing Gallery instance
-        album_data = validated_data.pop('album', None)
-        
-        # Update fields
+        """
+        Handles updating a single Gallery instance.
+        """
         for attr, value in validated_data.items():
             setattr(instance, attr, value)
-        
-        # If `album` is provided, update the many-to-many relationship
-        if album_data is not None:
-            instance.album.set(album_data)  # Update the albums associated with the gallery
-        
         instance.save()
         return instance
