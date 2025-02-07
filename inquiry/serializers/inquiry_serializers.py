@@ -7,11 +7,13 @@ from collegemanagement.models import College
 class CourseSerializers(serializers.ModelSerializer):
     class Meta:
         model = Course
+        ref_name = 'CourseInquirySerializers'
         fields = ['id','name','slug']
         
 class CourseSerializers(serializers.ModelSerializer):
     class Meta:
         model = College
+        ref_name = 'CollegeInquirySerializers'
         fields = ['id','name','slug']
         
 class InquiryListSerializers(serializers.ModelSerializer):
