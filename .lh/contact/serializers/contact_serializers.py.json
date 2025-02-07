@@ -1,0 +1,58 @@
+{
+    "sourceFile": "contact/serializers/contact_serializers.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 10,
+            "patches": [
+                {
+                    "date": 1738913786216,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1738913792747,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n from rest_framework import serializers\n from ..models import Contact\n-from \n+from accounts.\n class ContactListSerializers(serializers.ModelSerializer):\n     class Meta:\n         model = Contact\n         fields = '__all__'\n"
+                },
+                {
+                    "date": 1738913800632,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,12 +1,18 @@\n from rest_framework import serializers\n from ..models import Contact\n-from accounts.\n+from accounts.models import CustomUser\n+\n class ContactListSerializers(serializers.ModelSerializer):\n     class Meta:\n         model = Contact\n         fields = '__all__'\n \n+class ContactListSerializers(serializers.ModelSerializer):\n+    class Meta:\n+        model = Contact\n+        fields = '__all__'\n+\n class ContactRetrieveSerializers(serializers.ModelSerializer):\n     class Meta:\n         model = Contact\n         fields = '__all__'\n"
+                },
+                {
+                    "date": 1738913806281,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,9 @@\n from rest_framework import serializers\n from ..models import Contact\n from accounts.models import CustomUser\n \n-class ContactListSerializers(serializers.ModelSerializer):\n+class UserSerializers(serializers.ModelSerializer):\n     class Meta:\n         model = Contact\n         fields = '__all__'\n \n"
+                },
+                {
+                    "date": 1738913819668,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,10 +3,10 @@\n from accounts.models import CustomUser\n \n class UserSerializers(serializers.ModelSerializer):\n     class Meta:\n-        model = Contact\n-        fields = '__all__'\n+        model = CustomUser\n+        fields = [id,]\n \n class ContactListSerializers(serializers.ModelSerializer):\n     class Meta:\n         model = Contact\n"
+                },
+                {
+                    "date": 1738913826626,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,9 +4,9 @@\n \n class UserSerializers(serializers.ModelSerializer):\n     class Meta:\n         model = CustomUser\n-        fields = [id,]\n+        fields = [\n \n class ContactListSerializers(serializers.ModelSerializer):\n     class Meta:\n         model = Contact\n"
+                },
+                {
+                    "date": 1738913836335,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,9 +4,9 @@\n \n class UserSerializers(serializers.ModelSerializer):\n     class Meta:\n         model = CustomUser\n-        fields = [\n+        fields = ['id','full_name'\n \n class ContactListSerializers(serializers.ModelSerializer):\n     class Meta:\n         model = Contact\n"
+                },
+                {
+                    "date": 1738913853964,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,11 +4,12 @@\n \n class UserSerializers(serializers.ModelSerializer):\n     class Meta:\n         model = CustomUser\n-        fields = ['id','full_name'\n+        fields = ['id','full_name']\n \n class ContactListSerializers(serializers.ModelSerializer):\n+    user\n     class Meta:\n         model = Contact\n         fields = '__all__'\n \n"
+                },
+                {
+                    "date": 1738913860110,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,9 @@\n         model = CustomUser\n         fields = ['id','full_name']\n \n class ContactListSerializers(serializers.ModelSerializer):\n-    user\n+    user = \n     class Meta:\n         model = Contact\n         fields = '__all__'\n \n"
+                },
+                {
+                    "date": 1738913870172,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,14 +7,15 @@\n         model = CustomUser\n         fields = ['id','full_name']\n \n class ContactListSerializers(serializers.ModelSerializer):\n-    user = \n+    user = UserSerializers(read_only=True)\n     class Meta:\n         model = Contact\n         fields = '__all__'\n \n class ContactRetrieveSerializers(serializers.ModelSerializer):\n+    user = UserSerializers(read_only=True)\n     class Meta:\n         model = Contact\n         fields = '__all__'\n \n"
+                },
+                {
+                    "date": 1738913877356,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,7 +19,8 @@\n         model = Contact\n         fields = '__all__'\n \n class ContactWriteSerializers(serializers.ModelSerializer):\n+    user = UserSerializers(read_only=True)\n     class Meta:\n         model = Contact\n         fields = '__all__'\n\\ No newline at end of file\n"
+                }
+            ],
+            "date": 1738913786216,
+            "name": "Commit-0",
+            "content": "from rest_framework import serializers\nfrom ..models import Contact\nfrom \nclass ContactListSerializers(serializers.ModelSerializer):\n    class Meta:\n        model = Contact\n        fields = '__all__'\n\nclass ContactRetrieveSerializers(serializers.ModelSerializer):\n    class Meta:\n        model = Contact\n        fields = '__all__'\n\nclass ContactWriteSerializers(serializers.ModelSerializer):\n    class Meta:\n        model = Contact\n        fields = '__all__'"
+        }
+    ]
+}

@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 214,
+            "activePatchIndex": 216,
             "patches": [
                 {
                     "date": 1727170911785,
@@ -864,6 +864,14 @@
                 {
                     "date": 1738643726746,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,9 +14,8 @@\n from mainproj.utilities.seo import SEOFields\n import uuid\n from django.utils.text import slugify\n \n-# from faqs.models import FAQs\n \n  \n # CollegeGallery Model\n class CollegeGallery(models.Model):\n"
+                },
+                {
+                    "date": 1738904226266,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,9 +14,8 @@\n from mainproj.utilities.seo import SEOFields\n import uuid\n from django.utils.text import slugify\n \n-\n  \n # CollegeGallery Model\n class CollegeGallery(models.Model):\n     image = models.ImageField(upload_to='college/gallery/',null=True,blank=True)\n@@ -57,9 +56,9 @@\n     website_link = models.URLField(null= True,blank=True)\n     address = models.CharField(max_length=255)\n     district = models.ForeignKey(District,on_delete=models.CASCADE,related_name='college_district')\n     phone_number = models.CharField(max_length=20)\n-    email = models.EmailField()\n+    email = models.EmailField(max)\n     affiliated = models.ForeignKey(Affiliation, on_delete=models.CASCADE,related_name='college_affiliation')\n     college_type = models.ForeignKey(CollegeType, on_delete=models.CASCADE,related_name='college_type')\n     discipline = models.ManyToManyField(Discipline, related_name='college_discipline')\n     social_media = models.ManyToManyField(SocialMedia)\n"
+                },
+                {
+                    "date": 1738904232315,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -56,9 +56,9 @@\n     website_link = models.URLField(null= True,blank=True)\n     address = models.CharField(max_length=255)\n     district = models.ForeignKey(District,on_delete=models.CASCADE,related_name='college_district')\n     phone_number = models.CharField(max_length=20)\n-    email = models.EmailField(max)\n+    email = models.EmailField(max_length=255)s\n     affiliated = models.ForeignKey(Affiliation, on_delete=models.CASCADE,related_name='college_affiliation')\n     college_type = models.ForeignKey(CollegeType, on_delete=models.CASCADE,related_name='college_type')\n     discipline = models.ManyToManyField(Discipline, related_name='college_discipline')\n     social_media = models.ManyToManyField(SocialMedia)\n"
                 }
             ],
             "date": 1727170911784,

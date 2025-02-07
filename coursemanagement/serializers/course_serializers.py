@@ -1,9 +1,8 @@
 from rest_framework import serializers
-from ..models import Duration, Faculty, Level, Discipline, Course,  Affiliation
+from django.core.files.uploadedfile import InMemoryUploadedFile
 import ast
 from django.core.exceptions import ValidationError
-from rest_framework import serializers
-from django.core.files.uploadedfile import InMemoryUploadedFile
+from django.core.files.uploadedfile import InMemoryUploadedFile  
 from ..models import Course, CourseCurriculumFile, Duration, Faculty, Level, Discipline, Affiliation
 
 
@@ -116,12 +115,6 @@ class CourseRetrieveSerializers(serializers.ModelSerializer):
     class Meta:
         model = Course
         fields = '__all__'
-
-
-from rest_framework import serializers
-from django.core.files.uploadedfile import InMemoryUploadedFile
-from ..models import Course, CourseCurriculumFile, Duration, Faculty, Level, Discipline, Affiliation
-
 
 
 class CourseWriteSerializers(serializers.ModelSerializer):

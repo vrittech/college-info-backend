@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 13,
+            "activePatchIndex": 14,
             "patches": [
                 {
                     "date": 1733470542468,
@@ -60,6 +60,10 @@
                 {
                     "date": 1733470637582,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -21,9 +21,10 @@\n         model = CoursesAndFees\n         fields = '__all__'\n \n class CoursesAndFeesRetrieveSerializers(serializers.ModelSerializer):\n-    \n+    college = CollegeSerializers(read_only=True)\n+    course = CourseSerializers(read_only=True)\n     class Meta:\n         model = CoursesAndFees\n         fields = '__all__'\n \n"
+                },
+                {
+                    "date": 1738913200178,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -28,7 +28,9 @@\n         model = CoursesAndFees\n         fields = '__all__'\n \n class CoursesAndFeesWriteSerializers(serializers.ModelSerializer):\n+    college = CollegeSerializers(read_only=True)\n+    course = CourseSerializers(read_only=True)\n     class Meta:\n         model = CoursesAndFees\n         fields = '__all__'\n\\ No newline at end of file\n"
                 }
             ],
             "date": 1733470542468,

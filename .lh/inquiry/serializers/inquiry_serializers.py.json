@@ -1,0 +1,30 @@
+{
+    "sourceFile": "inquiry/serializers/inquiry_serializers.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 3,
+            "patches": [
+                {
+                    "date": 1738914096491,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1738914101859,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n from rest_framework import serializers\n from ..models import Inquiry\n-from coursemanagement\n+from coursemanagement.serializers.course_serializers import CourseListSeriali\n \n class InquiryListSerializers(serializers.ModelSerializer):\n     class Meta:\n         model = Inquiry\n"
+                },
+                {
+                    "date": 1738914109865,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n from rest_framework import serializers\n from ..models import Inquiry\n-from coursemanagement.models\n+from coursemanagement.models import Course\n \n class InquiryListSerializers(serializers.ModelSerializer):\n     class Meta:\n         model = Inquiry\n"
+                },
+                {
+                    "date": 1738914268537,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,36 @@\n+from rest_framework import serializers\n+from ..models import Inquiry\n+from coursemanagement.models import Course\n+from collegemanagement.models import College\n+\n+\n+class CourseSerializers(serializers.ModelSerializer):\n+    class Meta:\n+        model = Course\n+        fields = ['id','name','slug']\n+        \n+class CourseSerializers(serializers.ModelSerializer):\n+    class Meta:\n+        model = College\n+        fields = ['id','name','slug']\n+        \n+class InquiryListSerializers(serializers.ModelSerializer):\n+    course = CourseSerializers(read_only=True,many=True)\n+    college = CourseSerializers(read_only=True,many=True)\n+    class Meta:\n+        model = Inquiry\n+        fields = '__all__'\n+\n+class InquiryRetrieveSerializers(serializers.ModelSerializer):\n+    courses = CourseSerializers(read_only=True,many=True)\n+    colleges = CourseSerializers(read_only=True,many=True)\n+    class Meta:\n+        model = Inquiry\n+        fields = '__all__'\n+\n+class InquiryWriteSerializers(serializers.ModelSerializer):\n+    courses = CourseSerializers(read_only=True,many=True)\n+    colleges = CourseSerializers(read_only=True,many=True)\n+    class Meta:\n+        model = Inquiry\n+        fields = '__all__'\n\\ No newline at end of file\n"
+                }
+            ],
+            "date": 1738914096491,
+            "name": "Commit-0",
+            "content": "from rest_framework import serializers\nfrom ..models import Inquiry\nfrom coursemanagement\n\nclass InquiryListSerializers(serializers.ModelSerializer):\n    class Meta:\n        model = Inquiry\n        fields = '__all__'\n\nclass InquiryRetrieveSerializers(serializers.ModelSerializer):\n    class Meta:\n        model = Inquiry\n        fields = '__all__'\n\nclass InquiryWriteSerializers(serializers.ModelSerializer):\n    class Meta:\n        model = Inquiry\n        fields = '__all__'"
+        }
+    ]
+}

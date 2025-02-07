@@ -29,6 +29,8 @@ class CoursesAndFeesRetrieveSerializers(serializers.ModelSerializer):
         fields = '__all__'
 
 class CoursesAndFeesWriteSerializers(serializers.ModelSerializer):
+    college = CollegeSerializers(read_only=True)
+    course = CourseSerializers(read_only=True)
     class Meta:
         model = CoursesAndFees
         fields = '__all__'

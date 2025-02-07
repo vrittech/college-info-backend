@@ -57,7 +57,7 @@ class College(SEOFields):
     address = models.CharField(max_length=255)
     district = models.ForeignKey(District,on_delete=models.CASCADE,related_name='college_district')
     phone_number = models.CharField(max_length=20)
-    email = models.EmailField()
+    email = models.EmailField(max_length=255)
     affiliated = models.ForeignKey(Affiliation, on_delete=models.CASCADE,related_name='college_affiliation')
     college_type = models.ForeignKey(CollegeType, on_delete=models.CASCADE,related_name='college_type')
     discipline = models.ManyToManyField(Discipline, related_name='college_discipline')

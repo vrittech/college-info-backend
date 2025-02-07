@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from ..models import College, District, Affiliation, CollegeType, Discipline, SocialMedia, Facility
+from formprogress.models import FormStepProgress
 import ast
 
 
@@ -23,15 +24,20 @@ def str_to_list(data,value_to_convert):
 class DistrictSerializer(serializers.ModelSerializer):
     class Meta:
         model = District
-        fields = '__all__'
+        fields = ['id', 'name']
 
 # Nested serializer for Affiliation
 class AffiliationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Affiliation
-        fields = '__all__'
+        fields = ['id', 'name', 'established_year','address']
 
 # Nested serializer for CollegeType
+class FormStepProgressSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = FormStepProgress
+        fields = '__all__'
+        
 class CollegeTypeSerializer(serializers.ModelSerializer):
     class Meta:
         model = CollegeType
@@ -86,56 +92,94 @@ class CollegeRetrieveSerializers(serializers.ModelSerializer):
 
 
 # Serializer for creating/updating college details (with nested objects for foreign keys and many-to-many)
+# Serializer for College model
 class CollegeWriteSerializers(serializers.ModelSerializer):
-    # Use PrimaryKeyRelatedField to accept only IDs
+    # ForeignKey fields
     district = serializers.PrimaryKeyRelatedField(queryset=District.objects.all())
     affiliated = serializers.PrimaryKeyRelatedField(queryset=Affiliation.objects.all())
     college_type = serializers.PrimaryKeyRelatedField(queryset=CollegeType.objects.all())
+    step_counter = serializers.PrimaryKeyRelatedField(queryset=FormStepProgress.objects.all(), required=False, allow_null=True)
 
+    # ManyToMany fields
     discipline = serializers.PrimaryKeyRelatedField(queryset=Discipline.objects.all(), many=True)
-    social_media = serializers.PrimaryKeyRelatedField(queryset=SocialMedia.objects.all(), many=True)
-    facilities = serializers.PrimaryKeyRelatedField(queryset=Facility.objects.all(), many=True)
-    def to_internal_value(self, data):
-        if data.get('packages'):
-            data = str_to_list(data,'packages')
-            return super().to_internal_value(data)
-        return super().to_internal_value(data)
+    social_media = serializers.PrimaryKeyRelatedField(queryset=SocialMedia.objects.all(), many=True, required=False)
+    facilities = serializers.PrimaryKeyRelatedField(queryset=Facility.objects.all(), many=True, required=False)
 
     class Meta:
         model = College
         fields = '__all__'
-        
-    def create(self, validated_data):
-        discipline_ids = validated_data.pop('discipline', [])
-        social_media_ids = validated_data.pop('social_media', [])
-        facilities_ids = validated_data.pop('facilities', [])
 
-        # Create College instance with ForeignKey relationships
+    def create(self, validated_data):
+        """Handles creating a college and returns full objects in response."""
+        request = self.context.get("request")
+
+        # Extract ManyToMany relationships from the request
+        discipline_ids = request.data.get("discipline", [])
+        social_media_ids = request.data.get("social_media", [])
+        facilities_ids = request.data.get("facilities", [])
+
+        # Remove ManyToMany fields from validated_data
+        validated_data.pop("discipline", None)
+        validated_data.pop("social_media", None)
+        validated_data.pop("facilities", None)
+
+        # Create College instance
         college = College.objects.create(**validated_data)
 
-        # Add ManyToMany relationships using IDs
-        college.discipline.set(discipline_ids)
-        college.social_media.set(social_media_ids)
-        college.facilities.set(facilities_ids)
+        # Set ManyToMany relationships
+        if discipline_ids:
+            college.discipline.set(Discipline.objects.filter(id__in=discipline_ids))
+        if social_media_ids:
+            college.social_media.set(SocialMedia.objects.filter(id__in=social_media_ids))
+        if facilities_ids:
+            college.facilities.set(Facility.objects.filter(id__in=facilities_ids))
 
         return college
 
     def update(self, instance, validated_data):
-        discipline_ids = validated_data.pop('discipline', None)
-        social_media_ids = validated_data.pop('social_media', None)
-        facilities_ids = validated_data.pop('facilities', None)
+        """Handles updating a college and returns full objects in response."""
+        request = self.context.get("request")
 
-        # Update ForeignKey relationships
+        # Extract ManyToMany relationships from the request
+        discipline_ids = request.data.get("discipline", None)
+        social_media_ids = request.data.get("social_media", None)
+        facilities_ids = request.data.get("facilities", None)
+
+        # Remove ManyToMany fields from validated_data
+        validated_data.pop("discipline", None)
+        validated_data.pop("social_media", None)
+        validated_data.pop("facilities", None)
+
+        # Update ForeignKey fields
         for attr, value in validated_data.items():
             setattr(instance, attr, value)
         instance.save()
 
-        # Update ManyToMany relationships if provided
+        # Update ManyToMany relationships
         if discipline_ids is not None:
-            instance.discipline.set(discipline_ids)
+            instance.discipline.set(Discipline.objects.filter(id__in=discipline_ids))
         if social_media_ids is not None:
-            instance.social_media.set(social_media_ids)
+            instance.social_media.set(SocialMedia.objects.filter(id__in=social_media_ids))
         if facilities_ids is not None:
-            instance.facilities.set(facilities_ids)
+            instance.facilities.set(Facility.objects.filter(id__in=facilities_ids))
 
         return instance
+
+    def to_representation(self, instance):
+        """Customize the response to include full objects for related fields."""
+        response = super().to_representation(instance)
+
+        # Replace IDs with full nested objects for foreign key fields
+        response["district"] = DistrictSerializer(instance.district).data
+        response["affiliated"] = AffiliationSerializer(instance.affiliated).data
+        response["college_type"] = CollegeTypeSerializer(instance.college_type).data
+        response["step_counter"] = (
+            FormStepProgressSerializer(instance.step_counter).data if instance.step_counter else None
+        )
+
+        # Replace IDs with full nested objects for many-to-many fields
+        response["discipline"] = DisciplineSerializer(instance.discipline.all(), many=True).data
+        response["social_media"] = SocialMediaSerializer(instance.social_media.all(), many=True).data
+        response["facilities"] = FacilitySerializer(instance.facilities.all(), many=True).data
+
+        return response
