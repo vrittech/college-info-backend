@@ -63,6 +63,14 @@ class GroupExtension(models.Model):
         permissions = [
             ('manage_group_extension', 'Manage group extension'),
         ]
+    def save(self, *args, **kwargs):
+        # Ensure the superuser status is not changed accidentally
+        if not self.is_superuser:
+            print("####################Superuser status cannot be changed.##################")
+            # You can log or add checks here if needed
+            pass
+        super().save(*args, **kwar
+
 
     # def save(self, *args, **kwargs):
     #     # Set position to the Group ID if position is 0 (or could be None)

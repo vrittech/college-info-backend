@@ -45,9 +45,12 @@ class EventRetrieveSerializers(serializers.ModelSerializer):
 
 
 
+import ast
+
 def str_to_list(data, value_to_convert):
     """
     Converts a string representation of a list into an actual list if necessary.
+    Ensures that single values or comma-separated values are correctly converted into lists of integers.
     """
     try:
         mutable_data = data.dict()  # Convert QueryDict to standard dict if necessary
@@ -59,12 +62,28 @@ def str_to_list(data, value_to_convert):
     if isinstance(value_to_convert_data, list):
         return mutable_data  # If already a list, return unchanged
 
+    # If it's a comma-separated string, convert it to a list of integers
+    if isinstance(value_to_convert_data, str):
+        if ',' in value_to_convert_data:
+            # Split the string by commas, strip spaces, and convert each part to an integer
+            mutable_data[value_to_convert] = [int(x.strip()) for x in value_to_convert_data.split(',')]
+        else:
+            # If it's a single value, convert it to a list of one integer
+            mutable_data[value_to_convert] = [int(value_to_convert_data.strip())]
+        return mutable_data
+
+    # If it's a single item (not a list or string), wrap it in a list
+    if value_to_convert_data and not isinstance(value_to_convert_data, list):
+        mutable_data[value_to_convert] = [value_to_convert_data]
+        return mutable_data
+
     try:
         variations = ast.literal_eval(value_to_convert_data)  # Convert string to list
         mutable_data[value_to_convert] = variations
         return mutable_data
     except ValueError as e:
         raise serializers.ValidationError({f'{value_to_convert}': str(e)}) from e
+
 
 
 class EventWriteSerializers(serializers.ModelSerializer):

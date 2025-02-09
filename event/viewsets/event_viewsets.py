@@ -45,7 +45,7 @@ class eventViewsets(viewsets.ModelViewSet):
         serializer.is_valid(raise_exception=True)
         event_instance = serializer.save()
 
-        return self.get_formatted_response(event_instance)
+        return self.get_formatted_response(event_instance,status.HTTP_201_CREATED)
 
     def update(self, request, *args, **kwargs):
         """
@@ -59,9 +59,9 @@ class eventViewsets(viewsets.ModelViewSet):
         serializer.is_valid(raise_exception=True)
         event_instance = serializer.save()
 
-        return self.get_formatted_response(event_instance)
+        return self.get_formatted_response(event_instance,status.HTTP_200_OK)
 
-    def get_formatted_response(self, event_instance):
+    def get_formatted_response(self, event_instance, status):
         """Formats the response to match the expected structure."""
         response_data = {
             "category": EventCategoryRetrieveSerializers(event_instance.category.all(), many=True).data,
@@ -85,7 +85,7 @@ class eventViewsets(viewsets.ModelViewSet):
             ],
         }
 
-        return Response(response_data, status=status.HTTP_200_OK)
+        return Response(response_data, status= status)
 
 
     # @action(detail=False, methods=['get'], name="action_name", url_path="url_path")
