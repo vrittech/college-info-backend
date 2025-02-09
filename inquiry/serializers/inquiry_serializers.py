@@ -10,7 +10,7 @@ class CourseSerializers(serializers.ModelSerializer):
         ref_name = 'CourseInquirySerializers'
         fields = ['id','name','slug','image']
         
-class CourseSerializers(serializers.ModelSerializer):
+class CollegeSerializers(serializers.ModelSerializer):
     class Meta:
         model = College
         ref_name = 'CollegeInquirySerializers'
@@ -18,21 +18,21 @@ class CourseSerializers(serializers.ModelSerializer):
         
 class InquiryListSerializers(serializers.ModelSerializer):
     courses = CourseSerializers(read_only=True,many=True)
-    colleges = CourseSerializers(read_only=True,many=True)
+    colleges = CollegeSerializers(read_only=True,many=True)
     class Meta:
         model = Inquiry
         fields = '__all__'
 
 class InquiryRetrieveSerializers(serializers.ModelSerializer):
     courses = CourseSerializers(read_only=True,many=True)
-    colleges = CourseSerializers(read_only=True,many=True)
+    colleges = CollegeSerializers(read_only=True,many=True)
     class Meta:
         model = Inquiry
         fields = '__all__'
 
 class InquiryWriteSerializers(serializers.ModelSerializer):
     courses = CourseSerializers(read_only=True,many=True)
-    colleges = CourseSerializers(read_only=True,many=True)
+    colleges = CollegeSerializers(read_only=True,many=True)
     class Meta:
         model = Inquiry
         fields = '__all__'
