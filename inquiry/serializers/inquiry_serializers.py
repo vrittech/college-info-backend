@@ -8,13 +8,13 @@ class CourseSerializers(serializers.ModelSerializer):
     class Meta:
         model = Course
         ref_name = 'CourseInquirySerializers'
-        fields = ['id','name','slug']
+        fields = ['id','name','slug','image']
         
 class CourseSerializers(serializers.ModelSerializer):
     class Meta:
         model = College
         ref_name = 'CollegeInquirySerializers'
-        fields = ['id','name','slug']
+        fields = ['id','name','slug','dp_image']
         
 class InquiryListSerializers(serializers.ModelSerializer):
     courses = CourseSerializers(read_only=True,many=True)
