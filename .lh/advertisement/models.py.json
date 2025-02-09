@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 36,
+            "activePatchIndex": 37,
             "patches": [
                 {
                     "date": 1733373617417,
@@ -152,6 +152,10 @@
                 {
                     "date": 1738315342207,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,9 +6,9 @@\n     created_date = models.DateTimeField(auto_now_add=True)\n     updated_date = models.DateTimeField(auto_now=True)\n \n     def __str__(self):\n-        return self.position_name\n+        return self.placement_name\n     \n     class meta:\n         permissions = [\n             ('manage_placement_position', 'Manage placement position'),\n"
+                },
+                {
+                    "date": 1739079134264,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,9 +18,9 @@\n class Advertisement(models.Model):\n     name = models.CharField(max_length=255)\n     link = models.URLField()\n     image = models.ImageField(upload_to='ads/')\n-    placement = models.ForeignKey(PlacementPosition, on_delete=models.CASCADE)\n+     = models.ForeignKey(PlacementPosition, on_delete=models.CASCADE)\n     created_date = models.DateTimeField(auto_now_add=True)\n     updated_date = models.DateTimeField(auto_now=True)\n     # duration_in_seconds = models.IntegerField(default=0)  # Time in seconds for the ad\n \n"
                 }
             ],
             "date": 1733373617417,

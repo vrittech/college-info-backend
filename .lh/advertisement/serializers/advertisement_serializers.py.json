@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 4,
+            "activePatchIndex": 7,
             "patches": [
                 {
                     "date": 1733479747479,
@@ -24,6 +24,18 @@
                 {
                     "date": 1733479774684,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,8 +12,9 @@\n         model = Advertisement\n         fields = '__all__'\n \n class AdvertisementRetrieveSerializers(serializers.ModelSerializer):\n+    placement_position = PlacementPositionSerializers(read_only=True)\n     class Meta:\n         model = Advertisement\n         fields = '__all__'\n \n"
+                },
+                {
+                    "date": 1739079122479,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,7 +18,8 @@\n         model = Advertisement\n         fields = '__all__'\n \n class AdvertisementWriteSerializers(serializers.ModelSerializer):\n+    \n     class Meta:\n         model = Advertisement\n         fields = '__all__'\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1739079128103,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,8 +18,9 @@\n         model = Advertisement\n         fields = '__all__'\n \n class AdvertisementWriteSerializers(serializers.ModelSerializer):\n+    placement_position = PlacementPositionSerializers(read_only=True)\n     \n     class Meta:\n         model = Advertisement\n         fields = '__all__'\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1739079141945,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,9 +18,8 @@\n         model = Advertisement\n         fields = '__all__'\n \n class AdvertisementWriteSerializers(serializers.ModelSerializer):\n-    placement_position = PlacementPositionSerializers(read_only=True)\n-    \n+    placement = PlacementPositionSerializers(read_only=True)\n     class Meta:\n         model = Advertisement\n         fields = '__all__'\n\\ No newline at end of file\n"
                 }
             ],
             "date": 1733479747479,

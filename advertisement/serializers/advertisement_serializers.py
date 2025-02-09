@@ -7,18 +7,19 @@ class PlacementPositionSerializers(serializers.ModelSerializer):
         fields = '__all__'
 
 class AdvertisementListSerializers(serializers.ModelSerializer):
-    placement_position = PlacementPositionSerializers(read_only=True)
+    placement = PlacementPositionSerializers(read_only=True)
     class Meta:
         model = Advertisement
         fields = '__all__'
 
 class AdvertisementRetrieveSerializers(serializers.ModelSerializer):
-    placement_position = PlacementPositionSerializers(read_only=True)
+    placement = PlacementPositionSerializers(read_only=True)
     class Meta:
         model = Advertisement
         fields = '__all__'
 
 class AdvertisementWriteSerializers(serializers.ModelSerializer):
+    placement = PlacementPositionSerializers(read_only=True)
     class Meta:
         model = Advertisement
         fields = '__all__'
