@@ -69,7 +69,7 @@ class GroupExtension(models.Model):
             print("####################Superuser status cannot be changed.##################")
             # You can log or add checks here if needed
             pass
-        super().save(*args, **kwar
+        super().save(*args, **kwargs)
 
 
     # def save(self, *args, **kwargs):
