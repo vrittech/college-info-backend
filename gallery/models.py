@@ -24,10 +24,6 @@ class Gallery(models.Model):
     created_date_time = models.DateTimeField(auto_now_add=True, null = True,blank = True)
     updated_date_time = models.DateTimeField(auto_now=True, null = True,blank = True)
     
-    def __str__(self):
-        
-        return self.created_date
-    
     class Meta:
         permissions = [
             ('manage_gallery', 'Manage Gallery'),
