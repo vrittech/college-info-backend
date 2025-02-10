@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 4,
+            "activePatchIndex": 8,
             "patches": [
                 {
                     "date": 1726555503513,
@@ -24,6 +24,22 @@
                 {
                     "date": 1733396157585,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n from django.urls import path\n from .views import EmailCheckView, CustomPasswordResetView , VerifyUserPasswordToken,ContactmeView,EmailChangeGetOtpView,EmailResetView\n-from .views import PasswordResetView,SendEmailForBookingVerification\n+from .views import PasswordResetView\n \n \n \n urlpatterns = [\n"
+                },
+                {
+                    "date": 1739165701168,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,9 +9,9 @@\n     path('password-reset-get-otp/', PasswordResetView.as_view()),\n     # path('send-booking-confirmation/', SendEmailForBookingVerification.as_view()),\n     path('get-otp-email-change/', EmailChangeGetOtpView.as_view()),\n     path('email-reset/', EmailResetView.as_view(), name=\"EmailResetView\"),\n-    path('password-reset/', CustomPasswordResetView.as_view(), name=\"reset-password\"),\n+    path('tpassword-rese/', CustomPasswordResetView.as_view(), name=\"reset-password\"),\n     path('verify-token/', VerifyUserPasswordToken.as_view(), name=\"VerifyUserPasswordToken\"),\n \n     path('contact-me/',ContactmeView.as_view(),name=\"ContactmeView\"),\n ]\n"
+                },
+                {
+                    "date": 1739167299202,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,10 +9,11 @@\n     path('password-reset-get-otp/', PasswordResetView.as_view()),\n     # path('send-booking-confirmation/', SendEmailForBookingVerification.as_view()),\n     path('get-otp-email-change/', EmailChangeGetOtpView.as_view()),\n     path('email-reset/', EmailResetView.as_view(), name=\"EmailResetView\"),\n-    path('tpassword-rese/', CustomPasswordResetView.as_view(), name=\"reset-password\"),\n+    path('password-reset/', CustomPasswordResetView.as_view(), name=\"reset-password\"),\n     path('verify-token/', VerifyUserPasswordToken.as_view(), name=\"VerifyUserPasswordToken\"),\n+    path('change-password/', CustomChangePasswordView.as_view(), name='change-password'),\n \n     path('contact-me/',ContactmeView.as_view(),name=\"ContactmeView\"),\n ]\n  \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1739167311078,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n from django.urls import path\n-from .views import EmailCheckView, CustomPasswordResetView , VerifyUserPasswordToken,ContactmeView,EmailChangeGetOtpView,EmailResetView\n+from .views import EmailCheckView, CustomPasswordResetView , VerifyUserPasswordToken,ContactmeView,EmailChangeGetOtpView,CustomChangePasswordViewEmailResetView\n from .views import PasswordResetView\n \n \n \n"
+                },
+                {
+                    "date": 1739167436632,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n from django.urls import path\n-from .views import EmailCheckView, CustomPasswordResetView , VerifyUserPasswordToken,ContactmeView,EmailChangeGetOtpView,CustomChangePasswordViewEmailResetView\n+from .views import EmailCheckView, CustomPasswordResetView , VerifyUserPasswordToken,ContactmeView,EmailChangeGetOtpView,CustomChangePasswordView,EmailResetView\n from .views import PasswordResetView\n \n \n \n"
                 }
             ],
             "date": 1726555503513,

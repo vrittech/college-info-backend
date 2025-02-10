@@ -10,6 +10,7 @@ from django.conf import settings
 from django.core.mail import send_mail
 from django.contrib.auth.hashers import check_password
 from django.template.loader import render_to_string
+from .serializers import CustomChangePasswordSerializer
 # from booking.models import DestinationBook
 
 from django.db.models.signals import post_save
@@ -406,3 +407,51 @@ def sendPasswordResetMail(email, otp, subject, email_type, user):
     recipient_list = [email]
     plain_message = ""
     send_mail(subject, plain_message, email_from, recipient_list, html_message=password_html_contents)
+    
+
+
+class CustomChangePasswordView(generics.GenericAPIView):
+    serializer_class = CustomChangePasswordSerializer
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.serializer_class(data=request.data, context={"kwargs": kwargs})
+        serializer.is_valid(raise_exception=True)
+
+        # Retrieve user based on email or phone
+        user = CustomUser.objects.filter(
+            Q(email=serializer.validated_data.get('email')) |
+            Q(phone=serializer.validated_data.get('email'))
+        ).first()
+
+        if not user:
+            return response.Response(
+                {"message": "User not found"},
+                status=status.HTTP_404_NOT_FOUND
+            )
+
+        # Verify old password
+        old_password = serializer.validated_data.get('old_password')
+        if not check_password(old_password, user.password):
+            return response.Response(
+                {"message": "Old password is incorrect"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        # Check if new password matches re-entered password
+        new_password = serializer.validated_data.get('new_password')
+        confirm_new_password = serializer.validated_data.get('confirm_new_password')
+
+        if new_password != confirm_new_password:
+            return response.Response(
+                {"message": "New passwords do not match"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        # Set and save new password
+        user.set_password(new_password)  # Hashes the password securely
+        user.save()
+
+        return response.Response(
+            {"message": "Password successfully changed"},
+            status=status.HTTP_200_OK
+        )

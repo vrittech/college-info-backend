@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 1,
+            "activePatchIndex": 8,
             "patches": [
                 {
                     "date": 1726555479443,
@@ -12,6 +12,34 @@
                 {
                     "date": 1726555488747,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,9 +9,9 @@\n from django.conf import settings\n from django.core.mail import send_mail\n from django.contrib.auth.hashers import check_password\n from django.template.loader import render_to_string\n-from booking.models import DestinationBook\n+# from booking.models import DestinationBook\n \n from django.db.models.signals import post_save\n from django.dispatch import receiver\n from django.core.mail import send_mail\n"
+                },
+                {
+                    "date": 1739166377524,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,8 +9,9 @@\n from django.conf import settings\n from django.core.mail import send_mail\n from django.contrib.auth.hashers import check_password\n from django.template.loader import render_to_string\n+\n # from booking.models import DestinationBook\n \n from django.db.models.signals import post_save\n from django.dispatch import receiver\n"
+                },
+                {
+                    "date": 1739166388820,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,9 +9,9 @@\n from django.conf import settings\n from django.core.mail import send_mail\n from django.contrib.auth.hashers import check_password\n from django.template.loader import render_to_string\n-\n+from django.contrib.auth.hashers import check_passwor\n # from booking.models import DestinationBook\n \n from django.db.models.signals import post_save\n from django.dispatch import receiver\n"
+                },
+                {
+                    "date": 1739166398907,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,9 +9,8 @@\n from django.conf import settings\n from django.core.mail import send_mail\n from django.contrib.auth.hashers import check_password\n from django.template.loader import render_to_string\n-from django.contrib.auth.hashers import check_passwor\n # from booking.models import DestinationBook\n \n from django.db.models.signals import post_save\n from django.dispatch import receiver\n"
+                },
+                {
+                    "date": 1739166450033,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -404,5 +404,58 @@\n             \n     email_from = settings.EMAIL_HOST_USER\n     recipient_list = [email]\n     plain_message = \"\"\n-    send_mail(subject, plain_message, email_from, recipient_list, html_message=password_html_contents)\n\\ No newline at end of file\n+    send_mail(subject, plain_message, email_from, recipient_list, html_message=password_html_contents)\n+    \n+\n+from rest_framework import generics, status, response\n+from django.contrib.auth.hashers import check_password\n+from django.db.models import Q\n+from .serializers import CustomChangePasswordSerializer\n+from .models import CustomUser\n+\n+class CustomChangePasswordView(generics.GenericAPIView):\n+    serializer_class = CustomChangePasswordSerializer\n+\n+    def post(self, request, *args, **kwargs):\n+        serializer = self.serializer_class(data=request.data, context={\"kwargs\": kwargs})\n+        serializer.is_valid(raise_exception=True)\n+\n+        # Retrieve user based on email or phone\n+        user = CustomUser.objects.filter(\n+            Q(email=serializer.validated_data.get('email')) |\n+            Q(phone=serializer.validated_data.get('email'))\n+        ).first()\n+\n+        if not user:\n+            return response.Response(\n+                {\"message\": \"User not found\"},\n+                status=status.HTTP_404_NOT_FOUND\n+            )\n+\n+        # Verify old password\n+        old_password = serializer.validated_data.get('old_password')\n+        if not check_password(old_password, user.password):\n+            return response.Response(\n+                {\"message\": \"Old password is incorrect\"},\n+                status=status.HTTP_400_BAD_REQUEST\n+            )\n+\n+        # Check if new password matches re-entered password\n+        new_password = serializer.validated_data.get('new_password')\n+        confirm_new_password = serializer.validated_data.get('confirm_new_password')\n+\n+        if new_password != confirm_new_password:\n+            return response.Response(\n+                {\"message\": \"New passwords do not match\"},\n+                status=status.HTTP_400_BAD_REQUEST\n+            )\n+\n+        # Set and save new password\n+        user.set_password(new_password)  # Hashes the password securely\n+        user.save()\n+\n+        return response.Response(\n+            {\"message\": \"Password successfully changed\"},\n+            status=status.HTTP_200_OK\n+        )\n"
+                },
+                {
+                    "date": 1739166465598,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -411,9 +411,8 @@\n from rest_framework import generics, status, response\n from django.contrib.auth.hashers import check_password\n from django.db.models import Q\n from .serializers import CustomChangePasswordSerializer\n-from .models import CustomUser\n \n class CustomChangePasswordView(generics.GenericAPIView):\n     serializer_class = CustomChangePasswordSerializer\n \n"
+                },
+                {
+                    "date": 1739166473339,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -407,12 +407,8 @@\n     plain_message = \"\"\n     send_mail(subject, plain_message, email_from, recipient_list, html_message=password_html_contents)\n     \n \n-from rest_framework import generics, status, response\n-from django.contrib.auth.hashers import check_password\n-from django.db.models import Q\n-from .serializers import CustomChangePasswordSerializer\n \n class CustomChangePasswordView(generics.GenericAPIView):\n     serializer_class = CustomChangePasswordSerializer\n \n"
+                },
+                {
+                    "date": 1739166478602,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,8 +9,9 @@\n from django.conf import settings\n from django.core.mail import send_mail\n from django.contrib.auth.hashers import check_password\n from django.template.loader import render_to_string\n+from .serializers import CustomChangePasswordSerializer\n # from booking.models import DestinationBook\n \n from django.db.models.signals import post_save\n from django.dispatch import receiver\n"
                 }
             ],
             "date": 1726555479443,

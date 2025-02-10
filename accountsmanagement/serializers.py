@@ -141,3 +141,13 @@ class PasswordNumberSerializer(serializers.Serializer):
     #     ('reset_password', 'Reset Password')
     # ])
 
+class CustomChangePasswordSerializer(serializers.Serializer):
+    email = serializers.CharField(required=True)
+    old_password = serializers.CharField(write_only=True)
+    new_password = serializers.CharField(write_only=True)
+    confirm_new_password = serializers.CharField(write_only=True)
+
+    def validate(self, data):
+        if len(data.get('new_password')) < 8:
+            raise serializers.ValidationError("New password must be at least 8 characters long.")
+        return data
