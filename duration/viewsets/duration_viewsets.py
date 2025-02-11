@@ -13,12 +13,14 @@ class durationViewsets(viewsets.ModelViewSet):
     queryset = Duration.objects.all().order_by('-id')
 
     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]
-    search_fields = ['id']
-    ordering_fields = ['id']
+    search_fields = ['id','name']
+    ordering_fields = ['id','name']
 
-    # filterset_fields = {
-    #     'id': ['exact'],
-    # }
+    filterset_fields = {
+        'id': ['exact'],
+        'name': ['exact'],
+        'created_date': ['exact', 'gte', 'lte'],
+    }
 
     def get_queryset(self):
         queryset = super().get_queryset()
