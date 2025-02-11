@@ -7,7 +7,7 @@ from ..utilities.importbase import *
 
 class durationViewsets(viewsets.ModelViewSet):
     serializer_class = DurationListSerializers
-    # permission_classes = [durationPermission]
+    permission_classes = [durationPermission]
     authentication_classes = [JWTAuthentication]
     pagination_class = MyPageNumberPagination
     queryset = Duration.objects.all().order_by('-id')

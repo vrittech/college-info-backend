@@ -7,7 +7,7 @@ from ..utilities.importbase import *
 
 class eventcategoryViewsets(viewsets.ModelViewSet):
     serializer_class = EventCategoryListSerializers
-    # permission_classes = [eventPermission]
+    permission_classes = [eventPermission]
     authentication_classes = [JWTAuthentication]
     pagination_class = MyPageNumberPagination
     queryset = EventCategory.objects.all().order_by('-id')

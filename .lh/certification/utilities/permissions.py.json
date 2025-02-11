@@ -1,0 +1,26 @@
+{
+    "sourceFile": "certification/utilities/permissions.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 2,
+            "patches": [
+                {
+                    "date": 1739257398765,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1739263845431,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -36,9 +36,9 @@\n         if CanManage(request):  # If user has manage permission, grant full access\n             return True\n \n         if view.action in [\"list\"]:\n-            return HasPermission(request, CERTIFICATION_PERMISSIONS[\"view\"])\n+            return True\n \n         elif view.action in [\"retrieve\"]:\n             return HasPermission(request, CERTIFICATION_PERMISSIONS[\"view\"])\n \n"
+                },
+                {
+                    "date": 1739264291623,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -26,9 +26,9 @@\n def CanManage(request):\n     \"\"\"Check if the user has full manage access\"\"\"\n     return HasPermission(request, CERTIFICATION_PERMISSIONS[\"manage\"])\n \n-class CertificationPermission(BasePermission):\n+class certificationPermission(BasePermission):\n     \"\"\"\n     Permission class for managing certifications based strictly on Django permissions.\n     \"\"\"\n \n@@ -39,9 +39,9 @@\n         if view.action in [\"list\"]:\n             return True\n \n         elif view.action in [\"retrieve\"]:\n-            return HasPermission(request, CERTIFICATION_PERMISSIONS[\"view\"])\n+            return True\n \n         elif view.action in [\"create\"]:\n             return HasPermission(request, CERTIFICATION_PERMISSIONS[\"add\"])\n \n"
+                }
+            ],
+            "date": 1739257398765,
+            "name": "Commit-0",
+            "content": "#------permission are classified into three types------->\n#first-level:-Admin,Superadmin,Superuser (this is  user model class which can be considered as ObjectA)\n#second-level:-object 'B' is assigned to user(i.e in object B , ObjectA is assigned), where user called as ObjectA\n#third-level:-object 'C' is assigned to object object B(i.e object B is assigned in object C)\n\n#model ObjectB->user field\n#model ObjectC->objectB field(objectB id)\n\n\n#as example, we can consider as , user,company,job where user is ObjectA,company is ObjectB,job is ObjectC\n\nfrom rest_framework.permissions import BasePermission\n\nCERTIFICATION_PERMISSIONS = {\n    \"add\": \"add_certification\",\n    \"change\": \"change_certification\",\n    \"delete\": \"delete_certification\",\n    \"view\": \"view_certification\",\n    \"manage\": \"manage_certification\",\n}\n\ndef HasPermission(request, codename):\n    \"\"\"Check if the user has a specific Django permission\"\"\"\n    return request.user.has_perm(f\"app_name.{codename}\")\n\ndef CanManage(request):\n    \"\"\"Check if the user has full manage access\"\"\"\n    return HasPermission(request, CERTIFICATION_PERMISSIONS[\"manage\"])\n\nclass CertificationPermission(BasePermission):\n    \"\"\"\n    Permission class for managing certifications based strictly on Django permissions.\n    \"\"\"\n\n    def has_permission(self, request, view):\n        if CanManage(request):  # If user has manage permission, grant full access\n            return True\n\n        if view.action in [\"list\"]:\n            return HasPermission(request, CERTIFICATION_PERMISSIONS[\"view\"])\n\n        elif view.action in [\"retrieve\"]:\n            return HasPermission(request, CERTIFICATION_PERMISSIONS[\"view\"])\n\n        elif view.action in [\"create\"]:\n            return HasPermission(request, CERTIFICATION_PERMISSIONS[\"add\"])\n\n        elif view.action in [\"update\", \"partial_update\"]:\n            return HasPermission(request, CERTIFICATION_PERMISSIONS[\"change\"])\n\n        elif view.action == \"destroy\":\n            return HasPermission(request, CERTIFICATION_PERMISSIONS[\"delete\"])\n\n        return False  # Default deny access\n"
+        }
+    ]
+}

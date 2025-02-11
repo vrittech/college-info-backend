@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 3,
+            "activePatchIndex": 4,
             "patches": [
                 {
                     "date": 1733481357804,
@@ -20,6 +20,10 @@
                 {
                     "date": 1738748484850,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,9 @@\n \n class durationViewsets(viewsets.ModelViewSet):\n     serializer_class = DurationListSerializers\n     # permission_classes = [durationPermission]\n-    # authentication_classes = [JWTAuthentication]\n+    authentication_classes = [JWTAuthentication]\n     pagination_class = MyPageNumberPagination\n     queryset = Duration.objects.all().order_by('-id')\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n"
+                },
+                {
+                    "date": 1739264512046,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,9 +6,9 @@\n from ..utilities.importbase import *\n \n class durationViewsets(viewsets.ModelViewSet):\n     serializer_class = DurationListSerializers\n-    # permission_classes = [durationPermission]\n+    permission_classes = [durationPermission]\n     authentication_classes = [JWTAuthentication]\n     pagination_class = MyPageNumberPagination\n     queryset = Duration.objects.all().order_by('-id')\n \n"
                 }
             ],
             "date": 1733481357804,

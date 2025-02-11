@@ -9,7 +9,7 @@ from rest_framework import status
 
 class galleryViewsets(viewsets.ModelViewSet):
     serializer_class = GalleryListSerializers
-    # permission_classes = [galleryPermission]
+    permission_classes = [galleryPermission]
     authentication_classes = [JWTAuthentication]
     pagination_class = MyPageNumberPagination
     queryset = Gallery.objects.all().order_by('-id')

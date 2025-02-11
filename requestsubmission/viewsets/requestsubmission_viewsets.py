@@ -7,7 +7,7 @@ from ..utilities.importbase import *
 
 class requestsubmissionViewsets(viewsets.ModelViewSet):
     serializer_class = RequestSubmissionListSerializers
-    # permission_classes = [requestsubmissionPermission]
+    permission_classes = [requestsubmissionPermission]
     authentication_classes = [JWTAuthentication]
     pagination_class = MyPageNumberPagination
     queryset = RequestSubmission.objects.all().order_by('-id')

@@ -7,18 +7,21 @@ from ..utilities.importbase import *
 
 class levelViewsets(viewsets.ModelViewSet):
     serializer_class = LevelListSerializers
-    # permission_classes = [levelPermission]
+    permission_classes = [levelPermission]
     authentication_classes = [JWTAuthentication]
     pagination_class = MyPageNumberPagination
     queryset = Level.objects.all().order_by('-id')
-
+# ('sublevel', 'name', 'description', 'image', 'created_date', 'created_date_time', )
     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]
-    search_fields = ['id']
+    search_fields = ['id','sublevel__name', 'name', 'description', 'created_date', 'created_date_time',]
     ordering_fields = ['id']
 
-    # filterset_fields = {
-    #     'id': ['exact'],
-    # }
+    filterset_fields = {
+        'id': ['exact'],
+        'sublevel': ['exact'],
+        'name': ['exact'],
+        'created_date': ['exact', 'lte', 'gte'],
+    }
 
     def get_queryset(self):
         queryset = super().get_queryset()

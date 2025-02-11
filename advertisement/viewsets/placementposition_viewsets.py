@@ -7,7 +7,7 @@ from ..utilities.importbase import *
 
 class placementpositionViewsets(viewsets.ModelViewSet):
     serializer_class = PlacementPositionListSerializers
-    # permission_classes = [advertisementPermission]
+    permission_classes = [advertisementPermission]
     authentication_classes = [JWTAuthentication]
     pagination_class = MyPageNumberPagination
     queryset = PlacementPosition.objects.all().order_by('-id')

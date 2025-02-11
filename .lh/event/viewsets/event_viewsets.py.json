@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 48,
+            "activePatchIndex": 52,
             "patches": [
                 {
                     "date": 1733481372824,
@@ -200,6 +200,22 @@
                 {
                     "date": 1739094082930,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -44,9 +44,9 @@\n         serializer = self.get_serializer(data=request.data)\n         serializer.is_valid(raise_exception=True)\n         event_instance = serializer.save()\n \n-        return self.get_formatted_response(event_instance,status.HTTP_201_OK)\n+        return self.get_formatted_response(event_instance,status.HTTP_201_CREATED)\n \n     def update(self, request, *args, **kwargs):\n         \"\"\"\n         Handles PUT (full update) and PATCH (partial update).\n@@ -60,9 +60,9 @@\n         event_instance = serializer.save()\n \n         return self.get_formatted_response(event_instance,status.HTTP_200_OK)\n \n-    def get_formatted_response(self, event_instance, sta):\n+    def get_formatted_response(self, event_instance, status):\n         \"\"\"Formats the response to match the expected structure.\"\"\"\n         response_data = {\n             \"category\": EventCategoryRetrieveSerializers(event_instance.category.all(), many=True).data,\n             \"organizer\": EventOrganizerRetrieveSerializers(event_instance.organizer.all(), many=True).data,\n"
+                },
+                {
+                    "date": 1739264536210,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,9 +12,9 @@\n from rest_framework import status\n \n class eventViewsets(viewsets.ModelViewSet):\n     serializer_class = EventListSerializers\n-    # permission_classes = [eventPermission]\n+    permission_classes = [eventPermission]\n     authentication_classes = [JWTAuthentication]\n     pagination_class = MyPageNumberPagination\n     queryset = Event.objects.all().order_by('-id')\n     lookup_field = \"slug\"\n"
+                },
+                {
+                    "date": 1739264550504,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,9 +12,9 @@\n from rest_framework import status\n \n class eventViewsets(viewsets.ModelViewSet):\n     serializer_class = EventListSerializers\n-    permission_classes = [eventPermission]\n+    permission_classes = eventPermission]\n     authentication_classes = [JWTAuthentication]\n     pagination_class = MyPageNumberPagination\n     queryset = Event.objects.all().order_by('-id')\n     lookup_field = \"slug\"\n"
+                },
+                {
+                    "date": 1739264561068,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,12 +9,13 @@\n from ..utilities.pagination import MyPageNumberPagination\n from rest_framework_simplejwt.authentication import JWTAuthentication\n from rest_framework.response import Response\n from rest_framework import status\n+from \n \n class eventViewsets(viewsets.ModelViewSet):\n     serializer_class = EventListSerializers\n-    permission_classes = eventPermission]\n+    permission_classes = eventPermission\n     authentication_classes = [JWTAuthentication]\n     pagination_class = MyPageNumberPagination\n     queryset = Event.objects.all().order_by('-id')\n     lookup_field = \"slug\"\n"
+                },
+                {
+                    "date": 1739264569389,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,13 +9,13 @@\n from ..utilities.pagination import MyPageNumberPagination\n from rest_framework_simplejwt.authentication import JWTAuthentication\n from rest_framework.response import Response\n from rest_framework import status\n-from \n+from ..utilities\n \n class eventViewsets(viewsets.ModelViewSet):\n     serializer_class = EventListSerializers\n-    permission_classes = eventPermission\n+    permission_classes = [eventPermission]\n     authentication_classes = [JWTAuthentication]\n     pagination_class = MyPageNumberPagination\n     queryset = Event.objects.all().order_by('-id')\n     lookup_field = \"slug\"\n"
                 }
             ],
             "date": 1733481372824,

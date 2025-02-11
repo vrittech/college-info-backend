@@ -7,7 +7,7 @@ from ..utilities.importbase import *
 
 class contactViewsets(viewsets.ModelViewSet):
     serializer_class = ContactListSerializers
-    # permission_classes = [contactPermission]
+    permission_classes = [contactPermission]
     authentication_classes = [JWTAuthentication]
     pagination_class = MyPageNumberPagination
     queryset = Contact.objects.all().order_by('-id')

@@ -7,7 +7,7 @@ from ..utilities.importbase import *
 
 class disciplineViewsets(viewsets.ModelViewSet):
     serializer_class = DisciplineListSerializers
-    # permission_classes = [disciplinePermission]
+    permission_classes = [disciplinePermission]
     authentication_classes = [JWTAuthentication]
     pagination_class = MyPageNumberPagination
     queryset = Discipline.objects.all().order_by('-id')

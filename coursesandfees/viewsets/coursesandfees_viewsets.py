@@ -10,7 +10,7 @@ from django.db.models import Avg
 
 class coursesandfeesViewsets(viewsets.ModelViewSet):
     serializer_class = CoursesAndFeesListSerializers
-    # permission_classes = [coursesandfeesPermission]
+    permission_classes = [coursesandfeesPermission]
     authentication_classes = [JWTAuthentication]
     pagination_class = MyPageNumberPagination
     queryset = CoursesAndFees.objects.all().order_by('-id')

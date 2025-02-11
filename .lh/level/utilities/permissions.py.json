@@ -1,0 +1,26 @@
+{
+    "sourceFile": "level/utilities/permissions.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 2,
+            "patches": [
+                {
+                    "date": 1739258423287,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1739264082953,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -25,9 +25,9 @@\n         if CanManage(request):  # If user has manage permission, grant full access\n             return True\n \n         if view.action in [\"list\"]:\n-            return HasPermission(request, LEVEL_PERMISSIONS[\"view\"])\n+            return True\n \n         elif view.action in [\"retrieve\"]:\n             return HasPermission(request, LEVEL_PERMISSIONS[\"view\"])\n \n"
+                },
+                {
+                    "date": 1739264742730,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,9 +15,9 @@\n def CanManage(request):\n     \"\"\"Check if the user has full manage access\"\"\"\n     return HasPermission(request, LEVEL_PERMISSIONS[\"manage\"])\n \n-class LevelPermission(BasePermission):\n+class levelPermission(BasePermission):\n     \"\"\"\n     Permission class for managing levels based strictly on Django permissions.\n     \"\"\"\n \n"
+                }
+            ],
+            "date": 1739258423287,
+            "name": "Commit-0",
+            "content": "from rest_framework.permissions import BasePermission\n\nLEVEL_PERMISSIONS = {\n    \"add\": \"add_level\",\n    \"change\": \"change_level\",\n    \"delete\": \"delete_level\",\n    \"view\": \"view_level\",\n    \"manage\": \"manage_level\",\n}\n\ndef HasPermission(request, codename):\n    \"\"\"Check if the user has a specific Django permission\"\"\"\n    return request.user.has_perm(f\"app_name.{codename}\")\n\ndef CanManage(request):\n    \"\"\"Check if the user has full manage access\"\"\"\n    return HasPermission(request, LEVEL_PERMISSIONS[\"manage\"])\n\nclass LevelPermission(BasePermission):\n    \"\"\"\n    Permission class for managing levels based strictly on Django permissions.\n    \"\"\"\n\n    def has_permission(self, request, view):\n        if CanManage(request):  # If user has manage permission, grant full access\n            return True\n\n        if view.action in [\"list\"]:\n            return HasPermission(request, LEVEL_PERMISSIONS[\"view\"])\n\n        elif view.action in [\"retrieve\"]:\n            return HasPermission(request, LEVEL_PERMISSIONS[\"view\"])\n\n        elif view.action in [\"create\"]:\n            return HasPermission(request, LEVEL_PERMISSIONS[\"add\"])\n\n        elif view.action in [\"update\", \"partial_update\"]:\n            return HasPermission(request, LEVEL_PERMISSIONS[\"change\"])\n\n        elif view.action == \"destroy\":\n            return HasPermission(request, LEVEL_PERMISSIONS[\"delete\"])\n\n        return False  # Default deny access\n"
+        }
+    ]
+}

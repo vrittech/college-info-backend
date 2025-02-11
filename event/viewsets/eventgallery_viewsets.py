@@ -7,7 +7,7 @@ from ..utilities.importbase import *
 
 class eventgalleryViewsets(viewsets.ModelViewSet):
     serializer_class = EventGalleryListSerializers
-    # permission_classes = [eventPermission]
+    permission_classes = [eventPermission]
     authentication_classes = [JWTAuthentication]
     pagination_class = MyPageNumberPagination
     queryset = EventGallery.objects.all().order_by('-id')

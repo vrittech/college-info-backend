@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 3,
+            "activePatchIndex": 14,
             "patches": [
                 {
                     "date": 1733481919659,
@@ -20,6 +20,50 @@
                 {
                     "date": 1738748579513,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,9 @@\n \n class levelViewsets(viewsets.ModelViewSet):\n     serializer_class = LevelListSerializers\n     # permission_classes = [levelPermission]\n-    # authentication_classes = [JWTAuthentication]\n+    authentication_classes = [JWTAuthentication]\n     pagination_class = MyPageNumberPagination\n     queryset = Level.objects.all().order_by('-id')\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n"
+                },
+                {
+                    "date": 1739264752062,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,9 +6,9 @@\n from ..utilities.importbase import *\n \n class levelViewsets(viewsets.ModelViewSet):\n     serializer_class = LevelListSerializers\n-    # permission_classes = [levelPermission]\n+    permission_classes = [levelPermission]\n     authentication_classes = [JWTAuthentication]\n     pagination_class = MyPageNumberPagination\n     queryset = Level.objects.all().order_by('-id')\n \n"
+                },
+                {
+                    "date": 1739264769119,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,11 +15,12 @@\n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     search_fields = ['id']\n     ordering_fields = ['id']\n \n-    # filterset_fields = {\n-    #     'id': ['exact'],\n-    # }\n+    filterset_fields = {\n+        'id': ['exact'],\n+        'id': ['exact'],\n+    }\n \n     def get_queryset(self):\n         queryset = super().get_queryset()\n         return queryset\n"
+                },
+                {
+                    "date": 1739264775303,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,9 +17,9 @@\n     ordering_fields = ['id']\n \n     filterset_fields = {\n         'id': ['exact'],\n-        'id': ['exact'],\n+        'sublevel': ['exact'],\n     }\n \n     def get_queryset(self):\n         queryset = super().get_queryset()\n"
+                },
+                {
+                    "date": 1739264783754,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,8 +18,9 @@\n \n     filterset_fields = {\n         'id': ['exact'],\n         'sublevel': ['exact'],\n+        'name': ['exact'],\n     }\n \n     def get_queryset(self):\n         queryset = super().get_queryset()\n"
+                },
+                {
+                    "date": 1739264818552,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,9 @@\n     permission_classes = [levelPermission]\n     authentication_classes = [JWTAuthentication]\n     pagination_class = MyPageNumberPagination\n     queryset = Level.objects.all().order_by('-id')\n-\n+('sublevel', 'name', 'description', 'image', 'created_date', 'created_date_time', )\n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     search_fields = ['id']\n     ordering_fields = ['id']\n \n"
+                },
+                {
+                    "date": 1739264829104,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,9 @@\n     permission_classes = [levelPermission]\n     authentication_classes = [JWTAuthentication]\n     pagination_class = MyPageNumberPagination\n     queryset = Level.objects.all().order_by('-id')\n-('sublevel', 'name', 'description', 'image', 'created_date', 'created_date_time', )\n+# ('sublevel', 'name', 'description', 'image', 'created_date', 'created_date_time', )\n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     search_fields = ['id']\n     ordering_fields = ['id']\n \n"
+                },
+                {
+                    "date": 1739264837520,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,9 +12,9 @@\n     pagination_class = MyPageNumberPagination\n     queryset = Level.objects.all().order_by('-id')\n # ('sublevel', 'name', 'description', 'image', 'created_date', 'created_date_time', )\n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n-    search_fields = ['id']\n+    search_fields = ['id','sublevel', 'name', 'description', 'created_date', 'created_date_time',]\n     ordering_fields = ['id']\n \n     filterset_fields = {\n         'id': ['exact'],\n"
+                },
+                {
+                    "date": 1739264857914,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,9 +12,9 @@\n     pagination_class = MyPageNumberPagination\n     queryset = Level.objects.all().order_by('-id')\n # ('sublevel', 'name', 'description', 'image', 'created_date', 'created_date_time', )\n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n-    search_fields = ['id','sublevel', 'name', 'description', 'created_date', 'created_date_time',]\n+    search_fields = ['id','sublevel__', 'name', 'description', 'created_date', 'created_date_time',]\n     ordering_fields = ['id']\n \n     filterset_fields = {\n         'id': ['exact'],\n"
+                },
+                {
+                    "date": 1739264864366,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,9 +12,9 @@\n     pagination_class = MyPageNumberPagination\n     queryset = Level.objects.all().order_by('-id')\n # ('sublevel', 'name', 'description', 'image', 'created_date', 'created_date_time', )\n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n-    search_fields = ['id','sublevel__', 'name', 'description', 'created_date', 'created_date_time',]\n+    search_fields = ['id','sublevel__name', 'name', 'description', 'created_date', 'created_date_time',]\n     ordering_fields = ['id']\n \n     filterset_fields = {\n         'id': ['exact'],\n"
+                },
+                {
+                    "date": 1739264874536,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,8 +19,9 @@\n     filterset_fields = {\n         'id': ['exact'],\n         'sublevel': ['exact'],\n         'name': ['exact'],\n+        'name': ['exact'],\n     }\n \n     def get_queryset(self):\n         queryset = super().get_queryset()\n"
+                },
+                {
+                    "date": 1739264879987,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n     filterset_fields = {\n         'id': ['exact'],\n         'sublevel': ['exact'],\n         'name': ['exact'],\n-        'name': ['exact'],\n+        'created_date': ['exact',],\n     }\n \n     def get_queryset(self):\n         queryset = super().get_queryset()\n"
                 }
             ],
             "date": 1733481919659,

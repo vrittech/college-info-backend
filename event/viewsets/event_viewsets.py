@@ -10,10 +10,11 @@ from ..utilities.pagination import MyPageNumberPagination
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.response import Response
 from rest_framework import status
+from ..utilities.permissions import eventPermission
 
 class eventViewsets(viewsets.ModelViewSet):
     serializer_class = EventListSerializers
-    # permission_classes = [eventPermission]
+    permission_classes = [eventPermission]
     authentication_classes = [JWTAuthentication]
     pagination_class = MyPageNumberPagination
     queryset = Event.objects.all().order_by('-id')

@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 8,
+            "activePatchIndex": 9,
             "patches": [
                 {
                     "date": 1733481416906,
@@ -40,6 +40,10 @@
                 {
                     "date": 1738748516951,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,15 +7,15 @@\n \n class facilityViewsets(viewsets.ModelViewSet):\n     serializer_class = FacilityListSerializers\n     # permission_classes = [facilitiesPermission]\n-    # authentication_classes = [JWTAuthentication]\n+    authentication_classes = [JWTAuthentication]\n     pagination_class = MyPageNumberPagination\n     queryset = Facility.objects.all().order_by('-id')\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     search_fields = ['id','name']\n-    ordering_fields = ['id','']\n+    ordering_fields = ['id','name']\n \n     filterset_fields = {\n         'id': ['exact'],\n         'name': ['exact'],\n"
+                },
+                {
+                    "date": 1739264607783,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,9 +6,9 @@\n from ..utilities.importbase import *\n \n class facilityViewsets(viewsets.ModelViewSet):\n     serializer_class = FacilityListSerializers\n-    # permission_classes = [facilitiesPermission]\n+    permission_classes = [facilitiesPermission]\n     authentication_classes = [JWTAuthentication]\n     pagination_class = MyPageNumberPagination\n     queryset = Facility.objects.all().order_by('-id')\n \n"
                 }
             ],
             "date": 1733481416906,

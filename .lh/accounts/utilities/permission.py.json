@@ -3,11 +3,15 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 0,
+            "activePatchIndex": 1,
             "patches": [
                 {
                     "date": 1728378543651,
                     "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1739258757865,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n from rest_framework.permissions import BasePermission\n-from accountsmanagement import roles\n+from accounts import roles\n \n def IsAuthenticated(request):\n     return bool(request.user and request.user.is_authenticated)\n \n@@ -28,18 +28,8 @@\n         \n class AdminViewSetsPermission(BasePermission):\n     def has_permission(self, request, view):\n         return AdminLevel(request)\n-\n-class ShippingAddressViewsetsPermission(BasePermission):\n-    def has_permission(self, request, view):\n-        if view.action in ['list','retrieve']:\n-            return True\n-        elif view.action in ['create','update','partial_update']:\n-            return ownerPermission(request,view,'profile',is_destroy = False)\n-        elif view.action == 'destroy':\n-            return ownerPermission(request,view,'profile',is_destroy = True)\n-        return False\n     \n def SecureFields(self,model_fields,secure_fields,secure_method,exceptions_roles):\n     if self.context.get('request').method in secure_method and self.context.get('request').user.role not in exceptions_roles:\n         for field in secure_fields:\n"
                 }
             ],
             "date": 1728378543651,

@@ -8,7 +8,7 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 class collegeViewsets(viewsets.ModelViewSet):
     serializer_class = CollegeListSerializers
-    # permission_classes = [collegemanagementPermission]
+    permission_classes = [collegemanagementPermission]
     authentication_classes = [JWTAuthentication]
     pagination_class = MyPageNumberPagination
     lookup_field = "slug"

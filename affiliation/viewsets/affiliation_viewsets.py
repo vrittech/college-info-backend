@@ -7,7 +7,7 @@ from ..utilities.importbase import *
 
 class affiliationViewsets(viewsets.ModelViewSet):
     serializer_class = AffiliationListSerializers
-    # permission_classes = [affiliationPermission]
+    permission_classes = [affiliationPermission]
     authentication_classes = [JWTAuthentication]
     pagination_class = MyPageNumberPagination
     queryset = Affiliation.objects.all().order_by('-id')

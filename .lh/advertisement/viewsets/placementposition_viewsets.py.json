@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 3,
+            "activePatchIndex": 4,
             "patches": [
                 {
                     "date": 1733481090199,
@@ -20,6 +20,10 @@
                 {
                     "date": 1738748402547,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,9 @@\n \n class placementpositionViewsets(viewsets.ModelViewSet):\n     serializer_class = PlacementPositionListSerializers\n     # permission_classes = [advertisementPermission]\n-    # authentication_classes = [JWTAuthentication]\n+    authentication_classes = [JWTAuthentication]\n     pagination_class = MyPageNumberPagination\n     queryset = PlacementPosition.objects.all().order_by('-id')\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n@@ -22,8 +22,9 @@\n \n     def get_queryset(self):\n         queryset = super().get_queryset()\n         return queryset\n+    \n     def get_serializer_class(self):\n         if self.action in ['create', 'update', 'partial_update']:\n             return PlacementPositionWriteSerializers\n         elif self.action == 'retrieve':\n"
+                },
+                {
+                    "date": 1739264263288,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,9 +6,9 @@\n from ..utilities.importbase import *\n \n class placementpositionViewsets(viewsets.ModelViewSet):\n     serializer_class = PlacementPositionListSerializers\n-    # permission_classes = [advertisementPermission]\n+    permission_classes = [advertisementPermission]\n     authentication_classes = [JWTAuthentication]\n     pagination_class = MyPageNumberPagination\n     queryset = PlacementPosition.objects.all().order_by('-id')\n \n"
                 }
             ],
             "date": 1733481090198,

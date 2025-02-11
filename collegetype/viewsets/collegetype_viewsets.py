@@ -7,7 +7,7 @@ from ..utilities.importbase import *
 
 class collegetypeViewsets(viewsets.ModelViewSet):
     serializer_class = CollegeTypeListSerializers
-    # permission_classes = [collegetypePermission]
+    permission_classes = [collegetypePermission]
     authentication_classes = [JWTAuthentication]
     pagination_class = MyPageNumberPagination
     queryset = CollegeType.objects.all().order_by('-id')

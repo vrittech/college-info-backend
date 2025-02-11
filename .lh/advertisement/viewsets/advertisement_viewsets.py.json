@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 13,
+            "activePatchIndex": 18,
             "patches": [
                 {
                     "date": 1733481075583,
@@ -60,6 +60,26 @@
                 {
                     "date": 1738748399071,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,9 @@\n \n class advertisementViewsets(viewsets.ModelViewSet):\n     serializer_class = AdvertisementListSerializers\n     # permission_classes = [advertisementPermission]\n-    # authentication_classes = [JWTAuthentication]\n+    authentication_classes = [JWTAuthentication]\n     pagination_class = MyPageNumberPagination\n     queryset = Advertisement.objects.all().order_by('-id')\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n"
+                },
+                {
+                    "date": 1739264204648,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,8 +3,9 @@\n from django_filters.rest_framework import DjangoFilterBackend\n from ..models import Advertisement\n from ..serializers.advertisement_serializers import AdvertisementListSerializers, AdvertisementRetrieveSerializers, AdvertisementWriteSerializers\n from ..utilities.importbase import *\n+from \n \n class advertisementViewsets(viewsets.ModelViewSet):\n     serializer_class = AdvertisementListSerializers\n     # permission_classes = [advertisementPermission]\n"
+                },
+                {
+                    "date": 1739264210863,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,9 @@\n from django_filters.rest_framework import DjangoFilterBackend\n from ..models import Advertisement\n from ..serializers.advertisement_serializers import AdvertisementListSerializers, AdvertisementRetrieveSerializers, AdvertisementWriteSerializers\n from ..utilities.importbase import *\n-from \n+from ..utilities\n \n class advertisementViewsets(viewsets.ModelViewSet):\n     serializer_class = AdvertisementListSerializers\n     # permission_classes = [advertisementPermission]\n"
+                },
+                {
+                    "date": 1739264217026,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,9 @@\n from django_filters.rest_framework import DjangoFilterBackend\n from ..models import Advertisement\n from ..serializers.advertisement_serializers import AdvertisementListSerializers, AdvertisementRetrieveSerializers, AdvertisementWriteSerializers\n from ..utilities.importbase import *\n-from ..utilities\n+from ..utilities.permissions import A\n \n class advertisementViewsets(viewsets.ModelViewSet):\n     serializer_class = AdvertisementListSerializers\n     # permission_classes = [advertisementPermission]\n"
+                },
+                {
+                    "date": 1739264222358,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,9 @@\n from django_filters.rest_framework import DjangoFilterBackend\n from ..models import Advertisement\n from ..serializers.advertisement_serializers import AdvertisementListSerializers, AdvertisementRetrieveSerializers, AdvertisementWriteSerializers\n from ..utilities.importbase import *\n-from ..utilities.permissions import A\n+from ..utilities.permissions import ad\n \n class advertisementViewsets(viewsets.ModelViewSet):\n     serializer_class = AdvertisementListSerializers\n     # permission_classes = [advertisementPermission]\n"
+                },
+                {
+                    "date": 1739264238896,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,9 @@\n from django_filters.rest_framework import DjangoFilterBackend\n from ..models import Advertisement\n from ..serializers.advertisement_serializers import AdvertisementListSerializers, AdvertisementRetrieveSerializers, AdvertisementWriteSerializers\n from ..utilities.importbase import *\n-from ..utilities.permissions import ad\n+from ..utilities.permissions import advertisementPermission\n \n class advertisementViewsets(viewsets.ModelViewSet):\n     serializer_class = AdvertisementListSerializers\n     # permission_classes = [advertisementPermission]\n"
                 }
             ],
             "date": 1733481075583,

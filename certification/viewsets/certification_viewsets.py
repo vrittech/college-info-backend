@@ -7,7 +7,7 @@ from ..utilities.importbase import *
 
 class certificationViewsets(viewsets.ModelViewSet):
     serializer_class = CertificationListSerializers
-    # permission_classes = [certificationPermission]
+    permission_classes = [certificationPermission]
     authentication_classes = [JWTAuthentication]
     pagination_class = MyPageNumberPagination
     queryset = Certification.objects.all().order_by('-id')

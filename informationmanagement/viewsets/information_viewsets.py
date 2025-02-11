@@ -10,7 +10,7 @@ from rest_framework.response import Response
 
 class informationViewsets(viewsets.ModelViewSet):
     serializer_class = InformationListSerializers
-    # permission_classes = [informationmanagementPermission]
+    permission_classes = [informationmanagementPermission]
     authentication_classes = [JWTAuthentication]
     pagination_class = MyPageNumberPagination
     queryset = Information.objects.all().order_by('-id')

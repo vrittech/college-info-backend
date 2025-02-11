@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 11,
+            "activePatchIndex": 12,
             "patches": [
                 {
                     "date": 1733481482442,
@@ -52,6 +52,10 @@
                 {
                     "date": 1738748524273,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,9 @@\n \n class facultyViewsets(viewsets.ModelViewSet):\n     serializer_class = FacultyListSerializers\n     # permission_classes = [facultyPermission]\n-    # authentication_classes = [JWTAuthentication]\n+    authentication_classes = [JWTAuthentication]\n     pagination_class = MyPageNumberPagination\n     queryset = Faculty.objects.all().order_by('-id')\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n"
+                },
+                {
+                    "date": 1739264628793,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,9 +6,9 @@\n from ..utilities.importbase import *\n \n class facultyViewsets(viewsets.ModelViewSet):\n     serializer_class = FacultyListSerializers\n-    # permission_classes = [facultyPermission]\n+    permission_classes = [facultyPermission]\n     authentication_classes = [JWTAuthentication]\n     pagination_class = MyPageNumberPagination\n     queryset = Faculty.objects.all().order_by('-id')\n \n"
                 }
             ],
             "date": 1733481482442,

@@ -11,46 +11,44 @@
 
 from rest_framework.permissions import BasePermission
 
-SUPER_ADMIN = 1
-ADMIN = 2
+CERTIFICATION_PERMISSIONS = {
+    "add": "add_certification",
+    "change": "change_certification",
+    "delete": "delete_certification",
+    "view": "view_certification",
+    "manage": "manage_certification",
+}
 
+def HasPermission(request, codename):
+    """Check if the user has a specific Django permission"""
+    return request.user.has_perm(f"app_name.{codename}")
 
-def IsAuthenticated(request):
-    return bool(request.user and request.user.is_authenticated)
-
-def SuperAdminLevel(request):
-    return bool(IsAuthenticated(request) and request.user.is_superuser)
-
-def AdminLevel(request):
-    return bool(IsAuthenticated(request) and request.user.role in [ADMIN,SUPER_ADMIN])
-
-def isOwner(request):
-    if str(request.user.id) == str(request.data.get('user')):
-        return True
-    
-    elif len(request.data)==0 and len(request.POST)==0:
-        return True
-
-    return False
-
-
-# def ObjectBOwner(request):
-#     company = ObjectB.objects.filter(id = request.data.get('objectb'),user = request.user.id)
-#     if company.exists():
-#         return True
-#     return False
+def CanManage(request):
+    """Check if the user has full manage access"""
+    return HasPermission(request, CERTIFICATION_PERMISSIONS["manage"])
 
 class certificationPermission(BasePermission):
+    """
+    Permission class for managing certifications based strictly on Django permissions.
+    """
+
     def has_permission(self, request, view):
+        if CanManage(request):  # If user has manage permission, grant full access
+            return True
+
         if view.action in ["list"]:
             return True
-        elif view.action in ['retrieve']:
-            return isOwner(request)
-        elif view.action in ['create','update']:
-            return isOwner(request) #second level
-            return ObjectBOwner(request) #third level
-        elif view.action == "partial_update":
-            return view.get_object().user_id == request.user.id
-        elif view.action == 'destroy':
-            return isOwner(request)
 
+        elif view.action in ["retrieve"]:
+            return True
+
+        elif view.action in ["create"]:
+            return HasPermission(request, CERTIFICATION_PERMISSIONS["add"])
+
+        elif view.action in ["update", "partial_update"]:
+            return HasPermission(request, CERTIFICATION_PERMISSIONS["change"])
+
+        elif view.action == "destroy":
+            return HasPermission(request, CERTIFICATION_PERMISSIONS["delete"])
+
+        return False  # Default deny access

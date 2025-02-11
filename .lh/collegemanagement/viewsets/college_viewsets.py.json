@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 39,
+            "activePatchIndex": 40,
             "patches": [
                 {
                     "date": 1733718920520,
@@ -164,6 +164,10 @@
                 {
                     "date": 1738748429280,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,11 +8,11 @@\n from rest_framework.response import Response\n class collegeViewsets(viewsets.ModelViewSet):\n     serializer_class = CollegeListSerializers\n     # permission_classes = [collegemanagementPermission]\n-    # authentication_classes = [JWTAuthentication]\n+    authentication_classes = [JWTAuthentication]\n     pagination_class = MyPageNumberPagination\n-    lookup_field\n+    lookup_field = \"slug\"\n     queryset = College.objects.all().order_by('-id')\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     search_fields = ['id','name', 'established_date', 'website_link', 'address', 'district', 'phone_number', 'email', 'affiliated', 'college_type', 'discipline', 'social_media', 'google_map_link', 'latitude', 'longitude', 'about', 'brochure', 'step_counter', 'facilities', 'placement', 'scholarship', 'created_date', 'updated_date']\n"
+                },
+                {
+                    "date": 1739264329036,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,9 @@\n from rest_framework.decorators import action\n from rest_framework.response import Response\n class collegeViewsets(viewsets.ModelViewSet):\n     serializer_class = CollegeListSerializers\n-    # permission_classes = [collegemanagementPermission]\n+    permission_classes = [collegemanagementPermission]\n     authentication_classes = [JWTAuthentication]\n     pagination_class = MyPageNumberPagination\n     lookup_field = \"slug\"\n     queryset = College.objects.all().order_by('-id')\n"
                 }
             ],
             "date": 1733718920520,

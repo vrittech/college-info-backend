@@ -7,7 +7,7 @@ from ..utilities.importbase import *
 
 class superadmindetailsViewsets(viewsets.ModelViewSet):
     serializer_class = SuperAdminDetailsListSerializers
-    # permission_classes = [superadmindetailsPermission]
+    permission_classes = [superadmindetailsPermission]
     authentication_classes = [JWTAuthentication]
     pagination_class = MyPageNumberPagination
     queryset = SuperAdminDetails.objects.all().order_by('-id')
@@ -20,8 +20,8 @@ class superadmindetailsViewsets(viewsets.ModelViewSet):
         'id': ['exact'],
         'name': ['exact'],
         'location': ['exact'],
-        'created_at': ['exact'],
-        'updated_at': ['exact'],
+        'created_at': ['exact', 'gte', 'lte'],
+        'updated_at': ['exact', 'gte', 'lte'],
     }
 
     def get_queryset(self):

@@ -1,0 +1,30 @@
+{
+    "sourceFile": "coursesandfees/utilities/permissions.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 3,
+            "patches": [
+                {
+                    "date": 1739257733129,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1739263941571,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -25,9 +25,9 @@\n         if CanManage(request):  # If user has manage permission, grant full access\n             return True\n \n         if view.action in [\"list\"]:\n-            return HasPermission(request, COURSES_AND_FEES_PERMISSIONS[\"view\"])\n+           return True\n \n         elif view.action in [\"retrieve\"]:\n             return HasPermission(request, COURSES_AND_FEES_PERMISSIONS[\"view\"])\n \n"
+                },
+                {
+                    "date": 1739264431327,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,9 +15,9 @@\n def CanManage(request):\n     \"\"\"Check if the user has full manage access\"\"\"\n     return HasPermission(request, COURSES_AND_FEES_PERMISSIONS[\"manage\"])\n \n-class CoursesAndFeesPermission(BasePermission):\n+class coursesAndFeesPermission(BasePermission):\n     \"\"\"\n     Permission class for managing courses and fees based strictly on Django permissions.\n     \"\"\"\n \n"
+                },
+                {
+                    "date": 1739264437081,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,9 +15,9 @@\n def CanManage(request):\n     \"\"\"Check if the user has full manage access\"\"\"\n     return HasPermission(request, COURSES_AND_FEES_PERMISSIONS[\"manage\"])\n \n-class coursesAndFeesPermission(BasePermission):\n+class coursesandfeesPermission(BasePermission):\n     \"\"\"\n     Permission class for managing courses and fees based strictly on Django permissions.\n     \"\"\"\n \n"
+                }
+            ],
+            "date": 1739257733129,
+            "name": "Commit-0",
+            "content": "from rest_framework.permissions import BasePermission\n\nCOURSES_AND_FEES_PERMISSIONS = {\n    \"add\": \"add_coursesandfees\",\n    \"change\": \"change_coursesandfees\",\n    \"delete\": \"delete_coursesandfees\",\n    \"view\": \"view_coursesandfees\",\n    \"manage\": \"manage_courses_and_fees\",\n}\n\ndef HasPermission(request, codename):\n    \"\"\"Check if the user has a specific Django permission\"\"\"\n    return request.user.has_perm(f\"app_name.{codename}\")\n\ndef CanManage(request):\n    \"\"\"Check if the user has full manage access\"\"\"\n    return HasPermission(request, COURSES_AND_FEES_PERMISSIONS[\"manage\"])\n\nclass CoursesAndFeesPermission(BasePermission):\n    \"\"\"\n    Permission class for managing courses and fees based strictly on Django permissions.\n    \"\"\"\n\n    def has_permission(self, request, view):\n        if CanManage(request):  # If user has manage permission, grant full access\n            return True\n\n        if view.action in [\"list\"]:\n            return HasPermission(request, COURSES_AND_FEES_PERMISSIONS[\"view\"])\n\n        elif view.action in [\"retrieve\"]:\n            return HasPermission(request, COURSES_AND_FEES_PERMISSIONS[\"view\"])\n\n        elif view.action in [\"create\"]:\n            return HasPermission(request, COURSES_AND_FEES_PERMISSIONS[\"add\"])\n\n        elif view.action in [\"update\", \"partial_update\"]:\n            return HasPermission(request, COURSES_AND_FEES_PERMISSIONS[\"change\"])\n\n        elif view.action == \"destroy\":\n            return HasPermission(request, COURSES_AND_FEES_PERMISSIONS[\"delete\"])\n\n        return False  # Default deny access\n"
+        }
+    ]
+}

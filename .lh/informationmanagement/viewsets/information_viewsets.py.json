@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 29,
+            "activePatchIndex": 30,
             "patches": [
                 {
                     "date": 1733481577467,
@@ -124,6 +124,10 @@
                 {
                     "date": 1738748550520,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,9 @@\n \n class informationViewsets(viewsets.ModelViewSet):\n     serializer_class = InformationListSerializers\n     # permission_classes = [informationmanagementPermission]\n-    # authentication_classes = [JWTAuthentication]\n+    authentication_classes = [JWTAuthentication]\n     pagination_class = MyPageNumberPagination\n     queryset = Information.objects.all().order_by('-id')\n     filterset_class = InformationFilter\n     lookup_field = \"slug\"\n"
+                },
+                {
+                    "date": 1739264686563,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,9 +9,9 @@\n from rest_framework.response import Response\n \n class informationViewsets(viewsets.ModelViewSet):\n     serializer_class = InformationListSerializers\n-    # permission_classes = [informationmanagementPermission]\n+    permission_classes = [informationmanagementPermission]\n     authentication_classes = [JWTAuthentication]\n     pagination_class = MyPageNumberPagination\n     queryset = Information.objects.all().order_by('-id')\n     filterset_class = InformationFilter\n"
                 }
             ],
             "date": 1733481577467,

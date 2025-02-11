@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 6,
+            "activePatchIndex": 7,
             "patches": [
                 {
                     "date": 1733741246630,
@@ -32,6 +32,10 @@
                 {
                     "date": 1738748596741,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,9 @@\n \n class requestsubmissionViewsets(viewsets.ModelViewSet):\n     serializer_class = RequestSubmissionListSerializers\n     # permission_classes = [requestsubmissionPermission]\n-    # authentication_classes = [JWTAuthentication]\n+    authentication_classes = [JWTAuthentication]\n     pagination_class = MyPageNumberPagination\n     queryset = RequestSubmission.objects.all().order_by('-id')\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n"
+                },
+                {
+                    "date": 1739264917932,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,9 +6,9 @@\n from ..utilities.importbase import *\n \n class requestsubmissionViewsets(viewsets.ModelViewSet):\n     serializer_class = RequestSubmissionListSerializers\n-    # permission_classes = [requestsubmissionPermission]\n+    permission_classes = [requestsubmissionPermission]\n     authentication_classes = [JWTAuthentication]\n     pagination_class = MyPageNumberPagination\n     queryset = RequestSubmission.objects.all().order_by('-id')\n \n"
                 }
             ],
             "date": 1733741246630,

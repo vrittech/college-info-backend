@@ -1,56 +1,35 @@
-#------permission are classified into three types------->
-#first-level:-Admin,Superadmin,Superuser (this is  user model class which can be considered as ObjectA)
-#second-level:-object 'B' is assigned to user(i.e in object B , ObjectA is assigned), where user called as ObjectA
-#third-level:-object 'C' is assigned to object object B(i.e object B is assigned in object C)
-
-#model ObjectB->user field
-#model ObjectC->objectB field(objectB id)
-
-
-#as example, we can consider as , user,company,job where user is ObjectA,company is ObjectB,job is ObjectC
-
 from rest_framework.permissions import BasePermission
 
-SUPER_ADMIN = 1
-ADMIN = 2
+REQUEST_SUBMISSION_PERMISSIONS = {
+    "add": "add_requestsubmission",
+    "change": "change_requestsubmission",
+    "delete": "delete_requestsubmission",
+    "view": "view_requestsubmission",
+}
 
-
-def IsAuthenticated(request):
-    return bool(request.user and request.user.is_authenticated)
-
-def SuperAdminLevel(request):
-    return bool(IsAuthenticated(request) and request.user.is_superuser)
-
-def AdminLevel(request):
-    return bool(IsAuthenticated(request) and request.user.role in [ADMIN,SUPER_ADMIN])
-
-def isOwner(request):
-    if str(request.user.id) == str(request.data.get('user')):
-        return True
-    
-    elif len(request.data)==0 and len(request.POST)==0:
-        return True
-
-    return False
-
-
-# def ObjectBOwner(request):
-#     company = ObjectB.objects.filter(id = request.data.get('objectb'),user = request.user.id)
-#     if company.exists():
-#         return True
-#     return False
+def HasPermission(request, codename):
+    """Check if the user has a specific Django permission"""
+    return request.user.has_perm(f"app_name.{codename}")
 
 class requestsubmissionPermission(BasePermission):
+    """
+    Permission class for managing request submissions based strictly on Django permissions.
+    """
+
     def has_permission(self, request, view):
         if view.action in ["list"]:
             return True
-        elif view.action in ['retrieve']:
-            return isOwner(request)
-        elif view.action in ['create','update']:
-            return isOwner(request) #second level
-            return ObjectBOwner(request) #third level
-        elif view.action == "partial_update":
-            return view.get_object().user_id == request.user.id
-        elif view.action == 'destroy':
-            return isOwner(request)
 
+        elif view.action in ["retrieve"]:
+            return HasPermission(request, REQUEST_SUBMISSION_PERMISSIONS["view"])
+
+        elif view.action in ["create"]:
+            return HasPermission(request, REQUEST_SUBMISSION_PERMISSIONS["add"])
+
+        elif view.action in ["update", "partial_update"]:
+            return HasPermission(request, REQUEST_SUBMISSION_PERMISSIONS["change"])
+
+        elif view.action == "destroy":
+            return HasPermission(request, REQUEST_SUBMISSION_PERMISSIONS["delete"])
+
+        return False  # Default deny access

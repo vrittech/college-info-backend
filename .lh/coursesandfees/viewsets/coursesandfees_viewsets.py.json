@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 16,
+            "activePatchIndex": 17,
             "patches": [
                 {
                     "date": 1733481293986,
@@ -72,6 +72,10 @@
                 {
                     "date": 1738748451038,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,9 @@\n \n class coursesandfeesViewsets(viewsets.ModelViewSet):\n     serializer_class = CoursesAndFeesListSerializers\n     # permission_classes = [coursesandfeesPermission]\n-    # authentication_classes = [JWTAuthentication]\n+    authentication_classes = [JWTAuthentication]\n     pagination_class = MyPageNumberPagination\n     queryset = CoursesAndFees.objects.all().order_by('-id')\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n"
+                },
+                {
+                    "date": 1739264448325,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,9 +9,9 @@\n from django.db.models import Avg\n \n class coursesandfeesViewsets(viewsets.ModelViewSet):\n     serializer_class = CoursesAndFeesListSerializers\n-    # permission_classes = [coursesandfeesPermission]\n+    permission_classes = [coursesandfeesPermission]\n     authentication_classes = [JWTAuthentication]\n     pagination_class = MyPageNumberPagination\n     queryset = CoursesAndFees.objects.all().order_by('-id')\n \n"
                 }
             ],
             "date": 1733481293986,
