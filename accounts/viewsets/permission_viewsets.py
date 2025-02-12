@@ -9,7 +9,7 @@ from rest_framework import viewsets
 from collections import defaultdict
 from ..utilities.pagination import MyPageNumberPagination
 from ..serializers.permission_serializers import PermissionSerializer
-
+from collections import defaultdict, OrderedDict
 
 class PermissionViewSet(viewsets.ReadOnlyModelViewSet):
     """
@@ -61,8 +61,8 @@ class PermissionViewSet(viewsets.ReadOnlyModelViewSet):
     def grouped_by_model(self, request):
         """
         Group permissions by models only, replacing codename with action labels.
+        Sorted by model name in ascending order.
         """
-        # Fetch permissions and group by model
         permissions = self.get_queryset()
         grouped_permissions = defaultdict(list)
 
@@ -73,27 +73,29 @@ class PermissionViewSet(viewsets.ReadOnlyModelViewSet):
             "delete": "Delete",
             "view": "View",
             "manage": "Manage",
-            "verify": "Verify"  # Ensure "verify" is correctly mapped
+            "verify": "Verify"
         }
 
         for permission in permissions:
             model_name = permission.content_type.model
-            codename_parts = permission.codename.split("_")  # Extract parts (e.g., ['verify', 'user'])
+            codename_parts = permission.codename.split("_")  
 
-            # Ensure there's an action in the codename
+            # Extract action key
             action_key = codename_parts[0] if len(codename_parts) > 1 else permission.codename  
 
-            # Use mapping or fallback to capitalized action
+            # Map action name or default to capitalized version
             action_label = ACTION_MAPPING.get(action_key, action_key.capitalize())
 
-            # Ensure "Can" is removed from permission name
+            # Clean "Can" from permission name
             clean_name = permission.name.replace("Can ", "")
 
             grouped_permissions[model_name].append({
                 'id': permission.id,
-                'name': clean_name,  # Cleaned-up name without "Can"
-                'action': action_label  # Ensure correct action name
+                'name': clean_name,
+                'action': action_label
             })
 
-        # Convert grouped data to a serializable dict
-        return Response(dict(grouped_permissions))
+        # Sort model names alphabetically
+        sorted_permissions = OrderedDict(sorted(grouped_permissions.items()))
+
+        return Response(sorted_permissions)
