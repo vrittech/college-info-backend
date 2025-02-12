@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 152,
+            "activePatchIndex": 159,
             "patches": [
                 {
                     "date": 1726568467190,
@@ -616,6 +616,34 @@
                 {
                     "date": 1738651759778,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -109,9 +109,9 @@\n             (\"manage_event\", \"Manage Event\"),\n         ]\n \n class EventGallery(models.Model):\n-    event = models.ForeignKey()\n+    event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name='images')\n     is_featured_image = models.BooleanField(default=False)\n     image = models.ImageField(upload_to='event_images/',null=True,blank=True)\n     \n     created_date_time = models.DateTimeField(auto_now_add=True, null=True, blank=True)\n"
+                },
+                {
+                    "date": 1739343921515,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -109,9 +109,9 @@\n             (\"manage_event\", \"Manage Event\"),\n         ]\n \n class EventGallery(models.Model):\n-    event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name='images')\n+    event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name='image')\n     is_featured_image = models.BooleanField(default=False)\n     image = models.ImageField(upload_to='event_images/',null=True,blank=True)\n     \n     created_date_time = models.DateTimeField(auto_now_add=True, null=True, blank=True)\n@@ -122,6 +122,6 @@\n         return f\"{self.image.url} - {'Featured' if self.is_featured_image else 'Standard'}\"\n     \n     class Meta:\n         permissions = [\n-            (\"manage_event_gallery\", \"Manage Event Gallery\"),\n+            (\"manage_eventgallery\", \"Manage Event Gallery\"),\n         ]\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1739343933281,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -49,8 +49,12 @@\n     updated_date = models.DateTimeField(auto_now=True, null=True, blank=True)\n     \n     def __str__(self):\n         return f\"{self.name}\"\n+    class Meta:\n+        permissions = [\n+            (\"manage_eventgallery\", \"Manage Event Gallery\"),\n+        ]\n \n class Event(SEOFields):\n     public_id = models.UUIDField(default=uuid.uuid4,editable=False,unique=True)\n     slug = models.SlugField(max_length=255, unique=True, null=True, blank=True)\n"
+                },
+                {
+                    "date": 1739343940108,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -51,9 +51,9 @@\n     def __str__(self):\n         return f\"{self.name}\"\n     class Meta:\n         permissions = [\n-            (\"manage_eventgallery\", \"Manage Event Gallery\"),\n+            (\"manage_eventcategory\", \"Manage Event Gallery\"),\n         ]\n \n class Event(SEOFields):\n     public_id = models.UUIDField(default=uuid.uuid4,editable=False,unique=True)\n"
+                },
+                {
+                    "date": 1739343946126,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -40,8 +40,12 @@\n     updated_date = models.DateTimeField(auto_now=True, null=True, blank=True)\n     \n     def __str__(self):\n         return f\"{self.name}\"\n+    class Meta:\n+        permissions = [\n+            (\"manage_eventgallery\", \"Manage Event Gallery\"),\n+        ]\n \n class EventCategory(models.Model):\n     name = models.CharField(max_length=100)\n     created_date_time = models.DateTimeField(auto_now_add=True, null=True, blank=True)\n"
+                },
+                {
+                    "date": 1739343952621,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -42,9 +42,9 @@\n     def __str__(self):\n         return f\"{self.name}\"\n     class Meta:\n         permissions = [\n-            (\"manage_eventgallery\", \"Manage Event Gallery\"),\n+            (\"manage_eventorganizer\", \"Manage Event Gallery\"),\n         ]\n \n class EventCategory(models.Model):\n     name = models.CharField(max_length=100)\n"
+                },
+                {
+                    "date": 1739344068278,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -42,9 +42,9 @@\n     def __str__(self):\n         return f\"{self.name}\"\n     class Meta:\n         permissions = [\n-            (\"manage_eventorganizer\", \"Manage Event Gallery\"),\n+            (\"manage_eventorganizer\", \"Manage Event Organizer\"),\n         ]\n \n class EventCategory(models.Model):\n     name = models.CharField(max_length=100)\n"
+                },
+                {
+                    "date": 1739344075376,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -55,9 +55,9 @@\n     def __str__(self):\n         return f\"{self.name}\"\n     class Meta:\n         permissions = [\n-            (\"manage_eventcategory\", \"Manage Event Gallery\"),\n+            (\"manage_eventcategory\", \"Manage Event Category\"),\n         ]\n \n class Event(SEOFields):\n     public_id = models.UUIDField(default=uuid.uuid4,editable=False,unique=True)\n"
                 }
             ],
             "date": 1726568467190,

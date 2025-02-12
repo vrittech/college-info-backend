@@ -14,5 +14,5 @@ class SocialMedia(models.Model):
     
     class Meta:
         permissions = [
-            ('manage_social_media', 'Manage Social Media'),
+            ('manage_socialmedia', 'Manage Social Media'),
         ]

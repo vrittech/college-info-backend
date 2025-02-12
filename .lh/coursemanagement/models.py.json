@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 111,
+            "activePatchIndex": 114,
             "patches": [
                 {
                     "date": 1727071578528,
@@ -452,6 +452,18 @@
                 {
                     "date": 1739335047984,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -43,9 +43,9 @@\n         ]\n \n     \n class CourseCurriculumFile(models.Model):\n-    course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name=\"curriculum_files\")\n+    course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name=\"curriculum_file_upload\")\n     curriculum_file_upload = models.FileField(upload_to=\"courses/curriculum_files/\")\n     uploaded_at = models.DateTimeField(auto_now_add=True)\n \n     def __str__(self):\n"
+                },
+                {
+                    "date": 1739343861250,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -48,5 +48,9 @@\n     curriculum_file_upload = models.FileField(upload_to=\"courses/curriculum_files/\")\n     uploaded_at = models.DateTimeField(auto_now_add=True)\n \n     def __str__(self):\n-        return f\"File for {self.course.name} - {self.file.name}\"\n\\ No newline at end of file\n+        return f\"File for {self.course.name} - {self.file.name}\"\n+      class Meta:\n+        permissions = [\n+            ('manage_course', 'Manage course'),\n+        ]\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1739343870526,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -49,8 +49,8 @@\n     uploaded_at = models.DateTimeField(auto_now_add=True)\n \n     def __str__(self):\n         return f\"File for {self.course.name} - {self.file.name}\"\n-      class Meta:\n+    class Meta:\n         permissions = [\n-            ('manage_course', 'Manage course'),\n+            ('manage_coursecurriculum', 'Manage course'),\n         ]\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1739343880910,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -51,6 +51,6 @@\n     def __str__(self):\n         return f\"File for {self.course.name} - {self.file.name}\"\n     class Meta:\n         permissions = [\n-            ('manage_coursecurriculum', 'Manage course'),\n+            ('manage_coursecurriculumfile', 'Manage manage_coursecurriculum'),\n         ]\n\\ No newline at end of file\n"
                 }
             ],
             "date": 1727071578528,

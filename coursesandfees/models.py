@@ -16,5 +16,5 @@ class CoursesAndFees(models.Model): #CollegeHaveCourse
     
     class Meta:
         permissions = [
-            ('manage_courses_and_fees', 'Manage courses and fees'),
+            ('manage_coursesandfees', 'Manage courses and fees'),
         ]

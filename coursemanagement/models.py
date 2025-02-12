@@ -50,3 +50,7 @@ class CourseCurriculumFile(models.Model):
 
     def __str__(self):
         return f"File for {self.course.name} - {self.file.name}"
+    class Meta:
+        permissions = [
+            ('manage_coursecurriculumfile', 'Manage manage_coursecurriculumfile'),
+        ]

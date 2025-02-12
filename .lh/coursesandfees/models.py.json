@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 42,
+            "activePatchIndex": 44,
             "patches": [
                 {
                     "date": 1727174542938,
@@ -176,6 +176,14 @@
                 {
                     "date": 1733642121695,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,5 +14,7 @@\n     def __str__(self):\n         return f'{self.created_date} - {self.amount}'\n     \n     class Meta:\n-        \n\\ No newline at end of file\n+        permissions = [\n+            ('manage_courses_and_fees', 'Manage courses and fees'),\n+        ]\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1739343892703,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,6 +15,6 @@\n         return f'{self.created_date} - {self.amount}'\n     \n     class Meta:\n         permissions = [\n-            ('manage_courses_and_fees', 'Manage courses and fees'),\n+            ('manage_coursesand_fees', 'Manage courses and fees'),\n         ]\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1739344082975,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,6 +15,6 @@\n         return f'{self.created_date} - {self.amount}'\n     \n     class Meta:\n         permissions = [\n-            ('manage_coursesand_fees', 'Manage courses and fees'),\n+            ('manage_coursesandfees', 'Manage courses and fees'),\n         ]\n\\ No newline at end of file\n"
                 }
             ],
             "date": 1727174542938,

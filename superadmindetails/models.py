@@ -18,5 +18,5 @@ class SuperAdminDetails(models.Model):
     
     class Meta:
         permissions=[
-            ('manage_super_admin_details', 'Manage Super Admin Details'),
+            ('manage_superadmindetails', 'Manage Super Admin Details'),
         ]

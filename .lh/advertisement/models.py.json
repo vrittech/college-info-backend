@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 38,
+            "activePatchIndex": 39,
             "patches": [
                 {
                     "date": 1733373617417,
@@ -160,6 +160,10 @@
                 {
                     "date": 1739252721912,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,8 @@\n from django.db import models\n \n class PlacementPosition(models.Model):\n-    placement_name = models.CharField(max_length=255) \n+    placement_name = models.CharField(max_length=255,null=) \n     duration_in_seconds = models.IntegerField(default=0)  # Time in seconds\n     created_date = models.DateTimeField(auto_now_add=True)\n     updated_date = models.DateTimeField(auto_now=True)\n \n@@ -18,9 +18,9 @@\n class Advertisement(models.Model):\n     name = models.CharField(max_length=255)\n     link = models.URLField()\n     image = models.ImageField(upload_to='ads/')\n-     = models.ForeignKey(PlacementPosition, on_delete=models.CASCADE)\n+    placement = models.ForeignKey(PlacementPosition, on_delete=models.CASCADE)\n     created_date = models.DateTimeField(auto_now_add=True)\n     updated_date = models.DateTimeField(auto_now=True)\n     # duration_in_seconds = models.IntegerField(default=0)  # Time in seconds for the ad\n \n"
+                },
+                {
+                    "date": 1739343809422,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,8 @@\n from django.db import models\n \n class PlacementPosition(models.Model):\n-    placement_name = models.CharField(max_length=255,null=) \n+    placement_name = models.CharField(max_length=255,null=True,blank=True) \n     duration_in_seconds = models.IntegerField(default=0)  # Time in seconds\n     created_date = models.DateTimeField(auto_now_add=True)\n     updated_date = models.DateTimeField(auto_now=True)\n \n@@ -10,9 +10,9 @@\n         return self.placement_name\n     \n     class meta:\n         permissions = [\n-            ('manage_placement_position', 'Manage placement position'),\n+            ('manage_placementposition', 'Manage placement position'),\n         ]\n \n \n class Advertisement(models.Model):\n"
                 }
             ],
             "date": 1733373617417,

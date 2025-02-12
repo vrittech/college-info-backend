@@ -15,6 +15,6 @@ class CollegeType(models.Model):
     
     class Meta:
         permissions = [
-            ('manage_college_type', 'Manage college type'),
+            ('manage_collegetype', 'Manage college type'),
         ]
    

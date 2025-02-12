@@ -11,7 +11,7 @@ class PlacementPosition(models.Model):
     
     class meta:
         permissions = [
-            ('manage_placement_position', 'Manage placement position'),
+            ('manage_placementposition', 'Manage placement position'),
         ]
 
 

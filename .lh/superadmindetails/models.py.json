@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 5,
+            "activePatchIndex": 7,
             "patches": [
                 {
                     "date": 1733312873798,
@@ -28,6 +28,14 @@
                 {
                     "date": 1733642775941,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,5 +15,6 @@\n \n     def __str__(self):\n         return self.name\n     \n-    \n+    class Meta:\n+        permissions\n"
+                },
+                {
+                    "date": 1739344104851,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,5 +16,7 @@\n     def __str__(self):\n         return self.name\n     \n     class Meta:\n-        permissions\n+        permissions=[\n+            ('manage_superadmin_details', 'Manage Super Admin Details'),\n+        ]\n"
+                },
+                {
+                    "date": 1739344162334,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,6 +17,6 @@\n         return self.name\n     \n     class Meta:\n         permissions=[\n-            ('manage_superadmin_details', 'Manage Super Admin Details'),\n+            ('manage_superadminauth_permission_pkeydetails', 'Manage Super Admin Details'),\n         ]\n"
                 }
             ],
             "date": 1733312873798,

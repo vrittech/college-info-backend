@@ -41,6 +41,10 @@ class EventOrganizer(models.Model):
     
     def __str__(self):
         return f"{self.name}"
+    class Meta:
+        permissions = [
+            ("manage_eventorganizer", "Manage Event Organizer"),
+        ]
 
 class EventCategory(models.Model):
     name = models.CharField(max_length=100)
@@ -50,6 +54,10 @@ class EventCategory(models.Model):
     
     def __str__(self):
         return f"{self.name}"
+    class Meta:
+        permissions = [
+            ("manage_eventcategory", "Manage Event Category"),
+        ]
 
 class Event(SEOFields):
     public_id = models.UUIDField(default=uuid.uuid4,editable=False,unique=True)
@@ -123,5 +131,5 @@ class EventGallery(models.Model):
     
     class Meta:
         permissions = [
-            ("manage_event_gallery", "Manage Event Gallery"),
+            ("manage_eventgallery", "Manage Event Gallery"),
         ]

@@ -9,3 +9,7 @@ class RequestSubmission(models.Model):
     
     def __str__(self):
         return self.subject 
+    class Meta:
+        permissions = [
+            ("manage_requestsubmission", "Manage Request Submission"),
+        ]

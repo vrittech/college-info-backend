@@ -114,7 +114,7 @@ class InformationFiles(models.Model):
    
     class Meta:
         permissions = [
-            ('manage_information_files', 'Manage Information Files'),
+            ('manage_informationfiles', 'Manage Information Files'),
         ]
         
 class InformationGallery(models.Model):
@@ -127,5 +127,5 @@ class InformationGallery(models.Model):
     
     class Meta:
         permissions = [
-            ('manage_information_gallery', 'Manage Information Gallery'),
+            ('manage_informationgallery', 'Manage Information Gallery'),
         ]
