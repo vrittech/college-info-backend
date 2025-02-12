@@ -60,18 +60,39 @@ class PermissionViewSet(viewsets.ReadOnlyModelViewSet):
     @action(detail=False, methods=['get'])
     def grouped_by_model(self, request):
         """
-        Group permissions by models only.
+        Group permissions by models only, replacing codename with action labels.
         """
         # Fetch permissions and group by model
         permissions = self.get_queryset()
         grouped_permissions = defaultdict(list)
 
+        # Standard and custom action mappings
+        ACTION_MAPPING = {
+            "add": "Add",
+            "change": "Edit",
+            "delete": "Delete",
+            "view": "View",
+            "manage": "Manage",
+            "verify": "Verify"  # Ensure "verify" is correctly mapped
+        }
+
         for permission in permissions:
             model_name = permission.content_type.model
+            codename_parts = permission.codename.split("_")  # Extract parts (e.g., ['verify', 'user'])
+
+            # Ensure there's an action in the codename
+            action_key = codename_parts[0] if len(codename_parts) > 1 else permission.codename  
+
+            # Use mapping or fallback to capitalized action
+            action_label = ACTION_MAPPING.get(action_key, action_key.capitalize())
+
+            # Ensure "Can" is removed from permission name
+            clean_name = permission.name.replace("Can ", "")
+
             grouped_permissions[model_name].append({
                 'id': permission.id,
-                'name': permission.name,
-                'codename': permission.codename,
+                'name': clean_name,  # Cleaned-up name without "Can"
+                'action': action_label  # Ensure correct action name
             })
 
         # Convert grouped data to a serializable dict

@@ -41,7 +41,7 @@ class CustomUser(AbstractUser):
     
     class Meta:
         permissions = [
-            ('can_verify_user', 'Can verify user'),
+            ('manage_user', 'Manage User'),
         ]
     
     @property

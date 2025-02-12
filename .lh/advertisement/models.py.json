@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 39,
+            "activePatchIndex": 49,
             "patches": [
                 {
                     "date": 1733373617417,
@@ -164,6 +164,46 @@
                 {
                     "date": 1739343809422,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,8 @@\n from django.db import models\n \n class PlacementPosition(models.Model):\n-    placement_name = models.CharField(max_length=255,null=) \n+    placement_name = models.CharField(max_length=255,null=True,blank=True) \n     duration_in_seconds = models.IntegerField(default=0)  # Time in seconds\n     created_date = models.DateTimeField(auto_now_add=True)\n     updated_date = models.DateTimeField(auto_now=True)\n \n@@ -10,9 +10,9 @@\n         return self.placement_name\n     \n     class meta:\n         permissions = [\n-            ('manage_placement_position', 'Manage placement position'),\n+            ('manage_placementposition', 'Manage placement position'),\n         ]\n \n \n class Advertisement(models.Model):\n"
+                },
+                {
+                    "date": 1739351170408,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -26,8 +26,5 @@\n \n     def __str__(self):\n         return self.name\n     \n-    class meta:\n-        permissions = [\n-            ('manage_advertisement', 'Manage advertisement'),\n-        ]\n+ \n"
+                },
+                {
+                    "date": 1739351192337,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -25,6 +25,10 @@\n     # duration_in_seconds = models.IntegerField(default=0)  # Time in seconds for the ad\n \n     def __str__(self):\n         return self.name\n+       class meta:\n+        permissions = [\n+            ('manage_advertisement', 'Manage advertisement'),\n+        ]\n     \n  \n"
+                },
+                {
+                    "date": 1739351216207,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -25,10 +25,10 @@\n     # duration_in_seconds = models.IntegerField(default=0)  # Time in seconds for the ad\n \n     def __str__(self):\n         return self.name\n-       class meta:\n+     class Meta:\n         permissions = [\n-            ('manage_advertisement', 'Manage advertisement'),\n+            ('manage_coursecurriculumfile', 'Manage manage_coursecurriculumfile'),\n         ]\n     \n  \n"
+                },
+                {
+                    "date": 1739351224614,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -25,10 +25,10 @@\n     # duration_in_seconds = models.IntegerField(default=0)  # Time in seconds for the ad\n \n     def __str__(self):\n         return self.name\n-     class Meta:\n+    class Meta:\n         permissions = [\n-            ('manage_coursecurriculumfile', 'Manage manage_coursecurriculumfile'),\n+            ('manage_', 'Manage manage_coursecurriculumfile'),\n         ]\n     \n  \n"
+                },
+                {
+                    "date": 1739351233540,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,8 +27,8 @@\n     def __str__(self):\n         return self.name\n     class Meta:\n         permissions = [\n-            ('manage_', 'Manage manage_coursecurriculumfile'),\n+            ('manage_advertisements', 'Manage manage_coursecurriculumfile'),\n         ]\n     \n  \n"
+                },
+                {
+                    "date": 1739351244278,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,8 +27,8 @@\n     def __str__(self):\n         return self.name\n     class Meta:\n         permissions = [\n-            ('manage_advertisements', 'Manage manage_coursecurriculumfile'),\n+            ('manage_advertisements', 'Manage Advertisement'),\n         ]\n     \n  \n"
+                },
+                {
+                    "date": 1739351249985,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,8 +27,8 @@\n     def __str__(self):\n         return self.name\n     class Meta:\n         permissions = [\n-            ('manage_advertisements', 'Manage Advertisement'),\n+            ('manage_advertisement', 'Manage Advertisement'),\n         ]\n     \n  \n"
+                },
+                {
+                    "date": 1739351264824,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,11 +8,11 @@\n \n     def __str__(self):\n         return self.placement_name\n     \n-    class meta:\n+    class Meta:\n         permissions = [\n-            ('manage_placementposition', 'Manage placement position'),\n+            ('manage_', 'Manage manage_coursecurriculumfile'),\n         ]\n \n \n class Advertisement(models.Model):\n"
+                },
+                {
+                    "date": 1739351274481,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,9 @@\n         return self.placement_name\n     \n     class Meta:\n         permissions = [\n-            ('manage_', 'Manage manage_coursecurriculumfile'),\n+            ('manage_placementposition', 'Manage manage_coursecurriculumfile'),\n         ]\n \n \n class Advertisement(models.Model):\n"
+                },
+                {
+                    "date": 1739351282160,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,9 @@\n         return self.placement_name\n     \n     class Meta:\n         permissions = [\n-            ('manage_placementposition', 'Manage manage_coursecurriculumfile'),\n+            ('manage_placementposition', 'Manage Placement Position'),\n         ]\n \n \n class Advertisement(models.Model):\n"
                 }
             ],
             "date": 1733373617417,
