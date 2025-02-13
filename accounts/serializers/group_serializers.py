@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth.models import Group, Permission
-from accounts.models import GroupExtension
+# from accounts.models import GroupExtension
 
 class PermissionSerializer(serializers.ModelSerializer):
     class Meta:
@@ -19,11 +19,11 @@ class GroupSerializer(serializers.ModelSerializer):
         model = Group
         fields = ['id', 'name', 'permissions', 'permission_ids', 'position']
 
-    def validate_position(self, value):
-        # Check if a group with this position already exists in GroupExtension
-        if GroupExtension.objects.filter(position=value).exists():
-            raise serializers.ValidationError("A group with this position already exists.")
-        return value
+    # def validate_position(self, value):
+    #     # Check if a group with this position already exists in GroupExtension
+    #     if GroupExtension.objects.filter(position=value).exists():
+    #         raise serializers.ValidationError("A group with this position already exists.")
+    #     return value
 
     def create(self, validated_data):
         permission_ids = validated_data.pop('permission_ids', [])
@@ -34,7 +34,7 @@ class GroupSerializer(serializers.ModelSerializer):
         group.permissions.set(permission_ids)
 
         # Create or update GroupExtension with the position
-        GroupExtension.objects.create(group=group, position=position or group.id)
+        # GroupExtension.objects.create(group=group, position=position or group.id)
         return group
 
     def update(self, instance, validated_data):
@@ -45,10 +45,5 @@ class GroupSerializer(serializers.ModelSerializer):
         instance.save()
         instance.permissions.set(permission_ids)
 
-        # Update or create the related GroupExtension for position
-        if position:
-            extension, created = GroupExtension.objects.get_or_create(group=instance)
-            extension.position = position
-            extension.save()
 
         return instance

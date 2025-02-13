@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 4,
+            "activePatchIndex": 6,
             "patches": [
                 {
                     "date": 1733643783199,
@@ -24,6 +24,14 @@
                 {
                     "date": 1739423296275,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,8 @@\n from django.core.exceptions import PermissionDenied\n from django.contrib import admin\n from django.contrib.auth.admin import UserAdmin as BaseUserAdmin\n-from .models import CustomUser, GroupExtension\n+from .models import CustomUser, GroupExtension, Group\n \n class CustomUserAdmin(BaseUserAdmin):\n     exclude = ('user_permissions',)\n \n"
+                },
+                {
+                    "date": 1739425648614,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -26,18 +26,18 @@\n \n admin.site.register(CustomUser, CustomUserAdmin)\n \n # Register GroupExtension model\n-@admin.register(GroupExtension)\n-class GroupExtensionAdmin(admin.ModelAdmin):\n-    list_display = ['group', 'position']\n-    search_fields = ['group__name']\n-    list_filter = ['position']\n-    ordering = ['position']\n+# @admin.register(GroupExtension)\n+# class GroupExtensionAdmin(admin.ModelAdmin):\n+#     list_display = ['group', 'position']\n+#     search_fields = ['group__name']\n+#     list_filter = ['position']\n+#     ordering = ['position']\n \n-    def save_model(self, request, obj, form, change):\n-        # Override save_model to handle custom position saving logic if needed\n-        super().save_model(request, obj, form, change)\n+#     def save_model(self, request, obj, form, change):\n+#         # Override save_model to handle custom position saving logic if needed\n+#         super().save_model(request, obj, form, change)\n \n # Unregister and register Group to customize admin panel if necessary\n admin.site.unregister(Group)\n admin.site.register(Group)\n"
+                },
+                {
+                    "date": 1739425720920,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,8 @@\n from django.core.exceptions import PermissionDenied\n from django.contrib import admin\n from django.contrib.auth.admin import UserAdmin as BaseUserAdmin\n-from .models import CustomUser, GroupExtension, Group\n+from .models import CustomUser, Group\n \n class CustomUserAdmin(BaseUserAdmin):\n     exclude = ('user_permissions',)\n \n"
                 }
             ],
             "date": 1733643783199,

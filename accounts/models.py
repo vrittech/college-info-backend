@@ -52,24 +52,24 @@ class CustomUser(AbstractUser):
             return self.username
 
 
-class GroupExtension(models.Model):
-    group = models.OneToOneField(Group, on_delete=models.CASCADE, related_name='extension')
-    position = models.PositiveIntegerField(default=0)
+# class GroupExtension(models.Model):
+#     group = models.OneToOneField(Group, on_delete=models.CASCADE, related_name='extension')
+#     position = models.PositiveIntegerField(default=0)
     
-    def __int__(self):
-        return self.position
+#     def __int__(self):
+#         return self.position
     
-    class Meta:
-        permissions = [
-            ('manage_group_extension', 'Manage group extension'),
-        ]
-    def save(self, *args, **kwargs):
-        # Ensure the superuser status is not changed accidentally
-        if not self.is_superuser:
-            print("####################Superuser status cannot be changed.##################")
-            # You can log or add checks here if needed
-            pass
-        super().save(*args, **kwargs)
+#     class Meta:
+#         permissions = [
+#             ('manage_group_extension', 'Manage group extension'),
+#         ]
+#     def save(self, *args, **kwargs):
+#         # Ensure the superuser status is not changed accidentally
+#         if not self.is_superuser:
+#             print("####################Superuser status cannot be changed.##################")
+#             # You can log or add checks here if needed
+#             pass
+#         super().save(*args, **kwargs)
 
 
     # def save(self, *args, **kwargs):

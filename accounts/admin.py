@@ -1,7 +1,7 @@
 from django.core.exceptions import PermissionDenied
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
-from .models import CustomUser, GroupExtension, Group
+from .models import CustomUser, Group
 
 class CustomUserAdmin(BaseUserAdmin):
     exclude = ('user_permissions',)
@@ -27,16 +27,16 @@ class CustomUserAdmin(BaseUserAdmin):
 admin.site.register(CustomUser, CustomUserAdmin)
 
 # Register GroupExtension model
-@admin.register(GroupExtension)
-class GroupExtensionAdmin(admin.ModelAdmin):
-    list_display = ['group', 'position']
-    search_fields = ['group__name']
-    list_filter = ['position']
-    ordering = ['position']
+# @admin.register(GroupExtension)
+# class GroupExtensionAdmin(admin.ModelAdmin):
+#     list_display = ['group', 'position']
+#     search_fields = ['group__name']
+#     list_filter = ['position']
+#     ordering = ['position']
 
-    def save_model(self, request, obj, form, change):
-        # Override save_model to handle custom position saving logic if needed
-        super().save_model(request, obj, form, change)
+#     def save_model(self, request, obj, form, change):
+#         # Override save_model to handle custom position saving logic if needed
+#         super().save_model(request, obj, form, change)
 
 # Unregister and register Group to customize admin panel if necessary
 admin.site.unregister(Group)

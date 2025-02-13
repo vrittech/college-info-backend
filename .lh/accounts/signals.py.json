@@ -1,0 +1,18 @@
+{
+    "sourceFile": "accounts/signals.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1739425665260,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1739425665260,
+            "name": "Commit-0",
+            "content": "# signals.py\n\nfrom django.db.models.signals import post_save\nfrom django.dispatch import receiver\nfrom .models import CustomUser,GroupExtension\n\n@receiver(post_save, sender=CustomUser)\ndef set_position_same_as_id(sender, instance, created, **kwargs):\n    if created and instance.position != instance.id:\n        instance.position = instance.id\n        instance.save()\n\n        \n# @receiver(post_save, sender=ProjectService)\n# def set_position_same_as_id(sender, instance, created, **kwargs):\n#     if created and instance.position != instance.id:\n#         instance.position = instance.id\n#         instance.save()\n\n"
+        }
+    ]
+}

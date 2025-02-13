@@ -1,0 +1,18 @@
+{
+    "sourceFile": "accounts/serializers/groupextension_serializers.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1739425690159,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1739425690159,
+            "name": "Commit-0",
+            "content": "# from rest_framework import serializers\n# from ..models import GroupExtension\n\n# class GroupExtensionListSerializers(serializers.ModelSerializer):\n#     class Meta:\n#         model = GroupExtension\n#         fields = '__all__'\n\n# class GroupExtensionRetrieveSerializers(serializers.ModelSerializer):\n#     class Meta:\n#         model = GroupExtension\n#         fields = '__all__'\n\n# class GroupExtensionWriteSerializers(serializers.ModelSerializer):\n#     class Meta:\n#         model = GroupExtension\n#         fields = '__all__'"
+        }
+    ]
+}

@@ -1,0 +1,18 @@
+{
+    "sourceFile": "accounts/viewsets/groupextension_viewsets.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1739425682133,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1739425682133,
+            "name": "Commit-0",
+            "content": "# from rest_framework import viewsets\n# from rest_framework.filters import SearchFilter, OrderingFilter\n# from django_filters.rest_framework import DjangoFilterBackend\n# from ..models import GroupExtension\n# from ..serializers.groupextension_serializers import GroupExtensionListSerializers, GroupExtensionRetrieveSerializers, GroupExtensionWriteSerializers\n# from ..utilities.importbase import *\n\n# class groupextensionViewsets(viewsets.ModelViewSet):\n#     serializer_class = GroupExtensionListSerializers\n#     # permission_classes = [accountsPermission]\n#     authentication_classes = [JWTAuthentication]\n#     pagination_class = MyPageNumberPagination\n#     queryset = GroupExtension.objects.all().order_by('position')\n\n#     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n#     search_fields = ['id']\n#     ordering_fields = ['id']\n\n#     filterset_fields = {\n#         'id': ['exact'],\n#     }\n\n#     def get_queryset(self):\n#         queryset = super().get_queryset()\n#         return queryset\n\n#     def get_serializer_class(self):\n#         if self.action in ['create', 'update', 'partial_update']:\n#             return GroupExtensionWriteSerializers\n#         elif self.action == 'retrieve':\n#             return GroupExtensionRetrieveSerializers\n#         return super().get_serializer_class()\n\n#     # @action(detail=False, methods=['get'], name=\"action_name\", url_path=\"url_path\")\n#     # def action_name(self, request, *args, **kwargs):\n#     #     return super().list(request, *args, **kwargs)\n\n"
+        }
+    ]
+}
