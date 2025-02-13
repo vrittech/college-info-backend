@@ -100,7 +100,6 @@ class AffiliationWriteSerializers(serializers.ModelSerializer):
     def create(self, validated_data):
         """Handles creation of an affiliation."""
         certifications = validated_data.pop('certification', [])
-        print("Certifications//////////////////////////",certifications)
         affiliation = Affiliation.objects.create(**validated_data)
         affiliation.certification.set(certifications)
         return affiliation
