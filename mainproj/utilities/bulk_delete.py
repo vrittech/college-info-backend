@@ -9,18 +9,21 @@ from drf_yasg.utils import swagger_auto_schema
 from advertisement.models import Advertisement
 from affiliation.models import Affiliation
 from certification.models import Certification
-from informationmanagement.models import Information
+from informationmanagement.models import Information,InformationCategory,InformationFiles,InformationGallery,InformationTagging
 from collegemanagement.models import College, CollegeGallery, CollegeFaqs, CollegeType
 from coursesandfees.models import CoursesAndFees
 from collegetype.models import CollegeType
 from contact.models import Contact
-from coursemanagement.models import Course
+from coursemanagement.models import Course,CourseCurriculumFile
 from district.models import District
 from facilities.models import Facility
 from faculty.models import Faculty
-from level.models import Level
+from level.models import Level,SubLevel
 from socialmedia.models import SocialMedia
-from superadmindetails.models import SuperAdminDetails         
+from superadmindetails.models import SuperAdminDetails
+from accounts.models import Group
+from event.models import Event,EventCategory,EventGallery,EventOrganizer
+from inquiry.models import Inquiry         
 
 VALID_TYPES = {
     "advertisement": Advertisement,
@@ -28,18 +31,30 @@ VALID_TYPES = {
     "courses-and-fees": CoursesAndFees,
     "certification": Certification,
     "information": Information,
+    "information-category": InformationCategory,
+    "information-files": InformationFiles,
+    "information-gallery": InformationGallery,
+    "information-tag": InformationTagging,
     "college": College,
     "college-gallery": CollegeGallery,
     "college-faqs": CollegeFaqs,
     "college-type": CollegeType,
     "contact": Contact,
     "course": Course,
+    "course-curriculum-file": CourseCurriculumFile,
     "district": District,
     "facility": Facility,
     "faculty": Faculty,
     "level": Level,
+    "sub-level": SubLevel,
     "social-media": SocialMedia,
     "super-admin-details": SuperAdminDetails,
+    "event": Event,
+    "event-category": EventCategory,
+    "event-gallery": EventGallery,
+    "event-organizer": EventOrganizer,
+    "group": Group,
+    "inquiry": Inquiry,
 }
 
 class BulkDelete(APIView):
