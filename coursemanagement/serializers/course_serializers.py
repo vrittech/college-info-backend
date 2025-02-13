@@ -154,13 +154,7 @@ class CourseWriteSerializers(serializers.ModelSerializer):
 
     class Meta:
         model = Course
-        fields = [
-            "id", "name", "abbreviation", "description", "course_shortdescription",
-            "course_outcome", "course_curriculum", "eligibility_criteria", "image",
-            "curriculum_file_upload", "affiliation",
-            "duration", "faculty", "level", "discipline",
-            "created_date", "updated_date"
-        ]
+        fields = '__all__'
 
     def create(self, validated_data):
         """Handles creating a course with multiple curriculum file uploads"""

@@ -168,7 +168,7 @@ class CollegeWriteSerializers(serializers.ModelSerializer):
     def to_representation(self, instance):
         """Customize the response to include full objects for related fields."""
         response = super().to_representation(instance)
-        response["slug"] = instance.slug
+        # response["slug"] = instance.slug
 
         # Replace IDs with full nested objects for foreign key fields
         response["district"] = DistrictSerializer(instance.district).data
