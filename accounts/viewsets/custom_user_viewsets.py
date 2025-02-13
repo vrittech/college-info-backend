@@ -19,7 +19,7 @@ from rest_framework.filters import SearchFilter, OrderingFilter
 from django_filters.rest_framework import DjangoFilterBackend
 
 class CustomUserViewSet(viewsets.ModelViewSet):
-    queryset = CustomUser.objects.all().order_by('position')
+    queryset = CustomUser.objects.all().order_by('-id')
     permission_classes = [permissions.IsAuthenticated]
     # filterset_class = CustomUserFilter
     pagination_class = MyPageNumberPagination

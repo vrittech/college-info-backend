@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 2,
+            "activePatchIndex": 4,
             "patches": [
                 {
                     "date": 1733643783199,
@@ -16,6 +16,14 @@
                 {
                     "date": 1733643906712,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,9 @@\n     \n     # Only include fields that are present in the model\n     fieldsets = (\n         (None, {'fields': ('username', 'password')}),\n-        ('Personal info', {'fields': ('first_name', 'last_name', 'email','roles','phone', 'avatar', 'professional_image', 'position',)}),\n+        ('Personal info', {'fields': ('first_name', 'last_name', 'email','phone', 'avatar', 'professional_image', 'position',)}),\n         ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser','groups')}),\n     )\n     \n     list_display = ['username', 'email', 'position','phone', 'is_active', 'is_staff', 'professional_image', 'avatar']\n"
+                },
+                {
+                    "date": 1739423287391,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,25 +1,33 @@\n+from django.core.exceptions import PermissionDenied\n from django.contrib import admin\n from django.contrib.auth.admin import UserAdmin as BaseUserAdmin\n-from django.contrib.auth.models import Group\n from .models import CustomUser, GroupExtension\n \n class CustomUserAdmin(BaseUserAdmin):\n     exclude = ('user_permissions',)\n-    \n+\n     # Only include fields that are present in the model\n     fieldsets = (\n         (None, {'fields': ('username', 'password')}),\n-        ('Personal info', {'fields': ('first_name', 'last_name', 'email','phone', 'avatar', 'professional_image', 'position',)}),\n-        ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser','groups')}),\n+        ('Personal info', {'fields': ('first_name', 'last_name', 'email', 'phone', 'avatar', 'professional_image', 'position')}),\n+        ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser', 'groups')}),\n     )\n     \n-    list_display = ['username', 'email', 'position','phone', 'is_active', 'is_staff', 'professional_image', 'avatar']\n+    list_display = ['username', 'email', 'position', 'phone', 'is_active', 'is_staff', 'professional_image', 'avatar']\n     search_fields = ['username', 'email', 'full_name']\n \n+    def delete_model(self, request, obj):\n+        # Prevent deleting superusers (including the logged-in admin)\n+        if obj.is_superuser and obj != request.user:\n+            raise PermissionDenied(\"Superusers cannot be deleted.\")\n+        \n+        # Call the parent delete method to actually delete the user\n+        super().delete_model(request, obj)\n+\n admin.site.register(CustomUser, CustomUserAdmin)\n \n-\n+# Register GroupExtension model\n @admin.register(GroupExtension)\n class GroupExtensionAdmin(admin.ModelAdmin):\n     list_display = ['group', 'position']\n     search_fields = ['group__name']\n"
+                },
+                {
+                    "date": 1739423296275,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,8 @@\n from django.core.exceptions import PermissionDenied\n from django.contrib import admin\n from django.contrib.auth.admin import UserAdmin as BaseUserAdmin\n-from .models import CustomUser, GroupExtension\n+from .models import CustomUser, GroupExtension, Group\n \n class CustomUserAdmin(BaseUserAdmin):\n     exclude = ('user_permissions',)\n \n"
                 }
             ],
             "date": 1733643783199,
