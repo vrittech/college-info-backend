@@ -121,7 +121,7 @@ urlpatterns = [
     path('api-auth/', include('rest_framework.urls')),
     path('api/accounts/',include('accounts.urls')),
     path('api/import-excel/<str:type>/',ImportExcel.as_view(),name="import_excel"),
-    path('api/bulk-delete/<str:delete_type>/',BulkDelete.as_view(),name="bulk_delete"),
+    path('api/bulk-delete/', BulkDelete.as_view(), name="bulk_delete"),
     # path('api/',include(requestsubmission_router.urls)),
     # path('api/',include(coursemanagement_router.urls)),
     # path('api/',include(socialmedia_router.urls)),
