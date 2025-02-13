@@ -1,0 +1,18 @@
+{
+    "sourceFile": "notifications/models.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1739438341770,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1739438341770,
+            "name": "Commit-0",
+            "content": "from django.db import models\nfrom django.utils import timezone\nfrom accounts.models import CustomUser\n\nclass Notification(models.Model):\n    title = models.CharField(max_length=255)\n    message = models.TextField()\n    created_at = models.DateTimeField(auto_now_add=True, db_index=True)  # Indexed for better performance\n    module_name = models.CharField(max_length=100, db_index=True)\n    updated_id = models.CharField(max_length=255, blank=True, null=True, db_index=True)  # Indexed for search\n    users = models.ManyToManyField(CustomUser, related_name=\"notifications\", through=\"NotificationUser\")  # Track read status\n\n    def __str__(self):\n        return f\"{self.title} - {self.module_name}\"\n\n    class Meta:\n        permissions = [\n            ('can_manage_notifications', 'Can manage notifications'),\n        ]\n\nclass NotificationUser(models.Model):\n    \"\"\"\n    Intermediate model to track if a user has read a notification.\n    \"\"\"\n    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)\n    notification = models.ForeignKey(Notification, on_delete=models.CASCADE)\n    is_read = models.BooleanField(default=False)\n    read_at = models.DateTimeField(blank=True, null=True)\n\n    class Meta:\n        unique_together = ('user', 'notification')  # Ensures no duplicate user-notification entries\n\n    def mark_as_read(self):\n        \"\"\"Marks this notification as read for the user and sets a timestamp.\"\"\"\n        self.is_read = True\n        self.read_at = timezone.now()\n        self.save()\n\n    def __str__(self):\n        return f\"{self.user.username} - {self.notification.title} ({'Read' if self.is_read else 'Unread'})\"\n"
+        }
+    ]
+}

@@ -1,0 +1,18 @@
+{
+    "sourceFile": "notifications/viewsets/notification_viewsets.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1739438442326,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1739438442325,
+            "name": "Commit-0",
+            "content": "from rest_framework import viewsets\nfrom rest_framework.filters import SearchFilter, OrderingFilter\nfrom django_filters.rest_framework import DjangoFilterBackend\nfrom ..models import Notification\nfrom ..serializers.notification_serializers import NotificationListSerializers, NotificationRetrieveSerializers, NotificationWriteSerializers\nfrom ..utilities.importbase import *\nfrom rest_framework import viewsets, permissions\nfrom rest_framework.response import Response\nfrom rest_framework.decorators import action\n\n\nclass notificationViewsets(viewsets.ModelViewSet):\n    serializer_class = NotificationListSerializers\n    # permission_classes = [notificationsPermission]\n    # authentication_classes = [JWTAuthentication]\n    pagination_class = MyPageNumberPagination\n    queryset = Notification.objects.all().order_by('-id')\n\n    filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n    search_fields = ['id']\n    ordering_fields = ['id']\n\n    # filterset_fields = {\n    #     'id': ['exact'],\n    # }\n\n    def get_queryset(self):\n        queryset = super().get_queryset()\n        return queryset\n\n    def get_serializer_class(self):\n        if self.action in ['create', 'update', 'partial_update']:\n            return NotificationWriteSerializers\n        elif self.action == 'retrieve':\n            return NotificationRetrieveSerializers\n        return super().get_serializer_class()\n\n    # @action(detail=False, methods=['get'], name=\"action_name\", url_path=\"url_path\")\n    # def action_name(self, request, *args, **kwargs):\n    #     return super().list(request, *args, **kwargs)\n    \n    @action(detail=False, methods=['post'], url_path='mark-as-read')\n    def mark_as_read(self, request):\n        # Mark specific notifications as read\n        notification_ids = request.data.get('ids', [])\n        if notification_ids:\n            Notification.objects.filter(id__in=notification_ids, users=self.request.user).update(is_read=True)\n            return Response({\"status\": \"Notifications marked as read\"})\n        return Response({\"status\": \"No notifications to mark as read\"})\n\n    @action(detail=False, methods=['post'], url_path='mark-all-as-read')\n    def mark_all_as_read(self, request):\n        # Mark all unread notifications as read for the user\n        Notification.objects.filter(users=self.request.user, is_read=False).update(is_read=True)\n        return Response({\"status\": \"All notifications marked as read\"})"
+        }
+    ]
+}

@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 56,
+            "activePatchIndex": 59,
             "patches": [
                 {
                     "date": 1727073622967,
@@ -232,6 +232,18 @@
                 {
                     "date": 1738133563638,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -255,6 +255,4 @@\n ]\n \n SMS_KEY_PASSWORD = ''\n \n-# SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')\n-# SECURE_SSL_REDIRECT = True\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1739438476519,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -87,8 +87,9 @@\n     'superadmindetails',\n     'advertisement',\n     'contact',\n     'requestsubmission',\n+    ''\n ]\n \n AUTH_USER_MODEL = 'accounts.CustomUser'\n \n"
+                },
+                {
+                    "date": 1739438481987,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -87,9 +87,9 @@\n     'superadmindetails',\n     'advertisement',\n     'contact',\n     'requestsubmission',\n-    ''\n+    'notification'\n ]\n \n AUTH_USER_MODEL = 'accounts.CustomUser'\n \n"
+                },
+                {
+                    "date": 1739438507751,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -87,9 +87,9 @@\n     'superadmindetails',\n     'advertisement',\n     'contact',\n     'requestsubmission',\n-    'notification'\n+    's',\n ]\n \n AUTH_USER_MODEL = 'accounts.CustomUser'\n \n"
                 }
             ],
             "date": 1727073622967,

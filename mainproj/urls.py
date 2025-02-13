@@ -59,6 +59,7 @@ from coursesandfees.routers.routers import router as coursesandfees_router
 # from preparationinquiries.routers.routers import router as preparationinquiries_router
 # from collegeandcourseinquiries.routers.routers import router as collegeandcourseinquiries_router
 from discipline.routers.routers import router as discipline_router
+from notifications.routers.routers import router as notifications_router
 
 
 router = routers.DefaultRouter()
@@ -94,6 +95,7 @@ router.registry.extend(duration_router.registry)
 router.registry.extend(formprogress_router.registry)
 router.registry.extend(inquiry_router.registry)
 router.registry.extend(superadmindetails_router.registry)
+router.registry.extend(notifications_router.registry)
 
 from mainproj.utilities.import_excel import ImportExcel
 from mainproj.utilities.bulk_delete import BulkDelete

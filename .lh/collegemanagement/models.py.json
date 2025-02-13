@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 216,
+            "activePatchIndex": 219,
             "patches": [
                 {
                     "date": 1727170911785,
@@ -872,6 +872,18 @@
                 {
                     "date": 1738904232315,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -56,9 +56,9 @@\n     website_link = models.URLField(null= True,blank=True)\n     address = models.CharField(max_length=255)\n     district = models.ForeignKey(District,on_delete=models.CASCADE,related_name='college_district')\n     phone_number = models.CharField(max_length=20)\n-    email = models.EmailField(max)\n+    email = models.EmailField(max_length=255)s\n     affiliated = models.ForeignKey(Affiliation, on_delete=models.CASCADE,related_name='college_affiliation')\n     college_type = models.ForeignKey(CollegeType, on_delete=models.CASCADE,related_name='college_type')\n     discipline = models.ManyToManyField(Discipline, related_name='college_discipline')\n     social_media = models.ManyToManyField(SocialMedia)\n"
+                },
+                {
+                    "date": 1739438161643,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -56,9 +56,9 @@\n     website_link = models.URLField(null= True,blank=True)\n     address = models.CharField(max_length=255)\n     district = models.ForeignKey(District,on_delete=models.CASCADE,related_name='college_district')\n     phone_number = models.CharField(max_length=20)\n-    email = models.EmailField(max_length=255)s\n+    email = models.EmailField(max_length=255)\n     affiliated = models.ForeignKey(Affiliation, on_delete=models.CASCADE,related_name='college_affiliation')\n     college_type = models.ForeignKey(CollegeType, on_delete=models.CASCADE,related_name='college_type')\n     discipline = models.ManyToManyField(Discipline, related_name='college_discipline')\n     social_media = models.ManyToManyField(SocialMedia)\n@@ -80,8 +80,9 @@\n     # college_admin = models.ForeignKey(CustomUser, on_delete=models.CASCADE,related_name='college_admin')\n \n     def map_location(self):\n         \n+        \n         return f'{self.latitude}, {self.longitude}'\n \n     def __str__(self):\n           return self.name if self.name else \"Unnamed\"\n"
+                },
+                {
+                    "date": 1739438169727,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -80,11 +80,15 @@\n     # college_admin = models.ForeignKey(CustomUser, on_delete=models.CASCADE,related_name='college_admin')\n \n     def map_location(self):\n         \n+return f/*************  ✨ Codeium Command ⭐  *************/\n+        \"\"\"\n+        Return the latitude and longitude of the college as a comma-separated string\n         \n-        return f'{self.latitude}, {self.longitude}'\n \n+/******  21278235-3e98-4eda-b463-f7d8663fe5fc  *******/'{self.latitude}, {self.longitude}'\n+\n     def __str__(self):\n           return self.name if self.name else \"Unnamed\"\n     \n     def save(self, *args, **kwargs):\n"
+                },
+                {
+                    "date": 1739438176455,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -80,15 +80,10 @@\n     # college_admin = models.ForeignKey(CustomUser, on_delete=models.CASCADE,related_name='college_admin')\n \n     def map_location(self):\n         \n-return f/*************  ✨ Codeium Command ⭐  *************/\n-        \"\"\"\n-        Return the latitude and longitude of the college as a comma-separated string\n-        \n+        return f'{self.latitude}, {self.longitude}'\n \n-/******  21278235-3e98-4eda-b463-f7d8663fe5fc  *******/'{self.latitude}, {self.longitude}'\n-\n     def __str__(self):\n           return self.name if self.name else \"Unnamed\"\n     \n     def save(self, *args, **kwargs):\n"
                 }
             ],
             "date": 1727170911784,

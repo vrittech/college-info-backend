@@ -88,6 +88,7 @@ INSTALLED_APPS = [
     'advertisement',
     'contact',
     'requestsubmission',
+    'notifications',
 ]
 
 AUTH_USER_MODEL = 'accounts.CustomUser'
