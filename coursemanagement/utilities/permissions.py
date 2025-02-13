@@ -29,7 +29,7 @@ class coursemanagementPermission(BasePermission):
             return True
         
         elif view.action in ["retrieve"]:
-            return HasPermission(request, COURSE_MANAGEMENT_PERMISSIONS["view"])
+            return True
 
         elif view.action in ["create"]:
             return HasPermission(request, COURSE_MANAGEMENT_PERMISSIONS["add"])

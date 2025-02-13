@@ -146,11 +146,8 @@ class CourseWriteSerializers(serializers.ModelSerializer):
     faculty = FacultySerializer(read_only=True)
     level = LevelSerializer(read_only=True)
     discipline = DisciplineSerializer(many=True, read_only=True)
-
     # Retrieve curriculum files related to the course in the response
-    curriculum_file_upload = CourseCurriculumFileSerializer(
-        source="curriculum_files", many=True, read_only=True
-    )
+    curriculum_file_upload = CourseCurriculumFileSerializer(many=True, read_only=True)
 
     class Meta:
         model = Course
