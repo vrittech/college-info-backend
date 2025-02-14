@@ -4,10 +4,11 @@ from django_filters.rest_framework import DjangoFilterBackend
 from ..models import Album
 from ..serializers.album_serializers import AlbumListSerializers, AlbumRetrieveSerializers, AlbumWriteSerializers
 from ..utilities.importbase import *
+from mainproj.permissions import DynamicModelPermission
 
 class albumViewsets(viewsets.ModelViewSet):
     serializer_class = AlbumListSerializers
-    permission_classes = [galleryPermission]
+    permission_classes = [DynamicModelPermission]
     authentication_classes = [JWTAuthentication]
     pagination_class = MyPageNumberPagination
     queryset = Album.objects.all().order_by('-id')

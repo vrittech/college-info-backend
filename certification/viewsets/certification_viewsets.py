@@ -4,10 +4,12 @@ from django_filters.rest_framework import DjangoFilterBackend
 from ..models import Certification
 from ..serializers.certification_serializers import CertificationListSerializers, CertificationRetrieveSerializers, CertificationWriteSerializers
 from ..utilities.importbase import *
+from mainproj.permissions import DynamicModelPermission
 
 class certificationViewsets(viewsets.ModelViewSet):
     serializer_class = CertificationListSerializers
-    permission_classes = [certificationPermission]
+    # permission_classes = [certificationPermission]
+    permission_classes = [DynamicModelPermission]
     authentication_classes = [JWTAuthentication]
     pagination_class = MyPageNumberPagination
     queryset = Certification.objects.all().order_by('-id')

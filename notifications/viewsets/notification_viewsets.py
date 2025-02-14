@@ -7,12 +7,13 @@ from ..utilities.importbase import *
 from rest_framework import viewsets, permissions
 from rest_framework.response import Response
 from rest_framework.decorators import action
+from mainproj.permissions import DynamicModelPermission
 
 
 class notificationViewsets(viewsets.ModelViewSet):
     serializer_class = NotificationListSerializers
-    permission_classes = [notificationsPermission]
-    # authentication_classes = [JWTAuthentication]
+    permission_classes = [DynamicModelPermission]
+    authentication_classes = [JWTAuthentication]
     pagination_class = MyPageNumberPagination
     queryset = Notification.objects.all().order_by('-id')
 

@@ -4,10 +4,11 @@ from django_filters.rest_framework import DjangoFilterBackend
 from ..models import RequestSubmission
 from ..serializers.requestsubmission_serializers import RequestSubmissionListSerializers, RequestSubmissionRetrieveSerializers, RequestSubmissionWriteSerializers
 from ..utilities.importbase import *
+from mainproj.permissions import DynamicModelPermission
 
 class requestsubmissionViewsets(viewsets.ModelViewSet):
     serializer_class = RequestSubmissionListSerializers
-    permission_classes = [requestsubmissionPermission]
+    permission_classes = [DynamicModelPermission]
     authentication_classes = [JWTAuthentication]
     pagination_class = MyPageNumberPagination
     queryset = RequestSubmission.objects.all().order_by('-id')

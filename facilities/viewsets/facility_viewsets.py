@@ -4,10 +4,10 @@ from django_filters.rest_framework import DjangoFilterBackend
 from ..models import Facility
 from ..serializers.facility_serializers import FacilityListSerializers, FacilityRetrieveSerializers, FacilityWriteSerializers
 from ..utilities.importbase import *
-
+from mainproj.permissions import DynamicModelPermission
 class facilityViewsets(viewsets.ModelViewSet):
     serializer_class = FacilityListSerializers
-    permission_classes = [facilitiesPermission]
+    permission_classes = [DynamicModelPermission]
     authentication_classes = [JWTAuthentication]
     pagination_class = MyPageNumberPagination
     queryset = Facility.objects.all().order_by('-id')

@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 18,
+            "activePatchIndex": 22,
             "patches": [
                 {
                     "date": 1733481075583,
@@ -80,6 +80,22 @@
                 {
                     "date": 1739264238896,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,9 @@\n from django_filters.rest_framework import DjangoFilterBackend\n from ..models import Advertisement\n from ..serializers.advertisement_serializers import AdvertisementListSerializers, AdvertisementRetrieveSerializers, AdvertisementWriteSerializers\n from ..utilities.importbase import *\n-from ..utilities.permissions import ad\n+from ..utilities.permissions import advertisementPermission\n \n class advertisementViewsets(viewsets.ModelViewSet):\n     serializer_class = AdvertisementListSerializers\n     # permission_classes = [advertisementPermission]\n"
+                },
+                {
+                    "date": 1739509144879,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,12 +4,13 @@\n from ..models import Advertisement\n from ..serializers.advertisement_serializers import AdvertisementListSerializers, AdvertisementRetrieveSerializers, AdvertisementWriteSerializers\n from ..utilities.importbase import *\n from ..utilities.permissions import advertisementPermission\n+from mainproj.\n \n class advertisementViewsets(viewsets.ModelViewSet):\n     serializer_class = AdvertisementListSerializers\n-    # permission_classes = [advertisementPermission]\n+    permission_classes = [advertisementPermission]\n     authentication_classes = [JWTAuthentication]\n     pagination_class = MyPageNumberPagination\n     queryset = Advertisement.objects.all().order_by('-id')\n \n"
+                },
+                {
+                    "date": 1739509150958,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,9 +4,9 @@\n from ..models import Advertisement\n from ..serializers.advertisement_serializers import AdvertisementListSerializers, AdvertisementRetrieveSerializers, AdvertisementWriteSerializers\n from ..utilities.importbase import *\n from ..utilities.permissions import advertisementPermission\n-from mainproj.\n+from mainproj.permissions importDynamicModelPermission\n \n class advertisementViewsets(viewsets.ModelViewSet):\n     serializer_class = AdvertisementListSerializers\n     permission_classes = [advertisementPermission]\n"
+                },
+                {
+                    "date": 1739509158143,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,13 +4,14 @@\n from ..models import Advertisement\n from ..serializers.advertisement_serializers import AdvertisementListSerializers, AdvertisementRetrieveSerializers, AdvertisementWriteSerializers\n from ..utilities.importbase import *\n from ..utilities.permissions import advertisementPermission\n-from mainproj.permissions importDynamicModelPermission\n+from mainproj.permissions import DynamicModelPermission\n \n class advertisementViewsets(viewsets.ModelViewSet):\n     serializer_class = AdvertisementListSerializers\n-    permission_classes = [advertisementPermission]\n+    # permission_classes = [advertisementPermission]\n+    # permission_classes = [advertisementPermission]\n     authentication_classes = [JWTAuthentication]\n     pagination_class = MyPageNumberPagination\n     queryset = Advertisement.objects.all().order_by('-id')\n \n"
+                },
+                {
+                    "date": 1739509163782,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,9 +9,9 @@\n \n class advertisementViewsets(viewsets.ModelViewSet):\n     serializer_class = AdvertisementListSerializers\n     # permission_classes = [advertisementPermission]\n-    # permission_classes = [advertisementPermission]\n+    permission_classes = [DynamicModelPermission]\n     authentication_classes = [JWTAuthentication]\n     pagination_class = MyPageNumberPagination\n     queryset = Advertisement.objects.all().order_by('-id')\n \n"
                 }
             ],
             "date": 1733481075583,

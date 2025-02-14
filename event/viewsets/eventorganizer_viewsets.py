@@ -4,10 +4,11 @@ from django_filters.rest_framework import DjangoFilterBackend
 from ..models import EventOrganizer
 from ..serializers.eventorganizer_serializers import EventOrganizerListSerializers, EventOrganizerRetrieveSerializers, EventOrganizerWriteSerializers
 from ..utilities.importbase import *
+from mainproj.permissions import DynamicModelPermission
 
 class eventorganizerViewsets(viewsets.ModelViewSet):
     serializer_class = EventOrganizerListSerializers
-    permission_classes = [eventPermission]
+    permission_classes = [DynamicModelPermission]
     authentication_classes = [JWTAuthentication]
     pagination_class = MyPageNumberPagination
     queryset = EventOrganizer.objects.all().order_by('-id')

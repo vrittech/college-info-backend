@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 43,
+            "activePatchIndex": 46,
             "patches": [
                 {
                     "date": 1733718920520,
@@ -180,6 +180,18 @@
                 {
                     "date": 1739423685928,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,9 +15,9 @@\n     queryset = College.objects.all().order_by('-id')\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     search_fields = ['id','slug','name', 'established_date', 'website_link', 'address', 'district', 'phone_number', 'email', 'affiliated', 'college_type', 'discipline', 'social_media', 'google_map_link', 'latitude', 'longitude', 'about', 'brochure', 'step_counter', 'facilities', 'placement', 'scholarship', 'created_date', 'updated_date']\n-    ordering_fields = ['id','slug;'name', 'established_date', 'website_link', 'address', 'district__name', 'phone_number', 'email', 'latitude', 'longitude', 'about', 'brochure', 'step_counter', 'facilities', 'placement', 'scholarship', 'created_date', 'updated_date']\n+    ordering_fields = ['id','slug''name', 'established_date', 'website_link', 'address', 'district__name', 'phone_number', 'email', 'latitude', 'longitude', 'about', 'brochure', 'step_counter', 'facilities', 'placement', 'scholarship', 'created_date', 'updated_date']\n     \n     # ('name', 'established_date', 'website_link', 'address', 'district', 'phone_number', 'email', 'affiliated', 'college_type', 'discipline', 'social_media', 'google_map_link', 'latitude', 'longitude', 'about', 'brochure', 'step_counter', 'facilities', 'placement', 'scholarship', 'created_date', 'updated_date', )\n \n     filterset_fields = {\n"
+                },
+                {
+                    "date": 1739509253770,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,8 +5,9 @@\n from ..serializers.college_serializers import CollegeListSerializers, CollegeRetrieveSerializers, CollegeWriteSerializers\n from ..utilities.importbase import *\n from rest_framework.decorators import action\n from rest_framework.response import Response\n+from \n class collegeViewsets(viewsets.ModelViewSet):\n     serializer_class = CollegeListSerializers\n     permission_classes = [collegemanagementPermission]\n     authentication_classes = [JWTAuthentication]\n@@ -15,9 +16,9 @@\n     queryset = College.objects.all().order_by('-id')\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     search_fields = ['id','slug','name', 'established_date', 'website_link', 'address', 'district', 'phone_number', 'email', 'affiliated', 'college_type', 'discipline', 'social_media', 'google_map_link', 'latitude', 'longitude', 'about', 'brochure', 'step_counter', 'facilities', 'placement', 'scholarship', 'created_date', 'updated_date']\n-    ordering_fields = ['id','slug''name', 'established_date', 'website_link', 'address', 'district__name', 'phone_number', 'email', 'latitude', 'longitude', 'about', 'brochure', 'step_counter', 'facilities', 'placement', 'scholarship', 'created_date', 'updated_date']\n+    ordering_fields = ['id','slug','name', 'established_date', 'website_link', 'address', 'district__name', 'phone_number', 'email', 'latitude', 'longitude', 'about', 'brochure', 'step_counter', 'facilities', 'placement', 'scholarship', 'created_date', 'updated_date']\n     \n     # ('name', 'established_date', 'website_link', 'address', 'district', 'phone_number', 'email', 'affiliated', 'college_type', 'discipline', 'social_media', 'google_map_link', 'latitude', 'longitude', 'about', 'brochure', 'step_counter', 'facilities', 'placement', 'scholarship', 'created_date', 'updated_date', )\n \n     filterset_fields = {\n"
+                },
+                {
+                    "date": 1739509266238,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,9 +5,9 @@\n from ..serializers.college_serializers import CollegeListSerializers, CollegeRetrieveSerializers, CollegeWriteSerializers\n from ..utilities.importbase import *\n from rest_framework.decorators import action\n from rest_framework.response import Response\n-from \n+from mainproj.permissions import DynamicModelPermission\n class collegeViewsets(viewsets.ModelViewSet):\n     serializer_class = CollegeListSerializers\n     permission_classes = [collegemanagementPermission]\n     authentication_classes = [JWTAuthentication]\n"
+                },
+                {
+                    "date": 1739509275263,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,8 +9,9 @@\n from mainproj.permissions import DynamicModelPermission\n class collegeViewsets(viewsets.ModelViewSet):\n     serializer_class = CollegeListSerializers\n     permission_classes = [collegemanagementPermission]\n+    permission_classes = [collegemanagementPermission]\n     authentication_classes = [JWTAuthentication]\n     pagination_class = MyPageNumberPagination\n     lookup_field = \"slug\"\n     queryset = College.objects.all().order_by('-id')\n"
                 }
             ],
             "date": 1733718920520,

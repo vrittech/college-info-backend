@@ -4,10 +4,11 @@ from django_filters.rest_framework import DjangoFilterBackend
 from ..models import District
 from ..serializers.district_serializers import DistrictListSerializers, DistrictRetrieveSerializers, DistrictWriteSerializers
 from ..utilities.importbase import *
+from mainproj.permissions import DynamicModelPermission
 
 class districtViewsets(viewsets.ModelViewSet):
     serializer_class = DistrictListSerializers
-    permission_classes = [districtPermission]
+    permission_classes = [DynamicModelPermission]
     authentication_classes = [JWTAuthentication]
     pagination_class = MyPageNumberPagination
     queryset = District.objects.all().order_by('-id')

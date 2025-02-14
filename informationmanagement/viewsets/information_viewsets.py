@@ -7,10 +7,11 @@ from ..utilities.importbase import *
 from ..utilities.filters import InformationFilter
 from rest_framework import viewsets, status
 from rest_framework.response import Response
+from mainproj.permissions import DynamicModelPermission
 
 class informationViewsets(viewsets.ModelViewSet):
     serializer_class = InformationListSerializers
-    permission_classes = [informationmanagementPermission]
+    permission_classes = [DynamicModelPermission]
     authentication_classes = [JWTAuthentication]
     pagination_class = MyPageNumberPagination
     queryset = Information.objects.all().order_by('-id')

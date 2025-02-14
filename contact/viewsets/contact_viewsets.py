@@ -4,10 +4,11 @@ from django_filters.rest_framework import DjangoFilterBackend
 from ..models import Contact
 from ..serializers.contact_serializers import ContactListSerializers, ContactRetrieveSerializers, ContactWriteSerializers
 from ..utilities.importbase import *
+from mainproj.permissions import DynamicModelPermission
 
 class contactViewsets(viewsets.ModelViewSet):
     serializer_class = ContactListSerializers
-    permission_classes = [contactPermission]
+    permission_classes = [DynamicModelPermission]
     authentication_classes = [JWTAuthentication]
     pagination_class = MyPageNumberPagination
     queryset = Contact.objects.all().order_by('-id')

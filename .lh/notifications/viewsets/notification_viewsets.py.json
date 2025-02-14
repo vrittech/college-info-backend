@@ -3,11 +3,19 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 0,
+            "activePatchIndex": 2,
             "patches": [
                 {
                     "date": 1739438442326,
                     "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1739509675723,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,13 +6,14 @@\n from ..utilities.importbase import *\n from rest_framework import viewsets, permissions\n from rest_framework.response import Response\n from rest_framework.decorators import action\n+from mainproj.pe\n \n \n class notificationViewsets(viewsets.ModelViewSet):\n     serializer_class = NotificationListSerializers\n-    # permission_classes = [notificationsPermission]\n+    permission_classes = [notificationsPermission]\n     # authentication_classes = [JWTAuthentication]\n     pagination_class = MyPageNumberPagination\n     queryset = Notification.objects.all().order_by('-id')\n \n"
+                },
+                {
+                    "date": 1739509681450,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,14 +6,14 @@\n from ..utilities.importbase import *\n from rest_framework import viewsets, permissions\n from rest_framework.response import Response\n from rest_framework.decorators import action\n-from mainproj.pe\n+from mainproj.permissions import DynamicModelPermission\n \n \n class notificationViewsets(viewsets.ModelViewSet):\n     serializer_class = NotificationListSerializers\n-    permission_classes = [notificationsPermission]\n+    permission_classes = [DynamicModelPermission]\n     # authentication_classes = [JWTAuthentication]\n     pagination_class = MyPageNumberPagination\n     queryset = Notification.objects.all().order_by('-id')\n \n"
                 }
             ],
             "date": 1739438442325,

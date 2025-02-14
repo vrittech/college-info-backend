@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 52,
+            "activePatchIndex": 54,
             "patches": [
                 {
                     "date": 1733481372824,
@@ -216,6 +216,14 @@
                 {
                     "date": 1739264569389,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,13 +9,13 @@\n from ..utilities.pagination import MyPageNumberPagination\n from rest_framework_simplejwt.authentication import JWTAuthentication\n from rest_framework.response import Response\n from rest_framework import status\n-from \n+from ..utilities\n \n class eventViewsets(viewsets.ModelViewSet):\n     serializer_class = EventListSerializers\n-    permission_classes = eventPermission\n+    permission_classes = [eventPermission]\n     authentication_classes = [JWTAuthentication]\n     pagination_class = MyPageNumberPagination\n     queryset = Event.objects.all().order_by('-id')\n     lookup_field = \"slug\"\n"
+                },
+                {
+                    "date": 1739509422205,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,9 +9,10 @@\n from ..utilities.pagination import MyPageNumberPagination\n from rest_framework_simplejwt.authentication import JWTAuthentication\n from rest_framework.response import Response\n from rest_framework import status\n-from ..utilities\n+from ..utilities.permissions import eventPermission\n+fr\n \n class eventViewsets(viewsets.ModelViewSet):\n     serializer_class = EventListSerializers\n     permission_classes = [eventPermission]\n"
+                },
+                {
+                    "date": 1739509427662,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,9 @@\n from rest_framework_simplejwt.authentication import JWTAuthentication\n from rest_framework.response import Response\n from rest_framework import status\n from ..utilities.permissions import eventPermission\n-fr\n+from mainproj.permissions import DynamicModelPermission\n \n class eventViewsets(viewsets.ModelViewSet):\n     serializer_class = EventListSerializers\n     permission_classes = [eventPermission]\n"
                 }
             ],
             "date": 1733481372824,

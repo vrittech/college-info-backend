@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 5,
+            "activePatchIndex": 6,
             "patches": [
                 {
                     "date": 1733729892743,
@@ -28,6 +28,10 @@
                 {
                     "date": 1739264582985,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,9 +6,9 @@\n from ..utilities.importbase import *\n \n class eventgalleryViewsets(viewsets.ModelViewSet):\n     serializer_class = EventGalleryListSerializers\n-    # permission_classes = [eventPermission]\n+    permission_classes = [eventPermission]\n     authentication_classes = [JWTAuthentication]\n     pagination_class = MyPageNumberPagination\n     queryset = EventGallery.objects.all().order_by('-id')\n \n"
+                },
+                {
+                    "date": 1739509454651,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,8 +3,9 @@\n from django_filters.rest_framework import DjangoFilterBackend\n from ..models import EventGallery\n from ..serializers.eventgallery_serializers import EventGalleryListSerializers, EventGalleryRetrieveSerializers, EventGalleryWriteSerializers\n from ..utilities.importbase import *\n+from mainproj\n \n class eventgalleryViewsets(viewsets.ModelViewSet):\n     serializer_class = EventGalleryListSerializers\n     permission_classes = [eventPermission]\n"
                 }
             ],
             "date": 1733729892743,

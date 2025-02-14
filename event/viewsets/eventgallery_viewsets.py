@@ -4,10 +4,11 @@ from django_filters.rest_framework import DjangoFilterBackend
 from ..models import EventGallery
 from ..serializers.eventgallery_serializers import EventGalleryListSerializers, EventGalleryRetrieveSerializers, EventGalleryWriteSerializers
 from ..utilities.importbase import *
+from mainproj.permissions import DynamicModelPermission
 
 class eventgalleryViewsets(viewsets.ModelViewSet):
     serializer_class = EventGalleryListSerializers
-    permission_classes = [eventPermission]
+    permission_classes = [DynamicModelPermission]
     authentication_classes = [JWTAuthentication]
     pagination_class = MyPageNumberPagination
     queryset = EventGallery.objects.all().order_by('-id')

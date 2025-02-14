@@ -6,9 +6,11 @@ from ..serializers.college_serializers import CollegeListSerializers, CollegeRet
 from ..utilities.importbase import *
 from rest_framework.decorators import action
 from rest_framework.response import Response
+from mainproj.permissions import DynamicModelPermission
 class collegeViewsets(viewsets.ModelViewSet):
     serializer_class = CollegeListSerializers
-    permission_classes = [collegemanagementPermission]
+    # permission_classes = [collegemanagementPermission]
+    permission_classes = [DynamicModelPermission]
     authentication_classes = [JWTAuthentication]
     pagination_class = MyPageNumberPagination
     lookup_field = "slug"

@@ -6,10 +6,11 @@ from ..serializers.gallery_serializers import GalleryListSerializers, GalleryRet
 from ..utilities.importbase import *
 from rest_framework.response import Response
 from rest_framework import status
+from mainproj.permissions import DynamicModelPermission
 
 class galleryViewsets(viewsets.ModelViewSet):
     serializer_class = GalleryListSerializers
-    permission_classes = [galleryPermission]
+    permission_classes = [DynamicModelPermission]
     authentication_classes = [JWTAuthentication]
     pagination_class = MyPageNumberPagination
     queryset = Gallery.objects.all().order_by('-id')

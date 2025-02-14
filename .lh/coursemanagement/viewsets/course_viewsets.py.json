@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 46,
+            "activePatchIndex": 48,
             "patches": [
                 {
                     "date": 1733481275577,
@@ -192,6 +192,14 @@
                 {
                     "date": 1739267573481,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,9 +16,9 @@\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     search_fields = ['id','name', 'abbreviation', 'description', 'course_shortdescription', 'course_outcome', 'course_curriculum', 'eligibility_criteria', 'created_date', 'updated_date' ]\n     ordering_fields = ['id','name', 'abbreviation', 'description', 'course_shortdescription', 'course_outcome', 'course_curriculum', 'eligibility_criteria', 'created_date', 'updated_date' ]\n-    filterclass= CourseFilter\n+    filterset_class= CourseFilter\n     # ('name', 'abbreviation', 'duration', 'faculties', 'level', 'discipline', 'description', 'course_shortdescription', 'course_outcome', 'course_curriculum', 'eligibility_criteria', 'image', 'curriculum_file_upload', 'created_date', 'updated_date', )\n \n     # filterset_fields = {\n     #     'id': ['exact'],\n"
+                },
+                {
+                    "date": 1739509331367,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,9 @@\n from ..utilities.filter import CourseFilter\n \n class courseViewsets(viewsets.ModelViewSet):\n     serializer_class = CourseListSerializers\n-    permission_classes = [coursemanagementPermission]\n+    permission_classes = [DynamicModelPermission]\n     authentication_classes = [JWTAuthentication]\n     pagination_class = MyPageNumberPagination\n     queryset = Course.objects.all().order_by('-id')\n     lookup_field = \"slug\"\n"
+                },
+                {
+                    "date": 1739509342541,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,8 +4,9 @@\n from ..models import Course\n from ..serializers.course_serializers import CourseListSerializers, CourseRetrieveSerializers, CourseWriteSerializers\n from ..utilities.importbase import *\n from ..utilities.filter import CourseFilter\n+from mainproj.permissions import DynamicModelPermission\n \n class courseViewsets(viewsets.ModelViewSet):\n     serializer_class = CourseListSerializers\n     permission_classes = [DynamicModelPermission]\n"
                 }
             ],
             "date": 1733481275577,

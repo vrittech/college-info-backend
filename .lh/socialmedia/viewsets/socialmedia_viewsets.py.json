@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 8,
+            "activePatchIndex": 9,
             "patches": [
                 {
                     "date": 1733481992065,
@@ -40,6 +40,10 @@
                 {
                     "date": 1739264961308,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,9 +6,9 @@\n from ..utilities.importbase import *\n \n class socialmediaViewsets(viewsets.ModelViewSet):\n     serializer_class = SocialMediaListSerializers\n-    # permission_classes = [socialmediaPermission]\n+    permission_classes = [socialmediaPermission]\n     authentication_classes = [JWTAuthentication]\n     pagination_class = MyPageNumberPagination\n     queryset = SocialMedia.objects.all().order_by('-id')\n \n"
+                },
+                {
+                    "date": 1739509721090,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,8 +3,9 @@\n from django_filters.rest_framework import DjangoFilterBackend\n from ..models import SocialMedia\n from ..serializers.socialmedia_serializers import SocialMediaListSerializers, SocialMediaRetrieveSerializers, SocialMediaWriteSerializers\n from ..utilities.importbase import *\n+from mainproj.permissions import DynamicModelPermission\n \n class socialmediaViewsets(viewsets.ModelViewSet):\n     serializer_class = SocialMediaListSerializers\n     permission_classes = [socialmediaPermission]\n"
                 }
             ],
             "date": 1733481992065,

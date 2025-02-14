@@ -4,10 +4,12 @@ from django_filters.rest_framework import DjangoFilterBackend
 from ..models import Affiliation
 from ..serializers.affiliation_serializers import AffiliationListSerializers, AffiliationRetrieveSerializers, AffiliationWriteSerializers
 from ..utilities.importbase import *
+from mainproj.permissions import DynamicModelPermission
 
 class affiliationViewsets(viewsets.ModelViewSet):
     serializer_class = AffiliationListSerializers
-    permission_classes = [affiliationPermission]
+    # permission_classes = [affiliationPermission]
+    permission_classes = [DynamicModelPermission]
     authentication_classes = [JWTAuthentication]
     pagination_class = MyPageNumberPagination
     queryset = Affiliation.objects.all().order_by('-id')

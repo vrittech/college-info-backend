@@ -4,10 +4,11 @@ from django_filters.rest_framework import DjangoFilterBackend
 from ..models import InformationGallery
 from ..serializers.informationgallery_serializers import InformationGalleryListSerializers, InformationGalleryRetrieveSerializers, InformationGalleryWriteSerializers
 from ..utilities.importbase import *
+from mainproj.permissions import DynamicModelPermission
 
 class informationgalleryViewsets(viewsets.ModelViewSet):
     serializer_class = InformationGalleryListSerializers
-    permission_classes = [informationmanagementPermission]
+    permission_classes = [DynamicModelPermission]
     authentication_classes = [JWTAuthentication]
     pagination_class = MyPageNumberPagination
     queryset = InformationGallery.objects.all().order_by('-id')

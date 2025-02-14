@@ -4,10 +4,11 @@ from django_filters.rest_framework import DjangoFilterBackend
 from ..models import InformationCategory
 from ..serializers.informationcategory_serializers import InformationCategoryListSerializers, InformationCategoryRetrieveSerializers, InformationCategoryWriteSerializers
 from ..utilities.importbase import *
+from mainproj.permissions import DynamicModelPermission
 
 class informationcategoryViewsets(viewsets.ModelViewSet):
     serializer_class = InformationCategoryListSerializers
-    permission_classes = [informationmanagementPermission]
+    permission_classes = [DynamicModelPermission]
     authentication_classes = [JWTAuthentication]
     pagination_class = MyPageNumberPagination
     queryset = InformationCategory.objects.all().order_by('-id')

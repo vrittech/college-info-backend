@@ -4,10 +4,12 @@ from django_filters.rest_framework import DjangoFilterBackend
 from ..models import SubLevel
 from ..serializers.sublevel_serializers import SubLevelListSerializers, SubLevelRetrieveSerializers, SubLevelWriteSerializers
 from ..utilities.importbase import *
+from mainproj.permissions import DynamicModelPermission
+
 
 class sublevelViewsets(viewsets.ModelViewSet):
     serializer_class = SubLevelListSerializers
-    # permission_classes = [levelPermission]
+    permission_classes = [DynamicModelPermission]
     authentication_classes = [JWTAuthentication]
     pagination_class = MyPageNumberPagination
     queryset = SubLevel.objects.all().order_by('-id')

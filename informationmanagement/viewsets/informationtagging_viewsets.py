@@ -4,10 +4,11 @@ from django_filters.rest_framework import DjangoFilterBackend
 from ..models import InformationTagging
 from ..serializers.informationtagging_serializers import InformationTaggingListSerializers, InformationTaggingRetrieveSerializers, InformationTaggingWriteSerializers
 from ..utilities.importbase import *
+from mainproj.permissions import DynamicModelPermission
 
 class informationtaggingViewsets(viewsets.ModelViewSet):
     serializer_class = InformationTaggingListSerializers
-    permission_classes = [informationmanagementPermission]
+    permission_classes = [DynamicModelPermission]
     authentication_classes = [JWTAuthentication]
     pagination_class = MyPageNumberPagination
     queryset = InformationTagging.objects.all().order_by('-id')

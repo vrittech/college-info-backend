@@ -4,10 +4,12 @@ from django_filters.rest_framework import DjangoFilterBackend
 from ..models import PlacementPosition
 from ..serializers.placementposition_serializers import PlacementPositionListSerializers, PlacementPositionRetrieveSerializers, PlacementPositionWriteSerializers
 from ..utilities.importbase import *
+from mainproj.permissions import DynamicModelPermission
 
 class placementpositionViewsets(viewsets.ModelViewSet):
     serializer_class = PlacementPositionListSerializers
-    permission_classes = [advertisementPermission]
+    # permission_classes = [advertisementPermission]
+    permission_classes = [DynamicModelPermission]
     authentication_classes = [JWTAuthentication]
     pagination_class = MyPageNumberPagination
     queryset = PlacementPosition.objects.all().order_by('-id')

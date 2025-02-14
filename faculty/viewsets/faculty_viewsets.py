@@ -4,10 +4,11 @@ from django_filters.rest_framework import DjangoFilterBackend
 from ..models import Faculty
 from ..serializers.faculty_serializers import FacultyListSerializers, FacultyRetrieveSerializers, FacultyWriteSerializers
 from ..utilities.importbase import *
+from mainproj.permissions import DynamicModelPermission
 
 class facultyViewsets(viewsets.ModelViewSet):
     serializer_class = FacultyListSerializers
-    permission_classes = [facultyPermission]
+    permission_classes = [DynamicModelPermission]
     authentication_classes = [JWTAuthentication]
     pagination_class = MyPageNumberPagination
     queryset = Faculty.objects.all().order_by('-id')

@@ -4,10 +4,11 @@ from django_filters.rest_framework import DjangoFilterBackend
 from ..models import SocialMedia
 from ..serializers.socialmedia_serializers import SocialMediaListSerializers, SocialMediaRetrieveSerializers, SocialMediaWriteSerializers
 from ..utilities.importbase import *
+from mainproj.permissions import DynamicModelPermission
 
 class socialmediaViewsets(viewsets.ModelViewSet):
     serializer_class = SocialMediaListSerializers
-    permission_classes = [socialmediaPermission]
+    permission_classes = [DynamicModelPermission]
     authentication_classes = [JWTAuthentication]
     pagination_class = MyPageNumberPagination
     queryset = SocialMedia.objects.all().order_by('-id')

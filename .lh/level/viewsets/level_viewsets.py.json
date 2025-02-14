@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 14,
+            "activePatchIndex": 15,
             "patches": [
                 {
                     "date": 1733481919659,
@@ -64,6 +64,10 @@
                 {
                     "date": 1739264879987,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n     filterset_fields = {\n         'id': ['exact'],\n         'sublevel': ['exact'],\n         'name': ['exact'],\n-        'name': ['exact'],\n+        'created_date': ['exact',],\n     }\n \n     def get_queryset(self):\n         queryset = super().get_queryset()\n"
+                },
+                {
+                    "date": 1739509639578,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,8 +3,9 @@\n from django_filters.rest_framework import DjangoFilterBackend\n from ..models import Level\n from ..serializers.level_serializers import LevelListSerializers, LevelRetrieveSerializers, LevelWriteSerializers\n from ..utilities.importbase import *\n+from main\n \n class levelViewsets(viewsets.ModelViewSet):\n     serializer_class = LevelListSerializers\n     permission_classes = [levelPermission]\n@@ -19,9 +20,9 @@\n     filterset_fields = {\n         'id': ['exact'],\n         'sublevel': ['exact'],\n         'name': ['exact'],\n-        'created_date': ['exact',],\n+        'created_date': ['exact', 'lte', 'gte'],\n     }\n \n     def get_queryset(self):\n         queryset = super().get_queryset()\n"
                 }
             ],
             "date": 1733481919659,

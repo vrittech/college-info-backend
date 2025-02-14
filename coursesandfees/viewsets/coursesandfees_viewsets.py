@@ -7,10 +7,11 @@ from ..utilities.importbase import *
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from django.db.models import Avg
+from mainproj.permissions import DynamicModelPermission
 
 class coursesandfeesViewsets(viewsets.ModelViewSet):
     serializer_class = CoursesAndFeesListSerializers
-    permission_classes = [coursesandfeesPermission]
+    permission_classes = [DynamicModelPermission]
     authentication_classes = [JWTAuthentication]
     pagination_class = MyPageNumberPagination
     queryset = CoursesAndFees.objects.all().order_by('-id')

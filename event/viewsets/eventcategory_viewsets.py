@@ -4,10 +4,11 @@ from django_filters.rest_framework import DjangoFilterBackend
 from ..models import EventCategory
 from ..serializers.eventcategory_serializers import EventCategoryListSerializers, EventCategoryRetrieveSerializers, EventCategoryWriteSerializers
 from ..utilities.importbase import *
+from mainproj.permissions import DynamicModelPermission
 
 class eventcategoryViewsets(viewsets.ModelViewSet):
     serializer_class = EventCategoryListSerializers
-    permission_classes = [eventPermission]
+    permission_classes = [DynamicModelPermission]
     authentication_classes = [JWTAuthentication]
     pagination_class = MyPageNumberPagination
     queryset = EventCategory.objects.all().order_by('-id')

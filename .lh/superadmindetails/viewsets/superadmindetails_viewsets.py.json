@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 13,
+            "activePatchIndex": 14,
             "patches": [
                 {
                     "date": 1733482016443,
@@ -60,6 +60,10 @@
                 {
                     "date": 1739265167646,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,10 +19,10 @@\n     filterset_fields = {\n         'id': ['exact'],\n         'name': ['exact'],\n         'location': ['exact'],\n-        'created_at': ['exact',],\n-        'updated_at': ['exact'],\n+        'created_at': ['exact', 'gte', 'lte'],\n+        'updated_at': ['exact', 'gte', 'lte'],\n     }\n \n     def get_queryset(self):\n         queryset = super().get_queryset()\n"
+                },
+                {
+                    "date": 1739509737484,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,8 +3,9 @@\n from django_filters.rest_framework import DjangoFilterBackend\n from ..models import SuperAdminDetails\n from ..serializers.superadmindetails_serializers import SuperAdminDetailsListSerializers, SuperAdminDetailsRetrieveSerializers, SuperAdminDetailsWriteSerializers\n from ..utilities.importbase import *\n+from mainproj.permissions\n \n class superadmindetailsViewsets(viewsets.ModelViewSet):\n     serializer_class = SuperAdminDetailsListSerializers\n     permission_classes = [superadmindetailsPermission]\n"
                 }
             ],
             "date": 1733482016443,

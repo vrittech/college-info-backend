@@ -4,10 +4,11 @@ from django_filters.rest_framework import DjangoFilterBackend
 from ..models import Duration
 from ..serializers.duration_serializers import DurationListSerializers, DurationRetrieveSerializers, DurationWriteSerializers
 from ..utilities.importbase import *
+from mainproj.permissions import DynamicModelPermission
 
 class durationViewsets(viewsets.ModelViewSet):
     serializer_class = DurationListSerializers
-    permission_classes = [durationPermission]
+    permission_classes = [DynamicModelPermission]
     authentication_classes = [JWTAuthentication]
     pagination_class = MyPageNumberPagination
     queryset = Duration.objects.all().order_by('-id')

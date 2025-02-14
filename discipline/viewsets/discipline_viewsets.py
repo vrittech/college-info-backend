@@ -4,10 +4,10 @@ from django_filters.rest_framework import DjangoFilterBackend
 from ..models import Discipline
 from ..serializers.discipline_serializers import DisciplineListSerializers, DisciplineRetrieveSerializers, DisciplineWriteSerializers
 from ..utilities.importbase import *
-
+from mainproj.permissions import DynamicModelPermission
 class disciplineViewsets(viewsets.ModelViewSet):
     serializer_class = DisciplineListSerializers
-    permission_classes = [disciplinePermission]
+    permission_classes = [DynamicModelPermission]
     authentication_classes = [JWTAuthentication]
     pagination_class = MyPageNumberPagination
     queryset = Discipline.objects.all().order_by('-id')

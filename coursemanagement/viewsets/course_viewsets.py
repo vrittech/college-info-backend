@@ -5,10 +5,11 @@ from ..models import Course
 from ..serializers.course_serializers import CourseListSerializers, CourseRetrieveSerializers, CourseWriteSerializers
 from ..utilities.importbase import *
 from ..utilities.filter import CourseFilter
+from mainproj.permissions import DynamicModelPermission
 
 class courseViewsets(viewsets.ModelViewSet):
     serializer_class = CourseListSerializers
-    permission_classes = [coursemanagementPermission]
+    permission_classes = [DynamicModelPermission]
     authentication_classes = [JWTAuthentication]
     pagination_class = MyPageNumberPagination
     queryset = Course.objects.all().order_by('-id')

@@ -4,10 +4,11 @@ from django_filters.rest_framework import DjangoFilterBackend
 from ..models import InformationFiles
 from ..serializers.informationfiles_serializers import InformationFilesListSerializers, InformationFilesRetrieveSerializers, InformationFilesWriteSerializers
 from ..utilities.importbase import *
+from mainproj.permissions import DynamicModelPermission
 
 class informationfilesViewsets(viewsets.ModelViewSet):
     serializer_class = InformationFilesListSerializers
-    permission_classes = [informationmanagementPermission]
+    permission_classes = [DynamicModelPermission]
     authentication_classes = [JWTAuthentication]
     pagination_class = MyPageNumberPagination
     queryset = InformationFiles.objects.all().order_by('-id')

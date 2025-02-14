@@ -4,6 +4,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 from ..models import SuperAdminDetails
 from ..serializers.superadmindetails_serializers import SuperAdminDetailsListSerializers, SuperAdminDetailsRetrieveSerializers, SuperAdminDetailsWriteSerializers
 from ..utilities.importbase import *
+from mainproj.permissions import DynamicModelPermission
 
 class superadmindetailsViewsets(viewsets.ModelViewSet):
     serializer_class = SuperAdminDetailsListSerializers

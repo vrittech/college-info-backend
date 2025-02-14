@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 3,
+            "activePatchIndex": 4,
             "patches": [
                 {
                     "date": 1733481935884,
@@ -20,6 +20,10 @@
                 {
                     "date": 1738748585824,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,9 @@\n \n class sublevelViewsets(viewsets.ModelViewSet):\n     serializer_class = SubLevelListSerializers\n     # permission_classes = [levelPermission]\n-    # authentication_classes = [JWTAuthentication]\n+    authentication_classes = [JWTAuthentication]\n     pagination_class = MyPageNumberPagination\n     queryset = SubLevel.objects.all().order_by('-id')\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n"
+                },
+                {
+                    "date": 1739509658814,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,11 @@\n from django_filters.rest_framework import DjangoFilterBackend\n from ..models import SubLevel\n from ..serializers.sublevel_serializers import SubLevelListSerializers, SubLevelRetrieveSerializers, SubLevelWriteSerializers\n from ..utilities.importbase import *\n+from mainproj.permissions import DynamicModelPermission\n \n+\n class sublevelViewsets(viewsets.ModelViewSet):\n     serializer_class = SubLevelListSerializers\n     # permission_classes = [levelPermission]\n     authentication_classes = [JWTAuthentication]\n"
                 }
             ],
             "date": 1733481935884,

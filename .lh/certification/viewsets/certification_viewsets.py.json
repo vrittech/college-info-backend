@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 13,
+            "activePatchIndex": 16,
             "patches": [
                 {
                     "date": 1733481216579,
@@ -60,6 +60,18 @@
                 {
                     "date": 1739264299312,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,9 +6,9 @@\n from ..utilities.importbase import *\n \n class certificationViewsets(viewsets.ModelViewSet):\n     serializer_class = CertificationListSerializers\n-    # permission_classes = [certificationPermission]\n+    permission_classes = [certificationPermission]\n     authentication_classes = [JWTAuthentication]\n     pagination_class = MyPageNumberPagination\n     queryset = Certification.objects.all().order_by('-id')\n # ('name', 'is_show', 'image', 'created_date', 'created_date_time', 'updated_date', )\n"
+                },
+                {
+                    "date": 1739509225051,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,8 +3,9 @@\n from django_filters.rest_framework import DjangoFilterBackend\n from ..models import Certification\n from ..serializers.certification_serializers import CertificationListSerializers, CertificationRetrieveSerializers, CertificationWriteSerializers\n from ..utilities.importbase import *\n+from mainproj.\n \n class certificationViewsets(viewsets.ModelViewSet):\n     serializer_class = CertificationListSerializers\n     permission_classes = [certificationPermission]\n"
+                },
+                {
+                    "date": 1739509230226,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,9 @@\n from django_filters.rest_framework import DjangoFilterBackend\n from ..models import Certification\n from ..serializers.certification_serializers import CertificationListSerializers, CertificationRetrieveSerializers, CertificationWriteSerializers\n from ..utilities.importbase import *\n-from mainproj.\n+from mainproj.permissions import DynamicModelPermission\n \n class certificationViewsets(viewsets.ModelViewSet):\n     serializer_class = CertificationListSerializers\n     permission_classes = [certificationPermission]\n"
+                },
+                {
+                    "date": 1739509235598,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,10 @@\n from mainproj.permissions import DynamicModelPermission\n \n class certificationViewsets(viewsets.ModelViewSet):\n     serializer_class = CertificationListSerializers\n-    permission_classes = [certificationPermission]\n+    # permission_classes = [certificationPermission]\n+    # permission_classes = [certificationPermission]\n     authentication_classes = [JWTAuthentication]\n     pagination_class = MyPageNumberPagination\n     queryset = Certification.objects.all().order_by('-id')\n # ('name', 'is_show', 'image', 'created_date', 'created_date_time', 'updated_date', )\n"
                 }
             ],
             "date": 1733481216579,

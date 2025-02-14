@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 30,
+            "activePatchIndex": 32,
             "patches": [
                 {
                     "date": 1733481577467,
@@ -128,6 +128,14 @@
                 {
                     "date": 1739264686563,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,9 +9,9 @@\n from rest_framework.response import Response\n \n class informationViewsets(viewsets.ModelViewSet):\n     serializer_class = InformationListSerializers\n-    # permission_classes = [informationmanagementPermission]\n+    permission_classes = [informationmanagementPermission]\n     authentication_classes = [JWTAuthentication]\n     pagination_class = MyPageNumberPagination\n     queryset = Information.objects.all().order_by('-id')\n     filterset_class = InformationFilter\n"
+                },
+                {
+                    "date": 1739509541073,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,8 +6,9 @@\n from ..utilities.importbase import *\n from ..utilities.filters import InformationFilter\n from rest_framework import viewsets, status\n from rest_framework.response import Response\n+from mainproj\n \n class informationViewsets(viewsets.ModelViewSet):\n     serializer_class = InformationListSerializers\n     permission_classes = [informationmanagementPermission]\n"
+                },
+                {
+                    "date": 1739509547908,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,9 +6,9 @@\n from ..utilities.importbase import *\n from ..utilities.filters import InformationFilter\n from rest_framework import viewsets, status\n from rest_framework.response import Response\n-from mainproj\n+from mainproj.permissions import DynamicModelPermission\n \n class informationViewsets(viewsets.ModelViewSet):\n     serializer_class = InformationListSerializers\n     permission_classes = [informationmanagementPermission]\n"
                 }
             ],
             "date": 1733481577467,

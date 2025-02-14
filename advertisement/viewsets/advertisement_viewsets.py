@@ -5,10 +5,12 @@ from ..models import Advertisement
 from ..serializers.advertisement_serializers import AdvertisementListSerializers, AdvertisementRetrieveSerializers, AdvertisementWriteSerializers
 from ..utilities.importbase import *
 from ..utilities.permissions import advertisementPermission
+from mainproj.permissions import DynamicModelPermission
 
 class advertisementViewsets(viewsets.ModelViewSet):
     serializer_class = AdvertisementListSerializers
-    permission_classes = [advertisementPermission]
+    # permission_classes = [advertisementPermission]
+    permission_classes = [DynamicModelPermission]
     authentication_classes = [JWTAuthentication]
     pagination_class = MyPageNumberPagination
     queryset = Advertisement.objects.all().order_by('-id')

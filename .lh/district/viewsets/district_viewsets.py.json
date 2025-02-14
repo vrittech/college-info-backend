@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 10,
+            "activePatchIndex": 13,
             "patches": [
                 {
                     "date": 1733481340623,
@@ -48,6 +48,18 @@
                 {
                     "date": 1739268266209,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n     filterset_fields = {\n         'id': ['exact'],\n         'name': ['exact'],\n         'is_shown': ['exact'],\n-        'is_shown': ['exact'],\n+        'created_date': ['exact',],\n     }\n \n     def get_queryset(self):\n         queryset = super().get_queryset()\n"
+                },
+                {
+                    "date": 1739509383568,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,8 +10,9 @@\n     permission_classes = [districtPermission]\n     authentication_classes = [JWTAuthentication]\n     pagination_class = MyPageNumberPagination\n     queryset = District.objects.all().order_by('-id')\n+    from mainproj\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     search_fields = ['id','name']\n     ordering_fields = ['id','name']\n@@ -19,9 +20,9 @@\n     filterset_fields = {\n         'id': ['exact'],\n         'name': ['exact'],\n         'is_shown': ['exact'],\n-        'created_date': ['exact',],\n+        'created_date': ['exact', 'gte', 'lte'],\n     }\n \n     def get_queryset(self):\n         queryset = super().get_queryset()\n"
+                },
+                {
+                    "date": 1739509390588,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,16 +3,16 @@\n from django_filters.rest_framework import DjangoFilterBackend\n from ..models import District\n from ..serializers.district_serializers import DistrictListSerializers, DistrictRetrieveSerializers, DistrictWriteSerializers\n from ..utilities.importbase import *\n+    from mainproj.permissions import DynamicModelPermission\n \n class districtViewsets(viewsets.ModelViewSet):\n     serializer_class = DistrictListSerializers\n     permission_classes = [districtPermission]\n     authentication_classes = [JWTAuthentication]\n     pagination_class = MyPageNumberPagination\n     queryset = District.objects.all().order_by('-id')\n-    from mainproj\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     search_fields = ['id','name']\n     ordering_fields = ['id','name']\n"
+                },
+                {
+                    "date": 1739509396976,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,13 +3,13 @@\n from django_filters.rest_framework import DjangoFilterBackend\n from ..models import District\n from ..serializers.district_serializers import DistrictListSerializers, DistrictRetrieveSerializers, DistrictWriteSerializers\n from ..utilities.importbase import *\n-    from mainproj.permissions import DynamicModelPermission\n+from mainproj.permissions import DynamicModelPermission\n \n class districtViewsets(viewsets.ModelViewSet):\n     serializer_class = DistrictListSerializers\n-    permission_classes = [districtPermission]\n+    permission_classes = [DynamicModelPermission]\n     authentication_classes = [JWTAuthentication]\n     pagination_class = MyPageNumberPagination\n     queryset = District.objects.all().order_by('-id')\n \n"
                 }
             ],
             "date": 1733481340623,

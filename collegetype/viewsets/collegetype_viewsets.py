@@ -4,10 +4,12 @@ from django_filters.rest_framework import DjangoFilterBackend
 from ..models import CollegeType
 from ..serializers.collegetype_serializers import CollegeTypeListSerializers, CollegeTypeRetrieveSerializers, CollegeTypeWriteSerializers
 from ..utilities.importbase import *
+from mainproj.permissions import DynamicModelPermission
 
 class collegetypeViewsets(viewsets.ModelViewSet):
     serializer_class = CollegeTypeListSerializers
-    permission_classes = [collegetypePermission]
+    # permission_classes = [collegetypePermission]
+    permission_classes = [DynamicModelPermission]
     authentication_classes = [JWTAuthentication]
     pagination_class = MyPageNumberPagination
     queryset = CollegeType.objects.all().order_by('-id')

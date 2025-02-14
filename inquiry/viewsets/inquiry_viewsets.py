@@ -5,10 +5,11 @@ from ..models import Inquiry
 from ..serializers.inquiry_serializers import InquiryListSerializers, InquiryRetrieveSerializers, InquiryWriteSerializers
 from ..utilities.importbase import *
 from ..utilities.filter import InquiryFilter
+from mainproj.permissions import DynamicModelPermission
 
 class inquiryViewsets(viewsets.ModelViewSet):
     serializer_class = InquiryListSerializers
-    permission_classes = [inquiryPermission]
+    permission_classes = [DynamicModelPermission]
     authentication_classes = [JWTAuthentication]
     pagination_class = MyPageNumberPagination
     queryset = Inquiry.objects.all().order_by('-id')

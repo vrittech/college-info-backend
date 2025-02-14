@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 9,
+            "activePatchIndex": 11,
             "patches": [
                 {
                     "date": 1733481234724,
@@ -44,6 +44,14 @@
                 {
                     "date": 1739264366616,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,9 +6,9 @@\n from ..utilities.importbase import *\n \n class collegetypeViewsets(viewsets.ModelViewSet):\n     serializer_class = CollegeTypeListSerializers\n-    # permission_classes = [collegetypePermission]\n+    permission_classes = [collegetypePermission]\n     authentication_classes = [JWTAuthentication]\n     pagination_class = MyPageNumberPagination\n     queryset = CollegeType.objects.all().order_by('-id')\n \n"
+                },
+                {
+                    "date": 1739509296821,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,8 +3,9 @@\n from django_filters.rest_framework import DjangoFilterBackend\n from ..models import CollegeType\n from ..serializers.collegetype_serializers import CollegeTypeListSerializers, CollegeTypeRetrieveSerializers, CollegeTypeWriteSerializers\n from ..utilities.importbase import *\n+from \n \n class collegetypeViewsets(viewsets.ModelViewSet):\n     serializer_class = CollegeTypeListSerializers\n     permission_classes = [collegetypePermission]\n"
+                },
+                {
+                    "date": 1739509304914,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,13 +3,14 @@\n from django_filters.rest_framework import DjangoFilterBackend\n from ..models import CollegeType\n from ..serializers.collegetype_serializers import CollegeTypeListSerializers, CollegeTypeRetrieveSerializers, CollegeTypeWriteSerializers\n from ..utilities.importbase import *\n-from \n+from mainproj.permissions import DynamicModelPermission\n \n class collegetypeViewsets(viewsets.ModelViewSet):\n     serializer_class = CollegeTypeListSerializers\n-    permission_classes = [collegetypePermission]\n+    # permission_classes = [collegetypePermission]\n+    # permission_classes = [collegetypePermission]\n     authentication_classes = [JWTAuthentication]\n     pagination_class = MyPageNumberPagination\n     queryset = CollegeType.objects.all().order_by('-id')\n \n"
                 }
             ],
             "date": 1733481234724,
