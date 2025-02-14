@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 28,
+            "activePatchIndex": 30,
             "patches": [
                 {
                     "date": 1739336401943,
@@ -120,6 +120,14 @@
                 {
                     "date": 1739511306952,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -40,9 +40,9 @@\n                 continue  # Skip invalid permissions\n \n     return group_permissions\n \n-class DynamicGroupPermission(BasePermission):\n+class DynamicModelPermission(BasePermission):\n     \"\"\"\n     Fully dynamic permission class that:\n     - Uses only group-based permissions.\n     - Prevents users from accessing models they don't have permission for.\n"
+                },
+                {
+                    "date": 1739512545456,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,9 +14,9 @@\n # Models that should NOT be publicly listed or retrieved\n RESTRICTED_PUBLIC_MODELS = [\"user\", \"adminlog\", \"sessions\"]\n \n # Models that cannot be deleted except by superusers\n-RESTRICTED_DELETE_MODELS = [\"course\", \"blog\"]\n+RESTRICTED_DELETE_MODELS = [\"course\", \"user\", \"adminlog\", \"sessions\"]\n \n # Fetch all registered models dynamically\n ALL_MODELS = {model.__name__.lower(): model for model in apps.get_models()}\n \n"
+                },
+                {
+                    "date": 1739512551774,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,9 +14,9 @@\n # Models that should NOT be publicly listed or retrieved\n RESTRICTED_PUBLIC_MODELS = [\"user\", \"adminlog\", \"sessions\"]\n \n # Models that cannot be deleted except by superusers\n-RESTRICTED_DELETE_MODELS = [\"course\", \"user\", \"adminlog\", \"sessions\"]\n+RESTRICTED_DELETE_MODELS = [ \"user\", \"adminlog\", \"sessions\"]\n \n # Fetch all registered models dynamically\n ALL_MODELS = {model.__name__.lower(): model for model in apps.get_models()}\n \n"
                 }
             ],
             "date": 1739336401943,

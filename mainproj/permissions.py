@@ -15,7 +15,7 @@ ACTION_PERMISSION_MAPPING = {
 RESTRICTED_PUBLIC_MODELS = ["user", "adminlog", "sessions"]
 
 # Models that cannot be deleted except by superusers
-RESTRICTED_DELETE_MODELS = ["course", "blog"]
+RESTRICTED_DELETE_MODELS = ["user", "adminlog", "sessions"]
 
 # Fetch all registered models dynamically
 ALL_MODELS = {model.__name__.lower(): model for model in apps.get_models()}
