@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 5,
+            "activePatchIndex": 6,
             "patches": [
                 {
                     "date": 1739258046053,
@@ -28,6 +28,10 @@
                 {
                     "date": 1739264522054,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,9 +15,9 @@\n def CanManage(request):\n     \"\"\"Check if the user has full manage access\"\"\"\n     return HasPermission(request, EVENT_PERMISSIONS[\"manage\"])\n \n-class EventPermission(BasePermission):\n+class ventPermission(BasePermission):\n     \"\"\"\n     Permission class for managing events based strictly on Django permissions.\n     \"\"\"\n \n"
+                },
+                {
+                    "date": 1739506654492,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,9 +15,9 @@\n def CanManage(request):\n     \"\"\"Check if the user has full manage access\"\"\"\n     return HasPermission(request, EVENT_PERMISSIONS[\"manage\"])\n \n-class ventPermission(BasePermission):\n+class eventPermission(BasePermission):\n     \"\"\"\n     Permission class for managing events based strictly on Django permissions.\n     \"\"\"\n \n@@ -28,9 +28,9 @@\n         if view.action in [\"list\"]:\n             return True\n \n         elif view.action in [\"retrieve\"]:\n-            return HasPermission(request, EVENT_PERMISSIONS[\"view\"])\n+            return True\n \n         elif view.action in [\"create\"]:\n             return HasPermission(request, EVENT_PERMISSIONS[\"add\"])\n \n"
                 }
             ],
             "date": 1739258046053,

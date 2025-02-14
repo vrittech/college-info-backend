@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 2,
+            "activePatchIndex": 3,
             "patches": [
                 {
                     "date": 1739258332637,
@@ -16,6 +16,10 @@
                 {
                     "date": 1739264671784,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,9 +15,9 @@\n def CanManage(request):\n     \"\"\"Check if the user has full manage access\"\"\"\n     return HasPermission(request, INFORMATION_MANAGEMENT_PERMISSIONS[\"manage\"])\n \n-class InformationManagementPermission(BasePermission):\n+class informationManagementPermission(BasePermission):\n     \"\"\"\n     Permission class for managing information based strictly on Django permissions.\n     \"\"\"\n \n"
+                },
+                {
+                    "date": 1739506632656,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,9 +15,9 @@\n def CanManage(request):\n     \"\"\"Check if the user has full manage access\"\"\"\n     return HasPermission(request, INFORMATION_MANAGEMENT_PERMISSIONS[\"manage\"])\n \n-class informationManagementPermission(BasePermission):\n+class informationmanagementPermission(BasePermission):\n     \"\"\"\n     Permission class for managing information based strictly on Django permissions.\n     \"\"\"\n \n@@ -28,9 +28,9 @@\n         if view.action in [\"list\"]:\n             return True\n \n         elif view.action in [\"retrieve\"]:\n-            return HasPermission(request, INFORMATION_MANAGEMENT_PERMISSIONS[\"view\"])\n+            return True\n \n         elif view.action in [\"create\"]:\n             return HasPermission(request, INFORMATION_MANAGEMENT_PERMISSIONS[\"add\"])\n \n"
                 }
             ],
             "date": 1739258332637,

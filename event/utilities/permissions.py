@@ -29,7 +29,7 @@ class eventPermission(BasePermission):
             return True
 
         elif view.action in ["retrieve"]:
-            return HasPermission(request, EVENT_PERMISSIONS["view"])
+            return True
 
         elif view.action in ["create"]:
             return HasPermission(request, EVENT_PERMISSIONS["add"])

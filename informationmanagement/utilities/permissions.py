@@ -29,7 +29,7 @@ class informationmanagementPermission(BasePermission):
             return True
 
         elif view.action in ["retrieve"]:
-            return HasPermission(request, INFORMATION_MANAGEMENT_PERMISSIONS["view"])
+            return True
 
         elif view.action in ["create"]:
             return HasPermission(request, INFORMATION_MANAGEMENT_PERMISSIONS["add"])
