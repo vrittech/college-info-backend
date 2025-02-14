@@ -1,0 +1,18 @@
+{
+    "sourceFile": "collegemanagement/serializers/collegegallery_serializers.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1739512004648,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1739512004648,
+            "name": "Commit-0",
+            "content": "from rest_framework import serializers\nfrom ..models import CollegeGallery\n\nclass CollegeGalleryListSerializers(serializers.ModelSerializer):\n    class Meta:\n        model = CollegeGallery\n        fields = '__all__'\n\nclass CollegeGalleryRetrieveSerializers(serializers.ModelSerializer):\n    class Meta:\n        model = CollegeGallery\n        fields = '__all__'\n\nclass CollegeGalleryWriteSerializers(serializers.ModelSerializer):\n    images = serializers.ListField(\n        child=serializers.ImageField(), write_only=True, required=False\n    )\n\n    class Meta:\n        model = CollegeGallery\n        fields = ['images', 'description']  # Excluding 'image' field since we're handling multiple images\n\n    def create(self, validated_data):\n        request = self.context.get('request')\n        images = []\n        index = 0\n\n        while f'image[{index}]' in request.FILES:\n            images.append(request.FILES[f'image[{index}]'])\n            index += 1\n\n        gallery_instances = []\n        for image in images:\n            gallery_instance = CollegeGallery.objects.create(image=image)\n            gallery_instances.append(gallery_instance)\n\n        return gallery_instances\n\n    def update(self, instance, validated_data):\n        request = self.context.get('request')\n        images = []\n        index = 0\n\n        while f'image[{index}]' in request.FILES:\n            images.append(request.FILES[f'image[{index}]'])\n            index += 1\n\n        for image in images:\n            CollegeGallery.objects.create(image=image)\n\n        return super().update(instance, validated_data)\n"
+        }
+    ]
+}
