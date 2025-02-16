@@ -12,7 +12,7 @@ from rest_framework.response import Response
 class courseViewsets(viewsets.ModelViewSet):
     serializer_class = CourseListSerializers
     permission_classes = [DynamicModelPermission]
-    authentication_classes = [JWTAuthentication]
+    # authentication_classes = [JWTAuthentication]
     pagination_class = MyPageNumberPagination
     queryset = Course.objects.all().order_by('-id')
     lookup_field = "slug"
