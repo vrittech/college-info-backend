@@ -6,13 +6,13 @@ from coursemanagement.models import Course
 class CollegeSerializers(serializers.ModelSerializer):
     class Meta:
         model = College
-        fields = '__all__'
+        fields = ['slug','id','name']
         
 class CourseSerializers(serializers.ModelSerializer):
     class Meta:
         model = Course
-        fields = '__all__'
-        
+        fields = ['slug','id','name']
+         
         
 class CoursesAndFeesListSerializers(serializers.ModelSerializer):
     college = CollegeSerializers(read_only=True)
