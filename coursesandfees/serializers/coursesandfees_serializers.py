@@ -2,16 +2,24 @@ from rest_framework import serializers
 from ..models import CoursesAndFees
 from collegemanagement.models import College
 from coursemanagement.models import Course
+from duration.models import Duration
 
+
+class DurationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Duration
+        fields = ['id','name']
+        
 class CollegeSerializers(serializers.ModelSerializer):
     class Meta:
         model = College
         fields = ['slug','id','name']
         
 class CourseSerializers(serializers.ModelSerializer):
+    duration = DurationSerializer(read_only=True)
     class Meta:
         model = Course
-        fields = ['slug','id','name','affiliation','duration']
+        fields = ['slug','id','name','affiliation']
          
         
 class CoursesAndFeesListSerializers(serializers.ModelSerializer):
