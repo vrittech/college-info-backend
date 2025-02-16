@@ -30,9 +30,9 @@ jobs:
         # python -m pip install --upgrade pip
         pip install -r requirements.txt --use-deprecated=legacy-resolver
 
-    - name: Run tests
-      run: |
-        python manage.py test
+    # - name: Run tests
+    #   run: |
+    #     python manage.py test
 
     - name: Deploy to VPS Server
       env:

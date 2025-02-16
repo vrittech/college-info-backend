@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 20,
+            "activePatchIndex": 21,
             "patches": [
                 {
                     "date": 1733397109290,
@@ -88,6 +88,10 @@
                 {
                     "date": 1739685916197,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -72,9 +72,9 @@\n         ssh -o StrictHostKeyChecking=no root@$SERVER_IP \"cd $PROJECT_FOLDER && virtualenv venv && source venv/bin/activate && pip install -r requirements.txt && python manage.py migrate && python manage.py collectstatic --noinput \"\n         \n \n         #echo \"Running deployment commands on the server\" && \n-        # ssh -o StrictHostKeyChecking=no root@$SERVER_IP \"cd $PROJECT_FOLDER && virtualenv venv && source venv/bin/activate && pip install -r requirements.txt && python manage.py migrate && python manage.py collectstatic --noinput && screen -ls | grep $SCREEN_NAME | awk '{print $1}' | xargs -r -I{} screen -X -S {} quit && screen -dmS $SCREEN_NAME bash -c 'source venv/bin/activate && python manage.py runserver 0.0.0.0:$PORT'\"\n+        ssh -o StrictHostKeyChecking=no root@$SERVER_IP \"cd $PROJECT_FOLDER && virtualenv venv && source venv/bin/activate && pip install -r requirements.txt && python manage.py migrate && python manage.py collectstatic --noinput && screen -ls | grep $SCREEN_NAME | awk '{print $1}' | xargs -r -I{} screen -X -S {} quit && screen -dmS $SCREEN_NAME bash -c 'source venv/bin/activate && python manage.py runserver 0.0.0.0:$PORT'\"\n \n \n \n \n"
+                },
+                {
+                    "date": 1739686785253,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -29,11 +29,11 @@\n       run: |\n         # python -m pip install --upgrade pip\n         pip install -r requirements.txt --use-deprecated=legacy-resolver\n \n-    - name: Run tests\n-      run: |\n-        python manage.py test\n+    # - name: Run tests\n+    #   run: |\n+    #     python manage.py test\n \n     - name: Deploy to VPS Server\n       env:\n         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}\n@@ -68,9 +68,9 @@\n         #scp -r -o StrictHostKeyChecking=no ./* root@$SERVER_IP:$PROJECT_FOLDER/\n \n         # Run deployment commands on the server\n         echo \"Running deployment commands on the server\"\n-        ssh -o StrictHostKeyChecking=no root@$SERVER_IP \"cd $PROJECT_FOLDER && virtualenv venv && source venv/bin/activate && pip install -r requirements.txt && python manage.py migrate && python manage.py collectstatic --noinput \"\n+        # ssh -o StrictHostKeyChecking=no root@$SERVER_IP \"cd $PROJECT_FOLDER && virtualenv venv && source venv/bin/activate && pip install -r requirements.txt && python manage.py migrate && python manage.py collectstatic --noinput \"\n         \n \n         #echo \"Running deployment commands on the server\" && \n         ssh -o StrictHostKeyChecking=no root@$SERVER_IP \"cd $PROJECT_FOLDER && virtualenv venv && source venv/bin/activate && pip install -r requirements.txt && python manage.py migrate && python manage.py collectstatic --noinput && screen -ls | grep $SCREEN_NAME | awk '{print $1}' | xargs -r -I{} screen -X -S {} quit && screen -dmS $SCREEN_NAME bash -c 'source venv/bin/activate && python manage.py runserver 0.0.0.0:$PORT'\"\n"
                 }
             ],
             "date": 1733397109290,
