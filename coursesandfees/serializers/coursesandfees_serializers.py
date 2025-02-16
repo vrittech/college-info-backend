@@ -8,6 +8,7 @@ from duration.models import Duration
 class DurationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Duration
+        ref_name = 'course'
         fields = ['id','name']
         
 class CollegeSerializers(serializers.ModelSerializer):
@@ -19,7 +20,7 @@ class CourseSerializers(serializers.ModelSerializer):
     duration = DurationSerializer(read_only=True)
     class Meta:
         model = Course
-        fields = ['slug','id','name','affiliation']
+        fields = ['slug','id','name','affiliation','duration']
          
         
 class CoursesAndFeesListSerializers(serializers.ModelSerializer):
