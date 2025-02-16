@@ -3,7 +3,15 @@ from ..models import CoursesAndFees
 from collegemanagement.models import College
 from coursemanagement.models import Course
 from duration.models import Duration
+from affiliation.models import Affiliation
 
+
+class AffiliationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Affiliation
+        ref_name = 'course_affiliation'
+        fields = ['id','name']
+        
 
 class DurationSerializer(serializers.ModelSerializer):
     class Meta:
@@ -17,6 +25,7 @@ class CollegeSerializers(serializers.ModelSerializer):
         fields = ['slug','id','name']
         
 class CourseSerializers(serializers.ModelSerializer):
+    affiliation = AffiliationSerializer(read_only=True)
     duration = DurationSerializer(read_only=True)
     class Meta:
         model = Course
