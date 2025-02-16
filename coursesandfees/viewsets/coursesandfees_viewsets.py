@@ -1,4 +1,5 @@
 from rest_framework import viewsets
+from rest_framework.permissions import AllowAny
 from rest_framework.filters import SearchFilter, OrderingFilter
 from django_filters.rest_framework import DjangoFilterBackend
 from ..models import CoursesAndFees
@@ -40,7 +41,7 @@ class coursesandfeesViewsets(viewsets.ModelViewSet):
     # def action_name(self, request, *args, **kwargs):
     #     return super().list(request, *args, **kwargs)
     
-    @action(detail=False, methods=['get'], url_path="average-course-fee")
+    @action(detail=False, methods=['get'], url_path="average-course-fee",permission_classes=[AllowAny])
     def average_course_fee(self, request, *args, **kwargs):
         course_id = request.query_params.get('course_id', None)
         if not course_id:
