@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 5,
+            "activePatchIndex": 6,
             "patches": [
                 {
                     "date": 1738669074931,
@@ -28,6 +28,10 @@
                 {
                     "date": 1739509125490,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,11 +16,12 @@\n # from accounts.utilities.filters import CustomUserFilter\n # accounts/utilities/filters.py\n from rest_framework.filters import SearchFilter, OrderingFilter\n from django_filters.rest_framework import DjangoFilterBackend\n+from mainproj.permissions import *\n \n class CustomUserViewSet(viewsets.ModelViewSet):\n-    queryset = CustomUser.objects.all().order_by(')\n+    queryset = CustomUser.objects.all().order_by('-id')\n     permission_classes = [permissions.IsAuthenticated]\n     # filterset_class = CustomUserFilter\n     pagination_class = MyPageNumberPagination\n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n"
+                },
+                {
+                    "date": 1739702754897,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,9 +20,9 @@\n from mainproj.permissions import *\n \n class CustomUserViewSet(viewsets.ModelViewSet):\n     queryset = CustomUser.objects.all().order_by('-id')\n-    permission_classes = [permissions.IsAuthenticated]\n+    permission_classes = [permissions.IsAuthenticated,DynamicModelPermission]\n     # filterset_class = CustomUserFilter\n     pagination_class = MyPageNumberPagination\n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     \n@@ -55,5 +55,11 @@\n     @action(detail=False, methods=['get'], name=\"GetSelfDetail\", url_path=\"me\")\n     def GetSelfDetail(self, request, *args, **kwargs):\n         self.object = request.user  # Set the object directly to the current user\n         serializer = self.get_serializer(self.object)\n+        return Response(serializer.data)\n+    \n+    @action(detail=False, methods=['get'], name=\"college_admins\", url_path=\"college-admins\")\n+    def college_admins(self, request, *args, **kwargs):\n+        queryset = self.get_queryset().filter(college__isnull=False)  # Filter users with assigned college\n+        serializer = self.get_serializer(queryset, many=True)\n         return Response(serializer.data)\n\\ No newline at end of file\n"
                 }
             ],
             "date": 1738669074931,

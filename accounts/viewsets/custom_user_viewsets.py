@@ -57,3 +57,9 @@ class CustomUserViewSet(viewsets.ModelViewSet):
         self.object = request.user  # Set the object directly to the current user
         serializer = self.get_serializer(self.object)
         return Response(serializer.data)
+    
+    @action(detail=False, methods=['get'], name="college_admins", url_path="college-admins")
+    def college_admins(self, request, *args, **kwargs):
+        queryset = self.get_queryset().filter(college__isnull=False)  # Filter users with assigned college
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)

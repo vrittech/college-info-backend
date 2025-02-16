@@ -6,6 +6,8 @@ from ..serializers.course_serializers import CourseListSerializers, CourseRetrie
 from ..utilities.importbase import *
 from ..utilities.filter import CourseFilter
 from mainproj.permissions import DynamicModelPermission
+from rest_framework.decorators import action
+from rest_framework.response import Response
 
 class courseViewsets(viewsets.ModelViewSet):
     serializer_class = CourseListSerializers
@@ -50,5 +52,5 @@ class courseViewsets(viewsets.ModelViewSet):
 
     # @action(detail=False, methods=['get'], name="action_name", url_path="url_path")
     # def action_name(self, request, *args, **kwargs):
-    #     return super().list(request, *args, **kwargs)
+    #     return super().list(request, *args, **kwargs)   
 
