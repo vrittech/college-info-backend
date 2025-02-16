@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 20,
+            "activePatchIndex": 22,
             "patches": [
                 {
                     "date": 1726554854462,
@@ -88,6 +88,14 @@
                 {
                     "date": 1739687248712,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -21,29 +21,5 @@\n redis==5.0.0\n django-celery-beat\n django-notifications-hq\n channels\n-channels-redis\n-pillow==11.0.0\n-django-filter==24.3\n-Django==5.1.5\n-django-cors-headers==4.3.1\n-djangorestframework==3.15.2\n-djangorestframework-simplejwt==5.3.1\n-python-dotenv==1.0.1\n-daphne==4.0.0\n-psycopg2-binary\n-drf-yasg==1.21.7\n-google-auth==2.26.1\n-requests==2.32.2\n-pandas==2.2.3\n-phonenumbers==8.13.43\n-django-admin-interface==0.29.4\n-openpyxl==3.1.5\n-whitenoise==6.7.0\n-gunicorn==23.0.0\n-gevent==24.2.1\n-celery==5.4.0\n-redis==5.0.0\n-django-celery-beat\n-django-notifications-hq\n channels-redis\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1739688031529,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n pillow==11.0.0\n django-filter==24.3\n-Django==5.1.5\n+Django==\n django-cors-headers==4.3.1\n djangorestframework==3.15.2\n djangorestframework-simplejwt==5.3.1\n python-dotenv==1.0.1\n"
+                },
+                {
+                    "date": 1739688039513,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n pillow==11.0.0\n django-filter==24.3\n-Django==\n+Django==4.2.17\n django-cors-headers==4.3.1\n djangorestframework==3.15.2\n djangorestframework-simplejwt==5.3.1\n python-dotenv==1.0.1\n"
                 }
             ],
             "date": 1726554854462,
