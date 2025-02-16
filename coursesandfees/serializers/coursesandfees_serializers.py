@@ -10,7 +10,7 @@ class AffiliationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Affiliation
         ref_name = 'course_affiliation'
-        fields = ['id','name']
+        fields = ['id','name','slug']
         
 
 class DurationSerializer(serializers.ModelSerializer):
