@@ -1,0 +1,30 @@
+{
+    "sourceFile": "notification/views.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 3,
+            "patches": [
+                {
+                    "date": 1739684953744,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1739684965045,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,9 @@\n from rest_framework.response import Response\n from notifications.models import Notification\n from .serializers import NotificationSerializer\n from notifications.signals import notify\n-from django.contrib.auth import get_user_model\n+from accounts\n \n User = get_user_model()\n \n # 📌 API to get all notifications for a user\n"
+                },
+                {
+                    "date": 1739684971372,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,9 @@\n from rest_framework.response import Response\n from notifications.models import Notification\n from .serializers import NotificationSerializer\n from notifications.signals import notify\n-from accounts.\n+from accounts.models import cu\n \n User = get_user_model()\n \n # 📌 API to get all notifications for a user\n"
+                },
+                {
+                    "date": 1739684978956,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,52 @@\n+from rest_framework import generics, status\n+from rest_framework.permissions import IsAuthenticated\n+from rest_framework.response import Response\n+from notifications.models import Notification\n+from .serializers import NotificationSerializer\n+from notifications.signals import notify\n+from accounts.models import CustomUser as User\n+\n+# User = get_user_model()\n+\n+# 📌 API to get all notifications for a user\n+class NotificationListView(generics.ListAPIView):\n+    serializer_class = NotificationSerializer\n+    permission_classes = [IsAuthenticated]\n+\n+    def get_queryset(self):\n+        return self.request.user.notifications.all()  # Get notifications for the authenticated user\n+\n+\n+# 📌 API to get only unread notifications\n+class UnreadNotificationsView(generics.ListAPIView):\n+    serializer_class = NotificationSerializer\n+    permission_classes = [IsAuthenticated]\n+\n+    def get_queryset(self):\n+        return self.request.user.notifications.unread()  # Filter only unread notifications\n+\n+\n+# 📌 API to mark a notification as read\n+class MarkNotificationAsReadView(generics.UpdateAPIView):\n+    serializer_class = NotificationSerializer\n+    permission_classes = [IsAuthenticated]\n+\n+    def patch(self, request, *args, **kwargs):\n+        notification = Notification.objects.get(id=kwargs[\"pk\"], recipient=request.user)\n+        notification.mark_as_read()  # Mark notification as read\n+        return Response({\"message\": \"Notification marked as read\"}, status=status.HTTP_200_OK)\n+\n+\n+# 📌 API to send a notification\n+class SendNotificationView(generics.CreateAPIView):\n+    permission_classes = [IsAuthenticated]\n+\n+    def post(self, request, *args, **kwargs):\n+        recipient_id = request.data.get(\"recipient_id\")\n+        verb = request.data.get(\"verb\")\n+        description = request.data.get(\"description\", \"\")\n+\n+        recipient = User.objects.get(id=recipient_id)\n+        notify.send(request.user, recipient=recipient, verb=verb, description=description)\n+\n+        return Response({\"message\": \"Notification sent\"}, status=status.HTTP_201_CREATED)\n"
+                }
+            ],
+            "date": 1739684953744,
+            "name": "Commit-0",
+            "content": "from rest_framework import generics, status\nfrom rest_framework.permissions import IsAuthenticated\nfrom rest_framework.response import Response\nfrom notifications.models import Notification\nfrom .serializers import NotificationSerializer\nfrom notifications.signals import notify\nfrom django.contrib.auth import get_user_model\n\nUser = get_user_model()\n\n# 📌 API to get all notifications for a user\nclass NotificationListView(generics.ListAPIView):\n    serializer_class = NotificationSerializer\n    permission_classes = [IsAuthenticated]\n\n    def get_queryset(self):\n        return self.request.user.notifications.all()  # Get notifications for the authenticated user\n\n\n# 📌 API to get only unread notifications\nclass UnreadNotificationsView(generics.ListAPIView):\n    serializer_class = NotificationSerializer\n    permission_classes = [IsAuthenticated]\n\n    def get_queryset(self):\n        return self.request.user.notifications.unread()  # Filter only unread notifications\n\n\n# 📌 API to mark a notification as read\nclass MarkNotificationAsReadView(generics.UpdateAPIView):\n    serializer_class = NotificationSerializer\n    permission_classes = [IsAuthenticated]\n\n    def patch(self, request, *args, **kwargs):\n        notification = Notification.objects.get(id=kwargs[\"pk\"], recipient=request.user)\n        notification.mark_as_read()  # Mark notification as read\n        return Response({\"message\": \"Notification marked as read\"}, status=status.HTTP_200_OK)\n\n\n# 📌 API to send a notification\nclass SendNotificationView(generics.CreateAPIView):\n    permission_classes = [IsAuthenticated]\n\n    def post(self, request, *args, **kwargs):\n        recipient_id = request.data.get(\"recipient_id\")\n        verb = request.data.get(\"verb\")\n        description = request.data.get(\"description\", \"\")\n\n        recipient = User.objects.get(id=recipient_id)\n        notify.send(request.user, recipient=recipient, verb=verb, description=description)\n\n        return Response({\"message\": \"Notification sent\"}, status=status.HTTP_201_CREATED)\n"
+        }
+    ]
+}

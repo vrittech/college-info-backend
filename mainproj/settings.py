@@ -88,7 +88,9 @@ INSTALLED_APPS = [
     'advertisement',
     'contact',
     'requestsubmission',
-    'notifications',
+    'notification',
+    'notifications',  # Django Notifications HQ
+    'channels',  # Required for real-time updates (Django Channels)
 ]
 
 AUTH_USER_MODEL = 'accounts.CustomUser'
@@ -257,3 +259,8 @@ INTERNAL_IPS = [
 
 SMS_KEY_PASSWORD = ''
 
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer",  # Use Redis in production
+    },
+}

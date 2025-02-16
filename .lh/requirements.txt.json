@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 16,
+            "activePatchIndex": 18,
             "patches": [
                 {
                     "date": 1726554854462,
@@ -72,6 +72,14 @@
                 {
                     "date": 1737962578678,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,13 +11,12 @@\n google-auth==2.26.1\n requests==2.32.2\n pandas==2.2.3\n phonenumbers==8.13.43\n-django-admin-interface==0.29.5\n+django-admin-interface==0.29.4\n openpyxl==3.1.5\n whitenoise==6.7.0\n gunicorn==23.0.0\n gevent==24.2.1\n celery==5.4.0\n redis==5.0.0\n django-celery-beat\n-python-decouple\n"
+                },
+                {
+                    "date": 1739683990639,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,4 +19,5 @@\n gevent==24.2.1\n celery==5.4.0\n redis==5.0.0\n django-celery-beat\n+django-notifications-hq\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1739684005326,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,5 +19,6 @@\n gevent==24.2.1\n celery==5.4.0\n redis==5.0.0\n django-celery-beat\n-django-notifications-hq\n\\ No newline at end of file\n+django-notifications-hq\n+channels-redis\n\\ No newline at end of file\n"
                 }
             ],
             "date": 1726554854462,
