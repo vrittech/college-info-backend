@@ -11,7 +11,7 @@ class CollegeSerializers(serializers.ModelSerializer):
 class CourseSerializers(serializers.ModelSerializer):
     class Meta:
         model = Course
-        fields = ['slug','id','name']
+        fields = ['slug','id','name','affiliation','duration']
          
         
 class CoursesAndFeesListSerializers(serializers.ModelSerializer):

@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 6,
+            "activePatchIndex": 7,
             "patches": [
                 {
                     "date": 1733643783199,
@@ -32,6 +32,10 @@
                 {
                     "date": 1739425720920,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,8 @@\n from django.core.exceptions import PermissionDenied\n from django.contrib import admin\n from django.contrib.auth.admin import UserAdmin as BaseUserAdmin\n-from .models import CustomUser, GroupExtension, Group\n+from .models import CustomUser, Group\n \n class CustomUserAdmin(BaseUserAdmin):\n     exclude = ('user_permissions',)\n \n"
+                },
+                {
+                    "date": 1739703538323,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,9 @@\n \n     # Only include fields that are present in the model\n     fieldsets = (\n         (None, {'fields': ('username', 'password')}),\n-        ('Personal info', {'fields': ('first_name', 'last_name', 'email', 'phone', 'avatar', 'professional_image', 'position')}),\n+        ('Personal info', {'fields': ('first_name', 'last_name', 'email', 'phone', 'avatar', 'professional_image', 'college')}),\n         ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser', 'groups')}),\n     )\n     \n     list_display = ['username', 'email', 'position', 'phone', 'is_active', 'is_staff', 'professional_image', 'avatar']\n"
                 }
             ],
             "date": 1733643783199,
