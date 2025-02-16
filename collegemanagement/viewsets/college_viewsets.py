@@ -33,6 +33,11 @@ class collegeViewsets(viewsets.ModelViewSet):
 
     def get_queryset(self):
         queryset = super().get_queryset()
+        request = self.request
+        if request.user.is_superuser:
+            return queryset
+        elif request.user.has_perm('collegemanagement.change_college'):
+            return queryset.filter(user=request.user)
         return queryset
 
     def get_serializer_class(self):
