@@ -1,0 +1,26 @@
+{
+    "sourceFile": "coursesandfees/admin.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 2,
+            "patches": [
+                {
+                    "date": 1739698064023,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1739698074225,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,4 @@\n+from django.contrib import admin\n+from .models import Cour\n+\n+# Register your models here.\n"
+                },
+                {
+                    "date": 1739698086447,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,5 @@\n+from django.contrib import admin\n+from .models import CoursesAndFees\n+admin.site.register\n+\n+# Register your models here.\n"
+                }
+            ],
+            "date": 1739698064023,
+            "name": "Commit-0",
+            "content": "from django.contrib import admin]\n\n# Register your models here.\n"
+        }
+    ]
+}
