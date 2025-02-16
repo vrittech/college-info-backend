@@ -21,4 +21,5 @@ celery==5.4.0
 redis==5.0.0
 django-celery-beat
 django-notifications-hq
+channels
 channels-redis
