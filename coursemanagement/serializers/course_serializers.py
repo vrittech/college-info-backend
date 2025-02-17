@@ -83,7 +83,7 @@ class AffiliationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Affiliation
         ref_name = 'course'
-        fields = ['id', 'name']  
+        fields = ['id', 'name','slug']  
 
 # Serializer for Discipline model
 class DisciplineSerializer(serializers.ModelSerializer):
