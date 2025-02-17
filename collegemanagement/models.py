@@ -103,7 +103,7 @@ class CollegeFaqs(models.Model):
         ]
 
 class CollegeGallery(models.Model):
-    college = models.ForeignKey(College, on_delete=models.CASCADE,related_name='college_gallery')
+    college = models.ForeignKey(College, on_delete=models.CASCADE,related_name='college_gallery',null=True,blank=True)
     image = models.ImageField(upload_to='college/gallery/',null=True,blank=True)
     description = models.TextField(blank=True)
     created_date = models.DateField(auto_now_add=True)
