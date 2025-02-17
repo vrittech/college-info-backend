@@ -9,7 +9,7 @@ from mainproj.permissions import DynamicModelPermission
 class informationtaggingViewsets(viewsets.ModelViewSet):
     serializer_class = InformationTaggingListSerializers
     permission_classes = [DynamicModelPermission]
-    authentication_classes = [JWTAuthentication]
+    # authentication_classes = [JWTAuthentication]
     pagination_class = MyPageNumberPagination
     queryset = InformationTagging.objects.all().order_by('-id')
 

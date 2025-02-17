@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 5,
+            "activePatchIndex": 6,
             "patches": [
                 {
                     "date": 1733481603146,
@@ -28,6 +28,10 @@
                 {
                     "date": 1739509580766,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,8 +3,9 @@\n from django_filters.rest_framework import DjangoFilterBackend\n from ..models import InformationFiles\n from ..serializers.informationfiles_serializers import InformationFilesListSerializers, InformationFilesRetrieveSerializers, InformationFilesWriteSerializers\n from ..utilities.importbase import *\n+from mainproj.permissions import DynamicModelPermission\n \n class informationfilesViewsets(viewsets.ModelViewSet):\n     serializer_class = InformationFilesListSerializers\n     permission_classes = [informationmanagementPermission]\n"
+                },
+                {
+                    "date": 1739767361950,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,10 +7,10 @@\n from mainproj.permissions import DynamicModelPermission\n \n class informationfilesViewsets(viewsets.ModelViewSet):\n     serializer_class = InformationFilesListSerializers\n-    permission_classes = [informationmanagementPermission]\n-    authentication_classes = [JWTAuthentication]\n+    permission_classes = [DynamicModelPermission]\n+    # authentication_classes = [JWTAuthentication]\n     pagination_class = MyPageNumberPagination\n     queryset = InformationFiles.objects.all().order_by('-id')\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n"
                 }
             ],
             "date": 1733481603146,

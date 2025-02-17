@@ -9,7 +9,7 @@ from mainproj.permissions import DynamicModelPermission
 class informationgalleryViewsets(viewsets.ModelViewSet):
     serializer_class = InformationGalleryListSerializers
     permission_classes = [DynamicModelPermission]
-    authentication_classes = [JWTAuthentication]
+    # authentication_classes = [JWTAuthentication]
     pagination_class = MyPageNumberPagination
     queryset = InformationGallery.objects.all().order_by('-id')
 
