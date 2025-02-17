@@ -85,11 +85,14 @@ class DynamicModelPermission(BasePermission):
         """
         model_name = obj.__class__.__name__.lower()
         group_permissions = get_group_permissions(request.user)
+        
+        if view.action in ["list", "retrieve"]:
+            return True
 
         # ✅ Superusers always have full access
         if request.user.is_superuser:
             return True
-
+        
         # 🚫 Prevent deletion of restricted models (except for superusers)
         if view.action == "destroy" and model_name in RESTRICTED_DELETE_MODELS:
             return request.user.is_superuser
