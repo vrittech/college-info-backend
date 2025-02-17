@@ -24,6 +24,7 @@ class collegegalleryViewsets(viewsets.ModelViewSet):
     filterset_fields = {
         'id': ['exact'],
         'college': ['exact'],
+        'college__slug': ['exact'],
     }
 
     def get_queryset(self):
