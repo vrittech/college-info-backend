@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 5,
+            "activePatchIndex": 8,
             "patches": [
                 {
                     "date": 1737963405809,
@@ -28,6 +28,18 @@
                 {
                     "date": 1739264346602,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,9 +6,9 @@\n from ..utilities.importbase import *\n \n class collegegalleryViewsets(viewsets.ModelViewSet):\n     serializer_class = CollegeGalleryListSerializers\n-    # permission_classes = [collegemanagementPermission]\n+    permission_classes = [collegemanagementPermission]\n     authentication_classes = [JWTAuthentication]\n     pagination_class = MyPageNumberPagination\n     queryset = CollegeGallery.objects.all().order_by('-id')\n \n"
+                },
+                {
+                    "date": 1739770728297,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,11 +15,11 @@\n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     search_fields = ['id']\n     ordering_fields = ['id']\n \n-    # filterset_fields = {\n-    #     'id': ['exact'],\n-    # }\n+    filterset_fields = {\n+        'id': ['exact'],\n+    }\n \n     def get_queryset(self):\n         queryset = super().get_queryset()\n         return queryset\n"
+                },
+                {
+                    "date": 1739770736791,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,8 +17,9 @@\n     ordering_fields = ['id']\n \n     filterset_fields = {\n         'id': ['exact'],\n+        'college': ['exact'],\n     }\n \n     def get_queryset(self):\n         queryset = super().get_queryset()\n"
+                },
+                {
+                    "date": 1739770747016,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,9 +12,9 @@\n     pagination_class = MyPageNumberPagination\n     queryset = CollegeGallery.objects.all().order_by('-id')\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n-    search_fields = ['id']\n+    search_fields = ['id','college__name']\n     ordering_fields = ['id']\n \n     filterset_fields = {\n         'id': ['exact'],\n"
                 }
             ],
             "date": 1737963405809,

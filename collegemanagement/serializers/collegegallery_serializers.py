@@ -4,6 +4,7 @@ from ..models import CollegeGallery,College
 class CollegeSerializers(serializers.ModelSerializer):
     class Meta:
         model = College
+        ref_name='CollegeGallerySerializers'
         fields = ['slug','id','name']
 
 class CollegeGalleryListSerializers(serializers.ModelSerializer):
