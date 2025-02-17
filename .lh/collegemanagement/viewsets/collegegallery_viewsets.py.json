@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 28,
+            "activePatchIndex": 29,
             "patches": [
                 {
                     "date": 1737963405809,
@@ -120,6 +120,10 @@
                 {
                     "date": 1739773826030,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -52,9 +52,9 @@\n         # Serialize and return the data\n         serializer = self.get_serializer(images, many=True)\n         return Response(serializer.data)\n     \n-    action(detail=False, methods=['get'], url_path=\"latest/(?P<college_slug>[^/]+)\")\n+    @action(detail=False, methods=['get'], url_path=\"latest/(?P<college_slug>[^/]+)\")\n     def latest_college_images(self, request, college_slug=None, *args, **kwargs):\n         # Fetch the college using slug\n         college = get_object_or_404(College, slug=college_slug)\n \n"
+                },
+                {
+                    "date": 1739773849682,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -52,9 +52,9 @@\n         # Serialize and return the data\n         serializer = self.get_serializer(images, many=True)\n         return Response(serializer.data)\n     \n-    @action(detail=False, methods=['get'], url_path=\"latest/(?P<college_slug>[^/]+)\")\n+    @action(detail=False, methods=['get']permission_classes=[AllowAny], url_path=\"latest/(?P<college_slug>[^/]+)\")\n     def latest_college_images(self, request, college_slug=None, *args, **kwargs):\n         # Fetch the college using slug\n         college = get_object_or_404(College, slug=college_slug)\n \n"
                 }
             ],
             "date": 1737963405809,
