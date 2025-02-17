@@ -1,13 +1,14 @@
 from rest_framework import viewsets
 from rest_framework.filters import SearchFilter, OrderingFilter
 from django_filters.rest_framework import DjangoFilterBackend
-from ..models import CollegeGallery
+from ..models import CollegeGallery,College
 from ..serializers.collegegallery_serializers import CollegeGalleryListSerializers, CollegeGalleryRetrieveSerializers, CollegeGalleryWriteSerializers
 from ..utilities.importbase import *
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from mainproj.permissions import DynamicModelPermission
 from rest_framework.permissions import AllowAny
+from django.shortcuts import get_object_or_404
 
 class collegegalleryViewsets(viewsets.ModelViewSet):
     serializer_class = CollegeGalleryListSerializers
@@ -40,16 +41,15 @@ class collegegalleryViewsets(viewsets.ModelViewSet):
     # def action_name(self, request, *args, **kwargs):
     #     return super().list(request, *args, **kwargs)
     
-    @action(detail=False, methods=['get'], name="latest_college_images", url_path="latest-images",permission_classes=[AllowAny])
-    def latest_college_images(self, request, *args, **kwargs):
-        # Retrieve the latest 5 images for each college
-        colleges = CollegeGallery.objects.values_list('college', flat=True).distinct()
-        latest_images = []
+    @action(detail=False, methods=['get'],permission_classes=[AllowAny], url_path="latest-images/(?P<college_slug>[^/]+)")
+    def latest_college_images(self, request, college_slug=None, *args, **kwargs):
+        # Fetch the college using slug
+        college = get_object_or_404(College, slug=college_slug)
 
-        for college in colleges:
-            images = CollegeGallery.objects.filter(college=college).order_by('-created_date')[:5]
-            latest_images.extend(images)
+        # Get the latest 5 images of the specified college
+        images = CollegeGallery.objects.filter(college=college).order_by('-created_date')[:5]
 
-        serializer = self.get_serializer(latest_images, many=True)
+        # Serialize and return the data
+        serializer = self.get_serializer(images, many=True)
         return Response(serializer.data)
 
