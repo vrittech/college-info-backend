@@ -56,28 +56,28 @@ class DynamicModelPermission(BasePermission):
         model_name = getattr(view.queryset.model, "__name__", "").lower()
         group_permissions = get_group_permissions(request.user)
 
-        # ✅ Allow `list` and `retrieve` for all models except restricted ones
+        # Allow `list` and `retrieve` for all models except restricted ones
         if view.action in ["list", "retrieve"] and model_name not in RESTRICTED_PUBLIC_MODELS:
             return True
 
-        # ✅ Superusers always have full access
+        # Superusers always have full access
         if request.user.is_superuser:
             return True
 
-        # ❌ Strictly check if the user has permission for this model from groups
+        #  Strictly check if the user has permission for this model from groups
         if model_name not in group_permissions:
             return False  # User's groups have NO permission for this model
 
-        # 🔒 Enforce permission mapping (prevent unauthorized actions)
+        # Enforce permission mapping (prevent unauthorized actions)
         required_permission = ACTION_PERMISSION_MAPPING.get(view.action, None)
         if required_permission and required_permission not in group_permissions[model_name]:
             return False  # User's group does NOT have the required permission
 
-        # 🚫 Prevent deletion of restricted models (except for superusers)
+        # Prevent deletion of restricted models (except for superusers)
         if view.action == "destroy" and model_name in RESTRICTED_DELETE_MODELS:
             return request.user.is_superuser
 
-        return True  # ✅ Allow access if all checks pass
+        return True  # Allow access if all checks pass
 
     def has_object_permission(self, request, view, obj):
         """
@@ -89,29 +89,29 @@ class DynamicModelPermission(BasePermission):
         if view.action in ["list", "retrieve"]:
             return True
 
-        # ✅ Superusers always have full access
+        # Superusers always have full access
         if request.user.is_superuser:
             return True
         
-        # 🚫 Prevent deletion of restricted models (except for superusers)
+        # Prevent deletion of restricted models (except for superusers)
         if view.action == "destroy" and model_name in RESTRICTED_DELETE_MODELS:
             return request.user.is_superuser
 
-        # 🚫 Prevent users from deleting their own account
+        # Prevent users from deleting their own account
         if view.action == "destroy" and model_name == "customuser" and obj.id == request.user.id:
             return False
 
-        # 🔒 Users can only update their own profile
+        # Users can only update their own profile
         if view.action in ["update", "partial_update"] and model_name == "customuser":
             return obj.id == request.user.id or request.user.is_staff
 
-        # ❌ Strictly check if the user's groups have permission for this model
+        # Strictly check if the user's groups have permission for this model
         if model_name not in group_permissions:
             return False  # User's groups have NO permission for this model
 
-        # 🔒 Enforce permission mapping at object level
+        # Enforce permission mapping at object level
         required_permission = ACTION_PERMISSION_MAPPING.get(view.action, None)
         if required_permission and required_permission not in group_permissions[model_name]:
             return False  # User's groups do NOT have the required permission
 
-        return True  # ✅ Allow access if all checks pass
+        return True  # Allow access if all checks pass

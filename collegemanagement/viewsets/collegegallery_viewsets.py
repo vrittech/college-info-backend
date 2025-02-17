@@ -4,6 +4,8 @@ from django_filters.rest_framework import DjangoFilterBackend
 from ..models import CollegeGallery
 from ..serializers.collegegallery_serializers import CollegeGalleryListSerializers, CollegeGalleryRetrieveSerializers, CollegeGalleryWriteSerializers
 from ..utilities.importbase import *
+from rest_framework.decorators import action
+from rest_framework.response import Response
 
 class collegegalleryViewsets(viewsets.ModelViewSet):
     serializer_class = CollegeGalleryListSerializers
@@ -35,4 +37,17 @@ class collegegalleryViewsets(viewsets.ModelViewSet):
     # @action(detail=False, methods=['get'], name="action_name", url_path="url_path")
     # def action_name(self, request, *args, **kwargs):
     #     return super().list(request, *args, **kwargs)
+    
+    @action(detail=False, methods=['get'], name="latest_college_images", url_path="latest-images")
+    def latest_college_images(self, request, *args, **kwargs):
+        # Retrieve the latest 5 images for each college
+        colleges = CollegeGallery.objects.values_list('college', flat=True).distinct()
+        latest_images = []
+
+        for college in colleges:
+            images = CollegeGallery.objects.filter(college=college).order_by('-created_date')[:5]
+            latest_images.extend(images)
+
+        serializer = self.get_serializer(latest_images, many=True)
+        return Response(serializer.data)
 

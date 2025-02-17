@@ -47,9 +47,6 @@ class CourseCurriculumFile(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name="curriculum_file_upload")
     curriculum_file_upload = models.FileField(upload_to="courses/curriculum_files/")
     uploaded_at = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return f"File for {self.course.name} - {self.file.name}"
     class Meta:
         permissions = [
             ('manage_coursecurriculumfile', 'Manage manage_coursecurriculumfile'),

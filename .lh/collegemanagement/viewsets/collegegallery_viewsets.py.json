@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 8,
+            "activePatchIndex": 11,
             "patches": [
                 {
                     "date": 1737963405809,
@@ -40,6 +40,18 @@
                 {
                     "date": 1739770747016,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,9 +12,9 @@\n     pagination_class = MyPageNumberPagination\n     queryset = CollegeGallery.objects.all().order_by('-id')\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n-    search_fields = ['id']\n+    search_fields = ['id','college__name']\n     ordering_fields = ['id']\n \n     filterset_fields = {\n         'id': ['exact'],\n"
+                },
+                {
+                    "date": 1739772663312,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -34,5 +34,18 @@\n \n     # @action(detail=False, methods=['get'], name=\"action_name\", url_path=\"url_path\")\n     # def action_name(self, request, *args, **kwargs):\n     #     return super().list(request, *args, **kwargs)\n+    \n+    @action(detail=False, methods=['get'], name=\"latest_college_images\", url_path=\"latest-college-images\")\n+    def latest_college_images(self, request, *args, **kwargs):\n+        # Retrieve the latest 5 images for each college\n+        colleges = CollegeGallery.objects.values_list('college', flat=True).distinct()\n+        latest_images = []\n \n+        for college in colleges:\n+            images = CollegeGallery.objects.filter(college=college).order_by('-created_date')[:5]\n+            latest_images.extend(images)\n+\n+        serializer = self.get_serializer(latest_images, many=True)\n+        return Response(serializer.data)\n+\n"
+                },
+                {
+                    "date": 1739772677754,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,8 +3,10 @@\n from django_filters.rest_framework import DjangoFilterBackend\n from ..models import CollegeGallery\n from ..serializers.collegegallery_serializers import CollegeGalleryListSerializers, CollegeGalleryRetrieveSerializers, CollegeGalleryWriteSerializers\n from ..utilities.importbase import *\n+from rest_framework.decorators import action\n+from rest_framework.response import Response\n \n class collegegalleryViewsets(viewsets.ModelViewSet):\n     serializer_class = CollegeGalleryListSerializers\n     permission_classes = [collegemanagementPermission]\n"
+                },
+                {
+                    "date": 1739772686163,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -37,9 +37,9 @@\n     # @action(detail=False, methods=['get'], name=\"action_name\", url_path=\"url_path\")\n     # def action_name(self, request, *args, **kwargs):\n     #     return super().list(request, *args, **kwargs)\n     \n-    @action(detail=False, methods=['get'], name=\"latest_college_images\", url_path=\"latest-college-images\")\n+    @action(detail=False, methods=['get'], name=\"latest_college_images\", url_path=\"latest-images\")\n     def latest_college_images(self, request, *args, **kwargs):\n         # Retrieve the latest 5 images for each college\n         colleges = CollegeGallery.objects.values_list('college', flat=True).distinct()\n         latest_images = []\n"
                 }
             ],
             "date": 1737963405809,

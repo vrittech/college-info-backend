@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 42,
+            "activePatchIndex": 47,
             "patches": [
                 {
                     "date": 1739336401943,
@@ -176,6 +176,26 @@
                 {
                     "date": 1739768145363,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -84,15 +84,16 @@\n         Object-level permission handling.\n         \"\"\"\n         model_name = obj.__class__.__name__.lower()\n         group_permissions = get_group_permissions(request.user)\n+        \n+        if view.action in [\"list\", \"retrieve\"]:\n+            return True\n \n         # ✅ Superusers always have full access\n         if request.user.is_superuser:\n             return True\n         \n-        \n-\n         # 🚫 Prevent deletion of restricted models (except for superusers)\n         if view.action == \"destroy\" and model_name in RESTRICTED_DELETE_MODELS:\n             return request.user.is_superuser\n \n"
+                },
+                {
+                    "date": 1739771857788,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -63,9 +63,9 @@\n         # ✅ Superusers always have full access\n         if request.user.is_superuser:\n             return True\n \n-        # ❌ Strictly check if the user has permission for this model from groups\n+        #  Strictly check if the user has permission for this model from groups\n         if model_name not in group_permissions:\n             return False  # User's groups have NO permission for this model\n \n         # 🔒 Enforce permission mapping (prevent unauthorized actions)\n"
+                },
+                {
+                    "date": 1739771864373,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -55,13 +55,13 @@\n     def has_permission(self, request, view):\n         model_name = getattr(view.queryset.model, \"__name__\", \"\").lower()\n         group_permissions = get_group_permissions(request.user)\n \n-        # ✅ Allow `list` and `retrieve` for all models except restricted ones\n+        # Allow `list` and `retrieve` for all models except restricted ones\n         if view.action in [\"list\", \"retrieve\"] and model_name not in RESTRICTED_PUBLIC_MODELS:\n             return True\n \n-        # ✅ Superusers always have full access\n+        # Superusers always have full access\n         if request.user.is_superuser:\n             return True\n \n         #  Strictly check if the user has permission for this model from groups\n"
+                },
+                {
+                    "date": 1739771870062,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -67,14 +67,14 @@\n         #  Strictly check if the user has permission for this model from groups\n         if model_name not in group_permissions:\n             return False  # User's groups have NO permission for this model\n \n-        # 🔒 Enforce permission mapping (prevent unauthorized actions)\n+        # Enforce permission mapping (prevent unauthorized actions)\n         required_permission = ACTION_PERMISSION_MAPPING.get(view.action, None)\n         if required_permission and required_permission not in group_permissions[model_name]:\n             return False  # User's group does NOT have the required permission\n \n-        # 🚫 Prevent deletion of restricted models (except for superusers)\n+        # Prevent deletion of restricted models (except for superusers)\n         if view.action == \"destroy\" and model_name in RESTRICTED_DELETE_MODELS:\n             return request.user.is_superuser\n \n         return True  # ✅ Allow access if all checks pass\n"
+                },
+                {
+                    "date": 1739771880176,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -76,9 +76,9 @@\n         # Prevent deletion of restricted models (except for superusers)\n         if view.action == \"destroy\" and model_name in RESTRICTED_DELETE_MODELS:\n             return request.user.is_superuser\n \n-        return True  # ✅ Allow access if all checks pass\n+        return True  # Allow access if all checks pass\n \n     def has_object_permission(self, request, view, obj):\n         \"\"\"\n         Object-level permission handling.\n@@ -88,17 +88,17 @@\n         \n         if view.action in [\"list\", \"retrieve\"]:\n             return True\n \n-        # ✅ Superusers always have full access\n+        # Superusers always have full access\n         if request.user.is_superuser:\n             return True\n         \n-        # 🚫 Prevent deletion of restricted models (except for superusers)\n+        # Prevent deletion of restricted models (except for superusers)\n         if view.action == \"destroy\" and model_name in RESTRICTED_DELETE_MODELS:\n             return request.user.is_superuser\n \n-        # 🚫 Prevent users from deleting their own account\n+        # Prevent users from deleting their own account\n         if view.action == \"destroy\" and model_name == \"customuser\" and obj.id == request.user.id:\n             return False\n \n         # 🔒 Users can only update their own profile\n"
+                },
+                {
+                    "date": 1739771888672,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -100,17 +100,17 @@\n         # Prevent users from deleting their own account\n         if view.action == \"destroy\" and model_name == \"customuser\" and obj.id == request.user.id:\n             return False\n \n-        # 🔒 Users can only update their own profile\n+        # Users can only update their own profile\n         if view.action in [\"update\", \"partial_update\"] and model_name == \"customuser\":\n             return obj.id == request.user.id or request.user.is_staff\n \n-        # ❌ Strictly check if the user's groups have permission for this model\n+        # Strictly check if the user's groups have permission for this model\n         if model_name not in group_permissions:\n             return False  # User's groups have NO permission for this model\n \n-        # 🔒 Enforce permission mapping at object level\n+        # Enforce permission mapping at object level\n         required_permission = ACTION_PERMISSION_MAPPING.get(view.action, None)\n         if required_permission and required_permission not in group_permissions[model_name]:\n             return False  # User's groups do NOT have the required permission\n \n"
                 }
             ],
             "date": 1739336401943,
