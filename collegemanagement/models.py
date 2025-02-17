@@ -17,18 +17,7 @@ from django.utils.text import slugify
 
  
 # CollegeGallery Model
-class CollegeGallery(models.Model):
-    image = models.ImageField(upload_to='college/gallery/',null=True,blank=True)
-    description = models.TextField(blank=True)
-    created_date = models.DateField(auto_now_add=True)
-    updated_date = models.DateField(auto_now=True)
 
-    def __str__(self):
-        return f'Gallery Image {self.id}'
-    class Meta:
-        permissions = [
-            ('manage_college_gallery', 'Manage college gallery'),
-        ]
     
 # class Placement(models.Model):
 #     description = models.TextField(blank=True)
@@ -111,4 +100,18 @@ class CollegeFaqs(models.Model):
     class Meta:
         permissions = [
             ('manage_faq', 'Manage faq'),
+        ]
+
+class CollegeGallery(models.Model):
+    college = models.ForeignKey(College, on_delete=models.CASCADE,related_name='college_gallery')
+    image = models.ImageField(upload_to='college/gallery/',null=True,blank=True)
+    description = models.TextField(blank=True)
+    created_date = models.DateField(auto_now_add=True)
+    updated_date = models.DateField(auto_now=True)
+
+    def __str__(self):
+        return f'Gallery Image {self.id}'
+    class Meta:
+        permissions = [
+            ('manage_college_gallery', 'Manage college gallery'),
         ]

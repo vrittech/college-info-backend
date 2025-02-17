@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 219,
+            "activePatchIndex": 223,
             "patches": [
                 {
                     "date": 1727170911785,
@@ -884,6 +884,22 @@
                 {
                     "date": 1739438176455,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -80,15 +80,10 @@\n     # college_admin = models.ForeignKey(CustomUser, on_delete=models.CASCADE,related_name='college_admin')\n \n     def map_location(self):\n         \n-return f/*************  ✨ Codeium Command ⭐  *************/\n-        \"\"\"\n-        Return the latitude and longitude of the college as a comma-separated string\n-        \n+        return f'{self.latitude}, {self.longitude}'\n \n-/******  21278235-3e98-4eda-b463-f7d8663fe5fc  *******/'{self.latitude}, {self.longitude}'\n-\n     def __str__(self):\n           return self.name if self.name else \"Unnamed\"\n     \n     def save(self, *args, **kwargs):\n"
+                },
+                {
+                    "date": 1739770122859,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,8 +17,9 @@\n \n  \n # CollegeGallery Model\n class CollegeGallery(models.Model):\n+    College\n     image = models.ImageField(upload_to='college/gallery/',null=True,blank=True)\n     description = models.TextField(blank=True)\n     created_date = models.DateField(auto_now_add=True)\n     updated_date = models.DateField(auto_now=True)\n"
+                },
+                {
+                    "date": 1739770128128,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,9 +17,9 @@\n \n  \n # CollegeGallery Model\n class CollegeGallery(models.Model):\n-    College\n+    college = \n     image = models.ImageField(upload_to='college/gallery/',null=True,blank=True)\n     description = models.TextField(blank=True)\n     created_date = models.DateField(auto_now_add=True)\n     updated_date = models.DateField(auto_now=True)\n"
+                },
+                {
+                    "date": 1739770135568,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,21 +16,9 @@\n from django.utils.text import slugify\n \n  \n # CollegeGallery Model\n-class CollegeGallery(models.Model):\n-    college = \n-    image = models.ImageField(upload_to='college/gallery/',null=True,blank=True)\n-    description = models.TextField(blank=True)\n-    created_date = models.DateField(auto_now_add=True)\n-    updated_date = models.DateField(auto_now=True)\n \n-    def __str__(self):\n-        return f'Gallery Image {self.id}'\n-    class Meta:\n-        permissions = [\n-            ('manage_college_gallery', 'Manage college gallery'),\n-        ]\n     \n # class Placement(models.Model):\n #     description = models.TextField(blank=True)\n #     created_date = models.DateField(auto_now_add=True)\n"
+                },
+                {
+                    "date": 1739770140946,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -99,5 +99,19 @@\n     \n     class Meta:\n         permissions = [\n             ('manage_faq', 'Manage faq'),\n+        ]\n+\n+class CollegeGallery(models.Model):\n+    college = models.ForeignKey(College, on_delete=models.CASCADE,related_name='college_gallery')\n+    image = models.ImageField(upload_to='college/gallery/',null=True,blank=True)\n+    description = models.TextField(blank=True)\n+    created_date = models.DateField(auto_now_add=True)\n+    updated_date = models.DateField(auto_now=True)\n+\n+    def __str__(self):\n+        return f'Gallery Image {self.id}'\n+    class Meta:\n+        permissions = [\n+            ('manage_college_gallery', 'Manage college gallery'),\n         ]\n\\ No newline at end of file\n"
                 }
             ],
             "date": 1727170911784,

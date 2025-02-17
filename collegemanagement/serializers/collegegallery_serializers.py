@@ -1,12 +1,19 @@
 from rest_framework import serializers
-from ..models import CollegeGallery
+from ..models import CollegeGallery,College
+
+class CollegeSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = College
+        fields = ['slug','id','name']
 
 class CollegeGalleryListSerializers(serializers.ModelSerializer):
+    college = CollegeSerializers(read_only=True)
     class Meta:
         model = CollegeGallery
         fields = '__all__'
 
 class CollegeGalleryRetrieveSerializers(serializers.ModelSerializer):
+    college = CollegeSerializers(read_only=True)
     class Meta:
         model = CollegeGallery
         fields = '__all__'

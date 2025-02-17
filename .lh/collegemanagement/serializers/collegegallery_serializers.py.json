@@ -3,11 +3,43 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 0,
+            "activePatchIndex": 8,
             "patches": [
                 {
                     "date": 1739512004648,
                     "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1739770422481,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,7 @@\n from rest_framework import serializers\n from ..models import CollegeGallery\n+from \n \n class CollegeGalleryListSerializers(serializers.ModelSerializer):\n     class Meta:\n         model = CollegeGallery\n"
+                },
+                {
+                    "date": 1739770429059,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n from rest_framework import serializers\n-from ..models import CollegeGallery\n+from ..models import CollegeGallery,College\n from \n \n class CollegeGalleryListSerializers(serializers.ModelSerializer):\n     class Meta:\n"
+                },
+                {
+                    "date": 1739770438949,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,13 +1,17 @@\n from rest_framework import serializers\n from ..models import CollegeGallery,College\n-from \n \n class CollegeGalleryListSerializers(serializers.ModelSerializer):\n     class Meta:\n         model = CollegeGallery\n         fields = '__all__'\n \n+class CollegeGalleryListSerializers(serializers.ModelSerializer):\n+    class Meta:\n+        model = CollegeGallery\n+        fields = '__all__'\n+\n class CollegeGalleryRetrieveSerializers(serializers.ModelSerializer):\n     class Meta:\n         model = CollegeGallery\n         fields = '__all__'\n"
+                },
+                {
+                    "date": 1739770446289,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,10 +1,10 @@\n from rest_framework import serializers\n from ..models import CollegeGallery,College\n \n-class CollegeGalleryListSerializers(serializers.ModelSerializer):\n+class CollegeListSerializers(serializers.ModelSerializer):\n     class Meta:\n-        model = CollegeGallery\n+        model = College\n         fields = '__all__'\n \n class CollegeGalleryListSerializers(serializers.ModelSerializer):\n     class Meta:\n"
+                },
+                {
+                    "date": 1739770453285,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,13 +1,14 @@\n from rest_framework import serializers\n from ..models import CollegeGallery,College\n \n-class CollegeListSerializers(serializers.ModelSerializer):\n+class CollegeSerializers(serializers.ModelSerializer):\n     class Meta:\n         model = College\n         fields = '__all__'\n \n class CollegeGalleryListSerializers(serializers.ModelSerializer):\n+    College\n     class Meta:\n         model = CollegeGallery\n         fields = '__all__'\n \n"
+                },
+                {
+                    "date": 1739770459886,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,9 +6,9 @@\n         model = College\n         fields = '__all__'\n \n class CollegeGalleryListSerializers(serializers.ModelSerializer):\n-    College\n+    college = College\n     class Meta:\n         model = CollegeGallery\n         fields = '__all__'\n \n"
+                },
+                {
+                    "date": 1739770471073,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,14 +6,15 @@\n         model = College\n         fields = '__all__'\n \n class CollegeGalleryListSerializers(serializers.ModelSerializer):\n-    college = College\n+    college = CollegeSerializers(read_only=True)\n     class Meta:\n         model = CollegeGallery\n         fields = '__all__'\n \n class CollegeGalleryRetrieveSerializers(serializers.ModelSerializer):\n+    college = CollegeSerializers(read_only=True)\n     class Meta:\n         model = CollegeGallery\n         fields = '__all__'\n \n"
+                },
+                {
+                    "date": 1739770486773,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,9 @@\n \n class CollegeSerializers(serializers.ModelSerializer):\n     class Meta:\n         model = College\n-        fields = '__all__'\n+        fields = \n \n class CollegeGalleryListSerializers(serializers.ModelSerializer):\n     college = CollegeSerializers(read_only=True)\n     class Meta:\n"
                 }
             ],
             "date": 1739512004648,
