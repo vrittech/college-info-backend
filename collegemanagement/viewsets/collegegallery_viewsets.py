@@ -6,6 +6,8 @@ from ..serializers.collegegallery_serializers import CollegeGalleryListSerialize
 from ..utilities.importbase import *
 from rest_framework.decorators import action
 from rest_framework.response import Response
+from mainproj.permissions import DynamicModelPermission
+from rest_framework.permissions import AllowAny
 
 class collegegalleryViewsets(viewsets.ModelViewSet):
     serializer_class = CollegeGalleryListSerializers
@@ -38,7 +40,7 @@ class collegegalleryViewsets(viewsets.ModelViewSet):
     # def action_name(self, request, *args, **kwargs):
     #     return super().list(request, *args, **kwargs)
     
-    @action(detail=False, methods=['get'], name="latest_college_images", url_path="latest-images")
+    @action(detail=False, methods=['get'], name="latest_college_images", url_path="latest-images",permission_classes=[AllowAny])
     def latest_college_images(self, request, *args, **kwargs):
         # Retrieve the latest 5 images for each college
         colleges = CollegeGallery.objects.values_list('college', flat=True).distinct()

@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 11,
+            "activePatchIndex": 18,
             "patches": [
                 {
                     "date": 1737963405809,
@@ -52,6 +52,34 @@
                 {
                     "date": 1739772686163,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -37,9 +37,9 @@\n     # @action(detail=False, methods=['get'], name=\"action_name\", url_path=\"url_path\")\n     # def action_name(self, request, *args, **kwargs):\n     #     return super().list(request, *args, **kwargs)\n     \n-    @action(detail=False, methods=['get'], name=\"latest_college_images\", url_path=\"latest-college-images\")\n+    @action(detail=False, methods=['get'], name=\"latest_college_images\", url_path=\"latest-images\")\n     def latest_college_images(self, request, *args, **kwargs):\n         # Retrieve the latest 5 images for each college\n         colleges = CollegeGallery.objects.values_list('college', flat=True).distinct()\n         latest_images = []\n"
+                },
+                {
+                    "date": 1739772844099,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -37,9 +37,9 @@\n     # @action(detail=False, methods=['get'], name=\"action_name\", url_path=\"url_path\")\n     # def action_name(self, request, *args, **kwargs):\n     #     return super().list(request, *args, **kwargs)\n     \n-    @action(detail=False, methods=['get'], name=\"latest_college_images\", url_path=\"latest-images\")\n+    @action(detail=False, methods=['get'], name=\"latest_college_images\", url_path=\"latest-images\",permiss)\n     def latest_college_images(self, request, *args, **kwargs):\n         # Retrieve the latest 5 images for each college\n         colleges = CollegeGallery.objects.values_list('college', flat=True).distinct()\n         latest_images = []\n"
+                },
+                {
+                    "date": 1739772885969,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -37,9 +37,9 @@\n     # @action(detail=False, methods=['get'], name=\"action_name\", url_path=\"url_path\")\n     # def action_name(self, request, *args, **kwargs):\n     #     return super().list(request, *args, **kwargs)\n     \n-    @action(detail=False, methods=['get'], name=\"latest_college_images\", url_path=\"latest-images\",permiss)\n+    @action(detail=False, methods=['get'], name=\"latest_college_images\", url_path=\"latest-images\",permission_classes=[DynamicModelPermission])\n     def latest_college_images(self, request, *args, **kwargs):\n         # Retrieve the latest 5 images for each college\n         colleges = CollegeGallery.objects.values_list('college', flat=True).distinct()\n         latest_images = []\n"
+                },
+                {
+                    "date": 1739772891166,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,8 +5,9 @@\n from ..serializers.collegegallery_serializers import CollegeGalleryListSerializers, CollegeGalleryRetrieveSerializers, CollegeGalleryWriteSerializers\n from ..utilities.importbase import *\n from rest_framework.decorators import action\n from rest_framework.response import Response\n+from \n \n class collegegalleryViewsets(viewsets.ModelViewSet):\n     serializer_class = CollegeGalleryListSerializers\n     permission_classes = [collegemanagementPermission]\n"
+                },
+                {
+                    "date": 1739772908132,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,9 +5,9 @@\n from ..serializers.collegegallery_serializers import CollegeGalleryListSerializers, CollegeGalleryRetrieveSerializers, CollegeGalleryWriteSerializers\n from ..utilities.importbase import *\n from rest_framework.decorators import action\n from rest_framework.response import Response\n-from \n+from mainproj.permissions import DynamicModelPermission\n \n class collegegalleryViewsets(viewsets.ModelViewSet):\n     serializer_class = CollegeGalleryListSerializers\n     permission_classes = [collegemanagementPermission]\n"
+                },
+                {
+                    "date": 1739772949881,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -38,9 +38,9 @@\n     # @action(detail=False, methods=['get'], name=\"action_name\", url_path=\"url_path\")\n     # def action_name(self, request, *args, **kwargs):\n     #     return super().list(request, *args, **kwargs)\n     \n-    @action(detail=False, methods=['get'], name=\"latest_college_images\", url_path=\"latest-images\",permission_classes=[DynamicModelPermission])\n+    @action(detail=False, methods=['get'], name=\"latest_college_images\", url_path=\"latest-images\",permission_classes=[AllowAny])\n     def latest_college_images(self, request, *args, **kwargs):\n         # Retrieve the latest 5 images for each college\n         colleges = CollegeGallery.objects.values_list('college', flat=True).distinct()\n         latest_images = []\n"
+                },
+                {
+                    "date": 1739772955469,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,8 +6,9 @@\n from ..utilities.importbase import *\n from rest_framework.decorators import action\n from rest_framework.response import Response\n from mainproj.permissions import DynamicModelPermission\n+fr\n \n class collegegalleryViewsets(viewsets.ModelViewSet):\n     serializer_class = CollegeGalleryListSerializers\n     permission_classes = [collegemanagementPermission]\n"
+                },
+                {
+                    "date": 1739772961170,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,55 @@\n+from rest_framework import viewsets\n+from rest_framework.filters import SearchFilter, OrderingFilter\n+from django_filters.rest_framework import DjangoFilterBackend\n+from ..models import CollegeGallery\n+from ..serializers.collegegallery_serializers import CollegeGalleryListSerializers, CollegeGalleryRetrieveSerializers, CollegeGalleryWriteSerializers\n+from ..utilities.importbase import *\n+from rest_framework.decorators import action\n+from rest_framework.response import Response\n+from mainproj.permissions import DynamicModelPermission\n+from rest_framework.permissions import AllowAny\n+\n+class collegegalleryViewsets(viewsets.ModelViewSet):\n+    serializer_class = CollegeGalleryListSerializers\n+    permission_classes = [collegemanagementPermission]\n+    authentication_classes = [JWTAuthentication]\n+    pagination_class = MyPageNumberPagination\n+    queryset = CollegeGallery.objects.all().order_by('-id')\n+\n+    filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n+    search_fields = ['id','college__name']\n+    ordering_fields = ['id']\n+\n+    filterset_fields = {\n+        'id': ['exact'],\n+        'college': ['exact'],\n+    }\n+\n+    def get_queryset(self):\n+        queryset = super().get_queryset()\n+        return queryset\n+\n+    def get_serializer_class(self):\n+        if self.action in ['create', 'update', 'partial_update']:\n+            return CollegeGalleryWriteSerializers\n+        elif self.action == 'retrieve':\n+            return CollegeGalleryRetrieveSerializers\n+        return super().get_serializer_class()\n+\n+    # @action(detail=False, methods=['get'], name=\"action_name\", url_path=\"url_path\")\n+    # def action_name(self, request, *args, **kwargs):\n+    #     return super().list(request, *args, **kwargs)\n+    \n+    @action(detail=False, methods=['get'], name=\"latest_college_images\", url_path=\"latest-images\",permission_classes=[AllowAny])\n+    def latest_college_images(self, request, *args, **kwargs):\n+        # Retrieve the latest 5 images for each college\n+        colleges = CollegeGallery.objects.values_list('college', flat=True).distinct()\n+        latest_images = []\n+\n+        for college in colleges:\n+            images = CollegeGallery.objects.filter(college=college).order_by('-created_date')[:5]\n+            latest_images.extend(images)\n+\n+        serializer = self.get_serializer(latest_images, many=True)\n+        return Response(serializer.data)\n+\n"
                 }
             ],
             "date": 1737963405809,
