@@ -63,6 +63,7 @@ class Affiliation(SEOFields):
     description = models.TextField(blank=True, null=True)
     logo_image = models.ImageField(upload_to='affiliation_image/',null=True,blank=True)
     cover_image = models.ImageField(upload_to='affiliation_image/',null=True,blank=True)
+    is_verified = models.BooleanField(default=False)
     
     created_date = models.DateField(auto_now_add=True, null=True, blank=True)
     updated_date = models.DateTimeField(auto_now=True, null=True, blank=True)

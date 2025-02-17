@@ -1,0 +1,18 @@
+{
+    "sourceFile": "accounts/models.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1739786438931,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1739786438931,
+            "name": "Commit-0",
+            "content": "from django.db import models\nfrom django.contrib.auth.models import AbstractUser\nfrom collegemanagement.models import College\nfrom django.contrib.auth.models import Group, Permission\nfrom socialmedia.models import SocialMedia\n\n# Create your models here.\nclass CustomUser(AbstractUser):\n    # roles = models.CharField(max_length = 250,null = True) \n    full_name = models.CharField(max_length = 250,null = True)\n    college = models.ForeignKey(College,null = True,on_delete = models.SET_NULL,related_name='user',bla)\n    social_media = models.ManyToManyField(SocialMedia,blank=True)\n    email = models.EmailField(max_length = 250,unique = True)\n    # social_links = models.ManyToManyField(SocialMedia,blank=True)\n    position = models.PositiveIntegerField(default=0)\n    phone = models.CharField(max_length=15,null=True , default = '')\n    \n    groups = models.ManyToManyField(\n        Group,\n        related_name=\"customuser_groups\",  # Custom related name\n        blank=True\n    )\n    user_permissions = models.ManyToManyField(\n        Permission,\n        related_name=\"customuser_permissions\",  # Custom related name\n        blank=True\n    )\n\n    avatar = models.ImageField(upload_to='profile',null=True,blank=True)\n    professional_image = models.ImageField(upload_to='profile',null=True,blank=True)\n\n    USERNAME_FIELD = 'email'\n    REQUIRED_FIELDS = ['username']\n\n    created_at = models.DateTimeField(auto_now_add=True)\n    updated_at = models.DateTimeField(auto_now=True)\n\n\n    def __str__(self):\n        return self.username\n    \n    class Meta:\n        permissions = [\n            ('manage_user', 'Manage User'),\n        ]\n    \n    @property\n    def full_name(self):\n        try:\n            return self.first_name + \" \" + self.last_name\n        except:\n            return self.username\n\n\n# class GroupExtension(models.Model):\n#     group = models.OneToOneField(Group, on_delete=models.CASCADE, related_name='extension')\n#     position = models.PositiveIntegerField(default=0)\n    \n#     def __int__(self):\n#         return self.position\n    \n#     class Meta:\n#         permissions = [\n#             ('manage_group_extension', 'Manage group extension'),\n#         ]\n#     def save(self, *args, **kwargs):\n#         # Ensure the superuser status is not changed accidentally\n#         if not self.is_superuser:\n#             print(\"####################Superuser status cannot be changed.##################\")\n#             # You can log or add checks here if needed\n#             pass\n#         super().save(*args, **kwargs)\n\n\n    # def save(self, *args, **kwargs):\n    #     # Set position to the Group ID if position is 0 (or could be None)\n    #     if self.position == 0:\n    #         super().save(*args, **kwargs)  # Save initially to get the group ID\n    #         self.position = self.group.id\n    #         super().save(*args, **kwargs)  # Save again to update position with group ID\n    #     else:\n    #         super().save(*args, **kwargs)\n"
+        }
+    ]
+}

@@ -1,0 +1,22 @@
+{
+    "sourceFile": "affiliation/models.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 1,
+            "patches": [
+                {
+                    "date": 1739786292549,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1739786298502,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -62,9 +62,9 @@\n     email = models.EmailField(blank=True, null=True)\n     description = models.TextField(blank=True, null=True)\n     logo_image = models.ImageField(upload_to='affiliation_image/',null=True,blank=True)\n     cover_image = models.ImageField(upload_to='affiliation_image/',null=True,blank=True)\n-    is_\n+    is_verified = models.BooleanField(default=False)\n     \n     created_date = models.DateField(auto_now_add=True, null=True, blank=True)\n     updated_date = models.DateTimeField(auto_now=True, null=True, blank=True)\n \n"
+                }
+            ],
+            "date": 1739786292549,
+            "name": "Commit-0",
+            "content": "\n#    name\n#    established_year\n#    address url\n#    address\n#    Location--->foreign/Domestic\n#    phone_number\n#    email\n#    links\n#    Course------> manytoMany\n#    AffiliatedCollege-----> college model manytomany\n#    Level \n#    salientFetaures\n#    description\n#    feature \n#    file upload\n\n\nfrom django.db import models\n# from coursemanagement.models import Course\nfrom level.models import Level\n# from location.models import Location\nfrom district.models import District\n# from collegetype.models import CollegeType\nfrom django.utils.timezone import now\nfrom django.core.exceptions import ValidationError\nfrom certification.models import Certification\nfrom mainproj.utilities.seo import SEOFields\nimport uuid\nfrom django.utils.text import slugify\n\n\n\ndef validate_year(value):\n        current_year = now().year\n        if value > current_year or value < 1800:  # Define a reasonable range\n            raise ValidationError(f\"{value} is not a valid year. Please provide a year between 1800 and {current_year}.\")\n\nclass Affiliation(SEOFields):\n    \n    UNIVERSITY_TYPE_CHOICES = [\n        ('local', 'Local'),\n        ('foreign', 'Foreign'),\n    ]\n    public_id = models.UUIDField(default=uuid.uuid4,editable=False,unique=True)\n    slug = models.SlugField(max_length=255, unique=True, null=True, blank=True)\n    name = models.CharField(max_length=255,null=True,blank=True,unique=True)\n    established_year = models.IntegerField(default=now().year,validators=[validate_year])\n    website_url = models.URLField(max_length=500, blank=True, null=True)\n    google_map_embed_url = models.URLField(max_length=500, blank=True, null=True)\n    latitude = models.CharField(max_length=100, null=True, blank=True) \n    longitude = models.CharField(max_length=100, null=True, blank=True) \n    address = models.CharField(max_length=500,null=True,blank=True)\n    district = models.ForeignKey(District,on_delete=models.CASCADE, related_name='affiliation_district')\n    university_type = models.CharField(\n        max_length=10,  # Set a maximum length appropriate for the choice values\n        choices=UNIVERSITY_TYPE_CHOICES,\n        default='local'\n    )\n    certification = models.ManyToManyField(Certification,related_name='affiliation_certification')\n    phone_number = models.CharField(max_length=15, blank=True, null=True)\n    email = models.EmailField(blank=True, null=True)\n    description = models.TextField(blank=True, null=True)\n    logo_image = models.ImageField(upload_to='affiliation_image/',null=True,blank=True)\n    cover_image = models.ImageField(upload_to='affiliation_image/',null=True,blank=True)\n    is_\n    \n    created_date = models.DateField(auto_now_add=True, null=True, blank=True)\n    updated_date = models.DateTimeField(auto_now=True, null=True, blank=True)\n\n    def __str__(self):\n          return self.name if self.name else \"Unnamed Affiliation\"\n    \n    class Meta:\n        permissions = [\n            ('manage_affiliation', 'Manage Affiliation'),\n        ]\n    \n    def save(self, *args, **kwargs):\n        if not self.slug and self.name:\n            self.slug = slugify(self.name)\n        super().save(*args, **kwargs)\n    \n    "
+        }
+    ]
+}
