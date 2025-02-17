@@ -7,10 +7,15 @@ from ..utilities.importbase import *
 from ..utilities.filter import InquiryFilter
 from mainproj.permissions import DynamicModelPermission
 
+from rest_framework.decorators import action
+from rest_framework.response import Response
+from collegemanagement.models import College
+from django.db.models import Count
+
 class inquiryViewsets(viewsets.ModelViewSet):
     serializer_class = InquiryListSerializers
     permission_classes = [DynamicModelPermission]
-    authentication_classes = [JWTAuthentication]
+    # authentication_classes = [JWTAuthentication]
     pagination_class = MyPageNumberPagination
     queryset = Inquiry.objects.all().order_by('-id')
 
@@ -34,4 +39,29 @@ class inquiryViewsets(viewsets.ModelViewSet):
     # @action(detail=False, methods=['get'], name="action_name", url_path="url_path")
     # def action_name(self, request, *args, **kwargs):
     #     return super().list(request, *args, **kwargs)
+    
+    @action(detail=False, methods=['get'], name="Inquiries by Course", url_path="inquiry/(?P<college_slug>[^/.]+)/inquiries-count")
+    def inquiries_by_course(self, request, college_slug=None, *args, **kwargs):
+        # Ensure the college exists
+        college = College.objects.filter(slug=college_slug).first()
+        if not college:
+            return Response({"detail": "College not found."}, status=404)
+
+        # Get inquiries related to this college and group by course
+        inquiries = Inquiry.objects.filter(colleges=college)
+        
+        # Aggregate the count of inquiries for each course
+        course_inquiry_count = inquiries.values('courses__name') \
+            .annotate(count=Count('courses')) \
+            .order_by('courses__name')
+
+        # Prepare the response
+        data = []
+        for item in course_inquiry_count:
+            data.append({
+                'course': item['courses__name'],
+                'count': item['count']
+            })
+        
+        return Response(data)
 

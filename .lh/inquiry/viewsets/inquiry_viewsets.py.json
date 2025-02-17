@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 9,
+            "activePatchIndex": 25,
             "patches": [
                 {
                     "date": 1733481893066,
@@ -44,6 +44,70 @@
                 {
                     "date": 1739509630595,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,13 +4,13 @@\n from ..models import Inquiry\n from ..serializers.inquiry_serializers import InquiryListSerializers, InquiryRetrieveSerializers, InquiryWriteSerializers\n from ..utilities.importbase import *\n from ..utilities.filter import InquiryFilter\n-from mainproj.permissions\n+from mainproj.permissions import DynamicModelPermission\n \n class inquiryViewsets(viewsets.ModelViewSet):\n     serializer_class = InquiryListSerializers\n-    permission_classes = [inquiryPermission]\n+    permission_classes = [DynamicModelPermission]\n     authentication_classes = [JWTAuthentication]\n     pagination_class = MyPageNumberPagination\n     queryset = Inquiry.objects.all().order_by('-id')\n \n"
+                },
+                {
+                    "date": 1739785557464,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -33,5 +33,30 @@\n \n     # @action(detail=False, methods=['get'], name=\"action_name\", url_path=\"url_path\")\n     # def action_name(self, request, *args, **kwargs):\n     #     return super().list(request, *args, **kwargs)\n+    \n+    @action(detail=False, methods=['get'], name=\"Inquiries by Course\", url_path=\"inquiry/(?P<college_slug>[^/.]+)/count\")\n+    def inquiries_by_course(self, request, college_slug=None, *args, **kwargs):\n+        # Ensure the college exists\n+        college = College.objects.filter(slug=college_slug).first()\n+        if not college:\n+            return Response({\"detail\": \"College not found.\"}, status=404)\n \n+        # Get inquiries related to this college and group by course\n+        inquiries = Inquiry.objects.filter(colleges=college)\n+        \n+        # Aggregate the count of inquiries for each course\n+        course_inquiry_count = inquiries.values('courses__name') \\\n+            .annotate(count=Count('courses')) \\\n+            .order_by('courses__name')\n+\n+        # Prepare the response\n+        data = []\n+        for item in course_inquiry_count:\n+            data.append({\n+                'course': item['courses__name'],\n+                'count': item['count']\n+            })\n+        \n+        return Response(data)\n+\n"
+                },
+                {
+                    "date": 1739785578331,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,8 +6,15 @@\n from ..utilities.importbase import *\n from ..utilities.filter import InquiryFilter\n from mainproj.permissions import DynamicModelPermission\n \n+from rest_framework.decorators import action\n+from rest_framework.response import Response\n+from rest_framework import viewsets\n+from .models import Inquiry, College\n+from .serializers import InquirySerializer\n+from django.db.models import Count\n+\n class inquiryViewsets(viewsets.ModelViewSet):\n     serializer_class = InquiryListSerializers\n     permission_classes = [DynamicModelPermission]\n     authentication_classes = [JWTAuthentication]\n"
+                },
+                {
+                    "date": 1739785584338,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,9 +9,9 @@\n \n from rest_framework.decorators import action\n from rest_framework.response import Response\n from rest_framework import viewsets\n-from .models import Inquiry, College\n+from colle.models import Inquiry, College\n from .serializers import InquirySerializer\n from django.db.models import Count\n \n class inquiryViewsets(viewsets.ModelViewSet):\n"
+                },
+                {
+                    "date": 1739785593359,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,9 +9,9 @@\n \n from rest_framework.decorators import action\n from rest_framework.response import Response\n from rest_framework import viewsets\n-from colle.models import Inquiry, College\n+from collegemanagement.models import College\n from .serializers import InquirySerializer\n from django.db.models import Count\n \n class inquiryViewsets(viewsets.ModelViewSet):\n"
+                },
+                {
+                    "date": 1739785606736,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,9 @@\n from rest_framework.decorators import action\n from rest_framework.response import Response\n from rest_framework import viewsets\n from collegemanagement.models import College\n-from .serializers import InquirySerializer\n+from ..serializers import InquirySerializer\n from django.db.models import Count\n \n class inquiryViewsets(viewsets.ModelViewSet):\n     serializer_class = InquiryListSerializers\n"
+                },
+                {
+                    "date": 1739785613767,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,9 @@\n from rest_framework.decorators import action\n from rest_framework.response import Response\n from rest_framework import viewsets\n from collegemanagement.models import College\n-from ..serializers import InquirySerializer\n+from serializersserializers import InquirySerializer\n from django.db.models import Count\n \n class inquiryViewsets(viewsets.ModelViewSet):\n     serializer_class = InquiryListSerializers\n"
+                },
+                {
+                    "date": 1739785618881,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,9 @@\n from rest_framework.decorators import action\n from rest_framework.response import Response\n from rest_framework import viewsets\n from collegemanagement.models import College\n-from serializersserializers import InquirySerializer\n+from  import InquirySerializer\n from django.db.models import Count\n \n class inquiryViewsets(viewsets.ModelViewSet):\n     serializer_class = InquiryListSerializers\n"
+                },
+                {
+                    "date": 1739785625656,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,9 @@\n from rest_framework.decorators import action\n from rest_framework.response import Response\n from rest_framework import viewsets\n from collegemanagement.models import College\n-from  import InquirySerializer\n+from serializers.inquiry_serializers import InquirySerializer\n from django.db.models import Count\n \n class inquiryViewsets(viewsets.ModelViewSet):\n     serializer_class = InquiryListSerializers\n"
+                },
+                {
+                    "date": 1739785638105,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,9 @@\n from rest_framework.decorators import action\n from rest_framework.response import Response\n from rest_framework import viewsets\n from collegemanagement.models import College\n-from serializers.inquiry_serializers import InquirySerializer\n+from serializers.inquiry_serializers import InquiryRetrieveSerializers\n from django.db.models import Count\n \n class inquiryViewsets(viewsets.ModelViewSet):\n     serializer_class = InquiryListSerializers\n"
+                },
+                {
+                    "date": 1739785644248,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,8 @@\n from rest_framework.decorators import action\n from rest_framework.response import Response\n from rest_framework import viewsets\n from collegemanagement.models import College\n-from serializers.inquiry_serializers import InquiryRetrieveSerializers\n from django.db.models import Count\n \n class inquiryViewsets(viewsets.ModelViewSet):\n     serializer_class = InquiryListSerializers\n"
+                },
+                {
+                    "date": 1739785655019,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,8 +10,9 @@\n from rest_framework.decorators import action\n from rest_framework.response import Response\n from rest_framework import viewsets\n from collegemanagement.models import College\n+from serializers import InquirySerializer\n from django.db.models import Count\n \n class inquiryViewsets(viewsets.ModelViewSet):\n     serializer_class = InquiryListSerializers\n"
+                },
+                {
+                    "date": 1739785660608,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,8 @@\n from rest_framework.decorators import action\n from rest_framework.response import Response\n from rest_framework import viewsets\n from collegemanagement.models import College\n-from serializers import InquirySerializer\n from django.db.models import Count\n \n class inquiryViewsets(viewsets.ModelViewSet):\n     serializer_class = InquiryListSerializers\n"
+                },
+                {
+                    "date": 1739785665935,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,8 @@\n from mainproj.permissions import DynamicModelPermission\n \n from rest_framework.decorators import action\n from rest_framework.response import Response\n-from rest_framework import viewsets\n from collegemanagement.models import College\n from django.db.models import Count\n \n class inquiryViewsets(viewsets.ModelViewSet):\n"
+                },
+                {
+                    "date": 1739785675010,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -39,9 +39,9 @@\n     # @action(detail=False, methods=['get'], name=\"action_name\", url_path=\"url_path\")\n     # def action_name(self, request, *args, **kwargs):\n     #     return super().list(request, *args, **kwargs)\n     \n-    @action(detail=False, methods=['get'], name=\"Inquiries by Course\", url_path=\"inquiry/(?P<college_slug>[^/.]+)/count\")\n+    @action(detail=False, methods=['get'], name=\"Inquiries by Course\", url_path=\"inquiry/(?P<college_slug>[^/.]+)/inquiriescount\")\n     def inquiries_by_course(self, request, college_slug=None, *args, **kwargs):\n         # Ensure the college exists\n         college = College.objects.filter(slug=college_slug).first()\n         if not college:\n"
+                },
+                {
+                    "date": 1739785685462,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -39,9 +39,9 @@\n     # @action(detail=False, methods=['get'], name=\"action_name\", url_path=\"url_path\")\n     # def action_name(self, request, *args, **kwargs):\n     #     return super().list(request, *args, **kwargs)\n     \n-    @action(detail=False, methods=['get'], name=\"Inquiries by Course\", url_path=\"inquiry/(?P<college_slug>[^/.]+)/inquiriescount\")\n+    @action(detail=False, methods=['get'], name=\"Inquiries by Course\", url_path=\"inquiry/(?P<college_slug>[^/.]+)/inquiries-count\")\n     def inquiries_by_course(self, request, college_slug=None, *args, **kwargs):\n         # Ensure the college exists\n         college = College.objects.filter(slug=college_slug).first()\n         if not college:\n"
+                },
+                {
+                    "date": 1739785718570,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,9 +14,9 @@\n \n class inquiryViewsets(viewsets.ModelViewSet):\n     serializer_class = InquiryListSerializers\n     permission_classes = [DynamicModelPermission]\n-    authentication_classes = [JWTAuthentication]\n+    # authentication_classes = [JWTAuthentication]\n     pagination_class = MyPageNumberPagination\n     queryset = Inquiry.objects.all().order_by('-id')\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n"
                 }
             ],
             "date": 1733481893066,
