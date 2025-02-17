@@ -53,15 +53,15 @@ class collegegalleryViewsets(viewsets.ModelViewSet):
         serializer = self.get_serializer(images, many=True)
         return Response(serializer.data)
     
-    @action(detail=False, methods=['get'],permission_classes=[AllowAny], url_path="latest/(?P<college_slug>[^/]+)")
-    def latest_college_images(self, request, college_slug=None, *args, **kwargs):
-        # Fetch the college using slug
-        college = get_object_or_404(College, slug=college_slug)
+    # @action(detail=False, methods=['get'],permission_classes=[AllowAny], url_path="latest/(?P<college_slug>[^/]+)")
+    # def latest_college_images(self, request, college_slug=None, *args, **kwargs):
+    #     # Fetch the college using slug
+    #     college = get_object_or_404(College, slug=college_slug)
 
-        # Get the latest 5 images of the specified college
-        images = CollegeGallery.objects.filter(college=college).order_by('-created_date')[:5]
+    #     # Get the latest 5 images of the specified college
+    #     images = CollegeGallery.objects.filter(college=college).order_by('-created_date')[:5]
 
-        # Serialize and return the data as a flat array
-        serializer = CollegeGalleryRetrieveSerializers(images, many=True)
-        return Response(serializer.data)
+    #     # Serialize and return the data as a flat array
+    #     serializer = CollegeGalleryRetrieveSerializers(images, many=True)
+    #     return Response(serializer.data)
 
