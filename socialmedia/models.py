@@ -24,7 +24,7 @@ class CollegeSocialMedia(models.Model):
     icon=models.ImageField(upload_to='components/banner',null = True,blank= True)
     is_show = models.BooleanField(default=False)
     updated_date = models.DateTimeField(auto_now=True, null = True,blank = True)
-    college = models.ForeignKey('collegemanagement.College', on_delete=models.CASCADE,related_name='college_socialmedia',null=True,blank=True)  
+    college = models.ForeignKey('collegemanagement.College', on_delete=models.CASCADE,related_name='social_media',null=True,blank=True)  
     created_date = models.DateField(auto_now_add=True)
     updated_date = models.DateField(auto_now=True)
     
