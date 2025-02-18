@@ -1,0 +1,38 @@
+{
+    "sourceFile": "notify/views.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 5,
+            "patches": [
+                {
+                    "date": 1739869347719,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1739869355671,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,9 @@\n from rest_framework.response import Response\n from rest_framework.permissions import IsAuthenticated\n from .models import Notification\n from .serializers import NotificationSerializer\n-from .permissions import DynamicModelPermission\n+from ..permissions import DynamicModelPermission\n \n class NotificationViewSet(viewsets.ModelViewSet):\n     \"\"\"\n     API for managing notifications.\n"
+                },
+                {
+                    "date": 1739869362572,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,9 @@\n from rest_framework.response import Response\n from rest_framework.permissions import IsAuthenticated\n from .models import Notification\n from .serializers import NotificationSerializer\n-from ..permissions import DynamicModelPermission\n+from mainproj.permissions import DynamicModelPermission\n \n class NotificationViewSet(viewsets.ModelViewSet):\n     \"\"\"\n     API for managing notifications.\n"
+                },
+                {
+                    "date": 1739869736001,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,31 +2,28 @@\n from rest_framework.response import Response\n from rest_framework.permissions import IsAuthenticated\n from .models import Notification\n from .serializers import NotificationSerializer\n-from mainproj.permissions import DynamicModelPermission\n+from .permissions import DynamicModelPermission\n \n class NotificationViewSet(viewsets.ModelViewSet):\n     \"\"\"\n     API for managing notifications.\n-    - Users can only see their own notifications.\n-    - Superusers can see all notifications.\n-    - Users can mark notifications as read.\n     \"\"\"\n     serializer_class = NotificationSerializer\n     permission_classes = [IsAuthenticated, DynamicModelPermission]\n \n     def get_queryset(self):\n         \"\"\"\n-        Fetch only notifications related to the user.\n+        Users only see notifications related to their actions.\n         \"\"\"\n         if self.request.user.is_superuser:\n             return Notification.objects.all().order_by(\"-created_at\")\n         return Notification.objects.filter(user=self.request.user).order_by(\"-created_at\")\n \n     def update(self, request, *args, **kwargs):\n         \"\"\"\n-        Mark a notification as read.\n+        Allow users to mark notifications as read.\n         \"\"\"\n         instance = self.get_object()\n         if instance.user != request.user:\n             return Response({\"detail\": \"Not allowed\"}, status=status.HTTP_403_FORBIDDEN)\n"
+                },
+                {
+                    "date": 1739869741526,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,9 @@\n from rest_framework.response import Response\n from rest_framework.permissions import IsAuthenticated\n from .models import Notification\n from .serializers import NotificationSerializer\n-from .permissions import DynamicModelPermission\n+from main.permissions import DynamicModelPermission\n \n class NotificationViewSet(viewsets.ModelViewSet):\n     \"\"\"\n     API for managing notifications.\n"
+                },
+                {
+                    "date": 1739870603394,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,31 +2,26 @@\n from rest_framework.response import Response\n from rest_framework.permissions import IsAuthenticated\n from .models import Notification\n from .serializers import NotificationSerializer\n-from main.permissions import DynamicModelPermission\n \n class NotificationViewSet(viewsets.ModelViewSet):\n     \"\"\"\n     API for managing notifications.\n+    - Users only see their own notifications.\n+    - Superusers can see all notifications.\n     \"\"\"\n     serializer_class = NotificationSerializer\n-    permission_classes = [IsAuthenticated, DynamicModelPermission]\n+    permission_classes = [IsAuthenticated]\n \n     def get_queryset(self):\n-        \"\"\"\n-        Users only see notifications related to their actions.\n-        \"\"\"\n         if self.request.user.is_superuser:\n-            return Notification.objects.all().order_by(\"-created_at\")\n-        return Notification.objects.filter(user=self.request.user).order_by(\"-created_at\")\n+            return Notification.objects.all().order_by(\"-timestamp\")\n+        return Notification.objects.filter(user=self.request.user).order_by(\"-timestamp\")\n \n     def update(self, request, *args, **kwargs):\n-        \"\"\"\n-        Allow users to mark notifications as read.\n-        \"\"\"\n         instance = self.get_object()\n-        if instance.user != request.user:\n+        if request.user != instance.user:\n             return Response({\"detail\": \"Not allowed\"}, status=status.HTTP_403_FORBIDDEN)\n \n         instance.is_read = True\n         instance.save()\n"
+                }
+            ],
+            "date": 1739869347719,
+            "name": "Commit-0",
+            "content": "from rest_framework import viewsets, status\nfrom rest_framework.response import Response\nfrom rest_framework.permissions import IsAuthenticated\nfrom .models import Notification\nfrom .serializers import NotificationSerializer\nfrom .permissions import DynamicModelPermission\n\nclass NotificationViewSet(viewsets.ModelViewSet):\n    \"\"\"\n    API for managing notifications.\n    - Users can only see their own notifications.\n    - Superusers can see all notifications.\n    - Users can mark notifications as read.\n    \"\"\"\n    serializer_class = NotificationSerializer\n    permission_classes = [IsAuthenticated, DynamicModelPermission]\n\n    def get_queryset(self):\n        \"\"\"\n        Fetch only notifications related to the user.\n        \"\"\"\n        if self.request.user.is_superuser:\n            return Notification.objects.all().order_by(\"-created_at\")\n        return Notification.objects.filter(user=self.request.user).order_by(\"-created_at\")\n\n    def update(self, request, *args, **kwargs):\n        \"\"\"\n        Mark a notification as read.\n        \"\"\"\n        instance = self.get_object()\n        if instance.user != request.user:\n            return Response({\"detail\": \"Not allowed\"}, status=status.HTTP_403_FORBIDDEN)\n\n        instance.is_read = True\n        instance.save()\n        return Response({\"message\": \"Notification marked as read\"}, status=status.HTTP_200_OK)\n"
+        }
+    ]
+}

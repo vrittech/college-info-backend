@@ -1,0 +1,30 @@
+{
+    "sourceFile": "notify/serializers.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 3,
+            "patches": [
+                {
+                    "date": 1739869326773,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1739871956976,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,5 +3,5 @@\n \n class NotificationSerializer(serializers.ModelSerializer):\n     class Meta:\n         model = Notification\n-        fields = [\"id\", \"action\", \"model_name\", \"instance_id\", \"message\", \"is_read\", \"created_at\"]\n+        fields = [\"id\", \"model_name\", \"instance_id\", \"message\", \"is_read\", \"created_at\"]\n"
+                },
+                {
+                    "date": 1739872007530,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,5 +3,5 @@\n \n class NotificationSerializer(serializers.ModelSerializer):\n     class Meta:\n         model = Notification\n-        fields = [\"id\", \"model_name\", \"instance_id\", \"message\", \"is_read\", \"created_at\"]\n+        fields = '__all__'\n"
+                },
+                {
+                    "date": 1739872021293,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,7 @@\n from rest_framework import serializers\n from .models import Notification\n+from ma\n \n class NotificationSerializer(serializers.ModelSerializer):\n     class Meta:\n         model = Notification\n"
+                }
+            ],
+            "date": 1739869326773,
+            "name": "Commit-0",
+            "content": "from rest_framework import serializers\nfrom .models import Notification\n\nclass NotificationSerializer(serializers.ModelSerializer):\n    class Meta:\n        model = Notification\n        fields = [\"id\", \"action\", \"model_name\", \"instance_id\", \"message\", \"is_read\", \"created_at\"]\n"
+        }
+    ]
+}

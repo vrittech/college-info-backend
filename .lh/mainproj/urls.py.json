@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 3,
+            "activePatchIndex": 5,
             "patches": [
                 {
                     "date": 1739684343218,
@@ -20,6 +20,14 @@
                 {
                     "date": 1739868639822,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -123,9 +123,9 @@\n     path('api-auth/', include('rest_framework.urls')),\n     path('api/accounts/',include('accounts.urls')),\n     path('api/import-excel/<str:type>/',ImportExcel.as_view(),name=\"import_excel\"),\n     path('api/bulk-delete/', BulkDelete.as_view(), name=\"bulk_delete\"),\n-     path(\"api/\", include(\"notifications.urls\")),\n+    #  path(\"api/\", include(\"notification.urls\")),\n     # path('api/',include(requestsubmission_router.urls)),\n     # path('api/',include(coursemanagement_router.urls)),\n     # path('api/',include(socialmedia_router.urls)),\n     # path('api/',include(setupemail_router.urls)),\n"
+                },
+                {
+                    "date": 1739871485230,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -123,8 +123,9 @@\n     path('api-auth/', include('rest_framework.urls')),\n     path('api/accounts/',include('accounts.urls')),\n     path('api/import-excel/<str:type>/',ImportExcel.as_view(),name=\"import_excel\"),\n     path('api/bulk-delete/', BulkDelete.as_view(), name=\"bulk_delete\"),\n+    path(\"api/\", include(\"notifications.urls\")),\n     #  path(\"api/\", include(\"notification.urls\")),\n     # path('api/',include(requestsubmission_router.urls)),\n     # path('api/',include(coursemanagement_router.urls)),\n     # path('api/',include(socialmedia_router.urls)),\n"
+                },
+                {
+                    "date": 1739871490926,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -123,9 +123,9 @@\n     path('api-auth/', include('rest_framework.urls')),\n     path('api/accounts/',include('accounts.urls')),\n     path('api/import-excel/<str:type>/',ImportExcel.as_view(),name=\"import_excel\"),\n     path('api/bulk-delete/', BulkDelete.as_view(), name=\"bulk_delete\"),\n-    path(\"api/\", include(\"notifications.urls\")),\n+    path(\"api/\", include(\"notify.urls\")),\n     #  path(\"api/\", include(\"notification.urls\")),\n     # path('api/',include(requestsubmission_router.urls)),\n     # path('api/',include(coursemanagement_router.urls)),\n     # path('api/',include(socialmedia_router.urls)),\n"
                 }
             ],
             "date": 1739684343218,

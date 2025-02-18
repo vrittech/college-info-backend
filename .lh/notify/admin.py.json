@@ -1,0 +1,30 @@
+{
+    "sourceFile": "notify/admin.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 3,
+            "patches": [
+                {
+                    "date": 1739871914064,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1739871920283,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,3 +1,4 @@\n from django.contrib import admin\n-from \n+from .models import Notification\n+\n # Register your models here.\n"
+                },
+                {
+                    "date": 1739871930357,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,4 +1,3 @@\n from django.contrib import admin\n from .models import Notification\n-\n # Register your models here.\n"
+                },
+                {
+                    "date": 1739871936983,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,3 +1,5 @@\n from django.contrib import admin\n from .models import Notification\n+\n+admin.site\n # Register your models here.\n"
+                }
+            ],
+            "date": 1739871914064,
+            "name": "Commit-0",
+            "content": "from django.contrib import admin\nfrom \n# Register your models here.\n"
+        }
+    ]
+}

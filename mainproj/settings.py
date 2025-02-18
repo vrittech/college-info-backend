@@ -88,7 +88,7 @@ INSTALLED_APPS = [
     'advertisement',
     'contact',
     'requestsubmission',
-    'notification',
+    'notify',
     # 'notifications',  # Django Notifications HQ
     # 'channels',  # Required for real-time updates (Django Channels)
 ]
@@ -104,7 +104,7 @@ CSRF_TRUSTED_ORIGINS = ['https://collegeinfoapi.vrittechnologies.com']
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
-    'django.middleware.common.CommonMiddleware',
+    'django.middleware.common.CommonMiddleware', 
     
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',  # static file serving.
@@ -114,6 +114,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'notify.middleware.CaptureUserMiddleware',
 ]
 
 ROOT_URLCONF = 'mainproj.urls'
@@ -264,3 +265,6 @@ CHANNEL_LAYERS = {
         "BACKEND": "channels.layers.InMemoryChannelLayer",  # Use Redis in production
     },
 }
+
+
+# daphne -b 0.0.0.0 -p 8001 mainproj.asgi:application  # For WebSockets

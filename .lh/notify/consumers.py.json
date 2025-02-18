@@ -1,0 +1,18 @@
+{
+    "sourceFile": "notify/consumers.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1739871219067,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1739871219067,
+            "name": "Commit-0",
+            "content": "import json\nfrom channels.generic.websocket import AsyncWebsocketConsumer\n\nclass NotificationConsumer(AsyncWebsocketConsumer):\n    async def connect(self):\n        if self.scope[\"user\"].is_authenticated:\n            self.user = self.scope[\"user\"]\n            self.room_group_name = f\"notifications_{self.user.id}\"\n\n            await self.channel_layer.group_add(self.room_group_name, self.channel_name)\n            await self.accept()\n        else:\n            await self.close()\n\n    async def disconnect(self, close_code):\n        await self.channel_layer.group_discard(self.room_group_name, self.channel_name)\n\n    async def send_notification(self, event):\n        notification = event[\"message\"]\n        await self.send(text_data=json.dumps({\"message\": notification}))\n"
+        }
+    ]
+}
