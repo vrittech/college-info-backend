@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 83,
+            "activePatchIndex": 85,
             "patches": [
                 {
                     "date": 1733477116456,
@@ -340,6 +340,14 @@
                 {
                     "date": 1739858599916,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -211,9 +211,9 @@\n         # Replace IDs with full nested objects for many-to-many fields\n         response[\"discipline\"] = DisciplineSerializer(instance.discipline.all(), many=True).data\n         # response[\"social_media\"] = SocialMediaSerializer(instance.social_media.all(), many=True).data\n         response[\"facilities\"] = FacilitySerializer(instance.facilities.all(), many=True).data\n-        response[\"social_media\"] = CollegeSocialMediaSerializer(\n+        response[\"social_media\"] = SocialMediaSerializer(\n             CollegeSocialMedia.objects.filter(college=instance), many=True\n         ).data\n \n         return response\n"
+                },
+                {
+                    "date": 1739858751660,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -102,9 +102,9 @@\n     step_counter = serializers.PrimaryKeyRelatedField(queryset=FormStepProgress.objects.all(), required=False, allow_null=True)\n \n     # ManyToMany fields\n     discipline = serializers.PrimaryKeyRelatedField(queryset=Discipline.objects.all(), many=True)\n-    social_media = serializers.PrimaryKeyRelatedField(queryset=SocialMedia.objects.all(), many=True, required=False)\n+    social_media = CollegeSocialMediaSerializer(many=True, required=False)\n     facilities = serializers.PrimaryKeyRelatedField(queryset=Facility.objects.all(), many=True, required=False)\n     \n     def to_internal_value(self, data):\n         \"\"\"Converts stringified social media JSON into a list before validation.\"\"\"\n"
+                },
+                {
+                    "date": 1739858756982,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -102,9 +102,9 @@\n     step_counter = serializers.PrimaryKeyRelatedField(queryset=FormStepProgress.objects.all(), required=False, allow_null=True)\n \n     # ManyToMany fields\n     discipline = serializers.PrimaryKeyRelatedField(queryset=Discipline.objects.all(), many=True)\n-    social_media = CollegeSocialMediaSerializer(many=True, required=False)\n+    social_media = SocialMediaSerializer(many=True, required=False)\n     facilities = serializers.PrimaryKeyRelatedField(queryset=Facility.objects.all(), many=True, required=False)\n     \n     def to_internal_value(self, data):\n         \"\"\"Converts stringified social media JSON into a list before validation.\"\"\"\n"
                 }
             ],
             "date": 1733477116456,

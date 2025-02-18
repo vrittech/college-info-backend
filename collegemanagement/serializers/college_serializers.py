@@ -103,7 +103,7 @@ class CollegeWriteSerializers(serializers.ModelSerializer):
 
     # ManyToMany fields
     discipline = serializers.PrimaryKeyRelatedField(queryset=Discipline.objects.all(), many=True)
-    social_media = serializers.PrimaryKeyRelatedField(queryset=SocialMedia.objects.all(), many=True, required=False)
+    social_media = SocialMediaSerializer(many=True, required=False)
     facilities = serializers.PrimaryKeyRelatedField(queryset=Facility.objects.all(), many=True, required=False)
     
     def to_internal_value(self, data):
