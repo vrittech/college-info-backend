@@ -18,7 +18,7 @@ class SocialMedia(models.Model):
         ]
         
 class CollegeSocialMedia(models.Model):
-    social_media = models.ForeignKey(SocialMedia, on_delete=models.CASCADE,related_name='social_media',blank=True,null=True)
+    name = models.ForeignKey(SocialMedia, on_delete=models.CASCADE,related_name='social_media',blank=True,null=True)
     # name= models.CharField(max_length=100,null= True,blank=True) 
     link = models.URLField(max_length=200)
     icon=models.ImageField(upload_to='components/banner',null = True,blank= True)
