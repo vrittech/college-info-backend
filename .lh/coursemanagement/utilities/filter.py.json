@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 8,
+            "activePatchIndex": 12,
             "patches": [
                 {
                     "date": 1739267387711,
@@ -40,6 +40,22 @@
                 {
                     "date": 1739893586916,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,20 +14,26 @@\n     abbreviation = CharInFilter(field_name='abbreviation', lookup_expr='in')\n     duration = NumberInFilter(field_name='duration__id', lookup_expr='in')\n     faculty = NumberInFilter(field_name='faculty__id', lookup_expr='in')\n     level = NumberInFilter(field_name='level__id', lookup_expr='in')\n-    discipline = NumberInFilter(field_name='discipline__id', lookup_expr='in')\n     affiliation = NumberInFilter(field_name='affiliation__id', lookup_expr='in')\n     description = CharInFilter(field_name='description', lookup_expr='in')\n     course_shortdescription = CharInFilter(field_name='course_shortdescription', lookup_expr='in')\n     course_outcome = CharInFilter(field_name='course_outcome', lookup_expr='in')\n     eligibility_criteria = CharInFilter(field_name='eligibility_criteria', lookup_expr='in')\n     created_date = filters.DateFromToRangeFilter(field_name='created_date')\n     updated_date = filters.DateTimeFromToRangeFilter(field_name='updated_date')\n \n+    # Filtering for multiple disciplines (ManyToMany relationship)\n+    discipline = django_filters.ModelMultipleChoiceFilter(\n+        field_name='discipline__id',\n+        queryset=Course.objects.all().values_list('discipline__id', flat=True).distinct(),\n+        conjoined=False\n+    )\n+\n     class Meta:\n         model = Course\n         fields = [\n             'id', 'name', 'abbreviation', 'duration', 'faculty', 'level',\n-            'affiliation', 'description','discipline', 'course_shortdescription', \n+            'affiliation', 'description', 'discipline', 'course_shortdescription',\n             'course_outcome', 'eligibility_criteria', 'created_date', 'updated_date'\n         ]\n"
+                },
+                {
+                    "date": 1739894218860,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,14 +22,10 @@\n     eligibility_criteria = CharInFilter(field_name='eligibility_criteria', lookup_expr='in')\n     created_date = filters.DateFromToRangeFilter(field_name='created_date')\n     updated_date = filters.DateTimeFromToRangeFilter(field_name='updated_date')\n \n-    # Filtering for multiple disciplines (ManyToMany relationship)\n-    discipline = django_filters.ModelMultipleChoiceFilter(\n-        field_name='discipline__id',\n-        queryset=Course.objects.all().values_list('discipline__id', flat=True).distinct(),\n-        conjoined=False\n-    )\n+    # Fix: Use NumberInFilter for discipline to allow comma-separated IDs (e.g., ?discipline=4,5)\n+    discipline = NumberInFilter(field_name='discipline__id', lookup_expr='in')\n \n     class Meta:\n         model = Course\n         fields = [\n"
+                },
+                {
+                    "date": 1739894433986,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,11 +22,16 @@\n     eligibility_criteria = CharInFilter(field_name='eligibility_criteria', lookup_expr='in')\n     created_date = filters.DateFromToRangeFilter(field_name='created_date')\n     updated_date = filters.DateTimeFromToRangeFilter(field_name='updated_date')\n \n-    # Fix: Use NumberInFilter for discipline to allow comma-separated IDs (e.g., ?discipline=4,5)\n-    discipline = NumberInFilter(field_name='discipline__id', lookup_expr='in')\n+    discipline = django_filters.CharFilter(method='filter_by_disciplines')\n \n+    def filter_by_disciplines(self, queryset, name, value):\n+        if value:\n+            disciplines = value.split(',') if ',' in value else [value]\n+            queryset = queryset.filter(discipline__id__in=disciplines).distinct()\n+        return queryset\n+\n     class Meta:\n         model = Course\n         fields = [\n             'id', 'name', 'abbreviation', 'duration', 'faculty', 'level',\n"
+                },
+                {
+                    "date": 1739894439272,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -37,4 +37,5 @@\n             'id', 'name', 'abbreviation', 'duration', 'faculty', 'level',\n             'affiliation', 'description', 'discipline', 'course_shortdescription',\n             'course_outcome', 'eligibility_criteria', 'created_date', 'updated_date'\n         ]\n+z\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1739894444741,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -36,6 +36,5 @@\n         fields = [\n             'id', 'name', 'abbreviation', 'duration', 'faculty', 'level',\n             'affiliation', 'description', 'discipline', 'course_shortdescription',\n             'course_outcome', 'eligibility_criteria', 'created_date', 'updated_date'\n-        ]\n-z\n\\ No newline at end of file\n+        ]\n\\ No newline at end of file\n"
                 }
             ],
             "date": 1739267387711,
