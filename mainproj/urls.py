@@ -124,7 +124,7 @@ urlpatterns = [
     path('api/accounts/',include('accounts.urls')),
     path('api/import-excel/<str:type>/',ImportExcel.as_view(),name="import_excel"),
     path('api/bulk-delete/', BulkDelete.as_view(), name="bulk_delete"),
-     path("api/", include("notification.urls")),
+    #  path("api/", include("notification.urls")),
     # path('api/',include(requestsubmission_router.urls)),
     # path('api/',include(coursemanagement_router.urls)),
     # path('api/',include(socialmedia_router.urls)),

@@ -3,11 +3,15 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 0,
+            "activePatchIndex": 1,
             "patches": [
                 {
                     "date": 1739684945239,
                     "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1739868564884,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n-from rest_framework import serializers\n-from notifications.models import Notification  # The Notification model from django-notifications-hq\n+# from rest_framework import serializers\n+# from notifications.models import Notification  # The Notification model from django-notifications-hq\n \n-class NotificationSerializer(serializers.ModelSerializer):\n-    class Meta:\n-        model = Notification\n-        fields = [\"id\", \"recipient\", \"actor\", \"verb\", \"description\", \"timestamp\", \"unread\"]\n+# class NotificationSerializer(serializers.ModelSerializer):\n+#     class Meta:\n+#         model = Notification\n+#         fields = [\"id\", \"recipient\", \"actor\", \"verb\", \"description\", \"timestamp\", \"unread\"]\n"
                 }
             ],
             "date": 1739684945239,

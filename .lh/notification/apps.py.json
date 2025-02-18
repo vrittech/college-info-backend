@@ -3,11 +3,15 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 0,
+            "activePatchIndex": 1,
             "patches": [
                 {
                     "date": 1739685787790,
                     "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1739868569305,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,10 +1,10 @@\n-from django.apps import AppConfig\n+# from django.apps import AppConfig\n \n \n-class NotificationConfig(AppConfig):\n-    default_auto_field = 'django.db.models.BigAutoField'\n-    name = 'notification'\n+# class NotificationConfig(AppConfig):\n+#     default_auto_field = 'django.db.models.BigAutoField'\n+#     name = 'notification'\n     \n-    def ready(self):\n-        # Import the signals module to ensure it's registered when the app is ready\n-        import notifications.signals\n+#     def ready(self):\n+#         # Import the signals module to ensure it's registered when the app is ready\n+#         import notification.signals\n"
                 }
             ],
             "date": 1739685787790,

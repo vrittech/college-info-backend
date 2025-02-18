@@ -89,8 +89,8 @@ INSTALLED_APPS = [
     'contact',
     'requestsubmission',
     'notification',
-    'notifications',  # Django Notifications HQ
-    'channels',  # Required for real-time updates (Django Channels)
+    # 'notifications',  # Django Notifications HQ
+    # 'channels',  # Required for real-time updates (Django Channels)
 ]
 
 AUTH_USER_MODEL = 'accounts.CustomUser'

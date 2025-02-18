@@ -3,11 +3,15 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 0,
+            "activePatchIndex": 1,
             "patches": [
                 {
                     "date": 1739685008020,
                     "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1739868617319,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,14 +1,14 @@\n-from django.urls import path\n-from .views import (\n-    NotificationListView,\n-    UnreadNotificationsView,\n-    MarkNotificationAsReadView,\n-    SendNotificationView,\n-)\n+# from django.urls import path\n+# from .views import (\n+#     NotificationListView,\n+#     UnreadNotificationsView,\n+#     MarkNotificationAsReadView,\n+#     SendNotificationView,\n+# )\n \n-urlpatterns = [\n-    path(\"notifications/\", NotificationListView.as_view(), name=\"notifications_list\"),\n-    path(\"notifications/unread/\", UnreadNotificationsView.as_view(), name=\"unread_notifications\"),\n-    path(\"notifications/read/<int:pk>/\", MarkNotificationAsReadView.as_view(), name=\"mark_as_read\"),\n-    path(\"notifications/send/\", SendNotificationView.as_view(), name=\"send_notification\"),\n-]\n+# urlpatterns = [\n+#     path(\"notifications/\", NotificationListView.as_view(), name=\"notifications_list\"),\n+#     path(\"notifications/unread/\", UnreadNotificationsView.as_view(), name=\"unread_notifications\"),\n+#     path(\"notifications/read/<int:pk>/\", MarkNotificationAsReadView.as_view(), name=\"mark_as_read\"),\n+#     path(\"notifications/send/\", SendNotificationView.as_view(), name=\"send_notification\"),\n+# ]\n"
                 }
             ],
             "date": 1739685008020,
