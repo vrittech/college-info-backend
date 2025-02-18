@@ -5,7 +5,7 @@ from affiliation.models import Affiliation
 from collegetype.models import CollegeType
 # from coursesandfees.models import CoursesAndFees
 from facilities.models import Facility
-from socialmedia.models import SocialMedia
+from socialmedia.models import SocialMedia,CollegeSocialMedia
 from district.models import District
 from discipline.models import Discipline
 from gallery.models import Gallery
@@ -50,7 +50,7 @@ class College(SEOFields):
     affiliated = models.ForeignKey(Affiliation, on_delete=models.CASCADE,related_name='college_affiliation')
     college_type = models.ForeignKey(CollegeType, on_delete=models.CASCADE,related_name='college_type')
     discipline = models.ManyToManyField(Discipline, related_name='college_discipline')
-    social_media = models.ManyToManyField(SocialMedia)
+    # social_media = models.ManyToManyField(CollegeSocialMedia,blank=True)
     google_map_link = models.URLField(blank=True, null=True)
     latitude = models.CharField(max_length= 255)
     longitude = models.CharField(max_length= 255)

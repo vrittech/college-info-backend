@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 65,
+            "activePatchIndex": 83,
             "patches": [
                 {
                     "date": 1733477116456,
@@ -268,6 +268,78 @@
                 {
                     "date": 1739427054404,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -167,9 +167,9 @@\n \n     def to_representation(self, instance):\n         \"\"\"Customize the response to include full objects for related fields.\"\"\"\n         response = super().to_representation(instance)\n-        response[\"slug\"] = instance.slug\n+        # response[\"slug\"] = instance.slug\n \n         # Replace IDs with full nested objects for foreign key fields\n         response[\"district\"] = DistrictSerializer(instance.district).data\n         response[\"affiliated\"] = AffiliationSerializer(instance.affiliated).data\n"
+                },
+                {
+                    "date": 1739857365955,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n from rest_framework import serializers\n-from ..models import College, District, Affiliation, CollegeType, Discipline, SocialMedia, Facility\n+from ..models import College, District, Affiliation, CollegeType, Discipline Facility\n from formprogress.models import FormStepProgress\n import ast\n \n \n"
+                },
+                {
+                    "date": 1739857371262,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,7 @@\n from rest_framework import serializers\n-from ..models import College, District, Affiliation, CollegeType, Discipline Facility\n+from ..models import College, District, Affiliation, CollegeType, Discipline, Facility\n+from \n from formprogress.models import FormStepProgress\n import ast\n \n \n"
+                },
+                {
+                    "date": 1739857382251,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n from rest_framework import serializers\n from ..models import College, District, Affiliation, CollegeType, Discipline, Facility\n-from \n+from socialmedia.models import SocialMedia,CollegeSocialMedia\n from formprogress.models import FormStepProgress\n import ast\n \n \n@@ -53,9 +53,9 @@\n \n # Nested serializer for SocialMedia\n class SocialMediaSerializer(serializers.ModelSerializer):\n     class Meta:\n-        model = SocialMedia\n+        model = CollegeSocialMedia\n         fields = '__all__'\n \n # Nested serializer for Facility\n class FacilitySerializer(serializers.ModelSerializer):\n"
+                },
+                {
+                    "date": 1739857774137,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -104,8 +104,14 @@\n     # ManyToMany fields\n     discipline = serializers.PrimaryKeyRelatedField(queryset=Discipline.objects.all(), many=True)\n     social_media = serializers.PrimaryKeyRelatedField(queryset=SocialMedia.objects.all(), many=True, required=False)\n     facilities = serializers.PrimaryKeyRelatedField(queryset=Facility.objects.all(), many=True, required=False)\n+    \n+    def to_internal_value(self, data):\n+        \"\"\"Converts stringified social media JSON into a list before validation.\"\"\"\n+        if data.get('social_media'):\n+            data['social_media'] = str_to_list(data, 'social_media')  # Convert if stringified\n+        return super().to_internal_value(data)\n \n     class Meta:\n         model = College\n         fields = '__all__'\n"
+                },
+                {
+                    "date": 1739857833464,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -121,9 +121,9 @@\n         request = self.context.get(\"request\")\n \n         # Extract ManyToMany relationships from the request\n         discipline_ids = request.data.get(\"discipline\", [])\n-        social_media_ids = request.data.get(\"social_media\", [])\n+        social_media_data = validated_data.pop(\"social_media\", None) \n         facilities_ids = request.data.get(\"facilities\", [])\n \n         # Remove ManyToMany fields from validated_data\n         validated_data.pop(\"discipline\", None)\n"
+                },
+                {
+                    "date": 1739857845521,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -121,9 +121,9 @@\n         request = self.context.get(\"request\")\n \n         # Extract ManyToMany relationships from the request\n         discipline_ids = request.data.get(\"discipline\", [])\n-        social_media_data = validated_data.pop(\"social_media\", None) \n+        social_media_data = request.data.get(\"social_media\", None) \n         facilities_ids = request.data.get(\"facilities\", [])\n \n         # Remove ManyToMany fields from validated_data\n         validated_data.pop(\"discipline\", None)\n"
+                },
+                {
+                    "date": 1739857851172,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -121,9 +121,9 @@\n         request = self.context.get(\"request\")\n \n         # Extract ManyToMany relationships from the request\n         discipline_ids = request.data.get(\"discipline\", [])\n-        social_media_data = request.data.get(\"social_media\", None) \n+        social_media = request.data.get(\"social_media\", None) \n         facilities_ids = request.data.get(\"facilities\", [])\n \n         # Remove ManyToMany fields from validated_data\n         validated_data.pop(\"discipline\", None)\n"
+                },
+                {
+                    "date": 1739857861199,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -121,9 +121,9 @@\n         request = self.context.get(\"request\")\n \n         # Extract ManyToMany relationships from the request\n         discipline_ids = request.data.get(\"discipline\", [])\n-        social_media = request.data.get(\"social_media\", None) \n+        social_media_data = request.data.get(\"social_media\", None) \n         facilities_ids = request.data.get(\"facilities\", [])\n \n         # Remove ManyToMany fields from validated_data\n         validated_data.pop(\"discipline\", None)\n"
+                },
+                {
+                    "date": 1739857928851,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -135,10 +135,8 @@\n \n         # Set ManyToMany relationships\n         if discipline_ids:\n             college.discipline.set(Discipline.objects.filter(id__in=discipline_ids))\n-        if social_media_ids:\n-            college.social_media.set(SocialMedia.objects.filter(id__in=social_media_ids))\n         if facilities_ids:\n             college.facilities.set(Facility.objects.filter(id__in=facilities_ids))\n \n         return college\n"
+                },
+                {
+                    "date": 1739857934503,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -137,8 +137,17 @@\n         if discipline_ids:\n             college.discipline.set(Discipline.objects.filter(id__in=discipline_ids))\n         if facilities_ids:\n             college.facilities.set(Facility.objects.filter(id__in=facilities_ids))\n+        \n+        # Manually handle social media data\n+        for social in social_media_data:\n+            CollegeSocialMedia.objects.create(\n+                college=college,\n+                platform=social.get(\"platform\"),\n+                url=social.get(\"url\"),\n+                username=social.get(\"username\")\n+            )\n \n         return college\n \n     def update(self, instance, validated_data):\n"
+                },
+                {
+                    "date": 1739857952772,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -155,9 +155,9 @@\n         request = self.context.get(\"request\")\n \n         # Extract ManyToMany relationships from the request\n         discipline_ids = request.data.get(\"discipline\", None)\n-        social_media_ids = request.data.get(\"social_media\", None)\n+        social_media = request.data.get(\"social_media\", None)\n         facilities_ids = request.data.get(\"facilities\", None)\n \n         # Remove ManyToMany fields from validated_data\n         validated_data.pop(\"discipline\", None)\n"
+                },
+                {
+                    "date": 1739857993007,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -155,14 +155,14 @@\n         request = self.context.get(\"request\")\n \n         # Extract ManyToMany relationships from the request\n         discipline_ids = request.data.get(\"discipline\", None)\n-        social_media = request.data.get(\"social_media\", None)\n+        social_media_data = request.data.get(\"social_media\", None)\n         facilities_ids = request.data.get(\"facilities\", None)\n \n         # Remove ManyToMany fields from validated_data\n         validated_data.pop(\"discipline\", None)\n-        validated_data.pop(\"social_media\", None)\n+        # validated_data.pop(\"social_media\", None)\n         validated_data.pop(\"facilities\", None)\n \n         # Update ForeignKey fields\n         for attr, value in validated_data.items():\n"
+                },
+                {
+                    "date": 1739858003428,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -171,13 +171,26 @@\n \n         # Update ManyToMany relationships\n         if discipline_ids is not None:\n             instance.discipline.set(Discipline.objects.filter(id__in=discipline_ids))\n-        if social_media_ids is not None:\n-            instance.social_media.set(SocialMedia.objects.filter(id__in=social_media_ids))\n+        # if social_media_ids is not None:\n+        #     instance.social_media.set(SocialMedia.objects.filter(id__in=social_media_ids))\n         if facilities_ids is not None:\n             instance.facilities.set(Facility.objects.filter(id__in=facilities_ids))\n+            \n+        if social_media_data is not None:\n+            # Delete existing social media records\n+            CollegeSocialMedia.objects.filter(college=instance).delete()\n \n+            # Recreate social media entries\n+            for social in social_media_data:\n+                CollegeSocialMedia.objects.create(\n+                    college=instance,\n+                    platform=social.get(\"platform\"),\n+                    url=social.get(\"url\"),\n+                    username=social.get(\"username\")\n+                )\n+\n         return instance\n \n     def to_representation(self, instance):\n         \"\"\"Customize the response to include full objects for related fields.\"\"\"\n"
+                },
+                {
+                    "date": 1739858189180,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -206,8 +206,8 @@\n         )\n \n         # Replace IDs with full nested objects for many-to-many fields\n         response[\"discipline\"] = DisciplineSerializer(instance.discipline.all(), many=True).data\n-        response[\"social_media\"] = SocialMediaSerializer(instance.social_media.all(), many=True).data\n+        # response[\"social_media\"] = SocialMediaSerializer(instance.social_media.all(), many=True).data\n         response[\"facilities\"] = FacilitySerializer(instance.facilities.all(), many=True).data\n \n         return response\n"
+                },
+                {
+                    "date": 1739858371138,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -184,13 +184,15 @@\n             # Recreate social media entries\n             for social in social_media_data:\n                 CollegeSocialMedia.objects.create(\n                     college=instance,\n-                    platform=social.get(\"platform\"),\n-                    url=social.get(\"url\"),\n-                    username=social.get(\"username\")\n+                    name=social.get(\"name\"),\n+                    link=social.get(\"link\"),\n+                    icon=social.get(\"icon\"),\n+                    is_show=social.get(\"is_show\", False)\n                 )\n \n+\n         return instance\n \n     def to_representation(self, instance):\n         \"\"\"Customize the response to include full objects for related fields.\"\"\"\n@@ -208,6 +210,15 @@\n         # Replace IDs with full nested objects for many-to-many fields\n         response[\"discipline\"] = DisciplineSerializer(instance.discipline.all(), many=True).data\n         # response[\"social_media\"] = SocialMediaSerializer(instance.social_media.all(), many=True).data\n         response[\"facilities\"] = FacilitySerializer(instance.facilities.all(), many=True).data\n+        # Fetch social media manually\n+        response[\"social_media\"] = [\n+            {\n+                \"platform\": sm.platform,\n+                \"url\": sm.url,\n+                \"username\": sm.username\n+            }\n+            for sm in CollegeSocialMedia.objects.filter(college=instance)\n+        ]\n \n         return response\n"
+                },
+                {
+                    "date": 1739858515448,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -210,15 +210,9 @@\n         # Replace IDs with full nested objects for many-to-many fields\n         response[\"discipline\"] = DisciplineSerializer(instance.discipline.all(), many=True).data\n         # response[\"social_media\"] = SocialMediaSerializer(instance.social_media.all(), many=True).data\n         response[\"facilities\"] = FacilitySerializer(instance.facilities.all(), many=True).data\n-        # Fetch social media manually\n-        response[\"social_media\"] = [\n-            {\n-                \"platform\": sm.platform,\n-                \"url\": sm.url,\n-                \"username\": sm.username\n-            }\n-            for sm in CollegeSocialMedia.objects.filter(college=instance)\n-        ]\n+        response[\"social_media\"] = CollegeSocialMediaSerializer(\n+            CollegeSocialMedia.objects.filter(college=instance), many=True\n+        ).data\n \n         return response\n"
+                },
+                {
+                    "date": 1739858577773,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -142,11 +142,12 @@\n         # Manually handle social media data\n         for social in social_media_data:\n             CollegeSocialMedia.objects.create(\n                 college=college,\n-                platform=social.get(\"platform\"),\n-                url=social.get(\"url\"),\n-                username=social.get(\"username\")\n+                name=social.get(\"name\"),\n+                link=social.get(\"link\"),\n+                icon=social.get(\"icon\"),\n+                is_show=social.get(\"is_show\", False)\n             )\n \n         return college\n \n"
+                },
+                {
+                    "date": 1739858599916,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -211,9 +211,9 @@\n         # Replace IDs with full nested objects for many-to-many fields\n         response[\"discipline\"] = DisciplineSerializer(instance.discipline.all(), many=True).data\n         # response[\"social_media\"] = SocialMediaSerializer(instance.social_media.all(), many=True).data\n         response[\"facilities\"] = FacilitySerializer(instance.facilities.all(), many=True).data\n-        response[\"social_media\"] = CollegeSocialMediaSerializer(\n+        response[\"social_media\"] = SocialMediaSerializer(\n             CollegeSocialMedia.objects.filter(college=instance), many=True\n         ).data\n \n         return response\n"
                 }
             ],
             "date": 1733477116456,

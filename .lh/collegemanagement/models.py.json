@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 224,
+            "activePatchIndex": 229,
             "patches": [
                 {
                     "date": 1727170911785,
@@ -904,6 +904,26 @@
                 {
                     "date": 1739770623074,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -102,9 +102,9 @@\n             ('manage_faq', 'Manage faq'),\n         ]\n \n class CollegeGallery(models.Model):\n-    college = models.ForeignKey(College, on_delete=models.CASCADE,related_name='college_gallery')\n+    college = models.ForeignKey(College, on_delete=models.CASCADE,related_name='college_gallery',)\n     image = models.ImageField(upload_to='college/gallery/',null=True,blank=True)\n     description = models.TextField(blank=True)\n     created_date = models.DateField(auto_now_add=True)\n     updated_date = models.DateField(auto_now=True)\n"
+                },
+                {
+                    "date": 1739856538600,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -49,9 +49,9 @@\n     email = models.EmailField(max_length=255)\n     affiliated = models.ForeignKey(Affiliation, on_delete=models.CASCADE,related_name='college_affiliation')\n     college_type = models.ForeignKey(CollegeType, on_delete=models.CASCADE,related_name='college_type')\n     discipline = models.ManyToManyField(Discipline, related_name='college_discipline')\n-    social_media = models.ManyToManyField(SocialMedia)\n+    social_media = models.ManyToManyField(SocialMedia,)\n     google_map_link = models.URLField(blank=True, null=True)\n     latitude = models.CharField(max_length= 255)\n     longitude = models.CharField(max_length= 255)\n     about = models.TextField(null = True,blank=True)\n@@ -102,9 +102,9 @@\n             ('manage_faq', 'Manage faq'),\n         ]\n \n class CollegeGallery(models.Model):\n-    college = models.ForeignKey(College, on_delete=models.CASCADE,related_name='college_gallery',)\n+    college = models.ForeignKey(College, on_delete=models.CASCADE,related_name='college_gallery',null=True,blank=True)\n     image = models.ImageField(upload_to='college/gallery/',null=True,blank=True)\n     description = models.TextField(blank=True)\n     created_date = models.DateField(auto_now_add=True)\n     updated_date = models.DateField(auto_now=True)\n"
+                },
+                {
+                    "date": 1739856543969,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -49,9 +49,9 @@\n     email = models.EmailField(max_length=255)\n     affiliated = models.ForeignKey(Affiliation, on_delete=models.CASCADE,related_name='college_affiliation')\n     college_type = models.ForeignKey(CollegeType, on_delete=models.CASCADE,related_name='college_type')\n     discipline = models.ManyToManyField(Discipline, related_name='college_discipline')\n-    social_media = models.ManyToManyField(SocialMedia,)\n+    social_media = models.ManyToManyField(SocialMedia,blank=True)\n     google_map_link = models.URLField(blank=True, null=True)\n     latitude = models.CharField(max_length= 255)\n     longitude = models.CharField(max_length= 255)\n     about = models.TextField(null = True,blank=True)\n"
+                },
+                {
+                    "date": 1739856823987,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,9 +4,9 @@\n # from location.models import Location\n from collegetype.models import CollegeType\n # from coursesandfees.models import CoursesAndFees\n from facilities.models import Facility\n-from socialmedia.models import SocialMedia\n+from socialmedia.models import SocialMedia,c\n from district.models import District\n from discipline.models import Discipline\n from gallery.models import Gallery\n # from accounts.models import CustomUser\n"
+                },
+                {
+                    "date": 1739856830607,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,9 +4,9 @@\n # from location.models import Location\n from collegetype.models import CollegeType\n # from coursesandfees.models import CoursesAndFees\n from facilities.models import Facility\n-from socialmedia.models import SocialMedia,c\n+from socialmedia.models import SocialMedia,CollegeSocialMedia\n from district.models import District\n from discipline.models import Discipline\n from gallery.models import Gallery\n # from accounts.models import CustomUser\n@@ -49,9 +49,9 @@\n     email = models.EmailField(max_length=255)\n     affiliated = models.ForeignKey(Affiliation, on_delete=models.CASCADE,related_name='college_affiliation')\n     college_type = models.ForeignKey(CollegeType, on_delete=models.CASCADE,related_name='college_type')\n     discipline = models.ManyToManyField(Discipline, related_name='college_discipline')\n-    social_media = models.ManyToManyField(SocialMedia,blank=True)\n+    social_media = models.ManyToManyField(CollegeSocialMedia,blank=True)\n     google_map_link = models.URLField(blank=True, null=True)\n     latitude = models.CharField(max_length= 255)\n     longitude = models.CharField(max_length= 255)\n     about = models.TextField(null = True,blank=True)\n"
+                },
+                {
+                    "date": 1739857269793,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -49,9 +49,9 @@\n     email = models.EmailField(max_length=255)\n     affiliated = models.ForeignKey(Affiliation, on_delete=models.CASCADE,related_name='college_affiliation')\n     college_type = models.ForeignKey(CollegeType, on_delete=models.CASCADE,related_name='college_type')\n     discipline = models.ManyToManyField(Discipline, related_name='college_discipline')\n-    social_media = models.ManyToManyField(CollegeSocialMedia,blank=True)\n+    # social_media = models.ManyToManyField(CollegeSocialMedia,blank=True)\n     google_map_link = models.URLField(blank=True, null=True)\n     latitude = models.CharField(max_length= 255)\n     longitude = models.CharField(max_length= 255)\n     about = models.TextField(null = True,blank=True)\n"
                 }
             ],
             "date": 1727170911784,

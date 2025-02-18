@@ -1,0 +1,22 @@
+{
+    "sourceFile": "socialmedia/viewsets/collegesocialmedia_viewsets.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 1,
+            "patches": [
+                {
+                    "date": 1739856844779,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1739856852785,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,18 +8,18 @@\n class collegesocialmediaViewsets(viewsets.ModelViewSet):\n     serializer_class = CollegeSocialMediaListSerializers\n     # permission_classes = [socialmediaPermission]\n     # authentication_classes = [JWTAuthentication]\n-    #pagination_class = MyPageNumberPagination\n+    pagination_class = MyPageNumberPagination\n     queryset = CollegeSocialMedia.objects.all()\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     search_fields = ['id']\n     ordering_fields = ['id']\n \n-    # filterset_fields = {\n-    #     'id': ['exact'],\n-    # }\n+    filterset_fields = {\n+        'id': ['exact'],\n+    }\n \n     def get_queryset(self):\n         queryset = super().get_queryset()\n         return queryset\n"
+                }
+            ],
+            "date": 1739856844779,
+            "name": "Commit-0",
+            "content": "from rest_framework import viewsets\nfrom rest_framework.filters import SearchFilter, OrderingFilter\nfrom django_filters.rest_framework import DjangoFilterBackend\nfrom ..models import CollegeSocialMedia\nfrom ..serializers.collegesocialmedia_serializers import CollegeSocialMediaListSerializers, CollegeSocialMediaRetrieveSerializers, CollegeSocialMediaWriteSerializers\nfrom ..utilities.importbase import *\n\nclass collegesocialmediaViewsets(viewsets.ModelViewSet):\n    serializer_class = CollegeSocialMediaListSerializers\n    # permission_classes = [socialmediaPermission]\n    # authentication_classes = [JWTAuthentication]\n    #pagination_class = MyPageNumberPagination\n    queryset = CollegeSocialMedia.objects.all()\n\n    filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n    search_fields = ['id']\n    ordering_fields = ['id']\n\n    # filterset_fields = {\n    #     'id': ['exact'],\n    # }\n\n    def get_queryset(self):\n        queryset = super().get_queryset()\n        return queryset\n\n    def get_serializer_class(self):\n        if self.action in ['create', 'update', 'partial_update']:\n            return CollegeSocialMediaWriteSerializers\n        elif self.action == 'retrieve':\n            return CollegeSocialMediaRetrieveSerializers\n        return super().get_serializer_class()\n\n    # @action(detail=False, methods=['get'], name=\"action_name\", url_path=\"url_path\")\n    # def action_name(self, request, *args, **kwargs):\n    #     return super().list(request, *args, **kwargs)\n\n"
+        }
+    ]
+}

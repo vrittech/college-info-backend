@@ -16,3 +16,20 @@ class SocialMedia(models.Model):
         permissions = [
             ('manage_socialmedia', 'Manage Social Media'),
         ]
+        
+class CollegeSocialMedia(models.Model):
+    # social_media = models.ForeignKey(SocialMedia, on_delete=models.CASCADE,related_name='social_media',blank=True,null=True)
+    name= models.CharField(max_length=100,null= True,blank=True) 
+    link = models.URLField(max_length=200)
+    icon=models.ImageField(upload_to='components/banner',null = True,blank= True)
+    is_show = models.BooleanField(default=False)
+    updated_date = models.DateTimeField(auto_now=True, null = True,blank = True)
+    college = models.ForeignKey('collegemanagement.College', on_delete=models.CASCADE,related_name='college_socialmedia',null=True,blank=True)  
+    created_date = models.DateField(auto_now_add=True)
+    updated_date = models.DateField(auto_now=True)
+    
+    def __str__(self):
+        return self.social_media.name
+    permissions = [
+        ('manage_college_socialmedia', 'Manage college socialmedia'),
+    ]

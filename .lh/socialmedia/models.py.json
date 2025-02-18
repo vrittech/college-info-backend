@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 14,
+            "activePatchIndex": 27,
             "patches": [
                 {
                     "date": 1726725092271,
@@ -64,6 +64,58 @@
                 {
                     "date": 1739344094041,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,6 +13,6 @@\n         return self.name\n     \n     class Meta:\n         permissions = [\n-            ('manage_social_media', 'Manage Social Media'),\n+            ('manage_socialmedia', 'Manage Social Media'),\n         ]\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1739856633574,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,5 +14,6 @@\n     \n     class Meta:\n         permissions = [\n             ('manage_socialmedia', 'Manage Social Media'),\n-        ]\n\\ No newline at end of file\n+        ]\n+        \n"
+                },
+                {
+                    "date": 1739856643592,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,4 +16,5 @@\n         permissions = [\n             ('manage_socialmedia', 'Manage Social Media'),\n         ]\n         \n+class College\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1739856651620,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,5 +16,11 @@\n         permissions = [\n             ('manage_socialmedia', 'Manage Social Media'),\n         ]\n         \n-class College\n\\ No newline at end of file\n+class CollegeSocialMedia(models.Model):\n+    social_media = models.ForeignKey(SocialMedia, on_delete=models.CASCADE,related_name='college_socialmedia')\n+    college = models.ForeignKey('collegemanagement.College', on_delete=models.CASCADE,related_name='college_socialmedia')\n+    created_date = models.DateField(auto_now_add=True)\n+    updated_date = models.DateField(auto_now=True)\n+    permissions = [\n+        ('manage_college_socialmedia', 'Manage college socialmedia'),\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1739856665124,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,5 +22,6 @@\n     college = models.ForeignKey('collegemanagement.College', on_delete=models.CASCADE,related_name='college_socialmedia')\n     created_date = models.DateField(auto_now_add=True)\n     updated_date = models.DateField(auto_now=True)\n     permissions = [\n-        ('manage_college_socialmedia', 'Manage college socialmedia'),\n\\ No newline at end of file\n+        ('manage_college_socialmedia', 'Manage college socialmedia'),\n+    ]\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1739857059294,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,9 +18,9 @@\n         ]\n         \n class CollegeSocialMedia(models.Model):\n     social_media = models.ForeignKey(SocialMedia, on_delete=models.CASCADE,related_name='college_socialmedia')\n-    college = models.ForeignKey('collegemanagement.College', on_delete=models.CASCADE,related_name='college_socialmedia')\n+    college = models.ForeignKey('collegemanagement.College', on_delete=models.CASCADE,related_name='college_socialmedia',)\n     created_date = models.DateField(auto_now_add=True)\n     updated_date = models.DateField(auto_now=True)\n     permissions = [\n         ('manage_college_socialmedia', 'Manage college socialmedia'),\n"
+                },
+                {
+                    "date": 1739857065119,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,9 +18,9 @@\n         ]\n         \n class CollegeSocialMedia(models.Model):\n     social_media = models.ForeignKey(SocialMedia, on_delete=models.CASCADE,related_name='college_socialmedia')\n-    college = models.ForeignKey('collegemanagement.College', on_delete=models.CASCADE,related_name='college_socialmedia',)\n+    college = models.ForeignKey('collegemanagement.College', on_delete=models.CASCADE,related_name='college_socialmedia',null=True,blank=True)  \n     created_date = models.DateField(auto_now_add=True)\n     updated_date = models.DateField(auto_now=True)\n     permissions = [\n         ('manage_college_socialmedia', 'Manage college socialmedia'),\n"
+                },
+                {
+                    "date": 1739857140209,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,9 +17,9 @@\n             ('manage_socialmedia', 'Manage Social Media'),\n         ]\n         \n class CollegeSocialMedia(models.Model):\n-    social_media = models.ForeignKey(SocialMedia, on_delete=models.CASCADE,related_name='college_socialmedia')\n+    social_media = models.ForeignKey(SocialMedia, on_delete=models.CASCADE,related_name='college_socialmedia',blank=)\n     college = models.ForeignKey('collegemanagement.College', on_delete=models.CASCADE,related_name='college_socialmedia',null=True,blank=True)  \n     created_date = models.DateField(auto_now_add=True)\n     updated_date = models.DateField(auto_now=True)\n     permissions = [\n"
+                },
+                {
+                    "date": 1739857150985,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,11 +17,13 @@\n             ('manage_socialmedia', 'Manage Social Media'),\n         ]\n         \n class CollegeSocialMedia(models.Model):\n-    social_media = models.ForeignKey(SocialMedia, on_delete=models.CASCADE,related_name='college_socialmedia',blank=)\n+    social_media = models.ForeignKey(SocialMedia, on_delete=models.CASCADE,related_name='college_socialmedia',blank=True,null=True)\n     college = models.ForeignKey('collegemanagement.College', on_delete=models.CASCADE,related_name='college_socialmedia',null=True,blank=True)  \n     created_date = models.DateField(auto_now_add=True)\n     updated_date = models.DateField(auto_now=True)\n+    \n+    \n     permissions = [\n         ('manage_college_socialmedia', 'Manage college socialmedia'),\n     ]\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1739857157300,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,8 +22,9 @@\n     college = models.ForeignKey('collegemanagement.College', on_delete=models.CASCADE,related_name='college_socialmedia',null=True,blank=True)  \n     created_date = models.DateField(auto_now_add=True)\n     updated_date = models.DateField(auto_now=True)\n     \n-    \n+    def __str__(self):\n+        return self.social_media\n     permissions = [\n         ('manage_college_socialmedia', 'Manage college socialmedia'),\n     ]\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1739857301690,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,14 +17,14 @@\n             ('manage_socialmedia', 'Manage Social Media'),\n         ]\n         \n class CollegeSocialMedia(models.Model):\n-    social_media = models.ForeignKey(SocialMedia, on_delete=models.CASCADE,related_name='college_socialmedia',blank=True,null=True)\n+    social_media = models.ForeignKey(SocialMedia, on_delete=models.CASCADE,related_name='socialmedia',blank=True,null=True)\n     college = models.ForeignKey('collegemanagement.College', on_delete=models.CASCADE,related_name='college_socialmedia',null=True,blank=True)  \n     created_date = models.DateField(auto_now_add=True)\n     updated_date = models.DateField(auto_now=True)\n     \n     def __str__(self):\n-        return self.social_media\n+        return self.social_media.name\n     permissions = [\n         ('manage_college_socialmedia', 'Manage college socialmedia'),\n     ]\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1739858019769,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,9 +17,9 @@\n             ('manage_socialmedia', 'Manage Social Media'),\n         ]\n         \n class CollegeSocialMedia(models.Model):\n-    social_media = models.ForeignKey(SocialMedia, on_delete=models.CASCADE,related_name='socialmedia',blank=True,null=True)\n+    # social_media = models.ForeignKey(SocialMedia, on_delete=models.CASCADE,related_name='social_media',blank=True,null=True)\n     college = models.ForeignKey('collegemanagement.College', on_delete=models.CASCADE,related_name='college_socialmedia',null=True,blank=True)  \n     created_date = models.DateField(auto_now_add=True)\n     updated_date = models.DateField(auto_now=True)\n     \n"
+                },
+                {
+                    "date": 1739858044423,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,8 +18,14 @@\n         ]\n         \n class CollegeSocialMedia(models.Model):\n     # social_media = models.ForeignKey(SocialMedia, on_delete=models.CASCADE,related_name='social_media',blank=True,null=True)\n+    name= models.CharField(max_length=100,null= True,blank=True) \n+    link = models.URLField(max_length=200)\n+    icon=models.ImageField(upload_to='components/banner',null = True,blank= True)\n+    is_show = models.BooleanField(default=False)\n+    created_date = models.DateTimeField(auto_now_add=True, null = True,blank = True)\n+    updated_date = models.DateTimeField(auto_now=True, null = True,blank = True)\n     college = models.ForeignKey('collegemanagement.College', on_delete=models.CASCADE,related_name='college_socialmedia',null=True,blank=True)  \n     created_date = models.DateField(auto_now_add=True)\n     updated_date = models.DateField(auto_now=True)\n     \n"
+                },
+                {
+                    "date": 1739858296813,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,9 +22,8 @@\n     name= models.CharField(max_length=100,null= True,blank=True) \n     link = models.URLField(max_length=200)\n     icon=models.ImageField(upload_to='components/banner',null = True,blank= True)\n     is_show = models.BooleanField(default=False)\n-    created_date = models.DateTimeField(auto_now_add=True, null = True,blank = True)\n     updated_date = models.DateTimeField(auto_now=True, null = True,blank = True)\n     college = models.ForeignKey('collegemanagement.College', on_delete=models.CASCADE,related_name='college_socialmedia',null=True,blank=True)  \n     created_date = models.DateField(auto_now_add=True)\n     updated_date = models.DateField(auto_now=True)\n"
                 }
             ],
             "date": 1726725092271,
