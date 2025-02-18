@@ -126,50 +126,79 @@ class CustomUserWriteSerializer(serializers.ModelSerializer):
         }
         
 
-    def create(self, validated_data):
-        groups = validated_data.pop('groups', [])
-        social_media_data = validated_data.pop('social_media', [])
-        password = validated_data.pop('password', None)
+    def create(self, request, *args, **kwargs):
+        # Extract data from the request
+        data = request.data
+
+        # Extract groups and social media data (both as individual keys)
+        groups = [value for key, value in data.items() if key.startswith('groups[')]
+        social_media = [value for key, value in data.items() if key.startswith('social_media[')]
+
+        # If social_media wasn't provided as separate keys, try the list/dict provided directly
+        if not social_media:
+            social_media = data.get('social_media', [])
+
+        password = data.get('password', None)
 
         # Create user
-        user = User.objects.create(**validated_data)
+        user = User.objects.create(
+            username=data.get('username'),
+            email=data.get('email'),
+            # Add other fields as needed
+        )
         
         if password:
             user.set_password(password)
 
-        # Assign groups
+        # Assign groups: Convert to primary keys if necessary
         group_ids = [group.id if hasattr(group, 'id') else group for group in groups]
         user.groups.set(group_ids)  
 
-        # Assign social media (assuming it's ManyToMany)
-        if social_media_data:
-            user.social_media.set(social_media_data)
+        # Assign social media: Convert to primary keys if necessary
+        social_media_ids = [sm.id if hasattr(sm, 'id') else sm for sm in social_media]
+        if social_media_ids:
+            user.social_media.set(social_media_ids)
 
         user.save()
         return user
 
-    def update(self, instance, validated_data):
-        groups = validated_data.pop('groups', [])
-        social_media_data = validated_data.pop('social_media', [])
-        password = validated_data.pop('password', None)
+    def update(self, request, *args, **kwargs):
+        # Extract data from the request
+        data = request.data
 
-        # Update user fields
-        for attr, value in validated_data.items():
-            setattr(instance, attr, value)
+        # Get the user instance to update
+        instance = self.get_object()
+
+        # Extract groups and social media data (both as individual keys)
+        groups = [value for key, value in data.items() if key.startswith('groups[')]
+        social_media = [value for key, value in data.items() if key.startswith('social_media[')]
+        
+        # If social_media wasn't provided as separate keys, try the list/dict provided directly
+        if not social_media:
+            social_media = data.get('social_media', [])
+        
+        password = data.get('password', None)
+
+        # Update user fields (skip special fields)
+        for attr, value in data.items():
+            if attr not in ['groups', 'social_media', 'password']:
+                setattr(instance, attr, value)
 
         if password:
             instance.set_password(password)
 
-        # Convert groups into primary keys if they are objects
+        # Update groups: Convert to primary keys if necessary
         group_ids = [group.id if hasattr(group, 'id') else group for group in groups]
         instance.groups.set(group_ids)
 
-        # Assign social media (if present)
-        if social_media_data:
-            instance.social_media.set(social_media_data)
+        # Update social media: Convert to primary keys if necessary
+        social_media_ids = [sm.id if hasattr(sm, 'id') else sm for sm in social_media]
+        if social_media_ids:
+            instance.social_media.set(social_media_ids)
 
         instance.save()
         return instance
+
 
     def to_representation(self, instance):
         """Customize response to include detailed foreign key objects instead of just IDs."""
