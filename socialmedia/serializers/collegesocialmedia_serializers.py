@@ -3,10 +3,10 @@ from ..models import CollegeSocialMedia
 from socialmedia.models import SocialMedia
 from collegemanagement.models import College
 
-# class SocialMediaSerializers(serializers.ModelSerializer):
-#     class Meta:
-#         model = SocialMedia
-#         fields = '__all__'
+class SocialMediaSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = SocialMedia
+        fields = '__all__'
         
 class CollegeSerializers(serializers.ModelSerializer):
     class Meta:
@@ -17,14 +17,14 @@ class CollegeSerializers(serializers.ModelSerializer):
 
 class CollegeSocialMediaListSerializers(serializers.ModelSerializer):
     college = CollegeSerializers(read_only=True)
-    # social_media = SocialMediaSerializers(read_only=True)
+    social_media = SocialMediaSerializers(read_only=True)
     class Meta:
         model = CollegeSocialMedia
         fields = '__all__'
 
 class CollegeSocialMediaRetrieveSerializers(serializers.ModelSerializer):
     college = CollegeSerializers(read_only=True)
-    # social_media = SocialMediaSerializers(read_only=True)
+    social_media = SocialMediaSerializers(read_only=True)
     class Meta:
         model = CollegeSocialMedia
         fields = '__all__'
