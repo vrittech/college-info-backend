@@ -1,0 +1,22 @@
+{
+    "sourceFile": "socialmedia/admin.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 1,
+            "patches": [
+                {
+                    "date": 1739861647892,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1739861654887,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,7 @@\n # Register your models here.\n from django.contrib import admin\n \n # Register your models here.\n-from .models import SocialMedia, c\n+from .models import SocialMedia, CollegeSocialMedia\n+admin.site.register(SocialMedia)\n admin.site.register(SocialMedia)\n\\ No newline at end of file\n"
+                }
+            ],
+            "date": 1739861647892,
+            "name": "Commit-0",
+            "content": "# Register your models here.\nfrom django.contrib import admin\n\n# Register your models here.\nfrom .models import SocialMedia, c\nadmin.site.register(SocialMedia)"
+        }
+    ]
+}
