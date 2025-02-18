@@ -23,10 +23,17 @@ class CourseFilter(filters.FilterSet):
     created_date = filters.DateFromToRangeFilter(field_name='created_date')
     updated_date = filters.DateTimeFromToRangeFilter(field_name='updated_date')
 
+    # Filtering for multiple disciplines (ManyToMany relationship)
+    discipline = django_filters.ModelMultipleChoiceFilter(
+        field_name='discipline__id',
+        queryset=Course.objects.all().values_list('discipline__id', flat=True).distinct(),
+        conjoined=False
+    )
+
     class Meta:
         model = Course
         fields = [
             'id', 'name', 'abbreviation', 'duration', 'faculty', 'level',
-            'affiliation', 'description', 'course_shortdescription', 
+            'affiliation', 'description', 'discipline', 'course_shortdescription',
             'course_outcome', 'eligibility_criteria', 'created_date', 'updated_date'
         ]

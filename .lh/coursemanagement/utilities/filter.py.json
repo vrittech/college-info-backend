@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 1,
+            "activePatchIndex": 8,
             "patches": [
                 {
                     "date": 1739267387711,
@@ -12,6 +12,34 @@
                 {
                     "date": 1739267392856,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n import django_filters\n from django_filters import rest_framework as filters\n-from .models import Course\n+from ..models import Course\n \n class CharInFilter(django_filters.BaseInFilter, django_filters.CharFilter):\n     pass\n \n"
+                },
+                {
+                    "date": 1739893338873,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,8 +14,9 @@\n     abbreviation = CharInFilter(field_name='abbreviation', lookup_expr='in')\n     duration = NumberInFilter(field_name='duration__id', lookup_expr='in')\n     faculty = NumberInFilter(field_name='faculty__id', lookup_expr='in')\n     level = NumberInFilter(field_name='level__id', lookup_expr='in')\n+    level = NumberInFilter(field_name='level__id', lookup_expr='in')\n     affiliation = NumberInFilter(field_name='affiliation__id', lookup_expr='in')\n     description = CharInFilter(field_name='description', lookup_expr='in')\n     course_shortdescription = CharInFilter(field_name='course_shortdescription', lookup_expr='in')\n     course_outcome = CharInFilter(field_name='course_outcome', lookup_expr='in')\n"
+                },
+                {
+                    "date": 1739893344302,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,9 +14,9 @@\n     abbreviation = CharInFilter(field_name='abbreviation', lookup_expr='in')\n     duration = NumberInFilter(field_name='duration__id', lookup_expr='in')\n     faculty = NumberInFilter(field_name='faculty__id', lookup_expr='in')\n     level = NumberInFilter(field_name='level__id', lookup_expr='in')\n-    level = NumberInFilter(field_name='level__id', lookup_expr='in')\n+    levdisciplineel = NumberInFilter(field_name='level__id', lookup_expr='in')\n     affiliation = NumberInFilter(field_name='affiliation__id', lookup_expr='in')\n     description = CharInFilter(field_name='description', lookup_expr='in')\n     course_shortdescription = CharInFilter(field_name='course_shortdescription', lookup_expr='in')\n     course_outcome = CharInFilter(field_name='course_outcome', lookup_expr='in')\n"
+                },
+                {
+                    "date": 1739893349493,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,9 +14,9 @@\n     abbreviation = CharInFilter(field_name='abbreviation', lookup_expr='in')\n     duration = NumberInFilter(field_name='duration__id', lookup_expr='in')\n     faculty = NumberInFilter(field_name='faculty__id', lookup_expr='in')\n     level = NumberInFilter(field_name='level__id', lookup_expr='in')\n-    levdisciplineel = NumberInFilter(field_name='level__id', lookup_expr='in')\n+    discipline = NumberInFilter(field_name='level__id', lookup_expr='in')\n     affiliation = NumberInFilter(field_name='affiliation__id', lookup_expr='in')\n     description = CharInFilter(field_name='description', lookup_expr='in')\n     course_shortdescription = CharInFilter(field_name='course_shortdescription', lookup_expr='in')\n     course_outcome = CharInFilter(field_name='course_outcome', lookup_expr='in')\n"
+                },
+                {
+                    "date": 1739893363034,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,9 +14,9 @@\n     abbreviation = CharInFilter(field_name='abbreviation', lookup_expr='in')\n     duration = NumberInFilter(field_name='duration__id', lookup_expr='in')\n     faculty = NumberInFilter(field_name='faculty__id', lookup_expr='in')\n     level = NumberInFilter(field_name='level__id', lookup_expr='in')\n-    discipline = NumberInFilter(field_name='level__id', lookup_expr='in')\n+    discipline = NumberInFilter(field_name='discipline__id', lookup_expr='in')\n     affiliation = NumberInFilter(field_name='affiliation__id', lookup_expr='in')\n     description = CharInFilter(field_name='description', lookup_expr='in')\n     course_shortdescription = CharInFilter(field_name='course_shortdescription', lookup_expr='in')\n     course_outcome = CharInFilter(field_name='course_outcome', lookup_expr='in')\n"
+                },
+                {
+                    "date": 1739893372171,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,7 +27,7 @@\n     class Meta:\n         model = Course\n         fields = [\n             'id', 'name', 'abbreviation', 'duration', 'faculty', 'level',\n-            'affiliation', 'description', 'course_shortdescription', \n+            'affiliation', 'description','' 'course_shortdescription', \n             'course_outcome', 'eligibility_criteria', 'created_date', 'updated_date'\n         ]\n"
+                },
+                {
+                    "date": 1739893377474,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,7 +27,7 @@\n     class Meta:\n         model = Course\n         fields = [\n             'id', 'name', 'abbreviation', 'duration', 'faculty', 'level',\n-            'affiliation', 'description','' 'course_shortdescription', \n+            'affiliation', 'description','discipline', 'course_shortdescription', \n             'course_outcome', 'eligibility_criteria', 'created_date', 'updated_date'\n         ]\n"
+                },
+                {
+                    "date": 1739893586916,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,20 +14,26 @@\n     abbreviation = CharInFilter(field_name='abbreviation', lookup_expr='in')\n     duration = NumberInFilter(field_name='duration__id', lookup_expr='in')\n     faculty = NumberInFilter(field_name='faculty__id', lookup_expr='in')\n     level = NumberInFilter(field_name='level__id', lookup_expr='in')\n-    discipline = NumberInFilter(field_name='discipline__id', lookup_expr='in')\n     affiliation = NumberInFilter(field_name='affiliation__id', lookup_expr='in')\n     description = CharInFilter(field_name='description', lookup_expr='in')\n     course_shortdescription = CharInFilter(field_name='course_shortdescription', lookup_expr='in')\n     course_outcome = CharInFilter(field_name='course_outcome', lookup_expr='in')\n     eligibility_criteria = CharInFilter(field_name='eligibility_criteria', lookup_expr='in')\n     created_date = filters.DateFromToRangeFilter(field_name='created_date')\n     updated_date = filters.DateTimeFromToRangeFilter(field_name='updated_date')\n \n+    # Filtering for multiple disciplines (ManyToMany relationship)\n+    discipline = django_filters.ModelMultipleChoiceFilter(\n+        field_name='discipline__id',\n+        queryset=Course.objects.all().values_list('discipline__id', flat=True).distinct(),\n+        conjoined=False\n+    )\n+\n     class Meta:\n         model = Course\n         fields = [\n             'id', 'name', 'abbreviation', 'duration', 'faculty', 'level',\n-            'affiliation', 'description','discipline', 'course_shortdescription', \n+            'affiliation', 'description', 'discipline', 'course_shortdescription',\n             'course_outcome', 'eligibility_criteria', 'created_date', 'updated_date'\n         ]\n"
                 }
             ],
             "date": 1739267387711,

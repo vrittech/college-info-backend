@@ -254,9 +254,9 @@ class InformationWriteSerializers(serializers.ModelSerializer):
 
         if request and hasattr(request, 'FILES'):
             for key, file in request.FILES.items():
-                if key.startswith('image['):  # Accept multiple images as `image[0]`, `image[1]`
+                if key.startswith('information_gallery['):  # Accept multiple images as `image[0]`, `image[1]`
                     images_data.append(file)
-                elif key.startswith('file['):  # Accept multiple files as `file[0]`, `file[1]`
+                elif key.startswith('informations_files['):  # Accept multiple files as `file[0]`, `file[1]`
                     files_data.append(file)
 
         return images_data, files_data
@@ -305,7 +305,32 @@ class InformationWriteSerializers(serializers.ModelSerializer):
 
     @transaction.atomic
     def update(self, instance, validated_data):
-        """ Handles updates for Many-to-Many relationships and file uploads """
+        """Handles updates for Many-to-Many relationships, file uploads, and form-data parsing.
+        Ensures Many-to-Many fields can be passed as comma-separated values.
+        """
+
+        request = self.context.get('request')
+        images_data, files_data = [], []
+
+        # Extract images & files from request FILES
+        if request and hasattr(request, 'FILES'):
+            for key, file in request.FILES.items():
+                if key.startswith('information_gallery['):  # Accept multiple images as `image[0]`, `image[1]`
+                    images_data.append(file)
+                elif key.startswith('informations_files['):  # Accept multiple files as `file[0]`, `file[1]`
+                    files_data.append(file)
+
+        # Extract Many-to-Many fields (comma-separated values from form-data)
+        many_to_many_fields = [
+            "level", "sublevel", "course", "affiliation", "district",
+            "college", "faculty", "information_tagging", "information_category"
+        ]
+
+        for field in many_to_many_fields:
+            if field in validated_data:
+                validated_data[field] = [
+                    int(val.strip()) for val in validated_data[field].split(',') if val.strip().isdigit()
+                ]  # Convert comma-separated values into a list of integers
 
         # Extract Many-to-Many field IDs
         level_ids = validated_data.pop('level', None)
@@ -318,13 +343,11 @@ class InformationWriteSerializers(serializers.ModelSerializer):
         information_tagging_ids = validated_data.pop('information_tagging', None)
         information_category_ids = validated_data.pop('information_category', None)
 
-        # Extract images & files from request FILES
-        images_data, files_data = self.extract_images_and_files()
+        # Update instance fields only if validated_data is not empty
+        if validated_data:
+            instance = super().update(instance, validated_data)
 
-        # Update instance fields
-        instance = super().update(instance, validated_data)
-
-        # Update Many-to-Many relationships
+        # Update Many-to-Many relationships only if new data is provided
         if level_ids is not None:
             instance.level.set(level_ids)
         if sublevel_ids is not None:
@@ -344,12 +367,14 @@ class InformationWriteSerializers(serializers.ModelSerializer):
         if information_category_ids is not None:
             instance.information_category.set(information_category_ids)
 
-        # Save new images to InformationGallery
-        for image_file in images_data:
-            InformationGallery.objects.create(information=instance, image=image_file)
+        # Only update images if new ones are provided
+        if images_data:
+            for image_file in images_data:
+                InformationGallery.objects.create(information=instance, image=image_file)
 
-        # Save new files to InformationFiles
-        for file_item in files_data:
-            InformationFiles.objects.create(information=instance, file=file_item)
+        # Only update files if new ones are provided
+        if files_data:
+            for file_item in files_data:
+                InformationFiles.objects.create(information=instance, file=file_item)
 
         return instance

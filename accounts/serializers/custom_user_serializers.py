@@ -69,7 +69,7 @@ class SocialMediaSerializer(serializers.ModelSerializer):
 class CollegeSerializer(serializers.ModelSerializer):
     class Meta:
         model = College
-        fields = ['id', 'name', 'location']  # Adjust based on model fields
+        fields = ['id', 'name', 'address']  # Adjust based on model fields
 # class StaffSocialMediaSerializer(serializers.ModelSerializer):
 #     social_media = SocialMediaSerializer(read_only=True)
 
