@@ -143,7 +143,7 @@ class CollegeWriteSerializers(serializers.ModelSerializer):
         for social in social_media_data:
             CollegeSocialMedia.objects.create(
                 college=college,
-                name=social.get("name"),
+                social_media=social.get("social_media"),
                 link=social.get("link"),
                 icon=social.get("icon"),
                 is_show=social.get("is_show", False)
@@ -186,7 +186,7 @@ class CollegeWriteSerializers(serializers.ModelSerializer):
             for social in social_media_data:
                 CollegeSocialMedia.objects.create(
                     college=instance,
-                    name=social.get("name"),
+                    social_media=social.get("social_media"),
                     link=social.get("link"),
                     icon=social.get("icon"),
                     is_show=social.get("is_show", False)

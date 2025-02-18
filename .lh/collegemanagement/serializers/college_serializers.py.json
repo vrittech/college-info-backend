@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 85,
+            "activePatchIndex": 88,
             "patches": [
                 {
                     "date": 1733477116456,
@@ -348,6 +348,18 @@
                 {
                     "date": 1739858756982,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -102,9 +102,9 @@\n     step_counter = serializers.PrimaryKeyRelatedField(queryset=FormStepProgress.objects.all(), required=False, allow_null=True)\n \n     # ManyToMany fields\n     discipline = serializers.PrimaryKeyRelatedField(queryset=Discipline.objects.all(), many=True)\n-    social_media = CollegeSocialMediaSerializer(many=True, required=False)\n+    social_media = SocialMediaSerializer(many=True, required=False)\n     facilities = serializers.PrimaryKeyRelatedField(queryset=Facility.objects.all(), many=True, required=False)\n     \n     def to_internal_value(self, data):\n         \"\"\"Converts stringified social media JSON into a list before validation.\"\"\"\n"
+                },
+                {
+                    "date": 1739862804167,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -142,9 +142,9 @@\n         # Manually handle social media data\n         for social in social_media_data:\n             CollegeSocialMedia.objects.create(\n                 college=college,\n-                name=social.get(\"name\"),\n+                socie=social.get(\"name\"),\n                 link=social.get(\"link\"),\n                 icon=social.get(\"icon\"),\n                 is_show=social.get(\"is_show\", False)\n             )\n"
+                },
+                {
+                    "date": 1739862811714,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -142,9 +142,9 @@\n         # Manually handle social media data\n         for social in social_media_data:\n             CollegeSocialMedia.objects.create(\n                 college=college,\n-                socie=social.get(\"name\"),\n+                social_media=social.get(\"social_media\"),\n                 link=social.get(\"link\"),\n                 icon=social.get(\"icon\"),\n                 is_show=social.get(\"is_show\", False)\n             )\n"
+                },
+                {
+                    "date": 1739862846939,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -185,9 +185,9 @@\n             # Recreate social media entries\n             for social in social_media_data:\n                 CollegeSocialMedia.objects.create(\n                     college=instance,\n-                    name=social.get(\"name\"),\n+                    social_media=social.get(\"social_media\"),\n                     link=social.get(\"link\"),\n                     icon=social.get(\"icon\"),\n                     is_show=social.get(\"is_show\", False)\n                 )\n"
                 }
             ],
             "date": 1733477116456,
