@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 49,
+            "activePatchIndex": 52,
             "patches": [
                 {
                     "date": 1733481577467,
@@ -204,6 +204,18 @@
                 {
                     "date": 1739950241583,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -53,10 +53,4 @@\n         instance = serializer.save()\n \n         return Response(InformationRetrieveSerializers(instance).data, status=status.HTTP_200_OK)\n \n-    def get_queryset(self):\n-        \"\"\"\n-        Allows additional filtering logic if needed.\n-        \"\"\"\n-        queryset = super().get_queryset()\n-        return queryset\n"
+                },
+                {
+                    "date": 1739950816790,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,9 @@\n from mainproj.permissions import DynamicModelPermission\n \n class informationViewsets(viewsets.ModelViewSet):\n     permission_classes = [DynamicModelPermission]\n-    # pagination_class = MyPageNumberPagination\n+    pagination_class = MyPageNumberPagination\n     queryset = Information.objects.all().order_by('-id')\n     filterset_class = InformationFilter\n     lookup_field = \"slug\"\n \n"
+                },
+                {
+                    "date": 1739950831204,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,8 +6,9 @@\n from ..serializers.information_serializers import (\n     InformationListSerializers, InformationRetrieveSerializers, InformationWriteSerializers\n )\n from ..utilities.filters import InformationFilter\n+\n from mainproj.permissions import DynamicModelPermission\n \n class informationViewsets(viewsets.ModelViewSet):\n     permission_classes = [DynamicModelPermission]\n"
+                },
+                {
+                    "date": 1739950836395,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,9 +6,9 @@\n from ..serializers.information_serializers import (\n     InformationListSerializers, InformationRetrieveSerializers, InformationWriteSerializers\n )\n from ..utilities.filters import InformationFilter\n-\n+from ..utilities.pagination import MyPageNumberPagination\n from mainproj.permissions import DynamicModelPermission\n \n class informationViewsets(viewsets.ModelViewSet):\n     permission_classes = [DynamicModelPermission]\n"
                 }
             ],
             "date": 1733481577467,

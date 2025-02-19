@@ -7,11 +7,12 @@ from ..serializers.information_serializers import (
     InformationListSerializers, InformationRetrieveSerializers, InformationWriteSerializers
 )
 from ..utilities.filters import InformationFilter
+from ..utilities.pagination import MyPageNumberPagination
 from mainproj.permissions import DynamicModelPermission
 
 class informationViewsets(viewsets.ModelViewSet):
     permission_classes = [DynamicModelPermission]
-    # pagination_class = MyPageNumberPagination
+    pagination_class = MyPageNumberPagination
     queryset = Information.objects.all().order_by('-id')
     filterset_class = InformationFilter
     lookup_field = "slug"
