@@ -7,7 +7,7 @@ from ..utilities.importbase import *
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from mainproj.permissions import DynamicModelPermission
-from utilities.filter import CollegeFilter
+from ..utilities.filter import CollegeFilter
 class collegeViewsets(viewsets.ModelViewSet):
     serializer_class = CollegeListSerializers
     # permission_classes = [collegemanagementPermission]

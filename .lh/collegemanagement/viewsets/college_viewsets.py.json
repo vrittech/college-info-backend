@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 60,
+            "activePatchIndex": 61,
             "patches": [
                 {
                     "date": 1733718920520,
@@ -248,6 +248,10 @@
                 {
                     "date": 1739940111149,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,8 +6,9 @@\n from ..utilities.importbase import *\n from rest_framework.decorators import action\n from rest_framework.response import Response\n from mainproj.permissions import DynamicModelPermission\n+from utilities\n class collegeViewsets(viewsets.ModelViewSet):\n     serializer_class = CollegeListSerializers\n     # permission_classes = [collegemanagementPermission]\n     permission_classes = [DynamicModelPermission]\n"
+                },
+                {
+                    "date": 1739940536528,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,9 +6,9 @@\n from ..utilities.importbase import *\n from rest_framework.decorators import action\n from rest_framework.response import Response\n from mainproj.permissions import DynamicModelPermission\n-from utilities\n+from ..utilities.filter import CollegeFilter\n class collegeViewsets(viewsets.ModelViewSet):\n     serializer_class = CollegeListSerializers\n     # permission_classes = [collegemanagementPermission]\n     permission_classes = [DynamicModelPermission]\n"
                 }
             ],
             "date": 1733718920520,

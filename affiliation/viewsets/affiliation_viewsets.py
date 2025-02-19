@@ -5,7 +5,7 @@ from ..models import Affiliation
 from ..serializers.affiliation_serializers import AffiliationListSerializers, AffiliationRetrieveSerializers, AffiliationWriteSerializers
 from ..utilities.importbase import *
 from mainproj.permissions import DynamicModelPermission
-from utilities.filter import AffiliationFilter
+from ..utilities.filter import AffiliationFilter
 
 class affiliationViewsets(viewsets.ModelViewSet):
     serializer_class = AffiliationListSerializers
