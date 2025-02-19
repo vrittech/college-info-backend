@@ -8,7 +8,7 @@ from mainproj.permissions import DynamicModelPermission
 
 class contactViewsets(viewsets.ModelViewSet):
     serializer_class = ContactListSerializers
-    permission_classes = [DynamicModelPermission]
+    permission_classes = [contactPermission]
     authentication_classes = [JWTAuthentication]
     pagination_class = MyPageNumberPagination
     queryset = Contact.objects.all().order_by('-id')

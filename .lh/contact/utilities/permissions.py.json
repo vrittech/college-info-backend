@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 3,
+            "activePatchIndex": 5,
             "patches": [
                 {
                     "date": 1739257554966,
@@ -20,6 +20,14 @@
                 {
                     "date": 1739264376528,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,9 +15,9 @@\n def CanManage(request):\n     \"\"\"Check if the user has full manage access\"\"\"\n     return HasPermission(request, CONTACT_PERMISSIONS[\"manage\"])\n \n-class ContactPermission(BasePermission):\n+class contactPermission(BasePermission):\n     \"\"\"\n     Permission class for managing contacts based strictly on Django permissions.\n     \"\"\"\n \n@@ -28,9 +28,9 @@\n         if view.action in [\"list\"]:\n             return True\n \n         elif view.action in [\"retrieve\"]:\n-            return HasPermission(request, CONTACT_PERMISSIONS[\"view\"])\n+            return True\n \n         elif view.action in [\"create\"]:\n             return HasPermission(request, CONTACT_PERMISSIONS[\"add\"])\n \n"
+                },
+                {
+                    "date": 1739940470100,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -31,9 +31,9 @@\n         elif view.action in [\"retrieve\"]:\n             return True\n \n         elif view.action in [\"create\"]:\n-            return HasPermission(request, CONTACT_PERMISSIONS[\"add\"])\n+            return True\n \n         elif view.action in [\"update\", \"partial_update\"]:\n             return HasPermission(request, CONTACT_PERMISSIONS[\"change\"])\n \n"
+                },
+                {
+                    "date": 1739940476502,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -34,9 +34,9 @@\n         elif view.action in [\"create\"]:\n             return True\n \n         elif view.action in [\"update\", \"partial_update\"]:\n-            return HasPermission(request, CONTACT_PERMISSIONS[\"change\"])\n+            return True\n \n         elif view.action == \"destroy\":\n             return HasPermission(request, CONTACT_PERMISSIONS[\"delete\"])\n \n"
                 }
             ],
             "date": 1739257554966,

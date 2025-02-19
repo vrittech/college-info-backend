@@ -32,10 +32,10 @@ class contactPermission(BasePermission):
             return True
 
         elif view.action in ["create"]:
-            return HasPermission(request, CONTACT_PERMISSIONS["add"])
+            return True
 
         elif view.action in ["update", "partial_update"]:
-            return HasPermission(request, CONTACT_PERMISSIONS["change"])
+            return True
 
         elif view.action == "destroy":
             return HasPermission(request, CONTACT_PERMISSIONS["delete"])
