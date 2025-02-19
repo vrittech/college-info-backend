@@ -1,0 +1,26 @@
+{
+    "sourceFile": "accounts/apps.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 2,
+            "patches": [
+                {
+                    "date": 1739943943276,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1739943950247,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,6 +4,6 @@\n class AccountsConfig(AppConfig):\n     default_auto_field = 'django.db.models.BigAutoField'\n     name = 'accounts'\n     \n-     def ready(self):\n-        import your_app.signals  # Ensure signals are registered\n+    def ready(self):\n+        import accounts.signals  # Ensure signals are registered\n"
+                },
+                {
+                    "date": 1739943955464,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,5 +5,5 @@\n     default_auto_field = 'django.db.models.BigAutoField'\n     name = 'accounts'\n     \n     def ready(self):\n-        import accounts.signals  # Ensure signals are registered\n+        import accounts.signals  \n"
+                }
+            ],
+            "date": 1739943943276,
+            "name": "Commit-0",
+            "content": "from django.apps import AppConfig\n\n\nclass AccountsConfig(AppConfig):\n    default_auto_field = 'django.db.models.BigAutoField'\n    name = 'accounts'\n    \n     def ready(self):\n        import your_app.signals  # Ensure signals are registered\n"
+        }
+    ]
+}
