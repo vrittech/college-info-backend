@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 50,
+            "activePatchIndex": 51,
             "patches": [
                 {
                     "date": 1739336401943,
@@ -208,6 +208,10 @@
                 {
                     "date": 1739784801447,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,9 +17,9 @@\n # Models that cannot be deleted except by superusers\n RESTRICTED_DELETE_MODELS = [\"user\", \"adminlog\", \"sessions\"]\n \n # Models that college admins can only view (not edit/update)\n-COLLEGE_ADMIN_VIEW_ONLY_MODELS = [inquir]\n+COLLEGE_ADMIN_VIEW_ONLY_MODELS = [inquiry]\n \n # Fetch all registered models dynamically\n ALL_MODELS = {model.__name__.lower(): model for model in apps.get_models()}\n \n"
+                },
+                {
+                    "date": 1739949378458,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -28,9 +28,9 @@\n # Models that can be publicly listed, retrieved, and written but NOT deleted\n RESTRICTED_WRITE_MODELS = [\"contact\"]\n \n # Models that can only be written but NOT publicly listed or retrieved\n-WRITE_ONLY_MODELS = [\"user\", \"internalnotes\"]\n+WRITE_ONLY_MODELS = [\"user\", \"contact\"]\n \n # Fetch all registered models dynamically\n ALL_MODELS = {model.__name__.lower(): model for model in apps.get_models()}\n \n"
                 }
             ],
             "date": 1739336401943,
