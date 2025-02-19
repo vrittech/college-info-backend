@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 48,
+            "activePatchIndex": 51,
             "patches": [
                 {
                     "date": 1728378543651,
@@ -200,6 +200,18 @@
                 {
                     "date": 1739892559822,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -68,9 +68,9 @@\n         fields = ['id','name', 'url', 'media', 'created_at', 'updated_at' ]  # Adjust fields as per your SocialMedia model\n class CollegeSerializer(serializers.ModelSerializer):\n     class Meta:\n         model = College\n-        fields = ['id', 'name', 'location']  # Adjust based on model fields\n+        fields = ['id', 'name', 'address']  # Adjust based on model fields\n # class StaffSocialMediaSerializer(serializers.ModelSerializer):\n #     social_media = SocialMediaSerializer(read_only=True)\n \n #     class Meta:\n"
+                },
+                {
+                    "date": 1739949576304,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -68,9 +68,9 @@\n         fields = ['id','name', 'url', 'media', 'created_at', 'updated_at' ]  # Adjust fields as per your SocialMedia model\n class CollegeSerializer(serializers.ModelSerializer):\n     class Meta:\n         model = College\n-        fields = ['id', 'name', 'address']  # Adjust based on model fields\n+        fields = ['id','', 'name', 'address']  # Adjust based on model fields\n # class StaffSocialMediaSerializer(serializers.ModelSerializer):\n #     social_media = SocialMediaSerializer(read_only=True)\n \n #     class Meta:\n"
+                },
+                {
+                    "date": 1739949590142,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -68,9 +68,9 @@\n         fields = ['id','name', 'url', 'media', 'created_at', 'updated_at' ]  # Adjust fields as per your SocialMedia model\n class CollegeSerializer(serializers.ModelSerializer):\n     class Meta:\n         model = College\n-        fields = ['id','', 'name', 'address']  # Adjust based on model fields\n+        fields = ['id','slug', 'name', 'address']  # Adjust based on model fields\n # class StaffSocialMediaSerializer(serializers.ModelSerializer):\n #     social_media = SocialMediaSerializer(read_only=True)\n \n #     class Meta:\n@@ -98,8 +98,9 @@\n #         fields = ['id','name']\n \n class CustomUserReadSerializer(serializers.ModelSerializer):\n     # department = DepartmentSerializer(read_only = True)\n+    colle\n     groups = GroupSerializer(many=True,read_only = True)\n     # usersocial = StaffSocialMediaSerializer(many=True,read_only = True)\n     class Meta:\n         model = User\n"
+                },
+                {
+                    "date": 1739949608046,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -98,9 +98,9 @@\n #         fields = ['id','name']\n \n class CustomUserReadSerializer(serializers.ModelSerializer):\n     # department = DepartmentSerializer(read_only = True)\n-    colle\n+    college = CollegeSerializer(read_only = True)\n     groups = GroupSerializer(many=True,read_only = True)\n     # usersocial = StaffSocialMediaSerializer(many=True,read_only = True)\n     class Meta:\n         model = User\n@@ -183,8 +183,9 @@\n         \n         return data\n \n class CustomUserRetrieveSerializer(serializers.ModelSerializer):\n+    college = CollegeSerializer(read_only = True)\n     # usersocial = StaffSocialMediaSerializer(many=True,read_only = True)\n     groups = GroupSerializer(many=True,read_only = True)\n     # department = DepartmentSerializer(read_only = True)\n     class Meta:\n"
                 }
             ],
             "date": 1728378543651,

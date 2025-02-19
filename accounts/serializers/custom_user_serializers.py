@@ -69,7 +69,7 @@ class SocialMediaSerializer(serializers.ModelSerializer):
 class CollegeSerializer(serializers.ModelSerializer):
     class Meta:
         model = College
-        fields = ['id', 'name', 'address']  # Adjust based on model fields
+        fields = ['id','slug', 'name', 'address']  # Adjust based on model fields
 # class StaffSocialMediaSerializer(serializers.ModelSerializer):
 #     social_media = SocialMediaSerializer(read_only=True)
 
@@ -99,6 +99,7 @@ class GroupSerializer(serializers.ModelSerializer):
 
 class CustomUserReadSerializer(serializers.ModelSerializer):
     # department = DepartmentSerializer(read_only = True)
+    college = CollegeSerializer(read_only = True)
     groups = GroupSerializer(many=True,read_only = True)
     # usersocial = StaffSocialMediaSerializer(many=True,read_only = True)
     class Meta:
@@ -183,6 +184,7 @@ class CustomUserWriteSerializer(serializers.ModelSerializer):
         return data
 
 class CustomUserRetrieveSerializer(serializers.ModelSerializer):
+    college = CollegeSerializer(read_only = True)
     # usersocial = StaffSocialMediaSerializer(many=True,read_only = True)
     groups = GroupSerializer(many=True,read_only = True)
     # department = DepartmentSerializer(read_only = True)
