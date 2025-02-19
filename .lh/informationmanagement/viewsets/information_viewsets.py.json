@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 52,
+            "activePatchIndex": 56,
             "patches": [
                 {
                     "date": 1733481577467,
@@ -216,6 +216,22 @@
                 {
                     "date": 1739950836395,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,9 +6,9 @@\n from ..serializers.information_serializers import (\n     InformationListSerializers, InformationRetrieveSerializers, InformationWriteSerializers\n )\n from ..utilities.filters import InformationFilter\n-\n+from ..utilities.pagination import MyPageNumberPagination\n from mainproj.permissions import DynamicModelPermission\n \n class informationViewsets(viewsets.ModelViewSet):\n     permission_classes = [DynamicModelPermission]\n"
+                },
+                {
+                    "date": 1739956316080,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,9 @@\n from ..utilities.pagination import MyPageNumberPagination\n from mainproj.permissions import DynamicModelPermission\n \n class informationViewsets(viewsets.ModelViewSet):\n-    permission_classes = [DynamicModelPermission]\n+    # permission_classes = [DynamicModelPermission]\n     pagination_class = MyPageNumberPagination\n     queryset = Information.objects.all().order_by('-id')\n     filterset_class = InformationFilter\n     lookup_field = \"slug\"\n"
+                },
+                {
+                    "date": 1739956381622,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,9 @@\n from ..utilities.pagination import MyPageNumberPagination\n from mainproj.permissions import DynamicModelPermission\n \n class informationViewsets(viewsets.ModelViewSet):\n-    # permission_classes = [DynamicModelPermission]\n+    permission_classes = [DynamicModelPermission]\n     pagination_class = MyPageNumberPagination\n     queryset = Information.objects.all().order_by('-id')\n     filterset_class = InformationFilter\n     lookup_field = \"slug\"\n"
+                },
+                {
+                    "date": 1739957318266,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,8 +22,13 @@\n         'id', 'title', 'publish_date', 'active_period_start', 'active_period_end', \n         'sublevel__name', 'course__name', 'created_date', 'updated_date'\n     ]\n     ordering_fields = search_fields\n+    \n+    def get_queryset(self):\n+        if self.request.user.is_authenticated:\n+            return self.queryset.prefetch_related(\"related_users\")  # ✅ Ensures ManyToMany relationships are loaded\n+        return self.queryset\n \n     def get_serializer_class(self):\n         \"\"\"Return different serializers for different actions\"\"\"\n         if self.action in ['create', 'update', 'partial_update']:\n"
+                },
+                {
+                    "date": 1739957345339,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,11 +24,10 @@\n     ]\n     ordering_fields = search_fields\n     \n     def get_queryset(self):\n-        if self.request.user.is_authenticated:\n-            return self.queryset.prefetch_related(\"related_users\")  # ✅ Ensures ManyToMany relationships are loaded\n-        return self.queryset\n+        queryset = super().get_queryset()\n+        return queryset\n \n     def get_serializer_class(self):\n         \"\"\"Return different serializers for different actions\"\"\"\n         if self.action in ['create', 'update', 'partial_update']:\n"
                 }
             ],
             "date": 1733481577467,

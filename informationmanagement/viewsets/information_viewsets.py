@@ -23,6 +23,10 @@ class informationViewsets(viewsets.ModelViewSet):
         'sublevel__name', 'course__name', 'created_date', 'updated_date'
     ]
     ordering_fields = search_fields
+    
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        return queryset
 
     def get_serializer_class(self):
         """Return different serializers for different actions"""
