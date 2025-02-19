@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 159,
+            "activePatchIndex": 162,
             "patches": [
                 {
                     "date": 1726568467190,
@@ -644,6 +644,18 @@
                 {
                     "date": 1739344075376,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -55,9 +55,9 @@\n     def __str__(self):\n         return f\"{self.name}\"\n     class Meta:\n         permissions = [\n-            (\"manage_eventcategory\", \"Manage Event Gallery\"),\n+            (\"manage_eventcategory\", \"Manage Event Category\"),\n         ]\n \n class Event(SEOFields):\n     public_id = models.UUIDField(default=uuid.uuid4,editable=False,unique=True)\n"
+                },
+                {
+                    "date": 1739950501188,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -65,8 +65,9 @@\n     event_name = models.CharField(max_length=255,unique=True)\n     start_date = models.DateTimeField(null=True,blank=True)\n     end_date = models.DateTimeField(null=True,blank=True)\n     duration = models.CharField(max_length=255)\n+    duration = models.CharField(max_length=255)\n     TYPE_CHOICES = [\n         ('physical', 'Physical'),\n         ('online', 'Online'),\n         ('hybrid', 'Hybrid'),\n"
+                },
+                {
+                    "date": 1739950506655,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -65,9 +65,9 @@\n     event_name = models.CharField(max_length=255,unique=True)\n     start_date = models.DateTimeField(null=True,blank=True)\n     end_date = models.DateTimeField(null=True,blank=True)\n     duration = models.CharField(max_length=255)\n-    duration = models.CharField(max_length=255)\n+    duration_type = models.CharField(max_length=255)\n     TYPE_CHOICES = [\n         ('physical', 'Physical'),\n         ('online', 'Online'),\n         ('hybrid', 'Hybrid'),\n"
+                },
+                {
+                    "date": 1739950537470,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -65,9 +65,9 @@\n     event_name = models.CharField(max_length=255,unique=True)\n     start_date = models.DateTimeField(null=True,blank=True)\n     end_date = models.DateTimeField(null=True,blank=True)\n     duration = models.CharField(max_length=255)\n-    duration_type = models.CharField(max_length=255)\n+    duration_type = models.CharField(max_length=255,)\n     TYPE_CHOICES = [\n         ('physical', 'Physical'),\n         ('online', 'Online'),\n         ('hybrid', 'Hybrid'),\n"
                 }
             ],
             "date": 1726568467190,
