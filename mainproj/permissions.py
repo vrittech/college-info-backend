@@ -80,8 +80,6 @@ class DynamicModelPermission(BasePermission):
     """
 
     def has_permission(self, request, view):
-        if request.user.is_superuser:
-            return True
         
         model_name = getattr(view.queryset.model, "__name__", "").lower()
 
