@@ -37,7 +37,7 @@ from django.utils.text import slugify
 class College(SEOFields):
     public_id = models.UUIDField(default=uuid.uuid4,editable=False,unique=True)
     slug = models.SlugField(max_length=255, unique=True, null=True, blank=True)
-    banner_image = models.ImageField(upload_to='college/banner/')
+    banner_image = models.ImageField(upload_to='college/banner/',null=True,blank=True)
     dp_image = models.ImageField(upload_to='college/dp/',null=True,blank=True)
     name = models.CharField(max_length=255,unique=True)
     is_show = models.BooleanField(default=False)
