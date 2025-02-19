@@ -8,42 +8,42 @@ class LevelSerializer(serializers.ModelSerializer):
     class Meta:
         model = Level
         ref_name = 'levels'
-        fields = '__all__'
+        fields = ['id', 'name']
 
 class SubLevelSerializer(serializers.ModelSerializer):
     class Meta:
         model = SubLevel
         ref_name = 'sublevels'
-        fields = '__all__'
+        fields = ['id', 'name']
 
 class CourseSerializer(serializers.ModelSerializer):
     class Meta:
         model = Course
-        fields = '__all__'
+        fields = ['id', 'name','slug']
 
 class AffiliationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Affiliation
         ref_name = 'affiliations'
-        fields = '__all__'
+        fields =['id', 'name','slug']
 
 class DistrictSerializer(serializers.ModelSerializer):
     class Meta:
         model = District
         ref_name = 'districts'
-        fields = '__all__'
+        fields = fields = ['id', 'name']
 
 class CollegeSerializer(serializers.ModelSerializer):
     class Meta:
         model = College
         ref_name = 'colleges'
-        fields = '__all__'
+        fields = ['id', 'name','slug']
 
 class FacultySerializer(serializers.ModelSerializer):
     class Meta:
         model = Faculty
         ref_name = 'faculties'
-        fields = '__all__'
+        fields = ['id', 'name']
 
 class InformationTaggingSerializer(serializers.ModelSerializer):
     class Meta:

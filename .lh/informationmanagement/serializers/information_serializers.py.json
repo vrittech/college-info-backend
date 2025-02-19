@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 99,
+            "activePatchIndex": 108,
             "patches": [
                 {
                     "date": 1733485840683,
@@ -404,6 +404,42 @@
                 {
                     "date": 1739948574919,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -126,78 +126,9 @@\n \n     class Meta:\n         model = Information\n         fields = '__all__'\n-        \n \n-# class InformationWriteSerializers(serializers.ModelSerializer):\n-#     \"\"\"\n-#     Serializer for handling binary image & file uploads in form-data.\n-#     Many-to-Many fields are managed automatically by Django.\n-#     \"\"\"\n-    \n-\n-#     class Meta:\n-#         model = Information\n-#         fields = '__all__'\n-\n-    \n-#     @transaction.atomic\n-#     def create(self, validated_data):\n-#         \"\"\"\n-#         Handles creation of Information instance and processes image & file uploads.\n-#         \"\"\"\n-#         # Extract images and files from request's FILES\n-#         images_data = []\n-#         files_data = []\n-\n-#         for key, file in self.context['request'].FILES.items():\n-#             if key.startswith('images['):  # Images in array format\n-#                 images_data.append(file)\n-#             elif key.startswith('files['):  # Files in array format\n-#                 files_data.append(file)\n-\n-#         # Create the Information instance\n-#         information = super().create(validated_data)\n-\n-#         # Save image uploads\n-#         for image_file in images_data:\n-#             InformationGallery.objects.create(information=information, image=image_file)\n-\n-#         # Save file uploads\n-#         for file_item in files_data:\n-#             InformationFiles.objects.create(information=information, file=file_item)\n-\n-#         return information\n-\n-#     @transaction.atomic\n-#     def update(self, instance, validated_data):\n-#         \"\"\"\n-#         Handles updating an Information instance and manages image & file uploads.\n-#         \"\"\"\n-#         # Extract images and files from request's FILES\n-#         images_data = []\n-#         files_data = []\n-\n-#         for key, file in self.context['request'].FILES.items():\n-#             if key.startswith('images['):  # Images in array format\n-#                 images_data.append(file)\n-#             elif key.startswith('files['):  # Files in array format\n-#                 files_data.append(file)\n-\n-#         # Update instance fields\n-#         instance = super().update(instance, validated_data)\n-\n-#         # Save new image uploads (append to existing images)\n-#         for image_file in images_data:\n-#             InformationGallery.objects.create(information=instance, image=image_file)\n-\n-#         # Save new file uploads (append to existing files)\n-#         for file_item in files_data:\n-#             InformationFiles.objects.create(information=instance, file=file_item)\n-\n-#         return instance\n-\n class IntegerListField(serializers.ListField):\n     \"\"\" Handles Many-to-Many fields in form-data correctly (e.g., '[2,3]', '2,3'). \"\"\"\n     \n     def to_internal_value(self, data):\n"
+                },
+                {
+                    "date": 1739950012625,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,9 @@\n class LevelSerializer(serializers.ModelSerializer):\n     class Meta:\n         model = Level\n         ref_name = 'levels'\n-        fields = '__all__'\n+        fields = []\n \n class SubLevelSerializer(serializers.ModelSerializer):\n     class Meta:\n         model = SubLevel\n"
+                },
+                {
+                    "date": 1739950021090,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,15 +7,15 @@\n class LevelSerializer(serializers.ModelSerializer):\n     class Meta:\n         model = Level\n         ref_name = 'levels'\n-        fields = []\n+        fields = ['id', 'name']\n \n class SubLevelSerializer(serializers.ModelSerializer):\n     class Meta:\n         model = SubLevel\n         ref_name = 'sublevels'\n-        fields = '__all__'\n+        fields = ['id', 'name']\n \n class CourseSerializer(serializers.ModelSerializer):\n     class Meta:\n         model = Course\n"
+                },
+                {
+                    "date": 1739950026304,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,9 +18,9 @@\n \n class CourseSerializer(serializers.ModelSerializer):\n     class Meta:\n         model = Course\n-        fields = '__all__'\n+        fields = ['id', 'name','sl']\n \n class AffiliationSerializer(serializers.ModelSerializer):\n     class Meta:\n         model = Affiliation\n"
+                },
+                {
+                    "date": 1739950035864,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,15 +18,15 @@\n \n class CourseSerializer(serializers.ModelSerializer):\n     class Meta:\n         model = Course\n-        fields = ['id', 'name','sl']\n+        fields = ['id', 'name','slug']\n \n class AffiliationSerializer(serializers.ModelSerializer):\n     class Meta:\n         model = Affiliation\n         ref_name = 'affiliations'\n-        fields = '__all__'\n+        fields = fields = ['id', 'name','slug']\n \n class DistrictSerializer(serializers.ModelSerializer):\n     class Meta:\n         model = District\n"
+                },
+                {
+                    "date": 1739950042345,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -30,9 +30,9 @@\n class DistrictSerializer(serializers.ModelSerializer):\n     class Meta:\n         model = District\n         ref_name = 'districts'\n-        fields = '__all__'\n+        fields = fields = ['id', 'name','slug']\n \n class CollegeSerializer(serializers.ModelSerializer):\n     class Meta:\n         model = College\n"
+                },
+                {
+                    "date": 1739950050397,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -30,15 +30,15 @@\n class DistrictSerializer(serializers.ModelSerializer):\n     class Meta:\n         model = District\n         ref_name = 'districts'\n-        fields = fields = ['id', 'name','slug']\n+        fields = fields = ['id', 'name']\n \n class CollegeSerializer(serializers.ModelSerializer):\n     class Meta:\n         model = College\n         ref_name = 'colleges'\n-        fields = '__all__'\n+        fields = fields = ['id', 'name','slug']\n \n class FacultySerializer(serializers.ModelSerializer):\n     class Meta:\n         model = Faculty\n"
+                },
+                {
+                    "date": 1739950059609,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,9 +24,9 @@\n class AffiliationSerializer(serializers.ModelSerializer):\n     class Meta:\n         model = Affiliation\n         ref_name = 'affiliations'\n-        fields = fields = ['id', 'name','slug']\n+        fields =['id', 'name','slug']\n \n class DistrictSerializer(serializers.ModelSerializer):\n     class Meta:\n         model = District\n@@ -36,9 +36,9 @@\n class CollegeSerializer(serializers.ModelSerializer):\n     class Meta:\n         model = College\n         ref_name = 'colleges'\n-        fields = fields = ['id', 'name','slug']\n+        fields = '__all__'\n \n class FacultySerializer(serializers.ModelSerializer):\n     class Meta:\n         model = Faculty\n"
+                },
+                {
+                    "date": 1739950065372,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -36,9 +36,9 @@\n class CollegeSerializer(serializers.ModelSerializer):\n     class Meta:\n         model = College\n         ref_name = 'colleges'\n-        fields = '__all__'\n+        fields = ['id', 'name','slug']\n \n class FacultySerializer(serializers.ModelSerializer):\n     class Meta:\n         model = Faculty\n"
+                },
+                {
+                    "date": 1739950075652,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -42,9 +42,9 @@\n class FacultySerializer(serializers.ModelSerializer):\n     class Meta:\n         model = Faculty\n         ref_name = 'faculties'\n-        fields = '__all__'\n+        fields = ['id', 'name']\n \n class InformationTaggingSerializer(serializers.ModelSerializer):\n     class Meta:\n         model = InformationTagging\n"
                 }
             ],
             "date": 1733485840683,
