@@ -63,9 +63,9 @@ class Information(SEOFields):
     public_id = models.UUIDField(default=uuid.uuid4,editable=False,unique=True)
     slug = models.SlugField(max_length=255, unique=True, null=True, blank=True)
     title = models.CharField(max_length=510,unique=True)
-    publish_date = models.DateTimeField()
-    active_period_start = models.DateField()
-    active_period_end = models.DateField()
+    publish_date = models.DateField(null=True, blank=True)
+    active_period_start = models.DateField(null=True, blank=True)
+    active_period_end = models.DateField(null=True, blank=True)
     
     level = models.ManyToManyField(Level, blank=True)
     sublevel = models.ManyToManyField(SubLevel, blank=True)

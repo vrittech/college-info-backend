@@ -3,11 +3,27 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 0,
+            "activePatchIndex": 4,
             "patches": [
                 {
                     "date": 1739786154635,
                     "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1739945765730,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -62,9 +62,9 @@\n     # template_name  = models.CharField(max_length=255,null=True,blank=True)\n     public_id = models.UUIDField(default=uuid.uuid4,editable=False,unique=True)\n     slug = models.SlugField(max_length=255, unique=True, null=True, blank=True)\n     title = models.CharField(max_length=510,unique=True)\n-    publish_date = models.DateTimeField()\n+    publish_date = models.DateField()\n     active_period_start = models.DateField()\n     active_period_end = models.DateField()\n     \n     level = models.ManyToManyField(Level, blank=True)\n"
+                },
+                {
+                    "date": 1739945778179,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -62,9 +62,9 @@\n     # template_name  = models.CharField(max_length=255,null=True,blank=True)\n     public_id = models.UUIDField(default=uuid.uuid4,editable=False,unique=True)\n     slug = models.SlugField(max_length=255, unique=True, null=True, blank=True)\n     title = models.CharField(max_length=510,unique=True)\n-    publish_date = models.DateField()\n+    publish_date = models.DateField(null=)\n     active_period_start = models.DateField()\n     active_period_end = models.DateField()\n     \n     level = models.ManyToManyField(Level, blank=True)\n"
+                },
+                {
+                    "date": 1739945785580,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -62,11 +62,11 @@\n     # template_name  = models.CharField(max_length=255,null=True,blank=True)\n     public_id = models.UUIDField(default=uuid.uuid4,editable=False,unique=True)\n     slug = models.SlugField(max_length=255, unique=True, null=True, blank=True)\n     title = models.CharField(max_length=510,unique=True)\n-    publish_date = models.DateField(null=)\n-    active_period_start = models.DateField()\n-    active_period_end = models.DateField()\n+    publish_date = models.DateField(null=True, blank=True)\n+    active_period_start = models.DateField(null=True, blank=True))\n+    active_period_end = models.DateField(null=True, blank=True))\n     \n     level = models.ManyToManyField(Level, blank=True)\n     sublevel = models.ManyToManyField(SubLevel, blank=True)\n     course = models.ManyToManyField(Course, blank=True)\n"
+                },
+                {
+                    "date": 1739945798047,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -63,9 +63,9 @@\n     public_id = models.UUIDField(default=uuid.uuid4,editable=False,unique=True)\n     slug = models.SlugField(max_length=255, unique=True, null=True, blank=True)\n     title = models.CharField(max_length=510,unique=True)\n     publish_date = models.DateField(null=True, blank=True)\n-    active_period_start = models.DateField(null=True, blank=True))\n+    active_period_start = models.DateField(null=True, blank=True)\n     active_period_end = models.DateField(null=True, blank=True))\n     \n     level = models.ManyToManyField(Level, blank=True)\n     sublevel = models.ManyToManyField(SubLevel, blank=True)\n"
                 }
             ],
             "date": 1739786154635,
