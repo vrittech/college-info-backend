@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 47,
+            "activePatchIndex": 49,
             "patches": [
                 {
                     "date": 1733481577467,
@@ -196,6 +196,14 @@
                 {
                     "date": 1739948555065,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -37,9 +37,9 @@\n         Returns the full object data using InformationRetrieveSerializers.\n         \"\"\"\n         serializer = self.get_serializer(data=request.data)\n         serializer.is_valid(raise_exception=True)\n-        self.perform_create(serializer)  # 🔹 FIX: Uses DRF standard method\n+        self.perform_create(serializer)  \n \n         return Response(\n             InformationRetrieveSerializers(serializer.instance, context=self.get_serializer_context()).data, \n             status=status.HTTP_201_CREATED\n"
+                },
+                {
+                    "date": 1739950233516,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -35,31 +35,28 @@\n         \"\"\"\n         Handles creating a new Information object.\n         Returns the full object data using InformationRetrieveSerializers.\n         \"\"\"\n-        serializer = self.get_serializer(data=request.data)\n+        serializer = self.get_serializer(data=request.data, context={'request': request})\n         serializer.is_valid(raise_exception=True)\n-        self.perform_create(serializer)  \n+        instance = serializer.save()\n \n-        return Response(\n-            InformationRetrieveSerializers(serializer.instance, context=self.get_serializer_context()).data, \n-            status=status.HTTP_201_CREATED\n-        )\n+        return Response(InformationRetrieveSerializers(instance).data, status=status.HTTP_201_CREATED)\n \n-    def perform_create(self, serializer):\n-        \"\"\"Handles creating a new Information object (DRF standard method).\"\"\"\n-        serializer.save()\n-\n     def update(self, request, *args, **kwargs):\n         \"\"\"\n         Handles updating an existing Information object.\n         Returns the updated object data using InformationRetrieveSerializers.\n         \"\"\"\n         instance = self.get_object()\n-        serializer = self.get_serializer(instance, data=request.data, partial=True)\n+        serializer = self.get_serializer(instance, data=request.data, context={'request': request}, partial=True)\n         serializer.is_valid(raise_exception=True)\n         instance = serializer.save()\n \n-        return Response(\n-            InformationRetrieveSerializers(instance, context=self.get_serializer_context()).data, \n-            status=status.HTTP_200_OK\n-        )\n+        return Response(InformationRetrieveSerializers(instance).data, status=status.HTTP_200_OK)\n+\n+    def get_queryset(self):\n+        \"\"\"\n+        Allows additional filtering logic if needed.\n+        \"\"\"\n+        queryset = super().get_queryset()\n+        return queryset\n"
+                },
+                {
+                    "date": 1739950241583,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -53,10 +53,4 @@\n         instance = serializer.save()\n \n         return Response(InformationRetrieveSerializers(instance).data, status=status.HTTP_200_OK)\n \n-    def get_queryset(self):\n-        \"\"\"\n-        Allows additional filtering logic if needed.\n-        \"\"\"\n-        queryset = super().get_queryset()\n-        return queryset\n"
                 }
             ],
             "date": 1733481577467,

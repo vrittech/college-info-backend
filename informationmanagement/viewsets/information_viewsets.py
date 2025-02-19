@@ -36,18 +36,11 @@ class informationViewsets(viewsets.ModelViewSet):
         Handles creating a new Information object.
         Returns the full object data using InformationRetrieveSerializers.
         """
-        serializer = self.get_serializer(data=request.data)
+        serializer = self.get_serializer(data=request.data, context={'request': request})
         serializer.is_valid(raise_exception=True)
-        self.perform_create(serializer)  
+        instance = serializer.save()
 
-        return Response(
-            InformationRetrieveSerializers(serializer.instance, context=self.get_serializer_context()).data, 
-            status=status.HTTP_201_CREATED
-        )
-
-    def perform_create(self, serializer):
-        """Handles creating a new Information object (DRF standard method)."""
-        serializer.save()
+        return Response(InformationRetrieveSerializers(instance).data, status=status.HTTP_201_CREATED)
 
     def update(self, request, *args, **kwargs):
         """
@@ -55,11 +48,9 @@ class informationViewsets(viewsets.ModelViewSet):
         Returns the updated object data using InformationRetrieveSerializers.
         """
         instance = self.get_object()
-        serializer = self.get_serializer(instance, data=request.data, partial=True)
+        serializer = self.get_serializer(instance, data=request.data, context={'request': request}, partial=True)
         serializer.is_valid(raise_exception=True)
         instance = serializer.save()
 
-        return Response(
-            InformationRetrieveSerializers(instance, context=self.get_serializer_context()).data, 
-            status=status.HTTP_200_OK
-        )
+        return Response(InformationRetrieveSerializers(instance).data, status=status.HTTP_200_OK)
+
