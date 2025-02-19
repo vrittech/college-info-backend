@@ -5,6 +5,7 @@ from ..models import Affiliation
 from ..serializers.affiliation_serializers import AffiliationListSerializers, AffiliationRetrieveSerializers, AffiliationWriteSerializers
 from ..utilities.importbase import *
 from mainproj.permissions import DynamicModelPermission
+from utilities.filter import AffiliationFilter
 
 class affiliationViewsets(viewsets.ModelViewSet):
     serializer_class = AffiliationListSerializers
@@ -14,23 +15,25 @@ class affiliationViewsets(viewsets.ModelViewSet):
     pagination_class = MyPageNumberPagination
     queryset = Affiliation.objects.all().order_by('-id')
     lookup_field = "slug"
+    filterset_class= AffiliationFilter
 
 
     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]
     search_fields = ['id','name','district','address']
     ordering_fields = ['id','name','district','address','created_date','updated_date']
+    
 
-    filterset_fields = {
-        'id': ['exact'],
-        'name': ['exact'],
-        'address': ['exact'],
-        'district': ['exact'],
-        'university_type': ['exact'],
-        'certification': ['exact'],
-        'created_date': ['exact','gte','lte'],
-        'established_year': ['exact','gte','lte'],
-        'updated_date': ['exact','gte','lte'],
-    }
+    # filterset_fields = {
+    #     'id': ['exact'],
+    #     'name': ['exact'],
+    #     'address': ['exact'],
+    #     'district': ['exact'],
+    #     'university_type': ['exact'],
+    #     'certification': ['exact'],
+    #     'created_date': ['exact','gte','lte'],
+    #     'established_year': ['exact','gte','lte'],
+    #     'updated_date': ['exact','gte','lte'],
+    # }
 # ('name', 'established_year', '.year,validators', 'google_map_embed_url', 'latitude', 'longitude', 'address', 'district', 'university_type', 'certification', 'phone_number', 'email', 'description', 'logo_image', 'cover_image', 'created_date', 'updated_date', )
     def get_queryset(self):
         queryset = super().get_queryset()

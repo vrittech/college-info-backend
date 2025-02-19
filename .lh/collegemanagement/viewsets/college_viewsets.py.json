@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 57,
+            "activePatchIndex": 60,
             "patches": [
                 {
                     "date": 1733718920520,
@@ -236,6 +236,18 @@
                 {
                     "date": 1739682210065,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -35,9 +35,9 @@\n         queryset = super().get_queryset()\n         request = self.request\n         if request.user.is_superuser:\n             return queryset\n-        elif request.user.ha\n+        elif request.user.has_perm('collegemanagement.change_college'):\n             return queryset.filter(user=request.user)\n         return queryset\n \n     def get_serializer_class(self):\n"
+                },
+                {
+                    "date": 1739940098626,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -21,16 +21,16 @@\n     ordering_fields = ['id','slug','name', 'established_date', 'website_link', 'address', 'district__name', 'phone_number', 'email', 'latitude', 'longitude', 'about', 'brochure', 'step_counter', 'facilities', 'placement', 'scholarship', 'created_date', 'updated_date']\n     \n     # ('name', 'established_date', 'website_link', 'address', 'district', 'phone_number', 'email', 'affiliated', 'college_type', 'discipline', 'social_media', 'google_map_link', 'latitude', 'longitude', 'about', 'brochure', 'step_counter', 'facilities', 'placement', 'scholarship', 'created_date', 'updated_date', )\n \n-    filterset_fields = {\n-        'id': ['exact'],\n-        'college_type': ['exact'],\n-        'affiliated': ['exact'],\n-        'established_date': ['exact','gte','lte'],\n-        'created_date': ['exact','gte','lte'],\n-        'updated_date': ['exact','gte','lte'],\n-    }\n+    # filterset_fields = {\n+    #     'id': ['exact'],\n+    #     'college_type': ['exact'],\n+    #     'affiliated': ['exact'],\n+    #     'established_date': ['exact','gte','lte'],\n+    #     'created_date': ['exact','gte','lte'],\n+    #     'updated_date': ['exact','gte','lte'],\n+    # }\n \n     def get_queryset(self):\n         queryset = super().get_queryset()\n         request = self.request\n"
+                },
+                {
+                    "date": 1739940104952,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,9 +18,9 @@\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     search_fields = ['id','slug','name', 'established_date', 'website_link', 'address', 'district', 'phone_number', 'email', 'affiliated', 'college_type', 'discipline', 'social_media', 'google_map_link', 'latitude', 'longitude', 'about', 'brochure', 'step_counter', 'facilities', 'placement', 'scholarship', 'created_date', 'updated_date']\n     ordering_fields = ['id','slug','name', 'established_date', 'website_link', 'address', 'district__name', 'phone_number', 'email', 'latitude', 'longitude', 'about', 'brochure', 'step_counter', 'facilities', 'placement', 'scholarship', 'created_date', 'updated_date']\n-    \n+    filterset_class= CollegeFilter\n     # ('name', 'established_date', 'website_link', 'address', 'district', 'phone_number', 'email', 'affiliated', 'college_type', 'discipline', 'social_media', 'google_map_link', 'latitude', 'longitude', 'about', 'brochure', 'step_counter', 'facilities', 'placement', 'scholarship', 'created_date', 'updated_date', )\n \n     # filterset_fields = {\n     #     'id': ['exact'],\n"
+                },
+                {
+                    "date": 1739940111149,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,8 +6,9 @@\n from ..utilities.importbase import *\n from rest_framework.decorators import action\n from rest_framework.response import Response\n from mainproj.permissions import DynamicModelPermission\n+from utilities\n class collegeViewsets(viewsets.ModelViewSet):\n     serializer_class = CollegeListSerializers\n     # permission_classes = [collegemanagementPermission]\n     permission_classes = [DynamicModelPermission]\n"
                 }
             ],
             "date": 1733718920520,
