@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 14,
+            "activePatchIndex": 16,
             "patches": [
                 {
                     "date": 1733481590443,
@@ -64,6 +64,14 @@
                 {
                     "date": 1739767358429,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,9 @@\n \n class informationcategoryViewsets(viewsets.ModelViewSet):\n     serializer_class = InformationCategoryListSerializers\n     permission_classes = [DynamicModelPermission]\n-    authentication_classes = [JWTAuthentication]\n+    # authentication_classes = [JWTAuthentication]\n     pagination_class = MyPageNumberPagination\n     queryset = InformationCategory.objects.all().order_by('-id')\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n"
+                },
+                {
+                    "date": 1739959243392,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,11 +17,11 @@\n     search_fields = ['id','name', 'is_show', 'created_date', 'updated_date']\n     ordering_fields = ['id','name', 'is_show', 'created_date', 'updated_date']\n # ('name', 'is_show', 'image', 'created_date', 'updated_date', )\n    \n-    # filterset_fields = {\n-    #     'id': ['exact'],\n-    # }\n+    filterset_fields = {\n+        'id': ['exact'],\n+    }\n \n     def get_queryset(self):\n         queryset = super().get_queryset()\n         return queryset\n"
+                },
+                {
+                    "date": 1739959254600,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,8 +19,9 @@\n # ('name', 'is_show', 'image', 'created_date', 'updated_date', )\n    \n     filterset_fields = {\n         'id': ['exact'],\n+        'id': ['exact'],\n     }\n \n     def get_queryset(self):\n         queryset = super().get_queryset()\n"
                 }
             ],
             "date": 1733481590443,

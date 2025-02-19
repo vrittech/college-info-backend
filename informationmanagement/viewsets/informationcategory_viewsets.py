@@ -18,9 +18,10 @@ class informationcategoryViewsets(viewsets.ModelViewSet):
     ordering_fields = ['id','name', 'is_show', 'created_date', 'updated_date']
 # ('name', 'is_show', 'image', 'created_date', 'updated_date', )
    
-    # filterset_fields = {
-    #     'id': ['exact'],
-    # }
+    filterset_fields = {
+        'id': ['exact'],
+        'name': ['exact'],
+    }
 
     def get_queryset(self):
         queryset = super().get_queryset()
