@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 88,
+            "activePatchIndex": 90,
             "patches": [
                 {
                     "date": 1733477116456,
@@ -360,6 +360,14 @@
                 {
                     "date": 1739862846939,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -185,9 +185,9 @@\n             # Recreate social media entries\n             for social in social_media_data:\n                 CollegeSocialMedia.objects.create(\n                     college=instance,\n-                    name=social.get(\"name\"),\n+                    social_media=social.get(\"social_media\"),\n                     link=social.get(\"link\"),\n                     icon=social.get(\"icon\"),\n                     is_show=social.get(\"is_show\", False)\n                 )\n"
+                },
+                {
+                    "date": 1739943790964,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -139,8 +139,9 @@\n         if facilities_ids:\n             college.facilities.set(Facility.objects.filter(id__in=facilities_ids))\n         \n         # Manually handle social media data\n+        \n         for social in social_media_data:\n             CollegeSocialMedia.objects.create(\n                 college=college,\n                 social_media=social.get(\"social_media\"),\n"
+                },
+                {
+                    "date": 1739943800647,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -139,17 +139,17 @@\n         if facilities_ids:\n             college.facilities.set(Facility.objects.filter(id__in=facilities_ids))\n         \n         # Manually handle social media data\n-        \n-        for social in social_media_data:\n-            CollegeSocialMedia.objects.create(\n-                college=college,\n-                social_media=social.get(\"social_media\"),\n-                link=social.get(\"link\"),\n-                icon=social.get(\"icon\"),\n-                is_show=social.get(\"is_show\", False)\n-            )\n+        if social_media_data:\n+            for social in social_media_data:\n+                CollegeSocialMedia.objects.create(\n+                    college=college,\n+                    social_media=social.get(\"social_media\"),\n+                    link=social.get(\"link\"),\n+                    icon=social.get(\"icon\"),\n+                    is_show=social.get(\"is_show\", False)\n+                )\n \n         return college\n \n     def update(self, instance, validated_data):\n"
                 }
             ],
             "date": 1733477116456,

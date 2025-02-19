@@ -140,14 +140,15 @@ class CollegeWriteSerializers(serializers.ModelSerializer):
             college.facilities.set(Facility.objects.filter(id__in=facilities_ids))
         
         # Manually handle social media data
-        for social in social_media_data:
-            CollegeSocialMedia.objects.create(
-                college=college,
-                social_media=social.get("social_media"),
-                link=social.get("link"),
-                icon=social.get("icon"),
-                is_show=social.get("is_show", False)
-            )
+        if social_media_data:
+            for social in social_media_data:
+                CollegeSocialMedia.objects.create(
+                    college=college,
+                    social_media=social.get("social_media"),
+                    link=social.get("link"),
+                    icon=social.get("icon"),
+                    is_show=social.get("is_show", False)
+                )
 
         return college
 
