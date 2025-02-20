@@ -63,6 +63,7 @@ class DynamicModelPermission(BasePermission):
 
         
         # print(safe_model_method,"safe_model_method")
+
         public_object = safe_model_method.filter(model_name__model_name__iexact=model_name)
         if public_object.exists():
             if view.action in public_object.values_list('method__name',flat=True):
@@ -70,14 +71,12 @@ class DynamicModelPermission(BasePermission):
  
         group_permissions = get_group_permissions(request.user)
         required_permission = ACTION_PERMISSION_MAPPING.get(view.action, None)
-        #  Strictly check if the user has permission for this model from groups
-        if model_name not in group_permissions:
-            return False  # User's groups have NO permission for this model
+
         # Enforce permission mapping (prevent unauthorized actions)
-        elif required_permission and required_permission not in group_permissions[model_name]:
-            return False  # User's group does NOT have the required permission
+        if required_permission and required_permission in group_permissions.get(model_name.lower()):
+            return True  # User's group does NOT have the required permission
             
-        return True  # If we've reached here, the permission is granted
+        return False  # If we've reached here, the permission is granted
 
     def has_object_permission(self, request, view, obj):
   
