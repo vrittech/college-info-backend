@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 6,
+            "activePatchIndex": 22,
             "patches": [
                 {
                     "date": 1733729892743,
@@ -32,6 +32,70 @@
                 {
                     "date": 1739509454651,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,8 +3,9 @@\n from django_filters.rest_framework import DjangoFilterBackend\n from ..models import EventGallery\n from ..serializers.eventgallery_serializers import EventGalleryListSerializers, EventGalleryRetrieveSerializers, EventGalleryWriteSerializers\n from ..utilities.importbase import *\n+from mainproj\n \n class eventgalleryViewsets(viewsets.ModelViewSet):\n     serializer_class = EventGalleryListSerializers\n     permission_classes = [eventPermission]\n"
+                },
+                {
+                    "date": 1740026219312,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,24 +3,24 @@\n from django_filters.rest_framework import DjangoFilterBackend\n from ..models import EventGallery\n from ..serializers.eventgallery_serializers import EventGalleryListSerializers, EventGalleryRetrieveSerializers, EventGalleryWriteSerializers\n from ..utilities.importbase import *\n-from mainproj\n+from mainproj.permissions import DynamicModelPermission\n \n class eventgalleryViewsets(viewsets.ModelViewSet):\n     serializer_class = EventGalleryListSerializers\n-    permission_classes = [eventPermission]\n+    permission_classes = [DynamicModelPermission]\n     authentication_classes = [JWTAuthentication]\n     pagination_class = MyPageNumberPagination\n     queryset = EventGallery.objects.all().order_by('-id')\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     search_fields = ['id']\n     ordering_fields = ['id']\n \n-    # filterset_fields = {\n-    #     'id': ['exact'],\n-    # }\n+    filterset_fields = {\n+        'id': ['exact'],\n+    }\n \n     def get_queryset(self):\n         queryset = super().get_queryset()\n         return queryset\n"
+                },
+                {
+                    "date": 1740026232431,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,8 +18,9 @@\n     ordering_fields = ['id']\n \n     filterset_fields = {\n         'id': ['exact'],\n+        ''\n     }\n \n     def get_queryset(self):\n         queryset = super().get_queryset()\n"
+                },
+                {
+                    "date": 1740026245485,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,9 +18,10 @@\n     ordering_fields = ['id']\n \n     filterset_fields = {\n         'id': ['exact'],\n-        ''\n+        'event': ['exact'],\n+        'is_featured_image'\n     }\n \n     def get_queryset(self):\n         queryset = super().get_queryset()\n"
+                },
+                {
+                    "date": 1740026257988,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,10 @@\n \n     filterset_fields = {\n         'id': ['exact'],\n         'event': ['exact'],\n-        'is_featured_image'\n+        'is_featured_image': ['exact'],\n+        'created_date'\n     }\n \n     def get_queryset(self):\n         queryset = super().get_queryset()\n"
+                },
+                {
+                    "date": 1740026266462,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,9 +20,9 @@\n     filterset_fields = {\n         'id': ['exact'],\n         'event': ['exact'],\n         'is_featured_image': ['exact'],\n-        'created_date'\n+        'created_date':\n     }\n \n     def get_queryset(self):\n         queryset = super().get_queryset()\n"
+                },
+                {
+                    "date": 1740027556534,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,9 +20,10 @@\n     filterset_fields = {\n         'id': ['exact'],\n         'event': ['exact'],\n         'is_featured_image': ['exact'],\n-        'created_date':\n+        'created_date': ['exact', 'lte', 'gte'],\n+        'updated_date': ['exact', 'lte', 'gte'],\n     }\n \n     def get_queryset(self):\n         queryset = super().get_queryset()\n@@ -37,5 +38,7 @@\n \n     # @action(detail=False, methods=['get'], name=\"action_name\", url_path=\"url_path\")\n     # def action_name(self, request, *args, **kwargs):\n     #     return super().list(request, *args, **kwargs)\n+    \n+    \n \n"
+                },
+                {
+                    "date": 1740027615671,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -38,7 +38,18 @@\n \n     # @action(detail=False, methods=['get'], name=\"action_name\", url_path=\"url_path\")\n     # def action_name(self, request, *args, **kwargs):\n     #     return super().list(request, *args, **kwargs)\n+        @action(detail=False, methods=['get'],permission_classes=[AllowAny], url_path=\"latest-images/(?P<college_slug>[^/]+)\")\n+    def latest_college_images(self, request, college_slug=None, *args, **kwargs):\n+        # Fetch the college using slug\n+        college = get_object_or_404(College, slug=college_slug)\n+\n+        # Get the latest 5 images of the specified college\n+        images = CollegeGallery.objects.filter(college=college).order_by('-created_date')[:5]\n+\n+        # Serialize and return the data\n+        serializer = self.get_serializer(images, many=True)\n+        return Response(serializer.data)\n     \n     \n \n"
+                },
+                {
+                    "date": 1740027635936,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,8 +4,10 @@\n from ..models import EventGallery\n from ..serializers.eventgallery_serializers import EventGalleryListSerializers, EventGalleryRetrieveSerializers, EventGalleryWriteSerializers\n from ..utilities.importbase import *\n from mainproj.permissions import DynamicModelPermission\n+from rest_framework.decorators import action\n+from rest_framework.response import Response\n \n class eventgalleryViewsets(viewsets.ModelViewSet):\n     serializer_class = EventGalleryListSerializers\n     permission_classes = [DynamicModelPermission]\n@@ -38,9 +40,9 @@\n \n     # @action(detail=False, methods=['get'], name=\"action_name\", url_path=\"url_path\")\n     # def action_name(self, request, *args, **kwargs):\n     #     return super().list(request, *args, **kwargs)\n-        @action(detail=False, methods=['get'],permission_classes=[AllowAny], url_path=\"latest-images/(?P<college_slug>[^/]+)\")\n+    @action(detail=False, methods=['get'],permission_classes=[AllowAny], url_path=\"latest-images/(?P<college_slug>[^/]+)\")\n     def latest_college_images(self, request, college_slug=None, *args, **kwargs):\n         # Fetch the college using slug\n         college = get_object_or_404(College, slug=college_slug)\n \n"
+                },
+                {
+                    "date": 1740027651620,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,8 +6,10 @@\n from ..utilities.importbase import *\n from mainproj.permissions import DynamicModelPermission\n from rest_framework.decorators import action\n from rest_framework.response import Response\n+from rest_framework.permissions import AllowAny\n+from django.shortcuts import get_object_or_404\n \n class eventgalleryViewsets(viewsets.ModelViewSet):\n     serializer_class = EventGalleryListSerializers\n     permission_classes = [DynamicModelPermission]\n"
+                },
+                {
+                    "date": 1740027660300,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -45,9 +45,9 @@\n     #     return super().list(request, *args, **kwargs)\n     @action(detail=False, methods=['get'],permission_classes=[AllowAny], url_path=\"latest-images/(?P<college_slug>[^/]+)\")\n     def latest_college_images(self, request, college_slug=None, *args, **kwargs):\n         # Fetch the college using slug\n-        college = get_object_or_404(College, slug=college_slug)\n+        college = get_object_or_404(Event, slug=college_slug)\n \n         # Get the latest 5 images of the specified college\n         images = CollegeGallery.objects.filter(college=college).order_by('-created_date')[:5]\n \n"
+                },
+                {
+                    "date": 1740027678238,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,8 +8,9 @@\n from rest_framework.decorators import action\n from rest_framework.response import Response\n from rest_framework.permissions import AllowAny\n from django.shortcuts import get_object_or_404\n+from \n \n class eventgalleryViewsets(viewsets.ModelViewSet):\n     serializer_class = EventGalleryListSerializers\n     permission_classes = [DynamicModelPermission]\n@@ -48,9 +49,9 @@\n         # Fetch the college using slug\n         college = get_object_or_404(Event, slug=college_slug)\n \n         # Get the latest 5 images of the specified college\n-        images = CollegeGallery.objects.filter(college=college).order_by('-created_date')[:5]\n+        images = EventGallery.objects.filter(college=college).order_by('-created_date')[:5]\n \n         # Serialize and return the data\n         serializer = self.get_serializer(images, many=True)\n         return Response(serializer.data)\n"
+                },
+                {
+                    "date": 1740027711787,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,9 @@\n from rest_framework.decorators import action\n from rest_framework.response import Response\n from rest_framework.permissions import AllowAny\n from django.shortcuts import get_object_or_404\n-from \n+from ..models import Event\n \n class eventgalleryViewsets(viewsets.ModelViewSet):\n     serializer_class = EventGalleryListSerializers\n     permission_classes = [DynamicModelPermission]\n@@ -44,11 +44,11 @@\n     # @action(detail=False, methods=['get'], name=\"action_name\", url_path=\"url_path\")\n     # def action_name(self, request, *args, **kwargs):\n     #     return super().list(request, *args, **kwargs)\n     @action(detail=False, methods=['get'],permission_classes=[AllowAny], url_path=\"latest-images/(?P<college_slug>[^/]+)\")\n-    def latest_college_images(self, request, college_slug=None, *args, **kwargs):\n+    def latest_college_images(self, request, event_slug=None, *args, **kwargs):\n         # Fetch the college using slug\n-        college = get_object_or_404(Event, slug=college_slug)\n+        college = get_object_or_404(Event, slug=event_slug)\n \n         # Get the latest 5 images of the specified college\n         images = EventGallery.objects.filter(college=college).order_by('-created_date')[:5]\n \n"
+                },
+                {
+                    "date": 1740027717341,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -43,9 +43,9 @@\n \n     # @action(detail=False, methods=['get'], name=\"action_name\", url_path=\"url_path\")\n     # def action_name(self, request, *args, **kwargs):\n     #     return super().list(request, *args, **kwargs)\n-    @action(detail=False, methods=['get'],permission_classes=[AllowAny], url_path=\"latest-images/(?P<college_slug>[^/]+)\")\n+    @action(detail=False, methods=['get'],permission_classes=[AllowAny], url_path=\"latest-images/(?P<event_slug>[^/]+)\")\n     def latest_college_images(self, request, event_slug=None, *args, **kwargs):\n         # Fetch the college using slug\n         college = get_object_or_404(Event, slug=event_slug)\n \n"
+                },
+                {
+                    "date": 1740028033395,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -49,9 +49,9 @@\n         # Fetch the college using slug\n         college = get_object_or_404(Event, slug=event_slug)\n \n         # Get the latest 5 images of the specified college\n-        images = EventGallery.objects.filter(college=college).order_by('-created_date')[:5]\n+        images = EventGallery.objects.filter(ecent=college).order_by('-created_date')[:5]\n \n         # Serialize and return the data\n         serializer = self.get_serializer(images, many=True)\n         return Response(serializer.data)\n"
+                },
+                {
+                    "date": 1740028041120,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -49,9 +49,9 @@\n         # Fetch the college using slug\n         college = get_object_or_404(Event, slug=event_slug)\n \n         # Get the latest 5 images of the specified college\n-        images = EventGallery.objects.filter(ecent=college).order_by('-created_date')[:5]\n+        images = EventGallery.objects.filter(event=event).order_by('-created_date')[:5]\n \n         # Serialize and return the data\n         serializer = self.get_serializer(images, many=True)\n         return Response(serializer.data)\n"
+                },
+                {
+                    "date": 1740028049689,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -46,9 +46,9 @@\n     #     return super().list(request, *args, **kwargs)\n     @action(detail=False, methods=['get'],permission_classes=[AllowAny], url_path=\"latest-images/(?P<event_slug>[^/]+)\")\n     def latest_college_images(self, request, event_slug=None, *args, **kwargs):\n         # Fetch the college using slug\n-        college = get_object_or_404(Event, slug=event_slug)\n+        event = get_object_or_404(Event, slug=event_slug)\n \n         # Get the latest 5 images of the specified college\n         images = EventGallery.objects.filter(event=event).order_by('-created_date')[:5]\n \n"
                 }
             ],
             "date": 1733729892743,
