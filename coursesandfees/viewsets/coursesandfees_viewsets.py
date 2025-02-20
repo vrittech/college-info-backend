@@ -27,6 +27,8 @@ class coursesandfeesViewsets(viewsets.ModelViewSet):
     filterset_fields = {
         'id': ['exact'],
         'is_admission': ['exact'],
+        'college__slug': ['exact'],
+        'course__slug': ['exact'],
     }
 
     def get_queryset(self):

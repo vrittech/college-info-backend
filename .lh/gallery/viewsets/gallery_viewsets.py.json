@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 14,
+            "activePatchIndex": 18,
             "patches": [
                 {
                     "date": 1733481561311,
@@ -64,6 +64,22 @@
                 {
                     "date": 1739509527137,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,8 +5,9 @@\n from ..serializers.gallery_serializers import GalleryListSerializers, GalleryRetrieveSerializers, GalleryWriteSerializers\n from ..utilities.importbase import *\n from rest_framework.response import Response\n from rest_framework import status\n+from mainproj.permissions\n \n class galleryViewsets(viewsets.ModelViewSet):\n     serializer_class = GalleryListSerializers\n     permission_classes = [galleryPermission]\n"
+                },
+                {
+                    "date": 1740044275074,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,24 +5,24 @@\n from ..serializers.gallery_serializers import GalleryListSerializers, GalleryRetrieveSerializers, GalleryWriteSerializers\n from ..utilities.importbase import *\n from rest_framework.response import Response\n from rest_framework import status\n-from mainproj.permissions\n+from mainproj.permissions import DynamicModelPermission\n \n class galleryViewsets(viewsets.ModelViewSet):\n     serializer_class = GalleryListSerializers\n-    permission_classes = [galleryPermission]\n+    permission_classes = [DynamicModelPermission]\n     authentication_classes = [JWTAuthentication]\n     pagination_class = MyPageNumberPagination\n     queryset = Gallery.objects.all().order_by('-id')\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     search_fields = ['id']\n     ordering_fields = ['-id']\n \n-    # filterset_fields = {\n-    #     'id': ['exact'],\n-    # }\n+    filterset_fields = {\n+        'id': ['exact'],\n+    }\n \n     def get_queryset(self):\n         queryset = super().get_queryset()\n         return queryset\n"
+                },
+                {
+                    "date": 1740044282440,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,8 +20,9 @@\n     ordering_fields = ['-id']\n \n     filterset_fields = {\n         'id': ['exact'],\n+        album\n     }\n \n     def get_queryset(self):\n         queryset = super().get_queryset()\n"
+                },
+                {
+                    "date": 1740044289410,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,9 +20,9 @@\n     ordering_fields = ['-id']\n \n     filterset_fields = {\n         'id': ['exact'],\n-        album\n+        'album':\n     }\n \n     def get_queryset(self):\n         queryset = super().get_queryset()\n"
+                },
+                {
+                    "date": 1740044300595,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,9 +20,9 @@\n     ordering_fields = ['-id']\n \n     filterset_fields = {\n         'id': ['exact'],\n-        'album':\n+        'album': ['exact'],\n     }\n \n     def get_queryset(self):\n         queryset = super().get_queryset()\n"
                 }
             ],
             "date": 1733481561311,

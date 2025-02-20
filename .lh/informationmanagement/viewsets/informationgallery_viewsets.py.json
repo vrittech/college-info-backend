@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 7,
+            "activePatchIndex": 10,
             "patches": [
                 {
                     "date": 1733481837409,
@@ -36,6 +36,18 @@
                 {
                     "date": 1739767365188,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,10 +7,10 @@\n from mainproj.permissions import DynamicModelPermission\n \n class informationgalleryViewsets(viewsets.ModelViewSet):\n     serializer_class = InformationGalleryListSerializers\n-    permission_classes = [informationmanagementPermission]\n-    authentication_classes = [JWTAuthentication]\n+    permission_classes = [DynamicModelPermission]\n+    # authentication_classes = [JWTAuthentication]\n     pagination_class = MyPageNumberPagination\n     queryset = InformationGallery.objects.all().order_by('-id')\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n"
+                },
+                {
+                    "date": 1740028261428,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,11 +16,11 @@\n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     search_fields = ['id']\n     ordering_fields = ['id']\n \n-    # filterset_fields = {\n-    #     'id': ['exact'],\n-    # }\n+    filterset_fields = {\n+        'id': ['exact'],\n+    }\n \n     def get_queryset(self):\n         queryset = super().get_queryset()\n         return queryset\n"
+                },
+                {
+                    "date": 1740037588424,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,8 +18,9 @@\n     ordering_fields = ['id']\n \n     filterset_fields = {\n         'id': ['exact'],\n+        'is_featured'\n     }\n \n     def get_queryset(self):\n         queryset = super().get_queryset()\n"
+                },
+                {
+                    "date": 1740037624120,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,40 @@\n+from rest_framework import viewsets\n+from rest_framework.filters import SearchFilter, OrderingFilter\n+from django_filters.rest_framework import DjangoFilterBackend\n+from ..models import InformationGallery\n+from ..serializers.informationgallery_serializers import InformationGalleryListSerializers, InformationGalleryRetrieveSerializers, InformationGalleryWriteSerializers\n+from ..utilities.importbase import *\n+from mainproj.permissions import DynamicModelPermission\n+\n+class informationgalleryViewsets(viewsets.ModelViewSet):\n+    serializer_class = InformationGalleryListSerializers\n+    permission_classes = [DynamicModelPermission]\n+    # authentication_classes = [JWTAuthentication]\n+    pagination_class = MyPageNumberPagination\n+    queryset = InformationGallery.objects.all().order_by('-id')\n+\n+    filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n+    search_fields = ['id']\n+    ordering_fields = ['id']\n+\n+    filterset_fields = {\n+        'id': ['exact'],\n+        'is_featured': ['exact'],\n+    }\n+\n+    def get_queryset(self):\n+        \n+        queryset = super().get_queryset()\n+        return queryset\n+\n+    def get_serializer_class(self):\n+        if self.action in ['create', 'update', 'partial_update']:\n+            return InformationGalleryWriteSerializers\n+        elif self.action == 'retrieve':\n+            return InformationGalleryRetrieveSerializers\n+        return super().get_serializer_class()\n+\n+    # @action(detail=False, methods=['get'], name=\"action_name\", url_path=\"url_path\")\n+    # def action_name(self, request, *args, **kwargs):\n+    #     return super().list(request, *args, **kwargs)\n+\n"
                 }
             ],
             "date": 1733481837409,

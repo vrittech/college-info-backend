@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 4,
+            "activePatchIndex": 7,
             "patches": [
                 {
                     "date": 1739786154635,
@@ -24,6 +24,18 @@
                 {
                     "date": 1739945798047,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -63,9 +63,9 @@\n     public_id = models.UUIDField(default=uuid.uuid4,editable=False,unique=True)\n     slug = models.SlugField(max_length=255, unique=True, null=True, blank=True)\n     title = models.CharField(max_length=510,unique=True)\n     publish_date = models.DateField(null=True, blank=True)\n-    active_period_start = models.DateField(null=True, blank=True))\n+    active_period_start = models.DateField(null=True, blank=True)\n     active_period_end = models.DateField(null=True, blank=True))\n     \n     level = models.ManyToManyField(Level, blank=True)\n     sublevel = models.ManyToManyField(SubLevel, blank=True)\n"
+                },
+                {
+                    "date": 1740031769456,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -64,9 +64,9 @@\n     slug = models.SlugField(max_length=255, unique=True, null=True, blank=True)\n     title = models.CharField(max_length=510,unique=True)\n     publish_date = models.DateField(null=True, blank=True)\n     active_period_start = models.DateField(null=True, blank=True)\n-    active_period_end = models.DateField(null=True, blank=True))\n+    active_period_end = models.DateField(null=True, blank=True)\n     \n     level = models.ManyToManyField(Level, blank=True)\n     sublevel = models.ManyToManyField(SubLevel, blank=True)\n     course = models.ManyToManyField(Course, blank=True)\n@@ -122,8 +122,9 @@\n     image = models.ImageField(upload_to='information_category/',null=True,blank=True)\n     is_featured = models.BooleanField(default=False)\n     created_date = models.DateField(auto_now_add=True, null=True, blank=True)\n     updated_date = models.DateTimeField(auto_now=True, null=True, blank=True)\n+    \n \n     \n     class Meta:\n         permissions = [\n"
+                },
+                {
+                    "date": 1740031777925,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -122,9 +122,9 @@\n     image = models.ImageField(upload_to='information_category/',null=True,blank=True)\n     is_featured = models.BooleanField(default=False)\n     created_date = models.DateField(auto_now_add=True, null=True, blank=True)\n     updated_date = models.DateTimeField(auto_now=True, null=True, blank=True)\n-    \n+    manager = models.Man\n \n     \n     class Meta:\n         permissions = [\n"
+                },
+                {
+                    "date": 1740031784987,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -122,9 +122,8 @@\n     image = models.ImageField(upload_to='information_category/',null=True,blank=True)\n     is_featured = models.BooleanField(default=False)\n     created_date = models.DateField(auto_now_add=True, null=True, blank=True)\n     updated_date = models.DateTimeField(auto_now=True, null=True, blank=True)\n-    manager = models.Man\n \n     \n     class Meta:\n         permissions = [\n"
                 }
             ],
             "date": 1739786154635,

@@ -19,9 +19,11 @@ class galleryViewsets(viewsets.ModelViewSet):
     search_fields = ['id']
     ordering_fields = ['-id']
 
-    # filterset_fields = {
-    #     'id': ['exact'],
-    # }
+    filterset_fields = {
+        'id': ['exact'],
+        'album': ['exact'],
+        'is_cover': ['exact'],
+    }
 
     def get_queryset(self):
         queryset = super().get_queryset()

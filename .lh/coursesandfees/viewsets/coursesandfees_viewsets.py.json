@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 32,
+            "activePatchIndex": 36,
             "patches": [
                 {
                     "date": 1733481293986,
@@ -136,6 +136,22 @@
                 {
                     "date": 1739873265993,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -42,9 +42,9 @@\n \n     # @action(detail=False, methods=['get'], name=\"action_name\", url_path=\"url_path\")\n     # def action_name(self, request, *args, **kwargs):\n     #     return super().list(request, *args, **kwargs)\n-    @action(detail=True, methods=['get'], permission_classes=[AllowAny], url_path=\"average-course-fee/(?P<slug>[^/.]+)\")\n+    @action(detail=False, methods=['get'], permission_classes=[AllowAny], url_path=\"average-course-fee/(?P<slug>[^/.]+)\")\n     def average_course_fee(self, request, slug=None, *args, **kwargs):\n         \"\"\"\n         Fetch the average fee for a given course using its slug.\n         \"\"\"\n"
+                },
+                {
+                    "date": 1740032672398,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -26,8 +26,9 @@\n \n     filterset_fields = {\n         'id': ['exact'],\n         'is_admission': ['exact'],\n+        \n     }\n \n     def get_queryset(self):\n         queryset = super().get_queryset()\n"
+                },
+                {
+                    "date": 1740032723100,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -26,8 +26,9 @@\n \n     filterset_fields = {\n         'id': ['exact'],\n         'is_admission': ['exact'],\n+        'college': ['exact'],\n         \n     }\n \n     def get_queryset(self):\n"
+                },
+                {
+                    "date": 1740032736908,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -26,10 +26,10 @@\n \n     filterset_fields = {\n         'id': ['exact'],\n         'is_admission': ['exact'],\n-        'college': ['exact'],\n-        \n+        'college__slug': ['exact'],\n+        'course': ['exact'],\n     }\n \n     def get_queryset(self):\n         queryset = super().get_queryset()\n"
+                },
+                {
+                    "date": 1740032777532,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,9 +27,9 @@\n     filterset_fields = {\n         'id': ['exact'],\n         'is_admission': ['exact'],\n         'college__slug': ['exact'],\n-        'course': ['exact'],\n+        'course__slug': ['exact'],\n     }\n \n     def get_queryset(self):\n         queryset = super().get_queryset()\n"
                 }
             ],
             "date": 1733481293986,
