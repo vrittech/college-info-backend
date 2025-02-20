@@ -28,4 +28,11 @@ class Gallery(models.Model):
         permissions = [
             ('manage_gallery', 'Manage Gallery'),
         ]
+        
+    def save(self, *args, **kwargs):
+        if self.is_cover and self.album:
+            # Set all other images in this album to is_cover=False
+            Gallery.objects.filter(album=self.album, is_cover=True).update(is_cover=False)
+        
+        super().save(*args, **kwargs)
 
