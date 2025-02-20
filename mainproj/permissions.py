@@ -71,9 +71,9 @@ class DynamicModelPermission(BasePermission):
  
         group_permissions = get_group_permissions(request.user)
         required_permission = ACTION_PERMISSION_MAPPING.get(view.action, None)
-
+        print(group_permissions,"***********")
         # Enforce permission mapping (prevent unauthorized actions)
-        if required_permission and required_permission in group_permissions.get(model_name.lower()):
+        if required_permission and group_permissions and required_permission in group_permissions.get(model_name.lower()):
             return True  # User's group does NOT have the required permission
             
         return False  # If we've reached here, the permission is granted
@@ -105,7 +105,7 @@ class DynamicModelPermission(BasePermission):
             return False  # User's groups have NO permission for this model
 
         # Enforce permission mapping at object level
-        if required_permission and required_permission in group_permissions[model_name]:
+        if required_permission and group_permissions and required_permission in group_permissions.get(model_name):
             # First layer ownership check
             for field in foreign_owner_field:
                 if hasattr(obj, field):
