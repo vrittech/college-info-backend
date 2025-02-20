@@ -8,11 +8,12 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from mainproj.permissions import DynamicModelPermission
 from ..utilities.filter import CollegeFilter
+from ..utilities.pagination import MyPageNumberPagination
 class collegeViewsets(viewsets.ModelViewSet):
     serializer_class = CollegeListSerializers
     # permission_classes = [collegemanagementPermission]
     permission_classes = [DynamicModelPermission]
-    authentication_classes = [JWTAuthentication]
+    # authentication_classes = [JWTAuthentication]
     pagination_class = MyPageNumberPagination
     lookup_field = "slug"
     queryset = College.objects.all().order_by('-id')
@@ -71,27 +72,27 @@ class collegeViewsets(viewsets.ModelViewSet):
 
     
     
-    @action(detail=False, methods=['get'], name="calculate_completion_percentage", url_path="completion-percentage")
-    def calculate_completion_percentage(self, request, *args, **kwargs):
-        queryset = self.get_queryset()
-        total_colleges = queryset.count()
-        completion_data = []
+    # @action(detail=False, methods=['get'], name="calculate_completion_percentage", url_path="completion-percentage")
+    # def calculate_completion_percentage(self, request, *args, **kwargs):
+    #     queryset = self.get_queryset()
+    #     total_colleges = queryset.count()
+    #     completion_data = []
 
-        for college in queryset:
-            required_fields = [
-                field.name for field in College._meta.get_fields()
-                if isinstance(field, Field) and not field.blank and not field.null
-            ]
+    #     for college in queryset:
+    #         required_fields = [
+    #             field.name for field in College._meta.get_fields()
+    #             if isinstance(field, Field) and not field.blank and not field.null
+    #         ]
 
-            completed_fields_count = sum(1 for field in required_fields if getattr(college, field, None))
-            total_required_fields = len(required_fields)
-            completion_percentage = (completed_fields_count / total_required_fields * 100) if total_required_fields else 100
+    #         completed_fields_count = sum(1 for field in required_fields if getattr(college, field, None))
+    #         total_required_fields = len(required_fields)
+    #         completion_percentage = (completed_fields_count / total_required_fields * 100) if total_required_fields else 100
 
-            completion_data.append({
-                "college_id": college.id,
-                "college_name": college.name,
-                "completion_percentage": round(completion_percentage, 2),
-            })
+    #         completion_data.append({
+    #             "college_id": college.id,
+    #             "college_name": college.name,
+    #             "completion_percentage": round(completion_percentage, 2),
+    #         })
 
-        return Response(completion_data)
+    #     return Response(completion_data)
 

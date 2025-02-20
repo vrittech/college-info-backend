@@ -209,4 +209,9 @@ class CustomUserChangePasswordSerializers(serializers.Serializer):
             raise serializers.ValidationError("Password must be at least 8 characters long")
         return value
 
-   
+
+class CustomUserWriteSerializersCollegeAdmin(serializers.ModelSerializer):
+    full_name = serializers.CharField(required=True)
+    class Meta:
+        model = User
+        fields = ['email','full_name','phone']

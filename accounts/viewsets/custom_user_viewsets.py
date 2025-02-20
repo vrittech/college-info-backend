@@ -6,7 +6,7 @@ from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
 from rest_framework import status
 from django.views.decorators.csrf import csrf_exempt
-from ..serializers.custom_user_serializers import CustomUserReadSerializer, CustomUserWriteSerializer, CustomUserRetrieveSerializer,CustomUserChangePasswordSerializers
+from ..serializers.custom_user_serializers import CustomUserReadSerializer, CustomUserWriteSerializer, CustomUserRetrieveSerializer,CustomUserChangePasswordSerializers,CustomUserWriteSerializersCollegeAdmin
 from rest_framework.response import Response
 from accounts.models import CustomUser
 from django.contrib.auth import authenticate,login
@@ -18,10 +18,11 @@ from ..utilities.pagination import MyPageNumberPagination
 from rest_framework.filters import SearchFilter, OrderingFilter
 from django_filters.rest_framework import DjangoFilterBackend
 from mainproj.permissions import *
+from mainproj.permissions import DynamicModelPermission
 
 class CustomUserViewSet(viewsets.ModelViewSet):
     queryset = CustomUser.objects.all().order_by('-id')
-    permission_classes = [permissions.IsAuthenticated,DynamicModelPermission]
+    permission_classes = [DynamicModelPermission]
     # filterset_class = CustomUserFilter
     pagination_class = MyPageNumberPagination
     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]
@@ -34,6 +35,8 @@ class CustomUserViewSet(viewsets.ModelViewSet):
             return CustomUserReadSerializer
         elif self.action in ['create', 'update', 'partial_update']:
             return CustomUserWriteSerializer
+        elif self.action in ['signup_college_admin']:
+            return CustomUserWriteSerializersCollegeAdmin
         elif self.action in ['retrieve']:
             return CustomUserRetrieveSerializer
         elif self.action in ['changePassword']:
@@ -63,3 +66,16 @@ class CustomUserViewSet(viewsets.ModelViewSet):
         queryset = self.get_queryset().filter(college__isnull=False)  # Filter users with assigned college
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
+    
+    @action(detail=False, methods=['post'], name="signup_college_admin", url_path="signup-college-admin")
+    def signup_college_admin(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)  # ✅ FIX: Pass `data=request.data`
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(
+                {"message": "College Admin signed up successfully!", "data": serializer.data},
+                status=status.HTTP_201_CREATED
+            )
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

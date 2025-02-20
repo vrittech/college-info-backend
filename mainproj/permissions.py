@@ -1,27 +1,6 @@
 from rest_framework.permissions import BasePermission
 from django.apps import apps  # To fetch all models dynamically
 
-# Define API action to Django permission mapping
-ACTION_PERMISSION_MAPPING = {
-    "list": "view",  
-    "retrieve": "view",
-    "create": "add",
-    "update": "change",
-    "partial_update": "change",
-    "destroy": "delete",
-}
-
-# Models that should NOT be publicly listed or retrieved
-RESTRICTED_PUBLIC_MODELS = ["user", "adminlog", "sessions"]
-
-# Models that cannot be deleted except by superusers
-RESTRICTED_DELETE_MODELS = ["user", "adminlog", "sessions"]
-
-foreign_owner_field = ['user', 'college']
-foreign_owner_second_layer = ['college']
-
-# Fetch all registered models dynamically
-ALL_MODELS = {model.__name__.lower(): model for model in apps.get_models()}
 
 def get_group_permissions(user):
     """
@@ -43,8 +22,25 @@ def get_group_permissions(user):
                 continue  # Skip invalid permissions
     return group_permissions
 
+# Define API action to Django permission mapping
+ACTION_PERMISSION_MAPPING = {
+    "list": "view",  
+    "retrieve": "view",
+    "create": "add",
+    "update": "change",
+    "partial_update": "change",
+    "destroy": "delete",
+}
 
-safe_method = ['list', 'retrieve']
+
+foreign_owner_field = ['user', 'college']
+foreign_owner_second_layer = ['college']
+
+# Fetch all registered models dynamically
+ALL_MODELS = {model.__name__: model for model in apps.get_models()}
+
+from setting.models import ModelMethod
+safe_model_method = ModelMethod.objects.all()
 
 class DynamicModelPermission(BasePermission):
     """
@@ -59,35 +55,38 @@ class DynamicModelPermission(BasePermission):
     """
 
     def has_permission(self, request, view):
- 
+        print("has permission ...")
         # Fast track for superusers
         if request.user.is_superuser:
             return True
             
-        model_name = getattr(view.queryset.model, "__name__", "").lower()
+        model_name = getattr(view.queryset.model, "__name__", "")
+
+        
+        # print(safe_model_method,"safe_model_method")
+        public_object = safe_model_method.filter(model_name__model_name__iexact=model_name)
+       
+        if public_object.exists():
+            if view.action in public_object.values_list('method__name',flat=True):
+                return True
+ 
         group_permissions = get_group_permissions(request.user)
         required_permission = ACTION_PERMISSION_MAPPING.get(view.action, None)
-        
-        # Allow `list` and `retrieve` for all models except restricted ones
-        if view.action in safe_method and model_name not in RESTRICTED_PUBLIC_MODELS:
-            return True
 
         #  Strictly check if the user has permission for this model from groups
-        elif model_name not in group_permissions:
+        if model_name not in group_permissions:
             return False  # User's groups have NO permission for this model
 
         # Enforce permission mapping (prevent unauthorized actions)
         elif required_permission and required_permission not in group_permissions[model_name]:
             return False  # User's group does NOT have the required permission
-
-        # Prevent deletion of restricted models (except for superusers)
-        elif view.action == "destroy" and model_name in RESTRICTED_DELETE_MODELS:
-            return request.user.is_superuser
             
         return True  # If we've reached here, the permission is granted
 
     def has_object_permission(self, request, view, obj):
   
+        print("object level permission ....")
+        # return True
         """
         Object-level permission handling with multi-level ownership check.
         """
@@ -98,10 +97,7 @@ class DynamicModelPermission(BasePermission):
         model_name = obj.__class__.__name__.lower()
         group_permissions = get_group_permissions(request.user)
         required_permission = ACTION_PERMISSION_MAPPING.get(view.action, None)
-        
-        # Allow safe methods regardless of ownership
-        if view.action in safe_method:
-            return True       
+             
 
         # Strictly check if the user's groups have permission for this model
         if model_name not in group_permissions:

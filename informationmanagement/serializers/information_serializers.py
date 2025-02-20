@@ -171,6 +171,7 @@ class InformationWriteSerializers(serializers.ModelSerializer):
     class Meta:
         model = Information
         fields = '__all__'
+        
 
     def get_information_gallery(self, obj):
         return [img.image.url for img in obj.information_gallery.all()]
