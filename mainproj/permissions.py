@@ -55,7 +55,6 @@ class DynamicModelPermission(BasePermission):
     """
 
     def has_permission(self, request, view):
-        print("has permission ...")
         # Fast track for superusers
         if request.user.is_superuser:
             return True
@@ -65,18 +64,15 @@ class DynamicModelPermission(BasePermission):
         
         # print(safe_model_method,"safe_model_method")
         public_object = safe_model_method.filter(model_name__model_name__iexact=model_name)
-       
         if public_object.exists():
             if view.action in public_object.values_list('method__name',flat=True):
                 return True
  
         group_permissions = get_group_permissions(request.user)
         required_permission = ACTION_PERMISSION_MAPPING.get(view.action, None)
-
         #  Strictly check if the user has permission for this model from groups
         if model_name not in group_permissions:
             return False  # User's groups have NO permission for this model
-
         # Enforce permission mapping (prevent unauthorized actions)
         elif required_permission and required_permission not in group_permissions[model_name]:
             return False  # User's group does NOT have the required permission
@@ -94,11 +90,17 @@ class DynamicModelPermission(BasePermission):
         if request.user.is_superuser:
             return True
             
-        model_name = obj.__class__.__name__.lower()
+        model_name = obj.__class__.__name__
+
+        # print(safe_model_method,"safe_model_method")
+        public_object = safe_model_method.filter(model_name__model_name__iexact=model_name)
+        if public_object.exists():
+            if view.action in public_object.values_list('method__name',flat=True):
+                return True
+
         group_permissions = get_group_permissions(request.user)
         required_permission = ACTION_PERMISSION_MAPPING.get(view.action, None)
              
-
         # Strictly check if the user's groups have permission for this model
         if model_name not in group_permissions:
             return False  # User's groups have NO permission for this model

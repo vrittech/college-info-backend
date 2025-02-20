@@ -34,6 +34,7 @@ class collegeViewsets(viewsets.ModelViewSet):
     # }
 
     def get_queryset(self):
+        # print(self.action)
         queryset = super().get_queryset()
         request = self.request
         if request.user.is_superuser:
