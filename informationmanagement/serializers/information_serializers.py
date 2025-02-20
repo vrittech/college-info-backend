@@ -154,15 +154,15 @@ class IntegerListField(serializers.ListField):
 class InformationWriteSerializers(serializers.ModelSerializer):
     """ Handles Many-to-Many fields and file/image uploads """
 
-    level = IntegerListField(child=serializers.IntegerField(), required=False)
-    sublevel = IntegerListField(child=serializers.IntegerField(), required=False)
-    course = IntegerListField(child=serializers.IntegerField(), required=False)
-    affiliation = IntegerListField(child=serializers.IntegerField(), required=False)
-    district = IntegerListField(child=serializers.IntegerField(), required=False)
-    college = IntegerListField(child=serializers.IntegerField(), required=False)
-    faculty = IntegerListField(child=serializers.IntegerField(), required=False)
-    information_tagging = IntegerListField(child=serializers.IntegerField(), required=False)
-    information_category = IntegerListField(child=serializers.IntegerField(), required=False)
+    # level = IntegerListField(child=serializers.IntegerField(), required=False)
+    # sublevel = IntegerListField(child=serializers.IntegerField(), required=False)
+    # course = IntegerListField(child=serializers.IntegerField(), required=False)
+    # affiliation = IntegerListField(child=serializers.IntegerField(), required=False)
+    # district = IntegerListField(child=serializers.IntegerField(), required=False)
+    # college = IntegerListField(child=serializers.IntegerField(), required=False)
+    # faculty = IntegerListField(child=serialize    rs.IntegerField(), required=False)
+    # information_tagging = IntegerListField(child=serializers.IntegerField(), required=False)
+    # information_category = IntegerListField(child=serializers.IntegerField(), required=False)
 
     # Read-only for returned images and files
     information_gallery = serializers.SerializerMethodField()
