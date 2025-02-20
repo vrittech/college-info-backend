@@ -116,9 +116,16 @@ class DynamicModelPermission(BasePermission):
      
                     field_value = getattr(obj, field)
 
-                    # Direct user ownership
-                    if field_value == request.user or request.user in field_value.all():
+
+                    if hasattr(field_value, 'all'):  # ManyToMany field
+                        if request.user in field_value.all():
+                                return True
+                    elif field_value == request.user:
                         return True
+    
+                    # # Direct user ownership
+                    # if field_value == request.user or request.user in field_value.all():
+                    #     return True
                     
                     # Second layer ownership check (for fields like 'college')
                     if field in foreign_owner_second_layer:
