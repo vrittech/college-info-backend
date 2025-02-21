@@ -9,6 +9,12 @@ from rest_framework.response import Response
 from mainproj.permissions import DynamicModelPermission
 from ..utilities.filter import CollegeFilter
 from ..utilities.pagination import MyPageNumberPagination
+from rest_framework.decorators import action
+from rest_framework.response import Response
+from rest_framework import status
+from django.db.models import Field
+
+
 class collegeViewsets(viewsets.ModelViewSet):
     serializer_class = CollegeListSerializers
     # permission_classes = [collegemanagementPermission]
@@ -73,7 +79,7 @@ class collegeViewsets(viewsets.ModelViewSet):
 
         return Response(logos, status=200)
     
-    @action(detail=False, methods=['post'], name="college_creation", url_path="college-creation",permission_classes=[DynamicModelPermission])
+    @action(detail=False, methods=['post'], name="college_creation", url_path="college-creation")
     def college_creation(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)  # ✅ FIX: Pass `data=request.data`
 
@@ -87,28 +93,37 @@ class collegeViewsets(viewsets.ModelViewSet):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     
-    
-    # @action(detail=False, methods=['get'], name="calculate_completion_percentage", url_path="completion-percentage")
-    # def calculate_completion_percentage(self, request, *args, **kwargs):
-    #     queryset = self.get_queryset()
-    #     total_colleges = queryset.count()
-    #     completion_data = []
+    @action(detail=False, methods=['get'], name="calculate_completion_percentage", url_path="completion-percentage")
+    def calculate_completion_percentage(self, request, *args, **kwargs):
+        """
+        Calculate the profile completion percentage, but restrict access only to assigned college admins.
+        """
+        user = request.user
 
-    #     for college in queryset:
-    #         required_fields = [
-    #             field.name for field in College._meta.get_fields()
-    #             if isinstance(field, Field) and not field.blank and not field.null
-    #         ]
+        # Check if user has a related college (assuming a OneToOne or ForeignKey relationship)
+        if not hasattr(user, "college") or not user.college:
+            return Response({"error": "You do not have permission to view this data."}, status=status.HTTP_403_FORBIDDEN)
 
-    #         completed_fields_count = sum(1 for field in required_fields if getattr(college, field, None))
-    #         total_required_fields = len(required_fields)
-    #         completion_percentage = (completed_fields_count / total_required_fields * 100) if total_required_fields else 100
+        # Get the user's assigned college
+        college = user.college
 
-    #         completion_data.append({
-    #             "college_id": college.id,
-    #             "college_name": college.name,
-    #             "completion_percentage": round(completion_percentage, 2),
-    #         })
+        # Identify required fields dynamically
+        required_fields = [
+            field.name for field in College._meta.get_fields()
+            if isinstance(field, Field) and not field.blank and not field.null
+        ]
 
-    #     return Response(completion_data)
+        # Count filled fields
+        completed_fields_count = sum(1 for field in required_fields if getattr(college, field, None))
+        total_required_fields = len(required_fields)
 
+        # Calculate completion percentage
+        completion_percentage = (completed_fields_count / total_required_fields * 100) if total_required_fields else 100
+
+        completion_data = {
+            "college_id": college.id,
+            "college_name": college.name,
+            "completion_percentage": round(completion_percentage, 2),
+        }
+
+        return Response(completion_data)
