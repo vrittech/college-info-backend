@@ -31,7 +31,7 @@ class CustomUser(AbstractUser):
     professional_image = models.ImageField(upload_to='profile', null=True, blank=True)
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = []  # Remove 'username' from required fields
+    REQUIRED_FIELDS = ['username']  # Remove 'username' from required fields
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
