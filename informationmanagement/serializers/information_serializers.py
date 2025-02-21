@@ -151,27 +151,22 @@ class IntegerListField(serializers.ListField):
 
         return super().to_internal_value(data)
 
+from rest_framework import serializers
+from django.db import transaction
+from informationmanagement.models import (
+    Information, InformationGallery, InformationFiles
+)
+
+
 class InformationWriteSerializers(serializers.ModelSerializer):
     """ Handles Many-to-Many fields and file/image uploads """
 
-    # level = IntegerListField(child=serializers.IntegerField(), required=False)
-    # sublevel = IntegerListField(child=serializers.IntegerField(), required=False)
-    # course = IntegerListField(child=serializers.IntegerField(), required=False)
-    # affiliation = IntegerListField(child=serializers.IntegerField(), required=False)
-    # district = IntegerListField(child=serializers.IntegerField(), required=False)
-    # college = IntegerListField(child=serializers.IntegerField(), required=False)
-    # faculty = IntegerListField(child=serialize    rs.IntegerField(), required=False)
-    # information_tagging = IntegerListField(child=serializers.IntegerField(), required=False)
-    # information_category = IntegerListField(child=serializers.IntegerField(), required=False)
-
-    # Read-only for returned images and files
     information_gallery = serializers.SerializerMethodField()
     information_files = serializers.SerializerMethodField()
 
     class Meta:
         model = Information
         fields = '__all__'
-        
 
     def get_information_gallery(self, obj):
         return [img.image.url for img in obj.information_gallery.all()]
@@ -180,15 +175,15 @@ class InformationWriteSerializers(serializers.ModelSerializer):
         return [file.file.url for file in obj.information_files.all()]
 
     def extract_images_and_files(self):
-        """ Extract multiple images and files from `image[0]`, `image[1]` keys in request.FILES """
-        images_data, files_data = [], []
+        """ Extract multiple images and files from request.FILES """
         request = self.context.get('request')
+        images_data, files_data = [], []
 
         if request and hasattr(request, 'FILES'):
             for key, file in request.FILES.items():
-                if key.startswith('information_gallery['):  # Accept multiple images as `image[0]`, `image[1]`
+                if key.startswith('information_gallery['):
                     images_data.append(file)
-                elif key.startswith('informations_files['):  # Accept multiple files as `file[0]`, `file[1]`
+                elif key.startswith('information_files['):  
                     files_data.append(file)
 
         return images_data, files_data
@@ -197,39 +192,28 @@ class InformationWriteSerializers(serializers.ModelSerializer):
     def create(self, validated_data):
         """ Handles Many-to-Many relationships and image/file uploads """
 
-        # Extract Many-to-Many field IDs
-        level_ids = validated_data.pop('level', [])
-        sublevel_ids = validated_data.pop('sublevel', [])
-        course_ids = validated_data.pop('course', [])
-        affiliation_ids = validated_data.pop('affiliation', [])
-        district_ids = validated_data.pop('district', [])
-        college_ids = validated_data.pop('college', [])
-        faculty_ids = validated_data.pop('faculty', [])
-        information_tagging_ids = validated_data.pop('information_tagging', [])
-        information_category_ids = validated_data.pop('information_category', [])
+        # Extract Many-to-Many fields
+        many_to_many_fields = [
+            "level", "sublevel", "course", "affiliation", "district",
+            "college", "faculty", "information_tagging", "information_category"
+        ]
+        
+        m2m_data = {field: validated_data.pop(field, []) for field in many_to_many_fields}
 
-        # Extract images & files from request FILES
+        # Extract images & files
         images_data, files_data = self.extract_images_and_files()
 
         # Create Information instance
         information = Information.objects.create(**validated_data)
 
         # Assign Many-to-Many relationships
-        information.level.add(*level_ids)
-        information.sublevel.add(*sublevel_ids)
-        information.course.add(*course_ids)
-        information.affiliation.add(*affiliation_ids)
-        information.district.add(*district_ids)
-        information.college.add(*college_ids)
-        information.faculty.add(*faculty_ids)
-        information.information_tagging.add(*information_tagging_ids)
-        information.information_category.add(*information_category_ids)
+        for field, ids in m2m_data.items():
+            getattr(information, field).set(ids)
 
-        # Save images to InformationGallery
+        # Save images and files
         for image_file in images_data:
             InformationGallery.objects.create(information=information, image=image_file)
 
-        # Save files to InformationFiles
         for file_item in files_data:
             InformationFiles.objects.create(information=information, file=file_item)
 
@@ -237,76 +221,32 @@ class InformationWriteSerializers(serializers.ModelSerializer):
 
     @transaction.atomic
     def update(self, instance, validated_data):
-        """Handles updates for Many-to-Many relationships, file uploads, and form-data parsing.
-        Ensures Many-to-Many fields can be passed as comma-separated values.
-        """
+        """Handles updates for Many-to-Many relationships, file uploads, and form-data parsing."""
 
-        request = self.context.get('request')
-        images_data, files_data = [], []
-
-        # Extract images & files from request FILES
-        if request and hasattr(request, 'FILES'):
-            for key, file in request.FILES.items():
-                if key.startswith('information_gallery['):  # Accept multiple images as `image[0]`, `image[1]`
-                    images_data.append(file)
-                elif key.startswith('informations_files['):  # Accept multiple files as `file[0]`, `file[1]`
-                    files_data.append(file)
-
-        # Extract Many-to-Many fields (comma-separated values from form-data)
+        # Extract Many-to-Many fields
         many_to_many_fields = [
             "level", "sublevel", "course", "affiliation", "district",
             "college", "faculty", "information_tagging", "information_category"
         ]
+        
+        m2m_data = {field: validated_data.pop(field, None) for field in many_to_many_fields}
 
-        for field in many_to_many_fields:
-            if field in validated_data:
-                validated_data[field] = [
-                    int(val.strip()) for val in validated_data[field].split(',') if val.strip().isdigit()
-                ]  # Convert comma-separated values into a list of integers
+        # Extract images & files
+        images_data, files_data = self.extract_images_and_files()
 
-        # Extract Many-to-Many field IDs
-        level_ids = validated_data.pop('level', None)
-        sublevel_ids = validated_data.pop('sublevel', None)
-        course_ids = validated_data.pop('course', None)
-        affiliation_ids = validated_data.pop('affiliation', None)
-        district_ids = validated_data.pop('district', None)
-        college_ids = validated_data.pop('college', None)
-        faculty_ids = validated_data.pop('faculty', None)
-        information_tagging_ids = validated_data.pop('information_tagging', None)
-        information_category_ids = validated_data.pop('information_category', None)
-
-        # Update instance fields only if validated_data is not empty
-        if validated_data:
-            instance = super().update(instance, validated_data)
+        # Update instance fields
+        instance = super().update(instance, validated_data)
 
         # Update Many-to-Many relationships only if new data is provided
-        if level_ids is not None:
-            instance.level.set(level_ids)
-        if sublevel_ids is not None:
-            instance.sublevel.set(sublevel_ids)
-        if course_ids is not None:
-            instance.course.set(course_ids)
-        if affiliation_ids is not None:
-            instance.affiliation.set(affiliation_ids)
-        if district_ids is not None:
-            instance.district.set(district_ids)
-        if college_ids is not None:
-            instance.college.set(college_ids)
-        if faculty_ids is not None:
-            instance.faculty.set(faculty_ids)
-        if information_tagging_ids is not None:
-            instance.information_tagging.set(information_tagging_ids)
-        if information_category_ids is not None:
-            instance.information_category.set(information_category_ids)
+        for field, ids in m2m_data.items():
+            if ids is not None:
+                getattr(instance, field).set(ids)
 
-        # Only update images if new ones are provided
-        if images_data:
-            for image_file in images_data:
-                InformationGallery.objects.create(information=instance, image=image_file)
+        # Add new images and files if provided
+        for image_file in images_data:
+            InformationGallery.objects.create(information=instance, image=image_file)
 
-        # Only update files if new ones are provided
-        if files_data:
-            for file_item in files_data:
-                InformationFiles.objects.create(information=instance, file=file_item)
+        for file_item in files_data:
+            InformationFiles.objects.create(information=instance, file=file_item)
 
         return instance
