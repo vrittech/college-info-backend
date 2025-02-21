@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 62,
+            "activePatchIndex": 68,
             "patches": [
                 {
                     "date": 1728378543651,
@@ -256,6 +256,30 @@
                 {
                     "date": 1740037437816,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -215,9 +215,9 @@\n     class Meta:\n         model = User\n         fields = ['email','full_name','phone']\n         \n-     def validate(self, attrs):\n+    def validate(self, attrs):\n         attrs = super().validate(attrs)\n         \n         # Ensure 'College Admin' group exists and has permissions\n         college_admin_group, created = Group.objects.get_or_create(name=\"College Admin\")\n"
+                },
+                {
+                    "date": 1740113676988,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -210,9 +210,9 @@\n         return value\n \n \n class CustomUserWriteSerializersCollegeAdmin(serializers.ModelSerializer):\n-    full_name = serializers.CharField(required=True)\n+    full_name = serializers.CharField(required=True,write_only=True)\n     class Meta:\n         model = User\n         fields = ['email','full_name','phone']\n         \n"
+                },
+                {
+                    "date": 1740114097386,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -213,9 +213,9 @@\n class CustomUserWriteSerializersCollegeAdmin(serializers.ModelSerializer):\n     full_name = serializers.CharField(required=True,write_only=True)\n     class Meta:\n         model = User\n-        fields = ['email','full_name','phone']\n+        fields = ['id'email','full_name','phone']\n         \n     def validate(self, attrs):\n         attrs = super().validate(attrs)\n         \n"
+                },
+                {
+                    "date": 1740114177139,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -213,9 +213,9 @@\n class CustomUserWriteSerializersCollegeAdmin(serializers.ModelSerializer):\n     full_name = serializers.CharField(required=True,write_only=True)\n     class Meta:\n         model = User\n-        fields = ['id'email','full_name','phone']\n+        fields = ['email','full_name','phone']\n         \n     def validate(self, attrs):\n         attrs = super().validate(attrs)\n         \n"
+                },
+                {
+                    "date": 1740114450360,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -213,9 +213,9 @@\n class CustomUserWriteSerializersCollegeAdmin(serializers.ModelSerializer):\n     full_name = serializers.CharField(required=True,write_only=True)\n     class Meta:\n         model = User\n-        fields = ['email','full_name','phone']\n+        fields = ['id'email','full_name','phone']\n         \n     def validate(self, attrs):\n         attrs = super().validate(attrs)\n         \n"
+                },
+                {
+                    "date": 1740114468725,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -213,9 +213,9 @@\n class CustomUserWriteSerializersCollegeAdmin(serializers.ModelSerializer):\n     full_name = serializers.CharField(required=True,write_only=True)\n     class Meta:\n         model = User\n-        fields = ['id'email','full_name','phone']\n+        fields = ['email','full_name','phone']\n         \n     def validate(self, attrs):\n         attrs = super().validate(attrs)\n         \n"
+                },
+                {
+                    "date": 1740114829020,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -213,9 +213,9 @@\n class CustomUserWriteSerializersCollegeAdmin(serializers.ModelSerializer):\n     full_name = serializers.CharField(required=True,write_only=True)\n     class Meta:\n         model = User\n-        fields = ['email','full_name','phone']\n+        fields = ['id'email','full_name','phone']\n         \n     def validate(self, attrs):\n         attrs = super().validate(attrs)\n         \n"
                 }
             ],
             "date": 1728378543651,

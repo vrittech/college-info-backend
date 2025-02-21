@@ -211,10 +211,10 @@ class CustomUserChangePasswordSerializers(serializers.Serializer):
 
 
 class CustomUserWriteSerializersCollegeAdmin(serializers.ModelSerializer):
-    full_name = serializers.CharField(required=True)
+    full_name = serializers.CharField(required=True,write_only=True)
     class Meta:
         model = User
-        fields = ['email','full_name','phone']
+        fields = ['id','email','full_name','phone']
         
     def validate(self, attrs):
         attrs = super().validate(attrs)

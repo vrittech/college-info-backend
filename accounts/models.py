@@ -1,19 +1,20 @@
+import uuid
 from django.db import models
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser, Group, Permission
+from django.utils.text import slugify
 from collegemanagement.models import College
-from django.contrib.auth.models import Group, Permission
 from socialmedia.models import SocialMedia
 
-# Create your models here.
+
 class CustomUser(AbstractUser):
-    # roles = models.CharField(max_length = 250,null = True) 
-    full_name = models.CharField(max_length = 250,null = True)
-    college = models.ForeignKey(College,null = True,on_delete = models.SET_NULL,related_name='user',blank=True)
-    social_media = models.ManyToManyField(SocialMedia,blank=True)
-    email = models.EmailField(max_length = 250,unique = True)
-    # social_links = models.ManyToManyField(SocialMedia,blank=True)
+    first_name = models.CharField(max_length=250, null=True, blank=True)
+    last_name = models.CharField(max_length=250, null=True, blank=True)
+    full_name = models.CharField(max_length=250, null=True, blank=True)
+    college = models.ForeignKey(College, null=True, on_delete=models.SET_NULL, related_name='user', blank=True)
+    social_media = models.ManyToManyField(SocialMedia, blank=True)
+    email = models.EmailField(max_length=250, unique=True)
     position = models.PositiveIntegerField(default=0)
-    phone = models.CharField(max_length=15,null=True , default = '')
+    phone = models.CharField(max_length=15, null=True, default='')
     
     groups = models.ManyToManyField(
         Group,
@@ -26,57 +27,51 @@ class CustomUser(AbstractUser):
         blank=True
     )
 
-    avatar = models.ImageField(upload_to='profile',null=True,blank=True)
-    professional_image = models.ImageField(upload_to='profile',null=True,blank=True)
+    avatar = models.ImageField(upload_to='profile', null=True, blank=True)
+    professional_image = models.ImageField(upload_to='profile', null=True, blank=True)
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['username']
+    REQUIRED_FIELDS = []  # Remove 'username' from required fields
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    def save(self, *args, **kwargs):
+        # Auto-set first_name and last_name from full_name
+        if self.full_name:
+            name_parts = self.full_name.split(" ", 1)
+            self.first_name = name_parts[0]
+            self.last_name = name_parts[1] if len(name_parts) > 1 else ""
+
+        # Auto-generate username from full_name (if empty)
+        if not self.username:
+            base_username = slugify(self.full_name)[:30] if self.full_name else f"user-{uuid.uuid4().hex[:8]}"
+            unique_username = base_username
+
+            # Ensure uniqueness
+            counter = 1
+            while CustomUser.objects.filter(username=unique_username).exists():
+                unique_username = f"{base_username}-{counter}"
+                counter += 1
+
+            self.username = unique_username
+
+        super().save(*args, **kwargs)
 
     def __str__(self):
-        return self.username
-    
+        return self.email  # Display email instead of username
+
     class Meta:
         permissions = [
             ('manage_user', 'Manage User'),
         ]
-    
+
     @property
     def full_name(self):
-        try:
-            return self.first_name + " " + self.last_name
-        except:
-            return self.username
+        return f"{self.first_name} {self.last_name}".strip() if self.first_name or self.last_name else self.username
 
-
-# class GroupExtension(models.Model):
-#     group = models.OneToOneField(Group, on_delete=models.CASCADE, related_name='extension')
-#     position = models.PositiveIntegerField(default=0)
-    
-#     def __int__(self):
-#         return self.position
-    
-#     class Meta:
-#         permissions = [
-#             ('manage_group_extension', 'Manage group extension'),
-#         ]
-#     def save(self, *args, **kwargs):
-#         # Ensure the superuser status is not changed accidentally
-#         if not self.is_superuser:
-#             print("####################Superuser status cannot be changed.##################")
-#             # You can log or add checks here if needed
-#             pass
-#         super().save(*args, **kwargs)
-
-
-    # def save(self, *args, **kwargs):
-    #     # Set position to the Group ID if position is 0 (or could be None)
-    #     if self.position == 0:
-    #         super().save(*args, **kwargs)  # Save initially to get the group ID
-    #         self.position = self.group.id
-    #         super().save(*args, **kwargs)  # Save again to update position with group ID
-    #     else:
-    #         super().save(*args, **kwargs)
+    @full_name.setter
+    def full_name(self, value):
+        name_parts = value.split(" ", 1)
+        self.first_name = name_parts[0]
+        self.last_name = name_parts[1] if len(name_parts) > 1 else ""

@@ -23,6 +23,8 @@ class galleryViewsets(viewsets.ModelViewSet):
         'id': ['exact'],
         'album': ['exact'],
         'is_cover': ['exact'],
+        'created_date': ['exact', 'lte', 'gte'],
+        'updated_date_time': ['exact', 'lte', 'gte'],
     }
 
     def get_queryset(self):

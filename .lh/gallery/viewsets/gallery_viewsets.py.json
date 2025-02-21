@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 18,
+            "activePatchIndex": 21,
             "patches": [
                 {
                     "date": 1733481561311,
@@ -80,6 +80,18 @@
                 {
                     "date": 1740044300595,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,9 +20,9 @@\n     ordering_fields = ['-id']\n \n     filterset_fields = {\n         'id': ['exact'],\n-        'album':\n+        'album': ['exact'],\n     }\n \n     def get_queryset(self):\n         queryset = super().get_queryset()\n"
+                },
+                {
+                    "date": 1740112196608,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -21,8 +21,10 @@\n \n     filterset_fields = {\n         'id': ['exact'],\n         'album': ['exact'],\n+        'is_cover': ['exact'],\n+        \n     }\n \n     def get_queryset(self):\n         queryset = super().get_queryset()\n"
+                },
+                {
+                    "date": 1740112202104,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,8 +22,9 @@\n     filterset_fields = {\n         'id': ['exact'],\n         'album': ['exact'],\n         'is_cover': ['exact'],\n+        'created_date': ['exact', 'lte', 'gte'],\n         \n     }\n \n     def get_queryset(self):\n"
+                },
+                {
+                    "date": 1740112213315,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,9 +23,9 @@\n         'id': ['exact'],\n         'album': ['exact'],\n         'is_cover': ['exact'],\n         'created_date': ['exact', 'lte', 'gte'],\n-        \n+        'updated_date_time': ['exact', 'lte', 'gte'],\n     }\n \n     def get_queryset(self):\n         queryset = super().get_queryset()\n"
                 }
             ],
             "date": 1733481561311,
