@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 90,
+            "activePatchIndex": 94,
             "patches": [
                 {
                     "date": 1733477116456,
@@ -368,6 +368,22 @@
                 {
                     "date": 1739943800647,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -139,17 +139,17 @@\n         if facilities_ids:\n             college.facilities.set(Facility.objects.filter(id__in=facilities_ids))\n         \n         # Manually handle social media data\n-        \n-        for social in social_media_data:\n-            CollegeSocialMedia.objects.create(\n-                college=college,\n-                social_media=social.get(\"social_media\"),\n-                link=social.get(\"link\"),\n-                icon=social.get(\"icon\"),\n-                is_show=social.get(\"is_show\", False)\n-            )\n+        if social_media_data:\n+            for social in social_media_data:\n+                CollegeSocialMedia.objects.create(\n+                    college=college,\n+                    social_media=social.get(\"social_media\"),\n+                    link=social.get(\"link\"),\n+                    icon=social.get(\"icon\"),\n+                    is_show=social.get(\"is_show\", False)\n+                )\n \n         return college\n \n     def update(self, instance, validated_data):\n"
+                },
+                {
+                    "date": 1740118173337,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -137,19 +137,8 @@\n         if discipline_ids:\n             college.discipline.set(Discipline.objects.filter(id__in=discipline_ids))\n         if facilities_ids:\n             college.facilities.set(Facility.objects.filter(id__in=facilities_ids))\n-        \n-        # Manually handle social media data\n-        if social_media_data:\n-            for social in social_media_data:\n-                CollegeSocialMedia.objects.create(\n-                    college=college,\n-                    social_media=social.get(\"social_media\"),\n-                    link=social.get(\"link\"),\n-                    icon=social.get(\"icon\"),\n-                    is_show=social.get(\"is_show\", False)\n-                )\n \n         return college\n \n     def update(self, instance, validated_data):\n"
+                },
+                {
+                    "date": 1740118181909,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -171,19 +171,8 @@\n         if social_media_data is not None:\n             # Delete existing social media records\n             CollegeSocialMedia.objects.filter(college=instance).delete()\n \n-            # Recreate social media entries\n-            for social in social_media_data:\n-                CollegeSocialMedia.objects.create(\n-                    college=instance,\n-                    social_media=social.get(\"social_media\"),\n-                    link=social.get(\"link\"),\n-                    icon=social.get(\"icon\"),\n-                    is_show=social.get(\"is_show\", False)\n-                )\n-\n-\n         return instance\n \n     def to_representation(self, instance):\n         \"\"\"Customize the response to include full objects for related fields.\"\"\"\n"
+                },
+                {
+                    "date": 1740118192269,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -190,9 +190,6 @@\n         # Replace IDs with full nested objects for many-to-many fields\n         response[\"discipline\"] = DisciplineSerializer(instance.discipline.all(), many=True).data\n         # response[\"social_media\"] = SocialMediaSerializer(instance.social_media.all(), many=True).data\n         response[\"facilities\"] = FacilitySerializer(instance.facilities.all(), many=True).data\n-        response[\"social_media\"] = SocialMediaSerializer(\n-            CollegeSocialMedia.objects.filter(college=instance), many=True\n-        ).data\n \n         return response\n"
+                },
+                {
+                    "date": 1740118221370,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -166,12 +166,8 @@\n         # if social_media_ids is not None:\n         #     instance.social_media.set(SocialMedia.objects.filter(id__in=social_media_ids))\n         if facilities_ids is not None:\n             instance.facilities.set(Facility.objects.filter(id__in=facilities_ids))\n-            \n-        if social_media_data is not None:\n-            # Delete existing social media records\n-            CollegeSocialMedia.objects.filter(college=instance).delete()\n \n         return instance\n \n     def to_representation(self, instance):\n"
                 }
             ],
             "date": 1733477116456,

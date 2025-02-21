@@ -138,17 +138,6 @@ class CollegeWriteSerializers(serializers.ModelSerializer):
             college.discipline.set(Discipline.objects.filter(id__in=discipline_ids))
         if facilities_ids:
             college.facilities.set(Facility.objects.filter(id__in=facilities_ids))
-        
-        # Manually handle social media data
-        if social_media_data:
-            for social in social_media_data:
-                CollegeSocialMedia.objects.create(
-                    college=college,
-                    social_media=social.get("social_media"),
-                    link=social.get("link"),
-                    icon=social.get("icon"),
-                    is_show=social.get("is_show", False)
-                )
 
         return college
 
@@ -178,21 +167,6 @@ class CollegeWriteSerializers(serializers.ModelSerializer):
         #     instance.social_media.set(SocialMedia.objects.filter(id__in=social_media_ids))
         if facilities_ids is not None:
             instance.facilities.set(Facility.objects.filter(id__in=facilities_ids))
-            
-        if social_media_data is not None:
-            # Delete existing social media records
-            CollegeSocialMedia.objects.filter(college=instance).delete()
-
-            # Recreate social media entries
-            for social in social_media_data:
-                CollegeSocialMedia.objects.create(
-                    college=instance,
-                    social_media=social.get("social_media"),
-                    link=social.get("link"),
-                    icon=social.get("icon"),
-                    is_show=social.get("is_show", False)
-                )
-
 
         return instance
 
@@ -213,8 +187,5 @@ class CollegeWriteSerializers(serializers.ModelSerializer):
         response["discipline"] = DisciplineSerializer(instance.discipline.all(), many=True).data
         # response["social_media"] = SocialMediaSerializer(instance.social_media.all(), many=True).data
         response["facilities"] = FacilitySerializer(instance.facilities.all(), many=True).data
-        response["social_media"] = SocialMediaSerializer(
-            CollegeSocialMedia.objects.filter(college=instance), many=True
-        ).data
 
         return response
