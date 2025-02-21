@@ -4,7 +4,21 @@ from collegemanagement.models import College
 from coursemanagement.models import Course
 from duration.models import Duration
 from affiliation.models import Affiliation
+from district.models import District
+from collegetype.models import CollegeType
 
+
+class DistrictSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = District
+        ref_name = 'course_district'
+        fields = ['id','name']
+
+class CollegeTypeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CollegeType
+        ref_name = 'course_collegetype'
+        fields = ['id','name']
 
 class AffiliationSerializer(serializers.ModelSerializer):
     class Meta:
@@ -20,9 +34,11 @@ class DurationSerializer(serializers.ModelSerializer):
         fields = ['id','name']
         
 class CollegeSerializers(serializers.ModelSerializer):
+    district = DistrictSerializer(read_only=True)
+    college_type = CollegeTypeSerializer(read_only=True)
     class Meta:
         model = College
-        fields = ['slug','id','name','dp_image','is_show','address']
+        fields = ['slug','id','name','dp_image','is_show','address','district','college_type']
         
 class CourseSerializers(serializers.ModelSerializer):
     affiliation = AffiliationSerializer(read_only=True)
