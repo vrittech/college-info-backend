@@ -22,7 +22,7 @@ class DurationSerializer(serializers.ModelSerializer):
 class CollegeSerializers(serializers.ModelSerializer):
     class Meta:
         model = College
-        fields = ['slug','id','name']
+        fields = ['slug','id','name','dp_image','is_show','address']
         
 class CourseSerializers(serializers.ModelSerializer):
     affiliation = AffiliationSerializer(read_only=True)
