@@ -72,7 +72,7 @@ class collegeViewsets(viewsets.ModelViewSet):
         for college in colleges:
             if college.dp_image:
                 dp_image_url = request.build_absolute_uri(college.dp_image.url)
-                logos.append({"college_name": college.name, "dp_image_url": dp_image_url})
+                logos.append({"slug": college.slug, "college_name": college.name, "dp_image_url": dp_image_url})
 
         if not logos:
             return Response({"message": "No display images available."}, status=404)
