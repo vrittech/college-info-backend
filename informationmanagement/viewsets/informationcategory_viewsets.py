@@ -12,6 +12,7 @@ class informationcategoryViewsets(viewsets.ModelViewSet):
     # authentication_classes = [JWTAuthentication]
     pagination_class = MyPageNumberPagination
     queryset = InformationCategory.objects.all().order_by('-id')
+    lookup_field = "slug"
 
     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]
     search_fields = ['id','name', 'is_show', 'created_date', 'updated_date']
@@ -19,6 +20,8 @@ class informationcategoryViewsets(viewsets.ModelViewSet):
 # ('name', 'is_show', 'image', 'created_date', 'updated_date', )
    
     filterset_fields = {
+        'is_show': ['exact'],
+        'slug': ['exact'],
         'id': ['exact'],
         'name': ['exact'],
     }

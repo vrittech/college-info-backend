@@ -1,0 +1,18 @@
+{
+    "sourceFile": "informationmanagement/serializers/informationtagging_serializers.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1740130670334,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1740130670334,
+            "name": "Commit-0",
+            "content": "from rest_framework import serializers\nfrom ..models import InformationTagging\n\nclass InformationTaggingListSerializers(serializers.ModelSerializer):\n    class Meta:\n        model = InformationTagging\n        fields = '__all__'\n\nclass InformationTaggingRetrieveSerializers(serializers.ModelSerializer):\n    class Meta:\n        model = InformationTagging\n        fields = '__all__'\n\nclass InformationTaggingWriteSerializers(serializers.ModelSerializer):\n    class Meta:\n        model = InformationTagging\n        fields = '__all__'"
+        }
+    ]
+}

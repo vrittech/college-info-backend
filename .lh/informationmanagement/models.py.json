@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 7,
+            "activePatchIndex": 9,
             "patches": [
                 {
                     "date": 1739786154635,
@@ -36,6 +36,14 @@
                 {
                     "date": 1740031784987,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -122,9 +122,8 @@\n     image = models.ImageField(upload_to='information_category/',null=True,blank=True)\n     is_featured = models.BooleanField(default=False)\n     created_date = models.DateField(auto_now_add=True, null=True, blank=True)\n     updated_date = models.DateTimeField(auto_now=True, null=True, blank=True)\n-    manager = models.Man\n \n     \n     class Meta:\n         permissions = [\n"
+                },
+                {
+                    "date": 1740130555252,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -33,8 +33,10 @@\n         ]\n \n \n class InformationCategory(models.Model):\n+    public_id = models.UUIDField(default=uuid.uuid4,editable=False,unique=True)\n+    slug = models.SlugField(max_length=255, unique=True, null=True, blank=True)\n     name = models.CharField(max_length=100)\n     is_show = models.BooleanField(default=False)\n     image = models.ImageField(upload_to='information_category/',null=True,blank=True)\n     created_date = models.DateField(auto_now_add=True, null=True, blank=True)\n"
+                },
+                {
+                    "date": 1740130581593,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -52,8 +52,11 @@\n             count = InformationCategory.objects.filter(is_show=True).exclude(pk=self.pk).count()\n             if count >= 2:\n                 raise ValidationError(\"Only two categories can be shown at a time.\")\n         \n+        if not self.slug:\n+            self.slug = slugify(self.name)\n+        \n         super().save(*args, **kwargs)\n     \n     class Meta:\n         permissions = [\n"
                 }
             ],
             "date": 1739786154635,

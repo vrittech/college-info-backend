@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 16,
+            "activePatchIndex": 19,
             "patches": [
                 {
                     "date": 1733481590443,
@@ -72,6 +72,18 @@
                 {
                     "date": 1739959254600,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,8 +19,9 @@\n # ('name', 'is_show', 'image', 'created_date', 'updated_date', )\n    \n     filterset_fields = {\n         'id': ['exact'],\n+        'id': ['exact'],\n     }\n \n     def get_queryset(self):\n         queryset = super().get_queryset()\n"
+                },
+                {
+                    "date": 1740130603463,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,17 +11,18 @@\n     permission_classes = [DynamicModelPermission]\n     # authentication_classes = [JWTAuthentication]\n     pagination_class = MyPageNumberPagination\n     queryset = InformationCategory.objects.all().order_by('-id')\n+    lookup_field = \"slug\"\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     search_fields = ['id','name', 'is_show', 'created_date', 'updated_date']\n     ordering_fields = ['id','name', 'is_show', 'created_date', 'updated_date']\n # ('name', 'is_show', 'image', 'created_date', 'updated_date', )\n    \n     filterset_fields = {\n         'id': ['exact'],\n-        'id': ['exact'],\n+        'name': ['exact'],\n     }\n \n     def get_queryset(self):\n         queryset = super().get_queryset()\n"
+                },
+                {
+                    "date": 1740130614075,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,8 +19,9 @@\n     ordering_fields = ['id','name', 'is_show', 'created_date', 'updated_date']\n # ('name', 'is_show', 'image', 'created_date', 'updated_date', )\n    \n     filterset_fields = {\n+        ''\n         'id': ['exact'],\n         'name': ['exact'],\n     }\n \n"
+                },
+                {
+                    "date": 1740130621021,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,10 @@\n     ordering_fields = ['id','name', 'is_show', 'created_date', 'updated_date']\n # ('name', 'is_show', 'image', 'created_date', 'updated_date', )\n    \n     filterset_fields = {\n-        ''\n+        'is_show': ['exact'],\n+        'slug': ['exact'],\n         'id': ['exact'],\n         'name': ['exact'],\n     }\n \n"
                 }
             ],
             "date": 1733481590443,

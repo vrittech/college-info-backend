@@ -34,6 +34,8 @@ class InformationTagging(models.Model):
 
 
 class InformationCategory(models.Model):
+    public_id = models.UUIDField(default=uuid.uuid4,editable=False,unique=True)
+    slug = models.SlugField(max_length=255, unique=True, null=True, blank=True)
     name = models.CharField(max_length=100)
     is_show = models.BooleanField(default=False)
     image = models.ImageField(upload_to='information_category/',null=True,blank=True)
@@ -50,6 +52,9 @@ class InformationCategory(models.Model):
             count = InformationCategory.objects.filter(is_show=True).exclude(pk=self.pk).count()
             if count >= 2:
                 raise ValidationError("Only two categories can be shown at a time.")
+        
+        if not self.slug:
+            self.slug = slugify(self.name)
         
         super().save(*args, **kwargs)
     
