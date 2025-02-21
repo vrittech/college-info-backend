@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 67,
+            "activePatchIndex": 78,
             "patches": [
                 {
                     "date": 1733718920520,
@@ -276,6 +276,50 @@
                 {
                     "date": 1740045779704,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,9 +18,9 @@\n     lookup_field = \"slug\"\n     queryset = College.objects.all().order_by('-id')\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n-    search_fields = ['id','slug','name', 'established_date', 'website_link', 'address', 'phone_number', 'email','google_map_link', 'latitude', 'longitude', 'about', 'brochure', 'step_counter',  'placement', 'scholarship', 'created_date', 'updated_date']\n+    search_fields = ['id','slug','name', 'established_date', 'website_link', 'address', 'phone_number', 'email','google_map_link', 'latitude', 'longitude', 'about', 'brochure', 'step_counter', 'created_date', 'updated_date']\n     ordering_fields = ['id','slug','name', 'established_date', 'website_link', 'address', 'district__name', 'phone_number', 'email', 'latitude', 'longitude', 'about', 'brochure', 'step_counter', 'placement', 'scholarship', 'created_date', 'updated_date']\n     filterset_class= CollegeFilter\n     # ('name', 'established_date', 'website_link', 'address', 'district', 'phone_number', 'email', 'affiliated', 'college_type', 'discipline', 'social_media', 'google_map_link', 'latitude', 'longitude', 'about', 'brochure', 'step_counter', 'facilities', 'placement', 'scholarship', 'created_date', 'updated_date', )\n \n"
+                },
+                {
+                    "date": 1740121813269,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -69,9 +69,22 @@\n         if not logos:\n             return Response({\"message\": \"No display images available.\"}, status=404)\n \n         return Response(logos, status=200)\n+    \n+    @action(detail=False, methods=['post'], name=\"signup_college_admin\", url_path=\"signup-college-admin\")\n+    def signup_college_admin(self, request, *args, **kwargs):\n+        serializer = self.get_serializer(data=request.data)  # ✅ FIX: Pass `data=request.data`\n \n+        if serializer.is_valid():\n+            serializer.save()\n+            return Response(\n+                {\"message\": \"College Admin signed up successfully!\", \"data\": serializer.data},\n+                status=status.HTTP_201_CREATED\n+            )\n+        else:\n+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)\n+\n     \n     \n     # @action(detail=False, methods=['get'], name=\"calculate_completion_percentage\", url_path=\"completion-percentage\")\n     # def calculate_completion_percentage(self, request, *args, **kwargs):\n"
+                },
+                {
+                    "date": 1740121822591,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -70,9 +70,9 @@\n             return Response({\"message\": \"No display images available.\"}, status=404)\n \n         return Response(logos, status=200)\n     \n-    @action(detail=False, methods=['post'], name=\"signup_college_admin\", url_path=\"signup-college-admin\")\n+    @action(detail=False, methods=['post'], name=\"college_\", url_path=\"signup-college-admin\")\n     def signup_college_admin(self, request, *args, **kwargs):\n         serializer = self.get_serializer(data=request.data)  # ✅ FIX: Pass `data=request.data`\n \n         if serializer.is_valid():\n"
+                },
+                {
+                    "date": 1740121856961,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -70,9 +70,9 @@\n             return Response({\"message\": \"No display images available.\"}, status=404)\n \n         return Response(logos, status=200)\n     \n-    @action(detail=False, methods=['post'], name=\"college_\", url_path=\"signup-college-admin\")\n+    @action(detail=False, methods=['post'], name=\"college_creation\", url_path=\"college\")\n     def signup_college_admin(self, request, *args, **kwargs):\n         serializer = self.get_serializer(data=request.data)  # ✅ FIX: Pass `data=request.data`\n \n         if serializer.is_valid():\n"
+                },
+                {
+                    "date": 1740121873699,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -70,16 +70,16 @@\n             return Response({\"message\": \"No display images available.\"}, status=404)\n \n         return Response(logos, status=200)\n     \n-    @action(detail=False, methods=['post'], name=\"college_creation\", url_path=\"college\")\n+    @action(detail=False, methods=['post'], name=\"college_creation\", url_path=\"college-creation\")\n     def signup_college_admin(self, request, *args, **kwargs):\n         serializer = self.get_serializer(data=request.data)  # ✅ FIX: Pass `data=request.data`\n \n         if serializer.is_valid():\n             serializer.save()\n             return Response(\n-                {\"message\": \"College Admin signed up successfully!\", \"data\": serializer.data},\n+                {\"message\": \"College Created successfully!\", \"data\": serializer.data},\n                 status=status.HTTP_201_CREATED\n             )\n         else:\n             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)\n"
+                },
+                {
+                    "date": 1740121888739,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -71,9 +71,9 @@\n \n         return Response(logos, status=200)\n     \n     @action(detail=False, methods=['post'], name=\"college_creation\", url_path=\"college-creation\")\n-    def signup_college_admin(self, request, *args, **kwargs):\n+    def college_creation(self, request, *args, **kwargs):\n         serializer = self.get_serializer(data=request.data)  # ✅ FIX: Pass `data=request.data`\n \n         if serializer.is_valid():\n             serializer.save()\n"
+                },
+                {
+                    "date": 1740121929097,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -47,8 +47,10 @@\n         if self.action in ['create', 'update', 'partial_update']:\n             return CollegeWriteSerializers\n         elif self.action == 'retrieve':\n             return CollegeRetrieveSerializers\n+        elif self.action in ['signup_college_admin']:\n+            return CustomUserWriteSerializersCollegeAdmin\n         return super().get_serializer_class()\n \n     # @action(detail=False, methods=['get'], name=\"action_name\", url_path=\"url_path\")\n     # def action_name(self, request, *args, **kwargs):\n"
+                },
+                {
+                    "date": 1740121937180,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,9 @@\n from rest_framework import viewsets\n from rest_framework.filters import SearchFilter, OrderingFilter\n from django_filters.rest_framework import DjangoFilterBackend\n from ..models import College\n-from ..serializers.college_serializers import CollegeListSerializers, CollegeRetrieveSerializers, CollegeWriteSerializers\n+from ..serializers.college_serializers import CollegeListSerializers, CollegeRetrieveSerializers, CollegeWriteSerializers, nC\n from ..utilities.importbase import *\n from rest_framework.decorators import action\n from rest_framework.response import Response\n from mainproj.permissions import DynamicModelPermission\n"
+                },
+                {
+                    "date": 1740121946210,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,9 @@\n from rest_framework import viewsets\n from rest_framework.filters import SearchFilter, OrderingFilter\n from django_filters.rest_framework import DjangoFilterBackend\n from ..models import College\n-from ..serializers.college_serializers import CollegeListSerializers, CollegeRetrieveSerializers, CollegeWriteSerializers, nC\n+from ..serializers.college_serializers import CollegeListSerializers, CollegeRetrieveSerializers, CollegeWriteSerializers, CollegeAdminWriteSerializers\n from ..utilities.importbase import *\n from rest_framework.decorators import action\n from rest_framework.response import Response\n from mainproj.permissions import DynamicModelPermission\n@@ -48,9 +48,9 @@\n             return CollegeWriteSerializers\n         elif self.action == 'retrieve':\n             return CollegeRetrieveSerializers\n         elif self.action in ['signup_college_admin']:\n-            return CustomUserWriteSerializersCollegeAdmin\n+            return CollegeAdminWriteSerializers\n         return super().get_serializer_class()\n \n     # @action(detail=False, methods=['get'], name=\"action_name\", url_path=\"url_path\")\n     # def action_name(self, request, *args, **kwargs):\n"
+                },
+                {
+                    "date": 1740121971328,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -72,9 +72,9 @@\n             return Response({\"message\": \"No display images available.\"}, status=404)\n \n         return Response(logos, status=200)\n     \n-    @action(detail=False, methods=['post'], name=\"college_creation\", url_path=\"college-creation\")\n+    @action(detail=False, methods=['post'], name=\"college_creation\", url_path=\"college-creation\",permission_classes)\n     def college_creation(self, request, *args, **kwargs):\n         serializer = self.get_serializer(data=request.data)  # ✅ FIX: Pass `data=request.data`\n \n         if serializer.is_valid():\n"
+                },
+                {
+                    "date": 1740121977065,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -72,9 +72,9 @@\n             return Response({\"message\": \"No display images available.\"}, status=404)\n \n         return Response(logos, status=200)\n     \n-    @action(detail=False, methods=['post'], name=\"college_creation\", url_path=\"college-creation\",permission_classes)\n+    @action(detail=False, methods=['post'], name=\"college_creation\", url_path=\"college-creation\",permission_classes=[DynamicModelPermission])\n     def college_creation(self, request, *args, **kwargs):\n         serializer = self.get_serializer(data=request.data)  # ✅ FIX: Pass `data=request.data`\n \n         if serializer.is_valid():\n"
+                },
+                {
+                    "date": 1740122054903,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -47,9 +47,9 @@\n         if self.action in ['create', 'update', 'partial_update']:\n             return CollegeWriteSerializers\n         elif self.action == 'retrieve':\n             return CollegeRetrieveSerializers\n-        elif self.action in ['signup_college_admin']:\n+        elif self.action in ['college_creation']:\n             return CollegeAdminWriteSerializers\n         return super().get_serializer_class()\n \n     # @action(detail=False, methods=['get'], name=\"action_name\", url_path=\"url_path\")\n"
                 }
             ],
             "date": 1733718920520,

@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 1,
+            "activePatchIndex": 2,
             "patches": [
                 {
                     "date": 1739869393815,
@@ -12,6 +12,10 @@
                 {
                     "date": 1739871446773,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,10 +1,17 @@\n from django.urls import path, include\n from rest_framework.routers import DefaultRouter\n from .views import NotificationViewSet\n+from django.urls import re_path\n+from .consumers import NotificationConsumer\n \n router = DefaultRouter()\n router.register(r\"notifications\", NotificationViewSet, basename=\"notifications\")\n \n urlpatterns = [\n-    path(\"\", include(router.urls)),\n+    path(\"\", include(router.urls)),  # API for notifications\n ]\n+\n+# WebSocket URL patterns\n+websocket_urlpatterns = [\n+    re_path(r\"ws/notifications/$\", NotificationConsumer.as_asgi()),  # WebSockets for real-time notifications\n+]\n"
+                },
+                {
+                    "date": 1740121144958,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,17 +1,10 @@\n from django.urls import path, include\n from rest_framework.routers import DefaultRouter\n from .views import NotificationViewSet\n-from django.urls import re_path\n-from .consumers import NotificationConsumer\n \n router = DefaultRouter()\n-router.register(r\"notifications\", NotificationViewSet, basename=\"notifications\")\n+router.register(r'notifications', NotificationViewSet, basename='notification')\n \n urlpatterns = [\n-    path(\"\", include(router.urls)),  # API for notifications\n+    path('', include(router.urls)),  # Include notification endpoints\n ]\n-\n-# WebSocket URL patterns\n-websocket_urlpatterns = [\n-    re_path(r\"ws/notifications/$\", NotificationConsumer.as_asgi()),  # WebSockets for real-time notifications\n-]\n"
                 }
             ],
             "date": 1739869393815,

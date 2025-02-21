@@ -269,3 +269,16 @@ CHANNEL_LAYERS = {
 
 
 # daphne -b 0.0.0.0 -p 8001 mainproj.asgi:application  # For WebSockets
+# settings.py
+
+NOTIFICATION_MODELS = {
+    "collegemanagement.College": ["created", "updated", "deleted"],  
+    "informationmanagement.Information": ["created", "updated"], 
+    "affilliationmanagement.Affilliation": ["created", "updated", "deleted"], 
+    "event.Event": ["created", "updated", "deleted"], 
+    "coursemanagement.Course": ["created", "updated", "deleted"], 
+    "requestsubmission.RequestSubmission": ["created", "updated", "deleted"], 
+    "contact.Contact": ["created", "updated", "deleted"], 
+    "coursesandfees.CoursesAndFees": ["created", "updated", "deleted"], 
+    "inquiry.Inquiry": ["created", "updated", "deleted"],
+}

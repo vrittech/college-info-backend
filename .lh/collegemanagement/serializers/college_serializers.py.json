@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 94,
+            "activePatchIndex": 107,
             "patches": [
                 {
                     "date": 1733477116456,
@@ -384,6 +384,58 @@
                 {
                     "date": 1740118221370,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -166,12 +166,8 @@\n         # if social_media_ids is not None:\n         #     instance.social_media.set(SocialMedia.objects.filter(id__in=social_media_ids))\n         if facilities_ids is not None:\n             instance.facilities.set(Facility.objects.filter(id__in=facilities_ids))\n-            \n-        if social_media_data is not None:\n-            # Delete existing social media records\n-            CollegeSocialMedia.objects.filter(college=instance).delete()\n \n         return instance\n \n     def to_representation(self, instance):\n"
+                },
+                {
+                    "date": 1740121546793,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -188,4 +188,17 @@\n         # response[\"social_media\"] = SocialMediaSerializer(instance.social_media.all(), many=True).data\n         response[\"facilities\"] = FacilitySerializer(instance.facilities.all(), many=True).data\n \n         return response\n+\n+\n+class CollegeRetrieveSerializers(serializers.ModelSerializer):\n+    district = DistrictSerializer(read_only=True)  # Nested object for related model\n+    affiliated = AffiliationSerializer(read_only=True)  # Nested object for related model\n+    college_type = CollegeTypeSerializer(read_only=True)  # Nested object for related model\n+    discipline = DisciplineSerializer(many=True,read_only=True)  # Nested objects for ManyToMany\n+    social_media = SocialMediaSerializer(many=True,read_only=True)  # Nested objects for ManyToMany\n+    facilities = FacilitySerializer(many=True,read_only=True)  # Nested objects for ManyToMany\n+\n+    class Meta:\n+        model = College\n+        fields = '__all__'\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1740121560697,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -191,14 +191,7 @@\n         return response\n \n \n class CollegeRetrieveSerializers(serializers.ModelSerializer):\n-    district = DistrictSerializer(read_only=True)  # Nested object for related model\n-    affiliated = AffiliationSerializer(read_only=True)  # Nested object for related model\n-    college_type = CollegeTypeSerializer(read_only=True)  # Nested object for related model\n-    discipline = DisciplineSerializer(many=True,read_only=True)  # Nested objects for ManyToMany\n-    social_media = SocialMediaSerializer(many=True,read_only=True)  # Nested objects for ManyToMany\n-    facilities = FacilitySerializer(many=True,read_only=True)  # Nested objects for ManyToMany\n-\n     class Meta:\n         model = College\n         fields = '__all__'\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1740121575757,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -190,8 +190,8 @@\n \n         return response\n \n \n-class CollegeRetrieveSerializers(serializers.ModelSerializer):\n+class CollegeAdminWriteSerializers(serializers.ModelSerializer):\n     class Meta:\n         model = College\n         fields = '__all__'\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1740121725075,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -193,5 +193,5 @@\n \n class CollegeAdminWriteSerializers(serializers.ModelSerializer):\n     class Meta:\n         model = College\n-        fields = '__all__'\n\\ No newline at end of file\n+        fields = \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1740121730472,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -193,5 +193,5 @@\n \n class CollegeAdminWriteSerializers(serializers.ModelSerializer):\n     class Meta:\n         model = College\n-        fields = \n\\ No newline at end of file\n+        fields = ['name,']\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1740121736306,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -193,5 +193,5 @@\n \n class CollegeAdminWriteSerializers(serializers.ModelSerializer):\n     class Meta:\n         model = College\n-        fields = ['name,']\n\\ No newline at end of file\n+        fields = ['id'name,']\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1740121741810,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -193,5 +193,5 @@\n \n class CollegeAdminWriteSerializers(serializers.ModelSerializer):\n     class Meta:\n         model = College\n-        fields = ['id'name,']\n\\ No newline at end of file\n+        fields = ['id','name',]\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1740121749025,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -193,5 +193,5 @@\n \n class CollegeAdminWriteSerializers(serializers.ModelSerializer):\n     class Meta:\n         model = College\n-        fields = ['id','name',]\n\\ No newline at end of file\n+        fields = ['id','name','affiliation']\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1740121763695,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -193,5 +193,5 @@\n \n class CollegeAdminWriteSerializers(serializers.ModelSerializer):\n     class Meta:\n         model = College\n-        fields = ['id','name','affiliation']\n\\ No newline at end of file\n+        fields = ['id','name','affiliation','college_type']\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1740121772225,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -193,5 +193,5 @@\n \n class CollegeAdminWriteSerializers(serializers.ModelSerializer):\n     class Meta:\n         model = College\n-        fields = ['id','name','affiliation','college_type']\n\\ No newline at end of file\n+        fields = ['id','name','affiliation','college_type','level']\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1740121783819,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -193,5 +193,5 @@\n \n class CollegeAdminWriteSerializers(serializers.ModelSerializer):\n     class Meta:\n         model = College\n-        fields = ['id','name','affiliation','college_type','level']\n\\ No newline at end of file\n+        fields = ['id','name','affiliation','college_type','level','phone_number']\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1740122089436,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -193,5 +193,5 @@\n \n class CollegeAdminWriteSerializers(serializers.ModelSerializer):\n     class Meta:\n         model = College\n-        fields = ['id','name','affiliation','college_type','level','phone_number']\n\\ No newline at end of file\n+        fields = ['id','name','affiliated','college_type','level','phone_number']\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1740122143472,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -193,5 +193,5 @@\n \n class CollegeAdminWriteSerializers(serializers.ModelSerializer):\n     class Meta:\n         model = College\n-        fields = ['id','name','affiliated','college_type','level','phone_number']\n\\ No newline at end of file\n+        fields = ['id','name','affiliated','college_type','phone_number']\n\\ No newline at end of file\n"
                 }
             ],
             "date": 1733477116456,

@@ -189,3 +189,9 @@ class CollegeWriteSerializers(serializers.ModelSerializer):
         response["facilities"] = FacilitySerializer(instance.facilities.all(), many=True).data
 
         return response
+
+
+class CollegeAdminWriteSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = College
+        fields = ['id','name','affiliated','college_type','phone_number']

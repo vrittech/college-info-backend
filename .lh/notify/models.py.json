@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 3,
+            "activePatchIndex": 8,
             "patches": [
                 {
                     "date": 1739869271037,
@@ -20,6 +20,26 @@
                 {
                     "date": 1739870530670,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,20 +1,20 @@\n from django.db import models\n from django.contrib.auth import get_user_model\n-from accounts.models import CustomUser as User\n+from django.utils.timezone import now\n \n User = get_user_model()\n \n class Notification(models.Model):\n     \"\"\"\n-    Stores notifications for individual users.\n+    Stores notifications dynamically for all models.\n     \"\"\"\n-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name=\"notifications\")\n-    action = models.CharField(max_length=50)  # Example: 'created', 'updated', 'deleted'\n-    model_name = models.CharField(max_length=100)  # Example: 'student', 'course'\n-    instance_id = models.PositiveIntegerField()  # Related model instance ID\n+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name=\"notifications\")  # Single user per notification\n+    title = models.CharField(max_length=255)\n     message = models.TextField()\n+    module_name = models.CharField(max_length=100)  # Example: 'students', 'courses'\n+    updated_id = models.CharField(max_length=100)  # Unique identifier (slug or ID)\n     is_read = models.BooleanField(default=False)\n-    created_at = models.DateTimeField(auto_now_add=True)\n+    timestamp = models.DateTimeField(default=now)\n \n     def __str__(self):\n-        return f\"Notification for {self.user.username}: {self.message}\"\n+        return f\"Notification: {self.title} - {self.message}\"\n"
+                },
+                {
+                    "date": 1740119474650,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n from django.db import models\n-from django.contrib.auth import get_user_model\n+from \n from django.utils.timezone import now\n \n User = get_user_model()\n \n"
+                },
+                {
+                    "date": 1740119480394,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n from django.db import models\n-from \n+from accou\n from django.utils.timezone import now\n \n User = get_user_model()\n \n"
+                },
+                {
+                    "date": 1740119489280,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n from django.db import models\n-from accou\n+from accounts.models import CustomUser as User\n from django.utils.timezone import now\n \n User = get_user_model()\n \n"
+                },
+                {
+                    "date": 1740119500767,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,8 @@\n from django.db import models\n from accounts.models import CustomUser as User\n from django.utils.timezone import now\n \n-User = get_user_model()\n \n class Notification(models.Model):\n     \"\"\"\n     Stores notifications dynamically for all models.\n"
+                },
+                {
+                    "date": 1740119813726,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,13 +2,19 @@\n from accounts.models import CustomUser as User\n from django.utils.timezone import now\n \n \n+from django.db import models\n+from django.contrib.auth import get_user_model\n+from django.utils.timezone import now\n+\n+User = get_user_model()\n+\n class Notification(models.Model):\n     \"\"\"\n-    Stores notifications dynamically for all models.\n+    Stores notifications dynamically for configured models only.\n     \"\"\"\n-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name=\"notifications\")  # Single user per notification\n+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name=\"notifications\")\n     title = models.CharField(max_length=255)\n     message = models.TextField()\n     module_name = models.CharField(max_length=100)  # Example: 'students', 'courses'\n     updated_id = models.CharField(max_length=100)  # Unique identifier (slug or ID)\n"
                 }
             ],
             "date": 1739869271037,

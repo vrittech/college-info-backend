@@ -2,7 +2,7 @@ from rest_framework import viewsets
 from rest_framework.filters import SearchFilter, OrderingFilter
 from django_filters.rest_framework import DjangoFilterBackend
 from ..models import College
-from ..serializers.college_serializers import CollegeListSerializers, CollegeRetrieveSerializers, CollegeWriteSerializers
+from ..serializers.college_serializers import CollegeListSerializers, CollegeRetrieveSerializers, CollegeWriteSerializers, CollegeAdminWriteSerializers
 from ..utilities.importbase import *
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -48,6 +48,8 @@ class collegeViewsets(viewsets.ModelViewSet):
             return CollegeWriteSerializers
         elif self.action == 'retrieve':
             return CollegeRetrieveSerializers
+        elif self.action in ['college_creation']:
+            return CollegeAdminWriteSerializers
         return super().get_serializer_class()
 
     # @action(detail=False, methods=['get'], name="action_name", url_path="url_path")
@@ -70,6 +72,19 @@ class collegeViewsets(viewsets.ModelViewSet):
             return Response({"message": "No display images available."}, status=404)
 
         return Response(logos, status=200)
+    
+    @action(detail=False, methods=['post'], name="college_creation", url_path="college-creation",permission_classes=[DynamicModelPermission])
+    def college_creation(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)  # ✅ FIX: Pass `data=request.data`
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(
+                {"message": "College Created successfully!", "data": serializer.data},
+                status=status.HTTP_201_CREATED
+            )
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     
     

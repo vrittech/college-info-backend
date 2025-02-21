@@ -1,105 +1,93 @@
 from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
-from django.contrib.auth.models import Permission, Group
-from django.contrib.contenttypes.models import ContentType
+from django.conf import settings
 from django.utils.timezone import now
 from django.apps import apps
-from accounts.models import CustomUser
+from accounts.models import CustomUser as User
 from .models import Notification
 
-def get_users_with_permission(model_name, app_label):
+
+def get_current_user():
     """
-    Fetch users who have the 'view_{model_name}' permission.
-    Includes both individual permissions and those granted via groups.
+    Retrieve the current request user from middleware.
     """
-    content_type = ContentType.objects.get(app_label=app_label, model=model_name.lower())
-    permission_codename = f'view_{model_name.lower()}'
-    
-    try:
-        permission = Permission.objects.get(content_type=content_type, codename=permission_codename)
-    except Permission.DoesNotExist:
-        return CustomUser.objects.none()  # Return empty queryset if permission doesn't exist
+    from .middleware import get_current_user
+    return get_current_user()
 
-    # Get users with direct permission
-    users = CustomUser.objects.filter(user_permissions=permission)
-
-    # Get users who belong to groups with the required permission
-    users_in_groups = CustomUser.objects.filter(groups__permissions=permission)
-
-    # Merge both user lists and remove duplicates
-    return users.union(users_in_groups).distinct()
-
-
-def create_notification(action, instance, user):
+def should_notify(instance, action):
     """
-    Create a notification only for users who have the correct permissions.
-    Uses GenericForeignKey for better object reference.
+    Checks if the model should trigger notifications based on settings.
     """
-    model_name = instance._meta.model_name
-    app_label = instance._meta.app_label
-
-    users_with_permission = get_users_with_permission(model_name, app_label)
-
-    if not users_with_permission.exists():
-        return  # No need to create notifications if no user has permission
-
-    # Identify object uniquely
-    object_identifier = getattr(instance, 'slug', instance.pk)
-
-    # Define a more specific notification message
-    action_messages = {
-        'created': f"{user.get_full_name()} added a new {model_name} in {app_label}.",
-        'updated': f"{user.get_full_name()} updated {model_name} in {app_label}.",
-        'deleted': f"{user.get_full_name()} deleted {model_name} from {app_label}."
-    }
-
-    # Create notifications in bulk
-    notifications = [
-        Notification(
-            title=f"{model_name.capitalize()} {action.capitalize()}",
-            message=action_messages[action],
-            module_name=app_label,
-            updated_id=str(object_identifier),
-            timestamp=now()
-        )
-        for user in users_with_permission
-    ]
-
-    Notification.objects.bulk_create(notifications)
-
+    model_name = f"{instance._meta.app_label}.{instance._meta.model_name}"
+    return model_name in settings.NOTIFICATION_MODELS and action in settings.NOTIFICATION_MODELS[model_name]
 
 @receiver(post_save)
-def handle_create_update_notifications(sender, instance, created, **kwargs):
+def create_update_notification(sender, instance, created, **kwargs):
     """
-    Handles create and update events dynamically.
-    Uses `updated_by` field to track which user performed the action.
+    Create notifications dynamically when an instance is created or updated.
     """
     if not hasattr(instance, '_meta'):
-        return  # Skip non-model instances
+        return
 
-    model_name = instance._meta.model_name
-    user = getattr(instance, 'updated_by', None)  # Ensure models have `updated_by`
+    action = "created" if created else "updated"
+    if not should_notify(instance, action):
+        return  # Skip notification if the model/action is not in settings
 
-    if not user or not isinstance(user, CustomUser):
-        return  # Skip if no user is associated with the action
+    user = get_current_user()
+    if not user or not user.is_authenticated:
+        return  # Skip if user is not authenticated
 
-    action = 'created' if created else 'updated'
-    create_notification(action, instance, user)
+    model_name = instance._meta.model_name.lower()
+    identifier = str(getattr(instance, 'slug', getattr(instance, 'id', 'unknown')))
 
+    message = f"{user.get_full_name()} {action} a {model_name}."
+    title = f"{model_name.capitalize()} {action.capitalize()}"
+
+    permission_codename = f"{instance._meta.app_label}.view_{model_name}"
+    if not user.has_perm(permission_codename):
+        return  # Skip if user lacks permission
+
+    # Create notification
+    Notification.objects.create(
+        user=user,
+        title=title,
+        message=message,
+        module_name=instance._meta.app_label,
+        updated_id=identifier,
+        timestamp=now(),
+    )
 
 @receiver(post_delete)
-def handle_delete_notifications(sender, instance, **kwargs):
+def delete_notification(sender, instance, **kwargs):
     """
-    Handles delete events dynamically.
-    Uses `deleted_by` field to track the user who performed the delete action.
+    Create notifications dynamically when an instance is deleted.
     """
     if not hasattr(instance, '_meta'):
-        return  # Skip non-model instances
+        return
 
-    model_name = instance._meta.model_name
-    user = getattr(instance, 'deleted_by', None)  # Ensure models have `deleted_by`
+    if not should_notify(instance, "deleted"):
+        return  # Skip notification if the model/action is not in settings
 
-    if not user or not isinstance(user, CustomUser):
-        return  # Skip if no user is associated with the action
+    user = get_current_user()
+    if not user or not user.is_authenticated:
+        return  # Skip if user is not authenticated
 
-    create_notification('deleted', instance, user)
+    model_name = instance._meta.model_name.lower()
+    identifier = str(getattr(instance, 'slug', getattr(instance, 'id', 'unknown')))
+
+    title = f"{model_name.capitalize()} Deleted"
+    message = f"{user.get_full_name()} deleted a {model_name}."
+
+    permission_codename = f"{instance._meta.app_label}.view_{model_name}"
+    if not user.has_perm(permission_codename):
+        return  # Skip if user lacks permission
+
+    # Create notification
+    Notification.objects.create(
+        user=user,
+        title=title,
+        message=message,
+        module_name=instance._meta.app_label,
+        updated_id=identifier,
+        timestamp=now(),
+    )

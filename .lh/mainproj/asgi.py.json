@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 3,
+            "activePatchIndex": 4,
             "patches": [
                 {
                     "date": 1739871514459,
@@ -20,6 +20,10 @@
                 {
                     "date": 1739871543598,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,9 @@\n import os\n from django.core.asgi import get_asgi_application\n from channels.routing import ProtocolTypeRouter, URLRouter\n from channels.auth import AuthMiddlewareStack\n-from notifications.urls import websocket_urlpatterns \n+from notify.urls import websocket_urlpatterns \n \n from django.core.asgi import get_asgi_application\n \n os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'collegeinfo.settings')\n"
+                },
+                {
+                    "date": 1740120954467,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,10 +18,10 @@\n os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'collegeinfo.settings')\n \n # application = get_asgi_application()\n \n-application = ProtocolTypeRouter({\n-    \"http\": get_asgi_application(),\n-    \"websocket\": AuthMiddlewareStack(\n-        URLRouter(websocket_urlpatterns)\n-    ),\n-})\n\\ No newline at end of file\n+# application = ProtocolTypeRouter({\n+#     \"http\": get_asgi_application(),\n+#     \"websocket\": AuthMiddlewareStack(\n+#         URLRouter(websocket_urlpatterns)\n+#     ),\n+# })\n\\ No newline at end of file\n"
                 }
             ],
             "date": 1739871514459,
