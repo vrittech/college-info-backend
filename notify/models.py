@@ -2,18 +2,11 @@ from django.db import models
 from accounts.models import CustomUser as User
 from django.utils.timezone import now
 
-
-from django.db import models
-from django.contrib.auth import get_user_model
-from django.utils.timezone import now
-
-User = get_user_model()
-
 class Notification(models.Model):
     """
     Stores notifications dynamically for configured models only.
     """
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="notifications")
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="notifications", null=True, blank=True)
     title = models.CharField(max_length=255)
     message = models.TextField()
     module_name = models.CharField(max_length=100)  # Example: 'students', 'courses'
