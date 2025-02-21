@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 68,
+            "activePatchIndex": 69,
             "patches": [
                 {
                     "date": 1728378543651,
@@ -280,6 +280,10 @@
                 {
                     "date": 1740114829020,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -213,9 +213,9 @@\n class CustomUserWriteSerializersCollegeAdmin(serializers.ModelSerializer):\n     full_name = serializers.CharField(required=True,write_only=True)\n     class Meta:\n         model = User\n-        fields = ['email','full_name','phone']\n+        fields = ['id'email','full_name','phone']\n         \n     def validate(self, attrs):\n         attrs = super().validate(attrs)\n         \n"
+                },
+                {
+                    "date": 1740122543565,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -213,9 +213,9 @@\n class CustomUserWriteSerializersCollegeAdmin(serializers.ModelSerializer):\n     full_name = serializers.CharField(required=True,write_only=True)\n     class Meta:\n         model = User\n-        fields = ['id'email','full_name','phone']\n+        fields = ['id','email','full_name','phone','']\n         \n     def validate(self, attrs):\n         attrs = super().validate(attrs)\n         \n"
                 }
             ],
             "date": 1728378543651,
