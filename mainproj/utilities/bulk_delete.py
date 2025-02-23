@@ -23,7 +23,8 @@ from socialmedia.models import SocialMedia
 from superadmindetails.models import SuperAdminDetails
 from accounts.models import Group
 from event.models import Event,EventCategory,EventGallery,EventOrganizer
-from inquiry.models import Inquiry         
+from inquiry.models import Inquiry 
+from discipline.models import Discipline        
 
 VALID_TYPES = {
     "advertisement": Advertisement,
@@ -55,6 +56,7 @@ VALID_TYPES = {
     "event-organizer": EventOrganizer,
     "group": Group,
     "inquiry": Inquiry,
+    "discipline": Discipline,
 }
 
 class BulkDelete(APIView):

@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 66,
+            "activePatchIndex": 69,
             "patches": [
                 {
                     "date": 1733737051062,
@@ -272,6 +272,18 @@
                 {
                     "date": 1739440206749,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -40,9 +40,9 @@\n     \"college-faqs\": CollegeFaqs,\n     \"college-type\": CollegeType,\n     \"contact\": Contact,\n     \"course\": Course,\n-    \"course\": Course,\n+    \"course-curriculum-file\": Course,\n     \"district\": District,\n     \"facility\": Facility,\n     \"faculty\": Faculty,\n     \"level\": Level,\n"
+                },
+                {
+                    "date": 1740288070252,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,9 +22,10 @@\n from socialmedia.models import SocialMedia\n from superadmindetails.models import SuperAdminDetails\n from accounts.models import Group\n from event.models import Event,EventCategory,EventGallery,EventOrganizer\n-from inquiry.models import Inquiry         \n+from inquiry.models import Inquiry \n+        \n \n VALID_TYPES = {\n     \"advertisement\": Advertisement,\n     \"affiliation\": Affiliation,\n@@ -40,9 +41,9 @@\n     \"college-faqs\": CollegeFaqs,\n     \"college-type\": CollegeType,\n     \"contact\": Contact,\n     \"course\": Course,\n-    \"course-curriculum-file\": Course,\n+    \"course-curriculum-file\": CourseCurriculumFile,\n     \"district\": District,\n     \"facility\": Facility,\n     \"faculty\": Faculty,\n     \"level\": Level,\n"
+                },
+                {
+                    "date": 1740288076650,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,9 +23,9 @@\n from superadmindetails.models import SuperAdminDetails\n from accounts.models import Group\n from event.models import Event,EventCategory,EventGallery,EventOrganizer\n from inquiry.models import Inquiry \n-        \n+from discipline.models import Discipline        \n \n VALID_TYPES = {\n     \"advertisement\": Advertisement,\n     \"affiliation\": Affiliation,\n"
+                },
+                {
+                    "date": 1740288094919,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -55,8 +55,9 @@\n     \"event-gallery\": EventGallery,\n     \"event-organizer\": EventOrganizer,\n     \"group\": Group,\n     \"inquiry\": Inquiry,\n+    \"\"\n }\n \n class BulkDelete(APIView):\n     @swagger_auto_schema(\n"
                 }
             ],
             "date": 1733737051062,
