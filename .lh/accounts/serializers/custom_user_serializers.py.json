@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 72,
+            "activePatchIndex": 81,
             "patches": [
                 {
                     "date": 1728378543651,
@@ -296,6 +296,42 @@
                 {
                     "date": 1740122888357,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -216,9 +216,8 @@\n         model = User\n         fields = ['id','email','full_name','phone','password']\n         \n     def validate(self, attrs):\n-        \n         attrs = super().validate(attrs)\n         \n         # Ensure 'College Admin' group exists and has permissions\n         college_admin_group, created = Group.objects.get_or_create(name=\"College Admin\")\n"
+                },
+                {
+                    "date": 1740373317174,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -214,8 +214,10 @@\n     full_name = serializers.CharField(required=True,write_only=True)\n     class Meta:\n         model = User\n         fields = ['id','email','full_name','phone','password']\n+    \n+    \n         \n     def validate(self, attrs):\n         attrs = super().validate(attrs)\n         \n"
+                },
+                {
+                    "date": 1740373324407,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -215,10 +215,41 @@\n     class Meta:\n         model = User\n         fields = ['id','email','full_name','phone','password']\n     \n-    \n+    def validate(self, attrs):\n+        attrs = super().validate(attrs)\n         \n+        # Ensure 'College Admin' group exists and has permissions\n+        college_admin_group, created = Group.objects.get_or_create(name=\"College Admin\")\n+\n+        if created:\n+            # List of permissions to assign\n+            permissions_to_assign = [\n+                \"add_request_submission\", \"change_request_submission\", \"view_request_submission\",\n+                \"add_college\", \"change_college\", \"view_college\",\n+                \"add_courses_and_fees\", \"change_courses_and_fees\", \"delete_courses_and_fees\", \"view_courses_and_fees\",\n+                \"add_facility\", \"change_facility\", \"delete_facility\", \"view_facility\",\n+                \"add_college_gallery\", \"change_college_gallery\", \"delete_college_gallery\", \"view_college_gallery\",\n+                \"add_college_faqs\", \"change_college_faqs\", \"delete_college_faqs\", \"view_college_faqs\",\n+                \"view_inquiry\",\n+                \"add_contact\", \"change_contact\", \"view_contact\",\n+                \"add_custom_user\", \"change_custom_user\", \"view_custom_user\",\n+            ]\n+\n+            # Assign permissions to the group\n+            for perm_name in permissions_to_assign:\n+                try:\n+                    permission = Permission.objects.get(codename=perm_name)\n+                    college_admin_group.permissions.add(permission)\n+                except Permission.DoesNotExist:\n+                    print(f\"Permission '{perm_name}' does not exist.\")\n+\n+        # Assign user to the 'College Admin' group\n+        attrs['groups'] = [college_admin_group]\n+\n+        return attrs\n+        \n     def validate(self, attrs):\n         attrs = super().validate(attrs)\n         \n         # Ensure 'College Admin' group exists and has permissions\n"
+                },
+                {
+                    "date": 1740373329631,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -215,41 +215,10 @@\n     class Meta:\n         model = User\n         fields = ['id','email','full_name','phone','password']\n     \n-    def validate(self, attrs):\n-        attrs = super().validate(attrs)\n+    def validate ma\n         \n-        # Ensure 'College Admin' group exists and has permissions\n-        college_admin_group, created = Group.objects.get_or_create(name=\"College Admin\")\n-\n-        if created:\n-            # List of permissions to assign\n-            permissions_to_assign = [\n-                \"add_request_submission\", \"change_request_submission\", \"view_request_submission\",\n-                \"add_college\", \"change_college\", \"view_college\",\n-                \"add_courses_and_fees\", \"change_courses_and_fees\", \"delete_courses_and_fees\", \"view_courses_and_fees\",\n-                \"add_facility\", \"change_facility\", \"delete_facility\", \"view_facility\",\n-                \"add_college_gallery\", \"change_college_gallery\", \"delete_college_gallery\", \"view_college_gallery\",\n-                \"add_college_faqs\", \"change_college_faqs\", \"delete_college_faqs\", \"view_college_faqs\",\n-                \"view_inquiry\",\n-                \"add_contact\", \"change_contact\", \"view_contact\",\n-                \"add_custom_user\", \"change_custom_user\", \"view_custom_user\",\n-            ]\n-\n-            # Assign permissions to the group\n-            for perm_name in permissions_to_assign:\n-                try:\n-                    permission = Permission.objects.get(codename=perm_name)\n-                    college_admin_group.permissions.add(permission)\n-                except Permission.DoesNotExist:\n-                    print(f\"Permission '{perm_name}' does not exist.\")\n-\n-        # Assign user to the 'College Admin' group\n-        attrs['groups'] = [college_admin_group]\n-\n-        return attrs\n-        \n     def validate(self, attrs):\n         attrs = super().validate(attrs)\n         \n         # Ensure 'College Admin' group exists and has permissions\n"
+                },
+                {
+                    "date": 1740373335085,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -215,9 +215,9 @@\n     class Meta:\n         model = User\n         fields = ['id','email','full_name','phone','password']\n     \n-    def validate ma\n+    def validate password\n         \n     def validate(self, attrs):\n         attrs = super().validate(attrs)\n         \n"
+                },
+                {
+                    "date": 1740373347175,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -215,9 +215,11 @@\n     class Meta:\n         model = User\n         fields = ['id','email','full_name','phone','password']\n     \n-    def validate password\n+    def validate password:\n+        if len(value) < 8:\n+            raise serializers.ValidationError(\"Password must be at least 8 characters long\")\n         \n     def validate(self, attrs):\n         attrs = super().validate(attrs)\n         \n"
+                },
+                {
+                    "date": 1740373356570,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -214,12 +214,9 @@\n     full_name = serializers.CharField(required=True,write_only=True)\n     class Meta:\n         model = User\n         fields = ['id','email','full_name','phone','password']\n-    \n-    def validate password:\n-        if len(value) < 8:\n-            raise serializers.ValidationError(\"Password must be at least 8 characters long\")\n+    def \n         \n     def validate(self, attrs):\n         attrs = super().validate(attrs)\n         \n"
+                },
+                {
+                    "date": 1740373362916,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -214,9 +214,9 @@\n     full_name = serializers.CharField(required=True,write_only=True)\n     class Meta:\n         model = User\n         fields = ['id','email','full_name','phone','password']\n-    def \n+    def validate_\n         \n     def validate(self, attrs):\n         attrs = super().validate(attrs)\n         \n"
+                },
+                {
+                    "date": 1740373368243,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -214,9 +214,9 @@\n     full_name = serializers.CharField(required=True,write_only=True)\n     class Meta:\n         model = User\n         fields = ['id','email','full_name','phone','password']\n-    def validate_\n+    def validate_password(self, value):\n         \n     def validate(self, attrs):\n         attrs = super().validate(attrs)\n         \n"
+                },
+                {
+                    "date": 1740373387705,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -215,9 +215,10 @@\n     class Meta:\n         model = User\n         fields = ['id','email','full_name','phone','password']\n     def validate_password(self, value):\n-        \n+        return make_password(value)\n+       \n     def validate(self, attrs):\n         attrs = super().validate(attrs)\n         \n         # Ensure 'College Admin' group exists and has permissions\n"
                 }
             ],
             "date": 1728378543651,
