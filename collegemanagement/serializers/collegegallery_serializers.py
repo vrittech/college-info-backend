@@ -39,14 +39,17 @@ class CollegeGalleryRetrieveSerializers(serializers.ModelSerializer):
 
 ### ✅ Write Serializer (Handles Multi-Image Uploads) ###
 class CollegeGalleryWriteSerializers(serializers.ModelSerializer):
+    images = serializers.ListField(
+        child=serializers.ImageField(), write_only=True, required=False
+    )  # Accept multiple image uploads
 
     class Meta:
         model = CollegeGallery
-        fields = ['images', 'description']  # `images` key remains consistent in responses
+        fields = ['images', 'description']  # Keep `images` as input, but use `image` in DB
 
     def to_representation(self, instance):
         """
-        Ensures the response uses `images` instead of `image` for consistency.
+        Ensures `images` is used instead of `image` in responses.
         """
         return {
             "id": instance.id,
@@ -59,9 +62,8 @@ class CollegeGalleryWriteSerializers(serializers.ModelSerializer):
         images = []
         index = 0
 
-        # ✅ Handling `image[0]`, `image[1]`, etc.
-        while f'images[{index}]' in request.FILES:
-            images.append(request.FILES[f'images[{index}]'])
+        while f'image[{index}]' in request.FILES:
+            images.append(request.FILES[f'image[{index}]'])
             index += 1
 
         college = self.context.get('college')  # Get college from context if needed
@@ -71,16 +73,15 @@ class CollegeGalleryWriteSerializers(serializers.ModelSerializer):
             gallery_instance = CollegeGallery.objects.create(image=image, college=college)
             gallery_instances.append(gallery_instance)
 
-        return gallery_instances[0] if gallery_instances else None  # Return single instance
+        return gallery_instances[0] if gallery_instances else None  # Return a single instance
 
     def update(self, instance, validated_data):
         request = self.context.get('request')
         images = []
         index = 0
 
-        # ✅ Handling `image[0]`, `image[1]`, etc.
-        while f'images[{index}]' in request.FILES:
-            images.append(request.FILES[f'images[{index}]'])
+        while f'image[{index}]' in request.FILES:
+            images.append(request.FILES[f'image[{index}]'])
             index += 1
 
         for image in images:

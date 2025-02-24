@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 21,
+            "activePatchIndex": 22,
             "patches": [
                 {
                     "date": 1739512004648,
@@ -92,6 +92,10 @@
                 {
                     "date": 1740392554941,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -78,9 +78,9 @@\n         images = []\n         index = 0\n \n         # ✅ Handling `image[0]`, `image[1]`, etc.\n-        while f'image[{index}]' in request.FILES:\n+        while f'images[{index}]' in request.FILES:\n             images.append(request.FILES[f'images[{index}]'])\n             index += 1\n \n         for image in images:\n"
+                },
+                {
+                    "date": 1740392741349,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -38,16 +38,19 @@\n \n \n ### ✅ Write Serializer (Handles Multi-Image Uploads) ###\n class CollegeGalleryWriteSerializers(serializers.ModelSerializer):\n+    images = serializers.ListField(\n+        child=serializers.ImageField(), write_only=True, required=False\n+    )  # Accept multiple image uploads\n \n     class Meta:\n         model = CollegeGallery\n-        fields = ['images', 'description']  # `images` key remains consistent in responses\n+        fields = ['images', 'description']  # Keep `images` as input, but use `image` in DB\n \n     def to_representation(self, instance):\n         \"\"\"\n-        Ensures the response uses `images` instead of `image` for consistency.\n+        Ensures `images` is used instead of `image` in responses.\n         \"\"\"\n         return {\n             \"id\": instance.id,\n             \"images\": [instance.image.url] if instance.image else [],\n@@ -58,11 +61,10 @@\n         request = self.context.get('request')\n         images = []\n         index = 0\n \n-        # ✅ Handling `image[0]`, `image[1]`, etc.\n-        while f'images[{index}]' in request.FILES:\n-            images.append(request.FILES[f'images[{index}]'])\n+        while f'image[{index}]' in request.FILES:\n+            images.append(request.FILES[f'image[{index}]'])\n             index += 1\n \n         college = self.context.get('college')  # Get college from context if needed\n         gallery_instances = []\n@@ -70,20 +72,19 @@\n         for image in images:\n             gallery_instance = CollegeGallery.objects.create(image=image, college=college)\n             gallery_instances.append(gallery_instance)\n \n-        return gallery_instances[0] if gallery_instances else None  # Return single instance\n+        return gallery_instances[0] if gallery_instances else None  # Return a single instance\n \n     def update(self, instance, validated_data):\n         request = self.context.get('request')\n         images = []\n         index = 0\n \n-        # ✅ Handling `image[0]`, `image[1]`, etc.\n-        while f'images[{index}]' in request.FILES:\n-            images.append(request.FILES[f'images[{index}]'])\n+        while f'image[{index}]' in request.FILES:\n+            images.append(request.FILES[f'image[{index}]'])\n             index += 1\n \n         for image in images:\n             CollegeGallery.objects.create(image=image, college=instance.college)\n \n-        return super().update(instance, validated_data)\n+        return super().update(instance, validated_data)\n\\ No newline at end of file\n"
                 }
             ],
             "date": 1739512004648,
