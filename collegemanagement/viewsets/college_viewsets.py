@@ -13,12 +13,13 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework import status
 from django.db.models import Field
+from accounts.models import CustomUser as User
 
 
 class collegeViewsets(viewsets.ModelViewSet):
     serializer_class = CollegeListSerializers
     # permission_classes = [collegemanagementPermission]
-    permission_classes = [DynamicModelPermission]
+    # permission_classes = [DynamicModelPermission]
     # authentication_classes = [JWTAuthentication]
     pagination_class = MyPageNumberPagination
     lookup_field = "slug"
@@ -81,16 +82,55 @@ class collegeViewsets(viewsets.ModelViewSet):
     
     @action(detail=False, methods=['post'], name="college_creation", url_path="college-creation")
     def college_creation(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
+        """
+        Authenticate user from access token in payload if not in headers.
+        Ensure the user has permission to add a college.
+        """
+        # If the user is not already authenticated via headers, check token in payload
+        if not request.user.is_authenticated:
+            access_token = request.data.get("accessToken")
 
+            if not access_token:
+                return Response(
+                    {"error": "Authentication credentials were not provided! Access token required in payload."},
+                    status=status.HTTP_401_UNAUTHORIZED
+                )
+
+            # Authenticate user using JWT
+            jwt_authenticator = JWTAuthentication()
+            try:
+                validated_token = jwt_authenticator.get_validated_token(access_token)
+                user = jwt_authenticator.get_user(validated_token)
+            except Exception:
+                return Response(
+                    {"error": "Invalid or expired access token!"},
+                    status=status.HTTP_401_UNAUTHORIZED
+                )
+
+            # Assign the authenticated user to request
+            request.user = user
+
+        # ✅ **Force Refresh User Permissions (Fixes Permission Cache Issue)**
+        request.user = User.objects.get(id=request.user.id)
+
+        # ✅ **Check if user has 'add_college' permission**
+        if not request.user.has_perm("collegemanagement.add_college"):  
+            return Response(
+                {"error": "You do not have permission to add a college."},
+                status=status.HTTP_403_FORBIDDEN
+            )
+
+        # ✅ **Now create the college since the user is authenticated and has permission**
+        serializer = self.get_serializer(data=request.data)
         if serializer.is_valid():
             college = serializer.save()  # Create the college instance
-            # Assign the created college to the user
+            
+            # Assign the created college to the authenticated user
             request.user.college = college
             request.user.save()
-            
+
             return Response(
-                {"message": "College Created successfully!", "data": serializer.data},
+                {"message": "College created successfully!", "data": serializer.data},
                 status=status.HTTP_201_CREATED
             )
         else:

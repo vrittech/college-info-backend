@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 248,
+            "activePatchIndex": 251,
             "patches": [
                 {
                     "date": 1727170911785,
@@ -1000,6 +1000,18 @@
                 {
                     "date": 1740372322186,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -48,9 +48,9 @@\n     phone_number = models.CharField(max_length=20,null=True,blank=True)\n     email = models.EmailField(max_length=255,null=True,blank=True)\n     affiliated = models.ForeignKey(Affiliation, on_delete=models.CASCADE,related_name='college_affiliation',null=True,blank=True)\n     college_type = models.ForeignKey(CollegeType, on_delete=models.CASCADE,related_name='college_type',null=True,blank=True)\n-    discipline = models.ManyToManyField(Discipline, related_name='college_discipline',null=True,blank=True)\n+    discipline = models.ManyToManyField(Discipline, related_name='college_discipline'blank=True)\n     # social_media = models.ManyToManyField(CollegeSocialMedia,blank=True)\n     google_map_link = models.URLField(blank=True, null=True)\n     latitude = models.CharField(max_length= 255,null=True,blank=True)\n     longitude = models.CharField(max_length= 255,null=True,blank=True)\n"
+                },
+                {
+                    "date": 1740392318761,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -48,9 +48,9 @@\n     phone_number = models.CharField(max_length=20,null=True,blank=True)\n     email = models.EmailField(max_length=255,null=True,blank=True)\n     affiliated = models.ForeignKey(Affiliation, on_delete=models.CASCADE,related_name='college_affiliation',null=True,blank=True)\n     college_type = models.ForeignKey(CollegeType, on_delete=models.CASCADE,related_name='college_type',null=True,blank=True)\n-    discipline = models.ManyToManyField(Discipline, related_name='college_discipline'blank=True)\n+    discipline = models.ManyToManyField(Discipline, related_name='college_discipline',blank=True)\n     # social_media = models.ManyToManyField(CollegeSocialMedia,blank=True)\n     google_map_link = models.URLField(blank=True, null=True)\n     latitude = models.CharField(max_length= 255,null=True,blank=True)\n     longitude = models.CharField(max_length= 255,null=True,blank=True)\n@@ -103,9 +103,9 @@\n         ]\n \n class CollegeGallery(models.Model):\n     college = models.ForeignKey(College, on_delete=models.CASCADE,related_name='college_gallery',null=True,blank=True)\n-    image = models.ImageField(upload_to='college/gallery/',null=True,blank=True)\n+    images = models.ImageField(upload_to='college/gallery/',null=True,blank=True)\n     description = models.TextField(blank=True)\n     created_date = models.DateField(auto_now_add=True)\n     updated_date = models.DateField(auto_now=True)\n \n"
+                },
+                {
+                    "date": 1740392505880,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -101,17 +101,22 @@\n         permissions = [\n             ('manage_faq', 'Manage faq'),\n         ]\n \n+from django.db import models\n+\n class CollegeGallery(models.Model):\n-    college = models.ForeignKey(College, on_delete=models.CASCADE,related_name='college_gallery',null=True,blank=True)\n-    images = models.ImageField(upload_to='college/gallery/',null=True,blank=True)\n+    college = models.ForeignKey(\n+        College, on_delete=models.CASCADE, related_name='college_gallery', null=True, blank=True\n+    )\n+    image = models.ImageField(upload_to='college/gallery/', null=True, blank=True)  # Store one image per instance\n     description = models.TextField(blank=True)\n-    created_date = models.DateField(auto_now_add=True)\n-    updated_date = models.DateField(auto_now=True)\n+    created_date = models.DateTimeField(auto_now_add=True)\n\\ No newline at end of file\n+    updated_date = models.DateTimeField(auto_now=True)\n \n     def __str__(self):\n         return f'Gallery Image {self.id}'\n+\n     class Meta:\n         permissions = [\n             ('manage_college_gallery', 'Manage college gallery'),\n-        ]\n+        ]\n"
+                },
+                {
+                    "date": 1740392506100,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -118,5 +118,5 @@\n \n     class Meta:\n         permissions = [\n             ('manage_college_gallery', 'Manage college gallery'),\n-        ]\n\\ No newline at end of file\n+        ]\n"
                 }
             ],
             "date": 1727170911784,

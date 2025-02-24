@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 9,
+            "activePatchIndex": 21,
             "patches": [
                 {
                     "date": 1739512004648,
@@ -44,6 +44,54 @@
                 {
                     "date": 1739770780017,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,10 @@\n \n class CollegeSerializers(serializers.ModelSerializer):\n     class Meta:\n         model = College\n-        fields = \n+        ref_name\n+        fields = ['slug','id','name']\n \n class CollegeGalleryListSerializers(serializers.ModelSerializer):\n     college = CollegeSerializers(read_only=True)\n     class Meta:\n"
+                },
+                {
+                    "date": 1740391779381,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,9 @@\n \n class CollegeSerializers(serializers.ModelSerializer):\n     class Meta:\n         model = College\n-        ref_name\n+        ref_name='CollegeGallerySerializers'\n         fields = ['slug','id','name']\n \n class CollegeGalleryListSerializers(serializers.ModelSerializer):\n     college = CollegeSerializers(read_only=True)\n@@ -25,9 +25,9 @@\n     )\n \n     class Meta:\n         model = CollegeGallery\n-        fields = ['images', 'description']  # Excluding 'image' field since we're handling multiple images\n+        fields = ['image', 'description']  # Excluding 'image' field since we're handling multiple images\n \n     def create(self, validated_data):\n         request = self.context.get('request')\n         images = []\n"
+                },
+                {
+                    "date": 1740391796593,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -25,9 +25,9 @@\n     )\n \n     class Meta:\n         model = CollegeGallery\n-        fields = ['image', 'description']  # Excluding 'image' field since we're handling multiple images\n+        fields = ['images', 'description']  # Excluding 'image' field since we're handling multiple images\n \n     def create(self, validated_data):\n         request = self.context.get('request')\n         images = []\n"
+                },
+                {
+                    "date": 1740391925400,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -49,9 +49,9 @@\n         images = []\n         index = 0\n \n         while f'image[{index}]' in request.FILES:\n-            images.append(request.FILES[f'image[{index}]'])\n+            images.append(request.FILES[f'images[{index}]'])\n             index += 1\n \n         for image in images:\n             CollegeGallery.objects.create(image=image)\n"
+                },
+                {
+                    "date": 1740392277128,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -53,7 +53,7 @@\n             images.append(request.FILES[f'images[{index}]'])\n             index += 1\n \n         for image in images:\n-            CollegeGallery.objects.create(image=image)\n+            CollegeGallery.objects.create(images=image)\n \n         return super().update(instance, validated_data)\n"
+                },
+                {
+                    "date": 1740392291557,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,11 +19,8 @@\n         model = CollegeGallery\n         fields = '__all__'\n \n class CollegeGalleryWriteSerializers(serializers.ModelSerializer):\n-    images = serializers.ListField(\n-        child=serializers.ImageField(), write_only=True, required=False\n-    )\n \n     class Meta:\n         model = CollegeGallery\n         fields = ['images', 'description']  # Excluding 'image' field since we're handling multiple images\n"
+                },
+                {
+                    "date": 1740392297110,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,9 +22,9 @@\n class CollegeGalleryWriteSerializers(serializers.ModelSerializer):\n \n     class Meta:\n         model = CollegeGallery\n-        fields = ['images', 'description']  # Excluding 'image' field since we're handling multiple images\n+        fields = '__all__'\n \n     def create(self, validated_data):\n         request = self.context.get('request')\n         images = []\n"
+                },
+                {
+                    "date": 1740392303829,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -35,9 +35,9 @@\n             index += 1\n \n         gallery_instances = []\n         for image in images:\n-            gallery_instance = CollegeGallery.objects.create(image=image)\n+            gallery_instance = CollegeGallery.objects.create(images=image)\n             gallery_instances.append(gallery_instance)\n \n         return gallery_instances\n \n"
+                },
+                {
+                    "date": 1740392311480,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -35,9 +35,9 @@\n             index += 1\n \n         gallery_instances = []\n         for image in images:\n-            gallery_instance = CollegeGallery.objects.create(images=image)\n+            gallery_instance = CollegeGallery.objects.create(images=images)\n             gallery_instances.append(gallery_instance)\n \n         return gallery_instances\n \n"
+                },
+                {
+                    "date": 1740392473811,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,56 +1,89 @@\n from rest_framework import serializers\n-from ..models import CollegeGallery,College\n+from ..models import CollegeGallery, College\n \n+### ✅ College Serializer for nested relation ###\n class CollegeSerializers(serializers.ModelSerializer):\n     class Meta:\n         model = College\n-        ref_name='CollegeGallerySerializers'\n-        fields = ['slug','id','name']\n+        ref_name = 'CollegeGallerySerializers'\n+        fields = ['slug', 'id', 'name']\n \n+\n+### ✅ Read Serializer (for Listing Multiple Galleries) ###\n class CollegeGalleryListSerializers(serializers.ModelSerializer):\n     college = CollegeSerializers(read_only=True)\n+    images = serializers.SerializerMethodField()  # Ensures `images` is the response key\n+\n     class Meta:\n         model = CollegeGallery\n-        fields = '__all__'\n+        fields = ['id', 'college', 'images', 'description', 'created_date', 'updated_date']\n \n+    def get_images(self, obj):\n+        \"\"\"Returns a list of image URLs for consistency.\"\"\"\n+        return [obj.image.url] if obj.image else []\n+\n+\n+### ✅ Read Serializer (for Retrieving a Single Gallery) ###\n class CollegeGalleryRetrieveSerializers(serializers.ModelSerializer):\n     college = CollegeSerializers(read_only=True)\n+    images = serializers.SerializerMethodField()  # Ensures `images` is the response key\n+\n     class Meta:\n         model = CollegeGallery\n-        fields = '__all__'\n+        fields = ['id', 'college', 'images', 'description', 'created_date', 'updated_date']\n \n+    def get_images(self, obj):\n+        \"\"\"Returns a list of image URLs for consistency.\"\"\"\n+        return [obj.image.url] if obj.image else []\n+\n+\n+### ✅ Write Serializer (Handles Multi-Image Uploads) ###\n class CollegeGalleryWriteSerializers(serializers.ModelSerializer):\n \n     class Meta:\n         model = CollegeGallery\n-        fields = '__all__'\n+        fields = ['images', 'description']  # `images` key remains consistent in responses\n \n+    def to_representation(self, instance):\n+        \"\"\"\n+        Ensures the response uses `images` instead of `image` for consistency.\n+        \"\"\"\n+        return {\n+            \"id\": instance.id,\n+            \"images\": [instance.image.url] if instance.image else [],\n+            \"description\": instance.description\n+        }\n+\n     def create(self, validated_data):\n         request = self.context.get('request')\n         images = []\n         index = 0\n \n+        # ✅ Handling `image[0]`, `image[1]`, etc.\n         while f'image[{index}]' in request.FILES:\n             images.append(request.FILES[f'image[{index}]'])\n             index += 1\n \n+        college = self.context.get('college')  # Get college from context if needed\n         gallery_instances = []\n+\n         for image in images:\n-            gallery_instance = CollegeGallery.objects.create(images=images)\n+            gallery_instance = CollegeGallery.objects.create(image=image, college=college)\n             gallery_instances.append(gallery_instance)\n \n-        return gallery_instances\n+        return gallery_instances[0] if gallery_instances else None  # Return single instance\n \n     def update(self, instance, validated_data):\n         request = self.context.get('request')\n         images = []\n         index = 0\n \n+        # ✅ Handling `image[0]`, `image[1]`, etc.\n         while f'image[{index}]' in request.FILES:\n-            images.append(request.FILES[f'images[{index}]'])\n+            images.append(request.FILES[f'image[{index}]'])\n             index += 1\n \n         for image in images:\n-            CollegeGallery.objects.create(images=image)\n+            CollegeGallery.objects.create(image=image, college=instance.college)\n \n         return super().update(instance, validated_data)\n"
+                },
+                {
+                    "date": 1740392544479,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -79,9 +79,9 @@\n         index = 0\n \n         # ✅ Handling `image[0]`, `image[1]`, etc.\n         while f'image[{index}]' in request.FILES:\n-            images.append(request.FILES[f'image[{index}]'])\n+            images.append(request.FILES[f'images[{index}]'])\n             index += 1\n \n         for image in images:\n             CollegeGallery.objects.create(image=image, college=instance.college)\n"
+                },
+                {
+                    "date": 1740392549827,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -59,10 +59,10 @@\n         images = []\n         index = 0\n \n         # ✅ Handling `image[0]`, `image[1]`, etc.\n-        while f'image[{index}]' in request.FILES:\n-            images.append(request.FILES[f'image[{index}]'])\n+        while f'images[{index}]' in request.FILES:\n+            images.append(request.FILES[f'images[{index}]'])\n             index += 1\n \n         college = self.context.get('college')  # Get college from context if needed\n         gallery_instances = []\n"
+                },
+                {
+                    "date": 1740392554941,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -78,9 +78,9 @@\n         images = []\n         index = 0\n \n         # ✅ Handling `image[0]`, `image[1]`, etc.\n-        while f'image[{index}]' in request.FILES:\n+        while f'images[{index}]' in request.FILES:\n             images.append(request.FILES[f'images[{index}]'])\n             index += 1\n \n         for image in images:\n"
                 }
             ],
             "date": 1739512004648,
