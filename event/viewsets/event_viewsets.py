@@ -82,7 +82,7 @@ class eventViewsets(viewsets.ModelViewSet):
             "description": event_instance.description,
             "start_date": event_instance.start_date,
             "end_date": event_instance.end_date,
-            "images": [
+            "image": [
                 {"id": img.id, "image_url": img.image.url} for img in event_instance.image.all()
             ],
         }
