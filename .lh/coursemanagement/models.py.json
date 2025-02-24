@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 116,
+            "activePatchIndex": 119,
             "patches": [
                 {
                     "date": 1727071578528,
@@ -472,6 +472,18 @@
                 {
                     "date": 1739772620999,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -46,11 +46,8 @@\n class CourseCurriculumFile(models.Model):\n     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name=\"curriculum_file_upload\")\n     curriculum_file_upload = models.FileField(upload_to=\"courses/curriculum_files/\")\n     uploaded_at = models.DateTimeField(auto_now_add=True)\n-\n-    def __str__(self):\n-        return f\"File for {self.course.name} - {self.file.name}\"\n     class Meta:\n         permissions = [\n             ('manage_coursecurriculumfile', 'Manage manage_coursecurriculumfile'),\n         ]\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1740386765923,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,9 +11,9 @@\n # Create your models here.\n class Course(SEOFields):\n     public_id = models.UUIDField(default=uuid.uuid4,editable=False,unique=True)\n     slug = models.SlugField(max_length=255, unique=True, null=True, blank=True)\n-    name = models.CharField(max_length=255,unique=True)\n+    name = models.CharField(max_length=255)\n     abbreviation = models.CharField(max_length=255)\n     duration = models.ForeignKey(Duration,on_delete=models.CASCADE,related_name='course_duration')\n     faculty = models.ForeignKey(Faculty, on_delete=models.CASCADE, related_name='course_faculties')\n     level = models.ForeignKey(Level, on_delete=models.CASCADE, related_name='course_level')\n"
+                },
+                {
+                    "date": 1740386771784,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,9 +11,9 @@\n # Create your models here.\n class Course(SEOFields):\n     public_id = models.UUIDField(default=uuid.uuid4,editable=False,unique=True)\n     slug = models.SlugField(max_length=255, unique=True, null=True, blank=True)\n-    name = models.CharField(max_length=255)\n+    name = models.CharField(max_length=255,)\n     abbreviation = models.CharField(max_length=255)\n     duration = models.ForeignKey(Duration,on_delete=models.CASCADE,related_name='course_duration')\n     faculty = models.ForeignKey(Faculty, on_delete=models.CASCADE, related_name='course_faculties')\n     level = models.ForeignKey(Level, on_delete=models.CASCADE, related_name='course_level')\n"
+                },
+                {
+                    "date": 1740386789872,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,9 +11,9 @@\n # Create your models here.\n class Course(SEOFields):\n     public_id = models.UUIDField(default=uuid.uuid4,editable=False,unique=True)\n     slug = models.SlugField(max_length=255, unique=True, null=True, blank=True)\n-    name = models.CharField(max_length=255,)\n+    name = models.CharField(max_length=255)\n     abbreviation = models.CharField(max_length=255)\n     duration = models.ForeignKey(Duration,on_delete=models.CASCADE,related_name='course_duration')\n     faculty = models.ForeignKey(Faculty, on_delete=models.CASCADE, related_name='course_faculties')\n     level = models.ForeignKey(Level, on_delete=models.CASCADE, related_name='course_level')\n@@ -33,9 +33,9 @@\n         return self.name if self.name else \"Unnamed Course\"\n     \n     def save(self, *args, **kwargs):\n         if not self.slug:\n-            self.slug = slugify(self.name)\n+            self.slug = f'{slugify(self.name)}-{str(self.public_id)[1:5]}{str(self.public_id)[-1:-5]}'\n         super().save(*args, **kwargs)\n     \n     class Meta:\n         permissions = [\n"
                 }
             ],
             "date": 1727071578528,

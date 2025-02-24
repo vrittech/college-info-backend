@@ -62,7 +62,7 @@ class EventCategory(models.Model):
 class Event(SEOFields):
     public_id = models.UUIDField(default=uuid.uuid4,editable=False,unique=True)
     slug = models.SlugField(max_length=255, unique=True, null=True, blank=True)
-    event_name = models.CharField(max_length=255,unique=True)
+    event_name = models.CharField(max_length=255)
     start_date = models.DateTimeField(null=True,blank=True)
     end_date = models.DateTimeField(null=True,blank=True)
     duration = models.CharField(max_length=255)
@@ -109,7 +109,7 @@ class Event(SEOFields):
     
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = slugify(self.event_name)
+            self.slug = f'{slugify(self.name)}-{str(self.public_id)[1:5]}{str(self.public_id)[-1:-5]}'
         super().save(*args, **kwargs)
     
     
@@ -121,7 +121,7 @@ class Event(SEOFields):
 class EventGallery(models.Model):
     event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name='image')
     is_featured_image = models.BooleanField(default=False)
-    image = models.ImageField(upload_to='event_images/',null=True,blank=True)
+    images = models.ImageField(upload_to='event_images/',null=True,blank=True)
     
     created_date_time = models.DateTimeField(auto_now_add=True, null=True, blank=True)
     created_date = models.DateField(auto_now_add=True, null=True, blank=True)

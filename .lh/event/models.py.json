@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 164,
+            "activePatchIndex": 167,
             "patches": [
                 {
                     "date": 1726568467190,
@@ -664,6 +664,18 @@
                 {
                     "date": 1740378751836,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -30,9 +30,9 @@\n \n \n class EventOrganizer(models.Model):\n     name = models.CharField(max_length=255)\n-    image = models.ImageField(upload_to='event_organizer/',)\n+    image = models.ImageField(upload_to='event_organizer/',null=True,blank=True)\n     link = models.URLField(blank=True, null=True)\n     is_show = models.BooleanField(default=False)\n     \n     created_date_time = models.DateTimeField(auto_now_add=True, null=True, blank=True)\n"
+                },
+                {
+                    "date": 1740380973196,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -108,9 +108,9 @@\n         return f\"{self.event_name}\"\n     \n     def save(self, *args, **kwargs):\n         if not self.slug:\n-            self.slug = slugify(self.event_name)\n+            self.slug = f'{slugify(self.name)}-{str(self.public_id)[1:5]}{str(self.public_id)[-1:-5]}'\n         super().save(*args, **kwargs)\n     \n     \n     class Meta:\n"
+                },
+                {
+                    "date": 1740381014770,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -61,9 +61,9 @@\n \n class Event(SEOFields):\n     public_id = models.UUIDField(default=uuid.uuid4,editable=False,unique=True)\n     slug = models.SlugField(max_length=255, unique=True, null=True, blank=True)\n-    event_name = models.CharField(max_length=255,unique=True)\n+    event_name = models.CharField(max_length=255)\n     start_date = models.DateTimeField(null=True,blank=True)\n     end_date = models.DateTimeField(null=True,blank=True)\n     duration = models.CharField(max_length=255)\n     duration_type = models.CharField(max_length=255, blank=True, null=True)\n"
+                },
+                {
+                    "date": 1740388048508,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -120,9 +120,9 @@\n \n class EventGallery(models.Model):\n     event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name='image')\n     is_featured_image = models.BooleanField(default=False)\n-    image = models.ImageField(upload_to='event_images/',null=True,blank=True)\n+    images = models.ImageField(upload_to='event_images/',null=True,blank=True)\n     \n     created_date_time = models.DateTimeField(auto_now_add=True, null=True, blank=True)\n     created_date = models.DateField(auto_now_add=True, null=True, blank=True)\n     updated_date = models.DateTimeField(auto_now=True, null=True, blank=True)\n"
                 }
             ],
             "date": 1726568467190,

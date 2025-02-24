@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 9,
+            "activePatchIndex": 14,
             "patches": [
                 {
                     "date": 1739786154635,
@@ -44,6 +44,26 @@
                 {
                     "date": 1740130581593,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -52,8 +52,11 @@\n             count = InformationCategory.objects.filter(is_show=True).exclude(pk=self.pk).count()\n             if count >= 2:\n                 raise ValidationError(\"Only two categories can be shown at a time.\")\n         \n+        if not self.slug:\n+            self.slug = slugify(self.name)\n+        \n         super().save(*args, **kwargs)\n     \n     class Meta:\n         permissions = [\n"
+                },
+                {
+                    "date": 1740380841333,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -97,9 +97,9 @@\n         return self.title if self.title else \"Unnamed\"\n     \n     def save(self, *args, **kwargs):\n         if not self.slug:\n-            self.slug = slugify(self.name)\n+            self.slug = slugify(self.name) \n         super().save(*args, **kwargs)\n     \n     class Meta:\n         permissions = [\n"
+                },
+                {
+                    "date": 1740380951011,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -97,9 +97,9 @@\n         return self.title if self.title else \"Unnamed\"\n     \n     def save(self, *args, **kwargs):\n         if not self.slug:\n-            self.slug = slugify(self.name) \n+            self.slug = f'{slugify(self.name)}-{str(self.public_id)[1:5]}{str(self.public_id)[-1:-5]}'\n         super().save(*args, **kwargs)\n     \n     class Meta:\n         permissions = [\n"
+                },
+                {
+                    "date": 1740381058960,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -66,9 +66,27 @@\n class Information(SEOFields):\n     # template_name  = models.CharField(max_length=255,null=True,blank=True)\n     public_id = models.UUIDField(default=uuid.uuid4,editable=False,unique=True)\n     slug = models.SlugField(max_length=255, unique=True, null=True, blank=True)\n-    title = models.CharField(max_length=510,unique=True)\n+    \n+    \n+    \n+    \n+    \n+    \n+    \n+    \n+    \n+    \n+    \n+    \n+    \n+    \n+    \n+    \n+    \n+    \n+    = models.CharField(max_length=510,unique=True)\n     publish_date = models.DateField(null=True, blank=True)\n     active_period_start = models.DateField(null=True, blank=True)\n     active_period_end = models.DateField(null=True, blank=True)\n     \n"
+                },
+                {
+                    "date": 1740381066177,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -66,27 +66,9 @@\n class Information(SEOFields):\n     # template_name  = models.CharField(max_length=255,null=True,blank=True)\n     public_id = models.UUIDField(default=uuid.uuid4,editable=False,unique=True)\n     slug = models.SlugField(max_length=255, unique=True, null=True, blank=True)\n-    \n-    \n-    \n-    \n-    \n-    \n-    \n-    \n-    \n-    \n-    \n-    \n-    \n-    \n-    \n-    \n-    \n-    \n-    = models.CharField(max_length=510,unique=True)\n+    title = models.CharField(max_length=510,unique=True)\n     publish_date = models.DateField(null=True, blank=True)\n     active_period_start = models.DateField(null=True, blank=True)\n     active_period_end = models.DateField(null=True, blank=True)\n     \n"
+                },
+                {
+                    "date": 1740381487893,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -127,9 +127,8 @@\n     image = models.ImageField(upload_to='information_category/',null=True,blank=True)\n     is_featured = models.BooleanField(default=False)\n     created_date = models.DateField(auto_now_add=True, null=True, blank=True)\n     updated_date = models.DateTimeField(auto_now=True, null=True, blank=True)\n-\n     \n     class Meta:\n         permissions = [\n             ('manage_informationgallery', 'Manage Information Gallery'),\n"
                 }
             ],
             "date": 1739786154635,

@@ -98,7 +98,7 @@ class Information(SEOFields):
     
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = slugify(self.name)
+            self.slug = f'{slugify(self.name)}-{str(self.public_id)[1:5]}{str(self.public_id)[-1:-5]}'
         super().save(*args, **kwargs)
     
     class Meta:
@@ -128,7 +128,6 @@ class InformationGallery(models.Model):
     is_featured = models.BooleanField(default=False)
     created_date = models.DateField(auto_now_add=True, null=True, blank=True)
     updated_date = models.DateTimeField(auto_now=True, null=True, blank=True)
-
     
     class Meta:
         permissions = [
