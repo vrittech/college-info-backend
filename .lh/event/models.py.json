@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 162,
+            "activePatchIndex": 164,
             "patches": [
                 {
                     "date": 1726568467190,
@@ -656,6 +656,14 @@
                 {
                     "date": 1739950537470,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -65,9 +65,9 @@\n     event_name = models.CharField(max_length=255,unique=True)\n     start_date = models.DateTimeField(null=True,blank=True)\n     end_date = models.DateTimeField(null=True,blank=True)\n     duration = models.CharField(max_length=255)\n-    duration_type = models.CharField(max_length=255)\n+    duration_type = models.CharField(max_length=255,)\n     TYPE_CHOICES = [\n         ('physical', 'Physical'),\n         ('online', 'Online'),\n         ('hybrid', 'Hybrid'),\n"
+                },
+                {
+                    "date": 1740378745124,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -30,9 +30,9 @@\n \n \n class EventOrganizer(models.Model):\n     name = models.CharField(max_length=255)\n-    image = models.ImageField(upload_to='event_organizer/')\n+    image = models.ImageField(upload_to='event_organizer/',)\n     link = models.URLField(blank=True, null=True)\n     is_show = models.BooleanField(default=False)\n     \n     created_date_time = models.DateTimeField(auto_now_add=True, null=True, blank=True)\n@@ -65,9 +65,9 @@\n     event_name = models.CharField(max_length=255,unique=True)\n     start_date = models.DateTimeField(null=True,blank=True)\n     end_date = models.DateTimeField(null=True,blank=True)\n     duration = models.CharField(max_length=255)\n-    duration_type = models.CharField(max_length=255,)\n+    duration_type = models.CharField(max_length=255, blank=True, null=True)\n     TYPE_CHOICES = [\n         ('physical', 'Physical'),\n         ('online', 'Online'),\n         ('hybrid', 'Hybrid'),\n"
+                },
+                {
+                    "date": 1740378751836,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -30,9 +30,9 @@\n \n \n class EventOrganizer(models.Model):\n     name = models.CharField(max_length=255)\n-    image = models.ImageField(upload_to='event_organizer/',)\n+    image = models.ImageField(upload_to='event_organizer/',null=True,blank=True)\n     link = models.URLField(blank=True, null=True)\n     is_show = models.BooleanField(default=False)\n     \n     created_date_time = models.DateTimeField(auto_now_add=True, null=True, blank=True)\n"
                 }
             ],
             "date": 1726568467190,

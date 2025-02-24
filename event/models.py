@@ -31,7 +31,7 @@ from django.utils.text import slugify
 
 class EventOrganizer(models.Model):
     name = models.CharField(max_length=255)
-    image = models.ImageField(upload_to='event_organizer/')
+    image = models.ImageField(upload_to='event_organizer/',null=True,blank=True)
     link = models.URLField(blank=True, null=True)
     is_show = models.BooleanField(default=False)
     
