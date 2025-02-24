@@ -66,7 +66,7 @@ class CustomUserViewSet(viewsets.ModelViewSet):
         queryset = self.get_queryset().filter(college__isnull=False)  # Filter users with assigned college
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
-    
+
     @action(detail=False, methods=['post'], name="signup_college_admin", url_path="signup-college-admin")
     def signup_college_admin(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)  
@@ -77,12 +77,14 @@ class CustomUserViewSet(viewsets.ModelViewSet):
             user = serializer.instance
             refresh = RefreshToken.for_user(user)
             access_token = str(refresh.access_token)
+            refresh_token = str(refresh)
             
             return Response(
                 {
                     "message": "College Admin signed up successfully!",
                     "data": serializer.data,
-                    "access": access_token
+                    "access": access_token,
+                    "refresh": refresh_token
                 },
                 status=status.HTTP_201_CREATED
             )
