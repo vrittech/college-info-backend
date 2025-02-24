@@ -3,11 +3,19 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 0,
+            "activePatchIndex": 2,
             "patches": [
                 {
                     "date": 1733729034342,
                     "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1740379992053,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,10 +1,10 @@\n from django_filters import rest_framework as filters\n-from .models import Inquiry\n+from ..models import Inquiry\n \n class InquiryFilter(filters.FilterSet):\n     courses = filters.CharFilter(field_name='courses__name', lookup_expr='icontains')  # Filter by course name\n-    colleges = filters.CharFilter(field_name='colleges__name', lookup_expr='icontains')  # Filter by college name\n+    colleges = filters.CharFilter(field_name='colleges__slug', lookup_expr='icontains')  # Filter by college name\n \n     class Meta:\n         model = Inquiry\n         fields = ['courses', 'colleges']\n"
+                },
+                {
+                    "date": 1740379998281,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,9 @@\n from django_filters import rest_framework as filters\n from ..models import Inquiry\n \n class InquiryFilter(filters.FilterSet):\n-    courses = filters.CharFilter(field_name='courses__name', lookup_expr='icontains')  # Filter by course name\n+    courses = filters.CharFilter(field_name='courses__slug', lookup_expr='icontains')  # Filter by course name\n     colleges = filters.CharFilter(field_name='colleges__slug', lookup_expr='icontains')  # Filter by college name\n \n     class Meta:\n         model = Inquiry\n"
                 }
             ],
             "date": 1733729034342,

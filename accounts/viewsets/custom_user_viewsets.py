@@ -73,8 +73,17 @@ class CustomUserViewSet(viewsets.ModelViewSet):
 
         if serializer.is_valid():
             serializer.save()
+            # Generate tokens for the newly created user
+            user = serializer.instance
+            refresh = RefreshToken.for_user(user)
+            access_token = str(refresh.access_token)
+            
             return Response(
-                {"message": "College Admin signed up successfully!", "data": serializer.data},
+                {
+                    "message": "College Admin signed up successfully!",
+                    "data": serializer.data,
+                    "access": access_token
+                },
                 status=status.HTTP_201_CREATED
             )
         else:
