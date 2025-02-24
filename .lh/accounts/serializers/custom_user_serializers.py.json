@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 81,
+            "activePatchIndex": 82,
             "patches": [
                 {
                     "date": 1728378543651,
@@ -332,6 +332,10 @@
                 {
                     "date": 1740373387705,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -215,9 +215,10 @@\n     class Meta:\n         model = User\n         fields = ['id','email','full_name','phone','password']\n     def validate_password(self, value):\n-        \n+        return make_password(value)\n+       \n     def validate(self, attrs):\n         attrs = super().validate(attrs)\n         \n         # Ensure 'College Admin' group exists and has permissions\n"
+                },
+                {
+                    "date": 1740376717385,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -213,9 +213,9 @@\n class CustomUserWriteSerializersCollegeAdmin(serializers.ModelSerializer):\n     full_name = serializers.CharField(required=True,write_only=True)\n     class Meta:\n         model = User\n-        fields = ['id','email','full_name','phone','password']\n+        fields = ['id','email','full_name','phone','password','']\n     def validate_password(self, value):\n         return make_password(value)\n        \n     def validate(self, attrs):\n"
                 }
             ],
             "date": 1728378543651,

@@ -214,7 +214,7 @@ class CustomUserWriteSerializersCollegeAdmin(serializers.ModelSerializer):
     full_name = serializers.CharField(required=True,write_only=True)
     class Meta:
         model = User
-        fields = ['id','email','full_name','phone','password']
+        fields = ['id','email','full_name','phone','password','username']
     def validate_password(self, value):
         return make_password(value)
        
