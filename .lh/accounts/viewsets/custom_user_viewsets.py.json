@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 10,
+            "activePatchIndex": 11,
             "patches": [
                 {
                     "date": 1738669074931,
@@ -48,6 +48,10 @@
                 {
                     "date": 1740113245433,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -69,9 +69,8 @@\n     \n     @action(detail=False, methods=['post'], name=\"signup_college_admin\", url_path=\"signup-college-admin\")\n     def signup_college_admin(self, request, *args, **kwargs):\n         serializer = self.get_serializer(data=request.data)  # ✅ FIX: Pass `data=request.data`\n-        print(serializer,\"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\")\n \n         if serializer.is_valid():\n             serializer.save()\n             return Response(\n"
+                },
+                {
+                    "date": 1740377473085,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -68,9 +68,9 @@\n         return Response(serializer.data)\n     \n     @action(detail=False, methods=['post'], name=\"signup_college_admin\", url_path=\"signup-college-admin\")\n     def signup_college_admin(self, request, *args, **kwargs):\n-        serializer = self.get_serializer(data=request.data)  # ✅ FIX: Pass `data=request.data`\n+        serializer = self.get_serializer(data=request.data)  \n \n         if serializer.is_valid():\n             serializer.save()\n             return Response(\n"
                 }
             ],
             "date": 1738669074931,

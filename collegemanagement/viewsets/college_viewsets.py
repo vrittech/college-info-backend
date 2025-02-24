@@ -81,16 +81,21 @@ class collegeViewsets(viewsets.ModelViewSet):
     
     @action(detail=False, methods=['post'], name="college_creation", url_path="college-creation")
     def college_creation(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)  # ✅ FIX: Pass `data=request.data`
+        serializer = self.get_serializer(data=request.data)
 
         if serializer.is_valid():
-            serializer.save()
+            college = serializer.save()  # Create the college instance
+            # Assign the created college to the user
+            request.user.college = college
+            request.user.save()
+            
             return Response(
                 {"message": "College Created successfully!", "data": serializer.data},
                 status=status.HTTP_201_CREATED
             )
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
     
     @action(detail=False, methods=['get'], name="calculate_completion_percentage", url_path="completion-percentage")

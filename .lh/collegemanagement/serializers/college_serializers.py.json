@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 107,
+            "activePatchIndex": 109,
             "patches": [
                 {
                     "date": 1733477116456,
@@ -436,6 +436,14 @@
                 {
                     "date": 1740122143472,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -193,5 +193,5 @@\n \n class CollegeAdminWriteSerializers(serializers.ModelSerializer):\n     class Meta:\n         model = College\n-        fields = ['id','name','affiliated','college_type','level','phone_number']\n\\ No newline at end of file\n+        fields = ['id','name','affiliated','college_type','phone_number']\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1740377359969,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -105,13 +105,13 @@\n     discipline = serializers.PrimaryKeyRelatedField(queryset=Discipline.objects.all(), many=True)\n     social_media = SocialMediaSerializer(many=True, required=False)\n     facilities = serializers.PrimaryKeyRelatedField(queryset=Facility.objects.all(), many=True, required=False)\n     \n-    def to_internal_value(self, data):\n-        \"\"\"Converts stringified social media JSON into a list before validation.\"\"\"\n-        if data.get('social_media'):\n-            data['social_media'] = str_to_list(data, 'social_media')  # Convert if stringified\n-        return super().to_internal_value(data)\n+    # def to_internal_value(self, data):\n+    #     \"\"\"Converts stringified social media JSON into a list before validation.\"\"\"\n+    #     if data.get('social_media'):\n+    #         data['social_media'] = str_to_list(data, 'social_media')  # Convert if stringified\n+    #     return super().to_internal_value(data)\n \n     class Meta:\n         model = College\n         fields = '__all__'\n"
+                },
+                {
+                    "date": 1740377366968,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -102,9 +102,9 @@\n     step_counter = serializers.PrimaryKeyRelatedField(queryset=FormStepProgress.objects.all(), required=False, allow_null=True)\n \n     # ManyToMany fields\n     discipline = serializers.PrimaryKeyRelatedField(queryset=Discipline.objects.all(), many=True)\n-    social_media = SocialMediaSerializer(many=True, required=False)\n+    # social_media = SocialMediaSerializer(many=True, required=False)\n     facilities = serializers.PrimaryKeyRelatedField(queryset=Facility.objects.all(), many=True, required=False)\n     \n     # def to_internal_value(self, data):\n     #     \"\"\"Converts stringified social media JSON into a list before validation.\"\"\"\n"
                 }
             ],
             "date": 1733477116456,

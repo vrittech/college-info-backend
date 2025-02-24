@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 89,
+            "activePatchIndex": 90,
             "patches": [
                 {
                     "date": 1733718920520,
@@ -364,6 +364,10 @@
                 {
                     "date": 1740129623210,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -71,9 +71,9 @@\n         logos = []\n         for college in colleges:\n             if college.dp_image:\n                 dp_image_url = request.build_absolute_uri(college.dp_image.url)\n-                logos.append({\"slugcollege_name\": college.name, \"dp_image_url\": dp_image_url})\n+                logos.append({\"slug\": college.slug, \"college_name\": college.name, \"dp_image_url\": dp_image_url})\n \n         if not logos:\n             return Response({\"message\": \"No display images available.\"}, status=404)\n \n"
+                },
+                {
+                    "date": 1740377874287,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -79,20 +79,25 @@\n \n         return Response(logos, status=200)\n     \n     @action(detail=False, methods=['post'], name=\"college_creation\", url_path=\"college-creation\")\n-    def college_creation(self, request, *args, **kwargs):\n-        serializer = self.get_serializer(data=request.data)  # ✅ FIX: Pass `data=request.data`\n+def college_creation(self, request, *args, **kwargs):\n+    serializer = self.get_serializer(data=request.data)\n \n-        if serializer.is_valid():\n-            serializer.save()\n-            return Response(\n-                {\"message\": \"College Created successfully!\", \"data\": serializer.data},\n-                status=status.HTTP_201_CREATED\n-            )\n-        else:\n-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)\n+    if serializer.is_valid():\n+        college = serializer.save()  # Create the college instance\n+        # Assign the created college to the user\n+        request.user.college = college\n+        request.user.save()\n+        \n+        return Response(\n+            {\"message\": \"College Created successfully!\", \"data\": serializer.data},\n+            status=status.HTTP_201_CREATED\n+        )\n+    else:\n+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)\n \n+\n     \n     @action(detail=False, methods=['get'], name=\"calculate_completion_percentage\", url_path=\"completion-percentage\")\n     def calculate_completion_percentage(self, request, *args, **kwargs):\n         \"\"\"\n"
                 }
             ],
             "date": 1733718920520,

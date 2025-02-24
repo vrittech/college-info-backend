@@ -69,7 +69,7 @@ class CustomUserViewSet(viewsets.ModelViewSet):
     
     @action(detail=False, methods=['post'], name="signup_college_admin", url_path="signup-college-admin")
     def signup_college_admin(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)  # ✅ FIX: Pass `data=request.data`
+        serializer = self.get_serializer(data=request.data)  
 
         if serializer.is_valid():
             serializer.save()
