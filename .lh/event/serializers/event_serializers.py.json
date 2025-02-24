@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 46,
+            "activePatchIndex": 48,
             "patches": [
                 {
                     "date": 1733477390024,
@@ -192,6 +192,14 @@
                 {
                     "date": 1740410941086,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -122,9 +122,9 @@\n         category_ids = validated_data.pop(\"category\", [])\n         organizer_ids = validated_data.pop(\"organizer\", [])\n \n         # Extract multiple images from `images[0]`, `images[1]`, ...\n-        images_data = [file for key, file in request.FILES.items() if key.startswith(\"image[\")]\n+        images_data = [file for key, file in request.FILES.items() if key.startswith(\"images[\")]\n \n         # Create the Event instance\n         event = super().create(validated_data)\n \n"
+                },
+                {
+                    "date": 1740411266573,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -122,9 +122,9 @@\n         category_ids = validated_data.pop(\"category\", [])\n         organizer_ids = validated_data.pop(\"organizer\", [])\n \n         # Extract multiple images from `images[0]`, `images[1]`, ...\n-        images_data = [file for key, file in request.FILES.items() if key.startswith(\"images[\")]\n+        images_data = [file for key, file in request.FILES.items() if key.startswith(\"image[\")]\n \n         # Create the Event instance\n         event = super().create(validated_data)\n \n"
+                },
+                {
+                    "date": 1740411279673,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -150,9 +150,9 @@\n         category_ids = validated_data.pop(\"category\", None)\n         organizer_ids = validated_data.pop(\"organizer\", None)\n \n         # Extract multiple images from `images[0]`, `images[1]`, ...\n-        images_data = [file for key, file in request.FILES.items() if key.startswith(\"images[\")]\n+        images_data = [file for key, file in request.FILES.items() if key.startswith(\"image[\")]\n \n         # Update the event instance\n         instance = super().update(instance, validated_data)\n \n"
                 }
             ],
             "date": 1733477390024,

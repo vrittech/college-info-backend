@@ -123,7 +123,7 @@ class EventWriteSerializers(serializers.ModelSerializer):
         organizer_ids = validated_data.pop("organizer", [])
 
         # Extract multiple images from `images[0]`, `images[1]`, ...
-        images_data = [file for key, file in request.FILES.items() if key.startswith("images[")]
+        images_data = [file for key, file in request.FILES.items() if key.startswith("image[")]
 
         # Create the Event instance
         event = super().create(validated_data)
@@ -151,7 +151,7 @@ class EventWriteSerializers(serializers.ModelSerializer):
         organizer_ids = validated_data.pop("organizer", None)
 
         # Extract multiple images from `images[0]`, `images[1]`, ...
-        images_data = [file for key, file in request.FILES.items() if key.startswith("images[")]
+        images_data = [file for key, file in request.FILES.items() if key.startswith("image[")]
 
         # Update the event instance
         instance = super().update(instance, validated_data)
