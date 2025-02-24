@@ -134,7 +134,7 @@ class EventWriteSerializers(serializers.ModelSerializer):
 
         # Save images in EventGallery
         for image_file in images_data:
-            EventGallery.objects.create(event=event, image=image_file)
+            EventGallery.objects.create(event=event, images=image_file)
 
         return event
 
@@ -164,6 +164,6 @@ class EventWriteSerializers(serializers.ModelSerializer):
 
         # Save new images in EventGallery
         for image_file in images_data:
-            EventGallery.objects.create(event=instance, image=image_file)
+            EventGallery.objects.create(event=instance, images=image_file)
 
         return instance

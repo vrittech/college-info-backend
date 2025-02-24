@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 167,
+            "activePatchIndex": 168,
             "patches": [
                 {
                     "date": 1726568467190,
@@ -676,6 +676,10 @@
                 {
                     "date": 1740388048508,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -120,9 +120,9 @@\n \n class EventGallery(models.Model):\n     event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name='image')\n     is_featured_image = models.BooleanField(default=False)\n-    image = models.ImageField(upload_to='event_images/',null=True,blank=True)\n+    images = models.ImageField(upload_to='event_images/',null=True,blank=True)\n     \n     created_date_time = models.DateTimeField(auto_now_add=True, null=True, blank=True)\n     created_date = models.DateField(auto_now_add=True, null=True, blank=True)\n     updated_date = models.DateTimeField(auto_now=True, null=True, blank=True)\n"
+                },
+                {
+                    "date": 1740390103269,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -127,9 +127,9 @@\n     created_date = models.DateField(auto_now_add=True, null=True, blank=True)\n     updated_date = models.DateTimeField(auto_now=True, null=True, blank=True)\n     \n     def __str__(self):\n-        return f\"{self.image.url} - {'Featured' if self.is_featured_image else 'Standard'}\"\n+        return f\"{self.images.url} - {'Featured' if self.is_featured_image else 'Standard'}\"\n     \n     class Meta:\n         permissions = [\n             (\"manage_eventgallery\", \"Manage Event Gallery\"),\n"
                 }
             ],
             "date": 1726568467190,

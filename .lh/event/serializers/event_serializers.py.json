@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 35,
+            "activePatchIndex": 37,
             "patches": [
                 {
                     "date": 1733477390024,
@@ -148,6 +148,14 @@
                 {
                     "date": 1740389464825,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n # Serializer for EventGallery\n class EventGallerySerializer(serializers.ModelSerializer):\n     class Meta:\n         model = EventGallery\n-        fields = ['id', 'image', 'is_featured_image', 'created_date_time', 'created_date', 'updated_date']\n+        fields = ['id', 'images', 'is_featured_image', 'created_date_time', 'created_date', 'updated_date']\n \n # Serializer for listing event details (basic view)\n class EventListSerializers(serializers.ModelSerializer):\n     # Nested fields for related models (full object details)\n"
+                },
+                {
+                    "date": 1740390127444,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -133,9 +133,9 @@\n         event.organizer.set(organizer_ids)\n \n         # Save images in EventGallery\n         for image_file in images_data:\n-            EventGallery.objects.create(event=event, image=image_file)\n+            EventGallery.objects.create(event=event, images=image_file)\n \n         return event\n \n     @transaction.atomic\n"
+                },
+                {
+                    "date": 1740390137835,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -163,7 +163,7 @@\n             instance.organizer.set(organizer_ids)\n \n         # Save new images in EventGallery\n         for image_file in images_data:\n-            EventGallery.objects.create(event=instance, image=image_file)\n+            EventGallery.objects.create(event=instance, s=image_file)\n \n         return instance\n\\ No newline at end of file\n"
                 }
             ],
             "date": 1733477390024,

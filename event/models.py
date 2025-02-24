@@ -128,7 +128,7 @@ class EventGallery(models.Model):
     updated_date = models.DateTimeField(auto_now=True, null=True, blank=True)
     
     def __str__(self):
-        return f"{self.image.url} - {'Featured' if self.is_featured_image else 'Standard'}"
+        return f"{self.images.url} - {'Featured' if self.is_featured_image else 'Standard'}"
     
     class Meta:
         permissions = [
