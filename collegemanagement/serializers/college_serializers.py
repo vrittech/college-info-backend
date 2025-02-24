@@ -96,15 +96,15 @@ class CollegeRetrieveSerializers(serializers.ModelSerializer):
 # Serializer for College model
 class CollegeWriteSerializers(serializers.ModelSerializer):
     # ForeignKey fields
-    district = serializers.PrimaryKeyRelatedField(queryset=District.objects.all())
-    affiliated = serializers.PrimaryKeyRelatedField(queryset=Affiliation.objects.all())
-    college_type = serializers.PrimaryKeyRelatedField(queryset=CollegeType.objects.all())
-    step_counter = serializers.PrimaryKeyRelatedField(queryset=FormStepProgress.objects.all(), required=False, allow_null=True)
+    # district = serializers.PrimaryKeyRelatedField(queryset=District.objects.all())
+    # affiliated = serializers.PrimaryKeyRelatedField(queryset=Affiliation.objects.all())
+    # college_type = serializers.PrimaryKeyRelatedField(queryset=CollegeType.objects.all())
+    # step_counter = serializers.PrimaryKeyRelatedField(queryset=FormStepProgress.objects.all(), required=False, allow_null=True)
 
-    # ManyToMany fields
-    discipline = serializers.PrimaryKeyRelatedField(queryset=Discipline.objects.all(), many=True)
-    # social_media = SocialMediaSerializer(many=True, required=False)
-    facilities = serializers.PrimaryKeyRelatedField(queryset=Facility.objects.all(), many=True, required=False)
+    # # ManyToMany fields
+    # discipline = serializers.PrimaryKeyRelatedField(queryset=Discipline.objects.all(), many=True)
+    # # social_media = SocialMediaSerializer(many=True, required=False)
+    # # facilities = serializers.PrimaryKeyRelatedField(queryset=Facility.objects.all(), many=True, required=False)
     
     # def to_internal_value(self, data):
     #     """Converts stringified social media JSON into a list before validation."""
@@ -122,12 +122,12 @@ class CollegeWriteSerializers(serializers.ModelSerializer):
 
         # Extract ManyToMany relationships from the request
         discipline_ids = request.data.get("discipline", [])
-        social_media_data = request.data.get("social_media", None) 
+        # social_media_data = request.data.get("social_media", None) 
         facilities_ids = request.data.get("facilities", [])
 
         # Remove ManyToMany fields from validated_data
         validated_data.pop("discipline", None)
-        validated_data.pop("social_media", None)
+        # validated_data.pop("social_media", None)
         validated_data.pop("facilities", None)
 
         # Create College instance
