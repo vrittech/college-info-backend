@@ -63,8 +63,13 @@ class CoursesAndFeesRetrieveSerializers(serializers.ModelSerializer):
         fields = '__all__'
 
 class CoursesAndFeesWriteSerializers(serializers.ModelSerializer):
-    college = CollegeSerializers(read_only=True)
-    course = CourseSerializers(read_only=True)
     class Meta:
         model = CoursesAndFees
         fields = '__all__'
+        
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        # Replace the default field (usually an id) with the full nested object data.
+        representation['college'] = CollegeSerializers(instance.college).data
+        representation['course'] = CourseSerializers(instance.course).data
+        return representation
