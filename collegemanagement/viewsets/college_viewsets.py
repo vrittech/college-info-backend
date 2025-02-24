@@ -19,7 +19,7 @@ from accounts.models import CustomUser as User
 class collegeViewsets(viewsets.ModelViewSet):
     serializer_class = CollegeListSerializers
     # permission_classes = [collegemanagementPermission]
-    # permission_classes = [DynamicModelPermission]
+    permission_classes = [DynamicModelPermission]
     # authentication_classes = [JWTAuthentication]
     pagination_class = MyPageNumberPagination
     lookup_field = "slug"
@@ -80,7 +80,7 @@ class collegeViewsets(viewsets.ModelViewSet):
 
         return Response(logos, status=200)
     
-    @action(detail=False, methods=['post'], name="college_creation", url_path="college-creation")
+    @action(detail=False, methods=['post'], name="college_creation", url_path="college-creation",permission_classes=[DynamicModelPermission])
     def college_creation(self, request, *args, **kwargs):
         """
         Authenticate user from access token in payload if not in headers.

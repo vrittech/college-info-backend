@@ -14,20 +14,20 @@ class EventCategorySerializer(serializers.ModelSerializer):
 class EventOrganizerSerializer(serializers.ModelSerializer):
     class Meta:
         model = EventOrganizer
-        fields = ['id', 'name', 'image', 'link', 'is_show', 'created_date_time', 'created_date', 'updated_date']
+        fields = '__all__'
 
 # Serializer for EventGallery
 class EventGallerySerializer(serializers.ModelSerializer):
     class Meta:
         model = EventGallery
-        fields = ['id', 'images', 'is_featured_image', 'created_date_time', 'created_date', 'updated_date']
+        fields = '__all__'
 
 # Serializer for listing event details (basic view)
 class EventListSerializers(serializers.ModelSerializer):
     # Nested fields for related models (full object details)
     category = EventCategorySerializer(many=True,read_only=True)  # Full details of categories
     organizer = EventOrganizerSerializer(many=True,read_only=True)  # Full details of organizers
-    images = EventGallerySerializer(many=True,read_only=True)  # Full details of gallery images
+    image = EventGallerySerializer(many=True,read_only=True)  # Full details of gallery images
     
     class Meta:
         model = Event
@@ -38,7 +38,7 @@ class EventListSerializers(serializers.ModelSerializer):
 class EventRetrieveSerializers(serializers.ModelSerializer):
     category = EventCategorySerializer(many=True,read_only=True)  # Full details of categories
     organizer = EventOrganizerSerializer(many=True,read_only=True)  # Full details of organizers
-    images = EventGallerySerializer(many=True,read_only=True)  # Full details of gallery images
+    image = EventGallerySerializer(many=True,read_only=True)  # Full details of gallery images
     class Meta:
         model = Event
         fields = '__all__'
@@ -134,7 +134,7 @@ class EventWriteSerializers(serializers.ModelSerializer):
 
         # Save images in EventGallery
         for image_file in images_data:
-            EventGallery.objects.create(event=event, images=image_file)
+            EventGallery.objects.create(event=event, image=image_file)
 
         return event
 
@@ -164,6 +164,6 @@ class EventWriteSerializers(serializers.ModelSerializer):
 
         # Save new images in EventGallery
         for image_file in images_data:
-            EventGallery.objects.create(event=instance, images=image_file)
+            EventGallery.objects.create(event=instance, image=image_file)
 
         return instance

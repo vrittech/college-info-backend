@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 37,
+            "activePatchIndex": 44,
             "patches": [
                 {
                     "date": 1733477390024,
@@ -156,6 +156,34 @@
                 {
                     "date": 1740390137835,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -163,7 +163,7 @@\n             instance.organizer.set(organizer_ids)\n \n         # Save new images in EventGallery\n         for image_file in images_data:\n-            EventGallery.objects.create(event=instance, image=image_file)\n+            EventGallery.objects.create(event=instance, s=image_file)\n \n         return instance\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1740396631381,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,9 +13,9 @@\n # Serializer for EventOrganizer\n class EventOrganizerSerializer(serializers.ModelSerializer):\n     class Meta:\n         model = EventOrganizer\n-        fields = ['id', 'name', 'image', 'link', 'is_show', 'created_date_time', 'created_date', 'updated_date']\n+        fields = __\n \n # Serializer for EventGallery\n class EventGallerySerializer(serializers.ModelSerializer):\n     class Meta:\n@@ -163,7 +163,7 @@\n             instance.organizer.set(organizer_ids)\n \n         # Save new images in EventGallery\n         for image_file in images_data:\n-            EventGallery.objects.create(event=instance, s=image_file)\n+            EventGallery.objects.create(event=instance, images=image_file)\n \n         return instance\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1740396640355,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,15 +13,15 @@\n # Serializer for EventOrganizer\n class EventOrganizerSerializer(serializers.ModelSerializer):\n     class Meta:\n         model = EventOrganizer\n-        fields = __\n+        fields = '__all__'\n \n # Serializer for EventGallery\n class EventGallerySerializer(serializers.ModelSerializer):\n     class Meta:\n         model = EventGallery\n-        fields = ['id', 'images', 'is_featured_image', 'created_date_time', 'created_date', 'updated_date']\n+        fields = \n \n # Serializer for listing event details (basic view)\n class EventListSerializers(serializers.ModelSerializer):\n     # Nested fields for related models (full object details)\n"
+                },
+                {
+                    "date": 1740396899872,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n # Serializer for EventGallery\n class EventGallerySerializer(serializers.ModelSerializer):\n     class Meta:\n         model = EventGallery\n-        fields = \n+        fields = '__all__'\n \n # Serializer for listing event details (basic view)\n class EventListSerializers(serializers.ModelSerializer):\n     # Nested fields for related models (full object details)\n@@ -37,9 +37,9 @@\n # Serializer for retrieving complete event details (detailed view)\n class EventRetrieveSerializers(serializers.ModelSerializer):\n     category = EventCategorySerializer(many=True,read_only=True)  # Full details of categories\n     organizer = EventOrganizerSerializer(many=True,read_only=True)  # Full details of organizers\n-    images = EventGallerySerializer(many=True,read_only=True)  # Full details of gallery images\n+    image = EventGallerySerializer(many=True,read_only=True)  # Full details of gallery images\n     class Meta:\n         model = Event\n         fields = '__all__'\n \n"
+                },
+                {
+                    "date": 1740396923185,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -26,9 +26,9 @@\n class EventListSerializers(serializers.ModelSerializer):\n     # Nested fields for related models (full object details)\n     category = EventCategorySerializer(many=True,read_only=True)  # Full details of categories\n     organizer = EventOrganizerSerializer(many=True,read_only=True)  # Full details of organizers\n-    images = EventGallerySerializer(many=True,read_only=True)  # Full details of gallery images\n+    image = EventGallerySerializer(many=True,read_only=True)  # Full details of gallery images\n     \n     class Meta:\n         model = Event\n         fields = '__all__'\n@@ -122,9 +122,9 @@\n         category_ids = validated_data.pop(\"category\", [])\n         organizer_ids = validated_data.pop(\"organizer\", [])\n \n         # Extract multiple images from `images[0]`, `images[1]`, ...\n-        images_data = [file for key, file in request.FILES.items() if key.startswith(\"images[\")]\n+        images_data = [file for key, file in request.FILES.items() if key.startswith(\"image[\")]\n \n         # Create the Event instance\n         event = super().create(validated_data)\n \n"
+                },
+                {
+                    "date": 1740396935243,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -122,9 +122,9 @@\n         category_ids = validated_data.pop(\"category\", [])\n         organizer_ids = validated_data.pop(\"organizer\", [])\n \n         # Extract multiple images from `images[0]`, `images[1]`, ...\n-        images_data = [file for key, file in request.FILES.items() if key.startswith(\"image[\")]\n+        images_data = [file for key, file in request.FILES.items() if key.startswith(\"images[\")]\n \n         # Create the Event instance\n         event = super().create(validated_data)\n \n"
+                },
+                {
+                    "date": 1740396948691,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -133,9 +133,9 @@\n         event.organizer.set(organizer_ids)\n \n         # Save images in EventGallery\n         for image_file in images_data:\n-            EventGallery.objects.create(event=event, images=image_file)\n+            EventGallery.objects.create(event=event, image=image_file)\n \n         return event\n \n     @transaction.atomic\n@@ -150,9 +150,9 @@\n         category_ids = validated_data.pop(\"category\", None)\n         organizer_ids = validated_data.pop(\"organizer\", None)\n \n         # Extract multiple images from `images[0]`, `images[1]`, ...\n-        images_data = [file for key, file in request.FILES.items() if key.startswith(\"images[\")]\n+        images_data = [file for key, file in request.FILES.items() if key.startswith(\"image[\")]\n \n         # Update the event instance\n         instance = super().update(instance, validated_data)\n \n"
+                },
+                {
+                    "date": 1740397059201,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -150,9 +150,9 @@\n         category_ids = validated_data.pop(\"category\", None)\n         organizer_ids = validated_data.pop(\"organizer\", None)\n \n         # Extract multiple images from `images[0]`, `images[1]`, ...\n-        images_data = [file for key, file in request.FILES.items() if key.startswith(\"image[\")]\n+        images_data = [file for key, file in request.FILES.items() if key.startswith(\"images[\")]\n \n         # Update the event instance\n         instance = super().update(instance, validated_data)\n \n@@ -163,7 +163,7 @@\n             instance.organizer.set(organizer_ids)\n \n         # Save new images in EventGallery\n         for image_file in images_data:\n-            EventGallery.objects.create(event=instance, images=image_file)\n+            EventGallery.objects.create(event=instance, image=image_file)\n \n         return instance\n\\ No newline at end of file\n"
                 }
             ],
             "date": 1733477390024,

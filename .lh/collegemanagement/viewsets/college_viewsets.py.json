@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 103,
+            "activePatchIndex": 107,
             "patches": [
                 {
                     "date": 1733718920520,
@@ -420,6 +420,22 @@
                 {
                     "date": 1740392202077,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,9 +18,9 @@\n \n class collegeViewsets(viewsets.ModelViewSet):\n     serializer_class = CollegeListSerializers\n     # permission_classes = [collegemanagementPermission]\n-    permission_classes = [DynamicModelPermission]\n+    # permission_classes = [DynamicModelPermission]\n     # authentication_classes = [JWTAuthentication]\n     pagination_class = MyPageNumberPagination\n     lookup_field = \"slug\"\n     queryset = College.objects.all().order_by('-id')\n"
+                },
+                {
+                    "date": 1740393577799,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -113,9 +113,9 @@\n         # ✅ **Force Refresh User Permissions (Fixes Permission Cache Issue)**\n         request.user = User.objects.get(id=request.user.id)\n \n         # ✅ **Check if user has 'add_college' permission**\n-        if not request.user.has_perm(\"collegemanagement.add_college\"):  \n+        if not request.user.has_perm(\"college.add_college\"):  \n             return Response(\n                 {\"error\": \"You do not have permission to add a college.\"},\n                 status=status.HTTP_403_FORBIDDEN\n             )\n"
+                },
+                {
+                    "date": 1740393846548,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -113,9 +113,9 @@\n         # ✅ **Force Refresh User Permissions (Fixes Permission Cache Issue)**\n         request.user = User.objects.get(id=request.user.id)\n \n         # ✅ **Check if user has 'add_college' permission**\n-        if not request.user.has_perm(\"college.add_college\"):  \n+        if not request.user.has_perm(\"collegemanagement.change_college\"):  \n             return Response(\n                 {\"error\": \"You do not have permission to add a college.\"},\n                 status=status.HTTP_403_FORBIDDEN\n             )\n"
+                },
+                {
+                    "date": 1740394138883,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,9 +18,9 @@\n \n class collegeViewsets(viewsets.ModelViewSet):\n     serializer_class = CollegeListSerializers\n     # permission_classes = [collegemanagementPermission]\n-    # permission_classes = [DynamicModelPermission]\n+    permission_classes = [DynamicModelPermission]\n     # authentication_classes = [JWTAuthentication]\n     pagination_class = MyPageNumberPagination\n     lookup_field = \"slug\"\n     queryset = College.objects.all().order_by('-id')\n@@ -113,9 +113,9 @@\n         # ✅ **Force Refresh User Permissions (Fixes Permission Cache Issue)**\n         request.user = User.objects.get(id=request.user.id)\n \n         # ✅ **Check if user has 'add_college' permission**\n-        if not request.user.has_perm(\"collegemanagement.change_college\"):  \n+        if not request.user.has_perm(\"collegemanagement.add_college\"):  \n             return Response(\n                 {\"error\": \"You do not have permission to add a college.\"},\n                 status=status.HTTP_403_FORBIDDEN\n             )\n"
+                },
+                {
+                    "date": 1740394288712,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -79,9 +79,9 @@\n             return Response({\"message\": \"No display images available.\"}, status=404)\n \n         return Response(logos, status=200)\n     \n-    @action(detail=False, methods=['post'], name=\"college_creation\", url_path=\"college-creation\")\n+    @action(detail=False, methods=['post'], name=\"college_creation\", url_path=\"college-creation\",permission_classes)\n     def college_creation(self, request, *args, **kwargs):\n         \"\"\"\n         Authenticate user from access token in payload if not in headers.\n         Ensure the user has permission to add a college.\n"
                 }
             ],
             "date": 1733718920520,
