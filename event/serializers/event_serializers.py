@@ -20,14 +20,14 @@ class EventOrganizerSerializer(serializers.ModelSerializer):
 class EventGallerySerializer(serializers.ModelSerializer):
     class Meta:
         model = EventGallery
-        fields = ['id', 'image', 'is_featured_image', 'created_date_time', 'created_date', 'updated_date']
+        fields = ['id', 'images', 'is_featured_image', 'created_date_time', 'created_date', 'updated_date']
 
 # Serializer for listing event details (basic view)
 class EventListSerializers(serializers.ModelSerializer):
     # Nested fields for related models (full object details)
     category = EventCategorySerializer(many=True,read_only=True)  # Full details of categories
     organizer = EventOrganizerSerializer(many=True,read_only=True)  # Full details of organizers
-    image = EventGallerySerializer(many=True,read_only=True)  # Full details of gallery images
+    images = EventGallerySerializer(many=True,read_only=True)  # Full details of gallery images
     
     class Meta:
         model = Event
@@ -38,7 +38,7 @@ class EventListSerializers(serializers.ModelSerializer):
 class EventRetrieveSerializers(serializers.ModelSerializer):
     category = EventCategorySerializer(many=True,read_only=True)  # Full details of categories
     organizer = EventOrganizerSerializer(many=True,read_only=True)  # Full details of organizers
-    image = EventGallerySerializer(many=True,read_only=True)  # Full details of gallery images
+    images = EventGallerySerializer(many=True,read_only=True)  # Full details of gallery images
     class Meta:
         model = Event
         fields = '__all__'

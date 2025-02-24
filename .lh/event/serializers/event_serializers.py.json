@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 31,
+            "activePatchIndex": 35,
             "patches": [
                 {
                     "date": 1733477390024,
@@ -132,6 +132,22 @@
                 {
                     "date": 1739085439984,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -44,12 +44,14 @@\n         fields = '__all__'\n \n \n \n+import ast\n+\n def str_to_list(data, value_to_convert):\n     \"\"\"\n     Converts a string representation of a list into an actual list if necessary.\n-    Ensures that single values are also wrapped into a list.\n+    Ensures that single values or comma-separated values are correctly converted into lists of integers.\n     \"\"\"\n     try:\n         mutable_data = data.dict()  # Convert QueryDict to standard dict if necessary\n     except Exception:\n@@ -59,9 +61,19 @@\n \n     if isinstance(value_to_convert_data, list):\n         return mutable_data  # If already a list, return unchanged\n \n-    # If it's a single item, wrap it in a list\n+    # If it's a comma-separated string, convert it to a list of integers\n+    if isinstance(value_to_convert_data, str):\n+        if ',' in value_to_convert_data:\n+            # Split the string by commas, strip spaces, and convert each part to an integer\n+            mutable_data[value_to_convert] = [int(x.strip()) for x in value_to_convert_data.split(',')]\n+        else:\n+            # If it's a single value, convert it to a list of one integer\n+            mutable_data[value_to_convert] = [int(value_to_convert_data.strip())]\n+        return mutable_data\n+\n+    # If it's a single item (not a list or string), wrap it in a list\n     if value_to_convert_data and not isinstance(value_to_convert_data, list):\n         mutable_data[value_to_convert] = [value_to_convert_data]\n         return mutable_data\n \n@@ -72,8 +84,9 @@\n     except ValueError as e:\n         raise serializers.ValidationError({f'{value_to_convert}': str(e)}) from e\n \n \n+\n class EventWriteSerializers(serializers.ModelSerializer):\n     \"\"\"\n     Serializer for handling event creation with multiple images.\n     Uses `str_to_list()` to convert `category` and `organizer` from string to list.\n"
+                },
+                {
+                    "date": 1740389444500,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -26,9 +26,9 @@\n class EventListSerializers(serializers.ModelSerializer):\n     # Nested fields for related models (full object details)\n     category = EventCategorySerializer(many=True,read_only=True)  # Full details of categories\n     organizer = EventOrganizerSerializer(many=True,read_only=True)  # Full details of organizers\n-    image = EventGallerySerializer(many=True,read_only=True)  # Full details of gallery images\n+    images = EventGallerySerializer(many=True,read_only=True)  # Full details of gallery images\n     \n     class Meta:\n         model = Event\n         fields = '__all__'\n"
+                },
+                {
+                    "date": 1740389450636,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,9 +13,9 @@\n # Serializer for EventOrganizer\n class EventOrganizerSerializer(serializers.ModelSerializer):\n     class Meta:\n         model = EventOrganizer\n-        fields = ['id', 'name', 'image', 'link', 'is_show', 'created_date_time', 'created_date', 'updated_date']\n+        fields = ['id', 'name', 'images', 'link', 'is_show', 'created_date_time', 'created_date', 'updated_date']\n \n # Serializer for EventGallery\n class EventGallerySerializer(serializers.ModelSerializer):\n     class Meta:\n@@ -37,9 +37,9 @@\n # Serializer for retrieving complete event details (detailed view)\n class EventRetrieveSerializers(serializers.ModelSerializer):\n     category = EventCategorySerializer(many=True,read_only=True)  # Full details of categories\n     organizer = EventOrganizerSerializer(many=True,read_only=True)  # Full details of organizers\n-    image = EventGallerySerializer(many=True,read_only=True)  # Full details of gallery images\n+    images = EventGallerySerializer(many=True,read_only=True)  # Full details of gallery images\n     class Meta:\n         model = Event\n         fields = '__all__'\n \n"
+                },
+                {
+                    "date": 1740389457193,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,9 +13,9 @@\n # Serializer for EventOrganizer\n class EventOrganizerSerializer(serializers.ModelSerializer):\n     class Meta:\n         model = EventOrganizer\n-        fields = ['id', 'name', 'images', 'link', 'is_show', 'created_date_time', 'created_date', 'updated_date']\n+        fields = ['id', 'name', 'image', 'link', 'is_show', 'created_date_time', 'created_date', 'updated_date']\n \n # Serializer for EventGallery\n class EventGallerySerializer(serializers.ModelSerializer):\n     class Meta:\n"
+                },
+                {
+                    "date": 1740389464825,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n # Serializer for EventGallery\n class EventGallerySerializer(serializers.ModelSerializer):\n     class Meta:\n         model = EventGallery\n-        fields = ['id', 'image', 'is_featured_image', 'created_date_time', 'created_date', 'updated_date']\n+        fields = ['id', 'images', 'is_featured_image', 'created_date_time', 'created_date', 'updated_date']\n \n # Serializer for listing event details (basic view)\n class EventListSerializers(serializers.ModelSerializer):\n     # Nested fields for related models (full object details)\n"
                 }
             ],
             "date": 1733477390024,
