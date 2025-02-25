@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 110,
+            "activePatchIndex": 116,
             "patches": [
                 {
                     "date": 1733718920520,
@@ -448,6 +448,30 @@
                 {
                     "date": 1740458442549,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -84,9 +84,9 @@\n         detail=False,\n         methods=['post'],\n         name=\"college_creation\",\n         url_path=\"college-creation\",\n-        permission_classes=[DynamicModelPermission] \n+        permission_classes=[collegemanagementPermission] \n     )\n     def college_creation(self, request, *args, **kwargs):\n         \"\"\"\n         Authenticate user from access token in payload if not in headers.\n"
+                },
+                {
+                    "date": 1740459932381,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -95,8 +95,9 @@\n         \"\"\"\n         # If the user is not already authenticated via headers, check token in payload.\n         if not request.user.is_authenticated:\n             access_token = request.data.get(\"accessToken\")\n+            print\n             if not access_token:\n                 return Response(\n                     {\"error\": \"Authentication credentials were not provided! Access token required in payload.\"},\n                     status=status.HTTP_401_UNAUTHORIZED\n"
+                },
+                {
+                    "date": 1740459937926,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -95,9 +95,9 @@\n         \"\"\"\n         # If the user is not already authenticated via headers, check token in payload.\n         if not request.user.is_authenticated:\n             access_token = request.data.get(\"accessToken\")\n-            print\n+            print(access_token,\"\")\n             if not access_token:\n                 return Response(\n                     {\"error\": \"Authentication credentials were not provided! Access token required in payload.\"},\n                     status=status.HTTP_401_UNAUTHORIZED\n"
+                },
+                {
+                    "date": 1740459943951,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -95,9 +95,9 @@\n         \"\"\"\n         # If the user is not already authenticated via headers, check token in payload.\n         if not request.user.is_authenticated:\n             access_token = request.data.get(\"accessToken\")\n-            print(access_token,\"\")\n+            print(access_token,\"qqqqqqqqqqqqqqqqq\")\n             if not access_token:\n                 return Response(\n                     {\"error\": \"Authentication credentials were not provided! Access token required in payload.\"},\n                     status=status.HTTP_401_UNAUTHORIZED\n"
+                },
+                {
+                    "date": 1740460184791,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -95,9 +95,8 @@\n         \"\"\"\n         # If the user is not already authenticated via headers, check token in payload.\n         if not request.user.is_authenticated:\n             access_token = request.data.get(\"accessToken\")\n-            print(access_token,\"qqqqqqqqqqqqqqqqq\")\n             if not access_token:\n                 return Response(\n                     {\"error\": \"Authentication credentials were not provided! Access token required in payload.\"},\n                     status=status.HTTP_401_UNAUTHORIZED\n"
+                },
+                {
+                    "date": 1740460216505,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -87,8 +87,9 @@\n         url_path=\"college-creation\",\n         permission_classes=[collegemanagementPermission] \n     )\n     def college_creation(self, request, *args, **kwargs):\n+        print()\n         \"\"\"\n         Authenticate user from access token in payload if not in headers.\n         Ensure the user is either in the \"College Admin\" group or has the\n         'collegemanagement.add_college' permission.\n"
+                },
+                {
+                    "date": 1740460224401,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -87,9 +87,9 @@\n         url_path=\"college-creation\",\n         permission_classes=[collegemanagementPermission] \n     )\n     def college_creation(self, request, *args, **kwargs):\n-        print()\n+        print(request.data.get(\"accessToken\"),\"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\")\n         \"\"\"\n         Authenticate user from access token in payload if not in headers.\n         Ensure the user is either in the \"College Admin\" group or has the\n         'collegemanagement.add_college' permission.\n"
                 }
             ],
             "date": 1733718920520,

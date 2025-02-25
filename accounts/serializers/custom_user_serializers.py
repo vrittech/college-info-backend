@@ -224,9 +224,14 @@ class CustomUserWriteSerializersCollegeAdmin(serializers.ModelSerializer):
         attrs = super().validate(attrs)
 
         # ✅ Ensure "College Admin" group exists
-        college_admin_group, created = Group.objects.get_or_create(name="College Admin")
+        g_name = "College Admin"
+        print("Group name:", g_name,Group.objects.filter(name=g_name).exists())
+        
+        college_admin_group, created = Group.objects.get_or_create(name=g_name) # Get or create group   "
+        print(college_admin_group,"@@@@@###################")
 
         # ✅ Always assign permissions (even if the group already exists)
+        #TODO: Fix this as this is not assign the group second time
         permissions_to_assign = [
             "add_request_submission", "change_request_submission", "view_request_submission",
             "add_college", "change_college", "view_college",
