@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 128,
+            "activePatchIndex": 129,
             "patches": [
                 {
                     "date": 1733718920520,
@@ -520,6 +520,10 @@
                 {
                     "date": 1740464922840,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -144,9 +144,9 @@\n         else:\n             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)\n \n \n-    #TODO \n+    #TODO add a permission according to the permission of college!!!!\n     @action(detail=False, methods=['get'], name=\"calculate_completion_percentage\", url_path=\"completion-percentage\",permission_classes=[AllowAny])\n     def calculate_completion_percentage(self, request, *args, **kwargs):\n         \"\"\"\n         Calculate the profile completion percentage, but restrict access only to assigned college admins.\n"
+                },
+                {
+                    "date": 1740464949097,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -151,9 +151,8 @@\n         \"\"\"\n         Calculate the profile completion percentage, but restrict access only to assigned college admins.\n         \"\"\"\n         user = request.user\n-        print(user,\"@@@@@@@@!!!!!!!!!!!!!@@@@@@@line 154 in colleghe viewsets\")\n \n         # Check if user has a related college (assuming a OneToOne or ForeignKey relationship)\n         if not hasattr(user, \"college\") or not user.college:\n             return Response({\"error\": \"You do not have permission to view this data.\"}, status=status.HTTP_403_FORBIDDEN)\n"
                 }
             ],
             "date": 1733718920520,

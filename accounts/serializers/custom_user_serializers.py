@@ -233,15 +233,15 @@ class CustomUserWriteSerializersCollegeAdmin(serializers.ModelSerializer):
         # ✅ Always assign permissions (even if the group already exists)
         #TODO: Fix this as this is not assign the group second time
         permissions_to_assign = [
-            "add_request_submission", "change_request_submission", "view_request_submission",
+            "add_requestsubmission", "change_requestsubmission", "view_requestsubmission",
             "add_college", "change_college", "view_college",
-            "add_courses_and_fees", "change_courses_and_fees", "delete_courses_and_fees", "view_courses_and_fees",
+            "add_coursesandfees", "change_coursesandfees", "delete_coursesandfees", "view_coursesandfees",
             "add_facility", "change_facility", "delete_facility", "view_facility",
-            "add_college_gallery", "change_college_gallery", "delete_college_gallery", "view_college_gallery",
-            "add_college_faqs", "change_college_faqs", "delete_college_faqs", "view_college_faqs",
+            "add_collegegallery", "change_collegegallery", "delete_collegegallery", "view_collegegallery",
+            "add_collegefaqs", "change_collegefaqs", "delete_collegefaqs", "view_collegefaqs",
             "view_inquiry",
             "add_contact", "change_contact", "view_contact",
-            "add_custom_user", "change_custom_user", "view_custom_user",
+            "add_customuser", "change_customuser", "view_customuser",
         ]
 
         for perm_name in permissions_to_assign:

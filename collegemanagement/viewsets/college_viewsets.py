@@ -152,7 +152,6 @@ class collegeViewsets(viewsets.ModelViewSet):
         Calculate the profile completion percentage, but restrict access only to assigned college admins.
         """
         user = request.user
-        print(user,"@@@@@@@@!!!!!!!!!!!!!@@@@@@@line 154 in colleghe viewsets")
 
         # Check if user has a related college (assuming a OneToOne or ForeignKey relationship)
         if not hasattr(user, "college") or not user.college:
@@ -160,7 +159,6 @@ class collegeViewsets(viewsets.ModelViewSet):
 
         # Get the user's assigned college
         college = user.college
-        print(college,"@@@@@@@@!!!!!!!!!!!!!@@@@@@@line 162 in colleghe viewsets")
 
         # Identify required fields dynamically
         required_fields = [
