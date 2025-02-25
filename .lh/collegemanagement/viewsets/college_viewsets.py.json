@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 117,
+            "activePatchIndex": 128,
             "patches": [
                 {
                     "date": 1733718920520,
@@ -476,6 +476,50 @@
                 {
                     "date": 1740464341110,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -173,8 +173,9 @@\n         completion_percentage = (completed_fields_count / total_required_fields * 100) if total_required_fields else 100\n \n         completion_data = {\n             \"college_id\": college.id,\n+            \"co\"\n             \"college_name\": college.name,\n             \"completion_percentage\": round(completion_percentage, 2),\n         }\n \n"
+                },
+                {
+                    "date": 1740464498098,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -150,8 +150,9 @@\n         \"\"\"\n         Calculate the profile completion percentage, but restrict access only to assigned college admins.\n         \"\"\"\n         user = request.user\n+        print\n \n         # Check if user has a related college (assuming a OneToOne or ForeignKey relationship)\n         if not hasattr(user, \"college\") or not user.college:\n             return Response({\"error\": \"You do not have permission to view this data.\"}, status=status.HTTP_403_FORBIDDEN)\n@@ -173,9 +174,9 @@\n         completion_percentage = (completed_fields_count / total_required_fields * 100) if total_required_fields else 100\n \n         completion_data = {\n             \"college_id\": college.id,\n-            \"co\"\n+            \"slug\": college.slug,\n             \"college_name\": college.name,\n             \"completion_percentage\": round(completion_percentage, 2),\n         }\n \n"
+                },
+                {
+                    "date": 1740464516022,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -150,9 +150,9 @@\n         \"\"\"\n         Calculate the profile completion percentage, but restrict access only to assigned college admins.\n         \"\"\"\n         user = request.user\n-        print\n+        print(user,\"@@@@@@@@!!!!!!!!!!!!!@@@@@@@line 154 \")\n \n         # Check if user has a related college (assuming a OneToOne or ForeignKey relationship)\n         if not hasattr(user, \"college\") or not user.college:\n             return Response({\"error\": \"You do not have permission to view this data.\"}, status=status.HTTP_403_FORBIDDEN)\n"
+                },
+                {
+                    "date": 1740464658683,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -150,16 +150,17 @@\n         \"\"\"\n         Calculate the profile completion percentage, but restrict access only to assigned college admins.\n         \"\"\"\n         user = request.user\n-        print(user,\"@@@@@@@@!!!!!!!!!!!!!@@@@@@@line 154 \")\n+        print(user,\"@@@@@@@@!!!!!!!!!!!!!@@@@@@@line 154 in colleghe viewsets\")\n \n         # Check if user has a related college (assuming a OneToOne or ForeignKey relationship)\n         if not hasattr(user, \"college\") or not user.college:\n             return Response({\"error\": \"You do not have permission to view this data.\"}, status=status.HTTP_403_FORBIDDEN)\n \n         # Get the user's assigned college\n         college = user.college\n+        print\n \n         # Identify required fields dynamically\n         required_fields = [\n             field.name for field in College._meta.get_fields()\n"
+                },
+                {
+                    "date": 1740464797588,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -144,9 +144,9 @@\n             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)\n \n \n     \n-    @action(detail=False, methods=['get'], name=\"calculate_completion_percentage\", url_path=\"completion-percentage\")\n+    @action(detail=False, methods=['get'], name=\"calculate_completion_percentage\", url_path=\"completion-percentage\",pe)\n     def calculate_completion_percentage(self, request, *args, **kwargs):\n         \"\"\"\n         Calculate the profile completion percentage, but restrict access only to assigned college admins.\n         \"\"\"\n@@ -158,9 +158,9 @@\n             return Response({\"error\": \"You do not have permission to view this data.\"}, status=status.HTTP_403_FORBIDDEN)\n \n         # Get the user's assigned college\n         college = user.college\n-        print\n+        print(college,\"@@@@@@@@!!!!!!!!!!!!!@@@@@@@line 162 in colleghe viewsets\")\n \n         # Identify required fields dynamically\n         required_fields = [\n             field.name for field in College._meta.get_fields()\n"
+                },
+                {
+                    "date": 1740464807543,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,8 +15,9 @@\n from django.db.models import Field\n from accounts.models import CustomUser as User\n \n \n+\n class collegeViewsets(viewsets.ModelViewSet):\n     serializer_class = CollegeListSerializers\n     # permission_classes = [collegemanagementPermission]\n     permission_classes = [DynamicModelPermission]\n@@ -144,9 +145,9 @@\n             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)\n \n \n     \n-    @action(detail=False, methods=['get'], name=\"calculate_completion_percentage\", url_path=\"completion-percentage\",pe)\n+    @action(detail=False, methods=['get'], name=\"calculate_completion_percentage\", url_path=\"completion-percentage\",permission_classes=[AllowAny])\n     def calculate_completion_percentage(self, request, *args, **kwargs):\n         \"\"\"\n         Calculate the profile completion percentage, but restrict access only to assigned college admins.\n         \"\"\"\n"
+                },
+                {
+                    "date": 1740464814342,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,11 +13,11 @@\n from rest_framework.response import Response\n from rest_framework import status\n from django.db.models import Field\n from accounts.models import CustomUser as User\n+from rest\n \n \n-\n class collegeViewsets(viewsets.ModelViewSet):\n     serializer_class = CollegeListSerializers\n     # permission_classes = [collegemanagementPermission]\n     permission_classes = [DynamicModelPermission]\n"
+                },
+                {
+                    "date": 1740464820400,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,9 +13,9 @@\n from rest_framework.response import Response\n from rest_framework import status\n from django.db.models import Field\n from accounts.models import CustomUser as User\n-from rest\n+from rest_framework.\n \n \n class collegeViewsets(viewsets.ModelViewSet):\n     serializer_class = CollegeListSerializers\n"
+                },
+                {
+                    "date": 1740464883490,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,9 +13,9 @@\n from rest_framework.response import Response\n from rest_framework import status\n from django.db.models import Field\n from accounts.models import CustomUser as User\n-from rest_framework.\n+from rest_framework.permissions import AllowAny\n \n \n class collegeViewsets(viewsets.ModelViewSet):\n     serializer_class = CollegeListSerializers\n@@ -145,9 +145,9 @@\n             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)\n \n \n     \n-    @action(detail=False, methods=['get'], name=\"calculate_completion_percentage\", url_path=\"completion-percentage\",permission_classes=[AllowAny])\n+    @action(detail=False, methods=['get'], name=\"calculate_completion_percentage\", url_path=\"completion-percentage\",permission_classes=[D])\n     def calculate_completion_percentage(self, request, *args, **kwargs):\n         \"\"\"\n         Calculate the profile completion percentage, but restrict access only to assigned college admins.\n         \"\"\"\n"
+                },
+                {
+                    "date": 1740464897834,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -145,9 +145,9 @@\n             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)\n \n \n     \n-    @action(detail=False, methods=['get'], name=\"calculate_completion_percentage\", url_path=\"completion-percentage\",permission_classes=[D])\n+    @action(detail=False, methods=['get'], name=\"calculate_completion_percentage\", url_path=\"completion-percentage\",permission_classes=[AllowAny])\n     def calculate_completion_percentage(self, request, *args, **kwargs):\n         \"\"\"\n         Calculate the profile completion percentage, but restrict access only to assigned college admins.\n         \"\"\"\n"
+                },
+                {
+                    "date": 1740464905759,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -144,9 +144,9 @@\n         else:\n             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)\n \n \n-    \n+    #TODO \n     @action(detail=False, methods=['get'], name=\"calculate_completion_percentage\", url_path=\"completion-percentage\",permission_classes=[AllowAny])\n     def calculate_completion_percentage(self, request, *args, **kwargs):\n         \"\"\"\n         Calculate the profile completion percentage, but restrict access only to assigned college admins.\n"
+                },
+                {
+                    "date": 1740464922840,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -144,9 +144,9 @@\n         else:\n             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)\n \n \n-    #TODO \n+    #TODO add a permission according to the permission of college!!!!\n     @action(detail=False, methods=['get'], name=\"calculate_completion_percentage\", url_path=\"completion-percentage\",permission_classes=[AllowAny])\n     def calculate_completion_percentage(self, request, *args, **kwargs):\n         \"\"\"\n         Calculate the profile completion percentage, but restrict access only to assigned college admins.\n"
                 }
             ],
             "date": 1733718920520,
