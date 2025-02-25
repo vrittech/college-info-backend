@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 116,
+            "activePatchIndex": 117,
             "patches": [
                 {
                     "date": 1733718920520,
@@ -472,6 +472,10 @@
                 {
                     "date": 1740460224401,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -87,9 +87,9 @@\n         url_path=\"college-creation\",\n         permission_classes=[collegemanagementPermission] \n     )\n     def college_creation(self, request, *args, **kwargs):\n-        print()\n+        print(request.data.get(\"accessToken\"),\"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\")\n         \"\"\"\n         Authenticate user from access token in payload if not in headers.\n         Ensure the user is either in the \"College Admin\" group or has the\n         'collegemanagement.add_college' permission.\n"
+                },
+                {
+                    "date": 1740464341110,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -173,8 +173,9 @@\n         completion_percentage = (completed_fields_count / total_required_fields * 100) if total_required_fields else 100\n \n         completion_data = {\n             \"college_id\": college.id,\n+            \"co\"\n             \"college_name\": college.name,\n             \"completion_percentage\": round(completion_percentage, 2),\n         }\n \n"
                 }
             ],
             "date": 1733718920520,

@@ -174,6 +174,7 @@ class collegeViewsets(viewsets.ModelViewSet):
 
         completion_data = {
             "college_id": college.id,
+            "slug": college.slug,
             "college_name": college.name,
             "completion_percentage": round(completion_percentage, 2),
         }

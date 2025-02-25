@@ -6,6 +6,7 @@ from ..serializers.inquiry_serializers import InquiryListSerializers, InquiryRet
 from ..utilities.importbase import *
 from ..utilities.filter import InquiryFilter
 from mainproj.permissions import DynamicModelPermission
+from rest_framework.permissions import AllowAny
 
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -40,7 +41,7 @@ class inquiryViewsets(viewsets.ModelViewSet):
     # def action_name(self, request, *args, **kwargs):
     #     return super().list(request, *args, **kwargs)
     
-    @action(detail=False, methods=['get'], name="Inquiries by Course", url_path="inquiry/(?P<college_slug>[^/.]+)/inquiries-count")
+    @action(detail=False, methods=['get'], name="Inquiries by Course", url_path="inquiries-count/(?P<college_slug>[^/.]+)",permission_classes=[AllowAny])
     def inquiries_by_course(self, request, college_slug=None, *args, **kwargs):
         # Ensure the college exists
         college = College.objects.filter(slug=college_slug).first()
