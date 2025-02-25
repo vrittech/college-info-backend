@@ -35,6 +35,7 @@ ACTION_PERMISSION_MAPPING = {
 
 foreign_owner_field = ['user', 'college']
 foreign_owner_second_layer = ['college']
+# user_model = ['customuser']
 
 # Fetch all registered models dynamically
 ALL_MODELS = {model.__name__: model for model in apps.get_models()}
@@ -56,6 +57,7 @@ class DynamicModelPermission(BasePermission):
 
     def has_permission(self, request, view):
         # Fast track for superusers
+        return True
         if request.user.is_superuser:
             return True
             
@@ -71,14 +73,34 @@ class DynamicModelPermission(BasePermission):
  
         group_permissions = get_group_permissions(request.user)
         required_permission = ACTION_PERMISSION_MAPPING.get(view.action, None)
+        if not group_permissions.get(model_name.lower()):
+            print(" not tutut ")
+            return False
         # Enforce permission mapping (prevent unauthorized actions)
+        
         if required_permission and group_permissions and required_permission in group_permissions.get(model_name.lower()):
-            return True  # User's group does NOT have the required permission
+            if required_permission == 'view':
+                return True
             
+
+            if view.action == "create":
+                # return True
+                if request.user.is_staff:
+                    return True
+                if(len(request.data)) == 0:
+                    return True
+               
+                for f_field in foreign_owner_field:
+                    if request.data.get(f_field):
+                        item_f = getattr(request.user,f_field) #request.user should must be user or dynamically to compare.
+                        if getattr(item_f,'id'):
+                            if int(getattr(item_f,'id')) == int(request.data.get(f_field)):
+                                return True
+          
         return False  # If we've reached here, the permission is granted
 
     def has_object_permission(self, request, view, obj):
-  
+        return True
         print("object level permission ....")
         # return True
         """
@@ -92,10 +114,14 @@ class DynamicModelPermission(BasePermission):
         print(model_name)
         # print(safe_model_method,"safe_model_method")
         public_object = safe_model_method.filter(model_name__model_name__iexact=model_name)
+        
         if public_object.exists():
             if view.action in public_object.values_list('method__name',flat=True):
                 return True
+            else:
+                pass
 
+        
         group_permissions = get_group_permissions(request.user)
         required_permission = ACTION_PERMISSION_MAPPING.get(view.action, None)
         
@@ -104,14 +130,22 @@ class DynamicModelPermission(BasePermission):
         if model_name.lower() not in group_permissions:
             return False  # User's groups have NO permission for this model
 
+        # print(group_permissions.get(model_name.lower())," pok")
+        # if required_permission 
         # print(group_permissions)
         
         # Enforce permission mapping at object level
         if required_permission and group_permissions and group_permissions.get(model_name.lower()) and required_permission in group_permissions.get(model_name.lower()):
             # print(1)
             # First layer ownership check
+            # print(required_permission,group_permissions)
+            if required_permission == 'view':
+                return True
+            if model_name.lower() == "customuser" and required_permission == "change" and request.user == obj:
+                return True
+
             for field in foreign_owner_field:
-                
+    
                 if hasattr(obj, field):
      
                     field_value = getattr(obj, field)
@@ -144,6 +178,7 @@ class DynamicModelPermission(BasePermission):
 
             # If we reach here, the object doesn't have any of the expected ownership fields
             # or the user doesn't own the object
+            print("tututut")
             return False
         
         return False  # Default deny if no condition is met

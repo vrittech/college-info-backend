@@ -16,6 +16,7 @@ class InformationFilter(django_filters.FilterSet):
     faculty = django_filters.BaseInFilter(field_name="faculty__id", lookup_expr="in")
     information_tagging = django_filters.BaseInFilter(field_name="information_tagging__id", lookup_expr="in")
     information_category = django_filters.BaseInFilter(field_name="information_category__id", lookup_expr="in")
+    information_category_slug = django_filters.BaseInFilter(field_name="information_category__slug", lookup_expr="in")
     
     publish_date = django_filters.DateFromToRangeFilter(field_name="publish_date")
     active_period_start = django_filters.DateFromToRangeFilter(field_name="active_period_start")
@@ -24,5 +25,5 @@ class InformationFilter(django_filters.FilterSet):
     class Meta:
         model = Information
         fields = ['level', 'sublevel', 'course', 'affiliation', 'district', 'college',
-                  'faculty', 'information_tagging', 'information_category',
+                  'faculty', 'information_tagging', 'information_category','information_category_slug',
                   'publish_date', 'active_period_start', 'active_period_end']

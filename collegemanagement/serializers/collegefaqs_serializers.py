@@ -15,3 +15,7 @@ class CollegeFaqsWriteSerializers(serializers.ModelSerializer):
     class Meta:
         model = CollegeFaqs
         fields = '__all__'
+    
+    # def validate(self, attrs):
+    #     # raise Exception("stopped")
+    #     return super().validate(attrs)

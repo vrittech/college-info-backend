@@ -4,11 +4,13 @@ from django_filters.rest_framework import DjangoFilterBackend
 from ..models import CollegeFaqs
 from ..serializers.collegefaqs_serializers import CollegeFaqsListSerializers, CollegeFaqsRetrieveSerializers, CollegeFaqsWriteSerializers
 from ..utilities.importbase import *
+from mainproj.permissions import DynamicModelPermission
+from ..utilities.pagination import MyPageNumberPagination
 
 class collegefaqsViewsets(viewsets.ModelViewSet):
     serializer_class = CollegeFaqsListSerializers
-    permission_classes = [collegemanagementPermission]
-    authentication_classes = [JWTAuthentication]
+    permission_classes = [DynamicModelPermission]
+    # authentication_classes = [JWTAuthentication]
     pagination_class = MyPageNumberPagination
     queryset = CollegeFaqs.objects.all().order_by('-id')
 
@@ -21,8 +23,10 @@ class collegefaqsViewsets(viewsets.ModelViewSet):
     # }
 
     def get_queryset(self):
-        queryset = super().get_queryset()
-        return queryset
+        if self.request.user.college:
+            return super().get_queryset().filter(college = self.request.user.college)
+        
+        return super().get_queryset()
 
     def get_serializer_class(self):
         if self.action in ['create', 'update', 'partial_update']:

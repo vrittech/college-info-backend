@@ -5,6 +5,7 @@ from ..models import InformationCategory
 from ..serializers.informationcategory_serializers import InformationCategoryListSerializers, InformationCategoryRetrieveSerializers, InformationCategoryWriteSerializers
 from ..utilities.importbase import *
 from mainproj.permissions import DynamicModelPermission
+from ..utilities.pagination import MyPageNumberPagination
 
 class informationcategoryViewsets(viewsets.ModelViewSet):
     serializer_class = InformationCategoryListSerializers

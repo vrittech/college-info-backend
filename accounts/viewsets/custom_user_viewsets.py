@@ -30,6 +30,18 @@ class CustomUserViewSet(viewsets.ModelViewSet):
     search_fields = ['position', 'email', 'full_name','first_name','last_name']
     ordering_fields =['position', 'email', 'full_name','first_name','last_name']
 
+
+    def get_queryset(self):
+        if self.request.user.is_superuser:
+            return super().get_queryset()
+        elif self.request.user.is_staff:
+            return super().get_queryset()
+        elif self.request.user.is_authenticated:
+            return super().get_queryset().filter(id=self.request.user.id)
+        else:
+            return CustomUser.objects.none()
+
+
     def get_serializer_class(self):
         if self.action in ['list']:
             return CustomUserReadSerializer
