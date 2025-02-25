@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 4,
+            "activePatchIndex": 8,
             "patches": [
                 {
                     "date": 1739257451204,
@@ -24,6 +24,22 @@
                 {
                     "date": 1739264336527,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,9 +15,9 @@\n def CanManage(request):\n     \"\"\"Check if the user has full manage access\"\"\"\n     return HasPermission(request, COLLEGE_MANAGEMENT_PERMISSIONS[\"manage\"])\n \n-class collegeManagementPermission(BasePermission):\n+class collegemanagementPermission(BasePermission):\n     \"\"\"\n     Permission class for managing college data strictly based on Django permissions.\n     \"\"\"\n \n"
+                },
+                {
+                    "date": 1740458390102,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,24 +20,24 @@\n     \"\"\"\n     Permission class for managing college data strictly based on Django permissions.\n     \"\"\"\n \n-    def has_permission(self, request, view):\n-        if CanManage(request):  # If user has manage permission, grant full access\n-            return True\n+    # def has_permission(self, request, view):\n+    #     if CanManage(request):  # If user has manage permission, grant full access\n+    #         return True\n \n-        if view.action in [\"list\"]:\n-            return True\n+    #     if view.action in [\"list\"]:\n+    #         return True\n         \n-        elif view.action in [\"retrieve\"]:\n-            return True\n+    #     elif view.action in [\"retrieve\"]:\n+    #         return True\n \n-        elif view.action in [\"create\"]:\n-            return HasPermission(request, COLLEGE_MANAGEMENT_PERMISSIONS[\"add\"])\n+    #     elif view.action in [\"create\"]:\n+    #         return HasPermission(request, COLLEGE_MANAGEMENT_PERMISSIONS[\"add\"])\n \n-        elif view.action in [\"update\", \"partial_update\"]:\n-            return HasPermission(request, COLLEGE_MANAGEMENT_PERMISSIONS[\"change\"])\n+    #     elif view.action in [\"update\", \"partial_update\"]:\n+    #         return HasPermission(request, COLLEGE_MANAGEMENT_PERMISSIONS[\"change\"])\n \n-        elif view.action == \"destroy\":\n-            return HasPermission(request, COLLEGE_MANAGEMENT_PERMISSIONS[\"delete\"])\n+    #     elif view.action == \"destroy\":\n+    #         return HasPermission(request, COLLEGE_MANAGEMENT_PERMISSIONS[\"delete\"])\n \n-        return False  # Default deny access\n+    #     return False  # Default deny access\n"
+                },
+                {
+                    "date": 1740458396318,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,8 +18,24 @@\n \n class collegemanagementPermission(BasePermission):\n     \"\"\"\n     Permission class for managing college data strictly based on Django permissions.\n+    \n+    def has_permission(self, request, view):\n+        if not request.user or not request.user.is_authenticated:\n+            return False\n+\n+        # Debug: Log user groups to verify they are loaded correctly.\n+        user_groups = list(request.user.groups.values_list('name', flat=True))\n+        logger.info(\"User groups: %s\", user_groups)\n+        print(\"User groups:\", user_groups)\n+\n+        # Allow if the user is in the \"College Admin\" group.\n+        if request.user.groups.filter(name=\"College Admin\").exists():\n+            return True\n+\n+        # Otherwise, allow if the user has the specific permission.\n+        return request.user.has_perm(\"collegemanagement.add_college\")\n     \"\"\"\n \n     # def has_permission(self, request, view):\n     #     if CanManage(request):  # If user has manage permission, grant full access\n"
+                },
+                {
+                    "date": 1740458404575,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,8 +18,9 @@\n \n class collegemanagementPermission(BasePermission):\n     \"\"\"\n     Permission class for managing college data strictly based on Django permissions.\n+    \"\"\"\n     \n     def has_permission(self, request, view):\n         if not request.user or not request.user.is_authenticated:\n             return False\n@@ -34,9 +35,8 @@\n             return True\n \n         # Otherwise, allow if the user has the specific permission.\n         return request.user.has_perm(\"collegemanagement.add_college\")\n-    \"\"\"\n \n     # def has_permission(self, request, view):\n     #     if CanManage(request):  # If user has manage permission, grant full access\n     #         return True\n"
+                },
+                {
+                    "date": 1740458412191,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -26,9 +26,8 @@\n             return False\n \n         # Debug: Log user groups to verify they are loaded correctly.\n         user_groups = list(request.user.groups.values_list('name', flat=True))\n-        logger.info(\"User groups: %s\", user_groups)\n         print(\"User groups:\", user_groups)\n \n         # Allow if the user is in the \"College Admin\" group.\n         if request.user.groups.filter(name=\"College Admin\").exists():\n"
                 }
             ],
             "date": 1739257451204,

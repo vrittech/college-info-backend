@@ -80,23 +80,28 @@ class collegeViewsets(viewsets.ModelViewSet):
 
         return Response(logos, status=200)
     
-    @action(detail=False, methods=['post'], name="college_creation", url_path="college-creation",permission_classes=[DynamicModelPermission])
+    @action(
+        detail=False,
+        methods=['post'],
+        name="college_creation",
+        url_path="college-creation",
+        permission_classes=[collegemanagementPermission] 
+    )
     def college_creation(self, request, *args, **kwargs):
         """
         Authenticate user from access token in payload if not in headers.
-        Ensure the user has permission to add a college.
+        Ensure the user is either in the "College Admin" group or has the
+        'collegemanagement.add_college' permission.
         """
-        # If the user is not already authenticated via headers, check token in payload
+        # If the user is not already authenticated via headers, check token in payload.
         if not request.user.is_authenticated:
             access_token = request.data.get("accessToken")
-
             if not access_token:
                 return Response(
                     {"error": "Authentication credentials were not provided! Access token required in payload."},
                     status=status.HTTP_401_UNAUTHORIZED
                 )
 
-            # Authenticate user using JWT
             jwt_authenticator = JWTAuthentication()
             try:
                 validated_token = jwt_authenticator.get_validated_token(access_token)
@@ -106,26 +111,27 @@ class collegeViewsets(viewsets.ModelViewSet):
                     {"error": "Invalid or expired access token!"},
                     status=status.HTTP_401_UNAUTHORIZED
                 )
-
-            # Assign the authenticated user to request
+            # Assign the authenticated user to the request.
             request.user = user
 
-        # ✅ **Force Refresh User Permissions (Fixes Permission Cache Issue)**
+        # Force-refresh user instance to update permissions (fix permission cache issues).
         request.user = User.objects.get(id=request.user.id)
 
-        # ✅ **Check if user has 'add_college' permission**
-        if not request.user.has_perm("collegemanagement.add_college"):  
+        # Manual check: Allow the action if the user is in the "College Admin" group
+        # or if they have the "collegemanagement.add_college" permission.
+        if not (request.user.groups.filter(name="College Admin").exists() or 
+                request.user.has_perm("collegemanagement.add_college")):
             return Response(
                 {"error": "You do not have permission to add a college."},
                 status=status.HTTP_403_FORBIDDEN
             )
 
-        # ✅ **Now create the college since the user is authenticated and has permission**
+        # Proceed to create the college.
         serializer = self.get_serializer(data=request.data)
         if serializer.is_valid():
-            college = serializer.save()  # Create the college instance
+            college = serializer.save()  # Create the college instance.
             
-            # Assign the created college to the authenticated user
+            # Optionally assign the created college to the authenticated user.
             request.user.college = college
             request.user.save()
 
