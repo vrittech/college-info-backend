@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 69,
+            "activePatchIndex": 73,
             "patches": [
                 {
                     "date": 1733737051062,
@@ -284,6 +284,22 @@
                 {
                     "date": 1740288094919,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -55,8 +55,9 @@\n     \"event-gallery\": EventGallery,\n     \"event-organizer\": EventOrganizer,\n     \"group\": Group,\n     \"inquiry\": Inquiry,\n+    \"\"\n }\n \n class BulkDelete(APIView):\n     @swagger_auto_schema(\n"
+                },
+                {
+                    "date": 1740651211787,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,9 +23,10 @@\n from superadmindetails.models import SuperAdminDetails\n from accounts.models import Group\n from event.models import Event,EventCategory,EventGallery,EventOrganizer\n from inquiry.models import Inquiry \n-from discipline.models import Discipline        \n+from discipline.models import Discipline    \n+from gallery    \n \n VALID_TYPES = {\n     \"advertisement\": Advertisement,\n     \"affiliation\": Affiliation,\n@@ -55,9 +56,9 @@\n     \"event-gallery\": EventGallery,\n     \"event-organizer\": EventOrganizer,\n     \"group\": Group,\n     \"inquiry\": Inquiry,\n-    \"\"\n+    \"discipline\": Discipline,\n }\n \n class BulkDelete(APIView):\n     @swagger_auto_schema(\n"
+                },
+                {
+                    "date": 1740651222586,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,9 +24,9 @@\n from accounts.models import Group\n from event.models import Event,EventCategory,EventGallery,EventOrganizer\n from inquiry.models import Inquiry \n from discipline.models import Discipline    \n-from gallery    \n+from gallery.models import Gallery,Album    \n \n VALID_TYPES = {\n     \"advertisement\": Advertisement,\n     \"affiliation\": Affiliation,\n@@ -57,8 +57,10 @@\n     \"event-organizer\": EventOrganizer,\n     \"group\": Group,\n     \"inquiry\": Inquiry,\n     \"discipline\": Discipline,\n+    \"discipline\": Discipline,\n+    \"discipline\": Discipline,\n }\n \n class BulkDelete(APIView):\n     @swagger_auto_schema(\n"
+                },
+                {
+                    "date": 1740651229738,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -57,10 +57,10 @@\n     \"event-organizer\": EventOrganizer,\n     \"group\": Group,\n     \"inquiry\": Inquiry,\n     \"discipline\": Discipline,\n+    \"album\": Album,\n     \"discipline\": Discipline,\n-    \"discipline\": Discipline,\n }\n \n class BulkDelete(APIView):\n     @swagger_auto_schema(\n"
+                },
+                {
+                    "date": 1740651236211,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -58,9 +58,9 @@\n     \"group\": Group,\n     \"inquiry\": Inquiry,\n     \"discipline\": Discipline,\n     \"album\": Album,\n-    \"discipline\": Discipline,\n+    \"gallery\": Gallery,\n }\n \n class BulkDelete(APIView):\n     @swagger_auto_schema(\n"
                 }
             ],
             "date": 1733737051062,

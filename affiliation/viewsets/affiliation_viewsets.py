@@ -19,8 +19,8 @@ class affiliationViewsets(viewsets.ModelViewSet):
 
 
     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]
-    search_fields = ['id','name','district','address']
-    ordering_fields = ['id','name','district','address','created_date','updated_date']
+    search_fields = ['id','name','address','created_date']
+    ordering_fields = ['id','name','address','created_date','updated_date']
     
 
     # filterset_fields = {

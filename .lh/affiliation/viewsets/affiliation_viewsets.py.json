@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 38,
+            "activePatchIndex": 41,
             "patches": [
                 {
                     "date": 1733481192866,
@@ -160,6 +160,18 @@
                 {
                     "date": 1739940527416,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,9 +4,9 @@\n from ..models import Affiliation\n from ..serializers.affiliation_serializers import AffiliationListSerializers, AffiliationRetrieveSerializers, AffiliationWriteSerializers\n from ..utilities.importbase import *\n from mainproj.permissions import DynamicModelPermission\n-from /utilities.filter import AffiliationFilter\n+from ..utilities.filter import AffiliationFilter\n \n class affiliationViewsets(viewsets.ModelViewSet):\n     serializer_class = AffiliationListSerializers\n     # permission_classes = [affiliationPermission]\n"
+                },
+                {
+                    "date": 1740651303706,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,9 +18,9 @@\n     filterset_class= AffiliationFilter\n \n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n-    search_fields = ['id','name','district','address']\n+    search_fields = ['id','name','','address']\n     ordering_fields = ['id','name','district','address','created_date','updated_date']\n     \n \n     # filterset_fields = {\n"
+                },
+                {
+                    "date": 1740651312157,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,10 +18,10 @@\n     filterset_class= AffiliationFilter\n \n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n-    search_fields = ['id','name','','address']\n-    ordering_fields = ['id','name','district','address','created_date','updated_date']\n+    search_fields = ['id','name','address']\n+    ordering_fields = ['id','name','address','created_date','updated_date']\n     \n \n     # filterset_fields = {\n     #     'id': ['exact'],\n"
+                },
+                {
+                    "date": 1740651319954,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,9 +18,9 @@\n     filterset_class= AffiliationFilter\n \n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n-    search_fields = ['id','name','address']\n+    search_fields = ['id','name','address','created_date']\n     ordering_fields = ['id','name','address','created_date','updated_date']\n     \n \n     # filterset_fields = {\n"
                 }
             ],
             "date": 1733481192866,
