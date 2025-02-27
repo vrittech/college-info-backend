@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 22,
+            "activePatchIndex": 23,
             "patches": [
                 {
                     "date": 1733729892743,
@@ -96,6 +96,10 @@
                 {
                     "date": 1740028049689,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -46,9 +46,9 @@\n     #     return super().list(request, *args, **kwargs)\n     @action(detail=False, methods=['get'],permission_classes=[AllowAny], url_path=\"latest-images/(?P<event_slug>[^/]+)\")\n     def latest_college_images(self, request, event_slug=None, *args, **kwargs):\n         # Fetch the college using slug\n-        college = get_object_or_404(Event, slug=event_slug)\n+        event = get_object_or_404(Event, slug=event_slug)\n \n         # Get the latest 5 images of the specified college\n         images = EventGallery.objects.filter(event=event).order_by('-created_date')[:5]\n \n"
+                },
+                {
+                    "date": 1740559343978,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,9 +13,9 @@\n \n class eventgalleryViewsets(viewsets.ModelViewSet):\n     serializer_class = EventGalleryListSerializers\n     permission_classes = [DynamicModelPermission]\n-    authentication_classes = [JWTAuthentication]\n+    # authentication_classes = [JWTAuthentication]\n     pagination_class = MyPageNumberPagination\n     queryset = EventGallery.objects.all().order_by('-id')\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n"
                 }
             ],
             "date": 1733729892743,

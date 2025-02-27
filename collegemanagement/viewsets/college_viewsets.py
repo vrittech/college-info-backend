@@ -145,39 +145,58 @@ class collegeViewsets(viewsets.ModelViewSet):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-    #TODO add a permission according to the permission of college!!!!
-    @action(detail=False, methods=['get'], name="calculate_completion_percentage", url_path="completion-percentage",permission_classes=[AllowAny])
-    def calculate_completion_percentage(self, request, *args, **kwargs):
+    @action(detail=False, methods=['get'], name="calculate_completion_percentage", url_path="completion-percentage/(?P<slug>[^/.]+)", permission_classes=[AllowAny])
+    def calculate_completion_percentage(self, request, slug=None, *args, **kwargs):
         """
-        Calculate the profile completion percentage, but restrict access only to assigned college admins.
+        Calculate the profile completion percentage for a specific college by slug.
+        This API does NOT return completion percentage unless a slug is provided.
         """
-        user = request.user
+        if not slug:
+            return Response({"error": "A college slug is required."}, status=status.HTTP_400_BAD_REQUEST)
 
-        # Check if user has a related college (assuming a OneToOne or ForeignKey relationship)
-        if not hasattr(user, "college") or not user.college:
-            return Response({"error": "You do not have permission to view this data."}, status=status.HTTP_403_FORBIDDEN)
+        # Fetch the college using slug
+        college = College.objects.filter(slug=slug).first()
+        if not college:
+            return Response({"error": "College not found."}, status=status.HTTP_404_NOT_FOUND)
 
-        # Get the user's assigned college
-        college = user.college
+        # Serialize the college data
+        college_data = CollegeRetrieveSerializers(college).data
 
-        # Identify required fields dynamically
+        ### 🔹 REQUIRED FIELDS (Must be filled)
         required_fields = [
             field.name for field in College._meta.get_fields()
-            if isinstance(field, Field) and not field.blank and not field.null
+            if hasattr(field, 'blank') and not field.blank and hasattr(field, 'null') and not field.null
         ]
 
-        # Count filled fields
-        completed_fields_count = sum(1 for field in required_fields if getattr(college, field, None))
+        completed_required_fields = sum(1 for field in required_fields if getattr(college, field, None))
         total_required_fields = len(required_fields)
 
-        # Calculate completion percentage
-        completion_percentage = (completed_fields_count / total_required_fields * 100) if total_required_fields else 100
+        ### 🔹 NON-REQUIRED FIELDS (Optional but contribute)
+        non_required_fields = [
+            field.name for field in College._meta.get_fields()
+            if hasattr(field, 'blank') and field.blank and hasattr(field, 'null') and field.null
+        ]
+
+        completed_non_required_fields = sum(1 for field in non_required_fields if getattr(college, field, None))
+        total_non_required_fields = len(non_required_fields)
+
+        ### 🔹 RELATED FIELDS (Many-to-Many or ForeignKey relationships)
+        related_fields = ["district", "affiliated", "college_type", "discipline", "social_media", "facilities"]
+        completed_related_fields = sum(1 for field in related_fields if college_data.get(field))
+        total_related_fields = len(related_fields)
+
+        ### ✅ WEIGHTED COMPLETION CALCULATION:
+        required_percentage = (completed_required_fields / total_required_fields * 60) if total_required_fields else 60
+        related_percentage = (completed_related_fields / total_related_fields * 30) if total_related_fields else 30
+        non_required_percentage = (completed_non_required_fields / total_non_required_fields * 10) if total_non_required_fields else 10
+
+        completion_percentage = required_percentage + related_percentage + non_required_percentage
 
         completion_data = {
             "college_id": college.id,
             "slug": college.slug,
             "college_name": college.name,
-            "completion_percentage": round(completion_percentage, 2),
+            "completion_percentage": round(completion_percentage, 2)
         }
 
-        return Response(completion_data)
+        return Response(completion_data, status=200)

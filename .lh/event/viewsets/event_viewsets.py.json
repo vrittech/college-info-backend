@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 55,
+            "activePatchIndex": 56,
             "patches": [
                 {
                     "date": 1733481372824,
@@ -228,6 +228,10 @@
                 {
                     "date": 1740410909624,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,9 +14,9 @@\n from mainproj.permissions import DynamicModelPermission\n \n class eventViewsets(viewsets.ModelViewSet):\n     serializer_class = EventListSerializers\n-    permission_classes = [eventPermission]\n+    permission_classes = [DynamicModelPermission]\n     authentication_classes = [JWTAuthentication]\n     pagination_class = MyPageNumberPagination\n     queryset = Event.objects.all().order_by('-id')\n     lookup_field = \"slug\"\n@@ -81,9 +81,9 @@\n             \"amount_country\": event_instance.amount_country,\n             \"description\": event_instance.description,\n             \"start_date\": event_instance.start_date,\n             \"end_date\": event_instance.end_date,\n-            \"images\": [\n+            \"image\": [\n                 {\"id\": img.id, \"image_url\": img.image.url} for img in event_instance.image.all()\n             ],\n         }\n \n"
+                },
+                {
+                    "date": 1740559326423,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,9 +15,9 @@\n \n class eventViewsets(viewsets.ModelViewSet):\n     serializer_class = EventListSerializers\n     permission_classes = [DynamicModelPermission]\n-    authentication_classes = [JWTAuthentication]\n+    # authentication_classes = [JWTAuthentication]\n     pagination_class = MyPageNumberPagination\n     queryset = Event.objects.all().order_by('-id')\n     lookup_field = \"slug\"\n \n"
                 }
             ],
             "date": 1733481372824,

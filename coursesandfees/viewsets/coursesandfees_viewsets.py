@@ -48,26 +48,40 @@ class coursesandfeesViewsets(viewsets.ModelViewSet):
     # @action(detail=False, methods=['get'], name="action_name", url_path="url_path")
     # def action_name(self, request, *args, **kwargs):
     #     return super().list(request, *args, **kwargs)
-    @action(detail=False, methods=['get'], permission_classes=[AllowAny], url_path="average-course-fee/(?P<slug>[^/.]+)")
+    @action(detail=False, methods=['get'], permission_classes=[AllowAny], url_path="average-course-fee(?:/(?P<slug>[^/.]+))?")
     def average_course_fee(self, request, slug=None, *args, **kwargs):
         """
         Fetch the average fee for a given course using its slug.
+        If no slug is provided, return the average fee for all courses.
         """
-        # Fetch the course using the slug
-        course = get_object_or_404(Course, slug=slug)
+        if slug:
+            # Fetch the course using the slug
+            course = get_object_or_404(Course, slug=slug)
 
-        # Calculate the overall average fee for the given course
-        average_fee = (
-            CoursesAndFees.objects.filter(course=course, amount__isnull=False)
-            .aggregate(overall_average_fee=Avg('amount'))
-        )
+            # Calculate the overall average fee for the given course
+            average_fee = (
+                CoursesAndFees.objects.filter(course=course, amount__isnull=False)
+                .aggregate(overall_average_fee=Avg('amount'))
+            )
 
-        # Check if data exists
-        if average_fee['overall_average_fee'] is None:
-            return Response({"message": "No fee data available for the specified course."}, status=404)
+            # Check if data exists
+            if average_fee['overall_average_fee'] is None:
+                return Response({"message": "No fee data available for the specified course."}, status=404)
 
-        return Response({
-            "course_slug": slug,
-            "course_name": course.name,  # Assuming `name` field exists
-            "overall_average_fee": average_fee['overall_average_fee']
-        }, status=200)
+            return Response({
+                "course_slug": slug,
+                "course_name": course.name,  # Assuming `name` field exists
+                "overall_average_fee": average_fee['overall_average_fee']
+            }, status=200)
+        
+        else:
+            # Calculate the average fee for each course
+            course_fees = (
+                CoursesAndFees.objects.values('course__name', 'course__slug')
+                .annotate(overall_average_fee=Avg('amount'))
+            )
+
+            if not course_fees:
+                return Response({"message": "No fee data available for any course."}, status=404)
+
+            return Response({"courses": list(course_fees)}, status=200)
