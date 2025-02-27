@@ -16,7 +16,7 @@ from django.shortcuts import get_object_or_404
 class coursesandfeesViewsets(viewsets.ModelViewSet):
     serializer_class = CoursesAndFeesListSerializers
     permission_classes = [DynamicModelPermission]
-    authentication_classes = [JWTAuthentication]
+    # authentication_classes = [JWTAuthentication]
     pagination_class = MyPageNumberPagination
     queryset = CoursesAndFees.objects.all().order_by('-id')
 
@@ -32,7 +32,10 @@ class coursesandfeesViewsets(viewsets.ModelViewSet):
     }
 
     def get_queryset(self):
-        queryset = super().get_queryset()
+        if self.request.user.is_authenticated:
+            queryset = super().get_queryset().filter(college = self.request.user.college)
+        else:
+            queryset = super().get_queryset()
         return queryset
 
     def get_serializer_class(self):
