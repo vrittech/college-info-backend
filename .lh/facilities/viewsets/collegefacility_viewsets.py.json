@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 10,
+            "activePatchIndex": 14,
             "patches": [
                 {
                     "date": 1740650332763,
@@ -48,6 +48,22 @@
                 {
                     "date": 1740666475176,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,9 +23,14 @@\n         'facility': ['exact'],\n         'created_date': ['exact','gte','lte'],\n     }\n \n-    queryset = super().get_queryset().filter(colleges = self.request.user.college)\n+    def get_queryset(self):\n+        if self.request.user.is_authenticated:\n+            queryset = super().get_queryset().filter(college = self.request.user.college)\n+        else:\n+            queryset = super().get_queryset()\n+        return queryset\n \n     def get_serializer_class(self):\n         if self.action in ['create', 'update', 'partial_update']:\n             return CollegeFacilityWriteSerializers\n"
+                },
+                {
+                    "date": 1740685536690,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -36,8 +36,9 @@\n             return CollegeFacilityWriteSerializers\n         elif self.action == 'retrieve':\n             return CollegeFacilityRetrieveSerializers\n         return super().get_serializer_class()\n+    \n \n     # @action(detail=False, methods=['get'], name=\"action_name\", url_path=\"url_path\")\n     # def action_name(self, request, *args, **kwargs):\n     #     return super().list(request, *args, **kwargs)\n"
+                },
+                {
+                    "date": 1740685542157,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -37,8 +37,9 @@\n         elif self.action == 'retrieve':\n             return CollegeFacilityRetrieveSerializers\n         return super().get_serializer_class()\n     \n+    \n \n     # @action(detail=False, methods=['get'], name=\"action_name\", url_path=\"url_path\")\n     # def action_name(self, request, *args, **kwargs):\n     #     return super().list(request, *args, **kwargs)\n"
+                },
+                {
+                    "date": 1740685553057,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -37,10 +37,24 @@\n         elif self.action == 'retrieve':\n             return CollegeFacilityRetrieveSerializers\n         return super().get_serializer_class()\n     \n-    \n+    def create(self, request, *args, **kwargs):\n+        serializer = self.get_serializer(data=request.data)\n+        \n+        if serializer.is_valid():\n+            try:\n+                college_facility = serializer.save()\n+                \n+                # Serialize response with the retrieve serializer (nested objects)\n+                response_serializer = CollegeFacilityRetrieveSerializers(college_facility)\n \n+                return Response(response_serializer.data, status=status.HTTP_201_CREATED)\n+            except IntegrityError:\n+                return Response({\"error\": \"Invalid data. College and Facility are required.\"}, status=status.HTTP_400_BAD_REQUEST)\n+\n+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)\n+\n     # @action(detail=False, methods=['get'], name=\"action_name\", url_path=\"url_path\")\n     # def action_name(self, request, *args, **kwargs):\n     #     return super().list(request, *args, **kwargs)\n \n"
+                },
+                {
+                    "date": 1740685623504,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,8 +4,11 @@\n from ..models import CollegeFacility\n from ..serializers.collegefacility_serializers import CollegeFacilityListSerializers, CollegeFacilityRetrieveSerializers, CollegeFacilityWriteSerializers\n from ..utilities.importbase import *\n from mainproj.permissions import DynamicModelPermission\n+from rest_framework import status, viewsets\n+from rest_framework.response import Response\n+from django.db import IntegrityError\n \n class collegefacilityViewsets(viewsets.ModelViewSet):\n     serializer_class = CollegeFacilityListSerializers\n     permission_classes = [DynamicModelPermission]\n"
                 }
             ],
             "date": 1740650332763,

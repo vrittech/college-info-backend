@@ -5,6 +5,9 @@ from ..models import CollegeFacility
 from ..serializers.collegefacility_serializers import CollegeFacilityListSerializers, CollegeFacilityRetrieveSerializers, CollegeFacilityWriteSerializers
 from ..utilities.importbase import *
 from mainproj.permissions import DynamicModelPermission
+from rest_framework import status, viewsets
+from rest_framework.response import Response
+from django.db import IntegrityError
 
 class collegefacilityViewsets(viewsets.ModelViewSet):
     serializer_class = CollegeFacilityListSerializers
@@ -37,6 +40,22 @@ class collegefacilityViewsets(viewsets.ModelViewSet):
         elif self.action == 'retrieve':
             return CollegeFacilityRetrieveSerializers
         return super().get_serializer_class()
+    
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        
+        if serializer.is_valid():
+            try:
+                college_facility = serializer.save()
+                
+                # Serialize response with the retrieve serializer (nested objects)
+                response_serializer = CollegeFacilityRetrieveSerializers(college_facility)
+
+                return Response(response_serializer.data, status=status.HTTP_201_CREATED)
+            except IntegrityError:
+                return Response({"error": "Invalid data. College and Facility are required."}, status=status.HTTP_400_BAD_REQUEST)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     # @action(detail=False, methods=['get'], name="action_name", url_path="url_path")
     # def action_name(self, request, *args, **kwargs):
