@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 34,
+            "activePatchIndex": 40,
             "patches": [
                 {
                     "date": 1733481893066,
@@ -144,6 +144,30 @@
                 {
                     "date": 1740650685751,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -61,19 +61,19 @@\n             inquiries = Inquiry.objects.all()\n \n         # Aggregate the count of inquiries for each course\n         course_inquiry_count = (\n-            inquiries.values('courses__name')\n+            inquiries.values('courses__abbreviation')\n             .annotate(total_inquiries=Count('id'))\n-            .order_by('courses__name')\n+            .order_by('courses__abbreviation')\n         )\n \n         # Calculate total inquiries count\n         total_inquiries = inquiries.count()\n \n         # Prepare the response\n         data = [\n-            {'course_name': item['courses__name'], 'total_inquiries': item['total_inquiries']}\n+            {'course_name': item['courses__abbreviation'], 'total_inquiries': item['total_inquiries']}\n             for item in course_inquiry_count\n         ]\n \n         if not data:\n"
+                },
+                {
+                    "date": 1740665983583,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -26,9 +26,12 @@\n     ordering_fields = ['id', 'full_name', 'created_at', 'updated_at']  # Orderable fields\n     ordering = ['id']  # Default ordering\n \n     def get_queryset(self):\n-        queryset = super().get_queryset()\n+        if self.request.user.is_authenticated:\n+            queryset = super().get_queryset().filter(college = self.request.user.college)\n+        else:\n+            queryset = super().get_queryset()\n         return queryset\n \n     def get_serializer_class(self):\n         if self.action in ['create', 'update', 'partial_update']:\n"
+                },
+                {
+                    "date": 1740666217331,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,9 +27,9 @@\n     ordering = ['id']  # Default ordering\n \n     def get_queryset(self):\n         if self.request.user.is_authenticated:\n-            queryset = super().get_queryset().filter(college = self.request.user.college)\n+            queryset = super().get_queryset().filter(colleges = self.request.user.college)\n         else:\n             queryset = super().get_queryset()\n         return queryset\n \n"
+                },
+                {
+                    "date": 1740666249465,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,9 +27,9 @@\n     ordering = ['id']  # Default ordering\n \n     def get_queryset(self):\n         if self.request.user.is_authenticated:\n-            queryset = super().get_queryset().filter(colleges = self.request.user.college)\n+            queryset = super().get_queryset().filter(colleges = )\n         else:\n             queryset = super().get_queryset()\n         return queryset\n \n"
+                },
+                {
+                    "date": 1740666260141,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,9 +27,9 @@\n     ordering = ['id']  # Default ordering\n \n     def get_queryset(self):\n         if self.request.user.is_authenticated:\n-            queryset = super().get_queryset().filter(colleges = )\n+            queryset = super().get_queryset().filter(colleges = self.request.user.college)\n         else:\n             queryset = super().get_queryset()\n         return queryset\n \n"
+                },
+                {
+                    "date": 1740666293843,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,9 +27,9 @@\n     ordering = ['id']  # Default ordering\n \n     def get_queryset(self):\n         if self.request.user.is_authenticated:\n-            queryset = super().get_queryset().filter(colleges = self.request.user.college)\n+            queryset = super().get_queryset().filter(colleges = 71)\n         else:\n             queryset = super().get_queryset()\n         return queryset\n \n"
+                },
+                {
+                    "date": 1740666312829,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,9 +27,9 @@\n     ordering = ['id']  # Default ordering\n \n     def get_queryset(self):\n         if self.request.user.is_authenticated:\n-            queryset = super().get_queryset().filter(colleges = 71)\n+            queryset = super().get_queryset().filter(colleges = self.request.user.college)\n         else:\n             queryset = super().get_queryset()\n         return queryset\n \n"
                 }
             ],
             "date": 1733481893066,
