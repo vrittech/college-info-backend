@@ -41,28 +41,46 @@ class inquiryViewsets(viewsets.ModelViewSet):
     # def action_name(self, request, *args, **kwargs):
     #     return super().list(request, *args, **kwargs)
     
-    @action(detail=False, methods=['get'], name="Inquiries by Course", url_path="inquiries-count/(?P<college_slug>[^/.]+)",permission_classes=[AllowAny])
+    @action(detail=False, methods=['get'], name="Inquiries by Course", url_path="inquiries-count(?:/(?P<college_slug>[^/.]+))?", permission_classes=[AllowAny])
     def inquiries_by_course(self, request, college_slug=None, *args, **kwargs):
-        # Ensure the college exists
-        college = College.objects.filter(slug=college_slug).first()
-        if not college:
-            return Response({"detail": "College not found."}, status=404)
+        """
+        Get the count of inquiries grouped by course.
+        If college_slug is provided, fetch inquiries for that specific college.
+        If not, fetch inquiries across all colleges.
+        """
+        if college_slug:
+            # Ensure the college exists
+            college = College.objects.filter(slug=college_slug).first()
+            if not college:
+                return Response({"detail": "College not found."}, status=404)
 
-        # Get inquiries related to this college and group by course
-        inquiries = Inquiry.objects.filter(colleges=college)
-        
+            # Filter inquiries by the specific college
+            inquiries = Inquiry.objects.filter(colleges=college)
+        else:
+            # Get inquiries across all colleges
+            inquiries = Inquiry.objects.all()
+
         # Aggregate the count of inquiries for each course
-        course_inquiry_count = inquiries.values('courses__name') \
-            .annotate(count=Count('courses')) \
+        course_inquiry_count = (
+            inquiries.values('courses__name')
+            .annotate(total_inquiries=Count('id'))
             .order_by('courses__name')
+        )
+
+        # Calculate total inquiries count
+        total_inquiries = inquiries.count()
 
         # Prepare the response
-        data = []
-        for item in course_inquiry_count:
-            data.append({
-                'course': item['courses__name'],
-                'count': item['count']
-            })
-        
-        return Response(data)
+        data = [
+            {'course_name': item['courses__name'], 'total_inquiries': item['total_inquiries']}
+            for item in course_inquiry_count
+        ]
+
+        if not data:
+            return Response({"message": "No inquiries found.", "total_inquiries": 0}, status=404)
+
+        return Response({
+            "total_inquiries": total_inquiries,
+            "courses": data
+        }, status=200)
 
