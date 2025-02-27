@@ -9,7 +9,7 @@ from mainproj.permissions import DynamicModelPermission
 class eventorganizerViewsets(viewsets.ModelViewSet):
     serializer_class = EventOrganizerListSerializers
     permission_classes = [DynamicModelPermission]
-    authentication_classes = [JWTAuthentication]
+    # authentication_classes = [JWTAuthentication]
     pagination_class = MyPageNumberPagination
     queryset = EventOrganizer.objects.all().order_by('-id')
 

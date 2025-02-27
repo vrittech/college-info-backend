@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 36,
+            "activePatchIndex": 37,
             "patches": [
                 {
                     "date": 1733481293986,
@@ -152,6 +152,10 @@
                 {
                     "date": 1740032777532,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,9 +27,9 @@\n     filterset_fields = {\n         'id': ['exact'],\n         'is_admission': ['exact'],\n         'college__slug': ['exact'],\n-        'course': ['exact'],\n+        'course__slug': ['exact'],\n     }\n \n     def get_queryset(self):\n         queryset = super().get_queryset()\n"
+                },
+                {
+                    "date": 1740634968090,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -44,27 +44,41 @@\n \n     # @action(detail=False, methods=['get'], name=\"action_name\", url_path=\"url_path\")\n     # def action_name(self, request, *args, **kwargs):\n     #     return super().list(request, *args, **kwargs)\n-    @action(detail=False, methods=['get'], permission_classes=[AllowAny], url_path=\"average-course-fee/(?P<slug>[^/.]+)\")\n+    @action(detail=False, methods=['get'], permission_classes=[AllowAny], url_path=\"average-course-fee(?:/(?P<slug>[^/.]+))?\")\n     def average_course_fee(self, request, slug=None, *args, **kwargs):\n         \"\"\"\n         Fetch the average fee for a given course using its slug.\n+        If no slug is provided, return the average fee for all courses.\n         \"\"\"\n-        # Fetch the course using the slug\n-        course = get_object_or_404(Course, slug=slug)\n+        if slug:\n+            # Fetch the course using the slug\n+            course = get_object_or_404(Course, slug=slug)\n \n-        # Calculate the overall average fee for the given course\n-        average_fee = (\n-            CoursesAndFees.objects.filter(course=course, amount__isnull=False)\n-            .aggregate(overall_average_fee=Avg('amount'))\n-        )\n+            # Calculate the overall average fee for the given course\n+            average_fee = (\n+                CoursesAndFees.objects.filter(course=course, amount__isnull=False)\n+                .aggregate(overall_average_fee=Avg('amount'))\n+            )\n \n-        # Check if data exists\n-        if average_fee['overall_average_fee'] is None:\n-            return Response({\"message\": \"No fee data available for the specified course.\"}, status=404)\n+            # Check if data exists\n+            if average_fee['overall_average_fee'] is None:\n+                return Response({\"message\": \"No fee data available for the specified course.\"}, status=404)\n \n-        return Response({\n-            \"course_slug\": slug,\n-            \"course_name\": course.name,  # Assuming `name` field exists\n-            \"overall_average_fee\": average_fee['overall_average_fee']\n-        }, status=200)\n+            return Response({\n+                \"course_slug\": slug,\n+                \"course_name\": course.name,  # Assuming `name` field exists\n+                \"overall_average_fee\": average_fee['overall_average_fee']\n+            }, status=200)\n+        \n+        else:\n+            # Calculate the average fee for each course\n+            course_fees = (\n+                CoursesAndFees.objects.values('course__name', 'course__slug')\n+                .annotate(overall_average_fee=Avg('amount'))\n+            )\n+\n+            if not course_fees:\n+                return Response({\"message\": \"No fee data available for any course.\"}, status=404)\n+\n+            return Response({\"courses\": list(course_fees)}, status=200)\n"
                 }
             ],
             "date": 1733481293986,

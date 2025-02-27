@@ -14,7 +14,7 @@ from ..models import Event
 class eventgalleryViewsets(viewsets.ModelViewSet):
     serializer_class = EventGalleryListSerializers
     permission_classes = [DynamicModelPermission]
-    authentication_classes = [JWTAuthentication]
+    # authentication_classes = [JWTAuthentication]
     pagination_class = MyPageNumberPagination
     queryset = EventGallery.objects.all().order_by('-id')
 
