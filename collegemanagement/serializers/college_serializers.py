@@ -147,24 +147,19 @@ class CollegeWriteSerializers(serializers.ModelSerializer):
         """Handles creating a college and returns full objects in response."""
         request = self.context.get("request")
 
-        # Extract ManyToMany relationships from the request
-        discipline_ids = request.data.get("discipline", [])
-        # social_media_data = request.data.get("social_media", None) 
-        # facilities_ids = request.data.get("facilities", [])
+        # ✅ Convert and clean discipline_ids
+        request_data = str_to_list(request.data, "discipline")
+        discipline_ids = request_data.get("discipline", [])
 
-        # Remove ManyToMany fields from validated_data
+        # ✅ Remove ManyToMany fields from validated_data
         validated_data.pop("discipline", None)
-        # validated_data.pop("social_media", None)
-        # validated_data.pop("facilities", None)
 
-        # Create College instance
+        # ✅ Create College instance
         college = College.objects.create(**validated_data)
 
-        # Set ManyToMany relationships
+        # ✅ Set ManyToMany relationships, ensuring only valid IDs are used
         if discipline_ids:
             college.discipline.set(Discipline.objects.filter(id__in=discipline_ids))
-        # if facilities_ids:
-        #     college.facilities.set(Facility.objects.filter(id__in=facilities_ids))
 
         return college
 
