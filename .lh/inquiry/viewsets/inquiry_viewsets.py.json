@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 33,
+            "activePatchIndex": 34,
             "patches": [
                 {
                     "date": 1733481893066,
@@ -140,6 +140,10 @@
                 {
                     "date": 1740635374288,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -62,19 +62,25 @@\n \n         # Aggregate the count of inquiries for each course\n         course_inquiry_count = (\n             inquiries.values('courses__name')\n-            .annotate(count=Count('courses'))\n+            .annotate(total_inquiries=Count('id'))\n             .order_by('courses__name')\n         )\n \n+        # Calculate total inquiries count\n+        total_inquiries = inquiries.count()\n+\n         # Prepare the response\n         data = [\n-            {'course': item['courses__name'], 'count': item['count']}\n+            {'course_name': item['courses__name'], 'total_inquiries': item['total_inquiries']}\n             for item in course_inquiry_count\n         ]\n \n         if not data:\n-            return Response({\"message\": \"No inquiries found.\"}, status=404)\n+            return Response({\"message\": \"No inquiries found.\", \"total_inquiries\": 0}, status=404)\n \n-        return Response({\"courses\": data}, status=200)\n+        return Response({\n+            \"total_inquiries\": total_inquiries,\n+            \"courses\": data\n+        }, status=200)\n \n"
+                },
+                {
+                    "date": 1740650685751,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -61,19 +61,19 @@\n             inquiries = Inquiry.objects.all()\n \n         # Aggregate the count of inquiries for each course\n         course_inquiry_count = (\n-            inquiries.values('courses__name')\n+            inquiries.values('courses__abbreviation')\n             .annotate(total_inquiries=Count('id'))\n-            .order_by('courses__name')\n+            .order_by('courses__abbreviation')\n         )\n \n         # Calculate total inquiries count\n         total_inquiries = inquiries.count()\n \n         # Prepare the response\n         data = [\n-            {'course_name': item['courses__name'], 'total_inquiries': item['total_inquiries']}\n+            {'course_name': item['courses__abbreviation'], 'total_inquiries': item['total_inquiries']}\n             for item in course_inquiry_count\n         ]\n \n         if not data:\n"
                 }
             ],
             "date": 1733481893066,

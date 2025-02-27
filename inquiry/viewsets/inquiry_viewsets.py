@@ -62,9 +62,9 @@ class inquiryViewsets(viewsets.ModelViewSet):
 
         # Aggregate the count of inquiries for each course
         course_inquiry_count = (
-            inquiries.values('courses__name')
+            inquiries.values('courses__abbreviation')
             .annotate(total_inquiries=Count('id'))
-            .order_by('courses__name')
+            .order_by('courses__abbreviation')
         )
 
         # Calculate total inquiries count
@@ -72,7 +72,7 @@ class inquiryViewsets(viewsets.ModelViewSet):
 
         # Prepare the response
         data = [
-            {'course_name': item['courses__name'], 'total_inquiries': item['total_inquiries']}
+            {'course_name': item['courses__abbreviation'], 'total_inquiries': item['total_inquiries']}
             for item in course_inquiry_count
         ]
 
