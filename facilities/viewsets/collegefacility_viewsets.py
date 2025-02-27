@@ -25,7 +25,10 @@ class collegefacilityViewsets(viewsets.ModelViewSet):
     }
 
     def get_queryset(self):
-        queryset = super().get_queryset()
+        if self.request.user.is_authenticated:
+            queryset = super().get_queryset().filter(college = self.request.user.college)
+        else:
+            queryset = super().get_queryset()
         return queryset
 
     def get_serializer_class(self):

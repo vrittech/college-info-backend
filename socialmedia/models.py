@@ -31,5 +31,5 @@ class CollegeSocialMedia(models.Model):
     def __str__(self):
         return self.social_media.name
     permissions = [
-        ('manage_college_socialmedia', 'Manage college socialmedia'),
+        ('manage_collegesocialmedia', 'Manage college socialmedia'),
     ]

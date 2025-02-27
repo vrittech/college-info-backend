@@ -4,10 +4,11 @@ from django_filters.rest_framework import DjangoFilterBackend
 from ..models import CollegeSocialMedia
 from ..serializers.collegesocialmedia_serializers import CollegeSocialMediaListSerializers, CollegeSocialMediaRetrieveSerializers, CollegeSocialMediaWriteSerializers
 from ..utilities.importbase import *
+from mainproj.permissions import DynamicModelPermission
 
 class collegesocialmediaViewsets(viewsets.ModelViewSet):
     serializer_class = CollegeSocialMediaListSerializers
-    # permission_classes = [socialmediaPermission]
+    permission_classes = [DynamicModelPermission]
     # authentication_classes = [JWTAuthentication]
     pagination_class = MyPageNumberPagination
     queryset = CollegeSocialMedia.objects.all()
@@ -21,7 +22,10 @@ class collegesocialmediaViewsets(viewsets.ModelViewSet):
     }
 
     def get_queryset(self):
-        queryset = super().get_queryset()
+        if self.request.user.is_authenticated:
+            queryset = super().get_queryset().filter(college = self.request.user.college)
+        else:
+            queryset = super().get_queryset()
         return queryset
 
     def get_serializer_class(self):

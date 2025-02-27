@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 8,
+            "activePatchIndex": 10,
             "patches": [
                 {
                     "date": 1740650332763,
@@ -40,6 +40,14 @@
                 {
                     "date": 1740650405262,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -25,9 +25,9 @@\n     }\n \n     def get_queryset(self):\n         queryset = super().get_queryset()\n-        #return queryset.filter(user_id=self.request.user.id)\n+        return queryset\n \n     def get_serializer_class(self):\n         if self.action in ['create', 'update', 'partial_update']:\n             return CollegeFacilityWriteSerializers\n"
+                },
+                {
+                    "date": 1740666468911,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,11 +23,9 @@\n         'facility': ['exact'],\n         'created_date': ['exact','gte','lte'],\n     }\n \n-    def get_queryset(self):\n-        queryset = super().get_queryset()\n-        return queryset\n+    queryset = super().get_queryset().filter(colleges = self.request.user.college)\n \n     def get_serializer_class(self):\n         if self.action in ['create', 'update', 'partial_update']:\n             return CollegeFacilityWriteSerializers\n"
+                },
+                {
+                    "date": 1740666475176,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,9 +23,14 @@\n         'facility': ['exact'],\n         'created_date': ['exact','gte','lte'],\n     }\n \n-    queryset = super().get_queryset().filter(colleges = self.request.user.college)\n+    def get_queryset(self):\n+        if self.request.user.is_authenticated:\n+            queryset = super().get_queryset().filter(college = self.request.user.college)\n+        else:\n+            queryset = super().get_queryset()\n+        return queryset\n \n     def get_serializer_class(self):\n         if self.action in ['create', 'update', 'partial_update']:\n             return CollegeFacilityWriteSerializers\n"
                 }
             ],
             "date": 1740650332763,
