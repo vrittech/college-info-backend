@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 73,
+            "activePatchIndex": 79,
             "patches": [
                 {
                     "date": 1733737051062,
@@ -300,6 +300,30 @@
                 {
                     "date": 1740651236211,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -58,9 +58,9 @@\n     \"group\": Group,\n     \"inquiry\": Inquiry,\n     \"discipline\": Discipline,\n     \"album\": Album,\n-    \"discipline\": Discipline,\n+    \"gallery\": Gallery,\n }\n \n class BulkDelete(APIView):\n     @swagger_auto_schema(\n"
+                },
+                {
+                    "date": 1740685684727,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,9 +24,10 @@\n from accounts.models import Group\n from event.models import Event,EventCategory,EventGallery,EventOrganizer\n from inquiry.models import Inquiry \n from discipline.models import Discipline    \n-from gallery.models import Gallery,Album    \n+from gallery.models import Gallery,Album\n+from     \n \n VALID_TYPES = {\n     \"advertisement\": Advertisement,\n     \"affiliation\": Affiliation,\n"
+                },
+                {
+                    "date": 1740685690833,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -25,9 +25,9 @@\n from event.models import Event,EventCategory,EventGallery,EventOrganizer\n from inquiry.models import Inquiry \n from discipline.models import Discipline    \n from gallery.models import Gallery,Album\n-from     \n+from facilities.models import Facility    \n \n VALID_TYPES = {\n     \"advertisement\": Advertisement,\n     \"affiliation\": Affiliation,\n"
+                },
+                {
+                    "date": 1740685698549,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,19 +15,18 @@\n from collegetype.models import CollegeType\n from contact.models import Contact\n from coursemanagement.models import Course,CourseCurriculumFile\n from district.models import District\n-from facilities.models import Facility\n+from facilities.models import Facility, \n from faculty.models import Faculty\n from level.models import Level,SubLevel\n from socialmedia.models import SocialMedia\n from superadmindetails.models import SuperAdminDetails\n from accounts.models import Group\n from event.models import Event,EventCategory,EventGallery,EventOrganizer\n from inquiry.models import Inquiry \n from discipline.models import Discipline    \n-from gallery.models import Gallery,Album\n-from facilities.models import Facility    \n+from gallery.models import Gallery,Album \n \n VALID_TYPES = {\n     \"advertisement\": Advertisement,\n     \"affiliation\": Affiliation,\n"
+                },
+                {
+                    "date": 1740685705050,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,9 +15,9 @@\n from collegetype.models import CollegeType\n from contact.models import Contact\n from coursemanagement.models import Course,CourseCurriculumFile\n from district.models import District\n-from facilities.models import Facility, \n+from facilities.models import Facility, CollegeFacility\n from faculty.models import Faculty\n from level.models import Level,SubLevel\n from socialmedia.models import SocialMedia\n from superadmindetails.models import SuperAdminDetails\n"
+                },
+                {
+                    "date": 1740685719044,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,9 +15,9 @@\n from collegetype.models import CollegeType\n from contact.models import Contact\n from coursemanagement.models import Course,CourseCurriculumFile\n from district.models import District\n-from facilities.models import Facility, CollegeFacility\n+from facilities.models import Facility,CollegeFacility\n from faculty.models import Faculty\n from level.models import Level,SubLevel\n from socialmedia.models import SocialMedia\n from superadmindetails.models import SuperAdminDetails\n@@ -45,8 +45,9 @@\n     \"course\": Course,\n     \"course-curriculum-file\": CourseCurriculumFile,\n     \"district\": District,\n     \"facility\": Facility,\n+    \"facility\": Facility,\n     \"faculty\": Faculty,\n     \"level\": Level,\n     \"sub-level\": SubLevel,\n     \"social-media\": SocialMedia,\n"
+                },
+                {
+                    "date": 1740685727016,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -45,9 +45,9 @@\n     \"course\": Course,\n     \"course-curriculum-file\": CourseCurriculumFile,\n     \"district\": District,\n     \"facility\": Facility,\n-    \"facility\": Facility,\n+    \"college-facility\": CFacility,\n     \"faculty\": Faculty,\n     \"level\": Level,\n     \"sub-level\": SubLevel,\n     \"social-media\": SocialMedia,\n"
                 }
             ],
             "date": 1733737051062,

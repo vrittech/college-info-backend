@@ -16,7 +16,7 @@ from collegetype.models import CollegeType
 from contact.models import Contact
 from coursemanagement.models import Course,CourseCurriculumFile
 from district.models import District
-from facilities.models import Facility
+from facilities.models import Facility,CollegeFacility
 from faculty.models import Faculty
 from level.models import Level,SubLevel
 from socialmedia.models import SocialMedia
@@ -25,7 +25,7 @@ from accounts.models import Group
 from event.models import Event,EventCategory,EventGallery,EventOrganizer
 from inquiry.models import Inquiry 
 from discipline.models import Discipline    
-from gallery.models import Gallery,Album    
+from gallery.models import Gallery,Album 
 
 VALID_TYPES = {
     "advertisement": Advertisement,
@@ -46,6 +46,7 @@ VALID_TYPES = {
     "course-curriculum-file": CourseCurriculumFile,
     "district": District,
     "facility": Facility,
+    "college-facility": CollegeFacility,
     "faculty": Faculty,
     "level": Level,
     "sub-level": SubLevel,
