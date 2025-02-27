@@ -12,79 +12,143 @@ class CollegeSerializers(serializers.ModelSerializer):
 ### ✅ Read Serializer (for Listing Multiple Galleries) ###
 class CollegeGalleryListSerializers(serializers.ModelSerializer):
     college = CollegeSerializers(read_only=True)
-    images = serializers.SerializerMethodField()  # Ensures `images` is the response key
+    # images = serializers.SerializerMethodField()  # Ensures `images` is the response key
 
     class Meta:
         model = CollegeGallery
-        fields = ['id', 'college', 'images', 'description', 'created_date', 'updated_date']
+        fields = '__all__'
 
-    def get_images(self, obj):
-        """Returns a list of image URLs for consistency."""
-        return [obj.image.url] if obj.image else []
+    # def get_images(self, obj):
+    #     """Returns a list of image URLs for consistency."""
+    #     return [obj.image.url] if obj.image else []
 
 
 ### ✅ Read Serializer (for Retrieving a Single Gallery) ###
 class CollegeGalleryRetrieveSerializers(serializers.ModelSerializer):
     college = CollegeSerializers(read_only=True)
-    images = serializers.SerializerMethodField()  # Ensures `images` is the response key
+    # images = serializers.SerializerMethodField()  # Ensures `images` is the response key
 
     class Meta:
         model = CollegeGallery
-        fields = ['id', 'college', 'images', 'description', 'created_date', 'updated_date']
+        fields = '__all__'
 
-    def get_images(self, obj):
-        """Returns a list of image URLs for consistency."""
-        return [obj.image.url] if obj.image else []
+    # def get_images(self, obj):
+    #     """Returns a list of image URLs for consistency."""
+    #     return [obj.image.url] if obj.image else []
 
 
-### ✅ Write Serializer (Handles Multi-Image Uploads) ###
 class CollegeGalleryWriteSerializers(serializers.ModelSerializer):
-    images = serializers.ListField(
-        child=serializers.ImageField(), write_only=True, required=False
-    )  # Accept multiple image uploads
+    # images = serializers.ListField(
+    #     child=serializers.ImageField(), write_only=True, required=False
+    # )  # Accept multiple image uploads
 
     class Meta:
         model = CollegeGallery
-        fields = ['images', 'description']  # Keep `images` as input, but use `image` in DB
-
-    def to_representation(self, instance):
-        """
-        Ensures `images` is used instead of `image` in responses.
-        """
-        return {
-            "id": instance.id,
-            "images": [instance.image.url] if instance.image else [],
-            "description": instance.description
-        }
+        fields = '__all__'
 
     def create(self, validated_data):
-        request = self.context.get('request')
+        request = self.context.get('request')  # Auto-injected by Django
+        print(request.FILES, "DEBUG: Request Files")
+
         images = []
-        index = 0
 
-        while f'image[{index}]' in request.FILES:
-            images.append(request.FILES[f'image[{index}]'])
-            index += 1
+        # Extract all image files dynamically
+        for key, file_list in request.FILES.lists():
+            if key.startswith("image["):
+                images.extend(file_list)
 
-        college = self.context.get('college')  # Get college from context if needed
+        print(images, "DEBUG: Collected Images")
+
+        # Fetch college ID directly from request data
+        college_id = request.data.get("college")
+        if not college_id:
+            print("ERROR: College ID is missing in the request!")
+            raise serializers.ValidationError({"error": "College ID is required"})
+
+        try:
+            college = College.objects.get(id=college_id)
+        except College.DoesNotExist:
+            print(f"ERROR: College with ID {college_id} does not exist!")
+            raise serializers.ValidationError({"error": "Invalid College ID"})
+
+        if not images:
+            print("ERROR: No valid images found in request!")
+            raise serializers.ValidationError({"error": "No valid images uploaded"})
+
         gallery_instances = []
 
+        # Create Gallery instances
         for image in images:
-            gallery_instance = CollegeGallery.objects.create(image=image, college=college)
-            gallery_instances.append(gallery_instance)
+            try:
+                gallery_instance = CollegeGallery.objects.create(image=image, college=college)
+                gallery_instances.append(gallery_instance)
+            except Exception as e:
+                print(f"ERROR: Failed to create CollegeGallery instance -> {e}")
+                raise serializers.ValidationError({"error": "Failed to save image", "details": str(e)})
 
-        return gallery_instances[0] if gallery_instances else None  # Return a single instance
+        print(gallery_instances, "DEBUG: Created Gallery Instances")
+
+        # ✅ Instead of returning a list, return the first instance
+        return gallery_instances[0] if gallery_instances else None
 
     def update(self, instance, validated_data):
         request = self.context.get('request')
+        print(request.FILES, "DEBUG: Request Files for Update")
+
         images = []
-        index = 0
 
-        while f'image[{index}]' in request.FILES:
-            images.append(request.FILES[f'image[{index}]'])
-            index += 1
+        # Extract all image files dynamically
+        for key, file_list in request.FILES.lists():
+            if key.startswith("image["):
+                images.extend(file_list)
 
-        for image in images:
-            CollegeGallery.objects.create(image=image, college=instance.college)
+        print(images, "DEBUG: Collected Images for Update")
 
-        return super().update(instance, validated_data)
+        # Update description only if it's in the request
+        if 'description' in validated_data:
+            instance.description = validated_data['description']
+            instance.save()
+
+        gallery_instances = []
+
+        # Only add new images if they exist in the request
+        if images:
+            for image in images:
+                try:
+                    gallery_instance = CollegeGallery.objects.create(image=image, college=instance.college)
+                    gallery_instances.append(gallery_instance)
+                except Exception as e:
+                    print(f"ERROR: Failed to update CollegeGallery instance -> {e}")
+                    raise serializers.ValidationError({"error": "Failed to save image", "details": str(e)})
+
+            print(gallery_instances, "DEBUG: Updated Gallery Instances")
+
+        # ✅ Return instance with updated images in `image` key
+        return instance
+
+
+
+    def to_representation(self, instance):
+        """
+        Converts image file paths into full URLs and supports lists.
+        """
+        request = self.context.get('request')  # Get request to generate full URL
+
+        # ✅ If `instance` is a list, return a list of serialized data
+        if isinstance(instance, list):
+            return [
+                {
+                    "id": obj.id,
+                    "image": request.build_absolute_uri(obj.image.url) if obj.image else None,
+                    "college": obj.college.id if obj.college else None
+                }
+                for obj in instance
+            ]
+
+        # ✅ If `instance` is a single object, return a single object representation
+        return {
+            "id": instance.id,
+            "image": request.build_absolute_uri(instance.image.url) if instance.image else None,
+            "college": instance.college.id if instance.college else None
+        }
+

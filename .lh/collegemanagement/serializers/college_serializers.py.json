@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 112,
+            "activePatchIndex": 113,
             "patches": [
                 {
                     "date": 1733477116456,
@@ -456,6 +456,10 @@
                 {
                     "date": 1740388741236,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -95,17 +95,17 @@\n # Serializer for creating/updating college details (with nested objects for foreign keys and many-to-many)\n # Serializer for College model\n class CollegeWriteSerializers(serializers.ModelSerializer):\n     # ForeignKey fields\n-    district = serializers.PrimaryKeyRelatedField(queryset=District.objects.all())\n-    affiliated = serializers.PrimaryKeyRelatedField(queryset=Affiliation.objects.all())\n-    college_type = serializers.PrimaryKeyRelatedField(queryset=CollegeType.objects.all())\n-    step_counter = serializers.PrimaryKeyRelatedField(queryset=FormStepProgress.objects.all(), required=False, allow_null=True)\n+    # district = serializers.PrimaryKeyRelatedField(queryset=District.objects.all())\n+    # affiliated = serializers.PrimaryKeyRelatedField(queryset=Affiliation.objects.all())\n+    # college_type = serializers.PrimaryKeyRelatedField(queryset=CollegeType.objects.all())\n+    # step_counter = serializers.PrimaryKeyRelatedField(queryset=FormStepProgress.objects.all(), required=False, allow_null=True)\n \n-    # ManyToMany fields\n-    discipline = serializers.PrimaryKeyRelatedField(queryset=Discipline.objects.all(), many=True)\n-    # social_media = SocialMediaSerializer(many=True, required=False)\n-    # facilities = serializers.PrimaryKeyRelatedField(queryset=Facility.objects.all(), many=True, required=False)\n+    # # ManyToMany fields\n+    # discipline = serializers.PrimaryKeyRelatedField(queryset=Discipline.objects.all(), many=True)\n+    # # social_media = SocialMediaSerializer(many=True, required=False)\n+    # # facilities = serializers.PrimaryKeyRelatedField(queryset=Facility.objects.all(), many=True, required=False)\n     \n     # def to_internal_value(self, data):\n     #     \"\"\"Converts stringified social media JSON into a list before validation.\"\"\"\n     #     if data.get('social_media'):\n"
+                },
+                {
+                    "date": 1740638096505,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -118,8 +118,9 @@\n \n     def create(self, validated_data):\n         \"\"\"Handles creating a college and returns full objects in response.\"\"\"\n         request = self.context.get(\"request\")\n+        \n \n         # Extract ManyToMany relationships from the request\n         discipline_ids = request.data.get(\"discipline\", [])\n         # social_media_data = request.data.get(\"social_media\", None) \n"
                 }
             ],
             "date": 1733477116456,
