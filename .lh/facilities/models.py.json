@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 9,
+            "activePatchIndex": 18,
             "patches": [
                 {
                     "date": 1727174504183,
@@ -44,6 +44,42 @@
                 {
                     "date": 1738317987872,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,14 +14,14 @@\n     # category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='facilities')\n     image = models.ImageField(upload_to='facility_images/', blank=True, null=True)\n     created_date = models.DateField(auto_now_add=True, null=True, blank=True)\n     created_date_time = models.DateTimeField(auto_now_add=True, null=True, blank=True)\n-    is\n+    is_show = models.BooleanField(default=False)\n     updated_date = models.DateTimeField(auto_now=True, null=True, blank=True)\n     \n \n     def __str__(self):\n-        return self.facility_name\n+        return self.name\n     \n     class Meta:\n         permissions = [\n             ('manage_facility', 'Manage facility'),\n"
+                },
+                {
+                    "date": 1740650043108,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -25,4 +25,22 @@\n     class Meta:\n         permissions = [\n             ('manage_facility', 'Manage facility'),\n         ]\n+\n+class Facility(models.Model):\n+    name = models.CharField(max_length=255)\n+    # category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='facilities')\n+    image = models.ImageField(upload_to='facility_images/', blank=True, null=True)\n+    created_date = models.DateField(auto_now_add=True, null=True, blank=True)\n+    created_date_time = models.DateTimeField(auto_now_add=True, null=True, blank=True)\n+    is_show = models.BooleanField(default=False)\n+    updated_date = models.DateTimeField(auto_now=True, null=True, blank=True)\n+    \n+\n+    def __str__(self):\n+        return self.name\n+    \n+    class Meta:\n+        permissions = [\n+            ('manage_facility', 'Manage facility'),\n+        ]\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1740650056639,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -26,9 +26,10 @@\n         permissions = [\n             ('manage_facility', 'Manage facility'),\n         ]\n \n-class Facility(models.Model):\n+class CollegeFacility(models.Model):\n+    \n     name = models.CharField(max_length=255)\n     # category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='facilities')\n     image = models.ImageField(upload_to='facility_images/', blank=True, null=True)\n     created_date = models.DateField(auto_now_add=True, null=True, blank=True)\n"
+                },
+                {
+                    "date": 1740650062494,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -42,6 +42,6 @@\n         return self.name\n     \n     class Meta:\n         permissions = [\n-            ('manage_facility', 'Manage facility'),\n+            ('manage_collegefacility', 'Manage facility'),\n         ]\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1740650069697,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -28,8 +28,9 @@\n         ]\n \n class CollegeFacility(models.Model):\n     \n+    \n     name = models.CharField(max_length=255)\n     # category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='facilities')\n     image = models.ImageField(upload_to='facility_images/', blank=True, null=True)\n     created_date = models.DateField(auto_now_add=True, null=True, blank=True)\n@@ -42,6 +43,6 @@\n         return self.name\n     \n     class Meta:\n         permissions = [\n-            ('manage_collegefacility', 'Manage facility'),\n+            ('manage_collegefacility', 'Manage collegefacility'),\n         ]\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1740650080062,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n from django.db import models\n-\n+from collegemanagement\n # class Category(models.Model):\n #     name = models.CharField(max_length=255)\n #     image = models.ImageField(upload_to='facility_images/', blank=True, null=True)\n #     created_date_time = models.DateTimeField(auto_now_add=True, null=True, blank=True)\n@@ -27,10 +27,10 @@\n             ('manage_facility', 'Manage facility'),\n         ]\n \n class CollegeFacility(models.Model):\n+    college = \n     \n-    \n     name = models.CharField(max_length=255)\n     # category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='facilities')\n     image = models.ImageField(upload_to='facility_images/', blank=True, null=True)\n     created_date = models.DateField(auto_now_add=True, null=True, blank=True)\n"
+                },
+                {
+                    "date": 1740650086709,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n from django.db import models\n-from collegemanagement\n+from collegemanagement.models import College\n # class Category(models.Model):\n #     name = models.CharField(max_length=255)\n #     image = models.ImageField(upload_to='facility_images/', blank=True, null=True)\n #     created_date_time = models.DateTimeField(auto_now_add=True, null=True, blank=True)\n@@ -27,9 +27,9 @@\n             ('manage_facility', 'Manage facility'),\n         ]\n \n class CollegeFacility(models.Model):\n-    college = \n+    college =  \n     \n     name = models.CharField(max_length=255)\n     # category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='facilities')\n     image = models.ImageField(upload_to='facility_images/', blank=True, null=True)\n"
+                },
+                {
+                    "date": 1740650093594,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,9 +27,11 @@\n             ('manage_facility', 'Manage facility'),\n         ]\n \n class CollegeFacility(models.Model):\n-    college =  \n+    college = models.ForeignKey(College, on_delete=models.CASCADE, related_name='college_facilities')\n+    facility = models.ForeignKey(Facility, on_delete=models.CASCADE, related_name='college_facilities')\n+    created_date = models.DateField(auto_now_add=True, null=True, blank=True) \n     \n     name = models.CharField(max_length=255)\n     # category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='facilities')\n     image = models.ImageField(upload_to='facility_images/', blank=True, null=True)\n"
+                },
+                {
+                    "date": 1740650101653,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -29,17 +29,11 @@\n \n class CollegeFacility(models.Model):\n     college = models.ForeignKey(College, on_delete=models.CASCADE, related_name='college_facilities')\n     facility = models.ForeignKey(Facility, on_delete=models.CASCADE, related_name='college_facilities')\n-    created_date = models.DateField(auto_now_add=True, null=True, blank=True) \n-    \n-    name = models.CharField(max_length=255)\n-    # category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='facilities')\n-    image = models.ImageField(upload_to='facility_images/', blank=True, null=True)\n     created_date = models.DateField(auto_now_add=True, null=True, blank=True)\n     created_date_time = models.DateTimeField(auto_now_add=True, null=True, blank=True)\n-    is_show = models.BooleanField(default=False)\n-    updated_date = models.DateTimeField(auto_now=True, null=True, blank=True)\n+    updated_date = models.DateTimeField(auto_now=True, null=True, blank=True) \n     \n \n     def __str__(self):\n         return self.name\n"
+                },
+                {
+                    "date": 1740650108528,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -35,9 +35,9 @@\n     updated_date = models.DateTimeField(auto_now=True, null=True, blank=True) \n     \n \n     def __str__(self):\n-        \n+        return f'{self.college.name} - {self.facility.name}'\n     \n     class Meta:\n         permissions = [\n             ('manage_collegefacility', 'Manage collegefacility'),\n"
                 }
             ],
             "date": 1727174504183,

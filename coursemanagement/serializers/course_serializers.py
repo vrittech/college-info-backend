@@ -5,51 +5,60 @@ from django.core.exceptions import ValidationError
 from django.core.files.uploadedfile import InMemoryUploadedFile  
 from ..models import Course, CourseCurriculumFile, Duration, Faculty, Level, Discipline, Affiliation
 
-
-
 def str_to_list(data, value_to_convert):
-    """
-    Converts a string representation of a list into an actual list if necessary.
-    
-    Args:
-        data (QueryDict or dict): The incoming data from the request.
-        value_to_convert (str): The key in the data to convert.
-    
-    Returns:
-        dict: The modified data with the specified key converted to a list if necessary.
-    """
     try:
-        # Make a mutable copy of data
-        mutable_data = data.copy() if hasattr(data, 'copy') else dict(data)
-        value_to_convert_data = mutable_data.get(value_to_convert, None)
-        
-        # Skip conversion if data is already a list or contains Discipline instances
-        if isinstance(value_to_convert_data, list):
-            # Check if it's a list of Discipline objects; if so, skip conversion
-            if all(isinstance(item, Discipline) for item in value_to_convert_data):
-                return mutable_data
-            # If it's a list of IDs or similar, also skip conversion
-            return mutable_data
+        mutable_data = data.dict()  # Convert to dictionary if possible
+    except AttributeError:
+        mutable_data = data  # Already a dictionary
 
-        # Only parse if value is a string
-        if isinstance(value_to_convert_data, str):
-            try:
-                # Attempt to parse as JSON list
-                variations = ast.literal_eval(value_to_convert_data)
-                if isinstance(variations, list):
-                    mutable_data[value_to_convert] = variations
-                else:
-                    raise ValidationError({
-                        value_to_convert: "Input string does not represent a list."
-                    })
-            except (ValueError, SyntaxError):
-                # If not JSON, split by comma
-                disciplines = [item.strip() for item in value_to_convert_data.split(',') if item.strip()]
-                mutable_data[value_to_convert] = disciplines
+    value_to_convert_data = mutable_data.get(value_to_convert)
+
+    # If it's already a list, return as is
+    if isinstance(value_to_convert_data, list):
         return mutable_data
-    except KeyError:
-        # Return unchanged data if value_to_convert is not in the data
-        return data
+
+    # Handle binary or file data (leave as is)
+    if isinstance(value_to_convert_data, bytes):
+        return mutable_data
+
+    # If it's an int, float, or bool, wrap it in a list
+    if isinstance(value_to_convert_data, (int, float, bool)):
+        mutable_data[value_to_convert] = [value_to_convert_data]
+        return mutable_data
+
+    # If it's None, convert to an empty list
+    if value_to_convert_data is None:
+        mutable_data[value_to_convert] = []
+        return mutable_data
+
+    # Handle comma-separated values (e.g., "4,5,")
+    if isinstance(value_to_convert_data, str) and "," in value_to_convert_data:
+        parsed_list = [
+            item.strip() for item in value_to_convert_data.split(",") if item.strip().isdigit()
+        ]  # ✅ Remove empty strings and ensure only digits
+
+        # Convert to integers
+        mutable_data[value_to_convert] = [int(item) for item in parsed_list]
+        return mutable_data
+
+    # If it's a string, try parsing it as a list
+    try:
+        parsed_value = ast.literal_eval(value_to_convert_data)
+
+        # Ensure parsed result is a list
+        if isinstance(parsed_value, list):
+            mutable_data[value_to_convert] = parsed_value
+        else:
+            # Convert string (that is not a list) into a single-item list
+            mutable_data[value_to_convert] = [value_to_convert_data]
+
+        return mutable_data
+
+    except (ValueError, SyntaxError):
+        # If parsing fails, wrap it in a list instead
+        mutable_data[value_to_convert] = [value_to_convert_data]
+        return mutable_data
+
     
     
 
@@ -124,21 +133,21 @@ class CourseRetrieveSerializers(serializers.ModelSerializer):
 
 class CourseWriteSerializers(serializers.ModelSerializer):
     # Accept IDs for ForeignKey and ManyToMany fields in the request (write-only)
-    affiliation = serializers.PrimaryKeyRelatedField(
-        queryset=Affiliation.objects.all(), required=False, write_only=True
-    )
-    duration = serializers.PrimaryKeyRelatedField(
-        queryset=Duration.objects.all(), required=True, write_only=True
-    )
-    faculty = serializers.PrimaryKeyRelatedField(
-        queryset=Faculty.objects.all(), required=True, write_only=True
-    )
-    level = serializers.PrimaryKeyRelatedField(
-        queryset=Level.objects.all(), required=True, write_only=True
-    )
-    discipline = serializers.PrimaryKeyRelatedField(
-        queryset=Discipline.objects.all(), many=True, required=True, write_only=True
-    )
+    # affiliation = serializers.PrimaryKeyRelatedField(
+    #     queryset=Affiliation.objects.all(), required=False, write_only=True
+    # )
+    # duration = serializers.PrimaryKeyRelatedField(
+    #     queryset=Duration.objects.all(), required=True, write_only=True
+    # )
+    # faculty = serializers.PrimaryKeyRelatedField(
+    #     queryset=Faculty.objects.all(), required=True, write_only=True
+    # )
+    # level = serializers.PrimaryKeyRelatedField(
+    #     queryset=Level.objects.all(), required=True, write_only=True
+    # )
+    # discipline = serializers.PrimaryKeyRelatedField(
+    #     queryset=Discipline.objects.all(), many=True, required=True, write_only=True
+    # )
 
     # Read-only: Return full objects instead of just IDs in the response
     affiliation = AffiliationSerializer(read_only=True)
@@ -152,6 +161,11 @@ class CourseWriteSerializers(serializers.ModelSerializer):
     class Meta:
         model = Course
         fields = '__all__'
+        
+    def to_internal_value(self, data):
+            """Convert certification input from string to list using str_to_list."""
+            data = str_to_list(data, 'discipline')  # Convert string to list for certification
+            return super().to_internal_value(data)
 
     def create(self, validated_data):
         """Handles creating a course with multiple curriculum file uploads"""
@@ -181,7 +195,7 @@ class CourseWriteSerializers(serializers.ModelSerializer):
             faculty = Faculty.objects.get(id=faculty_id)
             level = Level.objects.get(id=level_id)
             affiliation = Affiliation.objects.get(id=affiliation_id) if affiliation_id else None
-            disciplines = Discipline.objects.filter(id__in=discipline_ids)
+            # disciplines = Discipline.objects.filter(id__in=discipline_ids)
         except Duration.DoesNotExist:
             raise serializers.ValidationError({"duration": "Invalid ID."})
         except Faculty.DoesNotExist:
@@ -190,14 +204,24 @@ class CourseWriteSerializers(serializers.ModelSerializer):
             raise serializers.ValidationError({"level": "Invalid ID."})
         except Affiliation.DoesNotExist:
             raise serializers.ValidationError({"affiliation": "Invalid ID."})
-        except Discipline.DoesNotExist:
+        # except Discipline.DoesNotExist:
             raise serializers.ValidationError({"discipline": "Invalid ID."})
 
         # Create course instance
         course = Course.objects.create(
             duration=duration, faculty=faculty, level=level, affiliation=affiliation, **validated_data
         )
+        # course.discipline.set(disciplines)
+        if isinstance(discipline_ids, str):
+            discipline_ids = [int(id) for id in discipline_ids.split(",") if id.strip().isdigit()]
+        elif isinstance(discipline_ids, list):
+            discipline_ids = [int(id) for id in discipline_ids if isinstance(id, int)]
+            
+        disciplines = Discipline.objects.filter(id__in=discipline_ids)
+        
         course.discipline.set(disciplines)
+            
+
 
         # Extract curriculum files from request.FILES
         uploaded_files = [
@@ -221,6 +245,11 @@ class CourseWriteSerializers(serializers.ModelSerializer):
         level_id = request.data.get("level", None)
         affiliation_id = request.data.get("affiliation", None)
         discipline_ids = request.data.get("discipline", [])
+        
+        if isinstance(discipline_ids, str):
+            discipline_ids = [int(id) for id in discipline_ids.split(",") if id.strip().isdigit()]
+        elif isinstance(discipline_ids, list):
+            discipline_ids = [int(id) for id in discipline_ids if isinstance(id, int)]
 
         if duration_id:
             instance.duration = Duration.objects.get(id=duration_id)
@@ -233,8 +262,15 @@ class CourseWriteSerializers(serializers.ModelSerializer):
         if discipline_ids:
             instance.discipline.set(Discipline.objects.filter(id__in=discipline_ids))
 
+            
+        
+        
+            
+        many_to_many_fields = {"discipline"}
+
         for attr, value in validated_data.items():
-            setattr(instance, attr, value)
+            if attr not in many_to_many_fields: 
+                setattr(instance, attr, value)
         instance.save()
 
         # Extract curriculum files from request.FILES

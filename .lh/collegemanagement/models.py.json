@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 252,
+            "activePatchIndex": 254,
             "patches": [
                 {
                     "date": 1727170911785,
@@ -1016,6 +1016,14 @@
                 {
                     "date": 1740640156938,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -108,9 +108,9 @@\n     college = models.ForeignKey(\n         College, on_delete=models.CASCADE, related_name='college_gallery', null=True, blank=True\n     )\n     image = models.ImageField(upload_to='college/gallery/', null=True, blank=True)  # Store one image per instance\n-    description = models.TextField(blank=True)\n+    # description = models.TextField(blank=True)\n     created_date = models.DateTimeField(auto_now_add=True)\n     updated_date = models.DateTimeField(auto_now=True)\n \n     def __str__(self):\n"
+                },
+                {
+                    "date": 1740650216678,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -56,9 +56,9 @@\n     longitude = models.CharField(max_length= 255,null=True,blank=True)\n     about = models.TextField(null = True,blank=True)\n     brochure = models.FileField(upload_to='college/brochure/',null=True,blank=True)\n     step_counter= models.ForeignKey(FormStepProgress, on_delete=models.CASCADE,related_name='step_counter',null=True,blank=True)\n-    facilities = models.ManyToManyField(Facility,related_name='college_facilities',blank=True)\n+    # facilities = models.ManyToManyField(Facility,related_name='college_facilities',blank=True)\n     placement = models.TextField(null=True,blank=True)\n     scholarship = models.TextField(null=True,blank=True)\n     created_date = models.DateField(auto_now_add=True)\n     updated_date = models.DateField(auto_now=True)\n"
+                },
+                {
+                    "date": 1740650240157,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,9 @@\n # from admissionopen.models import AdmissionOpen\n # from location.models import Location\n from collegetype.models import CollegeType\n # from coursesandfees.models import CoursesAndFees\n-from facilities.models import Facility\n+# from facilities.models import Facility\n from socialmedia.models import SocialMedia,CollegeSocialMedia\n from district.models import District\n from discipline.models import Discipline\n from gallery.models import Gallery\n"
                 }
             ],
             "date": 1727170911784,

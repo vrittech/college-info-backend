@@ -1,0 +1,54 @@
+{
+    "sourceFile": "facilities/serializers/collegefacility_serializers.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 9,
+            "patches": [
+                {
+                    "date": 1740650419170,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1740650425966,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,13 @@\n from rest_framework import serializers\n from ..models import CollegeFacility\n-from collegemanagement\n+from collegemanagement.models import College\n \n+class CollegeSerializers(serializers.ModelSerializer):\n+    class Meta:\n+        model = College\n+        fields = ['id', 'name']\n+\n class CollegeFacilityListSerializers(serializers.ModelSerializer):\n     class Meta:\n         model = CollegeFacility\n         fields = '__all__'\n"
+                },
+                {
+                    "date": 1740650431745,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,9 +4,9 @@\n \n class CollegeSerializers(serializers.ModelSerializer):\n     class Meta:\n         model = College\n-        fields = ['id', 'name']\n+        fields = ['id', 'name','slug']\n \n class CollegeFacilityListSerializers(serializers.ModelSerializer):\n     class Meta:\n         model = CollegeFacility\n"
+                },
+                {
+                    "date": 1740650438557,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,8 +5,9 @@\n class CollegeSerializers(serializers.ModelSerializer):\n     class Meta:\n         model = College\n         fields = ['id', 'name','slug']\n+        ref_name = 'CollegeFacilitySerializers'\n \n class CollegeFacilityListSerializers(serializers.ModelSerializer):\n     class Meta:\n         model = CollegeFacility\n"
+                },
+                {
+                    "date": 1740650445428,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,8 +8,9 @@\n         fields = ['id', 'name','slug']\n         ref_name = 'CollegeFacilitySerializers'\n \n class CollegeFacilityListSerializers(serializers.ModelSerializer):\n+    college = CollegeSerializers(read_only=True)\n     class Meta:\n         model = CollegeFacility\n         fields = '__all__'\n \n"
+                },
+                {
+                    "date": 1740650450882,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,8 +14,9 @@\n         model = CollegeFacility\n         fields = '__all__'\n \n class CollegeFacilityRetrieveSerializers(serializers.ModelSerializer):\n+    college = CollegeSerializers(read_only=True)\n     class Meta:\n         model = CollegeFacility\n         fields = '__all__'\n \n"
+                },
+                {
+                    "date": 1740650464709,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,7 +20,8 @@\n         model = CollegeFacility\n         fields = '__all__'\n \n class CollegeFacilityWriteSerializers(serializers.ModelSerializer):\n+    college = CollegeSerializers(read_only=True)\n     class Meta:\n         model = CollegeFacility\n         fields = '__all__'\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1740650471306,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,8 +20,8 @@\n         model = CollegeFacility\n         fields = '__all__'\n \n class CollegeFacilityWriteSerializers(serializers.ModelSerializer):\n-    college = CollegeSerializers(read_only=True)\n+    college = CollegeSerializers(write_only=True)\n     class Meta:\n         model = CollegeFacility\n         fields = '__all__'\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1740650558363,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,8 +20,8 @@\n         model = CollegeFacility\n         fields = '__all__'\n \n class CollegeFacilityWriteSerializers(serializers.ModelSerializer):\n-    college = CollegeSerializers(write_only=True)\n+    # college = CollegeSerializers(write_only=True)\n     class Meta:\n         model = CollegeFacility\n         fields = '__all__'\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1740650575731,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,8 +20,7 @@\n         model = CollegeFacility\n         fields = '__all__'\n \n class CollegeFacilityWriteSerializers(serializers.ModelSerializer):\n-    # college = CollegeSerializers(write_only=True)\n     class Meta:\n         model = CollegeFacility\n         fields = '__all__'\n\\ No newline at end of file\n"
+                }
+            ],
+            "date": 1740650419170,
+            "name": "Commit-0",
+            "content": "from rest_framework import serializers\nfrom ..models import CollegeFacility\nfrom collegemanagement\n\nclass CollegeFacilityListSerializers(serializers.ModelSerializer):\n    class Meta:\n        model = CollegeFacility\n        fields = '__all__'\n\nclass CollegeFacilityRetrieveSerializers(serializers.ModelSerializer):\n    class Meta:\n        model = CollegeFacility\n        fields = '__all__'\n\nclass CollegeFacilityWriteSerializers(serializers.ModelSerializer):\n    class Meta:\n        model = CollegeFacility\n        fields = '__all__'"
+        }
+    ]
+}
