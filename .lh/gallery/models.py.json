@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 44,
+            "activePatchIndex": 54,
             "patches": [
                 {
                     "date": 1726649624074,
@@ -184,6 +184,46 @@
                 {
                     "date": 1740719388418,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,21 +2,13 @@\n \n # Create your models here.\n class Album(models.Model):\n     name = models.CharField(max_length = 500 , null = True,blank = True)\n-    featured_image = models.ImageField(max_length = 500,upload_to = 'gallery/feature_images',null=True,blank=True)\n+    featured_image = models.CharField(max_length = 500 , null = True,blank = True)\n     created_date = models.DateField(auto_now_add=True, null = True,blank = True)\n     updated_date = models.DateTimeField(auto_now=True, null = True,blank = True)\n     \n     def __str__(self):\n-/*************  ✨ Codeium Command ⭐  *************/\n-        \"\"\"\n-        Return a string representation of the object.\n-        \n-        Returns:\n-            str: The name of the album.\n-        \"\"\"\n-/******  b55c0b11-a631-42df-8c72-35db7d5e1faa  *******/\n         return self.name\n     \n     class Meta:\n         permissions = [\n"
+                },
+                {
+                    "date": 1740724143709,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,8 +7,9 @@\n     created_date = models.DateField(auto_now_add=True, null = True,blank = True)\n     updated_date = models.DateTimeField(auto_now=True, null = True,blank = True)\n     \n     def __str__(self):\n+        \n         return self.name\n     \n     class Meta:\n         permissions = [\n"
+                },
+                {
+                    "date": 1740724148867,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,8 @@\n     created_date = models.DateField(auto_now_add=True, null = True,blank = True)\n     updated_date = models.DateTimeField(auto_now=True, null = True,blank = True)\n     \n     def __str__(self):\n-        \n         return self.name\n     \n     class Meta:\n         permissions = [\n"
+                },
+                {
+                    "date": 1740724342987,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -32,7 +32,12 @@\n     def save(self, *args, **kwargs):\n         if self.is_cover and self.album:\n             # Set all other images in this album to is_cover=False\n             Gallery.objects.filter(album=self.album, is_cover=True).update(is_cover=False)\n-        \n+\n+            # Update the album's featured image with the new cover image URL\n+            if self.image:\n+                self.album.featured_image = self.image.url  # Store the URL\n+                self.album.save(update_fields=['featured_image'])  # Save only this field to prevent overwrites\n+\n         super().save(*args, **kwargs)\n \n"
+                },
+                {
+                    "date": 1740724995711,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -33,11 +33,21 @@\n         if self.is_cover and self.album:\n             # Set all other images in this album to is_cover=False\n             Gallery.objects.filter(album=self.album, is_cover=True).update(is_cover=False)\n \n-            # Update the album's featured image with the new cover image URL\n+            # Generate full image URL dynamically\n             if self.image:\n-                self.album.featured_image = self.image.url  # Store the URL\n-                self.album.save(update_fields=['featured_image'])  # Save only this field to prevent overwrites\n+                request = kwargs.get('request')  # Get request object if passed\n+                if request:\n+                    full_url = request.build_absolute_uri(self.image.url)\n+                else:\n+                    # Fallback to dynamically fetch domain\n+                    from django.contrib.sites.models import Site\n+                    current_site = Site.objects.get_current()\n+                    full_url = f\"https://{current_site.domain}{self.image.url}\"\n \n+                # Save the full URL in Album.featured_image\n+                self.album.featured_image = full_url\n+                self.album.save(update_fields=['featured_image'])  # Save only this field\n+\n         super().save(*args, **kwargs)\n \n"
+                },
+                {
+                    "date": 1740725141328,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -33,21 +33,11 @@\n         if self.is_cover and self.album:\n             # Set all other images in this album to is_cover=False\n             Gallery.objects.filter(album=self.album, is_cover=True).update(is_cover=False)\n \n-            # Generate full image URL dynamically\n+            # Update the album's featured image with the new cover image URL\n             if self.image:\n-                request = kwargs.get('request')  # Get request object if passed\n-                if request:\n-                    full_url = request.build_absolute_uri(self.image.url)\n-                else:\n-                    # Fallback to dynamically fetch domain\n-                    from django.contrib.sites.models import Site\n-                    current_site = Site.objects.get_current()\n-                    full_url = f\"https://{current_site.domain}{self.image.url}\"\n+                self.album.featured_image = self.image.url  # Store the URL\n+                self.album.save(update_fields=['featured_image'])  # Save only this field to prevent overwrites\n \n-                # Save the full URL in Album.featured_image\n-                self.album.featured_image = full_url\n-                self.album.save(update_fields=['featured_image'])  # Save only this field\n-\n         super().save(*args, **kwargs)\n \n"
+                },
+                {
+                    "date": 1740725193943,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -39,5 +39,5 @@\n                 self.album.featured_image = self.image.url  # Store the URL\n                 self.album.save(update_fields=['featured_image'])  # Save only this field to prevent overwrites\n \n         super().save(*args, **kwargs)\n-\n+/meadi/\n"
+                },
+                {
+                    "date": 1740725199490,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -39,5 +39,4 @@\n                 self.album.featured_image = self.image.url  # Store the URL\n                 self.album.save(update_fields=['featured_image'])  # Save only this field to prevent overwrites\n \n         super().save(*args, **kwargs)\n-/meadi/\n"
+                },
+                {
+                    "date": 1740725319951,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,8 +7,16 @@\n     created_date = models.DateField(auto_now_add=True, null = True,blank = True)\n     updated_date = models.DateTimeField(auto_now=True, null = True,blank = True)\n     \n     def __str__(self):\n+/*************  ✨ Codeium Command ⭐  *************/\n+    \"\"\"\n+    Return a string representation of the object.\n+    \n+    Returns:\n+        str: The name of the Album.\n+    \"\"\"\n+/******  e865975d-0b7b-45d1-a39f-b6e0564c1f01  *******/\n         return self.name\n     \n     class Meta:\n         permissions = [\n@@ -32,11 +40,7 @@\n     def save(self, *args, **kwargs):\n         if self.is_cover and self.album:\n             # Set all other images in this album to is_cover=False\n             Gallery.objects.filter(album=self.album, is_cover=True).update(is_cover=False)\n+        \n+        super().save(*args, **kwargs)\n \n-            # Update the album's featured image with the new cover image URL\n-            if self.image:\n-                self.album.featured_image = self.image.url  # Store the URL\n-                self.album.save(update_fields=['featured_image'])  # Save only this field to prevent overwrites\n-\n-        super().save(*args, **kwargs)\n"
+                },
+                {
+                    "date": 1740725327289,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,16 +7,8 @@\n     created_date = models.DateField(auto_now_add=True, null = True,blank = True)\n     updated_date = models.DateTimeField(auto_now=True, null = True,blank = True)\n     \n     def __str__(self):\n-/*************  ✨ Codeium Command ⭐  *************/\n-    \"\"\"\n-    Return a string representation of the object.\n-    \n-    Returns:\n-        str: The name of the Album.\n-    \"\"\"\n-/******  e865975d-0b7b-45d1-a39f-b6e0564c1f01  *******/\n         return self.name\n     \n     class Meta:\n         permissions = [\n"
+                },
+                {
+                    "date": 1740725341110,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -32,7 +32,12 @@\n     def save(self, *args, **kwargs):\n         if self.is_cover and self.album:\n             # Set all other images in this album to is_cover=False\n             Gallery.objects.filter(album=self.album, is_cover=True).update(is_cover=False)\n-        \n+\n+            # Update the album's featured image with the new cover image URL\n+            if self.image:\n+                self.album.featured_image = self.image.url  # Store the URL\n+                self.album.save(update_fields=['featured_image'])  # Save only this field to prevent overwrites\n+\n         super().save(*args, **kwargs)\n \n"
                 }
             ],
             "date": 1726649624074,

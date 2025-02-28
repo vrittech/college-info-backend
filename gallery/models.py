@@ -33,6 +33,11 @@ class Gallery(models.Model):
         if self.is_cover and self.album:
             # Set all other images in this album to is_cover=False
             Gallery.objects.filter(album=self.album, is_cover=True).update(is_cover=False)
-        
+
+            # Update the album's featured image with the new cover image URL
+            if self.image:
+                self.album.featured_image = self.image.url  # Store the URL
+                self.album.save(update_fields=['featured_image'])  # Save only this field to prevent overwrites
+
         super().save(*args, **kwargs)
 
