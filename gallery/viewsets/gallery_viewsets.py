@@ -76,7 +76,7 @@ class galleryViewsets(viewsets.ModelViewSet):
     @action(detail=False, methods=['get'], name="list_all_albums", url_path="all-albums")
     def list_all_albums(self, request, *args, **kwargs):
         # Get all albums
-        albums = Album.objects.all()
+        albums = Album.objects.all().order_by('-id')
 
         # Create a list where each album has its cover image or None
         album_data = []
