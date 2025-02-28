@@ -1,22 +1,26 @@
 from rest_framework import viewsets
 from rest_framework.filters import SearchFilter, OrderingFilter
 from django_filters.rest_framework import DjangoFilterBackend
-from ..models import Gallery
+from ..models import Gallery,Album
 from ..serializers.gallery_serializers import GalleryListSerializers, GalleryRetrieveSerializers, GalleryWriteSerializers
 from ..utilities.importbase import *
 from rest_framework.response import Response
 from rest_framework import status
 from mainproj.permissions import DynamicModelPermission
+from rest_framework.decorators import action
+from rest_framework.response import Response
+from rest_framework.permissions import AllowAny
+
 
 class galleryViewsets(viewsets.ModelViewSet):
     serializer_class = GalleryListSerializers
     permission_classes = [DynamicModelPermission]
-    authentication_classes = [JWTAuthentication]
+    # authentication_classes = [JWTAuthentication]
     pagination_class = MyPageNumberPagination
     queryset = Gallery.objects.all().order_by('-id')
 
     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]
-    search_fields = ['id']
+    search_fields = ['id','album___name']
     ordering_fields = ['-id']
 
     filterset_fields = {
@@ -67,4 +71,27 @@ class galleryViewsets(viewsets.ModelViewSet):
     # @action(detail=False, methods=['get'], name="action_name", url_path="url_path")
     # def action_name(self, request, *args, **kwargs):
     #     return super().list(request, *args, **kwargs)
+
+
+    @action(detail=False, methods=['get'], name="list_all_albums", url_path="all-albums")
+    def list_all_albums(self, request, *args, **kwargs):
+        # Get all albums
+        albums = Album.objects.all()
+
+        # Create a list where each album has its cover image or None
+        album_data = []
+        for album in albums:
+            cover = Gallery.objects.filter(album=album, is_cover=True).first()
+            album_data.append({
+                "album_id": album.id,
+                "album_name": album.name,
+                "cover_image": request.build_absolute_uri(cover.image.url) if cover and cover.image else None
+            })
+
+        # Apply pagination
+        page = self.paginate_queryset(album_data)
+        if page is not None:
+            return self.get_paginated_response(page)
+
+        return Response(album_data)
 

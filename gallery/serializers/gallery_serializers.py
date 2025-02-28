@@ -84,9 +84,32 @@ class GalleryWriteSerializers(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         """
-        Handles updating a single Gallery instance.
+        Handles updating an album by adding new images if provided.
         """
+        request = self.context.get("request")
+
+        # Check if new images are being added
+        uploaded_files = [
+            request.FILES[key] for key in request.FILES if key.startswith("image[")
+        ]
+
+        if uploaded_files:
+            # Add new images to the album
+            gallery_instances = []
+            for image_file in uploaded_files:
+                if isinstance(image_file, InMemoryUploadedFile):
+                    gallery_instance = Gallery.objects.create(
+                        album=instance.album,  # Keep album association
+                        image=image_file,
+                        is_cover=validated_data.get("is_cover", False)
+                    )
+                    gallery_instances.append(gallery_instance)
+
+            return gallery_instances
+
+        # If no new images, proceed with updating existing fields
         for attr, value in validated_data.items():
             setattr(instance, attr, value)
         instance.save()
         return instance
+

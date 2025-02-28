@@ -14,10 +14,11 @@ class albumViewsets(viewsets.ModelViewSet):
     queryset = Album.objects.all().order_by('-id')
 
     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]
-    search_fields = ['id']
-    ordering_fields = ['id']
+    search_fields = ['id','name']
+    ordering_fields = ['id','name']
 
     filterset_fields = {
+        
         'id': ['exact'],
         'created_date': ['exact', 'lte', 'gte'],
     }
