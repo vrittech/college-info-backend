@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 172,
+            "activePatchIndex": 175,
             "patches": [
                 {
                     "date": 1726568467190,
@@ -696,6 +696,18 @@
                 {
                     "date": 1740410433404,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -118,9 +118,9 @@\n             (\"manage_event\", \"Manage Event\"),\n         ]\n \n class EventGallery(models.Model):\n-    event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name='images')\n+    event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name='image')\n     is_featured_image = models.BooleanField(default=False)\n     image = models.ImageField(upload_to='event_images/',null=True,blank=True)\n     \n     created_date_time = models.DateTimeField(auto_now_add=True, null=True, blank=True)\n"
+                },
+                {
+                    "date": 1740745910764,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -74,8 +74,9 @@\n     ]\n     event_type = models.CharField(max_length=10, choices=TYPE_CHOICES)\n     venue = models.CharField(max_length=255, blank=True, null=True)\n     \n+    \n     online_seat_limit = models.PositiveIntegerField(default=0)\n     offline_seat_limit = models.PositiveIntegerField(default=0)\n     is_offline_seat_limit = models.BooleanField(default=False)\n     is_online_seat_limit = models.BooleanField(default=False)\n"
+                },
+                {
+                    "date": 1740745916340,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -73,10 +73,10 @@\n         ('hybrid', 'Hybrid'),\n     ]\n     event_type = models.CharField(max_length=10, choices=TYPE_CHOICES)\n     venue = models.CharField(max_length=255, blank=True, null=True)\n+    online\n     \n-    \n     online_seat_limit = models.PositiveIntegerField(default=0)\n     offline_seat_limit = models.PositiveIntegerField(default=0)\n     is_offline_seat_limit = models.BooleanField(default=False)\n     is_online_seat_limit = models.BooleanField(default=False)\n"
+                },
+                {
+                    "date": 1740745921624,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -73,9 +73,9 @@\n         ('hybrid', 'Hybrid'),\n     ]\n     event_type = models.CharField(max_length=10, choices=TYPE_CHOICES)\n     venue = models.CharField(max_length=255, blank=True, null=True)\n-    online\n+    online_platform = models.CharField(max_length=255, blank=True, null=True)\n     \n     online_seat_limit = models.PositiveIntegerField(default=0)\n     offline_seat_limit = models.PositiveIntegerField(default=0)\n     is_offline_seat_limit = models.BooleanField(default=False)\n"
                 }
             ],
             "date": 1726568467190,

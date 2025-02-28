@@ -74,6 +74,7 @@ class Event(SEOFields):
     ]
     event_type = models.CharField(max_length=10, choices=TYPE_CHOICES)
     venue = models.CharField(max_length=255, blank=True, null=True)
+    online_platform = models.CharField(max_length=255, blank=True, null=True)
     
     online_seat_limit = models.PositiveIntegerField(default=0)
     offline_seat_limit = models.PositiveIntegerField(default=0)

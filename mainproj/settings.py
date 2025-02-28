@@ -272,14 +272,42 @@ CHANNEL_LAYERS = {
 # daphne -b 0.0.0.0 -p 8001 mainproj.asgi:application  # For WebSockets
 # settings.py
 
+# NOTIFICATION_MODELS = {
+#     "collegemanagement.College": ["created", "updated", "deleted"],  
+#     "informationmanagement.Information": ["created", "updated"], 
+#     "affilliationmanagement.Affilliation": ["created", "updated", "deleted"], 
+#     "event.Event": ["created", "updated", "deleted"], 
+#     "coursemanagement.Course": ["created", "updated", "deleted"], 
+#     "requestsubmission.RequestSubmission": ["created", "updated", "deleted"], 
+#     "contact.Contact": ["created", "updated", "deleted"], 
+#     "coursesandfees.CoursesAndFees": ["created", "updated", "deleted"], 
+#     "inquiry.Inquiry": ["created", "updated", "deleted"],
+    
+#     # 🔹 Add this missing model:
+#     "collegemanagement.CollegeGallery": ["created", "updated", "deleted"],  # ✅ New addition
+# }
 NOTIFICATION_MODELS = {
-    "collegemanagement.College": ["created", "updated", "deleted"],  
-    "informationmanagement.Information": ["created", "updated"], 
-    "affilliationmanagement.Affilliation": ["created", "updated", "deleted"], 
-    "event.Event": ["created", "updated", "deleted"], 
-    "coursemanagement.Course": ["created", "updated", "deleted"], 
-    "requestsubmission.RequestSubmission": ["created", "updated", "deleted"], 
-    "contact.Contact": ["created", "updated", "deleted"], 
-    "coursesandfees.CoursesAndFees": ["created", "updated", "deleted"], 
-    "inquiry.Inquiry": ["created", "updated", "deleted"],
+    "collegemanagement.college": ["created", "updated", "deleted"],  
+    "informationmanagement.information": ["created", "updated"], 
+    "affilliationmanagement.affilliation": ["created", "updated", "deleted"], 
+    "event.event": ["created", "updated", "deleted"], 
+    "coursemanagement.course": ["created", "updated", "deleted"], 
+    "requestsubmission.requestsubmission": ["created", "updated", "deleted"], 
+    "contact.contact": ["created", "updated", "deleted"], 
+    "coursesandfees.coursesandfees": ["created", "updated", "deleted"], 
+    "inquiry.inquiry": ["created", "updated", "deleted"], 
+    "collegemanagement.collegegallery": ["created", "updated", "deleted"],  
 }
+
+PUBLIC_NOTIFICATION_MODELS = [
+    "contact.contact",
+    "inquiry.inquiry",
+]
+
+# DEFAULT_SUPERADMIN_EMAILS = ["admin@example.com"]
+
+# USE_NOTIFICATION_PERMISSIONS = True
+
+# ENABLE_DEBUG_LOGS = True
+
+
