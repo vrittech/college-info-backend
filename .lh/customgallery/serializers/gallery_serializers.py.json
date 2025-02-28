@@ -1,0 +1,18 @@
+{
+    "sourceFile": "customgallery/serializers/gallery_serializers.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1740732870700,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1740732870700,
+            "name": "Commit-0",
+            "content": "from rest_framework import serializers\nfrom ..models import CustomGallery  Gallery\n\nclass GalleryListSerializers(serializers.ModelSerializer):\n    class Meta:\n        model = Gallery\n        fields = '__all__'\n\nclass GalleryRetrieveSerializers(serializers.ModelSerializer):\n    class Meta:\n        model = Gallery\n        fields = '__all__'\n\nclass GalleryWriteSerializers(serializers.ModelSerializer):\n    class Meta:\n        model = Gallery\n        fields = '__all__'"
+        }
+    ]
+}

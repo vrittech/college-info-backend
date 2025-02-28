@@ -90,6 +90,7 @@ INSTALLED_APPS = [
     'requestsubmission',
     'notify',
     'setting',
+    'customgallery',
     # 'notifications',  # Django Notifications HQ
     # 'channels',  # Required for real-time updates (Django Channels)
 ]

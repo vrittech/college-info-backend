@@ -1,0 +1,22 @@
+{
+    "sourceFile": "customgallery/admin.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 1,
+            "patches": [
+                {
+                    "date": 1740732849337,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1740733027071,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n from django.contrib import admin\n-from gallery.models import  Gallery\n+from customgallery.models import  CustomGallery\n \n # Register your models here.\n admin.site.register(CustomGallery)\n"
+                }
+            ],
+            "date": 1740732849337,
+            "name": "Commit-0",
+            "content": "from django.contrib import admin\nfrom gallery.models import  Gallery\n\n# Register your models here.\nadmin.site.register(CustomGallery)\n"
+        }
+    ]
+}
