@@ -1,0 +1,146 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Trip Booking Notification</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+        .email-container {
+            background-color: #ffffff;
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .header img {
+            max-width: 150px;
+        }
+        .content {
+            margin-bottom: 20px;
+        }
+        h1 {
+            font-size: 22px;
+            color: #333;
+        }
+    
+        .trip-details {
+            background-color: #f0f8ff;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .trip-details-text {
+            font-size: 16px;
+            line-height: 1.8;
+            color: #333;
+        }
+        .trip-details-text p {
+            margin: 5px 0;
+        }
+        .trip-details img {
+            max-width: 100px;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            background-color: #BE701E;
+            padding: 20px;
+            border-radius: 0 0 10px 10px;
+            color: #ffffff;
+        }
+        .footer a {
+            text-decoration: none;
+            color: #fff;
+        }
+        .footer .social-icons img {
+            width: 25px;
+            margin: 0 10px;
+        }
+        .footer-image-size{
+            height: 20px;
+            width: 20px;
+            margin: 0 5px;
+        }
+        .trip-details-box {
+            background-color: #f0f8ff;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            display: flex;
+            align-items: center;
+        }
+        .trip-details-box .details {
+            flex: 1;
+        }
+        .trip-details-box .details p {
+            margin: 5px 0;
+        }
+        .trip-details-box img {
+            width: 100px;
+            margin-left: 20px;
+        }
+        .footer .social-icons img {
+            width: 24px;
+            margin: 0 10px;
+        }
+        .footer-text{
+            color: white !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <div class="header">
+            <img src="https://api.everestthrills.com/media/gallery/images/Everest_Thrills_from_Vrit_Mail.png" alt="Everest Thrill Logo">
+        </div>
+        <div class="content">
+            <h1>New Trip Booking Notification – {{ recipient_name }}</h1>
+            <p>Dear {% if admin_name %}{{ admin_name }}{% else %}admin{% endif %},</p>
+            <p>A new trip booking has been made by a customer. Please find the details below:</p>
+            <div class="trip-details-box" style="display: flex; flex-wrap: wrap; gap: 5px; justify-content: space-between; align-items: start;" >
+                <div class="trip-details-text">
+                    <p><strong style="color: #00008B;">Trip Details:</strong></p>
+                    <p><strong>Contact:</strong> {{ contact }}</p>
+                    <!-- <p><strong>Activity:</strong> {{ activity }}</p>
+                    <p><strong>Package:</strong> {{ package }}</p> -->
+                    <p><strong>Destination:</strong> {{ destination }}</p>
+                    <p><strong>Arrival Date:</strong> {{ arrival_date }}</p>
+                    <p><strong>Departure Date:</strong> {{ departure_date }}</p>
+                    <p style="text-transform: capitalize;"><strong>Preferred Service Type:</strong>{{ preferred_service_type}}</p>
+                    
+                </div>
+                <div class="w-full" style="display: flex; flex-grow: 1;">
+                </div>
+                <img src="https://api.everestthrills.com/media/gallery/images/Appointment_schedule.gif" alt="Calendar Icon" style="width:auto; height:15vh;margin-right: 10%;">
+               
+            </div>
+            <p>Please review this booking and make the necessary arrangements.</p>
+        </div>
+        <div class="footer">
+            <div class="footer">
+                <a href="https://www.facebook.com/everestthrill"><img class="footer-image-size" src="https://api.everestthrills.com/media/gallery/images/Facebook_Logo_Primary.png" alt="Facebook"></a>
+                <a href="https://www.x.com/everestthrill"><img class="footer-image-size" src="https://api.everestthrills.com/media/gallery/images/Rajan_Sharma_image_1.png" alt="Twitter/X"></a>
+                <a href="https://youtube.com/@everestthrill?si=u0ff0Nh_pzFuVuUY"><img class="footer-image-size" src="https://api.everestthrills.com/media/gallery/images/Rajan_Sharma_image_2.png" alt="YouTube"></a>
+                <a href="https://www.instagram.com/everestthrill"><img class="footer-image-size" src="https://api.everestthrills.com/media/gallery/images/Rajan_Sharma_image.png" alt="Instagram"></a>
+            </div>
+            <p>&copy; 2024 Everest Thrill. All rights reserved.<br>Made with <span style="color: #FF7A00;">&hearts;</span> by <a href="https://vrittechnologies.com/" style="color: #fff;">Vrit Tech</a></p>
+        </div>
+    </div>
+</body>
+</html>
