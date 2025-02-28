@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 14,
+            "activePatchIndex": 29,
             "patches": [
                 {
                     "date": 1740650332763,
@@ -64,6 +64,66 @@
                 {
                     "date": 1740685623504,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,8 +4,11 @@\n from ..models import CollegeFacility\n from ..serializers.collegefacility_serializers import CollegeFacilityListSerializers, CollegeFacilityRetrieveSerializers, CollegeFacilityWriteSerializers\n from ..utilities.importbase import *\n from mainproj.permissions import DynamicModelPermission\n+from rest_framework import status, viewsets\n+from rest_framework.response import Response\n+from django.db import IntegrityError\n \n class collegefacilityViewsets(viewsets.ModelViewSet):\n     serializer_class = CollegeFacilityListSerializers\n     permission_classes = [DynamicModelPermission]\n"
+                },
+                {
+                    "date": 1740726598140,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -42,8 +42,9 @@\n         return super().get_serializer_class()\n     \n     def create(self, request, *args, **kwargs):\n         serializer = self.get_serializer(data=request.data)\n+        print\n         \n         if serializer.is_valid():\n             try:\n                 college_facility = serializer.save()\n"
+                },
+                {
+                    "date": 1740726603537,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -42,9 +42,9 @@\n         return super().get_serializer_class()\n     \n     def create(self, request, *args, **kwargs):\n         serializer = self.get_serializer(data=request.data)\n-        print\n+        print(request.data,\"\")\n         \n         if serializer.is_valid():\n             try:\n                 college_facility = serializer.save()\n"
+                },
+                {
+                    "date": 1740726609678,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -42,9 +42,9 @@\n         return super().get_serializer_class()\n     \n     def create(self, request, *args, **kwargs):\n         serializer = self.get_serializer(data=request.data)\n-        print(request.data,\"\")\n+        print(request.data,\"line 46!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\")\n         \n         if serializer.is_valid():\n             try:\n                 college_facility = serializer.save()\n"
+                },
+                {
+                    "date": 1740726679207,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -31,9 +31,9 @@\n         if self.request.user.is_authenticated:\n             queryset = super().get_queryset().filter(college = self.request.user.college)\n         else:\n             queryset = super().get_queryset()\n-        return queryset\n+    return queryset\n \n     def get_serializer_class(self):\n         if self.action in ['create', 'update', 'partial_update']:\n             return CollegeFacilityWriteSerializers\n"
+                },
+                {
+                    "date": 1740726701028,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -29,11 +29,12 @@\n \n     def get_queryset(self):\n         if self.request.user.is_authenticated:\n             queryset = super().get_queryset().filter(college = self.request.user.college)\n+            print\n         else:\n             queryset = super().get_queryset()\n-    return queryset\n+        return queryset\n \n     def get_serializer_class(self):\n         if self.action in ['create', 'update', 'partial_update']:\n             return CollegeFacilityWriteSerializers\n"
+                },
+                {
+                    "date": 1740726722079,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -29,9 +29,9 @@\n \n     def get_queryset(self):\n         if self.request.user.is_authenticated:\n             queryset = super().get_queryset().filter(college = self.request.user.college)\n-            print\n+            print(college = self.request.user.college)\n         else:\n             queryset = super().get_queryset()\n         return queryset\n \n"
+                },
+                {
+                    "date": 1740726728859,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -29,9 +29,9 @@\n \n     def get_queryset(self):\n         if self.request.user.is_authenticated:\n             queryset = super().get_queryset().filter(college = self.request.user.college)\n-            print(college = self.request.user.college)\n+            print(college = self.request.user.college,\"line 33!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\")\n         else:\n             queryset = super().get_queryset()\n         return queryset\n \n"
+                },
+                {
+                    "date": 1740726752196,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -29,9 +29,9 @@\n \n     def get_queryset(self):\n         if self.request.user.is_authenticated:\n             queryset = super().get_queryset().filter(college = self.request.user.college)\n-            print(college = self.request.user.college,\"line 33!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\")\n+            print(college = self.request.user.college)\n         else:\n             queryset = super().get_queryset()\n         return queryset\n \n"
+                },
+                {
+                    "date": 1740726759025,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -30,8 +30,9 @@\n     def get_queryset(self):\n         if self.request.user.is_authenticated:\n             queryset = super().get_queryset().filter(college = self.request.user.college)\n             print(college = self.request.user.college)\n+            print()\n         else:\n             queryset = super().get_queryset()\n         return queryset\n \n"
+                },
+                {
+                    "date": 1740726833008,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,12 +27,13 @@\n         'created_date': ['exact','gte','lte'],\n     }\n \n     def get_queryset(self):\n+        return queryset\n         if self.request.user.is_authenticated:\n             queryset = super().get_queryset().filter(college = self.request.user.college)\n             print(college = self.request.user.college)\n-            print()\n+            print(\"line 46!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\")\n         else:\n             queryset = super().get_queryset()\n         return queryset\n \n"
+                },
+                {
+                    "date": 1740726844673,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,9 +27,11 @@\n         'created_date': ['exact','gte','lte'],\n     }\n \n     def get_queryset(self):\n+               queryset = super().get_queryset()\n         return queryset\n+        \n         if self.request.user.is_authenticated:\n             queryset = super().get_queryset().filter(college = self.request.user.college)\n             print(college = self.request.user.college)\n             print(\"line 46!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\")\n"
+                },
+                {
+                    "date": 1740726850787,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,18 +27,18 @@\n         'created_date': ['exact','gte','lte'],\n     }\n \n     def get_queryset(self):\n-               queryset = super().get_queryset()\n+        queryset = super().get_queryset()\n         return queryset\n         \n-        if self.request.user.is_authenticated:\n-            queryset = super().get_queryset().filter(college = self.request.user.college)\n-            print(college = self.request.user.college)\n-            print(\"line 46!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\")\n-        else:\n-            queryset = super().get_queryset()\n-        return queryset\n+        # if self.request.user.is_authenticated:\n+        #     queryset = super().get_queryset().filter(college = self.request.user.college)\n+        #     print(college = self.request.user.college)\n+        #     print(\"line 46!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\")\n+        # else:\n+        #     queryset = super().get_queryset()\n+        # return queryset\n \n     def get_serializer_class(self):\n         if self.action in ['create', 'update', 'partial_update']:\n             return CollegeFacilityWriteSerializers\n"
+                },
+                {
+                    "date": 1740726949997,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,18 +27,13 @@\n         'created_date': ['exact','gte','lte'],\n     }\n \n     def get_queryset(self):\n-        queryset = super().get_queryset()\n+        if self.request.user.is_authenticated:\n+            queryset = super().get_queryset().filter(college = self.request.user.college)\n+        else:\n+            queryset = super().get_queryset()\n         return queryset\n-        \n-        # if self.request.user.is_authenticated:\n-        #     queryset = super().get_queryset().filter(college = self.request.user.college)\n-        #     print(college = self.request.user.college)\n-        #     print(\"line 46!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\")\n-        # else:\n-        #     queryset = super().get_queryset()\n-        # return queryset\n \n     def get_serializer_class(self):\n         if self.action in ['create', 'update', 'partial_update']:\n             return CollegeFacilityWriteSerializers\n"
+                },
+                {
+                    "date": 1740726955177,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -42,9 +42,9 @@\n         return super().get_serializer_class()\n     \n     def create(self, request, *args, **kwargs):\n         serializer = self.get_serializer(data=request.data)\n-        print(request.data,\"line 46!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\")\n+        print(request.data,\"line\")\n         \n         if serializer.is_valid():\n             try:\n                 college_facility = serializer.save()\n"
+                },
+                {
+                    "date": 1740727027558,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,14 +27,20 @@\n         'created_date': ['exact','gte','lte'],\n     }\n \n     def get_queryset(self):\n-        if self.request.user.is_authenticated:\n-            queryset = super().get_queryset().filter(college = self.request.user.college)\n+    \"\"\"Admins see all data, normal users see only their college's data\"\"\"\n+    queryset = super().get_queryset()\n+\n+    if self.request.user.is_authenticated:\n+        if self.request.user.is_superuser:\n+            return queryset  # Superusers get all records\n         else:\n-            queryset = super().get_queryset()\n-        return queryset\n+            return queryset.filter(college=self.request.user.college)  # Normal users get their college data only\n \n+    return queryset  # If unauthenticated (unlikely due to permissions), return all\n+\n+\n     def get_serializer_class(self):\n         if self.action in ['create', 'update', 'partial_update']:\n             return CollegeFacilityWriteSerializers\n         elif self.action == 'retrieve':\n"
                 }
             ],
             "date": 1740650332763,

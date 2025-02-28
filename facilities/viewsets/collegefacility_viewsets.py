@@ -28,11 +28,17 @@ class collegefacilityViewsets(viewsets.ModelViewSet):
     }
 
     def get_queryset(self):
+        """Admins see all data, normal users see only their college's data"""
+        queryset = super().get_queryset()
+
         if self.request.user.is_authenticated:
-            queryset = super().get_queryset().filter(college = self.request.user.college)
-        else:
-            queryset = super().get_queryset()
-        return queryset
+            if self.request.user.is_superuser:
+                return queryset  # Superusers get all records
+            else:
+                return queryset.filter(college=self.request.user.college)  # Normal users get their college data only
+
+        return queryset  # If unauthenticated (unlikely due to permissions), return all
+
 
     def get_serializer_class(self):
         if self.action in ['create', 'update', 'partial_update']:
@@ -43,6 +49,7 @@ class collegefacilityViewsets(viewsets.ModelViewSet):
     
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
+        print(request.data,"line")
         
         if serializer.is_valid():
             try:
