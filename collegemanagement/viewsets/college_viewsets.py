@@ -89,7 +89,7 @@ class collegeViewsets(viewsets.ModelViewSet):
         permission_classes=[collegemanagementPermission] 
     )
     def college_creation(self, request, *args, **kwargs):
-        print(request.data.get("accessToken"),"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
+        # print(request.data.get("accessToken"),"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
         """
         Authenticate user from access token in payload if not in headers.
         Ensure the user is either in the "College Admin" group or has the

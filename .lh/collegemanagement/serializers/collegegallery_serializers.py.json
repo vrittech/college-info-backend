@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 72,
+            "activePatchIndex": 80,
             "patches": [
                 {
                     "date": 1739512004648,
@@ -296,6 +296,38 @@
                 {
                     "date": 1740640828994,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -90,10 +90,45 @@\n \n         # ✅ Instead of returning a list, return the first instance\n         return gallery_instances[0] if gallery_instances else None\n \n+    def update(self, instance, validated_data):\n+        request = self.context.get('request')\n+        print(request.FILES, \"DEBUG: Request Files for Update\")\n \n+        images = []\n \n+        # Extract all image files dynamically\n+        for key, file_list in request.FILES.lists():\n+            if key.startswith(\"image[\"):\n+                images.extend(file_list)\n+\n+        print(images, \"DEBUG: Collected Images for Update\")\n+\n+        # Update description only if it's in the request\n+        if 'description' in validated_data:\n+            instance.description = validated_data['description']\n+            instance.save()\n+\n+        gallery_instances = []\n+\n+        # Only add new images if they exist in the request\n+        if images:\n+            for image in images:\n+                try:\n+                    gallery_instance = CollegeGallery.objects.create(image=image, college=instance.college)\n+                    gallery_instances.append(gallery_instance)\n+                except Exception as e:\n+                    print(f\"ERROR: Failed to update CollegeGallery instance -> {e}\")\n+                    raise serializers.ValidationError({\"error\": \"Failed to save image\", \"details\": str(e)})\n+\n+            print(gallery_instances, \"DEBUG: Updated Gallery Instances\")\n+\n+        # ✅ Return instance with updated images in `image` key\n+        return instance\n+\n+\n+\n     def to_representation(self, instance):\n         \"\"\"\n         Converts image file paths into full URLs and supports lists.\n         \"\"\"\n"
+                },
+                {
+                    "date": 1740722644996,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -120,9 +120,9 @@\n                 except Exception as e:\n                     print(f\"ERROR: Failed to update CollegeGallery instance -> {e}\")\n                     raise serializers.ValidationError({\"error\": \"Failed to save image\", \"details\": str(e)})\n \n-            print(gallery_instances, \"DEBUG: Updated Gallery Instances\")\n+            # print(gallery_instances, \"DEBUG: Updated Gallery Instances\")\n \n         # ✅ Return instance with updated images in `image` key\n         return instance\n \n"
+                },
+                {
+                    "date": 1740722651347,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -120,10 +120,10 @@\n                 except Exception as e:\n                     print(f\"ERROR: Failed to update CollegeGallery instance -> {e}\")\n                     raise serializers.ValidationError({\"error\": \"Failed to save image\", \"details\": str(e)})\n \n-            # print(gallery_instances, \"DEBUG: Updated Gallery Instances\")\n \n+\n         # ✅ Return instance with updated images in `image` key\n         return instance\n \n \n"
+                },
+                {
+                    "date": 1740722661382,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -47,9 +47,8 @@\n         fields = '__all__'\n \n     def create(self, validated_data):\n         request = self.context.get('request')  # Auto-injected by Django\n-        print(request.FILES, \"DEBUG: Request Files\")\n \n         images = []\n \n         # Extract all image files dynamically\n@@ -117,9 +116,8 @@\n                 try:\n                     gallery_instance = CollegeGallery.objects.create(image=image, college=instance.college)\n                     gallery_instances.append(gallery_instance)\n                 except Exception as e:\n-                    print(f\"ERROR: Failed to update CollegeGallery instance -> {e}\")\n                     raise serializers.ValidationError({\"error\": \"Failed to save image\", \"details\": str(e)})\n \n \n \n"
+                },
+                {
+                    "date": 1740722669794,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -55,14 +55,12 @@\n         for key, file_list in request.FILES.lists():\n             if key.startswith(\"image[\"):\n                 images.extend(file_list)\n \n-        print(images, \"DEBUG: Collected Images\")\n \n         # Fetch college ID directly from request data\n         college_id = request.data.get(\"college\")\n         if not college_id:\n-            print(\"ERROR: College ID is missing in the request!\")\n             raise serializers.ValidationError({\"error\": \"College ID is required\"})\n \n         try:\n             college = College.objects.get(id=college_id)\n"
+                },
+                {
+                    "date": 1740722683152,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -64,13 +64,12 @@\n \n         try:\n             college = College.objects.get(id=college_id)\n         except College.DoesNotExist:\n-            print(f\"ERROR: College with ID {college_id} does not exist!\")\n             raise serializers.ValidationError({\"error\": \"Invalid College ID\"})\n \n         if not images:\n-            print(\"ERROR: No valid images found in request!\")\n+            print(\"ERROR: No valid images found in request!\"\n             raise serializers.ValidationError({\"error\": \"No valid images uploaded\"})\n \n         gallery_instances = []\n \n"
+                },
+                {
+                    "date": 1740722691950,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -67,9 +67,8 @@\n         except College.DoesNotExist:\n             raise serializers.ValidationError({\"error\": \"Invalid College ID\"})\n \n         if not images:\n-            print(\"ERROR: No valid images found in request!\"\n             raise serializers.ValidationError({\"error\": \"No valid images uploaded\"})\n \n         gallery_instances = []\n \n"
+                },
+                {
+                    "date": 1740722701619,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -77,12 +77,11 @@\n             try:\n                 gallery_instance = CollegeGallery.objects.create(image=image, college=college)\n                 gallery_instances.append(gallery_instance)\n             except Exception as e:\n-                print(f\"ERROR: Failed to create CollegeGallery instance -> {e}\")\n                 raise serializers.ValidationError({\"error\": \"Failed to save image\", \"details\": str(e)})\n \n-        print(gallery_instances, \"DEBUG: Created Gallery Instances\")\n+        \n \n         # ✅ Instead of returning a list, return the first instance\n         return gallery_instances[0] if gallery_instances else None\n \n"
+                },
+                {
+                    "date": 1740722747898,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -86,18 +86,17 @@\n         return gallery_instances[0] if gallery_instances else None\n \n     def update(self, instance, validated_data):\n         request = self.context.get('request')\n-        print(request.FILES, \"DEBUG: Request Files for Update\")\n+       \n \n         images = []\n \n         # Extract all image files dynamically\n         for key, file_list in request.FILES.lists():\n             if key.startswith(\"image[\"):\n                 images.extend(file_list)\n \n-        print(images, \"DEBUG: Collected Images for Update\")\n \n         # Update description only if it's in the request\n         if 'description' in validated_data:\n             instance.description = validated_data['description']\n"
                 }
             ],
             "date": 1739512004648,

@@ -48,7 +48,6 @@ class CollegeGalleryWriteSerializers(serializers.ModelSerializer):
 
     def create(self, validated_data):
         request = self.context.get('request')  # Auto-injected by Django
-        print(request.FILES, "DEBUG: Request Files")
 
         images = []
 
@@ -57,22 +56,18 @@ class CollegeGalleryWriteSerializers(serializers.ModelSerializer):
             if key.startswith("image["):
                 images.extend(file_list)
 
-        print(images, "DEBUG: Collected Images")
 
         # Fetch college ID directly from request data
         college_id = request.data.get("college")
         if not college_id:
-            print("ERROR: College ID is missing in the request!")
             raise serializers.ValidationError({"error": "College ID is required"})
 
         try:
             college = College.objects.get(id=college_id)
         except College.DoesNotExist:
-            print(f"ERROR: College with ID {college_id} does not exist!")
             raise serializers.ValidationError({"error": "Invalid College ID"})
 
         if not images:
-            print("ERROR: No valid images found in request!")
             raise serializers.ValidationError({"error": "No valid images uploaded"})
 
         gallery_instances = []
@@ -83,17 +78,16 @@ class CollegeGalleryWriteSerializers(serializers.ModelSerializer):
                 gallery_instance = CollegeGallery.objects.create(image=image, college=college)
                 gallery_instances.append(gallery_instance)
             except Exception as e:
-                print(f"ERROR: Failed to create CollegeGallery instance -> {e}")
                 raise serializers.ValidationError({"error": "Failed to save image", "details": str(e)})
 
-        print(gallery_instances, "DEBUG: Created Gallery Instances")
+        
 
         # ✅ Instead of returning a list, return the first instance
         return gallery_instances[0] if gallery_instances else None
 
     def update(self, instance, validated_data):
         request = self.context.get('request')
-        print(request.FILES, "DEBUG: Request Files for Update")
+       
 
         images = []
 
@@ -102,7 +96,6 @@ class CollegeGalleryWriteSerializers(serializers.ModelSerializer):
             if key.startswith("image["):
                 images.extend(file_list)
 
-        print(images, "DEBUG: Collected Images for Update")
 
         # Update description only if it's in the request
         if 'description' in validated_data:
@@ -118,10 +111,9 @@ class CollegeGalleryWriteSerializers(serializers.ModelSerializer):
                     gallery_instance = CollegeGallery.objects.create(image=image, college=instance.college)
                     gallery_instances.append(gallery_instance)
                 except Exception as e:
-                    print(f"ERROR: Failed to update CollegeGallery instance -> {e}")
                     raise serializers.ValidationError({"error": "Failed to save image", "details": str(e)})
 
-            print(gallery_instances, "DEBUG: Updated Gallery Instances")
+
 
         # ✅ Return instance with updated images in `image` key
         return instance
