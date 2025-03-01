@@ -130,36 +130,43 @@ class InformationRetrieveSerializers(serializers.ModelSerializer):
 
 class IntegerListField(serializers.ListField):
     """ Handles Many-to-Many fields in form-data correctly (e.g., '[2,3]', '2,3'). """
-    
+
     def to_internal_value(self, data):
+        if data is None or data == "":
+            return []
+
         if isinstance(data, list):  
-            return [int(i) for i in data]  # Already a list, convert values to integers
+            return [int(i) for i in data if str(i).isdigit()]  # Convert to integers
         
         if isinstance(data, str):  
             try:
                 clean_data = data.strip("[]").replace(" ", "")  # Remove brackets & spaces
 
-                # If string is like "2,3", split and convert to list
                 if "," in clean_data:
-                    return list(map(int, clean_data.split(',')))
+                    return [int(x) for x in clean_data.split(',') if x.isdigit()]
 
-                # If single number, return as list
-                return [int(clean_data)]  
+                return [int(clean_data)] if clean_data.isdigit() else []
 
             except ValueError:
                 raise serializers.ValidationError("Invalid format. Expected comma-separated integers.")
 
         return super().to_internal_value(data)
 
-from rest_framework import serializers
-from django.db import transaction
-from informationmanagement.models import (
-    Information, InformationGallery, InformationFiles
-)
 
 
 class InformationWriteSerializers(serializers.ModelSerializer):
     """ Handles Many-to-Many fields and file/image uploads """
+
+    # Using IntegerListField for Many-to-Many relationships (comma-separated values)
+    level = IntegerListField(required=False)
+    sublevel = IntegerListField(required=False)
+    course = IntegerListField(required=False)
+    affiliation = IntegerListField(required=False)
+    district = IntegerListField(required=False)
+    college = IntegerListField(required=False)
+    faculty = IntegerListField(required=False)
+    information_tagging = IntegerListField(required=False)
+    information_category = IntegerListField(required=False)
 
     information_gallery = serializers.SerializerMethodField()
     information_files = serializers.SerializerMethodField()
@@ -198,7 +205,7 @@ class InformationWriteSerializers(serializers.ModelSerializer):
             "college", "faculty", "information_tagging", "information_category"
         ]
         
-        m2m_data = {field: validated_data.pop(field, []) for field in many_to_many_fields}
+        m2m_data = {field: validated_data.pop(field, None) for field in many_to_many_fields}
 
         # Extract images & files
         images_data, files_data = self.extract_images_and_files()
@@ -206,9 +213,10 @@ class InformationWriteSerializers(serializers.ModelSerializer):
         # Create Information instance
         information = Information.objects.create(**validated_data)
 
-        # Assign Many-to-Many relationships
+        # Assign Many-to-Many relationships only if data is provided
         for field, ids in m2m_data.items():
-            getattr(information, field).set(ids)
+            if ids is not None:
+                getattr(information, field).set(ids)
 
         # Save images and files
         for image_file in images_data:

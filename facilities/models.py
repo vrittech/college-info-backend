@@ -10,7 +10,7 @@ from collegemanagement.models import College
 #         return self.name
 
 class Facility(models.Model):
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255,unique=True, null=True, blank=True)
     # category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='facilities')
     image = models.ImageField(upload_to='facility_images/', blank=True, null=True)
     created_date = models.DateField(auto_now_add=True, null=True, blank=True)

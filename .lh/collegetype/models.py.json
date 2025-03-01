@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 17,
+            "activePatchIndex": 18,
             "patches": [
                 {
                     "date": 1726657166644,
@@ -76,6 +76,10 @@
                 {
                     "date": 1739343834218,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,9 +12,9 @@\n     \n     def __str__(self):\n         return self.name\n     \n-    class Meta:[\n+    class Meta:\n         permissions = [\n-            ('manage_college_type', 'Manage college type'),\n+            ('manage_collegetype', 'Manage college type'),\n         ]\n    \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1740792626582,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,9 @@\n from django.db import models\n \n # Create your models here.\n class CollegeType(models.Model):\n-    name = models.CharField(max_length=255,null=True,blank=True)\n+    name = models.CharField(max_length=255,null=True,blank=True,)\n     is_show = models.BooleanField(default=False)\n     # description = models.TextField(null=True,blank=True)\n     # image = models.ImageField(upload_to='college_type/',null=True,blank=True)\n     created_date = models.DateField(auto_now_add=True, null=True, blank=True)\n"
                 }
             ],
             "date": 1726657166644,

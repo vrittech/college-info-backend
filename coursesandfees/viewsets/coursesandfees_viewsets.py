@@ -11,6 +11,8 @@ from rest_framework.response import Response
 from django.db.models import Avg
 from mainproj.permissions import DynamicModelPermission
 from django.shortcuts import get_object_or_404
+from rest_framework.response import Response
+from rest_framework import status
 
 
 class coursesandfeesViewsets(viewsets.ModelViewSet):
@@ -31,19 +33,51 @@ class coursesandfeesViewsets(viewsets.ModelViewSet):
         'course__slug': ['exact'],
     }
 
-    def get_queryset(self):
-        if self.request.user.is_authenticated:
-            queryset = super().get_queryset().filter(college = self.request.user.college)
-        else:
-            queryset = super().get_queryset()
-        return queryset
+    # def get_queryset(self):
+    #     if self.request.user.is_authenticated:
+    #         queryset = super().get_queryset().filter(college = self.request.user.college)
+    #     else:
+    #         queryset = super().get_queryset()
+    #     return queryset
 
+    def get_queryset(self):
+        """Admins see all data, normal users see only their college's data"""
+        queryset = super().get_queryset()
+
+        if self.request.user.is_authenticated:
+            if self.request.user.is_superuser:
+                return queryset  # Superusers get all records
+            else:
+                return queryset.filter(college=self.request.user.college)  # Normal users get their college data only
+
+        return queryset  # If unauthenticated (unlikely due to permissions), return all
     def get_serializer_class(self):
         if self.action in ['create', 'update', 'partial_update']:
             return CoursesAndFeesWriteSerializers
         elif self.action == 'retrieve':
             return CoursesAndFeesRetrieveSerializers
         return super().get_serializer_class()
+    
+    def create(self, request, *args, **kwargs):
+        """ Override create method to return retrieve response format """
+        write_serializer = CoursesAndFeesWriteSerializers(data=request.data)
+        write_serializer.is_valid(raise_exception=True)
+        instance = write_serializer.save()
+
+        # After saving, use the retrieve serializer
+        retrieve_serializer = CoursesAndFeesRetrieveSerializers(instance)
+
+        return Response(retrieve_serializer.data, status=status.HTTP_201_CREATED)
+    def destroy(self, request, *args, **kwargs):
+        """ Override destroy method to return 200 OK even if object does not exist """
+        try:
+            instance = self.get_object()
+            self.perform_destroy(instance)
+            return Response({"detail": "Deleted successfully"}, status=status.HTTP_200_OK)
+        except CoursesAndFees.DoesNotExist:
+            return Response({"detail": "No CoursesAndFees found"}, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
     # @action(detail=False, methods=['get'], name="action_name", url_path="url_path")
     # def action_name(self, request, *args, **kwargs):
