@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 16,
+            "activePatchIndex": 17,
             "patches": [
                 {
                     "date": 1739856844779,
@@ -72,6 +72,10 @@
                 {
                     "date": 1740908215835,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -35,9 +35,9 @@\n \n         return queryset  # If unauthenticated (unlikely due to permissions), return all\n     \n     \n-        def create(self, request, *args, **kwargs):\n+    def create(self, request, *args, **kwargs):\n         serializer = self.get_serializer(data=request.data)\n         serializer.is_valid(raise_exception=True)\n         college_social_media = serializer.save()\n         \n"
+                },
+                {
+                    "date": 1740908456791,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -45,14 +45,8 @@\n         response_serializer = CollegeSocialMediaRetrieveSerializers(college_social_media)\n         \n         return Response(response_serializer.data, status=status.HTTP_201_CREATED)\n \n-    def get_serializer_class(self):\n-        if self.action in ['create', 'update', 'partial_update']:\n-            return CollegeSocialMediaWriteSerializers\n-        elif self.action == 'retrieve':\n-            return CollegeSocialMediaRetrieveSerializers\n-        return super().get_serializer_class()\n \n     # @action(detail=False, methods=['get'], name=\"action_name\", url_path=\"url_path\")\n     # def action_name(self, request, *args, **kwargs):\n     #     return super().list(request, *args, **kwargs)\n"
                 }
             ],
             "date": 1739856844779,

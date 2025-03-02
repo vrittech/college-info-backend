@@ -36,6 +36,14 @@ class collegesocialmediaViewsets(viewsets.ModelViewSet):
         return queryset  # If unauthenticated (unlikely due to permissions), return all
     
     
+    def get_serializer_class(self):
+        if self.action in ['create', 'update', 'partial_update']:
+            return CollegeSocialMediaWriteSerializers
+        elif self.action == 'retrieve':
+            return CollegeSocialMediaRetrieveSerializers
+        return super().get_serializer_class()
+    
+    
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -46,12 +54,6 @@ class collegesocialmediaViewsets(viewsets.ModelViewSet):
         
         return Response(response_serializer.data, status=status.HTTP_201_CREATED)
 
-    def get_serializer_class(self):
-        if self.action in ['create', 'update', 'partial_update']:
-            return CollegeSocialMediaWriteSerializers
-        elif self.action == 'retrieve':
-            return CollegeSocialMediaRetrieveSerializers
-        return super().get_serializer_class()
 
     # @action(detail=False, methods=['get'], name="action_name", url_path="url_path")
     # def action_name(self, request, *args, **kwargs):
