@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 137,
+            "activePatchIndex": 147,
             "patches": [
                 {
                     "date": 1733485840683,
@@ -556,6 +556,46 @@
                 {
                     "date": 1740910178862,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,9 +11,9 @@\n \"\"\" \n     This string list is used to convert string to list of integers or list of strings \n     and when frontend send list of ids in string format then we need to convert it to list of integers\n     for example if frontend send '1,2,3' then we need to convert it to [1,2,3]\n-    or \"1,2,3,\n+    or \"1,2,3,4\n \"\"\"\n \n def str_to_list(data, value_to_convert):\n     \"\"\"\n"
+                },
+                {
+                    "date": 1740935935040,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,9 +11,9 @@\n \"\"\" \n     This string list is used to convert string to list of integers or list of strings \n     and when frontend send list of ids in string format then we need to convert it to list of integers\n     for example if frontend send '1,2,3' then we need to convert it to [1,2,3]\n-    or \"1,2,3,4\n+    or \"1,2,3,4\" to [1,2,3,4]\n \"\"\"\n \n def str_to_list(data, value_to_convert):\n     \"\"\"\n@@ -182,9 +182,9 @@\n \n class InformationWriteSerializers(serializers.ModelSerializer):\n     \"\"\"Handles Many-to-Many fields and file/image uploads.\"\"\"\n \n-    information_gallery = serializers.SerializerMethodField()\n+    information_gallery = InformationGallerySerializer(many=True, read_only=True)\n     information_files = serializers.SerializerMethodField()\n \n     class Meta:\n         model = Information\n"
+                },
+                {
+                    "date": 1740935941976,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -183,9 +183,9 @@\n class InformationWriteSerializers(serializers.ModelSerializer):\n     \"\"\"Handles Many-to-Many fields and file/image uploads.\"\"\"\n \n     information_gallery = InformationGallerySerializer(many=True, read_only=True)\n-    information_files = serializers.SerializerMethodField()\n+    information_files = InformationFilesSerializer(many=True, read_only=True)\n \n     class Meta:\n         model = Information\n         fields = '__all__'\n"
+                },
+                {
+                    "date": 1740935947513,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -182,10 +182,10 @@\n \n class InformationWriteSerializers(serializers.ModelSerializer):\n     \"\"\"Handles Many-to-Many fields and file/image uploads.\"\"\"\n \n-    information_gallery = InformationGallerySerializer(many=True, read_only=True)\n-    information_files = InformationFilesSerializer(many=True, read_only=True)\n+    information_gallery = serializers.SerializerMethodField()\n+    information_files = serializers.SerializerMethodField()\n \n     class Meta:\n         model = Information\n         fields = '__all__'\n"
+                },
+                {
+                    "date": 1740936012842,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -182,10 +182,10 @@\n \n class InformationWriteSerializers(serializers.ModelSerializer):\n     \"\"\"Handles Many-to-Many fields and file/image uploads.\"\"\"\n \n-    information_gallery = serializers.SerializerMethodField()\n-    information_files = serializers.SerializerMethodField()\n+    information_gallery = InformationGallerySerializer(many=True, read_only=True)\n+    information_files = InformationFilesSerializer(many=True, read_only=True)\n \n     class Meta:\n         model = Information\n         fields = '__all__'\n"
+                },
+                {
+                    "date": 1740936018154,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -189,13 +189,13 @@\n     class Meta:\n         model = Information\n         fields = '__all__'\n \n-    def get_information_gallery(self, obj):\n-        return [img.image.url for img in obj.information_gallery.all()]\n+    # def get_information_gallery(self, obj):\n+    #     return [img.image.url for img in obj.information_gallery.all()]\n \n-    def get_information_files(self, obj):\n-        return [file.file.url for file in obj.information_files.all()]\n+    # def get_information_files(self, obj):\n+    #     return [file.file.url for file in obj.information_files.all()]\n \n     def to_internal_value(self, data):\n         \"\"\"\n         Override to_internal_value to handle Many-to-Many fields.\n"
+                },
+                {
+                    "date": 1740936027789,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -182,20 +182,20 @@\n \n class InformationWriteSerializers(serializers.ModelSerializer):\n     \"\"\"Handles Many-to-Many fields and file/image uploads.\"\"\"\n \n-    information_gallery = InformationGallerySerializer(many=True, read_only=True)\n-    information_files = InformationFilesSerializer(many=True, read_only=True)\n+    information_gallery = serializers.SerializerMethodField()\n+    information_files = serializers.SerializerMethodField()\n \n     class Meta:\n         model = Information\n         fields = '__all__'\n \n-    # def get_information_gallery(self, obj):\n-    #     return [img.image.url for img in obj.information_gallery.all()]\n+    def get_information_gallery(self, obj):\n+        return [img.image.url for img in obj.information_gallery.all()]\n \n-    # def get_information_files(self, obj):\n-    #     return [file.file.url for file in obj.information_files.all()]\n+    def get_information_files(self, obj):\n+        return [file.file.url for file in obj.information_files.all()]\n \n     def to_internal_value(self, data):\n         \"\"\"\n         Override to_internal_value to handle Many-to-Many fields.\n"
+                },
+                {
+                    "date": 1740936055399,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -189,13 +189,13 @@\n     class Meta:\n         model = Information\n         fields = '__all__'\n \n-    def get_information_gallery(self, obj):\n-        return [img.image.url for img in obj.information_gallery.all()]\n+    # def get_information_gallery(self, obj):\n+    #     return [img.image.url for img in obj.information_gallery.all()]\n \n-    def get_information_files(self, obj):\n-        return [file.file.url for file in obj.information_files.all()]\n+    # def get_information_files(self, obj):\n+    #     return [file.file.url for file in obj.information_files.all()]\n \n     def to_internal_value(self, data):\n         \"\"\"\n         Override to_internal_value to handle Many-to-Many fields.\n"
+                },
+                {
+                    "date": 1740936068706,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -189,13 +189,13 @@\n     class Meta:\n         model = Information\n         fields = '__all__'\n \n-    # def get_information_gallery(self, obj):\n-    #     return [img.image.url for img in obj.information_gallery.all()]\n+    def get_information_gallery(self, obj):\n+        return [img.image.url for img in obj.information_gallery.all()]\n \n-    # def get_information_files(self, obj):\n-    #     return [file.file.url for file in obj.information_files.all()]\n+    def get_information_files(self, obj):\n+        return [file.file.url for file in obj.information_files.all()]\n \n     def to_internal_value(self, data):\n         \"\"\"\n         Override to_internal_value to handle Many-to-Many fields.\n"
+                },
+                {
+                    "date": 1740936077579,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -182,20 +182,19 @@\n \n class InformationWriteSerializers(serializers.ModelSerializer):\n     \"\"\"Handles Many-to-Many fields and file/image uploads.\"\"\"\n \n-    information_gallery = serializers.SerializerMethodField()\n-    information_files = serializers.SerializerMethodField()\n+    \n \n     class Meta:\n         model = Information\n         fields = '__all__'\n \n-    def get_information_gallery(self, obj):\n-        return [img.image.url for img in obj.information_gallery.all()]\n+    # def get_information_gallery(self, obj):\n+    #     return [img.image.url for img in obj.information_gallery.all()]\n \n-    def get_information_files(self, obj):\n-        return [file.file.url for file in obj.information_files.all()]\n+    # def get_information_files(self, obj):\n+    #     return [file.file.url for file in obj.information_files.all()]\n \n     def to_internal_value(self, data):\n         \"\"\"\n         Override to_internal_value to handle Many-to-Many fields.\n"
+                },
+                {
+                    "date": 1740936086340,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -182,9 +182,10 @@\n \n class InformationWriteSerializers(serializers.ModelSerializer):\n     \"\"\"Handles Many-to-Many fields and file/image uploads.\"\"\"\n \n-    \n+    information_gallery = InformationGallerySerializer(many=True)\n+    information_files = InformationFilesSerializer(many=True, read_only=True)\n \n     class Meta:\n         model = Information\n         fields = '__all__'\n"
                 }
             ],
             "date": 1733485840683,

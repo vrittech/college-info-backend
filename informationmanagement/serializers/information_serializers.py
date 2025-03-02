@@ -183,18 +183,18 @@ class InformationRetrieveSerializers(serializers.ModelSerializer):
 class InformationWriteSerializers(serializers.ModelSerializer):
     """Handles Many-to-Many fields and file/image uploads."""
 
-    information_gallery = serializers.SerializerMethodField()
-    information_files = serializers.SerializerMethodField()
+    information_gallery = InformationGallerySerializer(many=True)
+    information_files = InformationFilesSerializer(many=True)
 
     class Meta:
         model = Information
         fields = '__all__'
 
-    def get_information_gallery(self, obj):
-        return [img.image.url for img in obj.information_gallery.all()]
+    # def get_information_gallery(self, obj):
+    #     return [img.image.url for img in obj.information_gallery.all()]
 
-    def get_information_files(self, obj):
-        return [file.file.url for file in obj.information_files.all()]
+    # def get_information_files(self, obj):
+    #     return [file.file.url for file in obj.information_files.all()]
 
     def to_internal_value(self, data):
         """
