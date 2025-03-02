@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 14,
+            "activePatchIndex": 16,
             "patches": [
                 {
                     "date": 1739856844779,
@@ -64,6 +64,14 @@
                 {
                     "date": 1740899300749,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,9 +11,8 @@\n     permission_classes = [DynamicModelPermission]\n     # authentication_classes = [JWTAuthentication]\n     pagination_class = MyPageNumberPagination\n     queryset = CollegeSocialMedia.objects.all().order_by('-id')\n-    lookup_field\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     search_fields = ['id','name__name']\n     ordering_fields = ['id','name']\n"
+                },
+                {
+                    "date": 1740908207982,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -33,8 +33,19 @@\n             else:\n                 return queryset.filter(college=self.request.user.college)  # Normal users get their college data only\n \n         return queryset  # If unauthenticated (unlikely due to permissions), return all\n+    \n+    \n+        def create(self, request, *args, **kwargs):\n+        serializer = self.get_serializer(data=request.data)\n+        serializer.is_valid(raise_exception=True)\n+        college_social_media = serializer.save()\n+        \n+        # Return the serialized object using CollegeSocialMediaRetrieveSerializers\n+        response_serializer = CollegeSocialMediaRetrieveSerializers(college_social_media)\n+        \n+        return Response(response_serializer.data, status=status.HTTP_201_CREATED)\n \n     def get_serializer_class(self):\n         if self.action in ['create', 'update', 'partial_update']:\n             return CollegeSocialMediaWriteSerializers\n"
+                },
+                {
+                    "date": 1740908215835,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -35,9 +35,9 @@\n \n         return queryset  # If unauthenticated (unlikely due to permissions), return all\n     \n     \n-        def create(self, request, *args, **kwargs):\n+    def create(self, request, *args, **kwargs):\n         serializer = self.get_serializer(data=request.data)\n         serializer.is_valid(raise_exception=True)\n         college_social_media = serializer.save()\n         \n"
                 }
             ],
             "date": 1739856844779,

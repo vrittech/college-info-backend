@@ -34,6 +34,17 @@ class collegesocialmediaViewsets(viewsets.ModelViewSet):
                 return queryset.filter(college=self.request.user.college)  # Normal users get their college data only
 
         return queryset  # If unauthenticated (unlikely due to permissions), return all
+    
+    
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        college_social_media = serializer.save()
+        
+        # Return the serialized object using CollegeSocialMediaRetrieveSerializers
+        response_serializer = CollegeSocialMediaRetrieveSerializers(college_social_media)
+        
+        return Response(response_serializer.data, status=status.HTTP_201_CREATED)
 
     def get_serializer_class(self):
         if self.action in ['create', 'update', 'partial_update']:

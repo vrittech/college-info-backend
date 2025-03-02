@@ -33,3 +33,4 @@ class CollegeSocialMediaWriteSerializers(serializers.ModelSerializer):
     class Meta:
         model = CollegeSocialMedia
         fields = '__all__'
+        
