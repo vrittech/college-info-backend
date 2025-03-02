@@ -9,7 +9,7 @@ from mainproj.permissions import DynamicModelPermission
 class albumViewsets(viewsets.ModelViewSet):
     serializer_class = AlbumListSerializers
     permission_classes = [DynamicModelPermission]
-    authentication_classes = [JWTAuthentication]
+    # authentication_classes = [JWTAuthentication]
     pagination_class = MyPageNumberPagination
     queryset = Album.objects.all().order_by('-id')
 

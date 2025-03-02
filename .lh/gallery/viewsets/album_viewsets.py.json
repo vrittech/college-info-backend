@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 12,
+            "activePatchIndex": 13,
             "patches": [
                 {
                     "date": 1733481540329,
@@ -56,6 +56,10 @@
                 {
                     "date": 1740718371260,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,11 +14,12 @@\n     queryset = Album.objects.all().order_by('-id')\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     search_fields = ['id','name']\n-    ordering_fields = ['id']\n+    ordering_fields = ['id','name']\n \n     filterset_fields = {\n+        \n         'id': ['exact'],\n         'created_date': ['exact', 'lte', 'gte'],\n     }\n \n"
+                },
+                {
+                    "date": 1740907126434,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,9 @@\n \n class albumViewsets(viewsets.ModelViewSet):\n     serializer_class = AlbumListSerializers\n     permission_classes = [DynamicModelPermission]\n-    authentication_classes = [JWTAuthentication]\n+    # authentication_classes = [JWTAuthentication]\n     pagination_class = MyPageNumberPagination\n     queryset = Album.objects.all().order_by('-id')\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n"
                 }
             ],
             "date": 1733481540329,

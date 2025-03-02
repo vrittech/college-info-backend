@@ -9,7 +9,7 @@ from mainproj.permissions import DynamicModelPermission
 class durationViewsets(viewsets.ModelViewSet):
     serializer_class = DurationListSerializers
     permission_classes = [DynamicModelPermission]
-    authentication_classes = [JWTAuthentication]
+    # authentication_classes = [JWTAuthentication]
     pagination_class = MyPageNumberPagination
     queryset = Duration.objects.all().order_by('-id')
 
