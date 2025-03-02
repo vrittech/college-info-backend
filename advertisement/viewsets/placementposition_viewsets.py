@@ -12,7 +12,7 @@ class placementpositionViewsets(viewsets.ModelViewSet):
     permission_classes = [DynamicModelPermission]
     # authentication_classes = [JWTAuthentication]
     pagination_class = MyPageNumberPagination
-    queryset = PlacementPosition.objects.all().order_by('-id')
+    queryset = PlacementPosition.objects.all().order_by('placement_name')
 
     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]
     search_fields = ['id']
