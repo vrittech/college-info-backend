@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 28,
+            "activePatchIndex": 31,
             "patches": [
                 {
                     "date": 1733814224286,
@@ -120,6 +120,18 @@
                 {
                     "date": 1733815052392,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,9 +22,9 @@\n from district.serializers.district_serializers import DistrictWriteSerializers\n from duration.serializers.duration_serializers import DurationWriteSerializers\n \n \n-class ImportExel(APIView):\n+class ImportExcel(APIView):\n     @swagger_auto_schema(\n         request_body=openapi.Schema(\n             type=openapi.TYPE_OBJECT,\n             properties={\n"
+                },
+                {
+                    "date": 1740898533242,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -57,9 +57,9 @@\n             create_update(Discipline, DisciplineWriteSerializers, datas, 'name')\n         elif type == \"faculty\":\n             create_update(Faculty, FacultyWriteSerializers, datas, 'name')\n         elif type == \"college-type\":\n-            create_update(CollegeType, CollegeTypeWriteSerializers, datas, 'type')\n+            create_update(CollegeType, CollegeTypeWriteSerializers, datas, 'name')\n         elif type == \"level\":\n             create_update(Level, LevelWriteSerializers, datas, 'level')\n         elif type == \"district\":\n             create_update(District, DistrictWriteSerializers, datas, 'name')\n"
+                },
+                {
+                    "date": 1740898545630,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -63,9 +63,9 @@\n             create_update(Level, LevelWriteSerializers, datas, 'level')\n         elif type == \"district\":\n             create_update(District, DistrictWriteSerializers, datas, 'name')\n         elif type == \"duration\":\n-            create_update(Duration, DurationWriteSerializers, datas, 'duration')\n+            create_update(Duration, DurationWriteSerializers, datas, 'name')\n         else:\n             return Response({\"message\": 'Unknown file type'}, status=status.HTTP_400_BAD_REQUEST)\n         \n         return Response({\"message\": \"File processed successfully\"}, status=status.HTTP_201_CREATED)\n"
+                },
+                {
+                    "date": 1740898553648,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -59,9 +59,9 @@\n             create_update(Faculty, FacultyWriteSerializers, datas, 'name')\n         elif type == \"college-type\":\n             create_update(CollegeType, CollegeTypeWriteSerializers, datas, 'name')\n         elif type == \"level\":\n-            create_update(Level, LevelWriteSerializers, datas, 'level')\n+            create_update(Level, LevelWriteSerializers, datas, 'name')\n         elif type == \"district\":\n             create_update(District, DistrictWriteSerializers, datas, 'name')\n         elif type == \"duration\":\n             create_update(Duration, DurationWriteSerializers, datas, 'name')\n"
                 }
             ],
             "date": 1733814224286,

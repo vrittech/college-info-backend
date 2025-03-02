@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 254,
+            "activePatchIndex": 255,
             "patches": [
                 {
                     "date": 1727170911785,
@@ -1024,6 +1024,10 @@
                 {
                     "date": 1740650240157,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,9 @@\n # from admissionopen.models import AdmissionOpen\n # from location.models import Location\n from collegetype.models import CollegeType\n # from coursesandfees.models import CoursesAndFees\n-from facilities.models import Facility\n+# from facilities.models import Facility\n from socialmedia.models import SocialMedia,CollegeSocialMedia\n from district.models import District\n from discipline.models import Discipline\n from gallery.models import Gallery\n"
+                },
+                {
+                    "date": 1740899123784,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,9 +4,8 @@\n # from location.models import Location\n from collegetype.models import CollegeType\n # from coursesandfees.models import CoursesAndFees\n # from facilities.models import Facility\n-from socialmedia.models import SocialMedia,CollegeSocialMedia\n from district.models import District\n from discipline.models import Discipline\n from gallery.models import Gallery\n # from accounts.models import CustomUser\n"
                 }
             ],
             "date": 1727170911784,

@@ -58,13 +58,13 @@ class ImportExcel(APIView):
         elif type == "faculty":
             create_update(Faculty, FacultyWriteSerializers, datas, 'name')
         elif type == "college-type":
-            create_update(CollegeType, CollegeTypeWriteSerializers, datas, 'type')
+            create_update(CollegeType, CollegeTypeWriteSerializers, datas, 'name')
         elif type == "level":
-            create_update(Level, LevelWriteSerializers, datas, 'level')
+            create_update(Level, LevelWriteSerializers, datas, 'name')
         elif type == "district":
             create_update(District, DistrictWriteSerializers, datas, 'name')
         elif type == "duration":
-            create_update(Duration, DurationWriteSerializers, datas, 'duration')
+            create_update(Duration, DurationWriteSerializers, datas, 'name')
         else:
             return Response({"message": 'Unknown file type'}, status=status.HTTP_400_BAD_REQUEST)
         

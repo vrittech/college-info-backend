@@ -5,7 +5,6 @@ from affiliation.models import Affiliation
 from collegetype.models import CollegeType
 # from coursesandfees.models import CoursesAndFees
 # from facilities.models import Facility
-from socialmedia.models import SocialMedia,CollegeSocialMedia
 from district.models import District
 from discipline.models import Discipline
 from gallery.models import Gallery

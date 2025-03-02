@@ -6,4 +6,4 @@ class NotifyConfig(AppConfig):
     name = 'notify'
     
     def ready(self):
-        import notify.signals  # Import the signals
+        import notify.signals  

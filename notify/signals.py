@@ -1,215 +1,134 @@
-# from django.db.models.signals import post_save, post_delete
-# from django.dispatch import receiver
-# from django.conf import settings
-# from django.utils.timezone import now
-# from django.apps import apps
-# from accounts.models import CustomUser as User
-# from .models import Notification
-# from django.db.models.signals import post_save, post_delete, m2m_changed
-# from django.dispatch import receiver
-# from django.conf import settings
-# from django.utils.timezone import now
-# from django.apps import apps
-# from accounts.models import CustomUser as User
-# from .models import Notification
-# from collegemanagement.models import College  # Import the College model
-# from django.db.models import ManyToManyField
+from django.db.models.signals import post_save, post_delete
+from django.dispatch import receiver
+from django.conf import settings
+from django.utils.timezone import now
+from accounts.models import CustomUser as User
+from .models import Notification
+import json
 
+# Constants
+ACTION_CREATED = "created"
+ACTION_UPDATED = "updated"
+ACTION_DELETED = "deleted"
 
-# def dynamic_m2m_notification(sender, instance, action, reverse, model, pk_set, **kwargs):
-#     """
-#     Dynamic handler for all Many-to-Many (M2M) fields.
-#     """
-#     print(f"🔄 M2M Changed Signal Triggered → College: {instance.name}, Field: {sender}, Action: {action}")
+def get_current_user():
+    """
+    Retrieve the current request user from middleware (for authenticated users).
+    Returns None if the request is from an unauthorized user.
+    """
+    from .middleware import get_current_user
+    return get_current_user()
 
-#     if action in ["post_add", "post_remove", "post_clear"]:
-#         user = get_current_user()
-#         receivers = get_notification_receivers(instance, user)
+def should_notify(instance, action):
+    """
+    Check if a notification should be sent based on the instance's model and action.
+    """
+    print(f"🔍 Checking if notification should be sent for {instance._meta.model_name} with action: {action}")
 
-#         field_name = sender._meta.model_name  # Get the M2M field name dynamically
-#         title = f"{instance.name} {field_name.capitalize()} Updated"
-#         message = f"{user.get_full_name()} updated {field_name} for {instance.name}." if user else f"{field_name.capitalize()} were updated for {instance.name}."
+    model_name = f"{instance._meta.app_label}.{instance._meta.model_name}".lower()
+    notification_models_lower = {k.lower(): v for k, v in settings.NOTIFICATION_MODELS.items()}
+    print(f"🔍 Model name: {model_name}")
+    print(f"🔍 NOTIFICATION_MODELS: {notification_models_lower}")
 
-#         print(f"📨 Attempting to Create Notification → Title: {title}, Message: {message}, Receivers: {receivers}")
+    if model_name in notification_models_lower and action in notification_models_lower[model_name]:
+        print(f"✅ Notification should be sent for {model_name} with action: {action}")
+        return True
 
-#         try:
-#             for receiver in receivers:
-#                 print(f"➡️ Creating notification for {receiver.email}")  # Debugging line
-                
-#                 notification = Notification.objects.create(
-#                     user=receiver,
-#                     title=title,
-#                     message=message,
-#                     module_name=instance._meta.app_label,
-#                     updated_id=str(instance.id),
-#                     timestamp=now(),
-#                 )
+    print(f"❌ Notification should NOT be sent for {model_name} with action: {action}")
+    return False
 
-#                 print(f"✅ Notification successfully created: {notification}")
-#         except Exception as e:
-#             print(f"❌ Error creating notification for M2M update: {e}")
+def get_notification_receivers(instance, user):
+    """
+    Determine notification recipients.
+    - If the user is authenticated, notify the user and superadmins.
+    - If the user is not authenticated, notify superadmins only.
+    """
+    print(f"🔍 Determining notification receivers for {instance._meta.model_name}")
 
+    receivers = []
+    if user and user.is_authenticated:
+        print(f"✅ User is authenticated: {user.email}")
+        receivers.append(user)  # Notify the user themselves
+    else:
+        print(f"❌ User is not authenticated or no user found.")
 
+    # Always notify superadmins
+    superadmins = User.objects.filter(is_superuser=True)
+    print(f"🔍 Superadmins to notify: {superadmins.count()}")
+    receivers.extend(superadmins)
 
-# # ✅ Dynamically Connect All M2M Fields in the College Model
-# for field in College._meta.get_fields():
-#     if isinstance(field, ManyToManyField) and hasattr(field.remote_field, 'through'):
-#         try:
-#             if field.remote_field.through:  # Ensure 'through' is not None
-#                 m2m_changed.connect(dynamic_m2m_notification, sender=field.remote_field.through)
-#                 print(f"✅ Connected m2m_changed signal for {field.name}")
-#         except AttributeError:
-#             print(f"❌ Skipping {field.name} - No 'through' attribute")
+    print(f"✅ Final receivers: {[r.email for r in receivers]}")
+    return list(set(receivers))  # Remove duplicates
 
-# def get_current_user():
-#     """
-#     Retrieve the current request user from middleware (for authenticated users).
-#     Returns None if the request is from an unauthorized user.
-#     """
-#     from .middleware import get_current_user
-#     return get_current_user()
+def create_notification(instance, action, user):
+    """
+    Generic function to create a notification with both casual and detailed messages.
+    """
+    print(f"🔍 Creating notification for {instance._meta.model_name} with action: {action}")
 
-# def should_notify(instance, action):
-#     model_name = f"{instance._meta.app_label}.{instance._meta.model_name}".lower()
+    model_name = instance._meta.model_name.lower()
+    identifier = str(getattr(instance, 'slug', getattr(instance, 'id', 'unknown')))
+    title = f"{model_name.capitalize()} {action.capitalize()}"
 
-#     print(f"🔍 should_notify() → Model Name from Instance: {model_name}, Action: {action}")
+    # Casual message (short and user-friendly)
+    casual_message = f"{user.get_full_name()} {action} a {model_name}." if user and user.is_authenticated else f"A {model_name} was {action} by an unauthorized user."
 
-#     # Ensure NOTIFICATION_MODELS keys are also lowercase
-#     notification_models_lower = {k.lower(): v for k, v in settings.NOTIFICATION_MODELS.items()}
-#     print(f"🔎 Checking Against: {list(notification_models_lower.keys())}")
+    # Detailed message (includes object data)
+    object_data = {
+        "id": instance.id,
+        "name": getattr(instance, 'name', 'Unnamed'),
+        "created_at": now().isoformat(),
+    }
+    detailed_message = f"{casual_message} Details: {json.dumps(object_data, indent=2)}"
 
-#     result = model_name in notification_models_lower and action in notification_models_lower[model_name]
+    permission_codename = f"{instance._meta.app_label}.view_{model_name}"
+    print(f"🔍 Permission codename: {permission_codename}")
 
-#     print(f"✅ Model Found in NOTIFICATION_MODELS? {result}")
+    receivers = get_notification_receivers(instance, user)
+    try:
+        notifications = [
+            Notification(
+                user=receiver,
+                title=title,
+                casual_message=casual_message,  # Casual message
+                detailed_message=detailed_message,  # Detailed message
+                module_name=instance._meta.app_label,
+                updated_id=identifier,
+                timestamp=now(),
+            )
+            for receiver in receivers if receiver.has_perm(permission_codename) or model_name in settings.PUBLIC_NOTIFICATION_MODELS
+        ]
+        print(f"🔍 Notifications to create: {len(notifications)}")
+        Notification.objects.bulk_create(notifications)
+        print(f"✅ Notifications successfully created for {len(notifications)} receivers")
+    except Exception as e:
+        print(f"❌ Error creating notification: {e}")
 
-#     return result
+@receiver(post_save)
+def handle_post_save(sender, instance, created, **kwargs):
+    """
+    Handle post_save signal to create notifications for successful creations or updates.
+    """
+    print(f"🔍 post_save signal triggered for {sender.__name__}")
 
+    action = ACTION_CREATED if created else ACTION_UPDATED
+    if should_notify(instance, action):
+        print(f"✅ Should notify for {sender.__name__} with action: {action}")
+        user = get_current_user()
+        create_notification(instance, action, user)
+    else:
+        print(f"❌ Should NOT notify for {sender.__name__} with action: {action}")
 
+@receiver(post_delete)
+def handle_post_delete(sender, instance, **kwargs):
+    """
+    Handle post_delete signal to create notifications for successful deletions.
+    """
+    print(f"🔍 post_delete signal triggered for {sender.__name__}")
 
-
-
-# def get_notification_receivers(instance, user):
-#     """
-#     Determine notification recipients:
-#     - If an `inquiry/contact` is made:
-#         - If a `college` is associated → Notify **users who have that college field set**.
-#         - Else → Notify **superadmins**.
-#     - If an authenticated user performs an action:
-#         - Notify **themselves**.
-#         - If they have a `college`, notify **other users from the same college**.
-#         - Else, notify **superadmins**.
-#     """
-#     model_name = f"{instance._meta.app_label}.{instance._meta.model_name}"
-#     receivers = []
-
-#     # 🔹 Case 1: Public User Inquiry (No Authenticated User)
-#     if model_name in settings.PUBLIC_NOTIFICATION_MODELS:
-#         college = getattr(instance, 'college', None)
-#         if college:
-#             # Notify all users linked to this college (users with college field set to this college)
-#             receivers = User.objects.filter(college=college)
-#         else:
-#             # No college assigned → Notify superadmins
-#             receivers = User.objects.filter(is_superuser=True)
-
-#     # 🔹 Case 2: Authenticated User Action
-#     elif user and user.is_authenticated:
-#         receivers = [user]  # Notify the user themselves
-
-#         if user.college:
-#             # Notify all users from the same college
-#             college_users = User.objects.filter(college=user.college).exclude(id=user.id)
-#             receivers.extend(college_users)
-#         else:
-#             # No college assigned → Notify superadmins
-#             superadmins = User.objects.filter(is_superuser=True)
-#             receivers.extend(superadmins)
-
-#     return list(set(receivers))  # Remove duplicates
-
-
-# @receiver(post_save)
-# def create_update_notification(sender, instance, created, **kwargs):
-#     # Print to check the model in NOTIFICATION_MODELS
-#     print(f"🔍 NOTIFICATION_MODELS: {settings.NOTIFICATION_MODELS}")
-
-#     print(f"📢 Signal Triggered: {sender.__name__} - Created: {created}")  # Debugging
-
-#     if sender.__name__ not in settings.NOTIFICATION_MODELS:
-#         print(f"⏩ Skipping: {sender.__name__} not in NOTIFICATION_MODELS")
-#         return  # Skip if not in notification models
-
-#     action = "created" if created else "updated"
-#     if not should_notify(instance, action):
-#         print(f"⏩ Skipping: should_notify() returned False for {sender.__name__}")
-#         return
-
-#     user = get_current_user()  # Get request user (None if unauthorized)
-#     print(f"👤 Current User: {user}")
-
-#     receivers = get_notification_receivers(instance, user)
-#     print(f"📨 Notification Receivers: {receivers}")
-
-#     model_name = instance._meta.model_name.lower()
-#     identifier = str(getattr(instance, 'slug', getattr(instance, 'id', 'unknown')))
-#     title = f"{model_name.capitalize()} {action.capitalize()}"
-
-#     message = f"{user.get_full_name()} {action} a {model_name}." if user and user.is_authenticated else f"A new {model_name} was {action} by an unauthorized user."
-
-#     permission_codename = f"{instance._meta.app_label}.view_{model_name}"
-
-#     try:
-#         for receiver in receivers:
-#             if receiver.has_perm(permission_codename) or model_name in settings.PUBLIC_NOTIFICATION_MODELS:
-#                 Notification.objects.create(
-#                     user=receiver,
-#                     title=title,
-#                     message=message,
-#                     module_name=instance._meta.app_label,
-#                     updated_id=identifier,
-#                     timestamp=now(),
-#                 )
-#                 print(f"✅ Notification created for {receiver.email}")
-#     except Exception as e:
-#         print(f"❌ Error creating notification: {e}")
-
-
-
-# @receiver(post_delete)
-# def delete_notification(sender, instance, **kwargs):
-#     """
-#     Create notifications dynamically when an instance is deleted.
-#     Handles both authenticated and unauthorized (public) users.
-#     """
-#     if sender.__name__ not in settings.NOTIFICATION_MODELS:
-#         return  # Skip if not in notification models
-
-#     if not should_notify(instance, "deleted"):
-#         return
-
-#     user = get_current_user()  # Get request user (None if unauthorized)
-
-#     receivers = get_notification_receivers(instance, user)
-
-#     model_name = instance._meta.model_name.lower()
-#     identifier = str(getattr(instance, 'slug', getattr(instance, 'id', 'unknown')))
-#     title = f"{model_name.capitalize()} Deleted"
-
-#     # Handle messages for authenticated and unauthorized users
-#     if user and user.is_authenticated:
-#         message = f"{user.get_full_name()} deleted a {model_name}."
-#     else:
-#         message = f"A {model_name} entry was deleted by an unauthorized user."
-
-#     permission_codename = f"{instance._meta.app_label}.view_{model_name}"
-
-#     for receiver in receivers:
-#         if receiver.has_perm(permission_codename) or model_name in settings.PUBLIC_NOTIFICATION_MODELS:
-#             Notification.objects.create(
-#                 user=receiver,
-#                 title=title,
-#                 message=message,
-#                 module_name=instance._meta.app_label,
-#                 updated_id=identifier,
-#                 timestamp=now(),
-#             )
+    if should_notify(instance, ACTION_DELETED):
+        print(f"✅ Should notify for {sender.__name__} with action: {ACTION_DELETED}")
+        user = get_current_user()
+        create_notification(instance, ACTION_DELETED, user)
+    else:
+        print(f"❌ Should NOT notify for {sender.__name__} with action: {ACTION_DELETED}")

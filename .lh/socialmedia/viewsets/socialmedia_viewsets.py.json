@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 9,
+            "activePatchIndex": 10,
             "patches": [
                 {
                     "date": 1733481992065,
@@ -44,6 +44,10 @@
                 {
                     "date": 1739509721090,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,8 +3,9 @@\n from django_filters.rest_framework import DjangoFilterBackend\n from ..models import SocialMedia\n from ..serializers.socialmedia_serializers import SocialMediaListSerializers, SocialMediaRetrieveSerializers, SocialMediaWriteSerializers\n from ..utilities.importbase import *\n+from mainproj.permissions import DynamicModelPermission\n \n class socialmediaViewsets(viewsets.ModelViewSet):\n     serializer_class = SocialMediaListSerializers\n     permission_classes = [socialmediaPermission]\n"
+                },
+                {
+                    "date": 1740898869195,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,9 @@\n from mainproj.permissions import DynamicModelPermission\n \n class socialmediaViewsets(viewsets.ModelViewSet):\n     serializer_class = SocialMediaListSerializers\n-    permission_classes = [socialmediaPermission]\n+    permission_classes = [DynamicModelPermission]\n     authentication_classes = [JWTAuthentication]\n     pagination_class = MyPageNumberPagination\n     queryset = SocialMedia.objects.all().order_by('-id')\n \n@@ -21,11 +21,19 @@\n         'id': ['exact'],\n     }\n # ('name', 'link', 'icon=models.ImageField(upload_to='components/banner',null', 'created_date', 'updated_date', )\n     def get_queryset(self):\n+        \"\"\"Admins see all data, normal users see only their college's data\"\"\"\n         queryset = super().get_queryset()\n-        return queryset\n \n+        if self.request.user.is_authenticated:\n+            if self.request.user.is_superuser:\n+                return queryset  # Superusers get all records\n+            else:\n+                return queryset.filter(college=self.request.user.college)  # Normal users get their college data only\n+\n+        return queryset  # If unauthenticated (unlikely due to permissions), return all\n+\n     def get_serializer_class(self):\n         if self.action in ['create', 'update', 'partial_update']:\n             return SocialMediaWriteSerializers\n         elif self.action == 'retrieve':\n"
                 }
             ],
             "date": 1733481992065,

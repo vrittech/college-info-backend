@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 11,
+            "activePatchIndex": 21,
             "patches": [
                 {
                     "date": 1739869271037,
@@ -52,6 +52,46 @@
                 {
                     "date": 1740123601107,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,15 +1,8 @@\n from django.db import models\n from accounts.models import CustomUser as User\n from django.utils.timezone import now\n \n-\n-from django.db import models\n-from django.contrib.auth import get_user_model\n-from django.utils.timezone import now\n-\n-User = get_user_model()\n-\n class Notification(models.Model):\n     \"\"\"\n     Stores notifications dynamically for configured models only.\n     \"\"\"\n"
+                },
+                {
+                    "date": 1740895860812,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,17 +2,14 @@\n from accounts.models import CustomUser as User\n from django.utils.timezone import now\n \n class Notification(models.Model):\n-    \"\"\"\n-    Stores notifications dynamically for configured models only.\n-    \"\"\"\n-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name=\"notifications\", null=True, blank=True)\n+    user = models.ForeignKey(User, on_delete=models.CASCADE)\n     title = models.CharField(max_length=255)\n-    message = models.TextField()\n-    module_name = models.CharField(max_length=100)  # Example: 'students', 'courses'\n-    updated_id = models.CharField(max_length=100)  # Unique identifier (slug or ID)\n-    is_read = models.BooleanField(default=False)\n-    timestamp = models.DateTimeField(default=now)\n+    casual_message = models.TextField()  # Casual message\n+    detailed_message = models.TextField()  # Detailed message\n+    module_name = models.CharField(max_length=255)\n+    updated_id = models.CharField(max_length=255)\n+    timestamp = models.DateTimeField(auto_now_add=True)\n \n     def __str__(self):\n-        return f\"Notification: {self.title} - {self.message}\"\n+        return self.title\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1740896218602,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,9 +4,9 @@\n \n class Notification(models.Model):\n     user = models.ForeignKey(User, on_delete=models.CASCADE)\n     title = models.CharField(max_length=255)\n-    casual_message = models.TextField()  # Casual message\n+    casual_message = models.TextField(nu)  # Casual message\n     detailed_message = models.TextField()  # Detailed message\n     module_name = models.CharField(max_length=255)\n     updated_id = models.CharField(max_length=255)\n     timestamp = models.DateTimeField(auto_now_add=True)\n"
+                },
+                {
+                    "date": 1740896227346,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,10 +4,10 @@\n \n class Notification(models.Model):\n     user = models.ForeignKey(User, on_delete=models.CASCADE)\n     title = models.CharField(max_length=255)\n-    casual_message = models.TextField(nu)  # Casual message\n-    detailed_message = models.TextField()  # Detailed message\n+    casual_message = models.TextField(null=True, blank=True)  # Casual message\n+    detailed_message = models.TextField(null=True, blank=True)  # Detailed message\n     module_name = models.CharField(max_length=255)\n     updated_id = models.CharField(max_length=255)\n     timestamp = models.DateTimeField(auto_now_add=True)\n \n"
+                },
+                {
+                    "date": 1740896250055,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,9 @@\n from accounts.models import CustomUser as User\n from django.utils.timezone import now\n \n class Notification(models.Model):\n-    user = models.ForeignKey(User, on_delete=models.CASCADE)\n+    user = models.ForeignKey(User, on_delete=models.CASCADE,null=True, blank=True)\n     title = models.CharField(max_length=255)\n     casual_message = models.TextField(null=True, blank=True)  # Casual message\n     detailed_message = models.TextField(null=True, blank=True)  # Detailed message\n     module_name = models.CharField(max_length=255)\n"
+                },
+                {
+                    "date": 1740896422110,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,15 +1,19 @@\n from django.db import models\n from accounts.models import CustomUser as User\n from django.utils.timezone import now\n \n+from django.db import models\n+from accounts.models import CustomUser as User\n+\n class Notification(models.Model):\n-    user = models.ForeignKey(User, on_delete=models.CASCADE,null=True, blank=True)\n+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='notifications')\n     title = models.CharField(max_length=255)\n-    casual_message = models.TextField(null=True, blank=True)  # Casual message\n-    detailed_message = models.TextField(null=True, blank=True)  # Detailed message\n+    casual_message = models.TextField()\n+    detailed_message = models.TextField()\n     module_name = models.CharField(max_length=255)\n     updated_id = models.CharField(max_length=255)\n     timestamp = models.DateTimeField(auto_now_add=True)\n+    read_by = models.ManyToManyField(User, related_name='read_notifications', blank=True)\n \n     def __str__(self):\n         return self.title\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1740896763027,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,9 @@\n     title = models.CharField(max_length=255)\n     casual_message = models.TextField()\n     detailed_message = models.TextField()\n     module_name = models.CharField(max_length=255)\n-    updated_id = models.CharField(max_length=255)\n+    updated_id = models.CharField(max_length=255,)\n     timestamp = models.DateTimeField(auto_now_add=True)\n     read_by = models.ManyToManyField(User, related_name='read_notifications', blank=True)\n \n     def __str__(self):\n"
+                },
+                {
+                    "date": 1740896772693,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,11 +8,11 @@\n class Notification(models.Model):\n     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='notifications')\n     title = models.CharField(max_length=255)\n     casual_message = models.TextField()\n-    detailed_message = models.TextField()\n-    module_name = models.CharField(max_length=255)\n-    updated_id = models.CharField(max_length=255,)\n+    detailed_message = models.TextField( blank=True, null=True))\n+    module_name = models.CharField(max_length=255, blank=True, null=True)\n+    updated_id = models.CharField(max_length=255, blank=True, null=True)\n     timestamp = models.DateTimeField(auto_now_add=True)\n     read_by = models.ManyToManyField(User, related_name='read_notifications', blank=True)\n \n     def __str__(self):\n"
+                },
+                {
+                    "date": 1740896777961,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,10 +7,10 @@\n \n class Notification(models.Model):\n     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='notifications')\n     title = models.CharField(max_length=255)\n-    casual_message = models.TextField()\n-    detailed_message = models.TextField( blank=True, null=True))\n+    casual_message = models.TextField(blank=True, null=True))\n+    detailed_message = models.TextField(blank=True, null=True))\n     module_name = models.CharField(max_length=255, blank=True, null=True)\n     updated_id = models.CharField(max_length=255, blank=True, null=True)\n     timestamp = models.DateTimeField(auto_now_add=True)\n     read_by = models.ManyToManyField(User, related_name='read_notifications', blank=True)\n"
+                },
+                {
+                    "date": 1740896789636,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,9 @@\n class Notification(models.Model):\n     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='notifications')\n     title = models.CharField(max_length=255)\n     casual_message = models.TextField(blank=True, null=True))\n-    detailed_message = models.TextField(blank=True, null=True))\n+    detailed_message = models.TextField(blank=True, null=True)\n     module_name = models.CharField(max_length=255, blank=True, null=True)\n     updated_id = models.CharField(max_length=255, blank=True, null=True)\n     timestamp = models.DateTimeField(auto_now_add=True)\n     read_by = models.ManyToManyField(User, related_name='read_notifications', blank=True)\n"
+                },
+                {
+                    "date": 1740896805859,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,11 +5,11 @@\n from django.db import models\n from accounts.models import CustomUser as User\n \n class Notification(models.Model):\n-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='notifications')\n+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='notifications',)\n     title = models.CharField(max_length=255)\n-    casual_message = models.TextField(blank=True, null=True))\n+    casual_message = models.TextField(blank=True, null=True)\n     detailed_message = models.TextField(blank=True, null=True)\n     module_name = models.CharField(max_length=255, blank=True, null=True)\n     updated_id = models.CharField(max_length=255, blank=True, null=True)\n     timestamp = models.DateTimeField(auto_now_add=True)\n"
                 }
             ],
             "date": 1739869271037,

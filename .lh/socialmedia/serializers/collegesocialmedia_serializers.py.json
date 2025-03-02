@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 23,
+            "activePatchIndex": 26,
             "patches": [
                 {
                     "date": 1739856941559,
@@ -100,6 +100,18 @@
                 {
                     "date": 1739870743660,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,9 +5,9 @@\n \n class SocialMediaSerializers(serializers.ModelSerializer):\n     class Meta:\n         model = SocialMedia\n-        fields = ['id','name']\n+        fields = ['id','name','url']\n         \n class CollegeSerializers(serializers.ModelSerializer):\n     class Meta:\n         model = College\n"
+                },
+                {
+                    "date": 1740899403990,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,9 +5,9 @@\n \n class SocialMediaSerializers(serializers.ModelSerializer):\n     class Meta:\n         model = SocialMedia\n-        fields = ['id','name','url']\n+        fields = ['id','name','link']\n         \n class CollegeSerializers(serializers.ModelSerializer):\n     class Meta:\n         model = College\n"
+                },
+                {
+                    "date": 1740899430608,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,9 +11,9 @@\n class CollegeSerializers(serializers.ModelSerializer):\n     class Meta:\n         model = College\n         ref_name = 'CollegeSocialMediaSerializers'\n-        fields = '__all__'\n+        fields = []\n \n \n class CollegeSocialMediaListSerializers(serializers.ModelSerializer):\n     college = CollegeSerializers(read_only=True)\n"
+                },
+                {
+                    "date": 1740899436709,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,9 +11,9 @@\n class CollegeSerializers(serializers.ModelSerializer):\n     class Meta:\n         model = College\n         ref_name = 'CollegeSocialMediaSerializers'\n-        fields = []\n+        fields = ['id','name',]\n \n \n class CollegeSocialMediaListSerializers(serializers.ModelSerializer):\n     college = CollegeSerializers(read_only=True)\n"
                 }
             ],
             "date": 1739856941559,

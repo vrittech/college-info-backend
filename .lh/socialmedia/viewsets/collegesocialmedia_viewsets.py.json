@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 5,
+            "activePatchIndex": 14,
             "patches": [
                 {
                     "date": 1739856844779,
@@ -28,6 +28,42 @@
                 {
                     "date": 1740666538283,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,13 +3,13 @@\n from django_filters.rest_framework import DjangoFilterBackend\n from ..models import CollegeSocialMedia\n from ..serializers.collegesocialmedia_serializers import CollegeSocialMediaListSerializers, CollegeSocialMediaRetrieveSerializers, CollegeSocialMediaWriteSerializers\n from ..utilities.importbase import *\n-from \n+from mainproj.permissions import DynamicModelPermission\n \n class collegesocialmediaViewsets(viewsets.ModelViewSet):\n     serializer_class = CollegeSocialMediaListSerializers\n-    permission_classes = [socialmediaPermission]\n+    permission_classes = [DynamicModelPermission]\n     # authentication_classes = [JWTAuthentication]\n     pagination_class = MyPageNumberPagination\n     queryset = CollegeSocialMedia.objects.all()\n \n"
+                },
+                {
+                    "date": 1740898861585,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -21,14 +21,19 @@\n         'id': ['exact'],\n     }\n \n     def get_queryset(self):\n+        \"\"\"Admins see all data, normal users see only their college's data\"\"\"\n+        queryset = super().get_queryset()\n+\n         if self.request.user.is_authenticated:\n-            queryset = super().get_queryset().filter(college = self.request.user.college)\n-        else:\n-            queryset = super().get_queryset()\n-        return queryset\n+            if self.request.user.is_superuser:\n+                return queryset  # Superusers get all records\n+            else:\n+                return queryset.filter(college=self.request.user.college)  # Normal users get their college data only\n \n+        return queryset  # If unauthenticated (unlikely due to permissions), return all\n+\n     def get_serializer_class(self):\n         if self.action in ['create', 'update', 'partial_update']:\n             return CollegeSocialMediaWriteSerializers\n         elif self.action == 'retrieve':\n"
+                },
+                {
+                    "date": 1740898978920,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,9 +14,9 @@\n     queryset = CollegeSocialMedia.objects.all()\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     search_fields = ['id']\n-    ordering_fields = ['id']\n+    ordering_fields = ['id',]\n \n     filterset_fields = {\n         'id': ['exact'],\n     }\n"
+                },
+                {
+                    "date": 1740898986570,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,10 +13,10 @@\n     pagination_class = MyPageNumberPagination\n     queryset = CollegeSocialMedia.objects.all()\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n-    search_fields = ['id']\n-    ordering_fields = ['id',]\n+    search_fields = ['id','name']\n+    ordering_fields = ['id','name']\n \n     filterset_fields = {\n         'id': ['exact'],\n     }\n"
+                },
+                {
+                    "date": 1740898994053,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,8 +18,10 @@\n     ordering_fields = ['id','name']\n \n     filterset_fields = {\n         'id': ['exact'],\n+        'id': ['exact'],\n+        'id': ['exact'],\n     }\n \n     def get_queryset(self):\n         \"\"\"Admins see all data, normal users see only their college's data\"\"\"\n"
+                },
+                {
+                    "date": 1740898999893,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,10 +18,10 @@\n     ordering_fields = ['id','name']\n \n     filterset_fields = {\n         'id': ['exact'],\n-        'id': ['exact'],\n-        'id': ['exact'],\n+        'name': ['exact'],\n+        ': ['exact'],\n     }\n \n     def get_queryset(self):\n         \"\"\"Admins see all data, normal users see only their college's data\"\"\"\n"
+                },
+                {
+                    "date": 1740899006985,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,15 +13,15 @@\n     pagination_class = MyPageNumberPagination\n     queryset = CollegeSocialMedia.objects.all()\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n-    search_fields = ['id','name']\n+    search_fields = ['id','name__nam,']\n     ordering_fields = ['id','name']\n \n     filterset_fields = {\n         'id': ['exact'],\n         'name': ['exact'],\n-        ': ['exact'],\n+        'college': ['exact'],\n     }\n \n     def get_queryset(self):\n         \"\"\"Admins see all data, normal users see only their college's data\"\"\"\n"
+                },
+                {
+                    "date": 1740899195177,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,12 +10,12 @@\n     serializer_class = CollegeSocialMediaListSerializers\n     permission_classes = [DynamicModelPermission]\n     # authentication_classes = [JWTAuthentication]\n     pagination_class = MyPageNumberPagination\n-    queryset = CollegeSocialMedia.objects.all()\n+    queryset = CollegeSocialMedia.objects.all().\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n-    search_fields = ['id','name__nam,']\n+    search_fields = ['id','name__name']\n     ordering_fields = ['id','name']\n \n     filterset_fields = {\n         'id': ['exact'],\n"
+                },
+                {
+                    "date": 1740899285925,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,10 @@\n     serializer_class = CollegeSocialMediaListSerializers\n     permission_classes = [DynamicModelPermission]\n     # authentication_classes = [JWTAuthentication]\n     pagination_class = MyPageNumberPagination\n-    queryset = CollegeSocialMedia.objects.all().\n+    queryset = CollegeSocialMedia.objects.all().order_by('-id')\n+    lookup_field\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     search_fields = ['id','name__name']\n     ordering_fields = ['id','name']\n"
+                },
+                {
+                    "date": 1740899300749,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,9 +11,8 @@\n     permission_classes = [DynamicModelPermission]\n     # authentication_classes = [JWTAuthentication]\n     pagination_class = MyPageNumberPagination\n     queryset = CollegeSocialMedia.objects.all().order_by('-id')\n-    lookup_field\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     search_fields = ['id','name__name']\n     ordering_fields = ['id','name']\n"
                 }
             ],
             "date": 1739856844779,
