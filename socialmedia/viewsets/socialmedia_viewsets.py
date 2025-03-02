@@ -25,11 +25,11 @@ class socialmediaViewsets(viewsets.ModelViewSet):
         """Admins see all data, normal users see only their college's data"""
         queryset = super().get_queryset()
 
-        if self.request.user.is_authenticated:
-            if self.request.user.is_superuser:
-                return queryset  # Superusers get all records
-            else:
-                return queryset.filter(college=self.request.user.college)  # Normal users get their college data only
+        # if self.request.user.is_authenticated:
+            # if self.request.user.is_superuser:
+            #     return queryset  # Superusers get all records
+            # else:
+            #     return queryset.filter(college=self.request.user.college)  # Normal users get their college data only
 
         return queryset  # If unauthenticated (unlikely due to permissions), return all
 
