@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 131,
+            "activePatchIndex": 132,
             "patches": [
                 {
                     "date": 1733718920520,
@@ -532,6 +532,10 @@
                 {
                     "date": 1740722622712,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -88,9 +88,9 @@\n         url_path=\"college-creation\",\n         permission_classes=[collegemanagementPermission] \n     )\n     def college_creation(self, request, *args, **kwargs):\n-        print(request.data.get(\"accessToken\"),\"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\")\n+        # print(request.data.get(\"accessToken\"),\"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\")\n         \"\"\"\n         Authenticate user from access token in payload if not in headers.\n         Ensure the user is either in the \"College Admin\" group or has the\n         'collegemanagement.add_college' permission.\n"
+                },
+                {
+                    "date": 1740907352908,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -63,9 +63,9 @@\n     # @action(detail=False, methods=['get'], name=\"action_name\", url_path=\"url_path\")\n     # def action_name(self, request, *args, **kwargs):\n     #     return super().list(request, *args, **kwargs)\n     \n-    @action(detail=False, methods=['get'], url_path=\"college-logo\")\n+    @action(detail=False, methods=['get'], url_path=\"college-logo\",permission_classes)\n     def get_dp_image(self, request, pk=None):\n         colleges = College.objects.all()  # Fetch all colleges\n         if not colleges.exists():\n             return Response({\"error\": \"No colleges available.\"}, status=404)\n"
                 }
             ],
             "date": 1733718920520,

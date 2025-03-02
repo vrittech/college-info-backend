@@ -64,7 +64,7 @@ class collegeViewsets(viewsets.ModelViewSet):
     # def action_name(self, request, *args, **kwargs):
     #     return super().list(request, *args, **kwargs)
     
-    @action(detail=False, methods=['get'], url_path="college-logo")
+    @action(detail=False, methods=['get'], url_path="college-logo",permission_classes=[AllowAny])
     def get_dp_image(self, request, pk=None):
         colleges = College.objects.all()  # Fetch all colleges
         if not colleges.exists():
