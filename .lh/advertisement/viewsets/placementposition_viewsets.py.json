@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 6,
+            "activePatchIndex": 7,
             "patches": [
                 {
                     "date": 1733481090199,
@@ -32,6 +32,10 @@
                 {
                     "date": 1739509184619,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,13 +3,14 @@\n from django_filters.rest_framework import DjangoFilterBackend\n from ..models import PlacementPosition\n from ..serializers.placementposition_serializers import PlacementPositionListSerializers, PlacementPositionRetrieveSerializers, PlacementPositionWriteSerializers\n from ..utilities.importbase import *\n+from mainproj.\n \n class placementpositionViewsets(viewsets.ModelViewSet):\n     serializer_class = PlacementPositionListSerializers\n-    permission_classes = [advertisementPermission]\n-    permission_classes = [advertisementPermission]\n+    # permission_classes = [advertisementPermission]\n+    permission_classes = [DynamicModelPermission]\n     authentication_classes = [JWTAuthentication]\n     pagination_class = MyPageNumberPagination\n     queryset = PlacementPosition.objects.all().order_by('-id')\n \n"
+                },
+                {
+                    "date": 1740906758083,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,15 +3,15 @@\n from django_filters.rest_framework import DjangoFilterBackend\n from ..models import PlacementPosition\n from ..serializers.placementposition_serializers import PlacementPositionListSerializers, PlacementPositionRetrieveSerializers, PlacementPositionWriteSerializers\n from ..utilities.importbase import *\n-from mainproj.\n+from mainproj.permissions import DynamicModelPermission\n \n class placementpositionViewsets(viewsets.ModelViewSet):\n     serializer_class = PlacementPositionListSerializers\n     # permission_classes = [advertisementPermission]\n     permission_classes = [DynamicModelPermission]\n-    authentication_classes = [JWTAuthentication]\n+    # authentication_classes = [JWTAuthentication]\n     pagination_class = MyPageNumberPagination\n     queryset = PlacementPosition.objects.all().order_by('-id')\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n"
                 }
             ],
             "date": 1733481090198,

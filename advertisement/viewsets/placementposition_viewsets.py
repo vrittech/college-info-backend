@@ -10,7 +10,7 @@ class placementpositionViewsets(viewsets.ModelViewSet):
     serializer_class = PlacementPositionListSerializers
     # permission_classes = [advertisementPermission]
     permission_classes = [DynamicModelPermission]
-    authentication_classes = [JWTAuthentication]
+    # authentication_classes = [JWTAuthentication]
     pagination_class = MyPageNumberPagination
     queryset = PlacementPosition.objects.all().order_by('-id')
 
