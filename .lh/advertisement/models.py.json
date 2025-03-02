@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 49,
+            "activePatchIndex": 52,
             "patches": [
                 {
                     "date": 1733373617417,
@@ -204,6 +204,18 @@
                 {
                     "date": 1739351282160,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,9 @@\n         return self.placement_name\n     \n     class Meta:\n         permissions = [\n-            ('manage_placementposition', 'Manage manage_coursecurriculumfile'),\n+            ('manage_placementposition', 'Manage Placement Position'),\n         ]\n \n \n class Advertisement(models.Model):\n"
+                },
+                {
+                    "date": 1740935050321,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,9 +17,9 @@\n \n class Advertisement(models.Model):\n     name = models.CharField(max_length=255)\n     link = models.URLField()\n-    image = models.ImageField(upload_to='ads/')\n+    image = models.ImageField(upload_to='ads/',n)\n     placement = models.ForeignKey(PlacementPosition, on_delete=models.CASCADE)\n     created_date = models.DateTimeField(auto_now_add=True)\n     updated_date = models.DateTimeField(auto_now=True)\n     # duration_in_seconds = models.IntegerField(default=0)  # Time in seconds for the ad\n"
+                },
+                {
+                    "date": 1740935066109,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,10 +16,10 @@\n \n \n class Advertisement(models.Model):\n     name = models.CharField(max_length=255)\n-    link = models.URLField()\n-    image = models.ImageField(upload_to='ads/',n)\n+    link = models.URLField(null=True,blank=True))\n+    image = models.ImageField(upload_to='ads/',null=True,blank=True)\n     placement = models.ForeignKey(PlacementPosition, on_delete=models.CASCADE)\n     created_date = models.DateTimeField(auto_now_add=True)\n     updated_date = models.DateTimeField(auto_now=True)\n     # duration_in_seconds = models.IntegerField(default=0)  # Time in seconds for the ad\n"
+                },
+                {
+                    "date": 1740935236672,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,9 +16,9 @@\n \n \n class Advertisement(models.Model):\n     name = models.CharField(max_length=255)\n-    link = models.URLField(null=True,blank=True))\n+    link = models.URLField(null=True,blank=True)\n     image = models.ImageField(upload_to='ads/',null=True,blank=True)\n     placement = models.ForeignKey(PlacementPosition, on_delete=models.CASCADE)\n     created_date = models.DateTimeField(auto_now_add=True)\n     updated_date = models.DateTimeField(auto_now=True)\n"
                 }
             ],
             "date": 1733373617417,

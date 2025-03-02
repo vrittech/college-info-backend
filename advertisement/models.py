@@ -17,8 +17,8 @@ class PlacementPosition(models.Model):
 
 class Advertisement(models.Model):
     name = models.CharField(max_length=255)
-    link = models.URLField()
-    image = models.ImageField(upload_to='ads/')
+    link = models.URLField(null=True,blank=True)
+    image = models.ImageField(upload_to='ads/',null=True,blank=True)
     placement = models.ForeignKey(PlacementPosition, on_delete=models.CASCADE)
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
