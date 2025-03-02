@@ -9,16 +9,16 @@ class Contact(models.Model):
     ('others', 'Others'),
     ('college_admin', 'College Admin'),
 ]
-    name = models.CharField(max_length=100)
-    email = models.EmailField()
-    phone_number = models.CharField(max_length=15)    
+    name = models.CharField(max_length=100,null=True,blank=True)
+    email = models.EmailField(null=True,blank=True)
+    phone_number = models.CharField(max_length=15,null=True,blank=True)
     tag = models.CharField(
     max_length=20,
     choices=ROLE_CHOICES,
     default='others',
 )
-    subject = models.CharField(max_length=1000)
-    message = models.TextField()
+    subject = models.CharField(max_length=1000,null=True,blank=True)
+    message = models.TextField(null=True,blank=True)
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
     

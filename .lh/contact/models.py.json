@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 32,
+            "activePatchIndex": 37,
             "patches": [
                 {
                     "date": 1733383238378,
@@ -136,6 +136,26 @@
                 {
                     "date": 1733803497555,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,9 @@\n from accounts.models import CustomUser\n \n # Create your models here.\n class Contact(models.Model):\n-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE,null=)\n+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE,null=True,blank=True)\n     ROLE_CHOICES = [\n     ('student', 'Student'),\n     ('others', 'Others'),\n     ('college_admin', 'College Admin'),\n"
+                },
+                {
+                    "date": 1740933709140,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,9 @@\n     ('student', 'Student'),\n     ('others', 'Others'),\n     ('college_admin', 'College Admin'),\n ]\n-    name = models.CharField(max_length=100)\n+    name = models.CharField(max_length=100,null=True,blank=True)\n     email = models.EmailField()\n     phone_number = models.CharField(max_length=15)    \n     tag = models.CharField(\n     max_length=20,\n"
+                },
+                {
+                    "date": 1740933714210,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,9 +9,9 @@\n     ('others', 'Others'),\n     ('college_admin', 'College Admin'),\n ]\n     name = models.CharField(max_length=100,null=True,blank=True)\n-    email = models.EmailField()\n+    email = models.EmailField(null=True,blank=True)\n     phone_number = models.CharField(max_length=15)    \n     tag = models.CharField(\n     max_length=20,\n     choices=ROLE_CHOICES,\n"
+                },
+                {
+                    "date": 1740933723384,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,15 +10,15 @@\n     ('college_admin', 'College Admin'),\n ]\n     name = models.CharField(max_length=100,null=True,blank=True)\n     email = models.EmailField(null=True,blank=True)\n-    phone_number = models.CharField(max_length=15)    \n+    phone_number = models.CharField(max_length=15,null=True,blank=True))    \n     tag = models.CharField(\n     max_length=20,\n     choices=ROLE_CHOICES,\n     default='others',\n )\n-    subject = models.CharField(max_length=1000)\n+    subject = models.CharField(max_length=1000,null=True,blank=True))\n     message = models.TextField()\n     created_date = models.DateTimeField(auto_now_add=True)\n     updated_date = models.DateTimeField(auto_now=True)\n     \n"
+                },
+                {
+                    "date": 1740933736704,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,10 +16,10 @@\n     max_length=20,\n     choices=ROLE_CHOICES,\n     default='others',\n )\n-    subject = models.CharField(max_length=1000,null=True,blank=True))\n-    message = models.TextField()\n+    subject = models.CharField(max_length=1000,null=True,blank=True)\n+    message = models.TextField(null=True,blank=True))\n     created_date = models.DateTimeField(auto_now_add=True)\n     updated_date = models.DateTimeField(auto_now=True)\n     \n     def __str__(self):\n"
+                },
+                {
+                    "date": 1740933745648,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,16 +10,16 @@\n     ('college_admin', 'College Admin'),\n ]\n     name = models.CharField(max_length=100,null=True,blank=True)\n     email = models.EmailField(null=True,blank=True)\n-    phone_number = models.CharField(max_length=15,null=True,blank=True))    \n+    phone_number = models.CharField(max_length=15,null=True,blank=True)\n     tag = models.CharField(\n     max_length=20,\n     choices=ROLE_CHOICES,\n     default='others',\n )\n     subject = models.CharField(max_length=1000,null=True,blank=True)\n-    message = models.TextField(null=True,blank=True))\n+    message = models.TextField(null=True,blank=True)\n     created_date = models.DateTimeField(auto_now_add=True)\n     updated_date = models.DateTimeField(auto_now=True)\n     \n     def __str__(self):\n"
                 }
             ],
             "date": 1733383238378,
