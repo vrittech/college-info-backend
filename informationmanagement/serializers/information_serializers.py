@@ -3,7 +3,50 @@ from django.db import transaction
 import ast
 
 from ..models import Information, Level, SubLevel, Course, Affiliation, District, College, Faculty, InformationTagging, InformationCategory, InformationGallery, InformationFiles
+from rest_framework import serializers
+from django.db import transaction
+from informationmanagement.models import (
+    Information, InformationGallery, InformationFiles
+)
 
+def str_to_list(data, value_to_convert):
+    """
+    Converts a string representation of a list into an actual list if necessary.
+    Ensures that single values or comma-separated values are correctly converted into lists of integers.
+    """
+    try:
+        mutable_data = data.dict()  # Convert QueryDict to standard dict if necessary
+    except Exception:
+        mutable_data = data
+
+    value_to_convert_data = mutable_data.get(value_to_convert)
+
+    if isinstance(value_to_convert_data, list):
+        return mutable_data  # If already a list, return unchanged
+
+    # If it's a comma-separated string, convert it to a list of integers
+    if isinstance(value_to_convert_data, str):
+        if ',' in value_to_convert_data:
+            # Split the string by commas, strip spaces, and convert each part to an integer
+            mutable_data[value_to_convert] = [int(x.strip()) for x in value_to_convert_data.split(',')]
+        else:
+            # If it's a single value, convert it to a list of one integer
+            mutable_data[value_to_convert] = [int(value_to_convert_data.strip())]
+        return mutable_data
+
+    # If it's a single item (not a list or string), wrap it in a list
+    if value_to_convert_data and not isinstance(value_to_convert_data, list):
+        mutable_data[value_to_convert] = [value_to_convert_data]
+        return mutable_data
+
+    try:
+        variations = ast.literal_eval(value_to_convert_data)  # Convert string to list
+        mutable_data[value_to_convert] = variations
+        return mutable_data
+    except ValueError as e:
+        raise serializers.ValidationError({f'{value_to_convert}': str(e)}) from e
+    
+    
 class LevelSerializer(serializers.ModelSerializer):
     class Meta:
         model = Level
@@ -128,45 +171,11 @@ class InformationRetrieveSerializers(serializers.ModelSerializer):
         model = Information
         fields = '__all__'
 
-class IntegerListField(serializers.ListField):
-    """ Handles Many-to-Many fields in form-data correctly (e.g., '[2,3]', '2,3'). """
-
-    def to_internal_value(self, data):
-        if data is None or data == "":
-            return []
-
-        if isinstance(data, list):  
-            return [int(i) for i in data if str(i).isdigit()]  # Convert to integers
-        
-        if isinstance(data, str):  
-            try:
-                clean_data = data.strip("[]").replace(" ", "")  # Remove brackets & spaces
-
-                if "," in clean_data:
-                    return [int(x) for x in clean_data.split(',') if x.isdigit()]
-
-                return [int(clean_data)] if clean_data.isdigit() else []
-
-            except ValueError:
-                raise serializers.ValidationError("Invalid format. Expected comma-separated integers.")
-
-        return super().to_internal_value(data)
 
 
 
 class InformationWriteSerializers(serializers.ModelSerializer):
-    """ Handles Many-to-Many fields and file/image uploads """
-
-    # Using IntegerListField for Many-to-Many relationships (comma-separated values)
-    level = IntegerListField(required=False)
-    sublevel = IntegerListField(required=False)
-    course = IntegerListField(required=False)
-    affiliation = IntegerListField(required=False)
-    district = IntegerListField(required=False)
-    college = IntegerListField(required=False)
-    faculty = IntegerListField(required=False)
-    information_tagging = IntegerListField(required=False)
-    information_category = IntegerListField(required=False)
+    """Handles Many-to-Many fields and file/image uploads."""
 
     information_gallery = serializers.SerializerMethodField()
     information_files = serializers.SerializerMethodField()
@@ -181,8 +190,25 @@ class InformationWriteSerializers(serializers.ModelSerializer):
     def get_information_files(self, obj):
         return [file.file.url for file in obj.information_files.all()]
 
+    def to_internal_value(self, data):
+        """
+        Override to_internal_value to handle Many-to-Many fields.
+        """
+        # List of fields that need to be converted from string to list
+        many_to_many_fields = [
+            "level", "sublevel", "course", "affiliation", "district",
+            "college", "faculty", "information_tagging", "information_category"
+        ]
+
+        # Convert each field using str_to_list
+        for field in many_to_many_fields:
+            if field in data:
+                data = str_to_list(data, field)
+
+        return super().to_internal_value(data)
+
     def extract_images_and_files(self):
-        """ Extract multiple images and files from request.FILES """
+        """Extract multiple images and files from request.FILES."""
         request = self.context.get('request')
         images_data, files_data = [], []
 
@@ -190,22 +216,22 @@ class InformationWriteSerializers(serializers.ModelSerializer):
             for key, file in request.FILES.items():
                 if key.startswith('information_gallery['):
                     images_data.append(file)
-                elif key.startswith('information_files['):  
+                elif key.startswith('information_files['):
                     files_data.append(file)
 
         return images_data, files_data
 
     @transaction.atomic
     def create(self, validated_data):
-        """ Handles Many-to-Many relationships and image/file uploads """
+        """Handles Many-to-Many relationships and image/file uploads."""
 
         # Extract Many-to-Many fields
         many_to_many_fields = [
             "level", "sublevel", "course", "affiliation", "district",
             "college", "faculty", "information_tagging", "information_category"
         ]
-        
-        m2m_data = {field: validated_data.pop(field, None) for field in many_to_many_fields}
+
+        m2m_data = {field: validated_data.pop(field, []) for field in many_to_many_fields}
 
         # Extract images & files
         images_data, files_data = self.extract_images_and_files()
@@ -213,10 +239,9 @@ class InformationWriteSerializers(serializers.ModelSerializer):
         # Create Information instance
         information = Information.objects.create(**validated_data)
 
-        # Assign Many-to-Many relationships only if data is provided
+        # Assign Many-to-Many relationships
         for field, ids in m2m_data.items():
-            if ids is not None:
-                getattr(information, field).set(ids)
+            getattr(information, field).set(ids)
 
         # Save images and files
         for image_file in images_data:
@@ -236,7 +261,7 @@ class InformationWriteSerializers(serializers.ModelSerializer):
             "level", "sublevel", "course", "affiliation", "district",
             "college", "faculty", "information_tagging", "information_category"
         ]
-        
+
         m2m_data = {field: validated_data.pop(field, None) for field in many_to_many_fields}
 
         # Extract images & files
