@@ -15,12 +15,15 @@ class collegefaqsViewsets(viewsets.ModelViewSet):
     queryset = CollegeFaqs.objects.all().order_by('-id')
 
     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]
-    search_fields = ['id']
-    ordering_fields = ['id']
+    search_fields = ['id','college__name']
+    ordering_fields = ['id','created_date']
 
-    # filterset_fields = {
-    #     'id': ['exact'],
-    # }
+    filterset_fields = {
+        'id': ['exact'],
+        'college__slug': ['exact'],
+        'created_date': ['exact', 'lte', 'gte'],
+        'updated_date': ['exact', 'lte', 'gte'],
+    }
 
     def get_queryset(self):
         if self.request.user.college:
