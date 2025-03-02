@@ -5,6 +5,8 @@ from ..models import CollegeSocialMedia
 from ..serializers.collegesocialmedia_serializers import CollegeSocialMediaListSerializers, CollegeSocialMediaRetrieveSerializers, CollegeSocialMediaWriteSerializers
 from ..utilities.importbase import *
 from mainproj.permissions import DynamicModelPermission
+from rest_framework.response import Response
+from rest_framework import status
 
 class collegesocialmediaViewsets(viewsets.ModelViewSet):
     serializer_class = CollegeSocialMediaListSerializers
