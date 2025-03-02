@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 37,
+            "activePatchIndex": 38,
             "patches": [
                 {
                     "date": 1726725092271,
@@ -156,6 +156,10 @@
                 {
                     "date": 1740910307502,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n from django.db import models\n-from colle\n+from collegemanagement.models import College\n \n # Create your models here.\n class SocialMedia(models.Model):\n     name= models.CharField(max_length=100,null= True,blank=True) \n@@ -29,8 +29,8 @@\n     created_date = models.DateField(auto_now_add=True)\n     updated_date = models.DateField(auto_now=True)\n     \n     def __str__(self):\n-        return self.social_media.name\n+        return self.is_show\n     permissions = [\n         ('manage_collegesocialmedia', 'Manage college socialmedia'),\n     ]\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1740910535196,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -28,9 +28,9 @@\n     college = models.ForeignKey(College, on_delete=models.CASCADE,related_name='college_social_media',null=True,blank=True)  \n     created_date = models.DateField(auto_now_add=True)\n     updated_date = models.DateField(auto_now=True)\n     \n-    def __str__(self):\n-        return self.is_show\n+\n+    \n     permissions = [\n         ('manage_collegesocialmedia', 'Manage college socialmedia'),\n     ]\n\\ No newline at end of file\n"
                 }
             ],
             "date": 1726725092271,
