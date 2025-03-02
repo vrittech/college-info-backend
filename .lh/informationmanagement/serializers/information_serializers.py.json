@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 121,
+            "activePatchIndex": 137,
             "patches": [
                 {
                     "date": 1733485840683,
@@ -492,6 +492,70 @@
                 {
                     "date": 1740909549268,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -174,9 +174,9 @@\n \n \n \n class InformationWriteSerializers(serializers.ModelSerializer):\n-    \"\"\" Handles Many-to-Many fields and file/image uploads \"\"\"\n+    \"\"\"Handles Many-to-Many fields and file/image uploads.\"\"\"\n \n     information_gallery = serializers.SerializerMethodField()\n     information_files = serializers.SerializerMethodField()\n \n@@ -189,32 +189,49 @@\n \n     def get_information_files(self, obj):\n         return [file.file.url for file in obj.information_files.all()]\n \n+    def to_internal_value(self, data):\n+        \"\"\"\n+        Override to_internal_value to handle Many-to-Many fields.\n+        \"\"\"\n+        # List of fields that need to be converted from string to list\n+        many_to_many_fields = [\n+            \"level\", \"sublevel\", \"course\", \"affiliation\", \"district\",\n+            \"college\", \"faculty\", \"information_tagging\", \"information_category\"\n+        ]\n+\n+        # Convert each field using str_to_list\n+        for field in many_to_many_fields:\n+            if field in data:\n+                data = str_to_list(data, field)\n+\n+        return super().to_internal_value(data)\n+\n     def extract_images_and_files(self):\n-        \"\"\" Extract multiple images and files from request.FILES \"\"\"\n+        \"\"\"Extract multiple images and files from request.FILES.\"\"\"\n         request = self.context.get('request')\n         images_data, files_data = [], []\n \n         if request and hasattr(request, 'FILES'):\n             for key, file in request.FILES.items():\n                 if key.startswith('information_gallery['):\n                     images_data.append(file)\n-                elif key.startswith('information_files['):  \n+                elif key.startswith('information_files['):\n                     files_data.append(file)\n \n         return images_data, files_data\n \n     @transaction.atomic\n     def create(self, validated_data):\n-        \"\"\" Handles Many-to-Many relationships and image/file uploads \"\"\"\n+        \"\"\"Handles Many-to-Many relationships and image/file uploads.\"\"\"\n \n         # Extract Many-to-Many fields\n         many_to_many_fields = [\n             \"level\", \"sublevel\", \"course\", \"affiliation\", \"district\",\n             \"college\", \"faculty\", \"information_tagging\", \"information_category\"\n         ]\n-        \n+\n         m2m_data = {field: validated_data.pop(field, []) for field in many_to_many_fields}\n \n         # Extract images & files\n         images_data, files_data = self.extract_images_and_files()\n@@ -243,9 +260,9 @@\n         many_to_many_fields = [\n             \"level\", \"sublevel\", \"course\", \"affiliation\", \"district\",\n             \"college\", \"faculty\", \"information_tagging\", \"information_category\"\n         ]\n-        \n+\n         m2m_data = {field: validated_data.pop(field, None) for field in many_to_many_fields}\n \n         # Extract images & files\n         images_data, files_data = self.extract_images_and_files()\n"
+                },
+                {
+                    "date": 1740910049556,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,9 @@\n from django.db import transaction\n from informationmanagement.models import (\n     Information, InformationGallery, InformationFiles\n )\n-\n+ #this string list is used to convert string to list \n def str_to_list(data, value_to_convert):\n     \"\"\"\n     Converts a string representation of a list into an actual list if necessary.\n     Ensures that single values or comma-separated values are correctly converted into lists of integers.\n"
+                },
+                {
+                    "date": 1740910055999,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,9 @@\n from django.db import transaction\n from informationmanagement.models import (\n     Information, InformationGallery, InformationFiles\n )\n- #this string list is used to convert string to list \n+ #this string list is used to convert string to list of integers or \n def str_to_list(data, value_to_convert):\n     \"\"\"\n     Converts a string representation of a list into an actual list if necessary.\n     Ensures that single values or comma-separated values are correctly converted into lists of integers.\n"
+                },
+                {
+                    "date": 1740910061955,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,9 @@\n from django.db import transaction\n from informationmanagement.models import (\n     Information, InformationGallery, InformationFiles\n )\n- #this string list is used to convert string to list of integers or \n+ #this string list is used to convert string to list of integers or list of strings or list of list of integers \n def str_to_list(data, value_to_convert):\n     \"\"\"\n     Converts a string representation of a list into an actual list if necessary.\n     Ensures that single values or comma-separated values are correctly converted into lists of integers.\n"
+                },
+                {
+                    "date": 1740910070247,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,9 @@\n from django.db import transaction\n from informationmanagement.models import (\n     Information, InformationGallery, InformationFiles\n )\n- #this string list is used to convert string to list of integers or list of strings or list of list of integers \n+ #this string list is used to convert string to list of integers or list of strings\n def str_to_list(data, value_to_convert):\n     \"\"\"\n     Converts a string representation of a list into an actual list if necessary.\n     Ensures that single values or comma-separated values are correctly converted into lists of integers.\n"
+                },
+                {
+                    "date": 1740910088340,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,9 @@\n from django.db import transaction\n from informationmanagement.models import (\n     Information, InformationGallery, InformationFiles\n )\n- #this string list is used to convert string to list of integers or list of strings\n+ #this string list is used to convert string to list of integers or list of strings and when frontend send list of ids in \n def str_to_list(data, value_to_convert):\n     \"\"\"\n     Converts a string representation of a list into an actual list if necessary.\n     Ensures that single values or comma-separated values are correctly converted into lists of integers.\n"
+                },
+                {
+                    "date": 1740910097314,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,10 @@\n from django.db import transaction\n from informationmanagement.models import (\n     Information, InformationGallery, InformationFiles\n )\n- #this string list is used to convert string to list of integers or list of strings and when frontend send list of ids in \n+ #this string list is used to convert string to list of integers or list of strings \n+ # and when frontend send list of ids in string format then we need to convert it to list of integers\n def str_to_list(data, value_to_convert):\n     \"\"\"\n     Converts a string representation of a list into an actual list if necessary.\n     Ensures that single values or comma-separated values are correctly converted into lists of integers.\n"
+                },
+                {
+                    "date": 1740910104094,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,8 +7,9 @@\n from django.db import transaction\n from informationmanagement.models import (\n     Information, InformationGallery, InformationFiles\n )\n+\"\"\"\"\"\"\n  #this string list is used to convert string to list of integers or list of strings \n  # and when frontend send list of ids in string format then we need to convert it to list of integers\n def str_to_list(data, value_to_convert):\n     \"\"\"\n"
+                },
+                {
+                    "date": 1740910111489,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,11 +7,11 @@\n from django.db import transaction\n from informationmanagement.models import (\n     Information, InformationGallery, InformationFiles\n )\n-\"\"\"\"\"\"\n- #this string list is used to convert string to list of integers or list of strings \n- # and when frontend send list of ids in string format then we need to convert it to list of integers\n+\"\"\" #this string list is used to convert string to list of integers or list of strings \n+ # and when frontend send list of ids in string format then we need to convert it to list of integers\"\"\"\n+\n def str_to_list(data, value_to_convert):\n     \"\"\"\n     Converts a string representation of a list into an actual list if necessary.\n     Ensures that single values or comma-separated values are correctly converted into lists of integers.\n"
+                },
+                {
+                    "date": 1740910117208,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,10 +7,10 @@\n from django.db import transaction\n from informationmanagement.models import (\n     Information, InformationGallery, InformationFiles\n )\n-\"\"\" #this string list is used to convert string to list of integers or list of strings \n- # and when frontend send list of ids in string format then we need to convert it to list of integers\"\"\"\n+\"\"\" this string list is used to convert string to list of integers or list of strings \n+ and when frontend send list of ids in string format then we need to convert it to list of integers\"\"\"\n \n def str_to_list(data, value_to_convert):\n     \"\"\"\n     Converts a string representation of a list into an actual list if necessary.\n"
+                },
+                {
+                    "date": 1740910125988,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,10 +7,11 @@\n from django.db import transaction\n from informationmanagement.models import (\n     Information, InformationGallery, InformationFiles\n )\n-\"\"\" this string list is used to convert string to list of integers or list of strings \n- and when frontend send list of ids in string format then we need to convert it to list of integers\"\"\"\n+\"\"\" This string list is used to convert string to list of integers or list of strings \n+ and when frontend send list of ids in string format then we need to convert it to list of integers\n+ \"\"\"\n \n def str_to_list(data, value_to_convert):\n     \"\"\"\n     Converts a string representation of a list into an actual list if necessary.\n"
+                },
+                {
+                    "date": 1740910136984,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,10 +7,11 @@\n from django.db import transaction\n from informationmanagement.models import (\n     Information, InformationGallery, InformationFiles\n )\n-\"\"\" This string list is used to convert string to list of integers or list of strings \n- and when frontend send list of ids in string format then we need to convert it to list of integers\n+\"\"\" \n+This string list is used to convert string to list of integers or list of strings \n+    and when frontend send list of ids in string format then we need to convert it to list of integers\n  \"\"\"\n \n def str_to_list(data, value_to_convert):\n     \"\"\"\n"
+                },
+                {
+                    "date": 1740910143655,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,11 +8,11 @@\n from informationmanagement.models import (\n     Information, InformationGallery, InformationFiles\n )\n \"\"\" \n-This string list is used to convert string to list of integers or list of strings \n+    This string list is used to convert string to list of integers or list of strings \n     and when frontend send list of ids in string format then we need to convert it to list of integers\n- \"\"\"\n+\"\"\"\n \n def str_to_list(data, value_to_convert):\n     \"\"\"\n     Converts a string representation of a list into an actual list if necessary.\n"
+                },
+                {
+                    "date": 1740910161406,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,8 +10,9 @@\n )\n \"\"\" \n     This string list is used to convert string to list of integers or list of strings \n     and when frontend send list of ids in string format then we need to convert it to list of integers\n+    for example\n \"\"\"\n \n def str_to_list(data, value_to_convert):\n     \"\"\"\n"
+                },
+                {
+                    "date": 1740910167430,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,10 @@\n )\n \"\"\" \n     This string list is used to convert string to list of integers or list of strings \n     and when frontend send list of ids in string format then we need to convert it to list of integers\n-    for example\n+    for example if frontend send '1,2,3' then we need to convert it to [1,2,3]\n+    or \"\n \"\"\"\n \n def str_to_list(data, value_to_convert):\n     \"\"\"\n"
+                },
+                {
+                    "date": 1740910173581,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,9 +11,9 @@\n \"\"\" \n     This string list is used to convert string to list of integers or list of strings \n     and when frontend send list of ids in string format then we need to convert it to list of integers\n     for example if frontend send '1,2,3' then we need to convert it to [1,2,3]\n-    or \"\n+    or \"1,2,3,\n \"\"\"\n \n def str_to_list(data, value_to_convert):\n     \"\"\"\n"
+                },
+                {
+                    "date": 1740910178862,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,9 +11,9 @@\n \"\"\" \n     This string list is used to convert string to list of integers or list of strings \n     and when frontend send list of ids in string format then we need to convert it to list of integers\n     for example if frontend send '1,2,3' then we need to convert it to [1,2,3]\n-    or \"1,2,3,\n+    or \"1,2,3,4\n \"\"\"\n \n def str_to_list(data, value_to_convert):\n     \"\"\"\n"
                 }
             ],
             "date": 1733485840683,

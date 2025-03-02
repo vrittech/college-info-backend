@@ -30,7 +30,8 @@ class CollegeSocialMedia(models.Model):
     updated_date = models.DateField(auto_now=True)
     
     def __str__(self):
-        return self.social_media.name
+        return self.is_show
+    
     permissions = [
         ('manage_collegesocialmedia', 'Manage college socialmedia'),
     ]

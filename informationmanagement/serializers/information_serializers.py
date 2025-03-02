@@ -8,6 +8,12 @@ from django.db import transaction
 from informationmanagement.models import (
     Information, InformationGallery, InformationFiles
 )
+""" 
+    This string list is used to convert string to list of integers or list of strings 
+    and when frontend send list of ids in string format then we need to convert it to list of integers
+    for example if frontend send '1,2,3' then we need to convert it to [1,2,3]
+    or "1,2,3,4" to [1,2,3,4]
+"""
 
 def str_to_list(data, value_to_convert):
     """
