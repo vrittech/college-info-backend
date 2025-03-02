@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 9,
+            "activePatchIndex": 10,
             "patches": [
                 {
                     "date": 1733481310606,
@@ -44,6 +44,10 @@
                 {
                     "date": 1739509371541,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,9 @@\n from django_filters.rest_framework import DjangoFilterBackend\n from ..models import Discipline\n from ..serializers.discipline_serializers import DisciplineListSerializers, DisciplineRetrieveSerializers, DisciplineWriteSerializers\n from ..utilities.importbase import *\n-\n+from \n class disciplineViewsets(viewsets.ModelViewSet):\n     serializer_class = DisciplineListSerializers\n     permission_classes = [disciplinePermission]\n     authentication_classes = [JWTAuthentication]\n"
+                },
+                {
+                    "date": 1740906988022,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,13 +3,13 @@\n from django_filters.rest_framework import DjangoFilterBackend\n from ..models import Discipline\n from ..serializers.discipline_serializers import DisciplineListSerializers, DisciplineRetrieveSerializers, DisciplineWriteSerializers\n from ..utilities.importbase import *\n-from \n+from mainproj.permissions import DynamicModelPermission\n class disciplineViewsets(viewsets.ModelViewSet):\n     serializer_class = DisciplineListSerializers\n-    permission_classes = [disciplinePermission]\n-    authentication_classes = [JWTAuthentication]\n+    permission_classes = [DynamicModelPermission]\n+    # authentication_classes = [JWTAuthentication]\n     pagination_class = MyPageNumberPagination\n     queryset = Discipline.objects.all().order_by('-id')\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n"
                 }
             ],
             "date": 1733481310606,

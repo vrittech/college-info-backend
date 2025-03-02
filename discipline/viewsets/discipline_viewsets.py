@@ -8,7 +8,7 @@ from mainproj.permissions import DynamicModelPermission
 class disciplineViewsets(viewsets.ModelViewSet):
     serializer_class = DisciplineListSerializers
     permission_classes = [DynamicModelPermission]
-    authentication_classes = [JWTAuthentication]
+    # authentication_classes = [JWTAuthentication]
     pagination_class = MyPageNumberPagination
     queryset = Discipline.objects.all().order_by('-id')
 
