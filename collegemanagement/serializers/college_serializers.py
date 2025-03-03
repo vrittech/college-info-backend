@@ -109,11 +109,13 @@ class CollegeListSerializers(serializers.ModelSerializer):
     discipline = DisciplineSerializer(many=True,read_only=True)  # Nested objects for ManyToMany
     social_media = SocialMediaSerializer(many=True,read_only=True)  # Nested objects for ManyToMany
     # facilities = FacilitySerializer(many=True,read_only=True)  # Nested objects for ManyToMany
-
+    # profile_completion_percentage = serializers.SerializerMethodField(read_only=True)
     class Meta:
         model = College
         fields = '__all__'# + ['get_profile_completion_percentage']
 
+    # def profile_completion_percentage(self,obj):
+    #     return obj.get_profile_completion_percentage
 
 # Serializer for retrieving complete college details (detailed view)
 class CollegeRetrieveSerializers(serializers.ModelSerializer):
