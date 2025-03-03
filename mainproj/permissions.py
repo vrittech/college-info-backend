@@ -97,12 +97,13 @@ class DynamicModelPermission(BasePermission):
                         if getattr(item_f,'id'):
                             if int(getattr(item_f,'id')) == int(request.data.get(f_field)):
                                 return True
-            elif view.action in ["partial_update","update"] and view.get_object():
+            elif view.action in ["partial_update","update","destroy"] and view.get_object():
                 return True
           
         return False  # If we've reached here, the permission is granted
 
     def has_object_permission(self, request, view, obj):
+        print(view.action , " this is for delete.")
         # return True
         """
         Object-level permission handling with multi-level ownership check.
@@ -133,7 +134,6 @@ class DynamicModelPermission(BasePermission):
         
         # Enforce permission mapping at object level
         if required_permission and group_permissions and group_permissions.get(model_name.lower()) and required_permission in group_permissions.get(model_name.lower()):
-
             if required_permission == 'view':
                 return True
             if model_name.lower() == "customuser" and required_permission == "change" and request.user == obj:
@@ -143,13 +143,25 @@ class DynamicModelPermission(BasePermission):
             for field in foreign_owner_field:
     
                 if hasattr(obj, field):
-     
+                    # print("lol 1",field,obj)
                     field_value = getattr(obj, field)
+                    # print(field_value)
                     if hasattr(field_value, 'all'):  # ManyToMany field
+                        # print("this is all ")
                         if request.user in field_value.all():
                                 return True
                     elif field_value == request.user:
                         return True
+                    elif hasattr(field_value,'user'): #this is for third layer.
+                        owner_field = getattr(field_value,'user')
+                        if owner_field:
+                            if hasattr(owner_field, 'all'):  # ManyToMany field
+                                if request.user in owner_field.all():
+                                    return True
+                            elif owner_field == request.user:
+                                return True
+
+
     
                     # # Direct user ownership
                     # if field_value == request.user or request.user in field_value.all():
@@ -159,6 +171,7 @@ class DynamicModelPermission(BasePermission):
                     if field in foreign_owner_second_layer:
                         # Get the related object (e.g., college)
                         related_obj = field_value
+                        # print(related_obj," related obj ...")
                         if related_obj:
                             # Check if the user is associated with this object
                             # For example, if college has a 'user' field
