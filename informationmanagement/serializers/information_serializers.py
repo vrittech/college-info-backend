@@ -183,8 +183,8 @@ class InformationRetrieveSerializers(serializers.ModelSerializer):
 class InformationWriteSerializers(serializers.ModelSerializer):
     """Handles Many-to-Many fields and file/image uploads."""
 
-    information_gallery = InformationGallerySerializer(many=True)
-    information_files = InformationFilesSerializer(many=True)
+    information_gallery = InformationGallerySerializer(many=True,read_only = True)
+    information_files = InformationFilesSerializer(many=True,read_only = True)
 
     class Meta:
         model = Information
