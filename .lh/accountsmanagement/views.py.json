@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 16,
+            "activePatchIndex": 20,
             "patches": [
                 {
                     "date": 1726555479443,
@@ -72,6 +72,22 @@
                 {
                     "date": 1740984784865,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,9 +12,9 @@\n from django.template.loader import render_to_string\n from .serializers import CustomChangePasswordSerializer\n # from booking.models import DestinationBook\n \n-from django.db.models.signals import post_save\n+# from django.db.models.signals import post_save\n from django.dispatch import receiver\n from django.core.mail import send_mail\n from rest_framework.views import APIView\n from rest_framework.response import Response\n"
+                },
+                {
+                    "date": 1740987724575,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -270,9 +270,9 @@\n         full_name = serializer.data[\"full_name\"]\n         message = serializer.data[\"message\"]\n         phone = serializer.data.get(\"phone\")\n         \n-        ContactMe(email,phone,full_name,subject,message)\n+        ContactMe(emailfull_name,subject,message)\n            \n         return response.Response(\n             {\n             \"message\": \"Email has sent to College Info Nepal Owner, please kindly wait for response\"\n"
+                },
+                {
+                    "date": 1740987729883,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -268,11 +268,11 @@\n         email = serializer.data[\"email\"]\n         subject = serializer.data.get('subject')\n         full_name = serializer.data[\"full_name\"]\n         message = serializer.data[\"message\"]\n-        phone = serializer.data.get(\"phone\")\n+        # phone = serializer.data.get(\"phone\")\n         \n-        ContactMe(emailfull_name,subject,message)\n+        ContactMe(email,full_name,subject,message)\n            \n         return response.Response(\n             {\n             \"message\": \"Email has sent to College Info Nepal Owner, please kindly wait for response\"\n"
+                },
+                {
+                    "date": 1740987777896,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -268,9 +268,9 @@\n         email = serializer.data[\"email\"]\n         subject = serializer.data.get('subject')\n         full_name = serializer.data[\"full_name\"]\n         message = serializer.data[\"message\"]\n-        # phone = serializer.data.get(\"phone\")\n+        phone = serializer.data.get(\"phone\")\n         \n         ContactMe(email,full_name,subject,message)\n            \n         return response.Response(\n"
+                },
+                {
+                    "date": 1740987783873,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -270,9 +270,9 @@\n         full_name = serializer.data[\"full_name\"]\n         message = serializer.data[\"message\"]\n         phone = serializer.data.get(\"phone\")\n         \n-        ContactMe(email,full_name,subject,message)\n+        ContactMe(email,full_name,phone,subject,message)\n            \n         return response.Response(\n             {\n             \"message\": \"Email has sent to College Info Nepal Owner, please kindly wait for response\"\n"
                 }
             ],
             "date": 1726555479443,
