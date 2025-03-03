@@ -1,4 +1,4 @@
-from django.shortcuts import render
+# from django.shortcuts import render
 from rest_framework import generics, status, viewsets, response
 from .serializers import EmailNumberSerializer,PasswordNumberSerializer, CustomPasswordResetSerializer, TokenValidationSerializer,ContactMeSerializer,EmailResetSerializer,EmailChangeGetOtpSerializer
 from accounts.models import CustomUser
@@ -13,7 +13,7 @@ from django.template.loader import render_to_string
 from .serializers import CustomChangePasswordSerializer
 # from booking.models import DestinationBook
 
-from django.db.models.signals import post_save
+# from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.core.mail import send_mail
 from rest_framework.views import APIView
@@ -275,7 +275,7 @@ class ContactmeView(generics.GenericAPIView):
            
         return response.Response(
             {
-            "message": "Email has sent to lead-management Owner, please kindly wait for response"
+            "message": "Email has sent to College Info Nepal Owner, please kindly wait for response"
             },
             status=status.HTTP_200_OK,
         )
