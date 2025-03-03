@@ -112,7 +112,7 @@ class CollegeListSerializers(serializers.ModelSerializer):
 
     class Meta:
         model = College
-        fields = '__all__'
+        fields = '__all__'# + ['get_profile_completion_percentage']
 
 
 # Serializer for retrieving complete college details (detailed view)

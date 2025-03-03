@@ -84,6 +84,48 @@ class College(SEOFields):
         permissions = [
             ('manage_college', 'Manage college'),
         ]
+    
+    # @property
+    # def get_profile_completion_percentage(self):
+    #     college = self
+    #     college_data = CollegeRetrieveSerializers(college).data
+
+    #     ### 🔹 REQUIRED FIELDS (Must be filled)
+    #     required_fields = [
+    #         field.name for field in College._meta.get_fields()
+    #         if hasattr(field, 'blank') and not field.blank and hasattr(field, 'null') and not field.null
+    #     ]
+
+    #     completed_required_fields = sum(1 for field in required_fields if getattr(college, field, None))
+    #     total_required_fields = len(required_fields)
+
+    #     ### 🔹 NON-REQUIRED FIELDS (Optional but contribute)
+    #     non_required_fields = [
+    #         field.name for field in College._meta.get_fields()
+    #         if hasattr(field, 'blank') and field.blank and hasattr(field, 'null') and field.null
+    #     ]
+
+    #     completed_non_required_fields = sum(1 for field in non_required_fields if getattr(college, field, None))
+    #     total_non_required_fields = len(non_required_fields)
+
+    #     ### 🔹 RELATED FIELDS (Many-to-Many or ForeignKey relationships)
+    #     related_fields = ["district", "affiliated", "college_type", "discipline", "social_media", "facilities"]
+    #     completed_related_fields = sum(1 for field in related_fields if college_data.get(field))
+    #     total_related_fields = len(related_fields)
+
+    #     ### ✅ WEIGHTED COMPLETION CALCULATION:
+    #     required_percentage = (completed_required_fields / total_required_fields * 60) if total_required_fields else 60
+    #     related_percentage = (completed_related_fields / total_related_fields * 30) if total_related_fields else 30
+    #     non_required_percentage = (completed_non_required_fields / total_non_required_fields * 10) if total_non_required_fields else 10
+
+    #     completion_percentage = required_percentage + related_percentage + non_required_percentage
+
+    #     completion_data = {
+    #         "college_id": college.id,
+    #         "slug": college.slug,
+    #         "college_name": college.name,
+    #         "completion_percentage": round(completion_percentage, 2)
+    #     }
 
 
 class CollegeFaqs(models.Model):
