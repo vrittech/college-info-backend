@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Contact Request</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            background: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            text-align: center;
+        }
+        .header {
+            background: #EAF3FF;
+            padding: 20px;
+        }
+        .header img {
+            max-width: 150px;
+        }
+        .content {
+            padding: 30px;
+            text-align: left;
+        }
+        h2 {
+            color: #333;
+        }
+        p {
+            font-size: 16px;
+            color: #555;
+            line-height: 1.6;
+        }
+        .footer {
+            background: #EAF3FF;
+            padding: 20px;
+            font-size: 14px;
+            color: #777;
+            text-align: center;
+        }
+        .footer a {
+            margin: 0 10px;
+            color: #555;
+            text-decoration: none;
+            font-size: 18px;
+        }
+        .social-icons {
+            margin-top: 10px;
+        }
+        .social-icons img {
+            width: 25px;
+            margin: 0 5px;
+        }
+        .message-box {
+            border-left: 4px solid #007BFF;
+            background: #f4f8ff;
+            padding: 15px;
+            margin-top: 10px;
+            font-style: italic;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Header Section -->
+    <div class="header">
+        <img src="https://collegeinfoapi.vrittechnologies.com/media/gallery/images/College_Info_Nepal.png" alt="College Info Nepal">
+    </div>
+
+    <!-- Email Content -->
+    <div class="content">
+        <h2>Confirmation of College Request</h2>
+        <p><strong>Name:</strong> {{ full_name }}</p>
+        <p><strong>Email:</strong> {{ user_email }}</p>
+        <p><strong>Phone:</strong> {{ user_phone }}</p>
+
+        <hr>
+
+        <p><strong>Message:</strong></p>
+        <div class="message-box">
+            <p>{{ message }}</p>
+        </div>
+
+        <p>Thank you for your Patience and Time</p>
+    </div>
+
+    <!-- Footer Section -->
+    <div class="footer">
+        <div class="social-icons">
+            <a href="https://www.facebook.com/everestthrill"><img src="https://api.everestthrills.com/media/gallery/images/Facebook_Logo_Primary.png" alt="Facebook"></a>
+                <a href="https://www.x.com/everestthrill"><img src="https://api.everestthrills.com/media/gallery/images/Rajan_Sharma_image_1.png" alt="Twitter/X"></a>
+                <a href="https://youtube.com/@everestthrill?si=u0ff0Nh_pzFuVuUY"><img src="https://api.everestthrills.com/media/gallery/images/Rajan_Sharma_image_2.png" alt="YouTube"></a>
+                <a href="https://www.instagram.com/everestthrill"><img src="https://api.everestthrills.com/media/gallery/images/Rajan_Sharma_image.png" alt="Instagram"></a>
+        </div>
+        <p>Copyright © 2025 College Info Nepal. All rights reserved.</p>
+    </div>
+</div>
+
+</body>
+</html>

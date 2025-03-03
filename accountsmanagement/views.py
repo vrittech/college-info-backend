@@ -271,7 +271,7 @@ class ContactmeView(generics.GenericAPIView):
         message = serializer.data["message"]
         phone = serializer.data.get("phone")
         
-        ContactMe(email,phone,full_name,subject,message)
+        ContactMe(email,full_name,phone,subject,message)
            
         return response.Response(
             {

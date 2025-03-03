@@ -1,0 +1,42 @@
+{
+    "sourceFile": "accountsmanagement/sms_sender.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 6,
+            "patches": [
+                {
+                    "date": 1740987697344,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1740987703638,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,7 +15,7 @@\n \n def ContactMe(user_email,full_name,subject,message):\n     email_from = settings.EMAIL_HOST_USER\n     recipient_list = [settings.EMAIL_HOST_USER]\n-    message = f\"A client  {full_name}, {user_email},mobile number {user_phone} Try to contact you \"+message\n+    message = f\"A client  {full_name}, {user_email}, Try to contact you \"+message\n     send_mail(subject, '', email_from, recipient_list,html_message=message)\n     return True\n"
+                },
+                {
+                    "date": 1740987759836,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,7 +15,7 @@\n \n def ContactMe(user_email,full_name,subject,message):\n     email_from = settings.EMAIL_HOST_USER\n     recipient_list = [settings.EMAIL_HOST_USER]\n-    message = f\"A client  {full_name}, {user_email}, Try to contact you \"+message\n+    message = f\"A client  {full_name}, {user_email},mobile number {user_phone} Try to contact you \"+message\n     send_mail(subject, '', email_from, recipient_list,html_message=message)\n     return True\n"
+                },
+                {
+                    "date": 1740987765950,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,10 +12,10 @@\n     response = requests.get(sms_api)\n     print(response.json)\n     return True\n \n-def ContactMe(user_email,full_name,subject,message):\n+def ContactMe(user_email,user_phone,full_name,subject,message):\n     email_from = settings.EMAIL_HOST_USER\n     recipient_list = [settings.EMAIL_HOST_USER]\n-    message = f\"A client  {full_name}, {user_email},mobile number {user_phone} Try to contact you \"+message\n+    message = f\"A client  {full_name}, {user_email}, Try to contact you \"+message\n     send_mail(subject, '', email_from, recipient_list,html_message=message)\n     return True\n"
+                },
+                {
+                    "date": 1740987881084,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,10 +12,39 @@\n     response = requests.get(sms_api)\n     print(response.json)\n     return True\n \n-def ContactMe(user_email,user_phone,full_name,subject,message):\n+from django.core.mail import EmailMultiAlternatives\n+from django.template.loader import render_to_string\n+from django.utils.html import strip_tags\n+from django.conf import settings\n+\n+def ContactMe(user_email, user_phone, full_name, subject, message):\n     email_from = settings.EMAIL_HOST_USER\n     recipient_list = [settings.EMAIL_HOST_USER]\n-    message = f\"A client  {full_name}, {user_email}, Try to contact you \"+message\n-    send_mail(subject, '', email_from, recipient_list,html_message=message)\n+\n+    # Render HTML email template with dynamic data\n+    html_content = render_to_string('contact_email.html', {\n+        'full_name': full_name,\n+        'user_email': user_email,\n+        'user_phone': user_phone,\n+        'message': message\n+    })\n+\n+    # Generate plain text version (fallback for email clients that don't support HTML)\n+    text_content = strip_tags(html_content)\n+\n+    # Create email message\n+    email = EmailMultiAlternatives(\n+        subject=subject,\n+        body=text_content,  # Plain text content\n+        from_email=email_from,\n+        to=recipient_list\n+    )\n+\n+    # Attach HTML content\n+    email.attach_alternative(html_content, \"text/html\")\n+\n+    # Send email\n+    email.send()\n+\n     return True\n"
+                },
+                {
+                    "date": 1740987886805,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,12 @@\n from django.conf import settings\n import  requests\n from django.conf import settings\n from django.core.mail import send_mail\n+from django.core.mail import EmailMultiAlternatives\n+from django.template.loader import render_to_string\n+from django.utils.html import strip_tags\n+from django.conf import settings\n \n SMS_KEY = settings.SMS_KEY_PASSWORD\n \n def SendSms(message,contact,otp):\n@@ -12,13 +16,10 @@\n     response = requests.get(sms_api)\n     print(response.json)\n     return True\n \n-from django.core.mail import EmailMultiAlternatives\n-from django.template.loader import render_to_string\n-from django.utils.html import strip_tags\n-from django.conf import settings\n \n+\n def ContactMe(user_email, user_phone, full_name, subject, message):\n     email_from = settings.EMAIL_HOST_USER\n     recipient_list = [settings.EMAIL_HOST_USER]\n \n"
+                },
+                {
+                    "date": 1740992766152,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,9 +18,9 @@\n     return True\n \n \n \n-def ContactMe(user_email, user_phone, full_name, subject, message):\n+def ContactMe(user_email, user_phone,  subject, message):\n     email_from = settings.EMAIL_HOST_USER\n     recipient_list = [settings.EMAIL_HOST_USER]\n \n     # Render HTML email template with dynamic data\n"
+                }
+            ],
+            "date": 1740987697344,
+            "name": "Commit-0",
+            "content": "from django.conf import settings\nimport  requests\nfrom django.conf import settings\nfrom django.core.mail import send_mail\n\nSMS_KEY = settings.SMS_KEY_PASSWORD\n\ndef SendSms(message,contact,otp):\n    message = message + \" \" + str(otp)\n    sms_api = f\"https://sms.vrittechnologies.com/smsapi/index?key={SMS_KEY}&contacts={contact}&senderid=SMSBit&msg={message}&responsetype=json\"\n    print(sms_api)\n    response = requests.get(sms_api)\n    print(response.json)\n    return True\n\ndef ContactMe(user_email,full_name,subject,message):\n    email_from = settings.EMAIL_HOST_USER\n    recipient_list = [settings.EMAIL_HOST_USER]\n    message = f\"A client  {full_name}, {user_email},mobile number {user_phone} Try to contact you \"+message\n    send_mail(subject, '', email_from, recipient_list,html_message=message)\n    return True\n"
+        }
+    ]
+}

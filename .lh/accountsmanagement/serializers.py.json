@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 1,
+            "activePatchIndex": 3,
             "patches": [
                 {
                     "date": 1739167254501,
@@ -12,6 +12,14 @@
                 {
                     "date": 1739167292516,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -149,5 +149,7 @@\n \n     def validate(self, data):\n         if len(data.get('new_password')) < 8:\n             raise serializers.ValidationError(\"New password must be at least 8 characters long.\")\n-        return data\n\\ No newline at end of file\n+        return data\n+\n+    path('change-password/', CustomChangePasswordView.as_view(), name='change-password'),\n"
+                },
+                {
+                    "date": 1740987742937,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -123,9 +123,9 @@\n class ContactMeSerializer(serializers.Serializer):\n     email = serializers.EmailField()\n     subject = serializers.CharField(required = False)\n     message = serializers.CharField()\n-    phone = serializers.CharField(required = False)\n+    # phone = serializers.CharField(required = False)\n     full_name =  serializers.CharField()\n \n # class EmailNumberSerializer(serializers.Serializer):\n     # email = serializers.EmailField()\n@@ -150,6 +150,4 @@\n     def validate(self, data):\n         if len(data.get('new_password')) < 8:\n             raise serializers.ValidationError(\"New password must be at least 8 characters long.\")\n         return data\n-\n-    path('change-password/', CustomChangePasswordView.as_view(), name='change-password'),\n"
+                },
+                {
+                    "date": 1740987752679,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -123,9 +123,9 @@\n class ContactMeSerializer(serializers.Serializer):\n     email = serializers.EmailField()\n     subject = serializers.CharField(required = False)\n     message = serializers.CharField()\n-    # phone = serializers.CharField(required = False)\n+    phone = serializers.CharField(required = False)\n     full_name =  serializers.CharField()\n \n # class EmailNumberSerializer(serializers.Serializer):\n     # email = serializers.EmailField()\n"
                 }
             ],
             "date": 1739167254501,

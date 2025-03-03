@@ -246,13 +246,13 @@ SIMPLE_JWT = {
     "USER_AUTHENTICATION_RULE": "rest_framework_simplejwt.authentication.default_user_authentication_rule",
 }
 
-EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_HOST_USER = 'manojdas.py@gmail.com'
-EMAIL_HOST_PASSWORD = 'qizi zhwj urhp vmvv'
+# EMAIL_USE_TLS = True
+# EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_PORT = 587
+# EMAIL_HOST_USER = 'manojdas.py@gmail.com'
+# EMAIL_HOST_PASSWORD = 'qizi zhwj urhp vmvv'
 
-# EMAIL_BACKEND = 'setupemail.utilities.custom_email_setup_backend.CustomEmailBackend'
+EMAIL_BACKEND = 'setupemail.utilities.custom_email_setup_backend.CustomEmailBackend'
 
 INTERNAL_IPS = [
     # ...
@@ -311,4 +311,4 @@ PUBLIC_NOTIFICATION_MODELS = [
 # ENABLE_DEBUG_LOGS = True
 
 
-# EMAIL_HOST_USER = 'manojdas.py@gmail.com'
+EMAIL_HOST_USER = 'vritprashant@gmail.com'
