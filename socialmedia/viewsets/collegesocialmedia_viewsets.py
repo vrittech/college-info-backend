@@ -56,6 +56,23 @@ class collegesocialmediaViewsets(viewsets.ModelViewSet):
         
         return Response(response_serializer.data, status=status.HTTP_201_CREATED)
 
+    def update(self, request, *args, **kwargs):
+        # Retrieve the existing instance by its id (primary key)
+        instance = self.get_object()
+        
+        # Use the serializer to update the object
+        serializer = self.get_serializer(instance, data=request.data, partial=True)  # Use partial=True if you want to allow partial updates
+        serializer.is_valid(raise_exception=True)
+        
+        # Save the updated instance
+        college_social_media = serializer.save()
+
+        # Return the updated serialized object using CollegeSocialMediaRetrieveSerializers
+        response_serializer = CollegeSocialMediaRetrieveSerializers(college_social_media)
+        
+        return Response(response_serializer.data, status=status.HTTP_200_OK)
+
+
 
     # @action(detail=False, methods=['get'], name="action_name", url_path="url_path")
     # def action_name(self, request, *args, **kwargs):

@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 8,
+            "activePatchIndex": 16,
             "patches": [
                 {
                     "date": 1726555479443,
@@ -40,6 +40,38 @@
                 {
                     "date": 1739166478602,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,8 +9,9 @@\n from django.conf import settings\n from django.core.mail import send_mail\n from django.contrib.auth.hashers import check_password\n from django.template.loader import render_to_string\n+from .serializers import CustomChangePasswordSerializer\n # from booking.models import DestinationBook\n \n from django.db.models.signals import post_save\n from django.dispatch import receiver\n"
+                },
+                {
+                    "date": 1740984064714,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -274,9 +274,9 @@\n         ContactMe(email,phone,full_name,subject,message)\n            \n         return response.Response(\n             {\n-            \"message\": \"Email has sent to lead-management Owner, please kindly wait for response\"\n+            \"message\": \"Email has sent to t Owner, please kindly wait for response\"\n             },\n             status=status.HTTP_200_OK,\n         )\n      \n"
+                },
+                {
+                    "date": 1740984073529,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -274,9 +274,9 @@\n         ContactMe(email,phone,full_name,subject,message)\n            \n         return response.Response(\n             {\n-            \"message\": \"Email has sent to t Owner, please kindly wait for response\"\n+            \"message\": \"Email has sent to College Info Nepal Owner, please kindly wait for response\"\n             },\n             status=status.HTTP_200_OK,\n         )\n      \n"
+                },
+                {
+                    "date": 1740984493471,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -268,9 +268,9 @@\n         email = serializer.data[\"email\"]\n         subject = serializer.data.get('subject')\n         full_name = serializer.data[\"full_name\"]\n         message = serializer.data[\"message\"]\n-        phone = serializer.data.get(\"phone\")\n+        # phone = serializer.data.get(\"phone\")\n         \n         ContactMe(email,phone,full_name,subject,message)\n            \n         return response.Response(\n"
+                },
+                {
+                    "date": 1740984501287,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -270,9 +270,9 @@\n         full_name = serializer.data[\"full_name\"]\n         message = serializer.data[\"message\"]\n         # phone = serializer.data.get(\"phone\")\n         \n-        ContactMe(email,phone,full_name,subject,message)\n+        ContactMe(email,full_name,subject,message)\n            \n         return response.Response(\n             {\n             \"message\": \"Email has sent to College Info Nepal Owner, please kindly wait for response\"\n"
+                },
+                {
+                    "date": 1740984646337,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -268,11 +268,11 @@\n         email = serializer.data[\"email\"]\n         subject = serializer.data.get('subject')\n         full_name = serializer.data[\"full_name\"]\n         message = serializer.data[\"message\"]\n-        # phone = serializer.data.get(\"phone\")\n+        phone = serializer.data.get(\"phone\")\n         \n-        ContactMe(email,full_name,subject,message)\n+        ContactMe(email,phone,full_name,subject,message)\n            \n         return response.Response(\n             {\n             \"message\": \"Email has sent to College Info Nepal Owner, please kindly wait for response\"\n"
+                },
+                {
+                    "date": 1740984686002,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -263,8 +263,9 @@\n     serializer_class = ContactMeSerializer\n     def post(self, request):\n         serializer = self.serializer_class(data=request.data)\n         serializer.is_valid(raise_exception=True)\n+        \n \n         email = serializer.data[\"email\"]\n         subject = serializer.data.get('subject')\n         full_name = serializer.data[\"full_name\"]\n"
+                },
+                {
+                    "date": 1740984777950,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-from django.shortcuts import render\n+# from django.shortcuts import render\n from rest_framework import generics, status, viewsets, response\n from .serializers import EmailNumberSerializer,PasswordNumberSerializer, CustomPasswordResetSerializer, TokenValidationSerializer,ContactMeSerializer,EmailResetSerializer,EmailChangeGetOtpSerializer\n from accounts.models import CustomUser\n from django.utils.http import urlsafe_base64_encode\n@@ -263,9 +263,8 @@\n     serializer_class = ContactMeSerializer\n     def post(self, request):\n         serializer = self.serializer_class(data=request.data)\n         serializer.is_valid(raise_exception=True)\n-        \n \n         email = serializer.data[\"email\"]\n         subject = serializer.data.get('subject')\n         full_name = serializer.data[\"full_name\"]\n"
+                },
+                {
+                    "date": 1740984784865,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,9 +12,9 @@\n from django.template.loader import render_to_string\n from .serializers import CustomChangePasswordSerializer\n # from booking.models import DestinationBook\n \n-from django.db.models.signals import post_save\n+# from django.db.models.signals import post_save\n from django.dispatch import receiver\n from django.core.mail import send_mail\n from rest_framework.views import APIView\n from rest_framework.response import Response\n"
                 }
             ],
             "date": 1726555479443,

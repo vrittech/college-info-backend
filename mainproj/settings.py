@@ -311,3 +311,4 @@ PUBLIC_NOTIFICATION_MODELS = [
 # ENABLE_DEBUG_LOGS = True
 
 
+# EMAIL_HOST_USER = 'manojdas.py@gmail.com'

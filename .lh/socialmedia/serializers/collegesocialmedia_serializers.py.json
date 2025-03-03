@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 31,
+            "activePatchIndex": 35,
             "patches": [
                 {
                     "date": 1739856941559,
@@ -132,6 +132,22 @@
                 {
                     "date": 1740908218637,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -32,49 +32,5 @@\n class CollegeSocialMediaWriteSerializers(serializers.ModelSerializer):\n     class Meta:\n         model = CollegeSocialMedia\n         fields = '__all__'\n-        \n-from rest_framework import serializers\n-from ..models import CollegeSocialMedia\n-from socialmedia.models import SocialMedia\n-from collegemanagement.models import College\n-\n-class SocialMediaSerializers(serializers.ModelSerializer):\n-    class Meta:\n-        model = SocialMedia\n-        fields = ['id','name','link']\n-        \n-class CollegeSerializers(serializers.ModelSerializer):\n-    class Meta:\n-        model = College\n-        ref_name = 'CollegeSocialMediaSerializers'\n-        fields = ['id','name','slug']\n-\n-\n-class CollegeSocialMediaListSerializers(serializers.ModelSerializer):\n-    college = CollegeSerializers(read_only=True)\n-    name = SocialMediaSerializers(read_only=True)\n-    class Meta:\n-        model = CollegeSocialMedia\n-        fields = '__all__'\n-\n-class CollegeSocialMediaRetrieveSerializers(serializers.ModelSerializer):\n-    college = CollegeSerializers(read_only=True)\n-    name = SocialMediaSerializers(read_only=True)\n-    class Meta:\n-        model = CollegeSocialMedia\n-        fields = '__all__'\n-\n-class CollegeSocialMediaWriteSerializers(serializers.ModelSerializer):\n-    class Meta:\n-        model = CollegeSocialMedia\n-        fields = '__all__'\n-        \n-        \n-        \n-        from rest_framework import viewsets, status\n-from rest_framework.response import Response\n-from ..models import CollegeSocialMedia\n-from .serializers import (\n-    CollegeSocialMediaWriteSerializers,\n-    CollegeSocialMediaRetrieveSerializers\n\\ No newline at end of file\n+        \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1740986087988,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -29,8 +29,10 @@\n         model = CollegeSocialMedia\n         fields = '__all__'\n \n class CollegeSocialMediaWriteSerializers(serializers.ModelSerializer):\n+    college = CollegeSerializers(read_only=True)\n+    name = SocialMediaSerializers(read_only=True)\n     class Meta:\n         model = CollegeSocialMedia\n         fields = '__all__'\n         \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1740986097878,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -29,10 +29,10 @@\n         model = CollegeSocialMedia\n         fields = '__all__'\n \n class CollegeSocialMediaWriteSerializers(serializers.ModelSerializer):\n-    college = CollegeSerializers(read_only=True)\n-    name = SocialMediaSerializers(read_only=True)\n+    college = CollegeSerializers()\n+    name = SocialMediaSerializers()\n     class Meta:\n         model = CollegeSocialMedia\n         fields = '__all__'\n         \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1740986171463,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -29,10 +29,10 @@\n         model = CollegeSocialMedia\n         fields = '__all__'\n \n class CollegeSocialMediaWriteSerializers(serializers.ModelSerializer):\n-    college = CollegeSerializers()\n-    name = SocialMediaSerializers()\n+    college = CollegeSerializers(read_only=True)\n+    name = SocialMediaSerializers(read_only=True)\n     class Meta:\n         model = CollegeSocialMedia\n         fields = '__all__'\n         \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1740986198237,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -29,10 +29,8 @@\n         model = CollegeSocialMedia\n         fields = '__all__'\n \n class CollegeSocialMediaWriteSerializers(serializers.ModelSerializer):\n-    college = CollegeSerializers(read_only=True)\n-    name = SocialMediaSerializers(read_only=True)\n     class Meta:\n         model = CollegeSocialMedia\n         fields = '__all__'\n         \n\\ No newline at end of file\n"
                 }
             ],
             "date": 1739856941559,

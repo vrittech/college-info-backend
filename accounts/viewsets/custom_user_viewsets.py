@@ -19,6 +19,7 @@ from rest_framework.filters import SearchFilter, OrderingFilter
 from django_filters.rest_framework import DjangoFilterBackend
 from mainproj.permissions import *
 from mainproj.permissions import DynamicModelPermission
+from rest_framework.permissions import IsAuthenticated,AllowAny
 
 class CustomUserViewSet(viewsets.ModelViewSet):
     queryset = CustomUser.objects.all().order_by('-id')
@@ -55,7 +56,7 @@ class CustomUserViewSet(viewsets.ModelViewSet):
             return CustomUserChangePasswordSerializers
         return CustomUserReadSerializer
     
-    @action(detail=False, methods=['post'], name="changePassword", url_path="change-password")
+    @action(detail=False, methods=['post'], name="changePassword", url_path="change-password",permission_classes=[IsAuthenticated])
     def changePassword(self, request, *args, **kwargs):
         serializer = CustomUserChangePasswordSerializers(data=request.data, context={'request': request})
         
@@ -67,13 +68,13 @@ class CustomUserViewSet(viewsets.ModelViewSet):
         
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
-    @action(detail=False, methods=['get'], name="GetSelfDetail", url_path="me")
+    @action(detail=False, methods=['get'], name="GetSelfDetail", url_path="me",permission_classes=[IsAuthenticated])
     def GetSelfDetail(self, request, *args, **kwargs):
         self.object = request.user  # Set the object directly to the current user
         serializer = self.get_serializer(self.object)
         return Response(serializer.data)
     
-    @action(detail=False, methods=['get'], name="college_admins", url_path="college-admins")
+    @action(detail=False, methods=['get'], name="college_admins", url_path="college-admins",permission_classes=[IsAuthenticated])
     def college_admins(self, request, *args, **kwargs):
         queryset = self.get_queryset().filter(college__isnull=False)  # Filter users with assigned college
         serializer = self.get_serializer(queryset, many=True)
