@@ -85,47 +85,54 @@ class College(SEOFields):
             ('manage_college', 'Manage college'),
         ]
     
-    # @property
-    # def get_profile_completion_percentage(self):
-    #     college = self
-    #     college_data = CollegeRetrieveSerializers(college).data
+    @property
+    def get_profile_completion_percentage(self):
+        # Required fields (must be filled)
+        required_fields = [
+            'name', 'district', 'affiliated', 'college_type'
+        ]
 
-    #     ### 🔹 REQUIRED FIELDS (Must be filled)
-    #     required_fields = [
-    #         field.name for field in College._meta.get_fields()
-    #         if hasattr(field, 'blank') and not field.blank and hasattr(field, 'null') and not field.null
-    #     ]
+        # Non-required fields (optional but contribute)
+        non_required_fields = [
+            'banner_image', 'dp_image', 'established_date', 'website_link', 'address',
+            'phone_number', 'email', 'google_map_link', 'latitude', 'longitude', 'about',
+            'brochure', 'placement', 'scholarship'
+        ]
 
-    #     completed_required_fields = sum(1 for field in required_fields if getattr(college, field, None))
-    #     total_required_fields = len(required_fields)
+        # Related fields (foreign keys and many-to-many relationships)
+        related_fields = [
+            'discipline',  # Many-to-many field
+        ]
 
-    #     ### 🔹 NON-REQUIRED FIELDS (Optional but contribute)
-    #     non_required_fields = [
-    #         field.name for field in College._meta.get_fields()
-    #         if hasattr(field, 'blank') and field.blank and hasattr(field, 'null') and field.null
-    #     ]
+        # Calculate completion for required fields
+        completed_required_fields = sum(1 for field in required_fields if getattr(self, field, None))
+        total_required_fields = len(required_fields)
+        required_percentage = (completed_required_fields / total_required_fields * 60) if total_required_fields else 60
 
-    #     completed_non_required_fields = sum(1 for field in non_required_fields if getattr(college, field, None))
-    #     total_non_required_fields = len(non_required_fields)
+        # Calculate completion for non-required fields
+        completed_non_required_fields = sum(1 for field in non_required_fields if getattr(self, field, None))
+        total_non_required_fields = len(non_required_fields)
+        non_required_percentage = (completed_non_required_fields / total_non_required_fields * 10) if total_non_required_fields else 10
 
-    #     ### 🔹 RELATED FIELDS (Many-to-Many or ForeignKey relationships)
-    #     related_fields = ["district", "affiliated", "college_type", "discipline", "social_media", "facilities"]
-    #     completed_related_fields = sum(1 for field in related_fields if college_data.get(field))
-    #     total_related_fields = len(related_fields)
+        # Calculate completion for related fields
+        completed_related_fields = 0
+        total_related_fields = len(related_fields)
 
-    #     ### ✅ WEIGHTED COMPLETION CALCULATION:
-    #     required_percentage = (completed_required_fields / total_required_fields * 60) if total_required_fields else 60
-    #     related_percentage = (completed_related_fields / total_related_fields * 30) if total_related_fields else 30
-    #     non_required_percentage = (completed_non_required_fields / total_non_required_fields * 10) if total_non_required_fields else 10
+        for field in related_fields:
+            related_value = getattr(self, field, None)
+            if related_value:
+                if isinstance(related_value, models.Manager):  # Many-to-many field
+                    if related_value.exists():
+                        completed_related_fields += 1
+                else:  # ForeignKey or OneToOneField
+                    completed_related_fields += 1
 
-    #     completion_percentage = required_percentage + related_percentage + non_required_percentage
+        related_percentage = (completed_related_fields / total_related_fields * 30) if total_related_fields else 30
 
-    #     completion_data = {
-    #         "college_id": college.id,
-    #         "slug": college.slug,
-    #         "college_name": college.name,
-    #         "completion_percentage": round(completion_percentage, 2)
-    #     }
+        # Total completion percentage
+        completion_percentage = required_percentage + related_percentage + non_required_percentage
+
+        return round(completion_percentage, 2)
 
 
 class CollegeFaqs(models.Model):

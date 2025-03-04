@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 79,
+            "activePatchIndex": 85,
             "patches": [
                 {
                     "date": 1733737051062,
@@ -324,6 +324,30 @@
                 {
                     "date": 1740685727016,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -45,9 +45,9 @@\n     \"course\": Course,\n     \"course-curriculum-file\": CourseCurriculumFile,\n     \"district\": District,\n     \"facility\": Facility,\n-    \"facility\": Facility,\n+    \"college-facility\": CFacility,\n     \"faculty\": Faculty,\n     \"level\": Level,\n     \"sub-level\": SubLevel,\n     \"social-media\": SocialMedia,\n"
+                },
+                {
+                    "date": 1741066518238,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -45,9 +45,9 @@\n     \"course\": Course,\n     \"course-curriculum-file\": CourseCurriculumFile,\n     \"district\": District,\n     \"facility\": Facility,\n-    \"college-facility\": CFacility,\n+    \"college-facility\": CollegeFacility,\n     \"faculty\": Faculty,\n     \"level\": Level,\n     \"sub-level\": SubLevel,\n     \"social-media\": SocialMedia,\n"
+                },
+                {
+                    "date": 1741067005514,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -122,8 +122,9 @@\n             )\n \n         # Perform the bulk deletion\n         deleted_count, _ = queryset.delete()\n+        print\n \n         return Response(\n             {\"message\": f\"Successfully deleted {deleted_count} items of type '{delete_type}'.\"},\n             status=status.HTTP_200_OK\n"
+                },
+                {
+                    "date": 1741067012229,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -122,9 +122,9 @@\n             )\n \n         # Perform the bulk deletion\n         deleted_count, _ = queryset.delete()\n-        print\n+        print(f\"Deleted {deleted_count} items of type '{delete_type}'.\")\n \n         return Response(\n             {\"message\": f\"Successfully deleted {deleted_count} items of type '{delete_type}'.\"},\n             status=status.HTTP_200_OK\n"
+                },
+                {
+                    "date": 1741067146497,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -121,11 +121,13 @@\n                 status=status.HTTP_400_BAD_REQUEST\n             )\n \n         # Perform the bulk deletion\n-        deleted_count, _ = queryset.delete()\n-        print(f\"Deleted {deleted_count} items of type '{delete_type}'.\")\n+        deleted_count = queryset.count()  # Count only the main objects\n+queryset.delete()  # Perform deletion\n \n-        return Response(\n-            {\"message\": f\"Successfully deleted {deleted_count} items of type '{delete_type}'.\"},\n-            status=status.HTTP_200_OK\n-        )\n+print(f\"Deleted {deleted_count} items of type '{delete_type}'.\")\n+\n+return Response(\n+    {\"message\": f\"Successfully deleted {deleted_count} items of type '{delete_type}'.\"},\n+    status=status.HTTP_200_OK\n+)\n"
+                },
+                {
+                    "date": 1741067151681,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -122,12 +122,12 @@\n             )\n \n         # Perform the bulk deletion\n         deleted_count = queryset.count()  # Count only the main objects\n-queryset.delete()  # Perform deletion\n+`    queryset.delete()  # Perform deletion\n \n-print(f\"Deleted {deleted_count} items of type '{delete_type}'.\")\n+    print(f\"Deleted {deleted_count} items of type '{delete_type}'.\")\n \n-return Response(\n-    {\"message\": f\"Successfully deleted {deleted_count} items of type '{delete_type}'.\"},\n-    status=status.HTTP_200_OK\n-)\n+    return Response(\n+        {\"message\": f\"Successfully deleted {deleted_count} items of type '{delete_type}'.\"},\n+        status=status.HTTP_200_OK\n+    )`\n"
+                },
+                {
+                    "date": 1741067156791,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -122,12 +122,12 @@\n             )\n \n         # Perform the bulk deletion\n         deleted_count = queryset.count()  # Count only the main objects\n-`    queryset.delete()  # Perform deletion\n+        queryset.delete()  # Perform deletion\n \n-    print(f\"Deleted {deleted_count} items of type '{delete_type}'.\")\n+        print(f\"Deleted {deleted_count} items of type '{delete_type}'.\")\n \n-    return Response(\n-        {\"message\": f\"Successfully deleted {deleted_count} items of type '{delete_type}'.\"},\n-        status=status.HTTP_200_OK\n-    )`\n+        return Response(\n+            {\"message\": f\"Successfully deleted {deleted_count} items of type '{delete_type}'.\"},\n+            status=status.HTTP_200_OK\n+        )\n"
                 }
             ],
             "date": 1733737051062,

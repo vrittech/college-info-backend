@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 40,
+            "activePatchIndex": 44,
             "patches": [
                 {
                     "date": 1733481893066,
@@ -168,6 +168,22 @@
                 {
                     "date": 1740666312829,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,9 +27,9 @@\n     ordering = ['id']  # Default ordering\n \n     def get_queryset(self):\n         if self.request.user.is_authenticated:\n-            queryset = super().get_queryset().filter(colleges = 71)\n+            queryset = super().get_queryset().filter(colleges = self.request.user.college)\n         else:\n             queryset = super().get_queryset()\n         return queryset\n \n"
+                },
+                {
+                    "date": 1741066397061,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -25,13 +25,16 @@\n     search_fields = ['id', 'full_name', 'email', 'phone', 'courses__name', 'colleges__name']  # Searchable fields\n     ordering_fields = ['id', 'full_name', 'created_at', 'updated_at']  # Orderable fields\n     ordering = ['id']  # Default ordering\n \n-    def get_queryset(self):\n-        if self.request.user.is_authenticated:\n-            queryset = super().get_queryset().filter(colleges = self.request.user.college)\n-        else:\n-            queryset = super().get_queryset()\n+      def get_queryset(self):\n+        # print(self.action)\n+        queryset = super().get_queryset()\n+        request = self.request\n+        if request.user.is_superuser:\n+            return queryset\n+        elif request.user.has_perm('collegemanagement.change_college'):\n+            return queryset.filter(user=request.user)\n         return queryset\n \n     def get_serializer_class(self):\n         if self.action in ['create', 'update', 'partial_update']:\n"
+                },
+                {
+                    "date": 1741066403777,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -25,9 +25,9 @@\n     search_fields = ['id', 'full_name', 'email', 'phone', 'courses__name', 'colleges__name']  # Searchable fields\n     ordering_fields = ['id', 'full_name', 'created_at', 'updated_at']  # Orderable fields\n     ordering = ['id']  # Default ordering\n \n-      def get_queryset(self):\n+    def get_queryset(self):\n         # print(self.action)\n         queryset = super().get_queryset()\n         request = self.request\n         if request.user.is_superuser:\n"
+                },
+                {
+                    "date": 1741066449788,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -26,17 +26,17 @@\n     ordering_fields = ['id', 'full_name', 'created_at', 'updated_at']  # Orderable fields\n     ordering = ['id']  # Default ordering\n \n     def get_queryset(self):\n-        # print(self.action)\n+        \"\"\"Admins see all data, normal users see only their college's data\"\"\"\n         queryset = super().get_queryset()\n-        request = self.request\n-        if request.user.is_superuser:\n-            return queryset\n-        elif request.user.has_perm('collegemanagement.change_college'):\n-            return queryset.filter(user=request.user)\n-        return queryset\n \n+        if self.request.user.is_authenticated:\n+            if self.request.user.is_superuser:\n+                return queryset  # Superusers get all records\n+            else:\n+                return queryset.filter(college=self.request.user.college)  # Normal users get their college data only\n+\n     def get_serializer_class(self):\n         if self.action in ['create', 'update', 'partial_update']:\n             return InquiryWriteSerializers\n         elif self.action == 'retrieve':\n"
+                },
+                {
+                    "date": 1741066455020,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -33,9 +33,9 @@\n         if self.request.user.is_authenticated:\n             if self.request.user.is_superuser:\n                 return queryset  # Superusers get all records\n             else:\n-                return queryset.filter(college=self.request.user.college)  # Normal users get their college data only\n+                return queryset.filter(colleges=self.request.user.college)  # Normal users get their college data only\n \n     def get_serializer_class(self):\n         if self.action in ['create', 'update', 'partial_update']:\n             return InquiryWriteSerializers\n"
                 }
             ],
             "date": 1733481893066,

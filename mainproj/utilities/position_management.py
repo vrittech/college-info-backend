@@ -13,6 +13,8 @@ class PositionManagementViewSet(viewsets.ViewSet):
     MODEL_MAP = {
         # 'meet-team':('components','MeetTeam'),
         'duration':('duration','Duration'),
+        'event-gallery':('eventmanagement','EventGallery'),
+        'event':('eventmanagement','Event'),
         # 'gallery': ('gallery', 'Gallery'),
         # 'gallery-group': ('gallery', 'GalleryGroup'),
         # 'quotation': ('quotationmanagement', 'Quotation'),

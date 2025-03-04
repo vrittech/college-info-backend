@@ -183,12 +183,36 @@ class InformationRetrieveSerializers(serializers.ModelSerializer):
 class InformationWriteSerializers(serializers.ModelSerializer):
     """Handles Many-to-Many fields and file/image uploads."""
 
-    information_gallery = InformationGallerySerializer(many=True)
-    information_files = InformationFilesSerializer(many=True)
+    information_gallery = InformationGallerySerializer(many=True,read_only = True)
+    information_files = InformationFilesSerializer(many=True,read_only = True)
 
     class Meta:
         model = Information
         fields = '__all__'
+    
+    def to_representation(self, instance):
+        attrs = super().to_representation(instance)
+
+        # Make the gallery URLs absolute
+        for item in attrs['information_gallery']:
+            if item.get('image'):
+                item['image'] = self.get_absolute_url(item['image'])
+
+        # Make the file URLs absolute
+        for item in attrs['information_files']:
+            if item.get('file'):
+                item['file'] = self.get_absolute_url(item['file'])
+
+        return attrs
+
+    def get_absolute_url(self, file_field):
+        """
+        Returns the absolute URL for a file or image field.
+        """
+        request = self.context.get('request')
+        if not request:
+            return file_field.url
+        return request.build_absolute_uri(file_field.url)
 
     # def get_information_gallery(self, obj):
     #     return [img.image.url for img in obj.information_gallery.all()]

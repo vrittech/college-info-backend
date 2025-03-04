@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 147,
+            "activePatchIndex": 176,
             "patches": [
                 {
                     "date": 1733485840683,
@@ -596,6 +596,122 @@
                 {
                     "date": 1740936086340,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -182,9 +182,10 @@\n \n class InformationWriteSerializers(serializers.ModelSerializer):\n     \"\"\"Handles Many-to-Many fields and file/image uploads.\"\"\"\n \n-    \n+    information_gallery = InformationGallerySerializer(many=True)\n+    information_files = InformationFilesSerializer(many=True, read_only=True)\n \n     class Meta:\n         model = Information\n         fields = '__all__'\n"
+                },
+                {
+                    "date": 1740993484414,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -183,9 +183,9 @@\n class InformationWriteSerializers(serializers.ModelSerializer):\n     \"\"\"Handles Many-to-Many fields and file/image uploads.\"\"\"\n \n     information_gallery = InformationGallerySerializer(many=True)\n-    information_files = InformationFilesSerializer(many=True, read_only=True)\n+    information_files = InformationFilesSerializer(many=True)\n \n     class Meta:\n         model = Information\n         fields = '__all__'\n@@ -240,8 +240,9 @@\n         m2m_data = {field: validated_data.pop(field, []) for field in many_to_many_fields}\n \n         # Extract images & files\n         images_data, files_data = self.extract_images_and_files()\n+        print\n \n         # Create Information instance\n         information = Information.objects.create(**validated_data)\n \n"
+                },
+                {
+                    "date": 1740993497678,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -240,9 +240,10 @@\n         m2m_data = {field: validated_data.pop(field, []) for field in many_to_many_fields}\n \n         # Extract images & files\n         images_data, files_data = self.extract_images_and_files()\n-        print\n+        print(image_file)\n+        print(image_file)\n \n         # Create Information instance\n         information = Information.objects.create(**validated_data)\n \n"
+                },
+                {
+                    "date": 1740993551180,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -215,8 +215,9 @@\n \n     def extract_images_and_files(self):\n         \"\"\"Extract multiple images and files from request.FILES.\"\"\"\n         request = self.context.get('request')\n+        print\n         images_data, files_data = [], []\n \n         if request and hasattr(request, 'FILES'):\n             for key, file in request.FILES.items():\n"
+                },
+                {
+                    "date": 1740993557220,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -215,9 +215,9 @@\n \n     def extract_images_and_files(self):\n         \"\"\"Extract multiple images and files from request.FILES.\"\"\"\n         request = self.context.get('request')\n-        print\n+        print(request)\n         images_data, files_data = [], []\n \n         if request and hasattr(request, 'FILES'):\n             for key, file in request.FILES.items():\n"
+                },
+                {
+                    "date": 1740993585594,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -241,10 +241,8 @@\n         m2m_data = {field: validated_data.pop(field, []) for field in many_to_many_fields}\n \n         # Extract images & files\n         images_data, files_data = self.extract_images_and_files()\n-        print(image_file)\n-        print(image_file)\n \n         # Create Information instance\n         information = Information.objects.create(**validated_data)\n \n"
+                },
+                {
+                    "date": 1740993730580,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -182,9 +182,9 @@\n \n class InformationWriteSerializers(serializers.ModelSerializer):\n     \"\"\"Handles Many-to-Many fields and file/image uploads.\"\"\"\n \n-    information_gallery = InformationGallerySerializer(many=True)\n+    information_gallery = InformationGallerySerializer(many=True,re)\n     information_files = InformationFilesSerializer(many=True)\n \n     class Meta:\n         model = Information\n"
+                },
+                {
+                    "date": 1740993736840,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -182,9 +182,9 @@\n \n class InformationWriteSerializers(serializers.ModelSerializer):\n     \"\"\"Handles Many-to-Many fields and file/image uploads.\"\"\"\n \n-    information_gallery = InformationGallerySerializer(many=True,re)\n+    information_gallery = InformationGallerySerializer(many=True,requi)\n     information_files = InformationFilesSerializer(many=True)\n \n     class Meta:\n         model = Information\n"
+                },
+                {
+                    "date": 1740993869109,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -182,9 +182,9 @@\n \n class InformationWriteSerializers(serializers.ModelSerializer):\n     \"\"\"Handles Many-to-Many fields and file/image uploads.\"\"\"\n \n-    information_gallery = InformationGallerySerializer(many=True,requi)\n+    information_gallery = InformationGallerySerializer(many=True)\n     information_files = InformationFilesSerializer(many=True)\n \n     class Meta:\n         model = Information\n@@ -215,9 +215,8 @@\n \n     def extract_images_and_files(self):\n         \"\"\"Extract multiple images and files from request.FILES.\"\"\"\n         request = self.context.get('request')\n-        print(request)\n         images_data, files_data = [], []\n \n         if request and hasattr(request, 'FILES'):\n             for key, file in request.FILES.items():\n"
+                },
+                {
+                    "date": 1740994034347,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -182,9 +182,9 @@\n \n class InformationWriteSerializers(serializers.ModelSerializer):\n     \"\"\"Handles Many-to-Many fields and file/image uploads.\"\"\"\n \n-    information_gallery = InformationGallerySerializer(many=True)\n+    information_gallery = InformationGallerySerializer(many=True,)\n     information_files = InformationFilesSerializer(many=True)\n \n     class Meta:\n         model = Information\n"
+                },
+                {
+                    "date": 1740994042100,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -182,9 +182,9 @@\n \n class InformationWriteSerializers(serializers.ModelSerializer):\n     \"\"\"Handles Many-to-Many fields and file/image uploads.\"\"\"\n \n-    information_gallery = InformationGallerySerializer(many=True,)\n+    information_gallery = InformationGallerySerializer(many=True,required = False)\n     information_files = InformationFilesSerializer(many=True)\n \n     class Meta:\n         model = Information\n"
+                },
+                {
+                    "date": 1740994048599,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -183,9 +183,9 @@\n class InformationWriteSerializers(serializers.ModelSerializer):\n     \"\"\"Handles Many-to-Many fields and file/image uploads.\"\"\"\n \n     information_gallery = InformationGallerySerializer(many=True,required = False)\n-    information_files = InformationFilesSerializer(many=True)\n+    information_files = InformationFilesSerializer(many=True,required = False)\n \n     class Meta:\n         model = Information\n         fields = '__all__'\n"
+                },
+                {
+                    "date": 1740994070285,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -182,9 +182,9 @@\n \n class InformationWriteSerializers(serializers.ModelSerializer):\n     \"\"\"Handles Many-to-Many fields and file/image uploads.\"\"\"\n \n-    information_gallery = InformationGallerySerializer(many=True,required = False)\n+    information_gallery = InformationGallerySerializer(many=True,)\n     information_files = InformationFilesSerializer(many=True,required = False)\n \n     class Meta:\n         model = Information\n"
+                },
+                {
+                    "date": 1740994077167,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -182,9 +182,9 @@\n \n class InformationWriteSerializers(serializers.ModelSerializer):\n     \"\"\"Handles Many-to-Many fields and file/image uploads.\"\"\"\n \n-    information_gallery = InformationGallerySerializer(many=True,)\n+    information_gallery = InformationGallerySerializer(many=True,read_)\n     information_files = InformationFilesSerializer(many=True,required = False)\n \n     class Meta:\n         model = Information\n"
+                },
+                {
+                    "date": 1740994084558,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -182,9 +182,9 @@\n \n class InformationWriteSerializers(serializers.ModelSerializer):\n     \"\"\"Handles Many-to-Many fields and file/image uploads.\"\"\"\n \n-    information_gallery = InformationGallerySerializer(many=True,read_)\n+    information_gallery = InformationGallerySerializer(many=True,read_only = True)\n     information_files = InformationFilesSerializer(many=True,required = False)\n \n     class Meta:\n         model = Information\n"
+                },
+                {
+                    "date": 1740994090025,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -183,9 +183,9 @@\n class InformationWriteSerializers(serializers.ModelSerializer):\n     \"\"\"Handles Many-to-Many fields and file/image uploads.\"\"\"\n \n     information_gallery = InformationGallerySerializer(many=True,read_only = True)\n-    information_files = InformationFilesSerializer(many=True,required = False)\n+    information_files = InformationFilesSerializer(many=True,read_only = True)\n \n     class Meta:\n         model = Information\n         fields = '__all__'\n"
+                },
+                {
+                    "date": 1740995489593,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -188,8 +188,10 @@\n \n     class Meta:\n         model = Information\n         fields = '__all__'\n+    \n+    def to\n \n     # def get_information_gallery(self, obj):\n     #     return [img.image.url for img in obj.information_gallery.all()]\n \n"
+                },
+                {
+                    "date": 1740995497197,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -189,9 +189,10 @@\n     class Meta:\n         model = Information\n         fields = '__all__'\n     \n-    def to\n+    def to_representation(self, instance):\n+         super().to_representation(instance)\n \n     # def get_information_gallery(self, obj):\n     #     return [img.image.url for img in obj.information_gallery.all()]\n \n"
+                },
+                {
+                    "date": 1740995504789,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -190,9 +190,10 @@\n         model = Information\n         fields = '__all__'\n     \n     def to_representation(self, instance):\n-         super().to_representation(instance)\n+        attrs= super().to_representation(instance)\n+        \n \n     # def get_information_gallery(self, obj):\n     #     return [img.image.url for img in obj.information_gallery.all()]\n \n"
+                },
+                {
+                    "date": 1740995512793,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -192,8 +192,9 @@\n     \n     def to_representation(self, instance):\n         attrs= super().to_representation(instance)\n         \n+        return attrs\n \n     # def get_information_gallery(self, obj):\n     #     return [img.image.url for img in obj.information_gallery.all()]\n \n"
+                },
+                {
+                    "date": 1740995529731,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -191,8 +191,9 @@\n         fields = '__all__'\n     \n     def to_representation(self, instance):\n         attrs= super().to_representation(instance)\n+        attrs['information_gallery'] = InformationGallerySerializer(instance.information_gallery, many=True).data\n         \n         return attrs\n \n     # def get_information_gallery(self, obj):\n"
+                },
+                {
+                    "date": 1740995535274,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -192,8 +192,9 @@\n     \n     def to_representation(self, instance):\n         attrs= super().to_representation(instance)\n         attrs['information_gallery'] = InformationGallerySerializer(instance.information_gallery, many=True).data\n+        attrs['information_files'] = InformationFilesSerializer(instance.information_files, many=True).data\n         \n         return attrs\n \n     # def get_information_gallery(self, obj):\n"
+                },
+                {
+                    "date": 1740995545170,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -193,9 +193,9 @@\n     def to_representation(self, instance):\n         attrs= super().to_representation(instance)\n         attrs['information_gallery'] = InformationGallerySerializer(instance.information_gallery, many=True).data\n         attrs['information_files'] = InformationFilesSerializer(instance.information_files, many=True).data\n-        \n+        for item in \n         return attrs\n \n     # def get_information_gallery(self, obj):\n     #     return [img.image.url for img in obj.information_gallery.all()]\n"
+                },
+                {
+                    "date": 1740995559554,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -193,9 +193,9 @@\n     def to_representation(self, instance):\n         attrs= super().to_representation(instance)\n         attrs['information_gallery'] = InformationGallerySerializer(instance.information_gallery, many=True).data\n         attrs['information_files'] = InformationFilesSerializer(instance.information_files, many=True).data\n-        for item in \n+        for item in attrs[]\n         return attrs\n \n     # def get_information_gallery(self, obj):\n     #     return [img.image.url for img in obj.information_gallery.all()]\n"
+                },
+                {
+                    "date": 1740995568895,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -193,9 +193,10 @@\n     def to_representation(self, instance):\n         attrs= super().to_representation(instance)\n         attrs['information_gallery'] = InformationGallerySerializer(instance.information_gallery, many=True).data\n         attrs['information_files'] = InformationFilesSerializer(instance.information_files, many=True).data\n-        for item in attrs[]\n+        for item in attrs['information_files']:\n+            item['file'] = str(item['file'])\n         return attrs\n \n     # def get_information_gallery(self, obj):\n     #     return [img.image.url for img in obj.information_gallery.all()]\n"
+                },
+                {
+                    "date": 1740995586668,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -193,10 +193,12 @@\n     def to_representation(self, instance):\n         attrs= super().to_representation(instance)\n         attrs['information_gallery'] = InformationGallerySerializer(instance.information_gallery, many=True).data\n         attrs['information_files'] = InformationFilesSerializer(instance.information_files, many=True).data\n+        \n         for item in attrs['information_files']:\n             item['file'] = str(item['file'])\n+            \n         return attrs\n \n     # def get_information_gallery(self, obj):\n     #     return [img.image.url for img in obj.information_gallery.all()]\n"
+                },
+                {
+                    "date": 1740995657015,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -189,17 +189,18 @@\n     class Meta:\n         model = Information\n         fields = '__all__'\n     \n-    def to_representation(self, instance):\n-        attrs= super().to_representation(instance)\n-        attrs['information_gallery'] = InformationGallerySerializer(instance.information_gallery, many=True).data\n-        attrs['information_files'] = InformationFilesSerializer(instance.information_files, many=True).data\n+    # def to_representation(self, instance):\n+    #     attrs= super().to_representation(instance)\n+    #     attrs['information_gallery'] = InformationGallerySerializer(instance.information_gallery, many=True).data\n+    #     attrs['information_files'] = InformationFilesSerializer(instance.information_files, many=True).data\n         \n-        for item in attrs['information_files']:\n-            item['file'] = str(item['file'])\n+        \n+    #     for item in attrs['information_files']:\n+    #         item['file'] = str(item['file'])\n             \n-        return attrs\n+    #     return attrs\n \n     # def get_information_gallery(self, obj):\n     #     return [img.image.url for img in obj.information_gallery.all()]\n \n"
+                },
+                {
+                    "date": 1740995863978,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -189,19 +189,32 @@\n     class Meta:\n         model = Information\n         fields = '__all__'\n     \n-    # def to_representation(self, instance):\n-    #     attrs= super().to_representation(instance)\n-    #     attrs['information_gallery'] = InformationGallerySerializer(instance.information_gallery, many=True).data\n-    #     attrs['information_files'] = InformationFilesSerializer(instance.information_files, many=True).data\n-        \n-        \n-    #     for item in attrs['information_files']:\n-    #         item['file'] = str(item['file'])\n-            \n-    #     return attrs\n+   def to_representation(self, instance):\n+        attrs = super().to_representation(instance)\n \n+        # Make the gallery URLs absolute\n+        for item in attrs['information_gallery']:\n+            if item.get('image'):\n+                item['image'] = self.get_absolute_url(item['image'])\n+\n+        # Make the file URLs absolute\n+        for item in attrs['information_files']:\n+            if item.get('file'):\n+                item['file'] = self.get_absolute_url(item['file'])\n+\n+        return attrs\n+\n+    def get_absolute_url(self, file_field):\n+        \"\"\"\n+        Returns the absolute URL for a file or image field.\n+        \"\"\"\n+        request = self.context.get('request')\n+        if not request:\n+            return file_field.url\n+        return request.build_absolute_uri(file_field.url)\n+\n     # def get_information_gallery(self, obj):\n     #     return [img.image.url for img in obj.information_gallery.all()]\n \n     # def get_information_files(self, obj):\n"
+                },
+                {
+                    "date": 1740995870955,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -189,31 +189,31 @@\n     class Meta:\n         model = Information\n         fields = '__all__'\n     \n-   def to_representation(self, instance):\n-        attrs = super().to_representation(instance)\n+    def to_representation(self, instance):\n+            attrs = super().to_representation(instance)\n \n-        # Make the gallery URLs absolute\n-        for item in attrs['information_gallery']:\n-            if item.get('image'):\n-                item['image'] = self.get_absolute_url(item['image'])\n+            # Make the gallery URLs absolute\n+            for item in attrs['information_gallery']:\n+                if item.get('image'):\n+                    item['image'] = self.get_absolute_url(item['image'])\n \n-        # Make the file URLs absolute\n-        for item in attrs['information_files']:\n-            if item.get('file'):\n-                item['file'] = self.get_absolute_url(item['file'])\n+            # Make the file URLs absolute\n+            for item in attrs['information_files']:\n+                if item.get('file'):\n+                    item['file'] = self.get_absolute_url(item['file'])\n \n-        return attrs\n+            return attrs\n \n-    def get_absolute_url(self, file_field):\n-        \"\"\"\n-        Returns the absolute URL for a file or image field.\n-        \"\"\"\n-        request = self.context.get('request')\n-        if not request:\n-            return file_field.url\n-        return request.build_absolute_uri(file_field.url)\n+        def get_absolute_url(self, file_field):\n+            \"\"\"\n+            Returns the absolute URL for a file or image field.\n+            \"\"\"\n+            request = self.context.get('request')\n+            if not request:\n+                return file_field.url\n+            return request.build_absolute_uri(file_field.url)\n \n     # def get_information_gallery(self, obj):\n     #     return [img.image.url for img in obj.information_gallery.all()]\n \n"
+                },
+                {
+                    "date": 1740995881339,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -190,30 +190,30 @@\n         model = Information\n         fields = '__all__'\n     \n     def to_representation(self, instance):\n-            attrs = super().to_representation(instance)\n+        attrs = super().to_representation(instance)\n \n-            # Make the gallery URLs absolute\n-            for item in attrs['information_gallery']:\n-                if item.get('image'):\n-                    item['image'] = self.get_absolute_url(item['image'])\n+        # Make the gallery URLs absolute\n+        for item in attrs['information_gallery']:\n+            if item.get('image'):\n+                item['image'] = self.get_absolute_url(item['image'])\n \n-            # Make the file URLs absolute\n-            for item in attrs['information_files']:\n-                if item.get('file'):\n-                    item['file'] = self.get_absolute_url(item['file'])\n+        # Make the file URLs absolute\n+        for item in attrs['information_files']:\n+            if item.get('file'):\n+                item['file'] = self.get_absolute_url(item['file'])\n \n-            return attrs\n+        return attrs\n \n-        def get_absolute_url(self, file_field):\n-            \"\"\"\n-            Returns the absolute URL for a file or image field.\n-            \"\"\"\n-            request = self.context.get('request')\n-            if not request:\n-                return file_field.url\n-            return request.build_absolute_uri(file_field.url)\n+    def get_absolute_url(self, file_field):\n+        \"\"\"\n+        Returns the absolute URL for a file or image field.\n+        \"\"\"\n+        request = self.context.get('request')\n+        if not request:\n+            return file_field.url\n+        return request.build_absolute_uri(file_field.url)\n \n     # def get_information_gallery(self, obj):\n     #     return [img.image.url for img in obj.information_gallery.all()]\n \n"
                 }
             ],
             "date": 1733485840683,

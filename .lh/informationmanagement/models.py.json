@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 14,
+            "activePatchIndex": 15,
             "patches": [
                 {
                     "date": 1739786154635,
@@ -64,6 +64,10 @@
                 {
                     "date": 1740381487893,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -127,9 +127,8 @@\n     image = models.ImageField(upload_to='information_category/',null=True,blank=True)\n     is_featured = models.BooleanField(default=False)\n     created_date = models.DateField(auto_now_add=True, null=True, blank=True)\n     updated_date = models.DateTimeField(auto_now=True, null=True, blank=True)\n-\n     \n     class Meta:\n         permissions = [\n             ('manage_informationgallery', 'Manage Information Gallery'),\n"
+                },
+                {
+                    "date": 1741067688040,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -97,9 +97,9 @@\n         return self.title if self.title else \"Unnamed\"\n     \n     def save(self, *args, **kwargs):\n         if not self.slug:\n-            self.slug = f'{slugify(self.name)}-{str(self.public_id)[1:5]}{str(self.public_id)[-1:-5]}'\n+            self.slug = f'{slugify(self.title)}-{str(self.public_id)[1:5]}{str(self.public_id)[-1:-5]}'\n         super().save(*args, **kwargs)\n     \n     class Meta:\n         permissions = [\n"
                 }
             ],
             "date": 1739786154635,

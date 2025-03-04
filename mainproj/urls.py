@@ -60,9 +60,14 @@ from coursesandfees.routers.routers import router as coursesandfees_router
 # from collegeandcourseinquiries.routers.routers import router as collegeandcourseinquiries_router
 from discipline.routers.routers import router as discipline_router
 # from notifications.routers.routers import router as notifications_router
+from mainproj.utilities.position_management import PositionManagementViewSet
 
 
 router = routers.DefaultRouter()
+
+position_management_viewset = PositionManagementViewSet.as_view({
+    'get': 'draggable'  # Map the 'get' request to the draggable action
+})
 
 router.registry.extend(requestsubmission_router.registry)
 router.registry.extend(coursemanagement_router.registry)
@@ -108,7 +113,7 @@ schema_view = get_schema_view(
       terms_of_service="https://www.google.com/policies/terms/",
       contact=openapi.Contact(email="prashantkarna21@gmail.com"),
       license=openapi.License(name="No License"),
-      **{'x-logo': {'url': 'your-logo-url'}},
+      **{'x-logo': {'url': 'https://collegeinfoapi.vrittechnologies.com/media/gallery/images/College_Info_Nepal.png'}},
    ),
    public=True,
    permission_classes=[permissions.AllowAny],
@@ -125,32 +130,7 @@ urlpatterns = [
     path('api/import-excel/<str:type>/',ImportExcel.as_view(),name="import_excel"),
     path('api/bulk-delete/', BulkDelete.as_view(), name="bulk_delete"),
     path("api/", include("notify.urls")),
-    #  path("api/", include("notification.urls")),
-    # path('api/',include(requestsubmission_router.urls)),
-    # path('api/',include(coursemanagement_router.urls)),
-    # path('api/',include(socialmedia_router.urls)),
-    # path('api/',include(setupemail_router.urls)),
-    # path('api/',include(semester_router.urls)),
-    # path('api/',include(level_router.urls)),
-    # path('api/',include(informationmanagement_router.urls)),
-    # path('api/',include(affiliation_router.urls)),
-    # path('api/',include(certification_router.urls)),
-    # path('api/',include(college_router.urls)),
-    # path('api/',include(collegeleveltype_router.urls)),
-    # path('api/',include(collegetype_router.urls)),
-    # path('api/',include(district_router.urls)),
-    # path('api/',include(event_router.urls)),
-    # path('api/',include(faculty_router.urls)),
-    # path('api/',include(gallery_router.urls)),
-    # path('api/',include(collegemanagement_router.urls)),
-    # path('api/',include(facilities_router.urls)),
-    # path('api/',include(admissionopen_router.urls)),
-    # path('api/',include(coursesandfees_router.urls)),
-    # path('api/',include(location_router.urls)),
-    # path('api/',include(preparationinquiries_router.urls)),
-    # path('api/',include(collegeandcourseinquiries_router.urls))
-    
-    
+    path('api/drag-item/', position_management_viewset, name='position_management_drag_item'),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
