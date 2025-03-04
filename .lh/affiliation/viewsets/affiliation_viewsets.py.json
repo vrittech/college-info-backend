@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 41,
+            "activePatchIndex": 43,
             "patches": [
                 {
                     "date": 1733481192866,
@@ -172,6 +172,14 @@
                 {
                     "date": 1740651319954,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,9 +18,9 @@\n     filterset_class= AffiliationFilter\n \n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n-    search_fields = ['id','name','address']\n+    search_fields = ['id','name','address','created_date']\n     ordering_fields = ['id','name','address','created_date','updated_date']\n     \n \n     # filterset_fields = {\n"
+                },
+                {
+                    "date": 1741071732974,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -21,8 +21,18 @@\n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     search_fields = ['id','name','address','created_date']\n     ordering_fields = ['id','name','address','created_date','updated_date']\n     \n+        def get_object(self):\n+        \"\"\"\n+        Override get_object to allow lookup by either 'id' or 'slug'.\n+        \"\"\"\n+        queryset = self.get_queryset()\n+        lookup_value = self.kwargs.get(self.lookup_field)  # Get lookup value from URL\n+        if lookup_value.isdigit():  # Check if lookup_value is numeric (ID)\n+            return get_object_or_404(queryset, id=int(lookup_value))\n+        return get_object_or_404(queryset, slug=lookup_value)  # Otherwise, lookup by slug\n+    \n \n     # filterset_fields = {\n     #     'id': ['exact'],\n     #     'name': ['exact'],\n"
+                },
+                {
+                    "date": 1741071850886,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,9 +5,11 @@\n from ..serializers.affiliation_serializers import AffiliationListSerializers, AffiliationRetrieveSerializers, AffiliationWriteSerializers\n from ..utilities.importbase import *\n from mainproj.permissions import DynamicModelPermission\n from ..utilities.filter import AffiliationFilter\n+from django.shortcuts import get_object_or_404\n \n+\n class affiliationViewsets(viewsets.ModelViewSet):\n     serializer_class = AffiliationListSerializers\n     # permission_classes = [affiliationPermission]\n     permission_classes = [DynamicModelPermission]\n@@ -21,9 +23,9 @@\n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     search_fields = ['id','name','address','created_date']\n     ordering_fields = ['id','name','address','created_date','updated_date']\n     \n-        def get_object(self):\n+    def get_object(self):\n         \"\"\"\n         Override get_object to allow lookup by either 'id' or 'slug'.\n         \"\"\"\n         queryset = self.get_queryset()\n"
                 }
             ],
             "date": 1733481192866,

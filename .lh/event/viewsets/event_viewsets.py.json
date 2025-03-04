@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 56,
+            "activePatchIndex": 58,
             "patches": [
                 {
                     "date": 1733481372824,
@@ -232,6 +232,14 @@
                 {
                     "date": 1740559326423,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,9 +15,9 @@\n \n class eventViewsets(viewsets.ModelViewSet):\n     serializer_class = EventListSerializers\n     permission_classes = [DynamicModelPermission]\n-    authentication_classes = [JWTAuthentication]\n+    # authentication_classes = [JWTAuthentication]\n     pagination_class = MyPageNumberPagination\n     queryset = Event.objects.all().order_by('-id')\n     lookup_field = \"slug\"\n \n"
+                },
+                {
+                    "date": 1741071815798,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -25,8 +25,18 @@\n     search_fields = ['id', 'event_name', 'venue', 'category__name', 'organizer__name']  # Fields to search\n     ordering_fields = ['id', 'event_name', 'start_date', 'end_date', 'is_featured_event']  # Fields to sort\n     ordering = ['-id']  # Default ordering\n     filterset_class = EventFilter\n+    \n+        def get_object(self):\n+        \"\"\"\n+        Override get_object to allow lookup by either 'id' or 'slug'.\n+        \"\"\"\n+        queryset = self.get_queryset()\n+        lookup_value = self.kwargs.get(self.lookup_field)  # Get lookup value from URL\n+        if lookup_value.isdigit():  # Check if lookup_value is numeric (ID)\n+            return get_object_or_404(queryset, id=int(lookup_value))\n+        return get_object_or_404(queryset, slug=lookup_value)  # Otherwise, lookup by slug\n \n     # filterset_fields = {\n     #     'id': ['exact'],\n     # }\n"
+                },
+                {
+                    "date": 1741071865669,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,9 +11,11 @@\n from rest_framework.response import Response\n from rest_framework import status\n from ..utilities.permissions import eventPermission\n from mainproj.permissions import DynamicModelPermission\n+from django.shortcuts import get_object_or_404\n \n+\n class eventViewsets(viewsets.ModelViewSet):\n     serializer_class = EventListSerializers\n     permission_classes = [DynamicModelPermission]\n     # authentication_classes = [JWTAuthentication]\n@@ -26,9 +28,9 @@\n     ordering_fields = ['id', 'event_name', 'start_date', 'end_date', 'is_featured_event']  # Fields to sort\n     ordering = ['-id']  # Default ordering\n     filterset_class = EventFilter\n     \n-        def get_object(self):\n+    def get_object(self):\n         \"\"\"\n         Override get_object to allow lookup by either 'id' or 'slug'.\n         \"\"\"\n         queryset = self.get_queryset()\n"
                 }
             ],
             "date": 1733481372824,

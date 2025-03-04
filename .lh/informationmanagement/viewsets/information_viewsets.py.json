@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 56,
+            "activePatchIndex": 58,
             "patches": [
                 {
                     "date": 1733481577467,
@@ -232,6 +232,14 @@
                 {
                     "date": 1739957345339,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,11 +24,10 @@\n     ]\n     ordering_fields = search_fields\n     \n     def get_queryset(self):\n-        if self.request.user.is_authenticated:\n-            return self.queryset.prefetch_related(\"related_users\")  # ✅ Ensures ManyToMany relationships are loaded\n-        return self.queryset\n+        queryset = super().get_queryset()\n+        return queryset\n \n     def get_serializer_class(self):\n         \"\"\"Return different serializers for different actions\"\"\"\n         if self.action in ['create', 'update', 'partial_update']:\n"
+                },
+                {
+                    "date": 1741071786734,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,8 +23,18 @@\n         'sublevel__name', 'course__name', 'created_date', 'updated_date'\n     ]\n     ordering_fields = search_fields\n     \n+        def get_object(self):\n+        \"\"\"\n+        Override get_object to allow lookup by either 'id' or 'slug'.\n+        \"\"\"\n+        queryset = self.get_queryset()\n+        lookup_value = self.kwargs.get(self.lookup_field)  # Get lookup value from URL\n+        if lookup_value.isdigit():  # Check if lookup_value is numeric (ID)\n+            return get_object_or_404(queryset, id=int(lookup_value))\n+        return get_object_or_404(queryset, slug=lookup_value)  # Otherwise, lookup by slug\n+    \n     def get_queryset(self):\n         queryset = super().get_queryset()\n         return queryset\n \n"
+                },
+                {
+                    "date": 1741071874806,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,11 @@\n )\n from ..utilities.filters import InformationFilter\n from ..utilities.pagination import MyPageNumberPagination\n from mainproj.permissions import DynamicModelPermission\n+from django.shortcuts import get_object_or_404\n \n+\n class informationViewsets(viewsets.ModelViewSet):\n     permission_classes = [DynamicModelPermission]\n     pagination_class = MyPageNumberPagination\n     queryset = Information.objects.all().order_by('-id')\n@@ -23,9 +25,9 @@\n         'sublevel__name', 'course__name', 'created_date', 'updated_date'\n     ]\n     ordering_fields = search_fields\n     \n-        def get_object(self):\n+    def get_object(self):\n         \"\"\"\n         Override get_object to allow lookup by either 'id' or 'slug'.\n         \"\"\"\n         queryset = self.get_queryset()\n"
                 }
             ],
             "date": 1733481577467,

@@ -12,6 +12,8 @@ from rest_framework.response import Response
 from rest_framework import status
 from ..utilities.permissions import eventPermission
 from mainproj.permissions import DynamicModelPermission
+from django.shortcuts import get_object_or_404
+
 
 class eventViewsets(viewsets.ModelViewSet):
     serializer_class = EventListSerializers
@@ -26,6 +28,16 @@ class eventViewsets(viewsets.ModelViewSet):
     ordering_fields = ['id', 'event_name', 'start_date', 'end_date', 'is_featured_event']  # Fields to sort
     ordering = ['-id']  # Default ordering
     filterset_class = EventFilter
+    
+    def get_object(self):
+        """
+        Override get_object to allow lookup by either 'id' or 'slug'.
+        """
+        queryset = self.get_queryset()
+        lookup_value = self.kwargs.get(self.lookup_field)  # Get lookup value from URL
+        if lookup_value.isdigit():  # Check if lookup_value is numeric (ID)
+            return get_object_or_404(queryset, id=int(lookup_value))
+        return get_object_or_404(queryset, slug=lookup_value)  # Otherwise, lookup by slug
 
     # filterset_fields = {
     #     'id': ['exact'],

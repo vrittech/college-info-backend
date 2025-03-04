@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 19,
+            "activePatchIndex": 21,
             "patches": [
                 {
                     "date": 1733481590443,
@@ -84,6 +84,14 @@
                 {
                     "date": 1740130621021,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,10 @@\n     ordering_fields = ['id','name', 'is_show', 'created_date', 'updated_date']\n # ('name', 'is_show', 'image', 'created_date', 'updated_date', )\n    \n     filterset_fields = {\n-        ''\n+        'is_show': ['exact'],\n+        'slug': ['exact'],\n         'id': ['exact'],\n         'name': ['exact'],\n     }\n \n"
+                },
+                {
+                    "date": 1741071794853,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,8 +4,9 @@\n from ..models import InformationCategory\n from ..serializers.informationcategory_serializers import InformationCategoryListSerializers, InformationCategoryRetrieveSerializers, InformationCategoryWriteSerializers\n from ..utilities.importbase import *\n from mainproj.permissions import DynamicModelPermission\n+from ..utilities.pagination import MyPageNumberPagination\n \n class informationcategoryViewsets(viewsets.ModelViewSet):\n     serializer_class = InformationCategoryListSerializers\n     permission_classes = [DynamicModelPermission]\n@@ -17,8 +18,10 @@\n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     search_fields = ['id','name', 'is_show', 'created_date', 'updated_date']\n     ordering_fields = ['id','name', 'is_show', 'created_date', 'updated_date']\n # ('name', 'is_show', 'image', 'created_date', 'updated_date', )\n+\n+\n    \n     filterset_fields = {\n         'is_show': ['exact'],\n         'slug': ['exact'],\n"
+                },
+                {
+                    "date": 1741071879191,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,9 +5,11 @@\n from ..serializers.informationcategory_serializers import InformationCategoryListSerializers, InformationCategoryRetrieveSerializers, InformationCategoryWriteSerializers\n from ..utilities.importbase import *\n from mainproj.permissions import DynamicModelPermission\n from ..utilities.pagination import MyPageNumberPagination\n+from django.shortcuts import get_object_or_404\n \n+\n class informationcategoryViewsets(viewsets.ModelViewSet):\n     serializer_class = InformationCategoryListSerializers\n     permission_classes = [DynamicModelPermission]\n     # authentication_classes = [JWTAuthentication]\n@@ -19,9 +21,17 @@\n     search_fields = ['id','name', 'is_show', 'created_date', 'updated_date']\n     ordering_fields = ['id','name', 'is_show', 'created_date', 'updated_date']\n # ('name', 'is_show', 'image', 'created_date', 'updated_date', )\n \n-\n+    def get_object(self):\n+        \"\"\"\n+        Override get_object to allow lookup by either 'id' or 'slug'.\n+        \"\"\"\n+        queryset = self.get_queryset()\n+        lookup_value = self.kwargs.get(self.lookup_field)  # Get lookup value from URL\n+        if lookup_value.isdigit():  # Check if lookup_value is numeric (ID)\n+            return get_object_or_404(queryset, id=int(lookup_value))\n+        return get_object_or_404(queryset, slug=lookup_value)  # Otherwise, lookup by slug\n    \n     filterset_fields = {\n         'is_show': ['exact'],\n         'slug': ['exact'],\n"
                 }
             ],
             "date": 1733481590443,

@@ -6,6 +6,8 @@ from ..serializers.informationcategory_serializers import InformationCategoryLis
 from ..utilities.importbase import *
 from mainproj.permissions import DynamicModelPermission
 from ..utilities.pagination import MyPageNumberPagination
+from django.shortcuts import get_object_or_404
+
 
 class informationcategoryViewsets(viewsets.ModelViewSet):
     serializer_class = InformationCategoryListSerializers
@@ -19,6 +21,16 @@ class informationcategoryViewsets(viewsets.ModelViewSet):
     search_fields = ['id','name', 'is_show', 'created_date', 'updated_date']
     ordering_fields = ['id','name', 'is_show', 'created_date', 'updated_date']
 # ('name', 'is_show', 'image', 'created_date', 'updated_date', )
+
+    def get_object(self):
+        """
+        Override get_object to allow lookup by either 'id' or 'slug'.
+        """
+        queryset = self.get_queryset()
+        lookup_value = self.kwargs.get(self.lookup_field)  # Get lookup value from URL
+        if lookup_value.isdigit():  # Check if lookup_value is numeric (ID)
+            return get_object_or_404(queryset, id=int(lookup_value))
+        return get_object_or_404(queryset, slug=lookup_value)  # Otherwise, lookup by slug
    
     filterset_fields = {
         'is_show': ['exact'],
