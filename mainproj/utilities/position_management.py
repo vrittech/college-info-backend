@@ -28,7 +28,6 @@ class PositionManagementViewSet(viewsets.ViewSet):
     }
 
     BREATH_HOLD = 10  # Maximum distance for small moves
-
     def _get_model(self, model_key):
         """
         Retrieve model class based on model key.
@@ -41,6 +40,31 @@ class PositionManagementViewSet(viewsets.ViewSet):
             except LookupError:
                 return None
         return None
+    
+    @swagger_auto_schema(
+    method='get',
+    operation_summary="Move an item to a new position",
+    operation_description=(
+        "Moves an item from `target` position to `goal` position within the specified `model`.\n\n"
+        "**Keys:**\n"
+        "- `duration`\n"
+        "- `event-gallery`\n"
+        "- `event`\n"
+    ),
+    manual_parameters=[
+        openapi.Parameter('model', openapi.IN_QUERY, description="Name of the model", type=openapi.TYPE_STRING, required=True),
+        openapi.Parameter('target', openapi.IN_QUERY, description="Current position of the item", type=openapi.TYPE_INTEGER, required=True),
+        openapi.Parameter('goal', openapi.IN_QUERY, description="Target position for the item", type=openapi.TYPE_INTEGER, required=True),
+    ],
+    responses={
+        200: openapi.Response("Item moved successfully"),
+        400: openapi.Response("Invalid request"),
+        404: openapi.Response("Target object not found"),
+    }
+)
+
+
+    
 
     @action(detail=False, methods=['get'], url_path='drag-item')
     def draggable(self, request, *args, **kwargs):
