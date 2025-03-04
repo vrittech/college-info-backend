@@ -98,7 +98,7 @@ class Information(SEOFields):
     
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = f'{slugify(self.name)}-{str(self.public_id)[1:5]}{str(self.public_id)[-1:-5]}'
+            self.slug = f'{slugify(self.title)}-{str(self.public_id)[1:5]}{str(self.public_id)[-1:-5]}'
         super().save(*args, **kwargs)
     
     class Meta:

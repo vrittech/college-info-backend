@@ -122,7 +122,10 @@ class BulkDelete(APIView):
             )
 
         # Perform the bulk deletion
-        deleted_count, _ = queryset.delete()
+        deleted_count = queryset.count()  # Count only the main objects
+        queryset.delete()  # Perform deletion
+
+        print(f"Deleted {deleted_count} items of type '{delete_type}'.")
 
         return Response(
             {"message": f"Successfully deleted {deleted_count} items of type '{delete_type}'."},
