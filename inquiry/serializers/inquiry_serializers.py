@@ -31,8 +31,6 @@ class InquiryRetrieveSerializers(serializers.ModelSerializer):
         fields = '__all__'
 
 class InquiryWriteSerializers(serializers.ModelSerializer):
-    courses = CourseSerializers(many=True,required=False)
-    colleges = CollegeSerializers(many=True,required=False)
     class Meta:
         model = Inquiry
         fields = '__all__'
