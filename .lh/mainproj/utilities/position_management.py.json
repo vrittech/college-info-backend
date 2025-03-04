@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 5,
+            "activePatchIndex": 10,
             "patches": [
                 {
                     "date": 1733737084641,
@@ -28,6 +28,26 @@
                 {
                     "date": 1733820648765,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,9 +11,9 @@\n \n     # Mapping of frontend identifiers to actual model names\n     MODEL_MAP = {\n         # 'meet-team':('components','MeetTeam'),\n-        'duration':('duration','duration'),\n+        'duration':('duration','Duration'),\n         # 'gallery': ('gallery', 'Gallery'),\n         # 'gallery-group': ('gallery', 'GalleryGroup'),\n         # 'quotation': ('quotationmanagement', 'Quotation'),\n         # 'booking': ('bookingmanagement', 'BookingService'),\n"
+                },
+                {
+                    "date": 1741069758301,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,8 +12,9 @@\n     # Mapping of frontend identifiers to actual model names\n     MODEL_MAP = {\n         # 'meet-team':('components','MeetTeam'),\n         'duration':('duration','Duration'),\n+        \n         # 'gallery': ('gallery', 'Gallery'),\n         # 'gallery-group': ('gallery', 'GalleryGroup'),\n         # 'quotation': ('quotationmanagement', 'Quotation'),\n         # 'booking': ('bookingmanagement', 'BookingService'),\n"
+                },
+                {
+                    "date": 1741069768010,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,17 +4,17 @@\n from django.apps import apps\n from django.db import transaction\n from django.db.models import F, Max,Min\n from drf_yasg.utils import swagger_auto_schema\n-from drf_yasg import openapi\n+from drf_yasg import openap\n \n class PositionManagementViewSet(viewsets.ViewSet):\n \n     # Mapping of frontend identifiers to actual model names\n     MODEL_MAP = {\n         # 'meet-team':('components','MeetTeam'),\n         'duration':('duration','Duration'),\n-        \n+        ''\n         # 'gallery': ('gallery', 'Gallery'),\n         # 'gallery-group': ('gallery', 'GalleryGroup'),\n         # 'quotation': ('quotationmanagement', 'Quotation'),\n         # 'booking': ('bookingmanagement', 'BookingService'),\n"
+                },
+                {
+                    "date": 1741069774388,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,17 +4,17 @@\n from django.apps import apps\n from django.db import transaction\n from django.db.models import F, Max,Min\n from drf_yasg.utils import swagger_auto_schema\n-from drf_yasg import openap\n+from drf_yasg import openapi\n \n class PositionManagementViewSet(viewsets.ViewSet):\n \n     # Mapping of frontend identifiers to actual model names\n     MODEL_MAP = {\n         # 'meet-team':('components','MeetTeam'),\n         'duration':('duration','Duration'),\n-        ''\n+        'event'\n         # 'gallery': ('gallery', 'Gallery'),\n         # 'gallery-group': ('gallery', 'GalleryGroup'),\n         # 'quotation': ('quotationmanagement', 'Quotation'),\n         # 'booking': ('bookingmanagement', 'BookingService'),\n"
+                },
+                {
+                    "date": 1741069780873,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,9 +12,9 @@\n     # Mapping of frontend identifiers to actual model names\n     MODEL_MAP = {\n         # 'meet-team':('components','MeetTeam'),\n         'duration':('duration','Duration'),\n-        'event'\n+        'event-gallery':('eventmanagement','EventGallery'),\n         # 'gallery': ('gallery', 'Gallery'),\n         # 'gallery-group': ('gallery', 'GalleryGroup'),\n         # 'quotation': ('quotationmanagement', 'Quotation'),\n         # 'booking': ('bookingmanagement', 'BookingService'),\n"
+                },
+                {
+                    "date": 1741069786342,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,8 +13,9 @@\n     MODEL_MAP = {\n         # 'meet-team':('components','MeetTeam'),\n         'duration':('duration','Duration'),\n         'event-gallery':('eventmanagement','EventGallery'),\n+        'event':('eventmanagement','Event'),\n         # 'gallery': ('gallery', 'Gallery'),\n         # 'gallery-group': ('gallery', 'GalleryGroup'),\n         # 'quotation': ('quotationmanagement', 'Quotation'),\n         # 'booking': ('bookingmanagement', 'BookingService'),\n"
                 }
             ],
             "date": 1733737084641,

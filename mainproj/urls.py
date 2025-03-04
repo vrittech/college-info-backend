@@ -60,9 +60,14 @@ from coursesandfees.routers.routers import router as coursesandfees_router
 # from collegeandcourseinquiries.routers.routers import router as collegeandcourseinquiries_router
 from discipline.routers.routers import router as discipline_router
 # from notifications.routers.routers import router as notifications_router
+from mainproj.utilities.position_management import PositionManagementViewSet
 
 
 router = routers.DefaultRouter()
+
+position_management_viewset = PositionManagementViewSet.as_view({
+    'get': 'draggable'  # Map the 'get' request to the draggable action
+})
 
 router.registry.extend(requestsubmission_router.registry)
 router.registry.extend(coursemanagement_router.registry)
@@ -125,6 +130,7 @@ urlpatterns = [
     path('api/import-excel/<str:type>/',ImportExcel.as_view(),name="import_excel"),
     path('api/bulk-delete/', BulkDelete.as_view(), name="bulk_delete"),
     path("api/", include("notify.urls")),
+    path('api/drag-item/', position_management_viewset, name='position_management_drag_item'),
     #  path("api/", include("notification.urls")),
     # path('api/',include(requestsubmission_router.urls)),
     # path('api/',include(coursemanagement_router.urls)),

@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 5,
+            "activePatchIndex": 13,
             "patches": [
                 {
                     "date": 1739684343218,
@@ -28,6 +28,38 @@
                 {
                     "date": 1739871490926,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -123,9 +123,9 @@\n     path('api-auth/', include('rest_framework.urls')),\n     path('api/accounts/',include('accounts.urls')),\n     path('api/import-excel/<str:type>/',ImportExcel.as_view(),name=\"import_excel\"),\n     path('api/bulk-delete/', BulkDelete.as_view(), name=\"bulk_delete\"),\n-    path(\"api/\", include(\"notifications.urls\")),\n+    path(\"api/\", include(\"notify.urls\")),\n     #  path(\"api/\", include(\"notification.urls\")),\n     # path('api/',include(requestsubmission_router.urls)),\n     # path('api/',include(coursemanagement_router.urls)),\n     # path('api/',include(socialmedia_router.urls)),\n"
+                },
+                {
+                    "date": 1741069901073,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -124,8 +124,9 @@\n     path('api/accounts/',include('accounts.urls')),\n     path('api/import-excel/<str:type>/',ImportExcel.as_view(),name=\"import_excel\"),\n     path('api/bulk-delete/', BulkDelete.as_view(), name=\"bulk_delete\"),\n     path(\"api/\", include(\"notify.urls\")),\n+     path('api/drag-item/', position_management_viewset, name='position_management_drag_item'),\n     #  path(\"api/\", include(\"notification.urls\")),\n     # path('api/',include(requestsubmission_router.urls)),\n     # path('api/',include(coursemanagement_router.urls)),\n     # path('api/',include(socialmedia_router.urls)),\n"
+                },
+                {
+                    "date": 1741069909317,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -59,8 +59,9 @@\n # from preparationinquiries.routers.routers import router as preparationinquiries_router\n # from collegeandcourseinquiries.routers.routers import router as collegeandcourseinquiries_router\n from discipline.routers.routers import router as discipline_router\n # from notifications.routers.routers import router as notifications_router\n+from \n \n \n router = routers.DefaultRouter()\n \n@@ -124,9 +125,9 @@\n     path('api/accounts/',include('accounts.urls')),\n     path('api/import-excel/<str:type>/',ImportExcel.as_view(),name=\"import_excel\"),\n     path('api/bulk-delete/', BulkDelete.as_view(), name=\"bulk_delete\"),\n     path(\"api/\", include(\"notify.urls\")),\n-     path('api/drag-item/', position_management_viewset, name='position_management_drag_item'),\n+    path('api/drag-item/', position_management_viewset, name='position_management_drag_item'),\n     #  path(\"api/\", include(\"notification.urls\")),\n     # path('api/',include(requestsubmission_router.urls)),\n     # path('api/',include(coursemanagement_router.urls)),\n     # path('api/',include(socialmedia_router.urls)),\n"
+                },
+                {
+                    "date": 1741069914529,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -59,9 +59,9 @@\n # from preparationinquiries.routers.routers import router as preparationinquiries_router\n # from collegeandcourseinquiries.routers.routers import router as collegeandcourseinquiries_router\n from discipline.routers.routers import router as discipline_router\n # from notifications.routers.routers import router as notifications_router\n-from \n+from mainproj.\n \n \n router = routers.DefaultRouter()\n \n"
+                },
+                {
+                    "date": 1741069919814,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -59,9 +59,9 @@\n # from preparationinquiries.routers.routers import router as preparationinquiries_router\n # from collegeandcourseinquiries.routers.routers import router as collegeandcourseinquiries_router\n from discipline.routers.routers import router as discipline_router\n # from notifications.routers.routers import router as notifications_router\n-from mainproj.\n+from mainproj.utilities.\n \n \n router = routers.DefaultRouter()\n \n"
+                },
+                {
+                    "date": 1741069926631,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -59,9 +59,9 @@\n # from preparationinquiries.routers.routers import router as preparationinquiries_router\n # from collegeandcourseinquiries.routers.routers import router as collegeandcourseinquiries_router\n from discipline.routers.routers import router as discipline_router\n # from notifications.routers.routers import router as notifications_router\n-from mainproj.utilities.\n+from mainproj.utilities.position_management import position_management_viewset\n \n \n router = routers.DefaultRouter()\n \n"
+                },
+                {
+                    "date": 1741069959859,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -59,9 +59,9 @@\n # from preparationinquiries.routers.routers import router as preparationinquiries_router\n # from collegeandcourseinquiries.routers.routers import router as collegeandcourseinquiries_router\n from discipline.routers.routers import router as discipline_router\n # from notifications.routers.routers import router as notifications_router\n-from mainproj.utilities.position_management import position_management_viewset\n+from vrittech.utilities.position_management import PositionManagementViewSet\n \n \n router = routers.DefaultRouter()\n \n"
+                },
+                {
+                    "date": 1741069967181,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -59,9 +59,9 @@\n # from preparationinquiries.routers.routers import router as preparationinquiries_router\n # from collegeandcourseinquiries.routers.routers import router as collegeandcourseinquiries_router\n from discipline.routers.routers import router as discipline_router\n # from notifications.routers.routers import router as notifications_router\n-from vrittech.utilities.position_management import PositionManagementViewSet\n+from mainpro.utilities.position_management import PositionManagementViewSet\n \n \n router = routers.DefaultRouter()\n \n"
+                },
+                {
+                    "date": 1741069991970,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -59,13 +59,17 @@\n # from preparationinquiries.routers.routers import router as preparationinquiries_router\n # from collegeandcourseinquiries.routers.routers import router as collegeandcourseinquiries_router\n from discipline.routers.routers import router as discipline_router\n # from notifications.routers.routers import router as notifications_router\n-from mainpro.utilities.position_management import PositionManagementViewSet\n+from mainproj.utilities.position_management import PositionManagementViewSet\n \n \n router = routers.DefaultRouter()\n \n+position_management_viewset = PositionManagementViewSet.as_view({\n+    'get': 'draggable'  # Map the 'get' request to the draggable action\n+})\n+\n router.registry.extend(requestsubmission_router.registry)\n router.registry.extend(coursemanagement_router.registry)\n router.registry.extend(socialmedia_router.registry)\n # router.registry.extend(setupemail_router.registry)\n"
                 }
             ],
             "date": 1739684343218,
