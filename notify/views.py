@@ -34,6 +34,9 @@ class NotificationViewSet(viewsets.ModelViewSet):
             print("🔍 mark_all_as_read action triggered")  # Debugging
             print(f"🔍 Current user: {request.user}")  # Debugging
 
+            if not request.user.is_authenticated:
+                return Response({"error": "Authentication required"}, status=status.HTTP_401_UNAUTHORIZED)
+
             # Get all notifications for the current user that haven't been read by them
             notifications = Notification.objects.filter(user=request.user).exclude(read_by=request.user)
             print(f"🔍 Notifications to mark as read: {notifications.count()}")  # Debugging
@@ -54,10 +57,16 @@ class NotificationViewSet(viewsets.ModelViewSet):
     def delete_all(self, request, *args, **kwargs):
         """Delete all notifications for the requesting user."""
         try:
+            if not request.user.is_authenticated:
+                return Response({"error": "Authentication required"}, status=status.HTTP_401_UNAUTHORIZED)
+
             if request.user.is_superuser:
                 count, _ = Notification.objects.all().delete()
+                print(f"🔍 Superuser deleted all notifications: {count}")  # Debugging
             else:
                 count, _ = Notification.objects.filter(user=request.user).delete()
+                print(f"🔍 User {request.user} deleted {count} notifications")  # Debugging
+
             return Response({"message": f"{count} notifications deleted"}, status=status.HTTP_200_OK)
         except Exception as e:
             logger.error(f"Error in delete_all(): {str(e)}", exc_info=True)
@@ -69,6 +78,10 @@ class NotificationViewSet(viewsets.ModelViewSet):
         """Mark a single notification as read for the requesting user."""
         try:
             print("🔍 mark_as_read action triggered")  # Debugging
+
+            if not request.user.is_authenticated:
+                return Response({"error": "Authentication required"}, status=status.HTTP_401_UNAUTHORIZED)
+
             notification = self.get_object()
             print(f"🔍 Notification ID: {notification.id}")  # Debugging
 
