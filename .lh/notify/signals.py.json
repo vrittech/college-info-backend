@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 33,
+            "activePatchIndex": 34,
             "patches": [
                 {
                     "date": 1739869421688,
@@ -140,6 +140,10 @@
                 {
                     "date": 1740895886107,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,8 +3,9 @@\n from django.conf import settings\n from django.utils.timezone import now\n from accounts.models import CustomUser as User\n from .models import Notification\n+import json\n \n # Constants\n ACTION_CREATED = \"created\"\n ACTION_UPDATED = \"updated\"\n@@ -60,17 +61,27 @@\n     return list(set(receivers))  # Remove duplicates\n \n def create_notification(instance, action, user):\n     \"\"\"\n-    Generic function to create a notification.\n+    Generic function to create a notification with both casual and detailed messages.\n     \"\"\"\n     print(f\"🔍 Creating notification for {instance._meta.model_name} with action: {action}\")\n \n     model_name = instance._meta.model_name.lower()\n     identifier = str(getattr(instance, 'slug', getattr(instance, 'id', 'unknown')))\n     title = f\"{model_name.capitalize()} {action.capitalize()}\"\n-    message = f\"{user.get_full_name()} {action} a {model_name}.\" if user and user.is_authenticated else f\"A {model_name} was {action} by an unauthorized user.\"\n \n+    # Casual message (short and user-friendly)\n+    casual_message = f\"{user.get_full_name()} {action} a {model_name}.\" if user and user.is_authenticated else f\"A {model_name} was {action} by an unauthorized user.\"\n+\n+    # Detailed message (includes object data)\n+    object_data = {\n+        \"id\": instance.id,\n+        \"name\": getattr(instance, 'name', 'Unnamed'),\n+        \"created_at\": now().isoformat(),\n+    }\n+    detailed_message = f\"{casual_message} Details: {json.dumps(object_data, indent=2)}\"\n+\n     permission_codename = f\"{instance._meta.app_label}.view_{model_name}\"\n     print(f\"🔍 Permission codename: {permission_codename}\")\n \n     receivers = get_notification_receivers(instance, user)\n@@ -78,9 +89,10 @@\n         notifications = [\n             Notification(\n                 user=receiver,\n                 title=title,\n-                message=message,\n+                casual_message=casual_message,  # Casual message\n+                detailed_message=detailed_message,  # Detailed message\n                 module_name=instance._meta.app_label,\n                 updated_id=identifier,\n                 timestamp=now(),\n             )\n"
+                },
+                {
+                    "date": 1741069031906,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -70,9 +70,9 @@\n     identifier = str(getattr(instance, 'slug', getattr(instance, 'id', 'unknown')))\n     title = f\"{model_name.capitalize()} {action.capitalize()}\"\n \n     # Casual message (short and user-friendly)\n-    casual_message = f\"{user.get_full_name()} {action} a {model_name}.\" if user and user.is_authenticated else f\"A {model_name} was {action} by an unauthorized user.\"\n+    casual_message = f\"{user.full_name()} {action} a {model_name}.\" if user and user.is_authenticated else f\"A {model_name} was {action} by an unauthorized user.\"\n \n     # Detailed message (includes object data)\n     object_data = {\n         \"id\": instance.id,\n"
                 }
             ],
             "date": 1739869421688,
