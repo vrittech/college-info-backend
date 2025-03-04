@@ -113,7 +113,7 @@ schema_view = get_schema_view(
       terms_of_service="https://www.google.com/policies/terms/",
       contact=openapi.Contact(email="prashantkarna21@gmail.com"),
       license=openapi.License(name="No License"),
-      **{'x-logo': {'url': 'your-logo-url'}},
+      **{'x-logo': {'url': 'https://collegeinfoapi.vrittechnologies.com/media/gallery/images/College_Info_Nepal.png'}},
    ),
    public=True,
    permission_classes=[permissions.AllowAny],
@@ -131,32 +131,6 @@ urlpatterns = [
     path('api/bulk-delete/', BulkDelete.as_view(), name="bulk_delete"),
     path("api/", include("notify.urls")),
     path('api/drag-item/', position_management_viewset, name='position_management_drag_item'),
-    #  path("api/", include("notification.urls")),
-    # path('api/',include(requestsubmission_router.urls)),
-    # path('api/',include(coursemanagement_router.urls)),
-    # path('api/',include(socialmedia_router.urls)),
-    # path('api/',include(setupemail_router.urls)),
-    # path('api/',include(semester_router.urls)),
-    # path('api/',include(level_router.urls)),
-    # path('api/',include(informationmanagement_router.urls)),
-    # path('api/',include(affiliation_router.urls)),
-    # path('api/',include(certification_router.urls)),
-    # path('api/',include(college_router.urls)),
-    # path('api/',include(collegeleveltype_router.urls)),
-    # path('api/',include(collegetype_router.urls)),
-    # path('api/',include(district_router.urls)),
-    # path('api/',include(event_router.urls)),
-    # path('api/',include(faculty_router.urls)),
-    # path('api/',include(gallery_router.urls)),
-    # path('api/',include(collegemanagement_router.urls)),
-    # path('api/',include(facilities_router.urls)),
-    # path('api/',include(admissionopen_router.urls)),
-    # path('api/',include(coursesandfees_router.urls)),
-    # path('api/',include(location_router.urls)),
-    # path('api/',include(preparationinquiries_router.urls)),
-    # path('api/',include(collegeandcourseinquiries_router.urls))
-    
-    
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 13,
+            "activePatchIndex": 16,
             "patches": [
                 {
                     "date": 1739684343218,
@@ -60,6 +60,18 @@
                 {
                     "date": 1741069991970,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -59,13 +59,17 @@\n # from preparationinquiries.routers.routers import router as preparationinquiries_router\n # from collegeandcourseinquiries.routers.routers import router as collegeandcourseinquiries_router\n from discipline.routers.routers import router as discipline_router\n # from notifications.routers.routers import router as notifications_router\n-from mainpro.utilities.position_management import PositionManagementViewSet\n+from mainproj.utilities.position_management import PositionManagementViewSet\n \n \n router = routers.DefaultRouter()\n \n+position_management_viewset = PositionManagementViewSet.as_view({\n+    'get': 'draggable'  # Map the 'get' request to the draggable action\n+})\n+\n router.registry.extend(requestsubmission_router.registry)\n router.registry.extend(coursemanagement_router.registry)\n router.registry.extend(socialmedia_router.registry)\n # router.registry.extend(setupemail_router.registry)\n"
+                },
+                {
+                    "date": 1741070254985,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -130,32 +130,8 @@\n     path('api/import-excel/<str:type>/',ImportExcel.as_view(),name=\"import_excel\"),\n     path('api/bulk-delete/', BulkDelete.as_view(), name=\"bulk_delete\"),\n     path(\"api/\", include(\"notify.urls\")),\n     path('api/drag-item/', position_management_viewset, name='position_management_drag_item'),\n-    #  path(\"api/\", include(\"notification.urls\")),\n-    # path('api/',include(requestsubmission_router.urls)),\n-    # path('api/',include(coursemanagement_router.urls)),\n-    # path('api/',include(socialmedia_router.urls)),\n-    # path('api/',include(setupemail_router.urls)),\n-    # path('api/',include(semester_router.urls)),\n-    # path('api/',include(level_router.urls)),\n-    # path('api/',include(informationmanagement_router.urls)),\n-    # path('api/',include(affiliation_router.urls)),\n-    # path('api/',include(certification_router.urls)),\n-    # path('api/',include(college_router.urls)),\n-    # path('api/',include(collegeleveltype_router.urls)),\n-    # path('api/',include(collegetype_router.urls)),\n-    # path('api/',include(district_router.urls)),\n-    # path('api/',include(event_router.urls)),\n-    # path('api/',include(faculty_router.urls)),\n-    # path('api/',include(gallery_router.urls)),\n-    # path('api/',include(collegemanagement_router.urls)),\n-    # path('api/',include(facilities_router.urls)),\n-    # path('api/',include(admissionopen_router.urls)),\n-    # path('api/',include(coursesandfees_router.urls)),\n-    # path('api/',include(location_router.urls)),\n-    # path('api/',include(preparationinquiries_router.urls)),\n-    # path('api/',include(collegeandcourseinquiries_router.urls))\n     \n     \n ]\n if settings.DEBUG:\n"
+                },
+                {
+                    "date": 1741070260070,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -130,10 +130,8 @@\n     path('api/import-excel/<str:type>/',ImportExcel.as_view(),name=\"import_excel\"),\n     path('api/bulk-delete/', BulkDelete.as_view(), name=\"bulk_delete\"),\n     path(\"api/\", include(\"notify.urls\")),\n     path('api/drag-item/', position_management_viewset, name='position_management_drag_item'),\n-    \n-    \n ]\n if settings.DEBUG:\n     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)\n     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)  # for development\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1741070288978,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -112,9 +112,9 @@\n       description=\"College Info Backend System\",\n       terms_of_service=\"https://www.google.com/policies/terms/\",\n       contact=openapi.Contact(email=\"prashantkarna21@gmail.com\"),\n       license=openapi.License(name=\"No License\"),\n-      **{'x-logo': {'url': 'your-logo-url'}},\n+      **{'x-logo': {'url': 'https://collegeinfoapi.vrittechnologies.com/media/gallery/images/College_Info_Nepal.png'}},\n    ),\n    public=True,\n    permission_classes=[permissions.AllowAny],\n )\n"
                 }
             ],
             "date": 1739684343218,
