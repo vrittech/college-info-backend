@@ -40,6 +40,7 @@ class College(SEOFields):
     dp_image = models.ImageField(upload_to='college/dp/',null=True,blank=True)
     name = models.CharField(max_length=255)
     is_show = models.BooleanField(default=False)
+    is_verified = models.BooleanField(default=False)
     established_date = models.DateField(null= True,blank=True)
     website_link = models.URLField(null= True,blank=True)
     address = models.CharField(max_length=255,null=True,blank=True)

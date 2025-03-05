@@ -3,11 +3,23 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 0,
+            "activePatchIndex": 3,
             "patches": [
                 {
                     "date": 1739940081389,
                     "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1741160622951,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n import django_filters\n from django.db.models import Q\n-from .models import College\n+from ..models import College\n from district.models import District\n from affiliation.models import Affiliation\n from collegetype.models import CollegeType\n from discipline.models import Discipline\n@@ -39,8 +39,9 @@\n \n     phone_number = CharInFilter(field_name=\"phone_number\", lookup_expr=\"in\")\n     email = CharInFilter(field_name=\"email\", lookup_expr=\"in\")\n     is_show = django_filters.BooleanFilter(field_name=\"is_show\")\n+    is_show = django_filters.BooleanFilter(field_name=\"is_show\")\n \n     # ManyToMany fields filtering using comma-separated values\n     discipline = django_filters.CharFilter(method=\"filter_by_disciplines\")\n     facilities = django_filters.CharFilter(method=\"filter_by_facilities\")\n"
+                },
+                {
+                    "date": 1741160633450,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -39,9 +39,9 @@\n \n     phone_number = CharInFilter(field_name=\"phone_number\", lookup_expr=\"in\")\n     email = CharInFilter(field_name=\"email\", lookup_expr=\"in\")\n     is_show = django_filters.BooleanFilter(field_name=\"is_show\")\n-    is_show = django_filters.BooleanFilter(field_name=\"is_show\")\n+    is_verified = django_filters.BooleanFilter(field_name=\"is_show\")\n \n     # ManyToMany fields filtering using comma-separated values\n     discipline = django_filters.CharFilter(method=\"filter_by_disciplines\")\n     facilities = django_filters.CharFilter(method=\"filter_by_facilities\")\n@@ -64,7 +64,7 @@\n     class Meta:\n         model = College\n         fields = [\n             \"id\", \"name\", \"address\", \"district\", \"college_type\", \"affiliated\",\n-            \"established_date\", \"created_date\", \"updated_date\",\n+            \"established_date\", \"created_date\", \"updated_date\", ''\n             \"phone_number\", \"email\", \"is_show\", \"discipline\", \"facilities\"\n         ]\n"
+                },
+                {
+                    "date": 1741160641505,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -64,7 +64,7 @@\n     class Meta:\n         model = College\n         fields = [\n             \"id\", \"name\", \"address\", \"district\", \"college_type\", \"affiliated\",\n-            \"established_date\", \"created_date\", \"updated_date\", ''\n+            \"established_date\", \"created_date\", \"updated_date\", 'is_verified',\n             \"phone_number\", \"email\", \"is_show\", \"discipline\", \"facilities\"\n         ]\n"
                 }
             ],
             "date": 1739940081389,

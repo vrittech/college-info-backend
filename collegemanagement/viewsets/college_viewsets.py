@@ -79,22 +79,25 @@ class collegeViewsets(viewsets.ModelViewSet):
     # def action_name(self, request, *args, **kwargs):
     #     return super().list(request, *args, **kwargs)
     
-    @action(detail=False, methods=['get'], url_path="college-logo",permission_classes=[AllowAny])
+    @action(detail=False, methods=['get'], url_path="college-logo", permission_classes=[AllowAny])
     def get_dp_image(self, request, pk=None):
-        colleges = College.objects.all()  # Fetch all colleges
+        # Filter out colleges that have a dp_image before paginating
+        colleges = College.objects.exclude(dp_image__isnull=True).exclude(dp_image="")  
+
         if not colleges.exists():
-            return Response({"error": "No colleges available."}, status=404)
+            return Response({"error": "No colleges with display images available."}, status=404)
 
-        logos = []
-        for college in colleges:
-            if college.dp_image:
-                dp_image_url = request.build_absolute_uri(college.dp_image.url)
-                logos.append({"slug": college.slug, "college_name": college.name, "dp_image_url": dp_image_url})
+        # Use your custom pagination class
+        paginator = MyPageNumberPagination()
+        paginated_colleges = paginator.paginate_queryset(colleges, request, view=self)
 
-        if not logos:
-            return Response({"message": "No display images available."}, status=404)
+        # Construct response
+        logos = [
+            {"slug": college.slug, "college_name": college.name, "dp_image_url": request.build_absolute_uri(college.dp_image.url)}
+            for college in paginated_colleges
+        ]
 
-        return Response(logos, status=200)
+        return paginator.get_paginated_response(logos)
     
     @action(
         detail=False,

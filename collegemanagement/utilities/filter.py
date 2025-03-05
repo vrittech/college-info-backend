@@ -40,6 +40,7 @@ class CollegeFilter(django_filters.FilterSet):
     phone_number = CharInFilter(field_name="phone_number", lookup_expr="in")
     email = CharInFilter(field_name="email", lookup_expr="in")
     is_show = django_filters.BooleanFilter(field_name="is_show")
+    is_verified = django_filters.BooleanFilter(field_name="is_show")
 
     # ManyToMany fields filtering using comma-separated values
     discipline = django_filters.CharFilter(method="filter_by_disciplines")
@@ -64,6 +65,6 @@ class CollegeFilter(django_filters.FilterSet):
         model = College
         fields = [
             "id", "name", "address", "district", "college_type", "affiliated",
-            "established_date", "created_date", "updated_date",
+            "established_date", "created_date", "updated_date", 'is_verified',
             "phone_number", "email", "is_show", "discipline", "facilities"
         ]
