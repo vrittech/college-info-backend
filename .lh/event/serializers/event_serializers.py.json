@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 53,
+            "activePatchIndex": 87,
             "patches": [
                 {
                     "date": 1733477390024,
@@ -220,6 +220,142 @@
                 {
                     "date": 1741158821292,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -110,24 +110,24 @@\n             data = str_to_list(data, \"organizer\")\n \n         return super().to_internal_value(data)\n     def to_representation(self, instance):\n-    attrs = super().to_representation(instance)\n+        attrs = super().to_representation(instance)\n \n-    # Ensure 'image' field is present and is a string (URL path)\n-    if 'image' in attrs and isinstance(attrs['image'], str):\n-        attrs['image'] = self.get_absolute_url(attrs['image'])\n+        # Ensure 'image' field is present and is a string (URL path)\n+        if 'image' in attrs and isinstance(attrs['image'], str):\n+            attrs['image'] = self.get_absolute_url(attrs['image'])\n \n-    return attrs\n+        return attrs\n \n-def get_absolute_url(self, image_path):\n-    \"\"\"\n-    Returns the absolute URL for the given image path.\n-    \"\"\"\n-    request = self.context.get('request')\n-    if request and image_path:\n-        return request.build_absolute_uri(image_path)  # Convert relative path to absolute URL\n-    return image_path  # Return as is if request is unavailable\n+    def get_absolute_url(self, image_path):\n+        \"\"\"\n+        Returns the absolute URL for the given image path.\n+        \"\"\"\n+        request = self.context.get('request')\n+        if request and image_path:\n+            return request.build_absolute_uri(image_path)  # Convert relative path to absolute URL\n+        return image_path  # Return as is if request is unavailable\n \n \n     @transaction.atomic\n     def create(self, validated_data):\n"
+                },
+                {
+                    "date": 1741166370466,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -26,9 +26,9 @@\n class EventListSerializers(serializers.ModelSerializer):\n     # Nested fields for related models (full object details)\n     category = EventCategorySerializer(many=True,read_only=True)  # Full details of categories\n     organizer = EventOrganizerSerializer(many=True,read_only=True)  # Full details of organizers\n-    image = EventGallerySerializer(many=True,read_only=True)  # Full details of gallery images\n+    image = #EventGallerySerializer(many=True,read_only=True)  # Full details of gallery images\n     \n     class Meta:\n         model = Event\n         fields = '__all__'\n"
+                },
+                {
+                    "date": 1741166375928,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -26,9 +26,9 @@\n class EventListSerializers(serializers.ModelSerializer):\n     # Nested fields for related models (full object details)\n     category = EventCategorySerializer(many=True,read_only=True)  # Full details of categories\n     organizer = EventOrganizerSerializer(many=True,read_only=True)  # Full details of organizers\n-    image = #EventGallerySerializer(many=True,read_only=True)  # Full details of gallery images\n+    image = serializers#EventGallerySerializer(many=True,read_only=True)  # Full details of gallery images\n     \n     class Meta:\n         model = Event\n         fields = '__all__'\n"
+                },
+                {
+                    "date": 1741166382361,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -26,9 +26,9 @@\n class EventListSerializers(serializers.ModelSerializer):\n     # Nested fields for related models (full object details)\n     category = EventCategorySerializer(many=True,read_only=True)  # Full details of categories\n     organizer = EventOrganizerSerializer(many=True,read_only=True)  # Full details of organizers\n-    image = serializers#EventGallerySerializer(many=True,read_only=True)  # Full details of gallery images\n+    image = serializers.SerializerMethodField#EventGallerySerializer(many=True,read_only=True)  # Full details of gallery images\n     \n     class Meta:\n         model = Event\n         fields = '__all__'\n"
+                },
+                {
+                    "date": 1741166388598,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -26,9 +26,9 @@\n class EventListSerializers(serializers.ModelSerializer):\n     # Nested fields for related models (full object details)\n     category = EventCategorySerializer(many=True,read_only=True)  # Full details of categories\n     organizer = EventOrganizerSerializer(many=True,read_only=True)  # Full details of organizers\n-    image = serializers.SerializerMethodField#EventGallerySerializer(many=True,read_only=True)  # Full details of gallery images\n+    image = serializers.SerializerMethodField()#EventGallerySerializer(many=True,read_only=True)  # Full details of gallery images\n     \n     class Meta:\n         model = Event\n         fields = '__all__'\n"
+                },
+                {
+                    "date": 1741166394629,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -31,8 +31,9 @@\n     \n     class Meta:\n         model = Event\n         fields = '__all__'\n+        \n \n \n # Serializer for retrieving complete event details (detailed view)\n class EventRetrieveSerializers(serializers.ModelSerializer):\n"
+                },
+                {
+                    "date": 1741166403494,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -31,9 +31,9 @@\n     \n     class Meta:\n         model = Event\n         fields = '__all__'\n-        \n+    def get_image\n \n \n # Serializer for retrieving complete event details (detailed view)\n class EventRetrieveSerializers(serializers.ModelSerializer):\n"
+                },
+                {
+                    "date": 1741166412086,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -31,9 +31,10 @@\n     \n     class Meta:\n         model = Event\n         fields = '__all__'\n-    def get_image\n+    def get_image(self, obj):\n+        return [img.image.url for img in obj.eventgallery_set.all()]\n \n \n # Serializer for retrieving complete event details (detailed view)\n class EventRetrieveSerializers(serializers.ModelSerializer):\n"
+                },
+                {
+                    "date": 1741166417907,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -32,9 +32,9 @@\n     class Meta:\n         model = Event\n         fields = '__all__'\n     def get_image(self, obj):\n-        return [img.image.url for img in obj.eventgallery_set.all()]\n+        \n \n \n # Serializer for retrieving complete event details (detailed view)\n class EventRetrieveSerializers(serializers.ModelSerializer):\n"
+                },
+                {
+                    "date": 1741166424899,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -32,9 +32,10 @@\n     class Meta:\n         model = Event\n         fields = '__all__'\n     def get_image(self, obj):\n-        \n+        class = QuerySet(models.QuerySet):\n+            \n \n \n # Serializer for retrieving complete event details (detailed view)\n class EventRetrieveSerializers(serializers.ModelSerializer):\n"
+                },
+                {
+                    "date": 1741166434175,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -32,9 +32,9 @@\n     class Meta:\n         model = Event\n         fields = '__all__'\n     def get_image(self, obj):\n-        class = QuerySet(models.QuerySet):\n+        query = \n             \n \n \n # Serializer for retrieving complete event details (detailed view)\n"
+                },
+                {
+                    "date": 1741166440474,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -32,9 +32,9 @@\n     class Meta:\n         model = Event\n         fields = '__all__'\n     def get_image(self, obj):\n-        query = \n+        query = O\n             \n \n \n # Serializer for retrieving complete event details (detailed view)\n"
+                },
+                {
+                    "date": 1741166448302,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -32,9 +32,9 @@\n     class Meta:\n         model = Event\n         fields = '__all__'\n     def get_image(self, obj):\n-        query = O\n+        query = object.\n             \n \n \n # Serializer for retrieving complete event details (detailed view)\n"
+                },
+                {
+                    "date": 1741166458899,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -32,9 +32,9 @@\n     class Meta:\n         model = Event\n         fields = '__all__'\n     def get_image(self, obj):\n-        query = object.\n+        query = obj.image\n             \n \n \n # Serializer for retrieving complete event details (detailed view)\n"
+                },
+                {
+                    "date": 1741166466169,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -32,9 +32,9 @@\n     class Meta:\n         model = Event\n         fields = '__all__'\n     def get_image(self, obj):\n-        query = obj.image\n+        query = obj.image.all().fil\n             \n \n \n # Serializer for retrieving complete event details (detailed view)\n"
+                },
+                {
+                    "date": 1741166471961,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -32,9 +32,9 @@\n     class Meta:\n         model = Event\n         fields = '__all__'\n     def get_image(self, obj):\n-        query = obj.image.all().fil\n+        query = obj.image.all().order_by('id')\n             \n \n \n # Serializer for retrieving complete event details (detailed view)\n"
+                },
+                {
+                    "date": 1741166481244,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -32,9 +32,10 @@\n     class Meta:\n         model = Event\n         fields = '__all__'\n     def get_image(self, obj):\n-        query = obj.image.all().order_by('id')\n+        query = obj.image.all().order_by('position')\n+        \n             \n \n \n # Serializer for retrieving complete event details (detailed view)\n"
+                },
+                {
+                    "date": 1741166490561,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -33,9 +33,9 @@\n         model = Event\n         fields = '__all__'\n     def get_image(self, obj):\n         query = obj.image.all().order_by('position')\n-        \n+        serializers = \n             \n \n \n # Serializer for retrieving complete event details (detailed view)\n"
+                },
+                {
+                    "date": 1741166495724,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -33,9 +33,10 @@\n         model = Event\n         fields = '__all__'\n     def get_image(self, obj):\n         query = obj.image.all().order_by('position')\n-        serializers = \n+        serializers = EventGallerySerializer(query, many=True)\n+        \n             \n \n \n # Serializer for retrieving complete event details (detailed view)\n"
+                },
+                {
+                    "date": 1741166557823,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -31,12 +31,13 @@\n     \n     class Meta:\n         model = Event\n         fields = '__all__'\n+        \n     def get_image(self, obj):\n         query = obj.image.all().order_by('position')\n         serializers = EventGallerySerializer(query, many=True)\n-        \n+        return serializers.data\n             \n \n \n # Serializer for retrieving complete event details (detailed view)\n"
+                },
+                {
+                    "date": 1741166567220,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -47,8 +47,12 @@\n     image = EventGallerySerializer(many=True,read_only=True)  # Full details of gallery images\n     class Meta:\n         model = Event\n         fields = '__all__'\n+     def get_image(self, obj):\n+        query = obj.image.all().order_by('position')\n+        serializers = EventGallerySerializer(query, many=True)\n+        return serializers.data\n \n \n \n import ast\n"
+                },
+                {
+                    "date": 1741166577839,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -43,13 +43,14 @@\n # Serializer for retrieving complete event details (detailed view)\n class EventRetrieveSerializers(serializers.ModelSerializer):\n     category = EventCategorySerializer(many=True,read_only=True)  # Full details of categories\n     organizer = EventOrganizerSerializer(many=True,read_only=True)  # Full details of organizers\n-    image = EventGallerySerializer(many=True,read_only=True)  # Full details of gallery images\n+    # image = EventGallerySerializer(many=True,read_only=True)  # Full details of gallery images\n+    image = serializers.SerializerMethodField()\n     class Meta:\n         model = Event\n         fields = '__all__'\n-     def get_image(self, obj):\n+    def get_image(self, obj):\n         query = obj.image.all().order_by('position')\n         serializers = EventGallerySerializer(query, many=True)\n         return serializers.data\n \n"
+                },
+                {
+                    "date": 1741166851431,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -48,15 +48,22 @@\n     image = serializers.SerializerMethodField()\n     class Meta:\n         model = Event\n         fields = '__all__'\n-    def get_image(self, obj):\n-        query = obj.image.all().order_by('position')\n-        serializers = EventGallerySerializer(query, many=True)\n-        return serializers.data\n+    def get_event_images(self, obj):\n+        request = self.context.get('request')  # Get request from serializer context\n+        query = obj.images.all().order_by('position')  # Ensure correct related_name\n \n+        images = []\n+        for image_obj in query:\n+            if image_obj.image:  # Ensure image exists\n+                image_url = request.build_absolute_uri(image_obj.image.url) if request else f\"{settings.MEDIA_URL}{image_obj.image.url}\"\n+                images.append({\"id\": image_obj.id, \"image_url\": image_url, \"position\": image_obj.position})\n \n+        return images\n \n+\n+\n import ast\n \n def str_to_list(data, value_to_convert):\n     \"\"\"\n"
+                },
+                {
+                    "date": 1741166859436,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -32,12 +32,19 @@\n     class Meta:\n         model = Event\n         fields = '__all__'\n         \n-    def get_image(self, obj):\n-        query = obj.image.all().order_by('position')\n-        serializers = EventGallerySerializer(query, many=True)\n-        return serializers.data\n+    def get_event_images(self, obj):\n+        request = self.context.get('request')  # Get request from serializer context\n+        query = obj.images.all().order_by('position')  # Ensure correct related_name\n+\n+        images = []\n+        for image_obj in query:\n+            if image_obj.image:  # Ensure image exists\n+                image_url = request.build_absolute_uri(image_obj.image.url) if request else f\"{settings.MEDIA_URL}{image_obj.image.url}\"\n+                images.append({\"id\": image_obj.id, \"image_url\": image_url, \"position\": image_obj.position})\n+\n+        return images\n             \n \n \n # Serializer for retrieving complete event details (detailed view)\n"
+                },
+                {
+                    "date": 1741167183565,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -137,22 +137,22 @@\n         return super().to_internal_value(data)\n     def to_representation(self, instance):\n         attrs = super().to_representation(instance)\n \n-        # Ensure 'image' field is present and is a string (URL path)\n-        if 'image' in attrs and isinstance(attrs['image'], str):\n-            attrs['image'] = self.get_absolute_url(attrs['image'])\n+        # Ensure 'image' field is present and is a valid file\n+        if 'image' in attrs and attrs['image']:\n+            attrs['image'] = self.get_absolute_url(instance.image)\n \n         return attrs\n \n-    def get_absolute_url(self, image_path):\n+    def get_absolute_url(self, image_field):\n         \"\"\"\n-        Returns the absolute URL for the given image path.\n+        Returns the absolute URL for the given image field.\n         \"\"\"\n         request = self.context.get('request')\n-        if request and image_path:\n-            return request.build_absolute_uri(image_path)  # Convert relative path to absolute URL\n-        return image_path  # Return as is if request is unavailable\n+        if request and image_field:\n+            return request.build_absolute_uri(image_field.url)  # Ensure we use .url\n+        return image_field.url if image_field else None  # Fallback in case request is missing\n \n \n     @transaction.atomic\n     def create(self, validated_data):\n"
+                },
+                {
+                    "date": 1741167192228,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -144,15 +144,15 @@\n \n         return attrs\n \n     def get_absolute_url(self, image_field):\n-        \"\"\"\n-        Returns the absolute URL for the given image field.\n-        \"\"\"\n-        request = self.context.get('request')\n-        if request and image_field:\n-            return request.build_absolute_uri(image_field.url)  # Ensure we use .url\n-        return image_field.url if image_field else None  # Fallback in case request is missing\n+            \"\"\"\n+            Returns the absolute URL for the given image field.\n+            \"\"\"\n+            request = self.context.get('request')\n+            if request and image_field:\n+                return request.build_absolute_uri(image_field.url)  # Ensure we use .url\n+            return image_field.url if image_field else None  # Fallback in case request is missing\n \n \n     @transaction.atomic\n     def create(self, validated_data):\n"
+                },
+                {
+                    "date": 1741167336837,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -32,9 +32,9 @@\n     class Meta:\n         model = Event\n         fields = '__all__'\n         \n-    def get_event_images(self, obj):\n+    def get_images(self, obj):\n         request = self.context.get('request')  # Get request from serializer context\n         query = obj.images.all().order_by('position')  # Ensure correct related_name\n \n         images = []\n"
+                },
+                {
+                    "date": 1741167346931,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,9 @@\n from rest_framework import serializers\n from ..models import Event, EventCategory, EventOrganizer, EventGallery\n from django.db import transaction\n import ast\n+import\n \n \n # Serializer for EventCategory\n class EventCategorySerializer(serializers.ModelSerializer):\n@@ -32,9 +33,9 @@\n     class Meta:\n         model = Event\n         fields = '__all__'\n         \n-    def get_images(self, obj):\n+    def get_image(self, obj):\n         request = self.context.get('request')  # Get request from serializer context\n         query = obj.images.all().order_by('position')  # Ensure correct related_name\n \n         images = []\n"
+                },
+                {
+                    "date": 1741167357368,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,9 @@\n from rest_framework import serializers\n from ..models import Event, EventCategory, EventOrganizer, EventGallery\n from django.db import transaction\n import ast\n-import\n+from \n \n \n # Serializer for EventCategory\n class EventCategorySerializer(serializers.ModelSerializer):\n"
+                },
+                {
+                    "date": 1741167369905,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,9 @@\n from rest_framework import serializers\n from ..models import Event, EventCategory, EventOrganizer, EventGallery\n from django.db import transaction\n import ast\n-from \n+from django.conf import settings\n \n \n # Serializer for EventCategory\n class EventCategorySerializer(serializers.ModelSerializer):\n@@ -56,9 +56,9 @@\n     image = serializers.SerializerMethodField()\n     class Meta:\n         model = Event\n         fields = '__all__'\n-    def get_event_images(self, obj):\n+    def get_images(self, obj):\n         request = self.context.get('request')  # Get request from serializer context\n         query = obj.images.all().order_by('position')  # Ensure correct related_name\n \n         images = []\n"
+                },
+                {
+                    "date": 1741167396252,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -56,17 +56,17 @@\n     image = serializers.SerializerMethodField()\n     class Meta:\n         model = Event\n         fields = '__all__'\n-    def get_images(self, obj):\n+    def get_image(self, obj):\n         request = self.context.get('request')  # Get request from serializer context\n         query = obj.images.all().order_by('position')  # Ensure correct related_name\n \n         images = []\n         for image_obj in query:\n             if image_obj.image:  # Ensure image exists\n                 image_url = request.build_absolute_uri(image_obj.image.url) if request else f\"{settings.MEDIA_URL}{image_obj.image.url}\"\n-                images.append({\"id\": image_obj.id, \"image_url\": image_url, \"position\": image_obj.position})\n+                image.append({\"id\": image_obj.id, \"image_url\": image_url, \"position\": image_obj.position})\n \n         return images\n \n \n"
+                },
+                {
+                    "date": 1741167404239,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -64,9 +64,9 @@\n         images = []\n         for image_obj in query:\n             if image_obj.image:  # Ensure image exists\n                 image_url = request.build_absolute_uri(image_obj.image.url) if request else f\"{settings.MEDIA_URL}{image_obj.image.url}\"\n-                image.append({\"id\": image_obj.id, \"image_url\": image_url, \"position\": image_obj.position})\n+                images.append({\"id\": image_obj.id, \"image_url\": image_url, \"position\": image_obj.position})\n \n         return images\n \n \n"
+                },
+                {
+                    "date": 1741167409820,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -35,9 +35,9 @@\n         fields = '__all__'\n         \n     def get_image(self, obj):\n         request = self.context.get('request')  # Get request from serializer context\n-        query = obj.images.all().order_by('position')  # Ensure correct related_name\n+        query = obj.image.all().order_by('position')  # Ensure correct related_name\n \n         images = []\n         for image_obj in query:\n             if image_obj.image:  # Ensure image exists\n@@ -58,9 +58,9 @@\n         model = Event\n         fields = '__all__'\n     def get_image(self, obj):\n         request = self.context.get('request')  # Get request from serializer context\n-        query = obj.images.all().order_by('position')  # Ensure correct related_name\n+        query = obj.image.all().order_by('position')  # Ensure correct related_name\n \n         images = []\n         for image_obj in query:\n             if image_obj.image:  # Ensure image exists\n"
+                },
+                {
+                    "date": 1741167472360,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -41,9 +41,9 @@\n         images = []\n         for image_obj in query:\n             if image_obj.image:  # Ensure image exists\n                 image_url = request.build_absolute_uri(image_obj.image.url) if request else f\"{settings.MEDIA_URL}{image_obj.image.url}\"\n-                images.append({\"id\": image_obj.id, \"image_url\": image_url, \"position\": image_obj.position})\n+                images.append({\"id\": image_obj.id, \"image\": image_url, \"position\": image_obj.position})\n \n         return images\n             \n \n"
+                },
+                {
+                    "date": 1741167486016,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -64,9 +64,9 @@\n         images = []\n         for image_obj in query:\n             if image_obj.image:  # Ensure image exists\n                 image_url = request.build_absolute_uri(image_obj.image.url) if request else f\"{settings.MEDIA_URL}{image_obj.image.url}\"\n-                images.append({\"id\": image_obj.id, \"image_url\": image_url, \"position\": image_obj.position})\n+                images.append({\"id\": image_obj.id, \"image\": image_url, \"position\": image_obj.position})\n \n         return images\n \n \n"
                 }
             ],
             "date": 1733477390024,

@@ -31,7 +31,7 @@ class eventgalleryViewsets(viewsets.ModelViewSet):
     }
 
     def get_queryset(self):
-        queryset = super().get_queryset()
+        queryset = super().get_queryset().order_by('-position')
         return queryset
 
     def get_serializer_class(self):

@@ -2,6 +2,7 @@ from rest_framework import serializers
 from ..models import Event, EventCategory, EventOrganizer, EventGallery
 from django.db import transaction
 import ast
+from django.conf import settings
 
 
 # Serializer for EventCategory
@@ -27,21 +28,46 @@ class EventListSerializers(serializers.ModelSerializer):
     # Nested fields for related models (full object details)
     category = EventCategorySerializer(many=True,read_only=True)  # Full details of categories
     organizer = EventOrganizerSerializer(many=True,read_only=True)  # Full details of organizers
-    image = EventGallerySerializer(many=True,read_only=True)  # Full details of gallery images
+    image = serializers.SerializerMethodField()#EventGallerySerializer(many=True,read_only=True)  # Full details of gallery images
     
     class Meta:
         model = Event
         fields = '__all__'
+        
+    def get_image(self, obj):
+        request = self.context.get('request')  # Get request from serializer context
+        query = obj.image.all().order_by('position')  # Ensure correct related_name
+
+        images = []
+        for image_obj in query:
+            if image_obj.image:  # Ensure image exists
+                image_url = request.build_absolute_uri(image_obj.image.url) if request else f"{settings.MEDIA_URL}{image_obj.image.url}"
+                images.append({"id": image_obj.id, "image": image_url, "position": image_obj.position})
+
+        return images
+            
 
 
 # Serializer for retrieving complete event details (detailed view)
 class EventRetrieveSerializers(serializers.ModelSerializer):
     category = EventCategorySerializer(many=True,read_only=True)  # Full details of categories
     organizer = EventOrganizerSerializer(many=True,read_only=True)  # Full details of organizers
-    image = EventGallerySerializer(many=True,read_only=True)  # Full details of gallery images
+    # image = EventGallerySerializer(many=True,read_only=True)  # Full details of gallery images
+    image = serializers.SerializerMethodField()
     class Meta:
         model = Event
         fields = '__all__'
+    def get_image(self, obj):
+        request = self.context.get('request')  # Get request from serializer context
+        query = obj.image.all().order_by('position')  # Ensure correct related_name
+
+        images = []
+        for image_obj in query:
+            if image_obj.image:  # Ensure image exists
+                image_url = request.build_absolute_uri(image_obj.image.url) if request else f"{settings.MEDIA_URL}{image_obj.image.url}"
+                images.append({"id": image_obj.id, "image": image_url, "position": image_obj.position})
+
+        return images
 
 
 
@@ -113,20 +139,20 @@ class EventWriteSerializers(serializers.ModelSerializer):
     def to_representation(self, instance):
         attrs = super().to_representation(instance)
 
-        # Ensure 'image' field is present and is a string (URL path)
-        if 'image' in attrs and isinstance(attrs['image'], str):
-            attrs['image'] = self.get_absolute_url(attrs['image'])
+        # Ensure 'image' field is present and is a valid file
+        if 'image' in attrs and attrs['image']:
+            attrs['image'] = self.get_absolute_url(instance.image)
 
         return attrs
 
-    def get_absolute_url(self, image_path):
-        """
-        Returns the absolute URL for the given image path.
-        """
-        request = self.context.get('request')
-        if request and image_path:
-            return request.build_absolute_uri(image_path)  # Convert relative path to absolute URL
-        return image_path  # Return as is if request is unavailable
+    def get_absolute_url(self, image_field):
+            """
+            Returns the absolute URL for the given image field.
+            """
+            request = self.context.get('request')
+            if request and image_field:
+                return request.build_absolute_uri(image_field.url)  # Ensure we use .url
+            return image_field.url if image_field else None  # Fallback in case request is missing
 
 
     @transaction.atomic
