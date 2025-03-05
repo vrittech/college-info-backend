@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 48,
+            "activePatchIndex": 53,
             "patches": [
                 {
                     "date": 1733477390024,
@@ -200,6 +200,26 @@
                 {
                     "date": 1740411279673,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -150,9 +150,9 @@\n         category_ids = validated_data.pop(\"category\", None)\n         organizer_ids = validated_data.pop(\"organizer\", None)\n \n         # Extract multiple images from `images[0]`, `images[1]`, ...\n-        images_data = [file for key, file in request.FILES.items() if key.startswith(\"images[\")]\n+        images_data = [file for key, file in request.FILES.items() if key.startswith(\"image[\")]\n \n         # Update the event instance\n         instance = super().update(instance, validated_data)\n \n"
+                },
+                {
+                    "date": 1741158589027,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -109,9 +109,32 @@\n         if data.get(\"organizer\"):\n             data = str_to_list(data, \"organizer\")\n \n         return super().to_internal_value(data)\n+    def to_representation(self, instance):\n+        attrs = super().to_representation(instance)\n \n+        # Make the gallery URLs absolute\n+        for item in attrs['information_gallery']:\n+            if item.get('image'):\n+                item['image'] = self.get_absolute_url(item['image'])\n+\n+        # Make the file URLs absolute\n+        for item in attrs['information_files']:\n+            if item.get('file'):\n+                item['file'] = self.get_absolute_url(item['file'])\n+\n+        return attrs\n+\n+    def get_absolute_url(self, file_field):\n+        \"\"\"\n+        Returns the absolute URL for a file or image field.\n+        \"\"\"\n+        request = self.context.get('request')\n+        if not request:\n+            return file_field.url\n+        return request.build_absolute_uri(file_field.url)\n+\n     @transaction.atomic\n     def create(self, validated_data):\n         \"\"\"\n         Handles event creation and image uploads.\n"
+                },
+                {
+                    "date": 1741158630706,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -117,13 +117,8 @@\n         for item in attrs['information_gallery']:\n             if item.get('image'):\n                 item['image'] = self.get_absolute_url(item['image'])\n \n-        # Make the file URLs absolute\n-        for item in attrs['information_files']:\n-            if item.get('file'):\n-                item['file'] = self.get_absolute_url(item['file'])\n-\n         return attrs\n \n     def get_absolute_url(self, file_field):\n         \"\"\"\n"
+                },
+                {
+                    "date": 1741158695000,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -113,9 +113,9 @@\n     def to_representation(self, instance):\n         attrs = super().to_representation(instance)\n \n         # Make the gallery URLs absolute\n-        for item in attrs['information_gallery']:\n+        for item in attrs['image']:\n             if item.get('image'):\n                 item['image'] = self.get_absolute_url(item['image'])\n \n         return attrs\n"
+                },
+                {
+                    "date": 1741158815511,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -110,26 +110,26 @@\n             data = str_to_list(data, \"organizer\")\n \n         return super().to_internal_value(data)\n     def to_representation(self, instance):\n-        attrs = super().to_representation(instance)\n+    attrs = super().to_representation(instance)\n \n-        # Make the gallery URLs absolute\n-        for item in attrs['image']:\n-            if item.get('image'):\n-                item['image'] = self.get_absolute_url(item['image'])\n+    # Ensure 'image' field is present and is a string (URL path)\n+    if 'image' in attrs and isinstance(attrs['image'], str):\n+        attrs['image'] = self.get_absolute_url(attrs['image'])\n \n-        return attrs\n+    return attrs\n \n-    def get_absolute_url(self, file_field):\n-        \"\"\"\n-        Returns the absolute URL for a file or image field.\n-        \"\"\"\n-        request = self.context.get('request')\n-        if not request:\n-            return file_field.url\n-        return request.build_absolute_uri(file_field.url)\n+def get_absolute_url(self, image_path):\n+    \"\"\"\n+    Returns the absolute URL for the given image path.\n+    \"\"\"\n+    request = self.context.get('request')\n+    if request and image_path:\n+        return request.build_absolute_uri(image_path)  # Convert relative path to absolute URL\n+    return image_path  # Return as is if request is unavailable\n \n+\n     @transaction.atomic\n     def create(self, validated_data):\n         \"\"\"\n         Handles event creation and image uploads.\n"
+                },
+                {
+                    "date": 1741158821292,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -110,24 +110,24 @@\n             data = str_to_list(data, \"organizer\")\n \n         return super().to_internal_value(data)\n     def to_representation(self, instance):\n-    attrs = super().to_representation(instance)\n+        attrs = super().to_representation(instance)\n \n-    # Ensure 'image' field is present and is a string (URL path)\n-    if 'image' in attrs and isinstance(attrs['image'], str):\n-        attrs['image'] = self.get_absolute_url(attrs['image'])\n+        # Ensure 'image' field is present and is a string (URL path)\n+        if 'image' in attrs and isinstance(attrs['image'], str):\n+            attrs['image'] = self.get_absolute_url(attrs['image'])\n \n-    return attrs\n+        return attrs\n \n-def get_absolute_url(self, image_path):\n-    \"\"\"\n-    Returns the absolute URL for the given image path.\n-    \"\"\"\n-    request = self.context.get('request')\n-    if request and image_path:\n-        return request.build_absolute_uri(image_path)  # Convert relative path to absolute URL\n-    return image_path  # Return as is if request is unavailable\n+    def get_absolute_url(self, image_path):\n+        \"\"\"\n+        Returns the absolute URL for the given image path.\n+        \"\"\"\n+        request = self.context.get('request')\n+        if request and image_path:\n+            return request.build_absolute_uri(image_path)  # Convert relative path to absolute URL\n+        return image_path  # Return as is if request is unavailable\n \n \n     @transaction.atomic\n     def create(self, validated_data):\n"
                 }
             ],
             "date": 1733477390024,

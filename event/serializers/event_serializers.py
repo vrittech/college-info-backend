@@ -110,6 +110,24 @@ class EventWriteSerializers(serializers.ModelSerializer):
             data = str_to_list(data, "organizer")
 
         return super().to_internal_value(data)
+    def to_representation(self, instance):
+        attrs = super().to_representation(instance)
+
+        # Ensure 'image' field is present and is a string (URL path)
+        if 'image' in attrs and isinstance(attrs['image'], str):
+            attrs['image'] = self.get_absolute_url(attrs['image'])
+
+        return attrs
+
+    def get_absolute_url(self, image_path):
+        """
+        Returns the absolute URL for the given image path.
+        """
+        request = self.context.get('request')
+        if request and image_path:
+            return request.build_absolute_uri(image_path)  # Convert relative path to absolute URL
+        return image_path  # Return as is if request is unavailable
+
 
     @transaction.atomic
     def create(self, validated_data):
