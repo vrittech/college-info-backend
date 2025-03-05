@@ -22,6 +22,7 @@ class advertisementViewsets(viewsets.ModelViewSet):
     filterset_fields = {
         'id': ['exact'],
         'name': ['exact'],
+        'is_show': ['exact'],
         'placement': ['exact'],
         'created_date': ['exact','gte','lte'],
         'updated_date': ['exact','gte','lte'],

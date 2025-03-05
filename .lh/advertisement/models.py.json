@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 52,
+            "activePatchIndex": 54,
             "patches": [
                 {
                     "date": 1733373617417,
@@ -216,6 +216,14 @@
                 {
                     "date": 1740935236672,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,9 +16,9 @@\n \n \n class Advertisement(models.Model):\n     name = models.CharField(max_length=255)\n-    link = models.URLField(null=True,blank=True))\n+    link = models.URLField(null=True,blank=True)\n     image = models.ImageField(upload_to='ads/',null=True,blank=True)\n     placement = models.ForeignKey(PlacementPosition, on_delete=models.CASCADE)\n     created_date = models.DateTimeField(auto_now_add=True)\n     updated_date = models.DateTimeField(auto_now=True)\n"
+                },
+                {
+                    "date": 1741165512445,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,8 +17,9 @@\n \n class Advertisement(models.Model):\n     name = models.CharField(max_length=255)\n     link = models.URLField(null=True,blank=True)\n+    \n     image = models.ImageField(upload_to='ads/',null=True,blank=True)\n     placement = models.ForeignKey(PlacementPosition, on_delete=models.CASCADE)\n     created_date = models.DateTimeField(auto_now_add=True)\n     updated_date = models.DateTimeField(auto_now=True)\n"
+                },
+                {
+                    "date": 1741165519889,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,9 +17,9 @@\n \n class Advertisement(models.Model):\n     name = models.CharField(max_length=255)\n     link = models.URLField(null=True,blank=True)\n-    \n+    is_show = models.BooleanField(default=False)\n     image = models.ImageField(upload_to='ads/',null=True,blank=True)\n     placement = models.ForeignKey(PlacementPosition, on_delete=models.CASCADE)\n     created_date = models.DateTimeField(auto_now_add=True)\n     updated_date = models.DateTimeField(auto_now=True)\n"
                 }
             ],
             "date": 1733373617417,
