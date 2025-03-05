@@ -103,6 +103,7 @@ class Event(SEOFields):
     created_date_time = models.DateTimeField(auto_now_add=True, null=True, blank=True)
     created_date = models.DateField(auto_now_add=True, null=True, blank=True)
     updated_date = models.DateTimeField(auto_now=True, null=True, blank=True)
+    position = models.PositiveIntegerField(default=0)
 
     
     def __str__(self):

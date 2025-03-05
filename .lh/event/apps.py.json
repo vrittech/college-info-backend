@@ -1,0 +1,22 @@
+{
+    "sourceFile": "event/apps.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 1,
+            "patches": [
+                {
+                    "date": 1741154769958,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1741154775663,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,5 +3,7 @@\n \n class EventConfig(AppConfig):\n     default_auto_field = 'django.db.models.BigAutoField'\n     name = 'event'\n-    \n+    def ready(self):\n+        import event.signals\n+\n"
+                }
+            ],
+            "date": 1741154769958,
+            "name": "Commit-0",
+            "content": "from django.apps import AppConfig\n\n\nclass EventConfig(AppConfig):\n    default_auto_field = 'django.db.models.BigAutoField'\n    name = 'event'\n    \n"
+        }
+    ]
+}
