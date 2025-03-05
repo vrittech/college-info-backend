@@ -5,11 +5,15 @@ class EventFilter(filters.FilterSet):
     event_type = filters.ChoiceFilter(choices=Event.TYPE_CHOICES)  # Filters by type
     registration_link = filters.BooleanFilter(method='filter_registration_link')  # Filters by registration link existence
     is_featured_event = filters.BooleanFilter()  # Filters by featured status
-    category = filters.CharFilter(field_name='category__name', lookup_expr='icontains')  # Filters by category name (many-to-many)
+    category_name = filters.CharFilter(field_name='category__name', lookup_expr='icontains')
+    category_id = filters.NumberFilter(field_name='category__id')  # Filter by category ID
+    
+    organizer_name = filters.CharFilter(field_name='organizer__name', lookup_expr='icontains')
+    organizer_id = filters.NumberFilter(field_name='organizer__id')  # Filter by organizer ID
 
     class Meta:
         model = Event
-        fields = ['event_type', 'registration_link', 'is_featured_event', 'category']
+        fields = ['event_type', 'registration_link', 'is_featured_event', 'category','organizer']
 
     def filter_registration_link(self, queryset, name, value):
         """

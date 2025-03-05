@@ -3,11 +3,35 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 0,
+            "activePatchIndex": 6,
             "patches": [
                 {
                     "date": 1733728774247,
                     "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1741150506788,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,12 +1,13 @@\n from django_filters import rest_framework as filters\n-from .models import Event\n+from ..models import Event\n \n class EventFilter(filters.FilterSet):\n     event_type = filters.ChoiceFilter(choices=Event.TYPE_CHOICES)  # Filters by type\n     registration_link = filters.BooleanFilter(method='filter_registration_link')  # Filters by registration link existence\n     is_featured_event = filters.BooleanFilter()  # Filters by featured status\n     category = filters.CharFilter(field_name='category__name', lookup_expr='icontains')  # Filters by category name (many-to-many)\n+    category = filters.CharFilter(field_name='category__name', lookup_expr='icontains')  # Filters by category name (many-to-many)\n \n     class Meta:\n         model = Event\n         fields = ['event_type', 'registration_link', 'is_featured_event', 'category']\n"
+                },
+                {
+                    "date": 1741150514916,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,9 +5,9 @@\n     event_type = filters.ChoiceFilter(choices=Event.TYPE_CHOICES)  # Filters by type\n     registration_link = filters.BooleanFilter(method='filter_registration_link')  # Filters by registration link existence\n     is_featured_event = filters.BooleanFilter()  # Filters by featured status\n     category = filters.CharFilter(field_name='category__name', lookup_expr='icontains')  # Filters by category name (many-to-many)\n-    category = filters.CharFilter(field_name='category__name', lookup_expr='icontains')  # Filters by category name (many-to-many)\n+    organizer = filters.CharFilter(field_name='organizer__name', lookup_expr='icontains')  # Filters by category name (many-to-many)\n \n     class Meta:\n         model = Event\n         fields = ['event_type', 'registration_link', 'is_featured_event', 'category']\n"
+                },
+                {
+                    "date": 1741150543805,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,9 +9,9 @@\n     organizer = filters.CharFilter(field_name='organizer__name', lookup_expr='icontains')  # Filters by category name (many-to-many)\n \n     class Meta:\n         model = Event\n-        fields = ['event_type', 'registration_link', 'is_featured_event', 'category']\n+        fields = ['event_type', 'registration_link', 'is_featured_event', 'category','']\n \n     def filter_registration_link(self, queryset, name, value):\n         \"\"\"\n         Custom filter to check if registration_link is present or not.\n"
+                },
+                {
+                    "date": 1741152464382,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,14 +4,17 @@\n class EventFilter(filters.FilterSet):\n     event_type = filters.ChoiceFilter(choices=Event.TYPE_CHOICES)  # Filters by type\n     registration_link = filters.BooleanFilter(method='filter_registration_link')  # Filters by registration link existence\n     is_featured_event = filters.BooleanFilter()  # Filters by featured status\n-    category = filters.CharFilter(field_name='category__name', lookup_expr='icontains')  # Filters by category name (many-to-many)\n-    organizer = filters.CharFilter(field_name='organizer__name', lookup_expr='icontains')  # Filters by category name (many-to-many)\n+    category_name = django_filters.CharFilter(field_name='category__name', lookup_expr='icontains')\n+    category_id = django_filters.NumberFilter(field_name='category__id')  # Filter by category ID\n+    \n+    organizer_name = django_filters.CharFilter(field_name='organizer__name', lookup_expr='icontains')\n+    organizer_id = django_filters.NumberFilter(field_name='organizer__id')  # Filter by organizer ID\n \n     class Meta:\n         model = Event\n-        fields = ['event_type', 'registration_link', 'is_featured_event', 'category','']\n+        fields = ['event_type', 'registration_link', 'is_featured_event', 'category','organizer']\n \n     def filter_registration_link(self, queryset, name, value):\n         \"\"\"\n         Custom filter to check if registration_link is present or not.\n"
+                },
+                {
+                    "date": 1741152475314,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,9 +4,9 @@\n class EventFilter(filters.FilterSet):\n     event_type = filters.ChoiceFilter(choices=Event.TYPE_CHOICES)  # Filters by type\n     registration_link = filters.BooleanFilter(method='filter_registration_link')  # Filters by registration link existence\n     is_featured_event = filters.BooleanFilter()  # Filters by featured status\n-    category_name = django_filters.CharFilter(field_name='category__name', lookup_expr='icontains')\n+    category_name = filters.CharFilter(field_name='category__name', lookup_expr='icontains')\n     category_id = django_filters.NumberFilter(field_name='category__id')  # Filter by category ID\n     \n     organizer_name = django_filters.CharFilter(field_name='organizer__name', lookup_expr='icontains')\n     organizer_id = django_filters.NumberFilter(field_name='organizer__id')  # Filter by organizer ID\n"
+                },
+                {
+                    "date": 1741152481636,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,12 +5,12 @@\n     event_type = filters.ChoiceFilter(choices=Event.TYPE_CHOICES)  # Filters by type\n     registration_link = filters.BooleanFilter(method='filter_registration_link')  # Filters by registration link existence\n     is_featured_event = filters.BooleanFilter()  # Filters by featured status\n     category_name = filters.CharFilter(field_name='category__name', lookup_expr='icontains')\n-    category_id = django_filters.NumberFilter(field_name='category__id')  # Filter by category ID\n+    category_id = filters.NumberFilter(field_name='category__id')  # Filter by category ID\n     \n-    organizer_name = django_filters.CharFilter(field_name='organizer__name', lookup_expr='icontains')\n-    organizer_id = django_filters.NumberFilter(field_name='organizer__id')  # Filter by organizer ID\n+    organizer_name = filters.CharFilter(field_name='organizer__name', lookup_expr='icontains')\n+    organizer_id = filters.NumberFilter(field_name='organizer__id')  # Filter by organizer ID\n \n     class Meta:\n         model = Event\n         fields = ['event_type', 'registration_link', 'is_featured_event', 'category','organizer']\n"
                 }
             ],
             "date": 1733728774247,

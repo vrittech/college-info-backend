@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 16,
+            "activePatchIndex": 18,
             "patches": [
                 {
                     "date": 1739684343218,
@@ -72,6 +72,14 @@
                 {
                     "date": 1741070288978,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -112,9 +112,9 @@\n       description=\"College Info Backend System\",\n       terms_of_service=\"https://www.google.com/policies/terms/\",\n       contact=openapi.Contact(email=\"prashantkarna21@gmail.com\"),\n       license=openapi.License(name=\"No License\"),\n-      **{'x-logo': {'url': 'your-logo-url'}},\n+      **{'x-logo': {'url': 'https://collegeinfoapi.vrittechnologies.com/media/gallery/images/College_Info_Nepal.png'}},\n    ),\n    public=True,\n    permission_classes=[permissions.AllowAny],\n )\n"
+                },
+                {
+                    "date": 1741080454300,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -116,8 +116,9 @@\n       **{'x-logo': {'url': 'https://collegeinfoapi.vrittechnologies.com/media/gallery/images/College_Info_Nepal.png'}},\n    ),\n    public=True,\n    permission_classes=[permissions.AllowAny],\n+   schemes=['http', 'https'],\n )\n \n urlpatterns = [\n     path('admin/', admin.site.urls),\n"
+                },
+                {
+                    "date": 1741080567550,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -116,9 +116,8 @@\n       **{'x-logo': {'url': 'https://collegeinfoapi.vrittechnologies.com/media/gallery/images/College_Info_Nepal.png'}},\n    ),\n    public=True,\n    permission_classes=[permissions.AllowAny],\n-   schemes=['http', 'https'],\n )\n \n urlpatterns = [\n     path('admin/', admin.site.urls),\n"
                 }
             ],
             "date": 1739684343218,

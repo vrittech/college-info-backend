@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 80,
+            "activePatchIndex": 82,
             "patches": [
                 {
                     "date": 1739512004648,
@@ -328,6 +328,14 @@
                 {
                     "date": 1740722747898,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -86,18 +86,17 @@\n         return gallery_instances[0] if gallery_instances else None\n \n     def update(self, instance, validated_data):\n         request = self.context.get('request')\n-        print(request.FILES, \"DEBUG: Request Files for Update\")\n+       \n \n         images = []\n \n         # Extract all image files dynamically\n         for key, file_list in request.FILES.lists():\n             if key.startswith(\"image[\"):\n                 images.extend(file_list)\n \n-        print(images, \"DEBUG: Collected Images for Update\")\n \n         # Update description only if it's in the request\n         if 'description' in validated_data:\n             instance.description = validated_data['description']\n"
+                },
+                {
+                    "date": 1741152241976,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,9 +5,9 @@\n class CollegeSerializers(serializers.ModelSerializer):\n     class Meta:\n         model = College\n         ref_name = 'CollegeGallerySerializers'\n-        fields = ['slug', 'id', 'name']\n+        fields = ['slug', 'id', 'name','']\n \n \n ### ✅ Read Serializer (for Listing Multiple Galleries) ###\n class CollegeGalleryListSerializers(serializers.ModelSerializer):\n"
+                },
+                {
+                    "date": 1741152252692,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,9 +5,9 @@\n class CollegeSerializers(serializers.ModelSerializer):\n     class Meta:\n         model = College\n         ref_name = 'CollegeGallerySerializers'\n-        fields = ['slug', 'id', 'name','']\n+        fields = ['slug', 'id', 'name','dp_image','address']\n \n \n ### ✅ Read Serializer (for Listing Multiple Galleries) ###\n class CollegeGalleryListSerializers(serializers.ModelSerializer):\n"
                 }
             ],
             "date": 1739512004648,

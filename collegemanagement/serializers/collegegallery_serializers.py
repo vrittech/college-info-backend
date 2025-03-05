@@ -6,7 +6,7 @@ class CollegeSerializers(serializers.ModelSerializer):
     class Meta:
         model = College
         ref_name = 'CollegeGallerySerializers'
-        fields = ['slug', 'id', 'name']
+        fields = ['slug', 'id', 'name','dp_image','address']
 
 
 ### ✅ Read Serializer (for Listing Multiple Galleries) ###
