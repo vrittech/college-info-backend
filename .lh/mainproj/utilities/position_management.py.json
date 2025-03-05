@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 29,
+            "activePatchIndex": 31,
             "patches": [
                 {
                     "date": 1733737084641,
@@ -124,6 +124,14 @@
                 {
                     "date": 1741079990866,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -41,26 +41,30 @@\n                 return None\n         return None\n     \n     @swagger_auto_schema(\n-        method='get',\n-        operation_summary=\"Move an item to a new position\",\n-        operation_description=\"Moves an item from `target` position to `goal` position within the specified `model`.\",\n-        manual_parameters=[\n-            openapi.Parameter('model', openapi.IN_QUERY, description=\"Name of the model\", type=openapi.TYPE_STRING, required=True),\n-            openapi.Parameter('target', openapi.IN_QUERY, description=\"Current position of the item\", type=openapi.TYPE_INTEGER, required=True),\n-            openapi.Parameter('goal', openapi.IN_QUERY, description=\"Target position for the item\", type=openapi.TYPE_INTEGER, required=True),\n-        ],\n-        responses={\n-            200: openapi.Response(\"Item moved successfully\"),\n-            400: openapi.Response(\"Invalid request\"),\n-            404: openapi.Response(\"Target object not found\"),\n-        },\n-        extra_fields={\n-            \"keys\": [\"duration\", \"event-gallery\", \"event\"]\n-        }\n-    )\n+    method='get',\n+    operation_summary=\"Move an item to a new position\",\n+    operation_description=(\n+        \"Moves an item from `target` position to `goal` position within the specified `model`.\\n\\n\"\n+        \"**Keys:**\\n\"\n+        \"- `duration`\\n\"\n+        \"- `event-gallery`\\n\"\n+        \"- `event`\\n\"\n+    ),\n+    manual_parameters=[\n+        openapi.Parameter('model', openapi.IN_QUERY, description=\"Name of the model\", type=openapi.TYPE_STRING, required=True),\n+        openapi.Parameter('target', openapi.IN_QUERY, description=\"Current position of the item\", type=openapi.TYPE_INTEGER, required=True),\n+        openapi.Parameter('goal', openapi.IN_QUERY, description=\"Target position for the item\", type=openapi.TYPE_INTEGER, required=True),\n+    ],\n+    responses={\n+        200: openapi.Response(\"Item moved successfully\"),\n+        400: openapi.Response(\"Invalid request\"),\n+        404: openapi.Response(\"Target object not found\"),\n+    }\n+)\n \n+\n     \n \n     @action(detail=False, methods=['get'], url_path='drag-item')\n     def draggable(self, request, *args, **kwargs):\n"
+                },
+                {
+                    "date": 1741164581902,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,9 +12,9 @@\n     # Mapping of frontend identifiers to actual model names\n     MODEL_MAP = {\n         # 'meet-team':('components','MeetTeam'),\n         'duration':('duration','Duration'),\n-        'event-gallery':('eventmanagement','EventGallery'),\n+        'event-gallery':('event','EventGallery'),\n         'event':('eventmanagement','Event'),\n         # 'gallery': ('gallery', 'Gallery'),\n         # 'gallery-group': ('gallery', 'GalleryGroup'),\n         # 'quotation': ('quotationmanagement', 'Quotation'),\n"
+                },
+                {
+                    "date": 1741164587505,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,9 +13,9 @@\n     MODEL_MAP = {\n         # 'meet-team':('components','MeetTeam'),\n         'duration':('duration','Duration'),\n         'event-gallery':('event','EventGallery'),\n-        'event':('eventmanagement','Event'),\n+        'event':('event','Event'),\n         # 'gallery': ('gallery', 'Gallery'),\n         # 'gallery-group': ('gallery', 'GalleryGroup'),\n         # 'quotation': ('quotationmanagement', 'Quotation'),\n         # 'booking': ('bookingmanagement', 'BookingService'),\n"
                 }
             ],
             "date": 1733737084641,
