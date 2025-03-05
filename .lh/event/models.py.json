@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 176,
+            "activePatchIndex": 177,
             "patches": [
                 {
                     "date": 1726568467190,
@@ -712,6 +712,10 @@
                 {
                     "date": 1741152624880,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -102,8 +102,9 @@\n     \n     created_date_time = models.DateTimeField(auto_now_add=True, null=True, blank=True)\n     created_date = models.DateField(auto_now_add=True, null=True, blank=True)\n     updated_date = models.DateTimeField(auto_now=True, null=True, blank=True)\n+    position = models.PositiveIntegerField(default=0)\n \n     \n     def __str__(self):\n         return f\"{self.event_name}\"\n"
+                },
+                {
+                    "date": 1741156482887,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -102,9 +102,9 @@\n     \n     created_date_time = models.DateTimeField(auto_now_add=True, null=True, blank=True)\n     created_date = models.DateField(auto_now_add=True, null=True, blank=True)\n     updated_date = models.DateTimeField(auto_now=True, null=True, blank=True)\n-    position = models.PositiveIntegerField(default=0)\n+    \n \n     \n     def __str__(self):\n         return f\"{self.event_name}\"\n"
                 }
             ],
             "date": 1726568467190,

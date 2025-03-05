@@ -103,7 +103,7 @@ class Event(SEOFields):
     created_date_time = models.DateTimeField(auto_now_add=True, null=True, blank=True)
     created_date = models.DateField(auto_now_add=True, null=True, blank=True)
     updated_date = models.DateTimeField(auto_now=True, null=True, blank=True)
-    position = models.PositiveIntegerField(default=0)
+    
 
     
     def __str__(self):
@@ -124,6 +124,7 @@ class EventGallery(models.Model):
     event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name='image')
     is_featured_image = models.BooleanField(default=False)
     image = models.ImageField(upload_to='event_images/',null=True,blank=True)
+    position = models.PositiveIntegerField(default=0)
     
     created_date_time = models.DateTimeField(auto_now_add=True, null=True, blank=True)
     created_date = models.DateField(auto_now_add=True, null=True, blank=True)
