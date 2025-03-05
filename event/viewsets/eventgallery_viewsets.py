@@ -16,7 +16,7 @@ class eventgalleryViewsets(viewsets.ModelViewSet):
     permission_classes = [DynamicModelPermission]
     # authentication_classes = [JWTAuthentication]
     pagination_class = MyPageNumberPagination
-    queryset = EventGallery.objects.all().order_by('-id')
+    queryset = EventGallery.objects.all().order_by('-position')
 
     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]
     search_fields = ['id']
