@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 19,
+            "activePatchIndex": 21,
             "patches": [
                 {
                     "date": 1739786438931,
@@ -84,6 +84,14 @@
                 {
                     "date": 1740132849921,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -30,9 +30,9 @@\n     avatar = models.ImageField(upload_to='profile', null=True, blank=True)\n     professional_image = models.ImageField(upload_to='profile', null=True, blank=True)\n \n     USERNAME_FIELD = 'email'\n-    REQUIRED_FIELDS = [user]  # Remove 'username' from required fields\n+    REQUIRED_FIELDS = ['username]  # Remove 'username' from required fields\n \n     created_at = models.DateTimeField(auto_now_add=True)\n     updated_at = models.DateTimeField(auto_now=True)\n \n"
+                },
+                {
+                    "date": 1741246714929,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,8 +14,12 @@\n     social_media = models.ManyToManyField(SocialMedia, blank=True)\n     email = models.EmailField(max_length=250, unique=True)\n     position = models.PositiveIntegerField(default=0)\n     phone = models.CharField(max_length=15, null=True, default='')\n+    is_active = models.BooleanField(default=True)\n+    remarks = models.CharField(max_length=200,null=True,default = '')\n+\n+    is_verified = models.BooleanField(default=False)\n     \n     groups = models.ManyToManyField(\n         Group,\n         related_name=\"customuser_groups\",  # Custom related name\n@@ -30,9 +34,9 @@\n     avatar = models.ImageField(upload_to='profile', null=True, blank=True)\n     professional_image = models.ImageField(upload_to='profile', null=True, blank=True)\n \n     USERNAME_FIELD = 'email'\n-    REQUIRED_FIELDS = ['username]  # Remove 'username' from required fields\n+    REQUIRED_FIELDS = ['username']  # Remove 'username' from required fields\n \n     created_at = models.DateTimeField(auto_now_add=True)\n     updated_at = models.DateTimeField(auto_now=True)\n \n"
+                },
+                {
+                    "date": 1741253256251,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,9 +16,8 @@\n     position = models.PositiveIntegerField(default=0)\n     phone = models.CharField(max_length=15, null=True, default='')\n     is_active = models.BooleanField(default=True)\n     remarks = models.CharField(max_length=200,null=True,default = '')\n-\n     is_verified = models.BooleanField(default=False)\n     \n     groups = models.ManyToManyField(\n         Group,\n@@ -36,9 +35,9 @@\n \n     USERNAME_FIELD = 'email'\n     REQUIRED_FIELDS = ['username']  # Remove 'username' from required fields\n \n-    created_at = models.DateTimeField(auto_now_add=True)\n+    created_date = models.DateTimeField(auto_now_add=True)\n     updated_at = models.DateTimeField(auto_now=True)\n \n     def save(self, *args, **kwargs):\n         # Auto-set first_name and last_name from full_name\n"
                 }
             ],
             "date": 1739786438931,

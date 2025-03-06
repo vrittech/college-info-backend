@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 32,
+            "activePatchIndex": 34,
             "patches": [
                 {
                     "date": 1738669074931,
@@ -136,6 +136,14 @@
                 {
                     "date": 1740985342100,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -73,9 +73,9 @@\n         self.object = request.user  # Set the object directly to the current user\n         serializer = self.get_serializer(self.object)\n         return Response(serializer.data)\n     \n-    @action(detail=False, methods=['get'], name=\"college_admins\", url_path=\"college-admins\",)\n+    @action(detail=False, methods=['get'], name=\"college_admins\", url_path=\"college-admins\",permission_classes=[IsAuthenticated])\n     def college_admins(self, request, *args, **kwargs):\n         queryset = self.get_queryset().filter(college__isnull=False)  # Filter users with assigned college\n         serializer = self.get_serializer(queryset, many=True)\n         return Response(serializer.data)\n"
+                },
+                {
+                    "date": 1741253729481,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,9 +23,9 @@\n \n class CustomUserViewSet(viewsets.ModelViewSet):\n     queryset = CustomUser.objects.all().order_by('-id')\n     permission_classes = [DynamicModelPermission]\n-    # filterset_class = CustomUserFilter\n+    filterset_class = CustomUserFilter\n     pagination_class = MyPageNumberPagination\n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     \n     search_fields = ['position', 'email', 'full_name','first_name','last_name']\n"
+                },
+                {
+                    "date": 1741253734696,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,9 +12,9 @@\n from django.contrib.auth import authenticate,login\n from rest_framework_simplejwt.tokens import RefreshToken\n from rest_framework.decorators import action\n from ..utilities.pagination import MyPageNumberPagination\n-# from accounts.utilities.filters import CustomUserFilter\n+from accounts.utilities.filters import CustomUserFilter\n # accounts/utilities/filters.py\n from rest_framework.filters import SearchFilter, OrderingFilter\n from django_filters.rest_framework import DjangoFilterBackend\n from mainproj.permissions import *\n"
                 }
             ],
             "date": 1738669074931,

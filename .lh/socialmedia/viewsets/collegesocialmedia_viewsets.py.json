@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 21,
+            "activePatchIndex": 25,
             "patches": [
                 {
                     "date": 1739856844779,
@@ -92,6 +92,22 @@
                 {
                     "date": 1740986432081,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -55,10 +55,26 @@\n         response_serializer = CollegeSocialMediaRetrieveSerializers(college_social_media)\n         \n         return Response(response_serializer.data, status=status.HTTP_201_CREATED)\n \n+    def update(self, request, *args, **kwargs):\n+        # Retrieve the existing instance by its id (primary key)\n+        instance = self.get_object()\n+        \n+        # Use the serializer to update the object\n+        serializer = self.get_serializer(instance, data=request.data, partial=True)  # Use partial=True if you want to allow partial updates\n+        serializer.is_valid(raise_exception=True)\n+        \n+        # Save the updated instance\n+        college_social_media = serializer.save()\n \n+        # Return the updated serialized object using CollegeSocialMediaRetrieveSerializers\n+        response_serializer = CollegeSocialMediaRetrieveSerializers(college_social_media)\n+        \n+        return Response(response_serializer.data, status=status.HTTP_200_OK)\n \n+\n+\n     # @action(detail=False, methods=['get'], name=\"action_name\", url_path=\"url_path\")\n     # def action_name(self, request, *args, **kwargs):\n     #     return super().list(request, *args, **kwargs)\n \n"
+                },
+                {
+                    "date": 1741253934929,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,8 +22,9 @@\n     filterset_fields = {\n         'id': ['exact'],\n         'name': ['exact'],\n         'college': ['exact'],\n+        'college': ['exact'],\n     }\n \n     def get_queryset(self):\n         \"\"\"Admins see all data, normal users see only their college's data\"\"\"\n"
+                },
+                {
+                    "date": 1741253944955,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,9 +22,9 @@\n     filterset_fields = {\n         'id': ['exact'],\n         'name': ['exact'],\n         'college': ['exact'],\n-        'college': ['exact'],\n+        'created_date': ['exact','gte'],\n     }\n \n     def get_queryset(self):\n         \"\"\"Admins see all data, normal users see only their college's data\"\"\"\n"
+                },
+                {
+                    "date": 1741253950222,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,9 +22,9 @@\n     filterset_fields = {\n         'id': ['exact'],\n         'name': ['exact'],\n         'college': ['exact'],\n-        'created_date': ['exact','gte'],\n+        'created_date': ['exact','gte','lte'],\n     }\n \n     def get_queryset(self):\n         \"\"\"Admins see all data, normal users see only their college's data\"\"\"\n"
+                },
+                {
+                    "date": 1741253959197,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,8 +23,9 @@\n         'id': ['exact'],\n         'name': ['exact'],\n         'college': ['exact'],\n         'created_date': ['exact','gte','lte'],\n+        'updated_date': ['exact','gte','lte'],\n     }\n \n     def get_queryset(self):\n         \"\"\"Admins see all data, normal users see only their college's data\"\"\"\n"
                 }
             ],
             "date": 1739856844779,

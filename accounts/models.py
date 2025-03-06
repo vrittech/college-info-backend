@@ -15,6 +15,9 @@ class CustomUser(AbstractUser):
     email = models.EmailField(max_length=250, unique=True)
     position = models.PositiveIntegerField(default=0)
     phone = models.CharField(max_length=15, null=True, default='')
+    is_active = models.BooleanField(default=True)
+    remarks = models.CharField(max_length=200,null=True,default = '')
+    is_verified = models.BooleanField(default=False)
     
     groups = models.ManyToManyField(
         Group,
@@ -33,8 +36,8 @@ class CustomUser(AbstractUser):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']  # Remove 'username' from required fields
 
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    created_date = models.DateTimeField(auto_now_add=True)
+    updated_date = models.DateTimeField(auto_now=True)
 
     def save(self, *args, **kwargs):
         # Auto-set first_name and last_name from full_name

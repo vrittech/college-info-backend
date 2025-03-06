@@ -1,55 +1,57 @@
-# import django_filters
-# from django.db.models import Q
-# from ..models import CustomUser
-# from django.contrib.auth.models import Group
+import django_filters
+from accounts.models import CustomUser
 
+class CustomUserFilter(django_filters.FilterSet):
+    """
+    Filter class for CustomUser model excluding image fields.
+    Allows filtering by email, phone, college, is_verified, etc.
+    """
 
-# class CustomUserFilter(django_filters.FilterSet):
-#     first_name = django_filters.CharFilter(field_name="first_name", lookup_expr="icontains")
-#     last_name = django_filters.CharFilter(field_name="last_name", lookup_expr="icontains")
-#     position = django_filters.CharFilter(method='filter_by_multiple_positions')
-#     # department = django_filters.ModelMultipleChoiceFilter(
-#     #     field_name="department",
-#     #     queryset=CustomUser.department.field.related_model.objects.all(),
-#     #     to_field_name="id",  # Change to "name" if filtering by department name
-#     # )
-#     groups = django_filters.ModelMultipleChoiceFilter(
-#         field_name="groups",
-#         queryset=Group.objects.all(),
-#         to_field_name="id",  # Change to "name" if filtering by group name
-#     )
-#     is_staff = django_filters.BooleanFilter()
-#     is_active = django_filters.BooleanFilter()
-#     created_date_gte = django_filters.DateFilter(
-#         field_name="created_at", lookup_expr="gte", label="Created Date (From)"
-#     )
-#     created_date_lte = django_filters.DateFilter(
-#         field_name="created_at", lookup_expr="lte", label="Created Date (To)"
-#     )
-#     email = django_filters.CharFilter(method='filter_by_multiple_emails')
+    first_name = django_filters.CharFilter(lookup_expr='icontains')
+    last_name = django_filters.CharFilter(lookup_expr='icontains')
+    full_name = django_filters.CharFilter(lookup_expr='icontains')
+    email = django_filters.CharFilter(lookup_expr='icontains')
+    phone = django_filters.CharFilter(lookup_expr='icontains')
+    position = django_filters.NumberFilter()
+    is_active = django_filters.BooleanFilter()
+    is_verified = django_filters.BooleanFilter()
+    college = django_filters.NumberFilter(field_name="college__id")  # Filter by college ID
+    social_media = django_filters.CharFilter(method='filter_social_media')
+    groups = django_filters.CharFilter(method='filter_groups')
+    user_permissions = django_filters.CharFilter(method='filter_permissions')
+    
+    # ✅ Using `lte` and `gte` for date filtering
+    created_date__gte = django_filters.DateFilter(field_name="created_date", lookup_expr="gte")
+    created_date__lte = django_filters.DateFilter(field_name="created_date", lookup_expr="lte")
+    updated_date__gte = django_filters.DateFilter(field_name="updated_date", lookup_expr="gte")
+    updated_date__lte = django_filters.DateFilter(field_name="updated_date", lookup_expr="lte")
 
-#     class Meta:
-#         model = CustomUser
-#         fields = {
-#             "username": ["exact", "icontains"],
-#         }
+    class Meta:
+        model = CustomUser
+        fields = [
+            'first_name', 'last_name', 'full_name', 'email', 'phone', 'position',
+            'is_active', 'is_verified', 'college', 'social_media', 'groups',
+            'user_permissions', 'created_date__gte', 'created_date__lte',
+            'updated_date__gte', 'updated_date__lte'
+        ]
 
-#     def filter_by_multiple_positions(self, queryset, name, value):
-#         """
-#         Custom filter to handle multiple positions. Accepts comma-separated values.
-#         """
-#         if value:
-#             positions = value.split(',')  # Split comma-separated positions
-#             return queryset.filter(position__in=positions)
-#         return queryset
+    def filter_social_media(self, queryset, name, value):
+        """
+        Filter users based on social media name.
+        Example: ?social_media=Facebook
+        """
+        return queryset.filter(social_media__name__icontains=value)
 
-#     def filter_by_multiple_emails(self, queryset, name, value):
-#         """
-#         Custom filter to handle multiple emails. Accepts comma-separated values.
-#         """
-#         if value:
-#             emails = value.split(',')  # Split comma-separated emails
-#             return queryset.filter(email__in=emails)
-#         return queryset
+    def filter_groups(self, queryset, name, value):
+        """
+        Filter users by group name.
+        Example: ?groups=Admin
+        """
+        return queryset.filter(groups__name__icontains=value)
 
-
+    def filter_permissions(self, queryset, name, value):
+        """
+        Filter users by permission name.
+        Example: ?user_permissions=can_view_college
+        """
+        return queryset.filter(user_permissions__codename__icontains=value)

@@ -19,6 +19,8 @@ class socialmediaViewsets(viewsets.ModelViewSet):
 
     filterset_fields = {
         'id': ['exact'],
+        'created_date': ['exact','gte','lte'],
+        'updated_date': ['exact','gte','lte'],
     }
 # ('name', 'link', 'icon=models.ImageField(upload_to='components/banner',null', 'created_date', 'updated_date', )
     def get_queryset(self):

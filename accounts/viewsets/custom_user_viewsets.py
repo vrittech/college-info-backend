@@ -13,7 +13,7 @@ from django.contrib.auth import authenticate,login
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.decorators import action
 from ..utilities.pagination import MyPageNumberPagination
-# from accounts.utilities.filters import CustomUserFilter
+from accounts.utilities.filters import CustomUserFilter
 # accounts/utilities/filters.py
 from rest_framework.filters import SearchFilter, OrderingFilter
 from django_filters.rest_framework import DjangoFilterBackend
@@ -24,7 +24,7 @@ from rest_framework.permissions import IsAuthenticated,AllowAny
 class CustomUserViewSet(viewsets.ModelViewSet):
     queryset = CustomUser.objects.all().order_by('-id')
     permission_classes = [DynamicModelPermission]
-    # filterset_class = CustomUserFilter
+    filterset_class = CustomUserFilter
     pagination_class = MyPageNumberPagination
     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]
     

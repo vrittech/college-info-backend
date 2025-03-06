@@ -23,6 +23,8 @@ class collegesocialmediaViewsets(viewsets.ModelViewSet):
         'id': ['exact'],
         'name': ['exact'],
         'college': ['exact'],
+        'created_date': ['exact','gte','lte'],
+        'updated_date': ['exact','gte','lte'],
     }
 
     def get_queryset(self):

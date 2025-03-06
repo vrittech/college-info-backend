@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 13,
+            "activePatchIndex": 14,
             "patches": [
                 {
                     "date": 1733481992065,
@@ -60,6 +60,10 @@
                 {
                     "date": 1740936445954,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,15 +24,15 @@\n     def get_queryset(self):\n         \"\"\"Admins see all data, normal users see only their college's data\"\"\"\n         queryset = super().get_queryset()\n \n-        if self.request.user.is_authenticated:\n+        # if self.request.user.is_authenticated:\n             # if self.request.user.is_superuser:\n             #     return queryset  # Superusers get all records\n             # else:\n             #     return queryset.filter(college=self.request.user.college)  # Normal users get their college data only\n \n-    return queryset  # If unauthenticated (unlikely due to permissions), return all\n+        return queryset  # If unauthenticated (unlikely due to permissions), return all\n \n     def get_serializer_class(self):\n         if self.action in ['create', 'update', 'partial_update']:\n             return SocialMediaWriteSerializers\n"
+                },
+                {
+                    "date": 1741253980477,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,8 +18,9 @@\n     ordering_fields = ['id']\n \n     filterset_fields = {\n         'id': ['exact'],\n+        \n     }\n # ('name', 'link', 'icon=models.ImageField(upload_to='components/banner',null', 'created_date', 'updated_date', )\n     def get_queryset(self):\n         \"\"\"Admins see all data, normal users see only their college's data\"\"\"\n"
                 }
             ],
             "date": 1733481992065,

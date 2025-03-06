@@ -1,0 +1,18 @@
+{
+    "sourceFile": "collegemanagement/utilities/pagination.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1741251126159,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1741251126159,
+            "name": "Commit-0",
+            "content": "from rest_framework.pagination import PageNumberPagination\nfrom rest_framework.response import Response\n\nclass MyPageNumberPagination(PageNumberPagination):\n    page_size = 20\n    page_query_param = 'page'\n    page_size_query_param = 'size'\n    max_page_size = 5000\n\n    def get_paginated_response(self, data):\n        \"\"\"\n        Override the default paginated response to ensure the structure remains correct.\n        \"\"\"\n        return Response({\n            'count': self.page.paginator.count,\n            'total_pages': self.page.paginator.num_pages,\n            'next': self.get_next_link(),\n            'previous': self.get_previous_link(),\n            'results': data\n        })\n"
+        }
+    ]
+}

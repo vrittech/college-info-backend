@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 54,
+            "activePatchIndex": 55,
             "patches": [
                 {
                     "date": 1733373617417,
@@ -224,6 +224,10 @@
                 {
                     "date": 1741165519889,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,9 +17,9 @@\n \n class Advertisement(models.Model):\n     name = models.CharField(max_length=255)\n     link = models.URLField(null=True,blank=True)\n-    \n+    is_show = models.BooleanField(default=False)\n     image = models.ImageField(upload_to='ads/',null=True,blank=True)\n     placement = models.ForeignKey(PlacementPosition, on_delete=models.CASCADE)\n     created_date = models.DateTimeField(auto_now_add=True)\n     updated_date = models.DateTimeField(auto_now=True)\n"
+                },
+                {
+                    "date": 1741254178188,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,9 +20,9 @@\n     link = models.URLField(null=True,blank=True)\n     is_show = models.BooleanField(default=False)\n     image = models.ImageField(upload_to='ads/',null=True,blank=True)\n     placement = models.ForeignKey(PlacementPosition, on_delete=models.CASCADE)\n-    created_date = models.DateTimeField(auto_now_add=True)\n+    created_date = models.DateField(auto_now_add=True)\n     updated_date = models.DateTimeField(auto_now=True)\n     # duration_in_seconds = models.IntegerField(default=0)  # Time in seconds for the ad\n \n     def __str__(self):\n"
                 }
             ],
             "date": 1733373617417,
