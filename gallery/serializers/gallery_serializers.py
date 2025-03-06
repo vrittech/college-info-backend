@@ -67,7 +67,7 @@ class GalleryWriteSerializers(serializers.ModelSerializer):
         ]
 
         if not uploaded_files:
-            raise serializers.ValidationError({"images": "At least one image is required."})
+            return
 
         gallery_instances = []
         for image_file in uploaded_files:
