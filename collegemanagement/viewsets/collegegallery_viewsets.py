@@ -90,7 +90,7 @@ class collegegalleryViewsets(viewsets.ModelViewSet):
                         "name": college.name,
                         "dp_image": request.build_absolute_uri(college.dp_image.url) if college.dp_image else None,
                         "address": college.address,
-                        "latest_images": images_array  # Full URLs of latest images
+                        "swiper-images": images_array  # Full URLs of latest images
                     }
                 })
 
