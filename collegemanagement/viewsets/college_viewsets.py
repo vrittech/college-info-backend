@@ -1,7 +1,7 @@
 from rest_framework import viewsets
 from rest_framework.filters import SearchFilter, OrderingFilter
 from django_filters.rest_framework import DjangoFilterBackend
-from ..models import College
+from ..models import College,CollegeGallery
 from ..serializers.college_serializers import CollegeListSerializers, CollegeRetrieveSerializers, CollegeWriteSerializers, CollegeAdminWriteSerializers
 from ..utilities.importbase import *
 from rest_framework.decorators import action
@@ -16,6 +16,8 @@ from django.db.models import Field
 from accounts.models import CustomUser as User
 from rest_framework.permissions import AllowAny
 from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404
+from django.db.models import Q
 
 
 class collegeViewsets(viewsets.ModelViewSet):
@@ -218,3 +220,40 @@ class collegeViewsets(viewsets.ModelViewSet):
         }
 
         return Response(completion_data, status=200)
+    
+    @action(detail=False, methods=['get'], name="college-lists", url_path="college-lists", permission_classes=[AllowAny])
+    def latest_college_images(self, request):
+        """
+        Fetch paginated college data with applied filtering, searching, sorting.
+        Includes latest 3 images from CollegeGallery.
+        """
+
+        # Get full queryset
+        colleges = self.get_queryset()  # ✅ Uses the existing filtered queryset
+
+        # **Manually Apply Filters**
+        filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]
+        for backend in filter_backends:
+            colleges = backend().filter_queryset(request, colleges, self)
+
+        # **Paginate Results**
+        paginator = MyPageNumberPagination()
+        paginated_colleges = paginator.paginate_queryset(colleges, request, view=self)
+
+        response_data = []
+        for college in paginated_colleges:
+            latest_images = CollegeGallery.objects.filter(college=college).order_by('-created_date')[:3]
+            images_array = [request.build_absolute_uri(image.image.url) for image in latest_images]
+
+            response_data.append({
+                "college": {
+                    "id": college.id,
+                    "slug": college.slug,
+                    "name": college.name,
+                    "dp_image": request.build_absolute_uri(college.dp_image.url) if college.dp_image else None,
+                    "address": college.address,
+                    "swiper-images": images_array
+                }
+            })
+
+        return paginator.get_paginated_response(response_data)

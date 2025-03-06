@@ -66,34 +66,6 @@ class collegegalleryViewsets(viewsets.ModelViewSet):
     #     serializer = CollegeGalleryRetrieveSerializers(images, many=True)
     #     return Response(serializer.data)
     
-    @action(detail=False, methods=['get'], name="latest_college_images", url_path="latest-images")
-    def latest_college_images(self, request):
-        """
-        Returns all colleges with their details and a single array of latest 3 image URLs.
-        """
-        colleges = College.objects.all()
-        response_data = []
 
-        for college in colleges:
-            latest_images = CollegeGallery.objects.filter(college=college).order_by('-created_date')[:3]
-
-            # Convert images into an array of full URLs
-            images_array = [request.build_absolute_uri(image.image.url) for image in latest_images]
-
-            if latest_images:
-                college_serializer = CollegeSerializers(college)
-
-                response_data.append({
-                    "college": {
-                        "id": college.id,
-                        "slug": college.slug,
-                        "name": college.name,
-                        "dp_image": request.build_absolute_uri(college.dp_image.url) if college.dp_image else None,
-                        "address": college.address,
-                        "swiper-images": images_array  # Full URLs of latest images
-                    }
-                })
-
-        return Response(response_data, status=200)
 
 
