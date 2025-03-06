@@ -1,4 +1,7 @@
 from django.db import models
+from django.conf import settings
+from urllib.parse import urljoin
+
 
 # Create your models here.
 class Album(models.Model):
@@ -29,15 +32,18 @@ class Gallery(models.Model):
             ('manage_gallery', 'Manage Gallery'),
         ]
         
+
     def save(self, *args, **kwargs):
         if self.is_cover and self.album:
             # Set all other images in this album to is_cover=False
             Gallery.objects.filter(album=self.album, is_cover=True).update(is_cover=False)
 
-            # Update the album's featured image with the new cover image URL
+            # Update the album's featured image with the full absolute URL
             if self.image:
-                self.album.featured_image = self.image.url  # Store the URL
-                self.album.save(update_fields=['featured_image'])  # Save only this field to prevent overwrites
+                # Construct the full absolute URL with domain
+                absolute_url = urljoin(settings.SITE_URL, self.image.url)  # Ensure SITE_URL is set in settings
+                self.album.featured_image = absolute_url
+                self.album.save(update_fields=['featured_image'])
 
         super().save(*args, **kwargs)
 

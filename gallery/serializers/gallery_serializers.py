@@ -29,6 +29,7 @@ class GalleryRetrieveSerializers(serializers.ModelSerializer):
 
 
 class GalleryWriteSerializers(serializers.ModelSerializer):
+    
     """
     Serializer for handling gallery image uploads.
     - Accepts `album` as an ID in the request.
@@ -39,10 +40,18 @@ class GalleryWriteSerializers(serializers.ModelSerializer):
         queryset=Album.objects.all(),
         write_only=True
     )
+    image = serializers.SerializerMethodField()
 
     class Meta:
         model = Gallery
         fields = ['id', 'image', 'album', 'is_cover', 'created_date', 'created_date_time', 'updated_date_time']
+        
+    def get_image(self, obj):
+        """ Returns the full image URL """
+        request = self.context.get('request')
+        if request and obj.image:
+            return request.build_absolute_uri(obj.image.url)
+        return None
 
     def create(self, validated_data):
         """

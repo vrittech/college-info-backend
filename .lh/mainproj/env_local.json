@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 2,
+            "activePatchIndex": 5,
             "patches": [
                 {
                     "date": 1737957070194,
@@ -16,6 +16,18 @@
                 {
                     "date": 1737962230066,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,10 +14,10 @@\n DATABASE_PASSWORD=md\n DATABASE_HOST=localhost\n DATABASE_PORT=5432\n \n-ENVIRONMENT=development\n-API_URL=http://localhost:8000\n+# ENVIRONMENT=development\n+# API_URL=http://localhost:8000\n \n \n \n \n"
+                },
+                {
+                    "date": 1741237290416,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,8 +17,10 @@\n \n # ENVIRONMENT=development\n # API_URL=http://localhost:8000\n \n+SITE_URL\n \n \n \n \n+\n"
+                },
+                {
+                    "date": 1741240914938,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,9 +17,9 @@\n \n # ENVIRONMENT=development\n # API_URL=http://localhost:8000\n \n-SITE_URL\n+SITE_URL=http://127:8000\n \n \n \n \n"
+                },
+                {
+                    "date": 1741240936265,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,9 +17,9 @@\n \n # ENVIRONMENT=development\n # API_URL=http://localhost:8000\n \n-SITE_URL=http://127:8000\n+SITE_URL=http://127.0.0.1:8000\n \n \n \n \n"
                 }
             ],
             "date": 1737957070194,

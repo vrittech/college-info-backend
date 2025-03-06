@@ -312,3 +312,4 @@ PUBLIC_NOTIFICATION_MODELS = [
 
 
 EMAIL_HOST_USER = 'vritprashant@gmail.com'
+SITE_URL = os.getenv('SITE_URL')

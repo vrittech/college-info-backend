@@ -13,6 +13,9 @@ from rest_framework import status
 from ..utilities.permissions import eventPermission
 from mainproj.permissions import DynamicModelPermission
 from django.shortcuts import get_object_or_404
+from django.utils.http import urlsafe_base64_encode
+from django.urls import reverse
+import requests
 
 
 class eventViewsets(viewsets.ModelViewSet):
@@ -59,7 +62,7 @@ class eventViewsets(viewsets.ModelViewSet):
         serializer.is_valid(raise_exception=True)
         event_instance = serializer.save()
 
-        return self.get_formatted_response(event_instance,status.HTTP_201_CREATED)
+        return self.get_formatted_response(event_instance,status.HTTP_201_CREATED,request)
 
     def update(self, request, *args, **kwargs):
         """
@@ -73,9 +76,9 @@ class eventViewsets(viewsets.ModelViewSet):
         serializer.is_valid(raise_exception=True)
         event_instance = serializer.save()
 
-        return self.get_formatted_response(event_instance,status.HTTP_200_OK)
+        return self.get_formatted_response(event_instance,status.HTTP_200_OK,request)
 
-    def get_formatted_response(self, event_instance, status):
+    def get_formatted_response(self, event_instance, status,request):
         """Formats the response to match the expected structure."""
         response_data = {
             "category": EventCategoryRetrieveSerializers(event_instance.category.all(), many=True).data,
@@ -95,7 +98,8 @@ class eventViewsets(viewsets.ModelViewSet):
             "start_date": event_instance.start_date,
             "end_date": event_instance.end_date,
             "image": [
-                {"id": img.id, "image_url": img.image.url} for img in event_instance.image.all()
+            {"id": img.id, "image": request.build_absolute_uri(img.image.url)}
+            for img in event_instance.image.all()
             ],
         }
 

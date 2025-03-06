@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 15,
+            "activePatchIndex": 20,
             "patches": [
                 {
                     "date": 1733477583982,
@@ -68,6 +68,26 @@
                 {
                     "date": 1741236752564,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -66,9 +66,9 @@\n             request.FILES[key] for key in request.FILES if key.startswith(\"image[\")\n         ]\n \n         if not uploaded_files:\n-            raise serializers.ValidationError({\"images\": \"At least one image is required.\"})\n+            return\n \n         gallery_instances = []\n         for image_file in uploaded_files:\n             if isinstance(image_file, InMemoryUploadedFile):\n"
+                },
+                {
+                    "date": 1741239079579,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -42,8 +42,15 @@\n \n     class Meta:\n         model = Gallery\n         fields = ['id', 'image', 'album', 'is_cover', 'created_date', 'created_date_time', 'updated_date_time']\n+        \n+     def get_image_url(self, obj):\n+        \"\"\" Returns the full image URL \"\"\"\n+        request = self.context.get('request')\n+        if request and obj.image:\n+            return request.build_absolute_uri(obj.image.url)\n+        return None\n \n     def create(self, validated_data):\n         \"\"\"\n         Handles multiple image uploads and links them to the same album.\n"
+                },
+                {
+                    "date": 1741239277683,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -28,8 +28,9 @@\n         fields = ['id', 'image', 'album', 'is_cover', 'created_date', 'created_date_time', 'updated_date_time']\n \n \n class GalleryWriteSerializers(serializers.ModelSerializer):\n+     image_url = serializers.SerializerMethodField()\n     \"\"\"\n     Serializer for handling gallery image uploads.\n     - Accepts `album` as an ID in the request.\n     - Accepts multiple images using `image[0]`, `image[1]`, etc.\n@@ -43,9 +44,9 @@\n     class Meta:\n         model = Gallery\n         fields = ['id', 'image', 'album', 'is_cover', 'created_date', 'created_date_time', 'updated_date_time']\n         \n-     def get_image_url(self, obj):\n+    def get_image_url(self, obj):\n         \"\"\" Returns the full image URL \"\"\"\n         request = self.context.get('request')\n         if request and obj.image:\n             return request.build_absolute_uri(obj.image.url)\n"
+                },
+                {
+                    "date": 1741239282949,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -28,9 +28,9 @@\n         fields = ['id', 'image', 'album', 'is_cover', 'created_date', 'created_date_time', 'updated_date_time']\n \n \n class GalleryWriteSerializers(serializers.ModelSerializer):\n-     image_url = serializers.SerializerMethodField()\n+    image = serializers.SerializerMethodField()\n     \"\"\"\n     Serializer for handling gallery image uploads.\n     - Accepts `album` as an ID in the request.\n     - Accepts multiple images using `image[0]`, `image[1]`, etc.\n"
+                },
+                {
+                    "date": 1741239300750,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -28,9 +28,9 @@\n         fields = ['id', 'image', 'album', 'is_cover', 'created_date', 'created_date_time', 'updated_date_time']\n \n \n class GalleryWriteSerializers(serializers.ModelSerializer):\n-    image = serializers.SerializerMethodField()\n+    \n     \"\"\"\n     Serializer for handling gallery image uploads.\n     - Accepts `album` as an ID in the request.\n     - Accepts multiple images using `image[0]`, `image[1]`, etc.\n"
+                },
+                {
+                    "date": 1741239309874,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -39,14 +39,15 @@\n     album = serializers.PrimaryKeyRelatedField(\n         queryset=Album.objects.all(),\n         write_only=True\n     )\n+    image = serializers.SerializerMethodField()\n \n     class Meta:\n         model = Gallery\n         fields = ['id', 'image', 'album', 'is_cover', 'created_date', 'created_date_time', 'updated_date_time']\n         \n-    def get_image_url(self, obj):\n+    def get_image(self, obj):\n         \"\"\" Returns the full image URL \"\"\"\n         request = self.context.get('request')\n         if request and obj.image:\n             return request.build_absolute_uri(obj.image.url)\n"
                 }
             ],
             "date": 1733477583982,

@@ -18,6 +18,8 @@ DATABASE_PORT=5432
 # ENVIRONMENT=development
 # API_URL=http://localhost:8000
 
+SITE_URL=http://127.0.0.1:8000
+
 
 
 

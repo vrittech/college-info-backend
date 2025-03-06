@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 54,
+            "activePatchIndex": 57,
             "patches": [
                 {
                     "date": 1726649624074,
@@ -224,6 +224,18 @@
                 {
                     "date": 1740725341110,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -32,7 +32,12 @@\n     def save(self, *args, **kwargs):\n         if self.is_cover and self.album:\n             # Set all other images in this album to is_cover=False\n             Gallery.objects.filter(album=self.album, is_cover=True).update(is_cover=False)\n-        \n+\n+            # Update the album's featured image with the new cover image URL\n+            if self.image:\n+                self.album.featured_image = self.image.url  # Store the URL\n+                self.album.save(update_fields=['featured_image'])  # Save only this field to prevent overwrites\n+\n         super().save(*args, **kwargs)\n \n"
+                },
+                {
+                    "date": 1741237222029,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -28,16 +28,21 @@\n         permissions = [\n             ('manage_gallery', 'Manage Gallery'),\n         ]\n         \n-    def save(self, *args, **kwargs):\n-        if self.is_cover and self.album:\n-            # Set all other images in this album to is_cover=False\n-            Gallery.objects.filter(album=self.album, is_cover=True).update(is_cover=False)\n+    from django.conf import settings\n+from urllib.parse import urljoin\n \n-            # Update the album's featured image with the new cover image URL\n-            if self.image:\n-                self.album.featured_image = self.image.url  # Store the URL\n-                self.album.save(update_fields=['featured_image'])  # Save only this field to prevent overwrites\n+def save(self, *args, **kwargs):\n+    if self.is_cover and self.album:\n+        # Set all other images in this album to is_cover=False\n+        Gallery.objects.filter(album=self.album, is_cover=True).update(is_cover=False)\n \n-        super().save(*args, **kwargs)\n+        # Update the album's featured image with the full absolute URL\n+        if self.image:\n+            # Construct the full absolute URL with domain\n+            absolute_url = urljoin(settings.SITE_URL, self.image.url)  # Ensure SITE_URL is set in settings\n+            self.album.featured_image = absolute_url\n+            self.album.save(update_fields=['featured_image'])\n \n+    super().save(*args, **kwargs)\n+\n"
+                },
+                {
+                    "date": 1741237228059,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -28,21 +28,19 @@\n         permissions = [\n             ('manage_gallery', 'Manage Gallery'),\n         ]\n         \n-    from django.conf import settings\n-from urllib.parse import urljoin\n \n-def save(self, *args, **kwargs):\n-    if self.is_cover and self.album:\n-        # Set all other images in this album to is_cover=False\n-        Gallery.objects.filter(album=self.album, is_cover=True).update(is_cover=False)\n+    def save(self, *args, **kwargs):\n+        if self.is_cover and self.album:\n+            # Set all other images in this album to is_cover=False\n+            Gallery.objects.filter(album=self.album, is_cover=True).update(is_cover=False)\n \n-        # Update the album's featured image with the full absolute URL\n-        if self.image:\n-            # Construct the full absolute URL with domain\n-            absolute_url = urljoin(settings.SITE_URL, self.image.url)  # Ensure SITE_URL is set in settings\n-            self.album.featured_image = absolute_url\n-            self.album.save(update_fields=['featured_image'])\n+            # Update the album's featured image with the full absolute URL\n+            if self.image:\n+                # Construct the full absolute URL with domain\n+                absolute_url = urljoin(settings.SITE_URL, self.image.url)  # Ensure SITE_URL is set in settings\n+                self.album.featured_image = absolute_url\n+                self.album.save(update_fields=['featured_image'])\n \n-    super().save(*args, **kwargs)\n+        super().save(*args, **kwargs)\n \n"
+                },
+                {
+                    "date": 1741237235687,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,9 @@\n from django.db import models\n+from django.conf import settings\n+from urllib.parse import urljoin\n \n+\n # Create your models here.\n class Album(models.Model):\n     name = models.CharField(max_length = 500 , null = True,blank = True)\n     featured_image = models.CharField(max_length = 500 , null = True,blank = True)\n"
                 }
             ],
             "date": 1726649624074,
