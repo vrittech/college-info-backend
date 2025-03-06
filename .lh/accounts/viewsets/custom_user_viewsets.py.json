@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 34,
+            "activePatchIndex": 41,
             "patches": [
                 {
                     "date": 1738669074931,
@@ -144,6 +144,34 @@
                 {
                     "date": 1741253734696,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,9 +12,9 @@\n from django.contrib.auth import authenticate,login\n from rest_framework_simplejwt.tokens import RefreshToken\n from rest_framework.decorators import action\n from ..utilities.pagination import MyPageNumberPagination\n-# from accounts.utilities.filters import CustomUserFilter\n+from accounts.utilities.filters import CustomUserFilter\n # accounts/utilities/filters.py\n from rest_framework.filters import SearchFilter, OrderingFilter\n from django_filters.rest_framework import DjangoFilterBackend\n from mainproj.permissions import *\n"
+                },
+                {
+                    "date": 1741255609088,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -28,9 +28,9 @@\n     pagination_class = MyPageNumberPagination\n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     \n     search_fields = ['position', 'email', 'full_name','first_name','last_name']\n-    ordering_fields =['position', 'email', 'full_name','first_name','last_name']\n+    ordering_fields =['position', 'email', 'full_name','first_name','last_name','id']\n \n \n     def get_queryset(self):\n         if self.request.user.is_superuser:\n"
+                },
+                {
+                    "date": 1741255616808,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -28,9 +28,9 @@\n     pagination_class = MyPageNumberPagination\n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     \n     search_fields = ['position', 'email', 'full_name','first_name','last_name']\n-    ordering_fields =['position', 'email', 'full_name','first_name','last_name','id']\n+    ordering_fields =['position', 'email', 'full_name','first_name','last_name','id','created_date']\n \n \n     def get_queryset(self):\n         if self.request.user.is_superuser:\n"
+                },
+                {
+                    "date": 1741255624126,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -28,9 +28,9 @@\n     pagination_class = MyPageNumberPagination\n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     \n     search_fields = ['position', 'email', 'full_name','first_name','last_name']\n-    ordering_fields =['position', 'email', 'full_name','first_name','last_name','id','created_date']\n+    ordering_fields =['position', 'email', 'full_name','first_name','last_name','id','created_date','updated_date']\n \n \n     def get_queryset(self):\n         if self.request.user.is_superuser:\n"
+                },
+                {
+                    "date": 1741255641295,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,9 +27,9 @@\n     filterset_class = CustomUserFilter\n     pagination_class = MyPageNumberPagination\n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     \n-    search_fields = ['position', 'email', 'full_name','first_name','last_name']\n+    search_fields = ['position', 'email', 'full_name','first_name','last_name','']\n     ordering_fields =['position', 'email', 'full_name','first_name','last_name','id','created_date','updated_date']\n \n \n     def get_queryset(self):\n"
+                },
+                {
+                    "date": 1741255646565,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,9 +27,9 @@\n     filterset_class = CustomUserFilter\n     pagination_class = MyPageNumberPagination\n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     \n-    search_fields = ['position', 'email', 'full_name','first_name','last_name','']\n+    search_fields = ['position', 'email', 'full_name','first_name','last_name','group__name']\n     ordering_fields =['position', 'email', 'full_name','first_name','last_name','id','created_date','updated_date']\n \n \n     def get_queryset(self):\n"
+                },
+                {
+                    "date": 1741255681702,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,9 +27,9 @@\n     filterset_class = CustomUserFilter\n     pagination_class = MyPageNumberPagination\n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     \n-    search_fields = ['position', 'email', 'full_name','first_name','last_name','group__name']\n+    search_fields = ['position', 'email', 'full_name','first_name','last_name','groups__name']\n     ordering_fields =['position', 'email', 'full_name','first_name','last_name','id','created_date','updated_date']\n \n \n     def get_queryset(self):\n"
+                },
+                {
+                    "date": 1741255777554,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,9 +27,9 @@\n     filterset_class = CustomUserFilter\n     pagination_class = MyPageNumberPagination\n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     \n-    search_fields = ['position', 'email', 'full_name','first_name','last_name','groups__name']\n+    search_fields = ['position', 'email','first_name','last_name','groups__name']\n     ordering_fields =['position', 'email', 'full_name','first_name','last_name','id','created_date','updated_date']\n \n \n     def get_queryset(self):\n"
                 }
             ],
             "date": 1738669074931,
