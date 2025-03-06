@@ -224,32 +224,39 @@ class collegeViewsets(viewsets.ModelViewSet):
     @action(detail=False, methods=['get'], name="college-lists", url_path="college-lists", permission_classes=[AllowAny])
     def latest_college_images(self, request):
         """
-        Fetch college data with full dataset ordering before pagination,
+        Fetch unique college data with full dataset ordering before pagination,
         ensuring results are ordered across all pages.
         Includes latest 3 images from CollegeGallery.
         """
 
-        # **Get the full queryset**
-        colleges = self.get_queryset()  # ✅ Uses existing queryset with filters
+        # **Get the base queryset without duplicates**
+        colleges = self.get_queryset().distinct()  # ✅ Ensure no duplicate data
 
-        # **Manually Apply Filters**
+        # **Apply Filtering Once**
         filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]
         for backend in filter_backends:
             colleges = backend().filter_queryset(request, colleges, self)
 
         # **Apply Ordering Before Pagination**
         ordering_field = request.GET.get("ordering", "-created_date")  # Default: latest first
-        colleges = colleges.order_by(ordering_field)
+        colleges = colleges.order_by(ordering_field).distinct()  # ✅ Prevent duplicate ordering
 
-        # **Paginate the Fully Ordered List**
+        # **Apply Pagination**
         paginator = MyPageNumberPagination()
         paginated_colleges = paginator.paginate_queryset(colleges, request, view=self)
 
         if paginated_colleges is None:  # If pagination fails, return all results
             paginated_colleges = colleges
 
+        # **Construct Response Data Without Duplication**
         response_data = []
+        seen_colleges = set()  # ✅ Use a set to track unique colleges
+
         for college in paginated_colleges:
+            if college.id in seen_colleges:  # Avoid duplicate entries
+                continue
+            seen_colleges.add(college.id)
+
             latest_images = CollegeGallery.objects.filter(college=college).order_by('-created_date')[:3]
             images_array = [request.build_absolute_uri(image.image.url) for image in latest_images]
 
@@ -264,5 +271,5 @@ class collegeViewsets(viewsets.ModelViewSet):
                 }
             })
 
-        return paginator.get_paginated_response(response_data)  # ✅ Uses fixed pagination response
+        return paginator.get_paginated_response(response_data) 
 

@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 41,
+            "activePatchIndex": 43,
             "patches": [
                 {
                     "date": 1738669074931,
@@ -172,6 +172,14 @@
                 {
                     "date": 1741255777554,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,9 +27,9 @@\n     filterset_class = CustomUserFilter\n     pagination_class = MyPageNumberPagination\n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     \n-    search_fields = ['position', 'email', 'full_name','first_name','last_name','groups__name']\n+    search_fields = ['position', 'email','first_name','last_name','groups__name']\n     ordering_fields =['position', 'email', 'full_name','first_name','last_name','id','created_date','updated_date']\n \n \n     def get_queryset(self):\n"
+                },
+                {
+                    "date": 1741269930730,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -73,14 +73,21 @@\n         self.object = request.user  # Set the object directly to the current user\n         serializer = self.get_serializer(self.object)\n         return Response(serializer.data)\n     \n-    @action(detail=False, methods=['get'], name=\"college_admins\", url_path=\"college-admins\",permission_classes=[IsAuthenticated])\n-    def college_admins(self, request, *args, **kwargs):\n-        queryset = self.get_queryset().filter(college__isnull=False)  # Filter users with assigned college\n-        serializer = self.get_serializer(queryset, many=True)\n-        return Response(serializer.data)\n+    @action(detail=False, methods=['get'], name=\"college_admins\", url_path=\"college-admins\", permission_classes=[IsAuthenticated])\n+def college_admins(self, request, *args, **kwargs):\n+    queryset = self.get_queryset().filter(college__isnull=False)  # Filter users with assigned college\n+    page = self.paginate_queryset(queryset)  # Apply pagination\n+    \n+    if page is not None:\n+        serializer = self.get_serializer(page, many=True)\n+        return self.get_paginated_response(serializer.data)  # Return paginated response\n \n+    serializer = self.get_serializer(queryset, many=True)\n+    return Response(serializer.data)  # If pagination is not applied, return normal response\n+\n+\n     @action(detail=False, methods=['post'], name=\"signup_college_admin\", url_path=\"signup-college-admin\")\n     def signup_college_admin(self, request, *args, **kwargs):\n         serializer = self.get_serializer(data=request.data)  \n \n"
+                },
+                {
+                    "date": 1741269936199,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -74,18 +74,18 @@\n         serializer = self.get_serializer(self.object)\n         return Response(serializer.data)\n     \n     @action(detail=False, methods=['get'], name=\"college_admins\", url_path=\"college-admins\", permission_classes=[IsAuthenticated])\n-def college_admins(self, request, *args, **kwargs):\n-    queryset = self.get_queryset().filter(college__isnull=False)  # Filter users with assigned college\n-    page = self.paginate_queryset(queryset)  # Apply pagination\n-    \n-    if page is not None:\n-        serializer = self.get_serializer(page, many=True)\n-        return self.get_paginated_response(serializer.data)  # Return paginated response\n+    def college_admins(self, request, *args, **kwargs):\n+        queryset = self.get_queryset().filter(college__isnull=False)  # Filter users with assigned college\n+        page = self.paginate_queryset(queryset)  # Apply pagination\n+        \n+        if page is not None:\n+            serializer = self.get_serializer(page, many=True)\n+            return self.get_paginated_response(serializer.data)  # Return paginated response\n \n-    serializer = self.get_serializer(queryset, many=True)\n-    return Response(serializer.data)  # If pagination is not applied, return normal response\n+        serializer = self.get_serializer(queryset, many=True)\n+        return Response(serializer.data)  # If pagination is not applied, return normal response\n \n \n     @action(detail=False, methods=['post'], name=\"signup_college_admin\", url_path=\"signup-college-admin\")\n     def signup_college_admin(self, request, *args, **kwargs):\n"
                 }
             ],
             "date": 1738669074931,

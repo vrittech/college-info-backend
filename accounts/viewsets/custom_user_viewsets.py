@@ -74,11 +74,18 @@ class CustomUserViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(self.object)
         return Response(serializer.data)
     
-    @action(detail=False, methods=['get'], name="college_admins", url_path="college-admins",permission_classes=[IsAuthenticated])
+    @action(detail=False, methods=['get'], name="college_admins", url_path="college-admins", permission_classes=[IsAuthenticated])
     def college_admins(self, request, *args, **kwargs):
         queryset = self.get_queryset().filter(college__isnull=False)  # Filter users with assigned college
+        page = self.paginate_queryset(queryset)  # Apply pagination
+        
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)  # Return paginated response
+
         serializer = self.get_serializer(queryset, many=True)
-        return Response(serializer.data)
+        return Response(serializer.data)  # If pagination is not applied, return normal response
+
 
     @action(detail=False, methods=['post'], name="signup_college_admin", url_path="signup-college-admin")
     def signup_college_admin(self, request, *args, **kwargs):
