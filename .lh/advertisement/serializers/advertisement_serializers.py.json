@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 9,
+            "activePatchIndex": 15,
             "patches": [
                 {
                     "date": 1733479747479,
@@ -44,6 +44,30 @@
                 {
                     "date": 1739083042841,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,8 +18,8 @@\n         model = Advertisement\n         fields = '__all__'\n \n class AdvertisementWriteSerializers(serializers.ModelSerializer):\n-    placement = PlacementPositionSerializers()\n+    # placement = PlacementPositionSerializers()\n     class Meta:\n         model = Advertisement\n         fields = '__all__'\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1741242147545,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,9 +17,29 @@\n     class Meta:\n         model = Advertisement\n         fields = '__all__'\n \n+from rest_framework import serializers\n+from urllib.parse import urljoin\n+from django.conf import settings\n+\n+class PlacementPositionSerializers(serializers.ModelSerializer):\n\\ No newline at end of file\n+    \"\"\"Serializer for PlacementPosition to return as an object\"\"\"\n+    \n+    class Meta:\n+        model = PlacementPosition  # Ensure this is your actual model\n+        fields = '__all__'  # Return all placement fields\n+\n class AdvertisementWriteSerializers(serializers.ModelSerializer):\n-    # placement = PlacementPositionSerializers()\n+    image_url = serializers.SerializerMethodField()  # Absolute URL for image\n+    placement = PlacementPositionSerializers()  # Include nested object\n+\n     class Meta:\n         model = Advertisement\n-        fields = '__all__'\n+        fields = '__all__'  # Includes all fields + custom fields\n+\n+    def get_image_url(self, obj):\n+        \"\"\"Returns the absolute URL of the advertisement image\"\"\"\n+        request = self.context.get('request')  # Get request object\n+        if obj.image:\n+            return request.build_absolute_uri(obj.image.url) if request else urljoin(settings.SITE_URL, obj.image.url)\n+        return None  # If no image\n"
+                },
+                {
+                    "date": 1741242153436,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -21,14 +21,8 @@\n from rest_framework import serializers\n from urllib.parse import urljoin\n from django.conf import settings\n \n-class PlacementPositionSerializers(serializers.ModelSerializer):\n-    \"\"\"Serializer for PlacementPosition to return as an object\"\"\"\n-    \n-    class Meta:\n-        model = PlacementPosition  # Ensure this is your actual model\n-        fields = '__all__'  # Return all placement fields\n \n class AdvertisementWriteSerializers(serializers.ModelSerializer):\n     image_url = serializers.SerializerMethodField()  # Absolute URL for image\n     placement = PlacementPositionSerializers()  # Include nested object\n@@ -41,5 +35,5 @@\n         \"\"\"Returns the absolute URL of the advertisement image\"\"\"\n         request = self.context.get('request')  # Get request object\n         if obj.image:\n             return request.build_absolute_uri(obj.image.url) if request else urljoin(settings.SITE_URL, obj.image.url)\n-        return None  # If no image\n\\ No newline at end of file\n+        return None  # If no image\n"
+                },
+                {
+                    "date": 1741242159294,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,11 +17,8 @@\n     class Meta:\n         model = Advertisement\n         fields = '__all__'\n \n-from rest_framework import serializers\n-from urllib.parse import urljoin\n-from django.conf import settings\n \n \n class AdvertisementWriteSerializers(serializers.ModelSerializer):\n     image_url = serializers.SerializerMethodField()  # Absolute URL for image\n"
+                },
+                {
+                    "date": 1741242164418,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,8 @@\n from rest_framework import serializers\n from ..models import Advertisement,PlacementPosition\n+from urllib.parse import urljoin\n+from django.conf import settings\n \n class PlacementPositionSerializers(serializers.ModelSerializer):\n     class Meta:\n         model = PlacementPosition\n"
+                },
+                {
+                    "date": 1741242171337,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,9 +22,9 @@\n \n \n \n class AdvertisementWriteSerializers(serializers.ModelSerializer):\n-    image_url = serializers.SerializerMethodField()  # Absolute URL for image\n+    image = serializers.SerializerMethodField()  # Absolute URL for image\n     placement = PlacementPositionSerializers()  # Include nested object\n \n     class Meta:\n         model = Advertisement\n"
+                },
+                {
+                    "date": 1741242176541,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -29,9 +29,9 @@\n     class Meta:\n         model = Advertisement\n         fields = '__all__'  # Includes all fields + custom fields\n \n-    def get_image_url(self, obj):\n+    def get_image(self, obj):\n         \"\"\"Returns the absolute URL of the advertisement image\"\"\"\n         request = self.context.get('request')  # Get request object\n         if obj.image:\n             return request.build_absolute_uri(obj.image.url) if request else urljoin(settings.SITE_URL, obj.image.url)\n"
                 }
             ],
             "date": 1733479747479,

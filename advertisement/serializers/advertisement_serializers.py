@@ -1,5 +1,7 @@
 from rest_framework import serializers
 from ..models import Advertisement,PlacementPosition
+from urllib.parse import urljoin
+from django.conf import settings
 
 class PlacementPositionSerializers(serializers.ModelSerializer):
     class Meta:
@@ -18,8 +20,19 @@ class AdvertisementRetrieveSerializers(serializers.ModelSerializer):
         model = Advertisement
         fields = '__all__'
 
+
+
 class AdvertisementWriteSerializers(serializers.ModelSerializer):
-    # placement = PlacementPositionSerializers()
+    image = serializers.SerializerMethodField()  # Absolute URL for image
+    placement = PlacementPositionSerializers()  # Include nested object
+
     class Meta:
         model = Advertisement
-        fields = '__all__'
+        fields = '__all__'  # Includes all fields + custom fields
+
+    def get_image(self, obj):
+        """Returns the absolute URL of the advertisement image"""
+        request = self.context.get('request')  # Get request object
+        if obj.image:
+            return request.build_absolute_uri(obj.image.url) if request else urljoin(settings.SITE_URL, obj.image.url)
+        return None  # If no image
