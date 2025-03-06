@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 57,
+            "activePatchIndex": 58,
             "patches": [
                 {
                     "date": 1726649624074,
@@ -236,6 +236,10 @@
                 {
                     "date": 1741237235687,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,9 @@\n from django.db import models\n+from django.conf import settings\n+from urllib.parse import urljoin\n \n+\n # Create your models here.\n class Album(models.Model):\n     name = models.CharField(max_length = 500 , null = True,blank = True)\n     featured_image = models.CharField(max_length = 500 , null = True,blank = True)\n"
+                },
+                {
+                    "date": 1741241331122,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -39,10 +39,13 @@\n             Gallery.objects.filter(album=self.album, is_cover=True).update(is_cover=False)\n \n             # Update the album's featured image with the full absolute URL\n             if self.image:\n-                # Construct the full absolute URL with domain\n-                absolute_url = urljoin(settings.SITE_URL, self.image.url)  # Ensure SITE_URL is set in settings\n+                # Ensure SITE_URL is set in settings\n+                site_url = getattr(settings, \"SITE_URL\", \"https://defaultdomain.com\")  # Default fallback\n+                absolute_url = urljoin(site_url, self.image.url)  # Construct absolute URL\n+                \n+                # Save to album\n                 self.album.featured_image = absolute_url\n                 self.album.save(update_fields=['featured_image'])\n \n         super().save(*args, **kwargs)\n"
                 }
             ],
             "date": 1726649624074,

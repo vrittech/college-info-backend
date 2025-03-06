@@ -40,8 +40,11 @@ class Gallery(models.Model):
 
             # Update the album's featured image with the full absolute URL
             if self.image:
-                # Construct the full absolute URL with domain
-                absolute_url = urljoin(settings.SITE_URL, self.image.url)  # Ensure SITE_URL is set in settings
+                # Ensure SITE_URL is set in settings
+                site_url = getattr(settings, "SITE_URL", "https://defaultdomain.com")  # Default fallback
+                absolute_url = urljoin(site_url, self.image.url)  # Construct absolute URL
+                
+                # Save to album
                 self.album.featured_image = absolute_url
                 self.album.save(update_fields=['featured_image'])
 
