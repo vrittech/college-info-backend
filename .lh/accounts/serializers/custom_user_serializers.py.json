@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 126,
+            "activePatchIndex": 129,
             "patches": [
                 {
                     "date": 1728378543651,
@@ -512,6 +512,18 @@
                 {
                     "date": 1741241881778,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -69,9 +69,9 @@\n class CollegeSerializer(serializers.ModelSerializer):\n     profile_completion_percentage = serializers.SerializerMethodField()\n     class Meta:\n         model = College\n-        fields = ['id','slug', 'name', 'address','profile_completion_percentage]  # Adjust based on model fields\n+        fields = ['id','slug', 'name', 'address','profile_completion_percentage']  # Adjust based on model fields\n     def get_profile_completion_percentage(self, obj):\n         return obj.get_profile_completion_percentage  # Call the property method\n # class StaffSocialMediaSerializer(serializers.ModelSerializer):\n #     social_media = SocialMediaSerializer(read_only=True)\n"
+                },
+                {
+                    "date": 1741244071097,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -69,9 +69,9 @@\n class CollegeSerializer(serializers.ModelSerializer):\n     profile_completion_percentage = serializers.SerializerMethodField()\n     class Meta:\n         model = College\n-        fields = ['id','slug', 'name', 'address','profile_completion_percentage']  # Adjust based on model fields\n+        fields = ['id','slug', 'name', 'address','profile_completion_percentage','is_show']  # Adjust based on model fields\n     def get_profile_completion_percentage(self, obj):\n         return obj.get_profile_completion_percentage  # Call the property method\n # class StaffSocialMediaSerializer(serializers.ModelSerializer):\n #     social_media = SocialMediaSerializer(read_only=True)\n"
+                },
+                {
+                    "date": 1741244077023,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -69,9 +69,9 @@\n class CollegeSerializer(serializers.ModelSerializer):\n     profile_completion_percentage = serializers.SerializerMethodField()\n     class Meta:\n         model = College\n-        fields = ['id','slug', 'name', 'address','profile_completion_percentage','is_show']  # Adjust based on model fields\n+        fields = ['id','slug', 'name', 'address','profile_completion_percentage','is_show','is_']  # Adjust based on model fields\n     def get_profile_completion_percentage(self, obj):\n         return obj.get_profile_completion_percentage  # Call the property method\n # class StaffSocialMediaSerializer(serializers.ModelSerializer):\n #     social_media = SocialMediaSerializer(read_only=True)\n"
+                },
+                {
+                    "date": 1741244083599,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -69,9 +69,9 @@\n class CollegeSerializer(serializers.ModelSerializer):\n     profile_completion_percentage = serializers.SerializerMethodField()\n     class Meta:\n         model = College\n-        fields = ['id','slug', 'name', 'address','profile_completion_percentage','is_show','is_']  # Adjust based on model fields\n+        fields = ['id','slug', 'name', 'address','profile_completion_percentage','is_show','is_verified']  # Adjust based on model fields\n     def get_profile_completion_percentage(self, obj):\n         return obj.get_profile_completion_percentage  # Call the property method\n # class StaffSocialMediaSerializer(serializers.ModelSerializer):\n #     social_media = SocialMediaSerializer(read_only=True)\n"
                 }
             ],
             "date": 1728378543651,

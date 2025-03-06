@@ -70,7 +70,7 @@ class CollegeSerializer(serializers.ModelSerializer):
     profile_completion_percentage = serializers.SerializerMethodField()
     class Meta:
         model = College
-        fields = ['id','slug', 'name', 'address','profile_completion_percentage']  # Adjust based on model fields
+        fields = ['id','slug', 'name', 'address','profile_completion_percentage','is_show','is_verified']  # Adjust based on model fields
     def get_profile_completion_percentage(self, obj):
         return obj.get_profile_completion_percentage  # Call the property method
 # class StaffSocialMediaSerializer(serializers.ModelSerializer):
