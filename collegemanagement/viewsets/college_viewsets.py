@@ -224,21 +224,29 @@ class collegeViewsets(viewsets.ModelViewSet):
     @action(detail=False, methods=['get'], name="college-lists", url_path="college-lists", permission_classes=[AllowAny])
     def latest_college_images(self, request):
         """
-        Fetch paginated college data with applied filtering, searching, sorting.
+        Fetch college data with full dataset ordering before pagination,
+        ensuring results are ordered across all pages.
         Includes latest 3 images from CollegeGallery.
         """
 
-        # Get full queryset
-        colleges = self.get_queryset()  # ✅ Uses the existing filtered queryset
+        # **Get the full queryset**
+        colleges = self.get_queryset()  # ✅ Uses existing queryset with filters
 
         # **Manually Apply Filters**
         filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]
         for backend in filter_backends:
             colleges = backend().filter_queryset(request, colleges, self)
 
-        # **Paginate Results**
+        # **Apply Ordering Before Pagination**
+        ordering_field = request.GET.get("ordering", "-created_date")  # Default: latest first
+        colleges = colleges.order_by(ordering_field)
+
+        # **Paginate the Fully Ordered List**
         paginator = MyPageNumberPagination()
         paginated_colleges = paginator.paginate_queryset(colleges, request, view=self)
+
+        if paginated_colleges is None:  # If pagination fails, return all results
+            paginated_colleges = colleges
 
         response_data = []
         for college in paginated_colleges:
@@ -256,4 +264,5 @@ class collegeViewsets(viewsets.ModelViewSet):
                 }
             })
 
-        return paginator.get_paginated_response(response_data)
+        return paginator.get_paginated_response(response_data)  # ✅ Uses fixed pagination response
+
