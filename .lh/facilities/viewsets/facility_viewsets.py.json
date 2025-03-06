@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 10,
+            "activePatchIndex": 15,
             "patches": [
                 {
                     "date": 1733481416906,
@@ -48,6 +48,26 @@
                 {
                     "date": 1739509486269,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,9 @@\n from django_filters.rest_framework import DjangoFilterBackend\n from ..models import Facility\n from ..serializers.facility_serializers import FacilityListSerializers, FacilityRetrieveSerializers, FacilityWriteSerializers\n from ..utilities.importbase import *\n-\n+from mainproj\n class facilityViewsets(viewsets.ModelViewSet):\n     serializer_class = FacilityListSerializers\n     permission_classes = [facilitiesPermission]\n     authentication_classes = [JWTAuthentication]\n"
+                },
+                {
+                    "date": 1741254796600,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,12 +3,12 @@\n from django_filters.rest_framework import DjangoFilterBackend\n from ..models import Facility\n from ..serializers.facility_serializers import FacilityListSerializers, FacilityRetrieveSerializers, FacilityWriteSerializers\n from ..utilities.importbase import *\n-from mainproj\n+from mainproj.permissions import DynamicModelPermission\n class facilityViewsets(viewsets.ModelViewSet):\n     serializer_class = FacilityListSerializers\n-    permission_classes = [facilitiesPermission]\n+    permission_classes = [DynamicModelPermission]\n     authentication_classes = [JWTAuthentication]\n     pagination_class = MyPageNumberPagination\n     queryset = Facility.objects.all().order_by('-id')\n \n@@ -19,8 +19,9 @@\n     filterset_fields = {\n         'id': ['exact'],\n         'name': ['exact'],\n         'is_show': ['exact'],\n+        'created_date'\n     }\n \n     def get_queryset(self):\n         queryset = super().get_queryset()\n"
+                },
+                {
+                    "date": 1741254804309,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n     filterset_fields = {\n         'id': ['exact'],\n         'name': ['exact'],\n         'is_show': ['exact'],\n-        'created_date'\n+        'created_date':]\n     }\n \n     def get_queryset(self):\n         queryset = super().get_queryset()\n"
+                },
+                {
+                    "date": 1741254812394,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n     filterset_fields = {\n         'id': ['exact'],\n         'name': ['exact'],\n         'is_show': ['exact'],\n-        'created_date':]\n+        'created_date':['exact']\n     }\n \n     def get_queryset(self):\n         queryset = super().get_queryset()\n"
+                },
+                {
+                    "date": 1741254821740,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n     filterset_fields = {\n         'id': ['exact'],\n         'name': ['exact'],\n         'is_show': ['exact'],\n-        'created_date':['exact']\n+        'created_date':['exact','gte']\n     }\n \n     def get_queryset(self):\n         queryset = super().get_queryset()\n"
+                },
+                {
+                    "date": 1741254826891,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n     filterset_fields = {\n         'id': ['exact'],\n         'name': ['exact'],\n         'is_show': ['exact'],\n-        'created_date':['exact','gte']\n+        'created_date':['exact','gte','lte']\n     }\n \n     def get_queryset(self):\n         queryset = super().get_queryset()\n"
                 }
             ],
             "date": 1733481416906,

@@ -20,6 +20,7 @@ class facilityViewsets(viewsets.ModelViewSet):
         'id': ['exact'],
         'name': ['exact'],
         'is_show': ['exact'],
+        'created_date':['exact','gte','lte']
     }
 
     def get_queryset(self):
