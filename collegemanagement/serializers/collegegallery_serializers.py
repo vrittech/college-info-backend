@@ -9,7 +9,7 @@ class CollegeSerializers(serializers.ModelSerializer):
         fields = ['slug', 'id', 'name','dp_image','address']
 
 
-### ✅ Read Serializer (for Listing Multiple Galleries) ###
+
 class CollegeGalleryListSerializers(serializers.ModelSerializer):
     college = CollegeSerializers(read_only=True)
     # images = serializers.SerializerMethodField()  # Ensures `images` is the response key
