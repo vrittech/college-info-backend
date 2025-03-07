@@ -9,7 +9,7 @@ from socialmedia.models import SocialMedia
 class CustomUser(AbstractUser):
     first_name = models.CharField(max_length=250, null=True, blank=True)
     last_name = models.CharField(max_length=250, null=True, blank=True)
-    full_name = models.CharField(max_length=250, null=True, blank=True)
+    # full_name = models.CharField(max_length=250, null=True, blank=True)
     college = models.ForeignKey(College, null=True, on_delete=models.SET_NULL, related_name='user', blank=True)
     social_media = models.ManyToManyField(SocialMedia, blank=True)
     email = models.EmailField(max_length=250, unique=True)
