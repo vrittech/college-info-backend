@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 6,
+            "activePatchIndex": 9,
             "patches": [
                 {
                     "date": 1733481388127,
@@ -32,6 +32,18 @@
                 {
                     "date": 1740559340673,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,10 +7,10 @@\n from mainproj.permissions import DynamicModelPermission\n \n class eventcategoryViewsets(viewsets.ModelViewSet):\n     serializer_class = EventCategoryListSerializers\n-    permission_classes = [eventPermission]\n-    authentication_classes = [JWTAuthentication]\n+    permission_classes = [DynamicModelPermission]\n+    # authentication_classes = [JWTAuthentication]\n     pagination_class = MyPageNumberPagination\n     queryset = EventCategory.objects.all().order_by('-id')\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n"
+                },
+                {
+                    "date": 1741338529549,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,9 +13,9 @@\n     pagination_class = MyPageNumberPagination\n     queryset = EventCategory.objects.all().order_by('-id')\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n-    search_fields = ['id']\n+    search_fields = ['id','name']\n     ordering_fields = ['id']\n \n     # filterset_fields = {\n     #     'id': ['exact'],\n"
+                },
+                {
+                    "date": 1741338535653,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,13 +14,13 @@\n     queryset = EventCategory.objects.all().order_by('-id')\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     search_fields = ['id','name']\n-    ordering_fields = ['id']\n+    ordering_fields = ['id','name']\n \n-    # filterset_fields = {\n-    #     'id': ['exact'],\n-    # }\n+    filterset_fields = {\n+        'id': ['exact'],\n+    }\n \n     def get_queryset(self):\n         queryset = super().get_queryset()\n         return queryset\n"
+                },
+                {
+                    "date": 1741338541384,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,8 +18,9 @@\n     ordering_fields = ['id','name']\n \n     filterset_fields = {\n         'id': ['exact'],\n+        'name': ['exact'],\n     }\n \n     def get_queryset(self):\n         queryset = super().get_queryset()\n"
                 }
             ],
             "date": 1733481388127,
