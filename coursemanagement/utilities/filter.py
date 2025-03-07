@@ -20,8 +20,13 @@ class CourseFilter(filters.FilterSet):
     course_shortdescription = CharInFilter(field_name='course_shortdescription', lookup_expr='in')
     course_outcome = CharInFilter(field_name='course_outcome', lookup_expr='in')
     eligibility_criteria = CharInFilter(field_name='eligibility_criteria', lookup_expr='in')
-    created_date = filters.DateFromToRangeFilter(field_name='created_date')
-    updated_date = filters.DateTimeFromToRangeFilter(field_name='updated_date')
+    created_date = django_filters.DateFilter(field_name="created_date", lookup_expr="exact")
+    created_date__gte = django_filters.DateFilter(field_name="created_date", lookup_expr="gte")
+    created_date__lte = django_filters.DateFilter(field_name="created_date", lookup_expr="lte")
+    
+    updated_date = django_filters.DateFilter(field_name="updated_date", lookup_expr="exact")
+    updated_date__gte = django_filters.DateFilter(field_name="updated_date", lookup_expr="gte")
+    updated_date__lte = django_filters.DateFilter(field_name="updated_date", lookup_expr="lte")
 
     discipline = django_filters.CharFilter(method='filter_by_disciplines')
 

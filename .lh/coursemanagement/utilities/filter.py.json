@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 12,
+            "activePatchIndex": 14,
             "patches": [
                 {
                     "date": 1739267387711,
@@ -56,6 +56,14 @@
                 {
                     "date": 1739894444741,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -36,6 +36,5 @@\n         fields = [\n             'id', 'name', 'abbreviation', 'duration', 'faculty', 'level',\n             'affiliation', 'description', 'discipline', 'course_shortdescription',\n             'course_outcome', 'eligibility_criteria', 'created_date', 'updated_date'\n-        ]\n-z\n\\ No newline at end of file\n+        ]\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1741323830047,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,10 +19,15 @@\n     description = CharInFilter(field_name='description', lookup_expr='in')\n     course_shortdescription = CharInFilter(field_name='course_shortdescription', lookup_expr='in')\n     course_outcome = CharInFilter(field_name='course_outcome', lookup_expr='in')\n     eligibility_criteria = CharInFilter(field_name='eligibility_criteria', lookup_expr='in')\n-    created_date = filters.DateFromToRangeFilter(field_name='created_date')\n-    updated_date = filters.DateTimeFromToRangeFilter(field_name='updated_date')\n+created_date = django_filters.DateFilter(field_name=\"created_date\", lookup_expr=\"exact\")\n+    created_date__gte = django_filters.DateFilter(field_name=\"created_date\", lookup_expr=\"gte\")\n+    created_date__lte = django_filters.DateFilter(field_name=\"created_date\", lookup_expr=\"lte\")\n+    \n+    updated_date = django_filters.DateFilter(field_name=\"updated_date\", lookup_expr=\"exact\")\n+    updated_date__gte = django_filters.DateFilter(field_name=\"updated_date\", lookup_expr=\"gte\")\n+    updated_date__lte = django_filters.DateFilter(field_name=\"updated_date\", lookup_expr=\"lte\")\n \n     discipline = django_filters.CharFilter(method='filter_by_disciplines')\n \n     def filter_by_disciplines(self, queryset, name, value):\n"
+                },
+                {
+                    "date": 1741323835245,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n     description = CharInFilter(field_name='description', lookup_expr='in')\n     course_shortdescription = CharInFilter(field_name='course_shortdescription', lookup_expr='in')\n     course_outcome = CharInFilter(field_name='course_outcome', lookup_expr='in')\n     eligibility_criteria = CharInFilter(field_name='eligibility_criteria', lookup_expr='in')\n-created_date = django_filters.DateFilter(field_name=\"created_date\", lookup_expr=\"exact\")\n+    created_date = django_filters.DateFilter(field_name=\"created_date\", lookup_expr=\"exact\")\n     created_date__gte = django_filters.DateFilter(field_name=\"created_date\", lookup_expr=\"gte\")\n     created_date__lte = django_filters.DateFilter(field_name=\"created_date\", lookup_expr=\"lte\")\n     \n     updated_date = django_filters.DateFilter(field_name=\"updated_date\", lookup_expr=\"exact\")\n"
                 }
             ],
             "date": 1739267387711,
