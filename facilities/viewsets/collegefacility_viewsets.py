@@ -47,22 +47,22 @@ class collegefacilityViewsets(viewsets.ModelViewSet):
             return CollegeFacilityRetrieveSerializers
         return super().get_serializer_class()
     
-    def create(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
-        print(request.data,"line")
+    # def create(self, request, *args, **kwargs):
+    #     serializer = self.get_serializer(data=request.data)
+    #     print(request.data,"line")
         
-        if serializer.is_valid():
-            try:
-                college_facility = serializer.save()
+    #     if serializer.is_valid():
+    #         try:
+    #             college_facility = serializer.save()
                 
-                # Serialize response with the retrieve serializer (nested objects)
-                response_serializer = CollegeFacilityRetrieveSerializers(college_facility)
+    #             # Serialize response with the retrieve serializer (nested objects)
+    #             response_serializer = CollegeFacilityRetrieveSerializers(college_facility)
 
-                return Response(response_serializer.data, status=status.HTTP_201_CREATED)
-            except IntegrityError:
-                return Response({"error": "Invalid data. College and Facility are required."}, status=status.HTTP_400_BAD_REQUEST)
+    #             return Response(response_serializer.data, status=status.HTTP_201_CREATED)
+    #         except IntegrityError:
+    #             return Response({"error": "Invalid data. College and Facility are required."}, status=status.HTTP_400_BAD_REQUEST)
 
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     # @action(detail=False, methods=['get'], name="action_name", url_path="url_path")
     # def action_name(self, request, *args, **kwargs):

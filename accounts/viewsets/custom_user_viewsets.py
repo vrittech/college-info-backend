@@ -29,7 +29,7 @@ class CustomUserViewSet(viewsets.ModelViewSet):
     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]
     
     search_fields = ['position', 'email','first_name','last_name','groups__name']
-    ordering_fields =['position', 'email', 'full_name','first_name','last_name','id','created_date','updated_date']
+    ordering_fields =['position', 'email','first_name','last_name','id','created_date','updated_date']
 
 
     def get_queryset(self):

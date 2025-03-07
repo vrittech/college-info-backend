@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 129,
+            "activePatchIndex": 144,
             "patches": [
                 {
                     "date": 1728378543651,
@@ -524,6 +524,66 @@
                 {
                     "date": 1741244083599,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -69,9 +69,9 @@\n class CollegeSerializer(serializers.ModelSerializer):\n     profile_completion_percentage = serializers.SerializerMethodField()\n     class Meta:\n         model = College\n-        fields = ['id','slug', 'name', 'address','profile_completion_percentage','is_show','is_']  # Adjust based on model fields\n+        fields = ['id','slug', 'name', 'address','profile_completion_percentage','is_show','is_verified']  # Adjust based on model fields\n     def get_profile_completion_percentage(self, obj):\n         return obj.get_profile_completion_percentage  # Call the property method\n # class StaffSocialMediaSerializer(serializers.ModelSerializer):\n #     social_media = SocialMediaSerializer(read_only=True)\n"
+                },
+                {
+                    "date": 1741332172895,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -218,8 +218,10 @@\n \n     class Meta:\n         model = User\n         fields = ['id', 'email', 'full_name', 'phone', 'password', 'username']\n+        \n+    \n \n     def validate_password(self, value):\n         return make_password(value)\n \n"
+                },
+                {
+                    "date": 1741332180184,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -219,9 +219,9 @@\n     class Meta:\n         model = User\n         fields = ['id', 'email', 'full_name', 'phone', 'password', 'username']\n         \n-    \n+    def get\n \n     def validate_password(self, value):\n         return make_password(value)\n \n"
+                },
+                {
+                    "date": 1741332186548,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -219,9 +219,9 @@\n     class Meta:\n         model = User\n         fields = ['id', 'email', 'full_name', 'phone', 'password', 'username']\n         \n-    def get\n+    def get_full\n \n     def validate_password(self, value):\n         return make_password(value)\n \n"
+                },
+                {
+                    "date": 1741332194502,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -219,9 +219,9 @@\n     class Meta:\n         model = User\n         fields = ['id', 'email', 'full_name', 'phone', 'password', 'username']\n         \n-    def get_full\n+    def get_full_name(``)\n \n     def validate_password(self, value):\n         return make_password(value)\n \n"
+                },
+                {
+                    "date": 1741332202170,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -219,9 +219,9 @@\n     class Meta:\n         model = User\n         fields = ['id', 'email', 'full_name', 'phone', 'password', 'username']\n         \n-    def get_full_name(``)\n+    def get_full_name(self,)\n \n     def validate_password(self, value):\n         return make_password(value)\n \n"
+                },
+                {
+                    "date": 1741332229973,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -186,8 +186,9 @@\n         \n         return data\n \n class CustomUserRetrieveSerializer(serializers.ModelSerializer):\n+    full\n     college = CollegeSerializer(read_only = True)\n     # usersocial = StaffSocialMediaSerializer(many=True,read_only = True)\n     groups = GroupSerializer(many=True,read_only = True)\n     # department = DepartmentSerializer(read_only = True)\n@@ -219,9 +220,10 @@\n     class Meta:\n         model = User\n         fields = ['id', 'email', 'full_name', 'phone', 'password', 'username']\n         \n-    def get_full_name(self,)\n+    def get_full_name(self, obj):\n+        return obj.full_name\n \n     def validate_password(self, value):\n         return make_password(value)\n \n"
+                },
+                {
+                    "date": 1741332235975,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -186,9 +186,9 @@\n         \n         return data\n \n class CustomUserRetrieveSerializer(serializers.ModelSerializer):\n-    full\n+    full_name = serializers.SerializerMethodField()\n     college = CollegeSerializer(read_only = True)\n     # usersocial = StaffSocialMediaSerializer(many=True,read_only = True)\n     groups = GroupSerializer(many=True,read_only = True)\n     # department = DepartmentSerializer(read_only = True)\n"
+                },
+                {
+                    "date": 1741332249476,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -195,8 +195,10 @@\n     class Meta:\n         model = User\n         fields =fields = '__all__'\n         # ('roles', 'department', 'email', 'full_name', 'social_links', 'position', 'phone', 'avatar', 'professional_image', )\n+      def get_full_name(self, obj):\n+        return obj.full_name\n \n class CustomUserChangePasswordSerializers(serializers.Serializer):\n     current_password = serializers.CharField(write_only=True)\n     new_password = serializers.CharField(write_only=True)\n"
+                },
+                {
+                    "date": 1741332283801,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -195,9 +195,9 @@\n     class Meta:\n         model = User\n         fields =fields = '__all__'\n         # ('roles', 'department', 'email', 'full_name', 'social_links', 'position', 'phone', 'avatar', 'professional_image', )\n-      def get_full_name(self, obj):\n+    def get_full_name(self, obj):\n         return obj.full_name\n \n class CustomUserChangePasswordSerializers(serializers.Serializer):\n     current_password = serializers.CharField(write_only=True)\n@@ -216,9 +216,9 @@\n         return value\n \n \n class CustomUserWriteSerializersCollegeAdmin(serializers.ModelSerializer):\n-    full_name = serializers.CharField(required=True, write_only=True)\n+    full_name = serializers.CharField(required=False, write_only=True)\n \n     class Meta:\n         model = User\n         fields = ['id', 'email', 'full_name', 'phone', 'password', 'username']\n"
+                },
+                {
+                    "date": 1741332291543,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -186,9 +186,9 @@\n         \n         return data\n \n class CustomUserRetrieveSerializer(serializers.ModelSerializer):\n-    full_name = serializers.SerializerMethodField()\n+    full_name = serializers.SerializerMethodField(required=False,)\n     college = CollegeSerializer(read_only = True)\n     # usersocial = StaffSocialMediaSerializer(many=True,read_only = True)\n     groups = GroupSerializer(many=True,read_only = True)\n     # department = DepartmentSerializer(read_only = True)\n"
+                },
+                {
+                    "date": 1741332297178,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -186,9 +186,9 @@\n         \n         return data\n \n class CustomUserRetrieveSerializer(serializers.ModelSerializer):\n-    full_name = serializers.SerializerMethodField(required=False,)\n+    full_name = serializers.SerializerMethodField(read_only=False,)\n     college = CollegeSerializer(read_only = True)\n     # usersocial = StaffSocialMediaSerializer(many=True,read_only = True)\n     groups = GroupSerializer(many=True,read_only = True)\n     # department = DepartmentSerializer(read_only = True)\n"
+                },
+                {
+                    "date": 1741332321397,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -186,16 +186,16 @@\n         \n         return data\n \n class CustomUserRetrieveSerializer(serializers.ModelSerializer):\n-    full_name = serializers.SerializerMethodField(read_only=False,)\n+    full_name = serializers.SerializerMethodField(read_only=True)\n     college = CollegeSerializer(read_only = True)\n     # usersocial = StaffSocialMediaSerializer(many=True,read_only = True)\n     groups = GroupSerializer(many=True,read_only = True)\n     # department = DepartmentSerializer(read_only = True)\n     class Meta:\n         model = User\n-        fields =fields = '__all__'\n+        fields = fields = '__all__'\n         # ('roles', 'department', 'email', 'full_name', 'social_links', 'position', 'phone', 'avatar', 'professional_image', )\n     def get_full_name(self, obj):\n         return obj.full_name\n \n"
+                },
+                {
+                    "date": 1741332339478,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -193,9 +193,9 @@\n     groups = GroupSerializer(many=True,read_only = True)\n     # department = DepartmentSerializer(read_only = True)\n     class Meta:\n         model = User\n-        fields = fields = '__all__'\n+        fields = fields = ['roles', 'department', 'email', 'full_name', 'social_links', 'position', 'phone', 'avatar', 'professional_image',]\n         # ('roles', 'department', 'email', 'full_name', 'social_links', 'position', 'phone', 'avatar', 'professional_image', )\n     def get_full_name(self, obj):\n         return obj.full_name\n \n"
+                },
+                {
+                    "date": 1741332357566,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -220,9 +220,9 @@\n     full_name = serializers.CharField(required=False, write_only=True)\n \n     class Meta:\n         model = User\n-        fields = ['id', 'email', 'full_name', 'phone', 'password', 'username']\n+        fields = ['roles', 'department', 'email', 'full_name', 'social_links', 'position', 'phone', 'avatar', 'professional_image',]\n         \n     def get_full_name(self, obj):\n         return obj.full_name\n \n"
+                },
+                {
+                    "date": 1741332376920,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -186,19 +186,16 @@\n         \n         return data\n \n class CustomUserRetrieveSerializer(serializers.ModelSerializer):\n-    full_name = serializers.SerializerMethodField(read_only=True)\n     college = CollegeSerializer(read_only = True)\n     # usersocial = StaffSocialMediaSerializer(many=True,read_only = True)\n     groups = GroupSerializer(many=True,read_only = True)\n     # department = DepartmentSerializer(read_only = True)\n     class Meta:\n         model = User\n-        fields = fields = ['roles', 'department', 'email', 'full_name', 'social_links', 'position', 'phone', 'avatar', 'professional_image',]\n+        fields =fields = '__all__'\n         # ('roles', 'department', 'email', 'full_name', 'social_links', 'position', 'phone', 'avatar', 'professional_image', )\n-    def get_full_name(self, obj):\n-        return obj.full_name\n \n class CustomUserChangePasswordSerializers(serializers.Serializer):\n     current_password = serializers.CharField(write_only=True)\n     new_password = serializers.CharField(write_only=True)\n@@ -216,16 +213,14 @@\n         return value\n \n \n class CustomUserWriteSerializersCollegeAdmin(serializers.ModelSerializer):\n-    full_name = serializers.CharField(required=False, write_only=True)\n+    full_name = serializers.CharField(required=True, write_only=True)\n \n     class Meta:\n         model = User\n-        fields = ['roles', 'department', 'email', 'full_name', 'social_links', 'position', 'phone', 'avatar', 'professional_image',]\n+        fields = ['id', 'email', 'full_name', 'phone', 'password', 'username']\n         \n-    def get_full_name(self, obj):\n-        return obj.full_name\n \n     def validate_password(self, value):\n         return make_password(value)\n \n"
                 }
             ],
             "date": 1728378543651,

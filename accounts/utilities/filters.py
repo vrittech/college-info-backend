@@ -9,7 +9,7 @@ class CustomUserFilter(django_filters.FilterSet):
 
     first_name = django_filters.CharFilter(lookup_expr='icontains')
     last_name = django_filters.CharFilter(lookup_expr='icontains')
-    full_name = django_filters.CharFilter(lookup_expr='icontains')
+    # full_name = django_filters.CharFilter(lookup_expr='icontains')
     email = django_filters.CharFilter(lookup_expr='icontains')
     phone = django_filters.CharFilter(lookup_expr='icontains')
     position = django_filters.NumberFilter()
@@ -29,7 +29,7 @@ class CustomUserFilter(django_filters.FilterSet):
     class Meta:
         model = CustomUser
         fields = [
-            'first_name', 'last_name', 'full_name', 'email', 'phone', 'position',
+            'first_name', 'last_name', 'email', 'phone', 'position',
             'is_active', 'is_verified', 'college', 'social_media', 'groups',
             'user_permissions', 'created_date__gte', 'created_date__lte',
             'updated_date__gte', 'updated_date__lte'
