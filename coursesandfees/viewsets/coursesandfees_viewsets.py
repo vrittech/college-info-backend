@@ -13,6 +13,8 @@ from mainproj.permissions import DynamicModelPermission
 from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
 from rest_framework import status
+from collegemanagement.models import College
+from django.db.models import Avg, Count, Q
 
 
 class coursesandfeesViewsets(viewsets.ModelViewSet):
@@ -85,37 +87,58 @@ class coursesandfeesViewsets(viewsets.ModelViewSet):
     @action(detail=False, methods=['get'], permission_classes=[AllowAny], url_path="average-course-fee(?:/(?P<slug>[^/.]+))?")
     def average_course_fee(self, request, slug=None, *args, **kwargs):
         """
-        Fetch the average fee for a given course using its slug.
-        If no slug is provided, return the average fee for all courses.
+        Fetch the average fee for courses.
+        - If a course slug is provided, return its average fee.
+        - If no slug is provided, return the average fee for all courses.
+        - Courses with no fee data should return `null` as their fee.
         """
+
         if slug:
-            # Fetch the course using the slug
+            # Fetch course by slug
             course = get_object_or_404(Course, slug=slug)
 
-            # Calculate the overall average fee for the given course
+            # Calculate the average fee for the given course
             average_fee = (
-                CoursesAndFees.objects.filter(course=course, amount__isnull=False)
+                CoursesAndFees.objects.filter(course=course)
                 .aggregate(overall_average_fee=Avg('amount'))
             )
 
-            # Check if data exists
-            if average_fee['overall_average_fee'] is None:
-                return Response({"message": "No fee data available for the specified course."}, status=404)
-
             return Response({
                 "course_slug": slug,
-                "course_name": course.name,  # Assuming `name` field exists
-                "overall_average_fee": average_fee['overall_average_fee']
+                "course_name": course.name,
+                "overall_average_fee": average_fee['overall_average_fee'],  # Will be `None` if no fees exist
             }, status=200)
-        
+
         else:
+            # Fetch all courses
+            courses = Course.objects.all().values('name', 'slug')
+
             # Calculate the average fee for each course
-            course_fees = (
-                CoursesAndFees.objects.values('course__name', 'course__slug')
+            course_fees = {
+                course['slug']: {
+                    "course_name": course['name'],
+                    "course_slug": course['slug'],
+                    "overall_average_fee": None,  # Default to null
+                }
+                for course in courses
+            }
+
+            # Fetch courses with fee data
+            fees = (
+                CoursesAndFees.objects.values('course__slug')
                 .annotate(overall_average_fee=Avg('amount'))
             )
 
-            if not course_fees:
-                return Response({"message": "No fee data available for any course."}, status=404)
+            # Update the dictionary with available fee data
+            for fee in fees:
+                course_fees[fee['course__slug']]["overall_average_fee"] = fee["overall_average_fee"]
 
-            return Response({"courses": list(course_fees)}, status=200)
+            # Convert dictionary to list
+            course_list = list(course_fees.values())
+
+            # Paginate the response
+            paginator = MyPageNumberPagination()
+            paginated_courses = paginator.paginate_queryset(course_list, request)
+
+            return paginator.get_paginated_response({"courses": paginated_courses})
+
