@@ -42,7 +42,16 @@ class EventListSerializers(serializers.ModelSerializer):
         for image_obj in query:
             if image_obj.image:  # Ensure image exists
                 image_url = request.build_absolute_uri(image_obj.image.url) if request else f"{settings.MEDIA_URL}{image_obj.image.url}"
-                images.append({"id": image_obj.id, "image": image_url, "position": image_obj.position})
+                # images.append({"id": image_obj.id, "image": image_url, "position": image_obj.position})
+                images.append({
+                    "id": image_obj.id,
+                    "image": image_url,
+                    "is_featured_image": image_obj.is_featured_image,
+                    "position": image_obj.position if hasattr(image_obj, 'position') else 0,  # Default to 0 if not present
+                    "created_date_time": image_obj.created_date_time,
+                    "created_date": image_obj.created_date,
+                    "updated_date": image_obj.updated_date,
+                })
 
         return images
             

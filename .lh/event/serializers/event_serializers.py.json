@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 87,
+            "activePatchIndex": 90,
             "patches": [
                 {
                     "date": 1733477390024,
@@ -356,6 +356,18 @@
                 {
                     "date": 1741167486016,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -64,9 +64,9 @@\n         images = []\n         for image_obj in query:\n             if image_obj.image:  # Ensure image exists\n                 image_url = request.build_absolute_uri(image_obj.image.url) if request else f\"{settings.MEDIA_URL}{image_obj.image.url}\"\n-                images.append({\"id\": image_obj.id, \"image_url\": image_url, \"position\": image_obj.position})\n+                images.append({\"id\": image_obj.id, \"image\": image_url, \"position\": image_obj.position})\n \n         return images\n \n \n"
+                },
+                {
+                    "date": 1741502995175,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -41,9 +41,18 @@\n         images = []\n         for image_obj in query:\n             if image_obj.image:  # Ensure image exists\n                 image_url = request.build_absolute_uri(image_obj.image.url) if request else f\"{settings.MEDIA_URL}{image_obj.image.url}\"\n-                images.append({\"id\": image_obj.id, \"image\": image_url, \"position\": image_obj.position})\n+                # images.append({\"id\": image_obj.id, \"image\": image_url, \"position\": image_obj.position})\n+                images.append({\n+        \"id\": image_obj.id,\n+        \"image\": image_url,\n+        \"is_featured\": image_obj.is_featured,\n+        \"position\": image_obj.position if hasattr(image_obj, 'position') else 0,  # Default to 0 if not present\n+        \"created_date_time\": image_obj.created_date_time,\n+        \"created_date\": image_obj.created_date,\n+        \"updated_date\": image_obj.updated_date,\n+    })\n \n         return images\n             \n \n"
+                },
+                {
+                    "date": 1741503000414,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -43,16 +43,16 @@\n             if image_obj.image:  # Ensure image exists\n                 image_url = request.build_absolute_uri(image_obj.image.url) if request else f\"{settings.MEDIA_URL}{image_obj.image.url}\"\n                 # images.append({\"id\": image_obj.id, \"image\": image_url, \"position\": image_obj.position})\n                 images.append({\n-        \"id\": image_obj.id,\n-        \"image\": image_url,\n-        \"is_featured\": image_obj.is_featured,\n-        \"position\": image_obj.position if hasattr(image_obj, 'position') else 0,  # Default to 0 if not present\n-        \"created_date_time\": image_obj.created_date_time,\n-        \"created_date\": image_obj.created_date,\n-        \"updated_date\": image_obj.updated_date,\n-    })\n+                    \"id\": image_obj.id,\n+                    \"image\": image_url,\n+                    \"is_featured\": image_obj.is_featured,\n+                    \"position\": image_obj.position if hasattr(image_obj, 'position') else 0,  # Default to 0 if not present\n+                    \"created_date_time\": image_obj.created_date_time,\n+                    \"created_date\": image_obj.created_date,\n+                    \"updated_date\": image_obj.updated_date,\n+                })\n \n         return images\n             \n \n"
+                },
+                {
+                    "date": 1741503035742,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -45,9 +45,9 @@\n                 # images.append({\"id\": image_obj.id, \"image\": image_url, \"position\": image_obj.position})\n                 images.append({\n                     \"id\": image_obj.id,\n                     \"image\": image_url,\n-                    \"is_featured\": image_obj.is_featured,\n+                    \"is_featured\": image_obj.is_featured_image,\n                     \"position\": image_obj.position if hasattr(image_obj, 'position') else 0,  # Default to 0 if not present\n                     \"created_date_time\": image_obj.created_date_time,\n                     \"created_date\": image_obj.created_date,\n                     \"updated_date\": image_obj.updated_date,\n"
                 }
             ],
             "date": 1733477390024,
