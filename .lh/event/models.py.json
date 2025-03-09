@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 177,
+            "activePatchIndex": 184,
             "patches": [
                 {
                     "date": 1726568467190,
@@ -716,6 +716,34 @@
                 {
                     "date": 1741156482887,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -102,9 +102,9 @@\n     \n     created_date_time = models.DateTimeField(auto_now_add=True, null=True, blank=True)\n     created_date = models.DateField(auto_now_add=True, null=True, blank=True)\n     updated_date = models.DateTimeField(auto_now=True, null=True, blank=True)\n-    position = models.PositiveIntegerField(default=0)\n+    \n \n     \n     def __str__(self):\n         return f\"{self.event_name}\"\n"
+                },
+                {
+                    "date": 1741495400418,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -95,8 +95,10 @@\n     amount_country = models.CharField(max_length=100, blank=True, null=True)\n     \n     description = models.TextField(blank=True, null=True)\n     is_featured_event = models.BooleanField(default=False)\n+        featured_image = models.CharField(max_length = 500 , null = True,blank = True)\n+\n     \n     category = models.ManyToManyField(EventCategory, related_name='event_category')\n     organizer = models.ManyToManyField(EventOrganizer, related_name='organizer')\n     \n@@ -123,8 +125,9 @@\n class EventGallery(models.Model):\n     event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name='image')\n     is_featured_image = models.BooleanField(default=False)\n     image = models.ImageField(upload_to='event_images/',null=True,blank=True)\n+    position = models.PositiveIntegerField(default=0)\n     \n     created_date_time = models.DateTimeField(auto_now_add=True, null=True, blank=True)\n     created_date = models.DateField(auto_now_add=True, null=True, blank=True)\n     updated_date = models.DateTimeField(auto_now=True, null=True, blank=True)\n"
+                },
+                {
+                    "date": 1741495405826,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -95,9 +95,9 @@\n     amount_country = models.CharField(max_length=100, blank=True, null=True)\n     \n     description = models.TextField(blank=True, null=True)\n     is_featured_event = models.BooleanField(default=False)\n-        featured_image = models.CharField(max_length = 500 , null = True,blank = True)\n+    featured_image = models.CharField(max_length = 500 , null = True,blank = True)\n \n     \n     category = models.ManyToManyField(EventCategory, related_name='event_category')\n     organizer = models.ManyToManyField(EventOrganizer, related_name='organizer')\n"
+                },
+                {
+                    "date": 1741495615152,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -137,5 +137,18 @@\n     \n     class Meta:\n         permissions = [\n             (\"manage_eventgallery\", \"Manage Event Gallery\"),\n-        ]\n\\ No newline at end of file\n+        ]\n+    \n+    def save(self, *args, **kwargs):\n+        # Save the instance first to get a valid `image.url`\n+        super().save(*args, **kwargs)\n+\n+        if self.is_featured_image and self.image:\n+            # Ensure SITE_URL is set in settings\n+            site_url = getattr(settings, \"SITE_URL\", \"https://collegeinfoapi.com\")  # Default fallback\n+            absolute_url = urljoin(site_url, self.image.url)  # Construct absolute URL\n+\n+            # Save to event's featured_image field\n+            self.event.featured_image = absolute_url\n+            self.event.save(update_fields=['featured_image'])  # Update only the featured_image field\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1741495626448,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,8 +24,10 @@\n from django.db import models\n from mainproj.utilities.seo import SEOFields\n import uuid\n from django.utils.text import slugify\n+from django.conf import settings\n+from urllib.parse import urljoin\n \n \n \n \n"
+                },
+                {
+                    "date": 1741495947728,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -152,5 +152,6 @@\n             absolute_url = urljoin(site_url, self.image.url)  # Construct absolute URL\n \n             # Save to event's featured_image field\n             self.event.featured_image = absolute_url\n+            \n             self.event.save(update_fields=['featured_image'])  # Update only the featured_image field\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1741495953426,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -152,6 +152,6 @@\n             absolute_url = urljoin(site_url, self.image.url)  # Construct absolute URL\n \n             # Save to event's featured_image field\n             self.event.featured_image = absolute_url\n-            \n+            print()\n             self.event.save(update_fields=['featured_image'])  # Update only the featured_image field\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1741496029286,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -133,11 +133,8 @@\n     created_date_time = models.DateTimeField(auto_now_add=True, null=True, blank=True)\n     created_date = models.DateField(auto_now_add=True, null=True, blank=True)\n     updated_date = models.DateTimeField(auto_now=True, null=True, blank=True)\n     \n-    def __str__(self):\n-        return f\"{self.image.url} - {'Featured' if self.is_featured_image else 'Standard'}\"\n-    \n     class Meta:\n         permissions = [\n             (\"manage_eventgallery\", \"Manage Event Gallery\"),\n         ]\n@@ -152,6 +149,6 @@\n             absolute_url = urljoin(site_url, self.image.url)  # Construct absolute URL\n \n             # Save to event's featured_image field\n             self.event.featured_image = absolute_url\n-            print()\n+            print(\"🌟\",self.event.featured_image)\n             self.event.save(update_fields=['featured_image'])  # Update only the featured_image field\n\\ No newline at end of file\n"
                 }
             ],
             "date": 1726568467190,

@@ -25,6 +25,8 @@ from django.db import models
 from mainproj.utilities.seo import SEOFields
 import uuid
 from django.utils.text import slugify
+from django.conf import settings
+from urllib.parse import urljoin
 
 
 
@@ -96,6 +98,8 @@ class Event(SEOFields):
     
     description = models.TextField(blank=True, null=True)
     is_featured_event = models.BooleanField(default=False)
+    featured_image = models.CharField(max_length = 500 , null = True,blank = True)
+
     
     category = models.ManyToManyField(EventCategory, related_name='event_category')
     organizer = models.ManyToManyField(EventOrganizer, related_name='organizer')
@@ -130,10 +134,21 @@ class EventGallery(models.Model):
     created_date = models.DateField(auto_now_add=True, null=True, blank=True)
     updated_date = models.DateTimeField(auto_now=True, null=True, blank=True)
     
-    def __str__(self):
-        return f"{self.image.url} - {'Featured' if self.is_featured_image else 'Standard'}"
-    
     class Meta:
         permissions = [
             ("manage_eventgallery", "Manage Event Gallery"),
         ]
+    
+    def save(self, *args, **kwargs):
+        # Save the instance first to get a valid `image.url`
+        super().save(*args, **kwargs)
+
+        if self.is_featured_image and self.image:
+            # Ensure SITE_URL is set in settings
+            site_url = getattr(settings, "SITE_URL", "https://collegeinfoapi.com")  # Default fallback
+            absolute_url = urljoin(site_url, self.image.url)  # Construct absolute URL
+
+            # Save to event's featured_image field
+            self.event.featured_image = absolute_url
+            print("🌟",self.event.featured_image)
+            self.event.save(update_fields=['featured_image'])  # Update only the featured_image field
