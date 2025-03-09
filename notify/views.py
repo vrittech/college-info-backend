@@ -98,3 +98,22 @@ class NotificationViewSet(viewsets.ModelViewSet):
             logger.error(f"Error in mark_as_read(): {str(e)}", exc_info=True)
             return Response({"error": "An error occurred while marking the notification as read."},
                             status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    
+    @action(detail=False, methods=['get'], name="Notification Count", url_path="notification-count")
+    def notification_count(self, request, *args, **kwargs):
+        """
+        Get count of unread notifications.
+        - Superusers see the total count of unread notifications.
+        - Regular users see only their own unread notifications.
+        """
+        try:
+            if request.user.is_superuser:
+                unread_count = Notification.objects.exclude(read_by=request.user).count()
+            else:
+                unread_count = Notification.objects.filter(user=request.user).exclude(read_by=request.user).count()
+
+            return Response({"unread_notification_count": unread_count}, status=status.HTTP_200_OK)
+        except Exception as e:
+            logger.error(f"Error in notification_count(): {str(e)}", exc_info=True)
+            return Response({"error": "An error occurred while fetching the notification count."},
+                            status=status.HTTP_500_INTERNAL_SERVER_ERROR)
