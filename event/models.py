@@ -150,5 +150,4 @@ class EventGallery(models.Model):
 
             # Save to event's featured_image field
             self.event.featured_image = absolute_url
-            print("🌟",self.event.featured_image)
             self.event.save(update_fields=['featured_image'])  # Update only the featured_image field

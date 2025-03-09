@@ -273,9 +273,15 @@ class InformationWriteSerializers(serializers.ModelSerializer):
         for field, ids in m2m_data.items():
             getattr(information, field).set(ids)
 
-        # Save images and files
-        for image_file in images_data:
-            InformationGallery.objects.create(information=information, image=image_file)
+        # # Save images and files
+        # for image_file in images_data:
+        #     InformationGallery.objects.create(information=information, image=image_file)
+        for index, image_file in enumerate(images_data):
+            InformationGallery.objects.create(
+                information=information,
+                image=image_file,
+                is_featured=(index == 0)  # Set only the first image as featured
+            )
 
         for file_item in files_data:
             InformationFiles.objects.create(information=information, file=file_item)

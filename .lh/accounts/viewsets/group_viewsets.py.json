@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 2,
+            "activePatchIndex": 6,
             "patches": [
                 {
                     "date": 1738669112140,
@@ -16,6 +16,22 @@
                 {
                     "date": 1738669122403,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,9 @@\n from django.contrib.auth.models import Group, Permission\n from rest_framework import viewsets\n from rest_framework.permissions import IsAdminUser\n from ..serializers.group_serializers import GroupSerializer\n-from ..uti\n+from ..utilities.pagination import MyPageNumberPagination\n \n class GroupViewSet(viewsets.ModelViewSet):\n     queryset = Group.objects.all().order_by('-id')\n     serializer_class = GroupSerializer\n"
+                },
+                {
+                    "date": 1741502460249,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,6 +7,8 @@\n class GroupViewSet(viewsets.ModelViewSet):\n     queryset = Group.objects.all().order_by('-id')\n     serializer_class = GroupSerializer\n     permission_classes = [IsAdminUser]\n+    pagination_class = MyPageNumberPagination\n+    \n \n \n"
+                },
+                {
+                    "date": 1741502466126,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,7 +8,14 @@\n     queryset = Group.objects.all().order_by('-id')\n     serializer_class = GroupSerializer\n     permission_classes = [IsAdminUser]\n     pagination_class = MyPageNumberPagination\n-    \n+    filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n+    search_fields = ['id','name']\n+    ordering_fields = ['id','name']\n+    filterset_fields = {\n+        'id': ['exact'],\n+        'name': ['exact'],\n+        'created_date': ['exact', 'gte', 'lte'],\n+    }\n \n \n"
+                },
+                {
+                    "date": 1741502476374,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,8 +2,9 @@\n from rest_framework import viewsets\n from rest_framework.permissions import IsAdminUser\n from ..serializers.group_serializers import GroupSerializer\n from ..utilities.pagination import MyPageNumberPagination\n+from django\n \n class GroupViewSet(viewsets.ModelViewSet):\n     queryset = Group.objects.all().order_by('-id')\n     serializer_class = GroupSerializer\n"
+                },
+                {
+                    "date": 1741502512496,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,10 @@\n from rest_framework import viewsets\n from rest_framework.permissions import IsAdminUser\n from ..serializers.group_serializers import GroupSerializer\n from ..utilities.pagination import MyPageNumberPagination\n-from django\n+from django_filters.rest_framework import DjangoFilterBackend\n+from rest_framework.filters import SearchFilter, OrderingFilter\n \n class GroupViewSet(viewsets.ModelViewSet):\n     queryset = Group.objects.all().order_by('-id')\n     serializer_class = GroupSerializer\n@@ -15,8 +16,7 @@\n     ordering_fields = ['id','name']\n     filterset_fields = {\n         'id': ['exact'],\n         'name': ['exact'],\n-        'created_date': ['exact', 'gte', 'lte'],\n     }\n \n \n"
                 }
             ],
             "date": 1738669112140,

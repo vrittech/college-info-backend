@@ -14,6 +14,8 @@ from mainproj.utilities.seo import SEOFields
 from django.core.exceptions import ValidationError
 from django.utils.text import slugify
 import uuid
+from urllib.parse import urljoin
+from django.conf import settings
 
 class InformationTagging(models.Model):
     name = models.CharField(max_length=100,null=True,blank = True)
@@ -89,6 +91,8 @@ class Information(SEOFields):
     # image = models.ManyToManyField(InformationGallery, blank=True)
     # file = models.ManyToManyField(InformationFiles, blank=True)
     state = models.BooleanField(default=False)
+    featured_image = models.CharField(max_length = 500 , null = True,blank = True)
+
 
     created_date = models.DateField(auto_now_add=True, null=True, blank=True)
     updated_date = models.DateTimeField(auto_now=True, null=True, blank=True)
@@ -133,3 +137,21 @@ class InformationGallery(models.Model):
         permissions = [
             ('manage_informationgallery', 'Manage Information Gallery'),
         ]
+    
+    def save(self, *args, **kwargs):
+        # Ensure that only one featured image exists for this information
+        if self.is_featured:
+            # Unfeature any other images linked to this information
+            InformationGallery.objects.filter(information=self.information, is_featured=True).update(is_featured=False)
+
+        # Save the current instance first
+        super().save(*args, **kwargs)
+
+        # Update the Information model's featured_image field if this is the featured image
+        if self.is_featured and self.image:
+            site_url = getattr(settings, "SITE_URL", "https://collegeinfoapi.com")  # Default fallback URL
+            absolute_url = urljoin(site_url, self.image.url)  # Construct absolute URL
+
+            # Update the `featured_image` field of the related `Information` instance
+            self.information.featured_image = absolute_url
+            self.information.save(update_fields=['featured_image'])  # Save only the updated field
