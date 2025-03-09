@@ -33,6 +33,7 @@ class coursesandfeesViewsets(viewsets.ModelViewSet):
         'is_admission': ['exact'],
         'college__slug': ['exact'],
         'course__slug': ['exact'],
+        'course__affiliation__id': ['exact'],  # Filter by affiliation
     }
 
     # def get_queryset(self):
@@ -87,15 +88,26 @@ class coursesandfeesViewsets(viewsets.ModelViewSet):
     @action(detail=False, methods=['get'], permission_classes=[AllowAny], url_path="average-course-fee(?:/(?P<slug>[^/.]+))?")
     def average_course_fee(self, request, slug=None, *args, **kwargs):
         """
-        Fetch the average fee for courses.
+        Fetch the average fee for courses with filtering.
         - If a course slug is provided, return its average fee.
         - If no slug is provided, return the average fee for all courses.
+        - Filter by affiliation, college, or other parameters.
+        - Include duration.
         - Courses with no fee data should return `null` as their fee.
         """
 
+        # Get optional filters from query parameters
+        affiliation_id = request.query_params.get("affiliation", None)
+        college_slug = request.query_params.get("college", None)
+
         if slug:
-            # Fetch course by slug
-            course = get_object_or_404(Course, slug=slug)
+            # Fetch course by slug with optional affiliation filter
+            course_query = Course.objects.filter(slug=slug).select_related("affiliation", "duration")
+            if affiliation_id:
+                course_query = course_query.filter(affiliation__id=affiliation_id)
+
+            # Check if course exists after filtering
+            course = get_object_or_404(course_query)
 
             # Calculate the average fee for the given course
             average_fee = (
@@ -106,26 +118,48 @@ class coursesandfeesViewsets(viewsets.ModelViewSet):
             return Response({
                 "course_slug": slug,
                 "course_name": course.name,
+                "affiliation_id": course.affiliation.id if course.affiliation else None,
+                "affiliation_slug": course.affiliation.slug if course.affiliation else None,
+                "affiliation_name": course.affiliation.name if course.affiliation else None,
+                "duration_id": course.duration.id if course.duration else None,
+                "duration_name": course.duration.name if course.duration else None,  # Assuming `name` exists in Duration
                 "overall_average_fee": average_fee['overall_average_fee'],  # Will be `None` if no fees exist
             }, status=200)
 
         else:
-            # Fetch all courses
-            courses = Course.objects.all().values('name', 'slug')
+            # Fetch all courses and apply filters
+            courses_query = Course.objects.select_related("affiliation", "duration")
+            if affiliation_id:
+                courses_query = courses_query.filter(affiliation__id=affiliation_id)
+            if college_slug:
+                courses_query = courses_query.filter(courses_and_fees__college__slug=college_slug)
 
-            # Calculate the average fee for each course
+            # Fetch course details
+            courses = courses_query.values(
+                'name', 'slug',
+                'affiliation__id', 'affiliation__slug', 'affiliation__name',
+                'duration__id', 'duration__name'
+            )
+
+            # Build a dictionary of courses
             course_fees = {
                 course['slug']: {
                     "course_name": course['name'],
                     "course_slug": course['slug'],
+                    "affiliation_id": course['affiliation__id'],
+                    "affiliation_slug": course['affiliation__slug'],
+                    "affiliation_name": course['affiliation__name'],
+                    "duration_id": course['duration__id'],
+                    "duration_name": course['duration__name'],
                     "overall_average_fee": None,  # Default to null
                 }
                 for course in courses
             }
 
-            # Fetch courses with fee data
+            # Fetch courses that have fee data
             fees = (
-                CoursesAndFees.objects.values('course__slug')
+                CoursesAndFees.objects.filter(course__slug__in=course_fees.keys())
+                .values('course__slug')
                 .annotate(overall_average_fee=Avg('amount'))
             )
 
@@ -141,4 +175,3 @@ class coursesandfeesViewsets(viewsets.ModelViewSet):
             paginated_courses = paginator.paginate_queryset(course_list, request)
 
             return paginator.get_paginated_response({"courses": paginated_courses})
-
