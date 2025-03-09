@@ -71,7 +71,7 @@ def create_notification(instance, action, user):
     title = f"{model_name.capitalize()} {action.capitalize()}"
 
     # Casual message (short and user-friendly)
-    casual_message = f"{user.first_name()} {action} a {model_name}." if user and user.is_authenticated else f"A {model_name} was {action} by an unauthorized user."
+    casual_message = f"{user.first_name} {action} a {model_name}." if user and user.is_authenticated else f"A {model_name} was {action} by an unauthorized user."
 
     # Detailed message (includes object data)
     object_data = {

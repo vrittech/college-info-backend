@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 35,
+            "activePatchIndex": 36,
             "patches": [
                 {
                     "date": 1739869421688,
@@ -148,6 +148,10 @@
                 {
                     "date": 1741498169682,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -70,9 +70,9 @@\n     identifier = str(getattr(instance, 'slug', getattr(instance, 'id', 'unknown')))\n     title = f\"{model_name.capitalize()} {action.capitalize()}\"\n \n     # Casual message (short and user-friendly)\n-    casual_message = f\"{user.full_name()} {action} a {model_name}.\" if user and user.is_authenticated else f\"A {model_name} was {action} by an unauthorized user.\"\n+    casual_message = f\"{user.first_name()} {action} a {model_name}.\" if user and user.is_authenticated else f\"A {model_name} was {action} by an unauthorized user.\"\n \n     # Detailed message (includes object data)\n     object_data = {\n         \"id\": instance.id,\n"
+                },
+                {
+                    "date": 1741498483267,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -70,9 +70,9 @@\n     identifier = str(getattr(instance, 'slug', getattr(instance, 'id', 'unknown')))\n     title = f\"{model_name.capitalize()} {action.capitalize()}\"\n \n     # Casual message (short and user-friendly)\n-    casual_message = f\"{user.first_name()} {action} a {model_name}.\" if user and user.is_authenticated else f\"A {model_name} was {action} by an unauthorized user.\"\n+    casual_message = f\"{user.first_name} {action} a {model_name}.\" if user and user.is_authenticated else f\"A {model_name} was {action} by an unauthorized user.\"\n \n     # Detailed message (includes object data)\n     object_data = {\n         \"id\": instance.id,\n"
                 }
             ],
             "date": 1739869421688,
