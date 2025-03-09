@@ -265,7 +265,7 @@ class collegeViewsets(viewsets.ModelViewSet):
                     "id": college.id,
                     "slug": college.slug,
                     "name": college.name,
-                    "district": college.district.name,
+                    "district": college.district.name if college.district else None,
                     "dp_image": request.build_absolute_uri(college.dp_image.url) if college.dp_image else None,
                     "address": college.address,
                     "swiper_images": images_array

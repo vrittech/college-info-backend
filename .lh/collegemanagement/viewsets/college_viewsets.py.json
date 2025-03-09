@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 156,
+            "activePatchIndex": 157,
             "patches": [
                 {
                     "date": 1733718920520,
@@ -632,6 +632,10 @@
                 {
                     "date": 1741493895638,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -264,8 +264,9 @@\n                 \"college\": {\n                     \"id\": college.id,\n                     \"slug\": college.slug,\n                     \"name\": college.name,\n+                    \"district\":\n                     \"dp_image\": request.build_absolute_uri(college.dp_image.url) if college.dp_image else None,\n                     \"address\": college.address,\n                     \"swiper_images\": images_array\n                 }\n"
+                },
+                {
+                    "date": 1741494057218,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -264,9 +264,9 @@\n                 \"college\": {\n                     \"id\": college.id,\n                     \"slug\": college.slug,\n                     \"name\": college.name,\n-                    \"district\":\n+                    \"district\": college.district.name ,\n                     \"dp_image\": request.build_absolute_uri(college.dp_image.url) if college.dp_image else None,\n                     \"address\": college.address,\n                     \"swiper_images\": images_array\n                 }\n"
                 }
             ],
             "date": 1733718920520,
