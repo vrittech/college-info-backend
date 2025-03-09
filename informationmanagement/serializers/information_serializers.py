@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from django.db import transaction
 import ast
+from django.conf import settings
 
 from ..models import Information, Level, SubLevel, Course, Affiliation, District, College, Faculty, InformationTagging, InformationCategory, InformationGallery, InformationFiles
 from rest_framework import serializers
@@ -194,12 +195,12 @@ class InformationWriteSerializers(serializers.ModelSerializer):
         attrs = super().to_representation(instance)
 
         # Make the gallery URLs absolute
-        for item in attrs['information_gallery']:
+        for item in attrs.get('information_gallery', []):  # Avoid KeyError if key is missing
             if item.get('image'):
                 item['image'] = self.get_absolute_url(item['image'])
 
         # Make the file URLs absolute
-        for item in attrs['information_files']:
+        for item in attrs.get('information_files', []):  # Avoid KeyError if key is missing
             if item.get('file'):
                 item['file'] = self.get_absolute_url(item['file'])
 
@@ -208,11 +209,21 @@ class InformationWriteSerializers(serializers.ModelSerializer):
     def get_absolute_url(self, file_field):
         """
         Returns the absolute URL for a file or image field.
+        If the field is already a URL (str), return it as is.
         """
         request = self.context.get('request')
-        if not request:
-            return file_field.url
-        return request.build_absolute_uri(file_field.url)
+        
+        # If it's already a full URL, return it as is
+        if file_field.startswith('http://') or file_field.startswith('https://'):
+            return file_field
+
+        # If the field is a Django ImageField/FileField, get its URL
+        if hasattr(file_field, 'url'):
+            return request.build_absolute_uri(file_field.url) if request else f"{settings.MEDIA_URL}{file_field.url}"
+
+        # Otherwise, assume it's a relative URL string and prepend MEDIA_URL
+        return request.build_absolute_uri(file_field) if request else f"{settings.MEDIA_URL}{file_field}"
+
 
     # def get_information_gallery(self, obj):
     #     return [img.image.url for img in obj.information_gallery.all()]
