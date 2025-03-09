@@ -102,7 +102,7 @@ CORS_ORIGIN_WHITELIST = [white for white in os.getenv('CORS_ORIGIN_WHITELIST').s
 # CSRF_TRUSTED_ORIGINS = [trusted for trusted in os.getenv('CSRF_TRUSTED_ORIGINS').split(',') if trusted != '']
 
 CORS_ALLOW_CREDENTIALS = True
-CSRF_TRUSTED_ORIGINS = ['https://collegeinfoapi.vrittechnologies.com']
+CSRF_TRUSTED_ORIGINS = ['https://base.collegeinfonepal.com']
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
