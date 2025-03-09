@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 27,
+            "activePatchIndex": 35,
             "patches": [
                 {
                     "date": 1733397109290,
@@ -116,6 +116,38 @@
                 {
                     "date": 1740132882982,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -68,13 +68,13 @@\n         #scp -r -o StrictHostKeyChecking=no ./* root@$SERVER_IP:$PROJECT_FOLDER/\n \n         # Run deployment commands on the server\n         echo \"Running deployment commands on the server\"\n-        ssh -o StrictHostKeyChecking=no root@$SERVER_IP \"cd $PROJECT_FOLDER && virtualenv venv && source venv/bin/activate && pip install -r requirements.txt && python manage.py migrate && python manage.py collectstatic --noinput \"\n+        # ssh -o StrictHostKeyChecking=no root@$SERVER_IP \"cd $PROJECT_FOLDER && virtualenv venv && source venv/bin/activate && pip install -r requirements.txt && python manage.py migrate && python manage.py collectstatic --noinput \"\n         \n \n         #echo \"Running deployment commands on the server\" && \n-        ssh -o StrictHostKeyChecking=no root@$SERVER_IP \"cd $PROJECT_FOLDER && virtualenv venv && source venv/bin/activate && pip install -r requirements.txt && python manage.py migrate && python manage.py collectstatic --noinput && screen -ls | grep $SCREEN_NAME | awk '{print $1}' | xargs -r -I{} screen -X -S {} quit && screen -dmS $SCREEN_NAME bash -c 'source venv/bin/activate && python manage.py runserver 0.0.0.0:$PORT'\"\n+        # ssh -o StrictHostKeyChecking=no root@$SERVER_IP \"cd $PROJECT_FOLDER && virtualenv venv && source venv/bin/activate && pip install -r requirements.txt && python manage.py migrate && python manage.py collectstatic --noinput && screen -ls | grep $SCREEN_NAME | awk '{print $1}' | xargs -r -I{} screen -X -S {} quit && screen -dmS $SCREEN_NAME bash -c 'source venv/bin/activate && python manage.py runserver 0.0.0.0:$PORT'\"\n \n \n \n \n"
+                },
+                {
+                    "date": 1741520868289,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -41,9 +41,10 @@\n         AWS_DEFAULT_REGION: ap-southeast-2\n         BACKEND_USER: backend\n         BACKEND_PASSWORD: backend\n         SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}\n-        SERVER_IP: \"142.171.168.136\"\n+        # SERVER_IP: \"142.171.168.136\"\n+        \n         PORT: \"8007\"\n         SCREEN_NAME: \"collegeinfo\"\n         PROJECT_FOLDER: \"/home/collegeinfo\"\n \n@@ -68,9 +69,9 @@\n         #scp -r -o StrictHostKeyChecking=no ./* root@$SERVER_IP:$PROJECT_FOLDER/\n \n         # Run deployment commands on the server\n         echo \"Running deployment commands on the server\"\n-        # ssh -o StrictHostKeyChecking=no root@$SERVER_IP \"cd $PROJECT_FOLDER && virtualenv venv && source venv/bin/activate && pip install -r requirements.txt && python manage.py migrate && python manage.py collectstatic --noinput \"\n+        ssh -o StrictHostKeyChecking=no root@$SERVER_IP \"cd $PROJECT_FOLDER && virtualenv venv && source venv/bin/activate && pip install -r requirements.txt && python manage.py migrate && python manage.py collectstatic --noinput \"\n         \n \n         #echo \"Running deployment commands on the server\" && \n         # ssh -o StrictHostKeyChecking=no root@$SERVER_IP \"cd $PROJECT_FOLDER && virtualenv venv && source venv/bin/activate && pip install -r requirements.txt && python manage.py migrate && python manage.py collectstatic --noinput && screen -ls | grep $SCREEN_NAME | awk '{print $1}' | xargs -r -I{} screen -X -S {} quit && screen -dmS $SCREEN_NAME bash -c 'source venv/bin/activate && python manage.py runserver 0.0.0.0:$PORT'\"\n"
+                },
+                {
+                    "date": 1741520875623,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -42,9 +42,9 @@\n         BACKEND_USER: backend\n         BACKEND_PASSWORD: backend\n         SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}\n         # SERVER_IP: \"142.171.168.136\"\n-        \n+        # SERVER_IP: \"\"\n         PORT: \"8007\"\n         SCREEN_NAME: \"collegeinfo\"\n         PROJECT_FOLDER: \"/home/collegeinfo\"\n \n"
+                },
+                {
+                    "date": 1741520883318,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -42,9 +42,9 @@\n         BACKEND_USER: backend\n         BACKEND_PASSWORD: backend\n         SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}\n         # SERVER_IP: \"142.171.168.136\"\n-        # SERVER_IP: \"\"\n+        # SERVER_IP: \"@82.29.167.247\"\n         PORT: \"8007\"\n         SCREEN_NAME: \"collegeinfo\"\n         PROJECT_FOLDER: \"/home/collegeinfo\"\n \n"
+                },
+                {
+                    "date": 1741520889033,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -42,10 +42,10 @@\n         BACKEND_USER: backend\n         BACKEND_PASSWORD: backend\n         SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}\n         # SERVER_IP: \"142.171.168.136\"\n-        # SERVER_IP: \"@82.29.167.247\"\n-        PORT: \"8007\"\n+        SERVER_IP: \"82.29.167.247\"\n+        PORT: \"8001\"\n         SCREEN_NAME: \"collegeinfo\"\n         PROJECT_FOLDER: \"/home/collegeinfo\"\n \n       run: |\n"
+                },
+                {
+                    "date": 1741520897953,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -36,9 +36,9 @@\n \n     - name: Deploy to VPS Server\n       env:\n         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}\n-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}\n+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY_ }}\n         AWS_DEFAULT_REGION: ap-southeast-2\n         BACKEND_USER: backend\n         BACKEND_PASSWORD: backend\n         SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}\n"
+                },
+                {
+                    "date": 1741520910381,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -36,9 +36,9 @@\n \n     - name: Deploy to VPS Server\n       env:\n         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}\n-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY_ }}\n+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}\n         AWS_DEFAULT_REGION: ap-southeast-2\n         BACKEND_USER: backend\n         BACKEND_PASSWORD: backend\n         SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}\n"
+                },
+                {
+                    "date": 1741520916329,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -40,9 +40,9 @@\n         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}\n         AWS_DEFAULT_REGION: ap-southeast-2\n         BACKEND_USER: backend\n         BACKEND_PASSWORD: backend\n-        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}\n+        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY_PROD }}\n         # SERVER_IP: \"142.171.168.136\"\n         SERVER_IP: \"82.29.167.247\"\n         PORT: \"8001\"\n         SCREEN_NAME: \"collegeinfo\"\n"
+                },
+                {
+                    "date": 1741520921456,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -49,9 +49,9 @@\n         PROJECT_FOLDER: \"/home/collegeinfo\"\n \n       run: |\n         mkdir -p ~/.ssh\n-        echo \"${{ secrets.SSH_PRIVATE_KEY }}\" > ~/.ssh/id_rsa\n+        echo \"${{ secrets.SSH_PRIVATE_KEY_PROD }}\" > ~/.ssh/id_rsa\n         chmod 600 ~/.ssh/id_rsa\n \n         # Install rsync\n         #sudo apt-get install -y rsync\n"
                 }
             ],
             "date": 1733397109290,
