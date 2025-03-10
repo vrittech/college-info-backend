@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 10,
+            "activePatchIndex": 11,
             "patches": [
                 {
                     "date": 1737963415881,
@@ -48,6 +48,10 @@
                 {
                     "date": 1740932761564,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,9 +15,9 @@\n     queryset = CollegeFaqs.objects.all().order_by('-id')\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     search_fields = ['id','college__name']\n-    ordering_fields = ['id','creq']\n+    ordering_fields = ['id','cre']\n \n     filterset_fields = {\n         'id': ['exact'],\n         'college__slug': ['exact'],\n"
+                },
+                {
+                    "date": 1741592509371,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,45 @@\n+from rest_framework import viewsets\n+from rest_framework.filters import SearchFilter, OrderingFilter\n+from django_filters.rest_framework import DjangoFilterBackend\n+from ..models import CollegeFaqs\n+from ..serializers.collegefaqs_serializers import CollegeFaqsListSerializers, CollegeFaqsRetrieveSerializers, CollegeFaqsWriteSerializers\n+from ..utilities.importbase import *\n+from mainproj.permissions import DynamicModelPermission\n+from ..utilities.pagination import MyPageNumberPagination\n+\n+class collegefaqsViewsets(viewsets.ModelViewSet):\n+    serializer_class = CollegeFaqsListSerializers\n+    permission_classes = [DynamicModelPermission]\n+    # authentication_classes = [JWTAuthentication]\n+    pagination_class = MyPageNumberPagination\n+    queryset = CollegeFaqs.objects.all().order_by('-id')\n+\n+    filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n+    search_fields = ['id','college__name']\n+    ordering_fields = ['id','created_date']\n+\n+    filterset_fields = {\n+        'id': ['exact'],\n+        'college__slug': ['exact'],\n+        'created_date': ['exact', 'lte', 'gte'],\n+        'updated_date': ['exact', 'lte', 'gte'],\n+    }\n+\n+    def get_queryset(self):\n+        if user.\n+        if self.request.user.college:\n+            return super().get_queryset().filter(college = self.request.user.college)\n+        \n+        return super().get_queryset()\n+\n+    def get_serializer_class(self):\n+        if self.action in ['create', 'update', 'partial_update']:\n+            return CollegeFaqsWriteSerializers\n+        elif self.action == 'retrieve':\n+            return CollegeFaqsRetrieveSerializers\n+        return super().get_serializer_class()\n+\n+    # @action(detail=False, methods=['get'], name=\"action_name\", url_path=\"url_path\")\n+    # def action_name(self, request, *args, **kwargs):\n+    #     return super().list(request, *args, **kwargs)\n+\n"
                 }
             ],
             "date": 1737963415881,

@@ -26,8 +26,9 @@ class collegefaqsViewsets(viewsets.ModelViewSet):
     }
 
     def get_queryset(self):
-        if self.request.user.college:
-            return super().get_queryset().filter(college = self.request.user.college)
+        if self.request.user.is_authenticated:
+            if self.request.user.college:
+                return super().get_queryset().filter(college = self.request.user.college)
         
         return super().get_queryset()
 
