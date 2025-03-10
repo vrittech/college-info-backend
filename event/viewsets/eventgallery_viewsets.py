@@ -25,6 +25,7 @@ class eventgalleryViewsets(viewsets.ModelViewSet):
     filterset_fields = {
         'id': ['exact'],
         'event': ['exact'],
+        'event__slug': ['exact'],
         'is_featured_image': ['exact'],
         'created_date': ['exact', 'lte', 'gte'],
         'updated_date': ['exact', 'lte', 'gte'],
