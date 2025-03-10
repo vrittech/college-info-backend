@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 14,
+            "activePatchIndex": 17,
             "patches": [
                 {
                     "date": 1739267387711,
@@ -64,6 +64,18 @@
                 {
                     "date": 1741323835245,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n     description = CharInFilter(field_name='description', lookup_expr='in')\n     course_shortdescription = CharInFilter(field_name='course_shortdescription', lookup_expr='in')\n     course_outcome = CharInFilter(field_name='course_outcome', lookup_expr='in')\n     eligibility_criteria = CharInFilter(field_name='eligibility_criteria', lookup_expr='in')\n-created_date = django_filters.DateFilter(field_name=\"created_date\", lookup_expr=\"exact\")\n+    created_date = django_filters.DateFilter(field_name=\"created_date\", lookup_expr=\"exact\")\n     created_date__gte = django_filters.DateFilter(field_name=\"created_date\", lookup_expr=\"gte\")\n     created_date__lte = django_filters.DateFilter(field_name=\"created_date\", lookup_expr=\"lte\")\n     \n     updated_date = django_filters.DateFilter(field_name=\"updated_date\", lookup_expr=\"exact\")\n"
+                },
+                {
+                    "date": 1741582881066,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,8 +15,10 @@\n     duration = NumberInFilter(field_name='duration__id', lookup_expr='in')\n     faculty = NumberInFilter(field_name='faculty__id', lookup_expr='in')\n     level = NumberInFilter(field_name='level__id', lookup_expr='in')\n     affiliation = NumberInFilter(field_name='affiliation__id', lookup_expr='in')\n+        affiliation_type = django_filters.CharFilter(field_name='affiliated__university_type', lookup_expr='icontains')\n+\n     description = CharInFilter(field_name='description', lookup_expr='in')\n     course_shortdescription = CharInFilter(field_name='course_shortdescription', lookup_expr='in')\n     course_outcome = CharInFilter(field_name='course_outcome', lookup_expr='in')\n     eligibility_criteria = CharInFilter(field_name='eligibility_criteria', lookup_expr='in')\n"
+                },
+                {
+                    "date": 1741582889609,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,10 +15,9 @@\n     duration = NumberInFilter(field_name='duration__id', lookup_expr='in')\n     faculty = NumberInFilter(field_name='faculty__id', lookup_expr='in')\n     level = NumberInFilter(field_name='level__id', lookup_expr='in')\n     affiliation = NumberInFilter(field_name='affiliation__id', lookup_expr='in')\n-        affiliation_type = django_filters.CharFilter(field_name='affiliated__university_type', lookup_expr='icontains')\n-\n+    affiliation_type = django_filters.CharFilter(field_name='affiliated__university_type', lookup_expr='icontains')\n     description = CharInFilter(field_name='description', lookup_expr='in')\n     course_shortdescription = CharInFilter(field_name='course_shortdescription', lookup_expr='in')\n     course_outcome = CharInFilter(field_name='course_outcome', lookup_expr='in')\n     eligibility_criteria = CharInFilter(field_name='eligibility_criteria', lookup_expr='in')\n"
+                },
+                {
+                    "date": 1741582901955,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,9 +15,9 @@\n     duration = NumberInFilter(field_name='duration__id', lookup_expr='in')\n     faculty = NumberInFilter(field_name='faculty__id', lookup_expr='in')\n     level = NumberInFilter(field_name='level__id', lookup_expr='in')\n     affiliation = NumberInFilter(field_name='affiliation__id', lookup_expr='in')\n-    affiliation_type = django_filters.CharFilter(field_name='affiliated__university_type', lookup_expr='icontains')\n+    affiliation_type = django_filters.CharFilter(field_name='affiliation__university_type', lookup_expr='icontains')\n     description = CharInFilter(field_name='description', lookup_expr='in')\n     course_shortdescription = CharInFilter(field_name='course_shortdescription', lookup_expr='in')\n     course_outcome = CharInFilter(field_name='course_outcome', lookup_expr='in')\n     eligibility_criteria = CharInFilter(field_name='eligibility_criteria', lookup_expr='in')\n"
                 }
             ],
             "date": 1739267387711,
