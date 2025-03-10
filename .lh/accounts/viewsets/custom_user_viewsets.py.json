@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 44,
+            "activePatchIndex": 45,
             "patches": [
                 {
                     "date": 1738669074931,
@@ -184,6 +184,10 @@
                 {
                     "date": 1741332097780,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -28,9 +28,9 @@\n     pagination_class = MyPageNumberPagination\n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     \n     search_fields = ['position', 'email','first_name','last_name','groups__name']\n-    ordering_fields =['position', 'email', 'full_name','first_name','last_name','id','created_date','updated_date']\n+    ordering_fields =['position', 'email', '','first_name','last_name','id','created_date','updated_date']\n \n \n     def get_queryset(self):\n         if self.request.user.is_superuser:\n"
+                },
+                {
+                    "date": 1741581467364,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -28,9 +28,9 @@\n     pagination_class = MyPageNumberPagination\n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     \n     search_fields = ['position', 'email','first_name','last_name','groups__name']\n-    ordering_fields =['position', 'email', '','first_name','last_name','id','created_date','updated_date']\n+    ordering_fields =['position', 'email','first_name','last_name','id','created_date','updated_date']\n \n \n     def get_queryset(self):\n         if self.request.user.is_superuser:\n@@ -75,11 +75,15 @@\n         return Response(serializer.data)\n     \n     @action(detail=False, methods=['get'], name=\"college_admins\", url_path=\"college-admins\", permission_classes=[IsAuthenticated])\n     def college_admins(self, request, *args, **kwargs):\n-        queryset = self.get_queryset().filter(college__isnull=False)  # Filter users with assigned college\n-        page = self.paginate_queryset(queryset)  # Apply pagination\n+        queryset = self.get_queryset().filter(college__isnull=False)  # Only admins assigned to a college\n         \n+        # Apply filtering, searching, and ordering\n+        queryset = self.filter_queryset(queryset)  \n+\n+        # Apply pagination\n+        page = self.paginate_queryset(queryset)\n         if page is not None:\n             serializer = self.get_serializer(page, many=True)\n             return self.get_paginated_response(serializer.data)  # Return paginated response\n \n"
                 }
             ],
             "date": 1738669074931,

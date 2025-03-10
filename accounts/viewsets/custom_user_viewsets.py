@@ -76,9 +76,13 @@ class CustomUserViewSet(viewsets.ModelViewSet):
     
     @action(detail=False, methods=['get'], name="college_admins", url_path="college-admins", permission_classes=[IsAuthenticated])
     def college_admins(self, request, *args, **kwargs):
-        queryset = self.get_queryset().filter(college__isnull=False)  # Filter users with assigned college
-        page = self.paginate_queryset(queryset)  # Apply pagination
+        queryset = self.get_queryset().filter(college__isnull=False)  # Only admins assigned to a college
         
+        # Apply filtering, searching, and ordering
+        queryset = self.filter_queryset(queryset)  
+
+        # Apply pagination
+        page = self.paginate_queryset(queryset)
         if page is not None:
             serializer = self.get_serializer(page, many=True)
             return self.get_paginated_response(serializer.data)  # Return paginated response
