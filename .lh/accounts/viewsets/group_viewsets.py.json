@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 6,
+            "activePatchIndex": 9,
             "patches": [
                 {
                     "date": 1738669112140,
@@ -32,6 +32,18 @@
                 {
                     "date": 1741502512496,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,10 @@\n from rest_framework import viewsets\n from rest_framework.permissions import IsAdminUser\n from ..serializers.group_serializers import GroupSerializer\n from ..utilities.pagination import MyPageNumberPagination\n-from django\n+from django_filters.rest_framework import DjangoFilterBackend\n+from rest_framework.filters import SearchFilter, OrderingFilter\n \n class GroupViewSet(viewsets.ModelViewSet):\n     queryset = Group.objects.all().order_by('-id')\n     serializer_class = GroupSerializer\n@@ -15,8 +16,7 @@\n     ordering_fields = ['id','name']\n     filterset_fields = {\n         'id': ['exact'],\n         'name': ['exact'],\n-        'created_date': ['exact', 'gte', 'lte'],\n     }\n \n \n"
+                },
+                {
+                    "date": 1741580955113,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,6 +17,8 @@\n     filterset_fields = {\n         'id': ['exact'],\n         'name': ['exact'],\n     }\n+    \n+    \n \n \n"
+                },
+                {
+                    "date": 1741580968381,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,7 +18,16 @@\n         'id': ['exact'],\n         'name': ['exact'],\n     }\n     \n+    def get_queryset(self):\n+        if self.request.user.is_superuser:\n+            return super().get_queryset()\n+        elif self.request.user.is_staff:\n+            return super().get_queryset()\n+        elif self.request.user.is_authenticated:\n+            return super().get_queryset().filter(id=self.request.user.id)\n+        else:\n+            return CustomUser.objects.none()\n     \n \n \n"
+                },
+                {
+                    "date": 1741580973998,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -26,8 +26,8 @@\n             return super().get_queryset()\n         elif self.request.user.is_authenticated:\n             return super().get_queryset().filter(id=self.request.user.id)\n         else:\n-            return CustomUser.objects.none()\n+            return Group.objects.none()\n     \n \n \n"
                 }
             ],
             "date": 1738669112140,

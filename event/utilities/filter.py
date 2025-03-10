@@ -3,6 +3,7 @@ from ..models import Event
 
 class EventFilter(filters.FilterSet):
     event_type = filters.ChoiceFilter(choices=Event.TYPE_CHOICES)  # Filters by type
+    registration_type = filters.ChoiceFilter(choices=Event.REGISTRATION_TYPE_CHOICES)
     registration_link = filters.BooleanFilter(method='filter_registration_link')  # Filters by registration link existence
     is_featured_event = filters.BooleanFilter()  # Filters by featured status
     category_name = filters.CharFilter(field_name='category__name', lookup_expr='icontains')
@@ -13,7 +14,7 @@ class EventFilter(filters.FilterSet):
 
     class Meta:
         model = Event
-        fields = ['event_type', 'registration_link', 'is_featured_event', 'category','organizer']
+        fields = ['event_type', 'registration_link', 'is_featured_event', 'category','organizer','registration_type']
 
     def filter_registration_link(self, queryset, name, value):
         """

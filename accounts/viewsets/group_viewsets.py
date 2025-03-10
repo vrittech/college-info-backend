@@ -18,5 +18,16 @@ class GroupViewSet(viewsets.ModelViewSet):
         'id': ['exact'],
         'name': ['exact'],
     }
+    
+    def get_queryset(self):
+        if self.request.user.is_superuser:
+            return super().get_queryset()
+        elif self.request.user.is_staff:
+            return super().get_queryset()
+        elif self.request.user.is_authenticated:
+            return super().get_queryset().filter(id=self.request.user.id)
+        else:
+            return Group.objects.none()
+    
 
 

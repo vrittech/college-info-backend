@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 25,
+            "activePatchIndex": 26,
             "patches": [
                 {
                     "date": 1733481075583,
@@ -108,6 +108,10 @@
                 {
                     "date": 1741165558392,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -21,9 +21,9 @@\n \n     filterset_fields = {\n         'id': ['exact'],\n         'name': ['exact'],\n-        ''\n+        'is_show': ['exact'],\n         'placement': ['exact'],\n         'created_date': ['exact','gte','lte'],\n         'updated_date': ['exact','gte','lte'],\n     }\n"
+                },
+                {
+                    "date": 1741580891660,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,9 +15,9 @@\n     pagination_class = MyPageNumberPagination\n     queryset = Advertisement.objects.all().order_by('-id')\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n-    search_fields = ['id','name', 'link','placement', 'created_date', 'updated_date']\n+    search_fields = ['id','name', 'link', 'created_date', 'updated_date']\n     ordering_fields = ['id','name', 'link','placement', 'created_date', 'updated_date']\n \n     filterset_fields = {\n         'id': ['exact'],\n"
                 }
             ],
             "date": 1733481075583,

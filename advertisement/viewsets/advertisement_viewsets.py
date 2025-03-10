@@ -16,7 +16,7 @@ class advertisementViewsets(viewsets.ModelViewSet):
     queryset = Advertisement.objects.all().order_by('-id')
 
     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]
-    search_fields = ['id','name', 'link','placement', 'created_date', 'updated_date']
+    search_fields = ['id','name', 'link', 'created_date', 'updated_date']
     ordering_fields = ['id','name', 'link','placement', 'created_date', 'updated_date']
 
     filterset_fields = {
