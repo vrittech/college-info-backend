@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 41,
+            "activePatchIndex": 42,
             "patches": [
                 {
                     "date": 1733397109290,
@@ -172,6 +172,10 @@
                 {
                     "date": 1741600584687,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -41,17 +41,17 @@\n         AWS_DEFAULT_REGION: ap-southeast-2\n         BACKEND_USER: backend\n         BACKEND_PASSWORD: backend\n         SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}\n-        # SERVER_IP: \"142.171.168.136\"\n+        SERVER_IP: \"142.171.168.136\"\n         # SERVER_IP: \"82.29.167.247\"\n         PORT: \"8001\"\n         SCREEN_NAME: \"collegeinfo\"\n         PROJECT_FOLDER: \"/home/collegeinfo\"\n \n       run: |\n         mkdir -p ~/.ssh\n-        echo \"${{ secrets.SSH_PRIVATE_KEY_PROD }}\" > ~/.ssh/id_rsa\n+        echo \"${{ secrets.SSH_PRIVATE_KEY }}\" > ~/.ssh/id_rsa\n         chmod 600 ~/.ssh/id_rsa\n \n         # Install rsync\n         #sudo apt-get install -y rsync\n"
+                },
+                {
+                    "date": 1741600595790,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -41,17 +41,17 @@\n         AWS_DEFAULT_REGION: ap-southeast-2\n         BACKEND_USER: backend\n         BACKEND_PASSWORD: backend\n         SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}\n-        SERVER_IP: \"142.171.168.136\"\n+        # SERVER_IP: \"142.171.168.136\"\n         # SERVER_IP: \"82.29.167.247\"\n         PORT: \"8001\"\n         SCREEN_NAME: \"collegeinfo\"\n         PROJECT_FOLDER: \"/home/collegeinfo\"\n \n       run: |\n         mkdir -p ~/.ssh\n-        echo \"${{ secrets.SSH_PRIVATE_KEY }}\" > ~/.ssh/id_rsa\n+        echo \"${{ secrets.SSH_PRIVATE_KEY_PROD }}\" > ~/.ssh/id_rsa\n         chmod 600 ~/.ssh/id_rsa\n \n         # Install rsync\n         #sudo apt-get install -y rsync\n"
                 }
             ],
             "date": 1733397109290,
