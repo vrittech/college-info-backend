@@ -23,7 +23,7 @@ class CollegeFilter(django_filters.FilterSet):
     district = CharInFilter(field_name="district__name", lookup_expr="in")
     college_type = django_filters.CharFilter(field_name="college_type__id", lookup_expr="exact")
     affiliated = django_filters.CharFilter(field_name="affiliated__id", lookup_expr="exact")
-    affiliation_type = django_filters.CharFilter(field_name='affiliated__university_type', lookup_expr='icontains')
+    university_type = django_filters.CharFilter(field_name='affiliated__university_type', lookup_expr='icontains')
 
 
     # Date and year range filters
@@ -68,5 +68,5 @@ class CollegeFilter(django_filters.FilterSet):
         fields = [
             "id", "name", "address", "district", "college_type", "affiliated",
             "established_date", "created_date", "updated_date", 'is_verified',
-            "phone_number", "email", "is_show", "discipline", "facilities","affiliation_type"
+            "phone_number", "email", "is_show", "discipline", "facilities","university_type"
         ]

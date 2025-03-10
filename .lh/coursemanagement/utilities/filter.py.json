@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 17,
+            "activePatchIndex": 20,
             "patches": [
                 {
                     "date": 1739267387711,
@@ -76,6 +76,18 @@
                 {
                     "date": 1741582901955,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,9 +15,9 @@\n     duration = NumberInFilter(field_name='duration__id', lookup_expr='in')\n     faculty = NumberInFilter(field_name='faculty__id', lookup_expr='in')\n     level = NumberInFilter(field_name='level__id', lookup_expr='in')\n     affiliation = NumberInFilter(field_name='affiliation__id', lookup_expr='in')\n-    affiliation_type = django_filters.CharFilter(field_name='affiliated__university_type', lookup_expr='icontains')\n+    affiliation_type = django_filters.CharFilter(field_name='affiliation__university_type', lookup_expr='icontains')\n     description = CharInFilter(field_name='description', lookup_expr='in')\n     course_shortdescription = CharInFilter(field_name='course_shortdescription', lookup_expr='in')\n     course_outcome = CharInFilter(field_name='course_outcome', lookup_expr='in')\n     eligibility_criteria = CharInFilter(field_name='eligibility_criteria', lookup_expr='in')\n"
+                },
+                {
+                    "date": 1741590294434,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,9 +15,9 @@\n     duration = NumberInFilter(field_name='duration__id', lookup_expr='in')\n     faculty = NumberInFilter(field_name='faculty__id', lookup_expr='in')\n     level = NumberInFilter(field_name='level__id', lookup_expr='in')\n     affiliation = NumberInFilter(field_name='affiliation__id', lookup_expr='in')\n-    affiliation_type = django_filters.CharFilter(field_name='affiliation__university_type', lookup_expr='icontains')\n+    _type = django_filters.CharFilter(field_name='affiliation__university_type', lookup_expr='icontains')\n     description = CharInFilter(field_name='description', lookup_expr='in')\n     course_shortdescription = CharInFilter(field_name='course_shortdescription', lookup_expr='in')\n     course_outcome = CharInFilter(field_name='course_outcome', lookup_expr='in')\n     eligibility_criteria = CharInFilter(field_name='eligibility_criteria', lookup_expr='in')\n"
+                },
+                {
+                    "date": 1741590310939,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,9 +15,9 @@\n     duration = NumberInFilter(field_name='duration__id', lookup_expr='in')\n     faculty = NumberInFilter(field_name='faculty__id', lookup_expr='in')\n     level = NumberInFilter(field_name='level__id', lookup_expr='in')\n     affiliation = NumberInFilter(field_name='affiliation__id', lookup_expr='in')\n-    _type = django_filters.CharFilter(field_name='affiliation__university_type', lookup_expr='icontains')\n+    university_type = django_filters.CharFilter(field_name='affiliation__university_type', lookup_expr='icontains')\n     description = CharInFilter(field_name='description', lookup_expr='in')\n     course_shortdescription = CharInFilter(field_name='course_shortdescription', lookup_expr='in')\n     course_outcome = CharInFilter(field_name='course_outcome', lookup_expr='in')\n     eligibility_criteria = CharInFilter(field_name='eligibility_criteria', lookup_expr='in')\n@@ -41,6 +41,6 @@\n         model = Course\n         fields = [\n             'id', 'name', 'abbreviation', 'duration', 'faculty', 'level',\n             'affiliation', 'description', 'discipline', 'course_shortdescription',\n-            'course_outcome', 'eligibility_criteria', 'created_date', 'updated_date'\n+            'course_outcome', 'eligibility_criteria', 'created_date', 'updated_date',\"university_type\"\n         ]\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1741590319862,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -41,6 +41,6 @@\n         model = Course\n         fields = [\n             'id', 'name', 'abbreviation', 'duration', 'faculty', 'level',\n             'affiliation', 'description', 'discipline', 'course_shortdescription',\n-            'course_outcome', 'eligibility_criteria', 'created_date', 'updated_date',\"university_type\"\n+            'course_outcome', 'eligibility_criteria', 'created_date', 'updated_date','university_type'\n         ]\n\\ No newline at end of file\n"
                 }
             ],
             "date": 1739267387711,

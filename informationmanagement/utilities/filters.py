@@ -11,7 +11,7 @@ class InformationFilter(django_filters.FilterSet):
     sublevel = django_filters.BaseInFilter(field_name="sublevel__id", lookup_expr="in")
     course = django_filters.BaseInFilter(field_name="course__id", lookup_expr="in")
     affiliation = django_filters.BaseInFilter(field_name="affiliation__id", lookup_expr="in")
-    affiliation_type = django_filters.CharFilter(method="filter_by_university_type")
+    university_type = django_filters.CharFilter(method="filter_by_university_type")
     district = django_filters.BaseInFilter(field_name="district__id", lookup_expr="in")
     college = django_filters.BaseInFilter(field_name="college__id", lookup_expr="in")
     faculty = django_filters.BaseInFilter(field_name="faculty__id", lookup_expr="in")
@@ -27,7 +27,7 @@ class InformationFilter(django_filters.FilterSet):
         model = Information
         fields = ['level', 'sublevel', 'course', 'affiliation', 'district', 'college',
                   'faculty', 'information_tagging', 'information_category','information_category_slug',
-                  'publish_date', 'active_period_start', 'active_period_end',"affiliation_type"]
+                  'publish_date', 'active_period_start', 'active_period_end',"university_type"]
         
         
     def filter_by_university_type(self, queryset, name, value):

@@ -16,7 +16,7 @@ class CourseFilter(filters.FilterSet):
     faculty = NumberInFilter(field_name='faculty__id', lookup_expr='in')
     level = NumberInFilter(field_name='level__id', lookup_expr='in')
     affiliation = NumberInFilter(field_name='affiliation__id', lookup_expr='in')
-    affiliation_type = django_filters.CharFilter(field_name='affiliation__university_type', lookup_expr='icontains')
+    university_type = django_filters.CharFilter(field_name='affiliation__university_type', lookup_expr='icontains')
     description = CharInFilter(field_name='description', lookup_expr='in')
     course_shortdescription = CharInFilter(field_name='course_shortdescription', lookup_expr='in')
     course_outcome = CharInFilter(field_name='course_outcome', lookup_expr='in')
@@ -42,5 +42,5 @@ class CourseFilter(filters.FilterSet):
         fields = [
             'id', 'name', 'abbreviation', 'duration', 'faculty', 'level',
             'affiliation', 'description', 'discipline', 'course_shortdescription',
-            'course_outcome', 'eligibility_criteria', 'created_date', 'updated_date'
+            'course_outcome', 'eligibility_criteria', 'created_date', 'updated_date','university_type'
         ]

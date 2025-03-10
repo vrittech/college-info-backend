@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 6,
+            "activePatchIndex": 8,
             "patches": [
                 {
                     "date": 1738142088924,
@@ -32,6 +32,14 @@
                 {
                     "date": 1741583146409,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -31,5 +31,5 @@\n         \n         \n     def filter_by_university_type(self, queryset, name, value):\n         \"\"\"Filter by university type in Affiliation model\"\"\"\n-        return queryset.filter(affiliated__university_type__icontains=value).distinct()\n+        return queryset.filter(affiliat__university_type__icontains=value).distinct()\n"
+                },
+                {
+                    "date": 1741590372936,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,9 @@\n     level = django_filters.BaseInFilter(field_name=\"level__id\", lookup_expr=\"in\")\n     sublevel = django_filters.BaseInFilter(field_name=\"sublevel__id\", lookup_expr=\"in\")\n     course = django_filters.BaseInFilter(field_name=\"course__id\", lookup_expr=\"in\")\n     affiliation = django_filters.BaseInFilter(field_name=\"affiliation__id\", lookup_expr=\"in\")\n-    affiliation_type = django_filters.CharFilter(method=\"filter_by_university_type\")\n+    university_type = django_filters.CharFilter(method=\"filter_by_university_type\")\n     district = django_filters.BaseInFilter(field_name=\"district__id\", lookup_expr=\"in\")\n     college = django_filters.BaseInFilter(field_name=\"college__id\", lookup_expr=\"in\")\n     faculty = django_filters.BaseInFilter(field_name=\"faculty__id\", lookup_expr=\"in\")\n     information_tagging = django_filters.BaseInFilter(field_name=\"information_tagging__id\", lookup_expr=\"in\")\n@@ -31,5 +31,5 @@\n         \n         \n     def filter_by_university_type(self, queryset, name, value):\n         \"\"\"Filter by university type in Affiliation model\"\"\"\n-        return queryset.filter(affiliat__university_type__icontains=value).distinct()\n+        return queryset.filter(affiliation__university_type__icontains=value).distinct()\n"
+                },
+                {
+                    "date": 1741590378020,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -26,9 +26,9 @@\n     class Meta:\n         model = Information\n         fields = ['level', 'sublevel', 'course', 'affiliation', 'district', 'college',\n                   'faculty', 'information_tagging', 'information_category','information_category_slug',\n-                  'publish_date', 'active_period_start', 'active_period_end',\"affiliation_type\"]\n+                  'publish_date', 'active_period_start', 'active_period_end',\"university_type\"]\n         \n         \n     def filter_by_university_type(self, queryset, name, value):\n         \"\"\"Filter by university type in Affiliation model\"\"\"\n"
                 }
             ],
             "date": 1738142088924,
