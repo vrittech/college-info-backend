@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 59,
+            "activePatchIndex": 62,
             "patches": [
                 {
                     "date": 1726649624074,
@@ -244,6 +244,18 @@
                 {
                     "date": 1741495346267,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -40,9 +40,9 @@\n \n             # Update the album's featured image with the full absolute URL\n             if self.image:\n                 # Ensure SITE_URL is set in settings\n-                site_url = getattr(settings, \"SITE_URL\", \"https://defaultdomain.com\")  # Default fallback\n+                site_url = getattr(settings, \"SITE_URL\", \"https://collegeinfoapi.com\")  # Default fallback\n                 absolute_url = urljoin(site_url, self.image.url)  # Construct absolute URL\n                 \n                 # Save to album\n                 self.album.featured_image = absolute_url\n"
+                },
+                {
+                    "date": 1741590735539,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -40,9 +40,9 @@\n \n             # Update the album's featured image with the full absolute URL\n             if self.image:\n                 # Ensure SITE_URL is set in settings\n-                site_url = getattr(settings, \"SITE_URL\", \"https://collegeinfoapi.com\")  # Default fallback\n+                site_url = getattr(settings, \"SITE_URL\", \"https://base.collegeinfoapi.com\")  # Default fallback\n                 absolute_url = urljoin(site_url, self.image.url)  # Construct absolute URL\n                 \n                 # Save to album\n                 self.album.featured_image = absolute_url\n"
+                },
+                {
+                    "date": 1741590755144,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -40,9 +40,9 @@\n \n             # Update the album's featured image with the full absolute URL\n             if self.image:\n                 # Ensure SITE_URL is set in settings\n-                site_url = getattr(settings, \"SITE_URL\", \"https://base.collegeinfoapi.com\")  # Default fallback\n+                site_url = getattr(settings, \"SITE_URL\", \"base.collegeinfonepal.com\")  # Default fallback\n                 absolute_url = urljoin(site_url, self.image.url)  # Construct absolute URL\n                 \n                 # Save to album\n                 self.album.featured_image = absolute_url\n"
+                },
+                {
+                    "date": 1741590760774,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -40,9 +40,9 @@\n \n             # Update the album's featured image with the full absolute URL\n             if self.image:\n                 # Ensure SITE_URL is set in settings\n-                site_url = getattr(settings, \"SITE_URL\", \"base.collegeinfonepal.com\")  # Default fallback\n+                site_url = getattr(settings, \"SITE_URL\", \"https://base.collegeinfonepal.com\")  # Default fallback\n                 absolute_url = urljoin(site_url, self.image.url)  # Construct absolute URL\n                 \n                 # Save to album\n                 self.album.featured_image = absolute_url\n"
                 }
             ],
             "date": 1726649624074,

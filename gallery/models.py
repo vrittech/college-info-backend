@@ -41,7 +41,7 @@ class Gallery(models.Model):
             # Update the album's featured image with the full absolute URL
             if self.image:
                 # Ensure SITE_URL is set in settings
-                site_url = getattr(settings, "SITE_URL", "https://collegeinfoapi.com")  # Default fallback
+                site_url = getattr(settings, "SITE_URL", "https://base.collegeinfonepal.com")  # Default fallback
                 absolute_url = urljoin(site_url, self.image.url)  # Construct absolute URL
                 
                 # Save to album

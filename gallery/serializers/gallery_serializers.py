@@ -5,6 +5,8 @@ from rest_framework.exceptions import ValidationError as DRFValidationError
 from rest_framework import serializers
 from rest_framework import serializers
 from django.core.files.uploadedfile import InMemoryUploadedFile
+from django.conf import settings
+from urllib.parse import urljoin
 
 class AlbumSerializer(serializers.ModelSerializer):
     class Meta:
@@ -55,12 +57,12 @@ class GalleryWriteSerializers(serializers.ModelSerializer):
 
     def create(self, validated_data):
         """
-        Handles multiple image uploads and links them to the same album.
+        Handles multiple image uploads and ensures the first image is the cover.
         """
         request = self.context.get("request")
 
         # Retrieve album ID from request data
-        album_id = request.data.get("album")  # Gets album ID from request
+        album_id = request.data.get("album")  
         if not album_id:
             raise serializers.ValidationError({"album": "This field is required."})
 
@@ -76,18 +78,30 @@ class GalleryWriteSerializers(serializers.ModelSerializer):
         ]
 
         if not uploaded_files:
-            return
+            return []
+
+        # Check if this album already has a cover image
+        has_cover = Gallery.objects.filter(album=album, is_cover=True).exists()
 
         gallery_instances = []
-        for image_file in uploaded_files:
+        for index, image_file in enumerate(uploaded_files):
             if isinstance(image_file, InMemoryUploadedFile):
-                # Create a separate Gallery instance for each uploaded image
-                gallery_instance = Gallery.objects.create(
-                    album=album,  # Manually assigning album here
-                    image=image_file,
-                    is_cover=validated_data.get("is_cover", False)
-                )
+                is_first_image = index == 0 and not has_cover  # Ensure first image is cover
+                
+                # Create gallery instance but DO NOT access `.image.url` yet
+                gallery_instance = Gallery(album=album, image=image_file, is_cover=is_first_image)
+                gallery_instance.save()  # Explicitly save the instance first
+                
                 gallery_instances.append(gallery_instance)
+
+                # Ensure the image field is saved before accessing `.url`
+                if is_first_image and request:
+                    gallery_instance.refresh_from_db()  # Ensure fresh data
+                    absolute_url = request.build_absolute_uri(gallery_instance.image.url)  # Correct absolute URL
+                    
+                    # Update album's featured image
+                    album.featured_image = absolute_url
+                    album.save(update_fields=['featured_image'])
 
         return gallery_instances
 

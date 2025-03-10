@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 2,
+            "activePatchIndex": 6,
             "patches": [
                 {
                     "date": 1733729034342,
@@ -16,6 +16,22 @@
                 {
                     "date": 1740379998281,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,9 @@\n from django_filters import rest_framework as filters\n from ..models import Inquiry\n \n class InquiryFilter(filters.FilterSet):\n-    courses = filters.CharFilter(field_name='courses__name', lookup_expr='icontains')  # Filter by course name\n+    courses = filters.CharFilter(field_name='courses__slug', lookup_expr='icontains')  # Filter by course name\n     colleges = filters.CharFilter(field_name='colleges__slug', lookup_expr='icontains')  # Filter by college name\n \n     class Meta:\n         model = Inquiry\n"
+                },
+                {
+                    "date": 1741591695808,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,8 +3,9 @@\n \n class InquiryFilter(filters.FilterSet):\n     courses = filters.CharFilter(field_name='courses__slug', lookup_expr='icontains')  # Filter by course name\n     colleges = filters.CharFilter(field_name='colleges__slug', lookup_expr='icontains')  # Filter by college name\n-\n+     courses = filters.CharFilter(field_name='courses__slug', lookup_expr='icontains')  # Filter by course name\n+    colleges = filters.CharFilter(field_name='colleges__slug', lookup_expr='icontains')  # Filter by college name\n     class Meta:\n         model = Inquiry\n         fields = ['courses', 'colleges']\n"
+                },
+                {
+                    "date": 1741591707533,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,9 @@\n \n class InquiryFilter(filters.FilterSet):\n     courses = filters.CharFilter(field_name='courses__slug', lookup_expr='icontains')  # Filter by course name\n     colleges = filters.CharFilter(field_name='colleges__slug', lookup_expr='icontains')  # Filter by college name\n-     courses = filters.CharFilter(field_name='courses__slug', lookup_expr='icontains')  # Filter by course name\n+    courses_id = filters.CharFilter(field_name='courses__slug', lookup_expr='icontains')  # Filter by course name\n     colleges = filters.CharFilter(field_name='colleges__slug', lookup_expr='icontains')  # Filter by college name\n     class Meta:\n         model = Inquiry\n         fields = ['courses', 'colleges']\n"
+                },
+                {
+                    "date": 1741591716772,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,9 @@\n \n class InquiryFilter(filters.FilterSet):\n     courses = filters.CharFilter(field_name='courses__slug', lookup_expr='icontains')  # Filter by course name\n     colleges = filters.CharFilter(field_name='colleges__slug', lookup_expr='icontains')  # Filter by college name\n-    courses_id = filters.CharFilter(field_name='courses__slug', lookup_expr='icontains')  # Filter by course name\n-    colleges = filters.CharFilter(field_name='colleges__slug', lookup_expr='icontains')  # Filter by college name\n+    courses_id = filters.CharFilter(field_name='courses__id', lookup_expr='icontains')  # Filter by course name\n+    colleges_id = filters.CharFilter(field_name='colleges__slug', lookup_expr='icontains')  # Filter by college name\n     class Meta:\n         model = Inquiry\n         fields = ['courses', 'colleges']\n"
+                },
+                {
+                    "date": 1741591727617,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,8 +4,8 @@\n class InquiryFilter(filters.FilterSet):\n     courses = filters.CharFilter(field_name='courses__slug', lookup_expr='icontains')  # Filter by course name\n     colleges = filters.CharFilter(field_name='colleges__slug', lookup_expr='icontains')  # Filter by college name\n     courses_id = filters.CharFilter(field_name='courses__id', lookup_expr='icontains')  # Filter by course name\n-    colleges_id = filters.N(field_name='colleges__id', lookup_expr='icontains')  # Filter by college name\n+    colleges_id = filters.NumberFilter(field_name='colleges__id', lookup_expr='icontains')  # Filter by college name\n     class Meta:\n         model = Inquiry\n         fields = ['courses', 'colleges']\n"
                 }
             ],
             "date": 1733729034342,
