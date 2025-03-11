@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 44,
+            "activePatchIndex": 46,
             "patches": [
                 {
                     "date": 1727174542938,
@@ -184,6 +184,14 @@
                 {
                     "date": 1739344082975,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,6 +15,6 @@\n         return f'{self.created_date} - {self.amount}'\n     \n     class Meta:\n         permissions = [\n-            ('manage_coursesand_fees', 'Manage courses and fees'),\n+            ('manage_coursesandfees', 'Manage courses and fees'),\n         ]\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1741675050215,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,9 +5,9 @@\n # CoursesAndFees Model\n class CoursesAndFees(models.Model): #CollegeHaveCourse\n     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='courses_and_fees')\n     college = models.ForeignKey(College, on_delete=models.CASCADE, related_name='college_courses_and_fees')\n-    amount = models.DecimalField(max_digits=10, decimal_places=2)\n+    amount = models.DecimalField(max_digits=10, decimal_places=2,default=)\n     is_admission = models.BooleanField(default=False)\n     created_date = models.DateField(auto_now_add=True)\n     updated_date = models.DateField(auto_now_add=True)\n \n"
+                },
+                {
+                    "date": 1741675082041,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,9 +5,9 @@\n # CoursesAndFees Model\n class CoursesAndFees(models.Model): #CollegeHaveCourse\n     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='courses_and_fees')\n     college = models.ForeignKey(College, on_delete=models.CASCADE, related_name='college_courses_and_fees')\n-    amount = models.DecimalField(max_digits=10, decimal_places=2,default=)\n+    amount = models.DecimalField(max_digits=10, decimal_places=2,ni)\n     is_admission = models.BooleanField(default=False)\n     created_date = models.DateField(auto_now_add=True)\n     updated_date = models.DateField(auto_now_add=True)\n \n"
                 }
             ],
             "date": 1727174542938,

@@ -20,6 +20,13 @@ DATABASE_PORT=5432
 
 SITE_URL=http://127.0.0.1:8000
 
+# Cloudflare R2 Configuration
+AWS_ACCESS_KEY_ID=ed274c7ba0e941640875507a86df92c8
+AWS_SECRET_ACCESS_KEY=8ac893a940e7c0bb5c1133385de02f8865806b678a43223526090f9969f42b90
+AWS_STORAGE_BUCKET_NAME=collegeinfo-bucket
+AWS_S3_REGION_NAME=auto
+AWS_S3_ENDPOINT_URL=https://0eb36d57e9131fec092a0e63d1ee3d2f.r2.cloudflarestorage.com/collegeinfo-bucket  # Replace YOUR_ACCOUNT_ID
+AWS_S3_CUSTOM_DOMAIN=collegeinfo-bucket.0eb36d57e9131fec092a0e63d1ee3d2f.r2.cloudflarestorage.com  # Replace YOUR_ACCOUNT_ID
 
 
 

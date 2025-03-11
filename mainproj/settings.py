@@ -188,18 +188,69 @@ USE_TZ = True
 
 
 import os
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/4.1/howto/static-files/
+import environ
+from pathlib import Path
 
-# STATIC_URL = 'https://api.everestthrills.com/static/'
-STATIC_URL = 'static/'
+# Initialize environment variables
+env = environ.Env()
+environ.Env.read_env()
+
+# Build paths inside the project
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Cloudflare R2 Configuration
+USE_R2 = True  # Set to True to use Cloudflare R2
+
+if USE_R2:
+    AWS_ACCESS_KEY_ID = env("AWS_ACCESS_KEY_ID")
+    AWS_SECRET_ACCESS_KEY = env("AWS_SECRET_ACCESS_KEY")
+    AWS_STORAGE_BUCKET_NAME = env("AWS_STORAGE_BUCKET_NAME")
+    AWS_S3_REGION_NAME = env("AWS_S3_REGION_NAME", default="auto")
+    AWS_S3_ENDPOINT_URL = env("AWS_S3_ENDPOINT_URL")  # Cloudflare R2 Endpoint
+    AWS_S3_CUSTOM_DOMAIN = env("AWS_S3_CUSTOM_DOMAIN")  # Custom Domain for Public Access
+    
+    AWS_DEFAULT_ACL = None  # R2 does not support ACLs
+
+    AWS_S3_OBJECT_PARAMETERS = {'CacheControl': 'max-age=86400'}
+    AWS_QUERYSTRING_AUTH = False  # Disable signed URLs for public access
+    AWS_S3_FILE_OVERWRITE = False
+
+    # Static and Media Settings for R2
+    STATICFILES_LOCATION = 'static'
+    MEDIAFILES_LOCATION = 'media'
+
+    # Storage Settings
+    STORAGES = {
+        'default': {
+            'BACKEND': 'storages.backends.s3boto3.S3Boto3Storage'
+        },
+        'staticfiles': {
+            'BACKEND': 'storages.backends.s3boto3.S3Boto3Storage',
+            'OPTIONS': {'location': STATICFILES_LOCATION}
+        },
+        'media': {
+            'BACKEND': 'storages.backends.s3boto3.S3Boto3Storage',
+            'OPTIONS': {'location': MEDIAFILES_LOCATION}
+        }
+    }
+
+    # URLs
+    STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{STATICFILES_LOCATION}/'
+    MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{MEDIAFILES_LOCATION}/'
+
+else:
+    # Local Storage Settings
+    STATIC_URL = '/static/'
+    MEDIA_URL = '/media/'
+
+# Common Static/Media Settings
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 STATICFILES_DIRS = [
-    BASE_DIR / "static",
+    os.path.join(BASE_DIR, 'static')  # Ensure this directory exists
 ]
-MEDIA_URL = 'media/'
 
-STATIC_ROOT = os.path.join(BASE_DIR,'staticfiles')
-MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 
 
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"

@@ -23,3 +23,6 @@ django-celery-beat
 django-notifications-hq
 channels
 channels-redis
+django-storages
+boto3
+environ
