@@ -188,12 +188,7 @@ USE_TZ = True
 
 
 import os
-import environ
 from pathlib import Path
-
-# Initialize environment variables
-env = environ.Env()
-environ.Env.read_env()
 
 # Build paths inside the project
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -202,12 +197,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 USE_R2 = True  # Set to True to use Cloudflare R2
 
 if USE_R2:
-    AWS_ACCESS_KEY_ID = env("AWS_ACCESS_KEY_ID")
-    AWS_SECRET_ACCESS_KEY = env("AWS_SECRET_ACCESS_KEY")
-    AWS_STORAGE_BUCKET_NAME = env("AWS_STORAGE_BUCKET_NAME")
-    AWS_S3_REGION_NAME = env("AWS_S3_REGION_NAME", default="auto")
-    AWS_S3_ENDPOINT_URL = env("AWS_S3_ENDPOINT_URL")  # Cloudflare R2 Endpoint
-    AWS_S3_CUSTOM_DOMAIN = env("AWS_S3_CUSTOM_DOMAIN")  # Custom Domain for Public Access
+    AWS_ACCESS_KEY_ID = os.env("AWS_ACCESS_KEY_ID")
+    AWS_SECRET_ACCESS_KEY = os.env("AWS_SECRET_ACCESS_KEY")
+    AWS_STORAGE_BUCKET_NAME = os.env("AWS_STORAGE_BUCKET_NAME")
+    AWS_S3_REGION_NAME = os.env("AWS_S3_REGION_NAME", default="auto")
+    AWS_S3_ENDPOINT_URL = os.env("AWS_S3_ENDPOINT_URL")  # Cloudflare R2 Endpoint
+    AWS_S3_CUSTOM_DOMAIN = os.env("AWS_S3_CUSTOM_DOMAIN")  # Custom Domain for Public Access
     
     AWS_DEFAULT_ACL = None  # R2 does not support ACLs
 
