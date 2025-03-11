@@ -6,7 +6,7 @@ from collegemanagement.models import College
 class CoursesAndFees(models.Model): #CollegeHaveCourse
     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='courses_and_fees')
     college = models.ForeignKey(College, on_delete=models.CASCADE, related_name='college_courses_and_fees')
-    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    amount = models.DecimalField(max_digits=10, decimal_places=2,null=True,blank=True)
     is_admission = models.BooleanField(default=False)
     created_date = models.DateField(auto_now_add=True)
     updated_date = models.DateField(auto_now_add=True)
