@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 186,
+            "activePatchIndex": 188,
             "patches": [
                 {
                     "date": 1726568467190,
@@ -752,6 +752,14 @@
                 {
                     "date": 1741511050249,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -144,9 +144,9 @@\n         super().save(*args, **kwargs)\n \n         if self.is_featured_image and self.image:\n             # Ensure SITE_URL is set in settings\n-            site_url = getattr(settings, \"SITE_URL\", \"https://collegeinfoapi.com\")  # Default fallback\n+            site_url = getattr(settings, \"SITE_URL\", \"https://base.collegeinfonepal.com\")  # Default fallback\n             absolute_url = urljoin(site_url, self.image.url)  # Construct absolute URL\n \n             # Save to event's featured_image field\n             self.event.featured_image = absolute_url\n"
+                },
+                {
+                    "date": 1741685240719,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -148,6 +148,6 @@\n             site_url = getattr(settings, \"SITE_URL\", \"https://base.collegeinfonepal.com\")  # Default fallback\n             absolute_url = urljoin(site_url, self.image.url)  # Construct absolute URL\n \n             # Save to event's featured_image field\n-            self.event.featured_image = absolute_url\n+            self.event.featured_image =  self.image.url\n             self.event.save(update_fields=['featured_image'])  # Update only the featured_image field\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1741685246531,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -143,11 +143,7 @@\n         # Save the instance first to get a valid `image.url`\n         super().save(*args, **kwargs)\n \n         if self.is_featured_image and self.image:\n-            # Ensure SITE_URL is set in settings\n-            site_url = getattr(settings, \"SITE_URL\", \"https://base.collegeinfonepal.com\")  # Default fallback\n-            absolute_url = urljoin(site_url, self.image.url)  # Construct absolute URL\n-\n             # Save to event's featured_image field\n             self.event.featured_image =  self.image.url\n             self.event.save(update_fields=['featured_image'])  # Update only the featured_image field\n\\ No newline at end of file\n"
                 }
             ],
             "date": 1726568467190,

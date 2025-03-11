@@ -149,9 +149,6 @@ class InformationGallery(models.Model):
 
         # Update the Information model's featured_image field if this is the featured image
         if self.is_featured and self.image:
-            site_url = getattr(settings, "SITE_URL", "https://base.collegeinfonepal.com")  # Default fallback URL
-            absolute_url = urljoin(site_url, self.image.url)  # Construct absolute URL
-
             # Update the `featured_image` field of the related `Information` instance
-            self.information.featured_image = absolute_url
+            self.information.featured_image = self.image.url
             self.information.save(update_fields=['featured_image'])  # Save only the updated field

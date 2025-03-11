@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 41,
+            "activePatchIndex": 42,
             "patches": [
                 {
                     "date": 1733481561311,
@@ -172,6 +172,10 @@
                 {
                     "date": 1740722222671,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -75,9 +75,9 @@\n \n     @action(detail=False, methods=['get'], name=\"list_all_albums\", url_path=\"all-albums\")\n     def list_all_albums(self, request, *args, **kwargs):\n         # Get all albums\n-        albums = Album.objects.all().\n+        albums = Album.objects.all().order_by('-id')\n \n         # Create a list where each album has its cover image or None\n         album_data = []\n         for album in albums:\n"
+                },
+                {
+                    "date": 1741684385246,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -84,9 +84,9 @@\n             cover = Gallery.objects.filter(album=album, is_cover=True).first()\n             album_data.append({\n                 \"album_id\": album.id,\n                 \"album_name\": album.name,\n-                \"cover_image\": request.build_absolute_uri(cover.image.url) if cover and cover.image else None\n+                \"cover_image\": cover.image.url) if cover and cover.image else None\n             })\n \n         # Apply pagination\n         page = self.paginate_queryset(album_data)\n"
                 }
             ],
             "date": 1733481561311,

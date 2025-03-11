@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 62,
+            "activePatchIndex": 64,
             "patches": [
                 {
                     "date": 1726649624074,
@@ -256,6 +256,14 @@
                 {
                     "date": 1741590760774,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -40,9 +40,9 @@\n \n             # Update the album's featured image with the full absolute URL\n             if self.image:\n                 # Ensure SITE_URL is set in settings\n-                site_url = getattr(settings, \"SITE_URL\", \"base.collegeinfonepal.com\")  # Default fallback\n+                site_url = getattr(settings, \"SITE_URL\", \"https://base.collegeinfonepal.com\")  # Default fallback\n                 absolute_url = urljoin(site_url, self.image.url)  # Construct absolute URL\n                 \n                 # Save to album\n                 self.album.featured_image = absolute_url\n"
+                },
+                {
+                    "date": 1741685275309,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -44,9 +44,9 @@\n                 site_url = getattr(settings, \"SITE_URL\", \"https://base.collegeinfonepal.com\")  # Default fallback\n                 absolute_url = urljoin(site_url, self.image.url)  # Construct absolute URL\n                 \n                 # Save to album\n-                self.album.featured_image = absolute_url\n+                self.album.featured_image = self.image.url\n                 self.album.save(update_fields=['featured_image'])\n \n         super().save(*args, **kwargs)\n \n"
+                },
+                {
+                    "date": 1741685280423,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -39,12 +39,8 @@\n             Gallery.objects.filter(album=self.album, is_cover=True).update(is_cover=False)\n \n             # Update the album's featured image with the full absolute URL\n             if self.image:\n-                # Ensure SITE_URL is set in settings\n-                site_url = getattr(settings, \"SITE_URL\", \"https://base.collegeinfonepal.com\")  # Default fallback\n-                absolute_url = urljoin(site_url, self.image.url)  # Construct absolute URL\n-                \n                 # Save to album\n                 self.album.featured_image = self.image.url\n                 self.album.save(update_fields=['featured_image'])\n \n"
                 }
             ],
             "date": 1726649624074,

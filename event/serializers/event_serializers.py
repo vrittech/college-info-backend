@@ -41,7 +41,7 @@ class EventListSerializers(serializers.ModelSerializer):
         images = []
         for image_obj in query:
             if image_obj.image:  # Ensure image exists
-                image_url = request.build_absolute_uri(image_obj.image.url) if request else f"{settings.MEDIA_URL}{image_obj.image.url}"
+                image_url = image_obj.image.url
                 # images.append({"id": image_obj.id, "image": image_url, "position": image_obj.position})
                 images.append({
                     "id": image_obj.id,
@@ -73,7 +73,7 @@ class EventRetrieveSerializers(serializers.ModelSerializer):
         images = []
         for image_obj in query:
             if image_obj.image:  # Ensure image exists
-                image_url = request.build_absolute_uri(image_obj.image.url) if request else f"{settings.MEDIA_URL}{image_obj.image.url}"
+                image_url = image_obj.image.url
                 # images.append({"id": image_obj.id, "image": image_url, "position": image_obj.position})
                 images.append({
                     "id": image_obj.id,
@@ -159,18 +159,18 @@ class EventWriteSerializers(serializers.ModelSerializer):
 
         # Ensure 'image' field is present and is a valid file
         if 'image' in attrs and attrs['image']:
-            attrs['image'] = self.get_absolute_url(instance.image)
+            attrs['image'] = instance.image
 
         return attrs
 
-    def get_absolute_url(self, image_field):
-            """
-            Returns the absolute URL for the given image field.
-            """
-            request = self.context.get('request')
-            if request and image_field:
-                return request.build_absolute_uri(image_field.url)  # Ensure we use .url
-            return image_field.url if image_field else None  # Fallback in case request is missing
+    # def get_absolute_url(self, image_field):
+    #         """
+    #         Returns the absolute URL for the given image field.
+    #         """
+    #         request = self.context.get('request')
+    #         if request and image_field:
+    #             return image_field.url)  # Ensure we use .url
+    #         return image_field.url if image_field else None  # Fallback in case request is missing
 
 
     @transaction.atomic

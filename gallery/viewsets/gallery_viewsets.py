@@ -85,7 +85,7 @@ class galleryViewsets(viewsets.ModelViewSet):
             album_data.append({
                 "album_id": album.id,
                 "album_name": album.name,
-                "cover_image": request.build_absolute_uri(cover.image.url) if cover and cover.image else None
+                "cover_image": cover.image.url if cover and cover.image else None
             })
 
         # Apply pagination

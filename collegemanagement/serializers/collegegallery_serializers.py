@@ -131,7 +131,7 @@ class CollegeGalleryWriteSerializers(serializers.ModelSerializer):
             return [
                 {
                     "id": obj.id,
-                    "image": request.build_absolute_uri(obj.image.url) if obj.image else None,
+                    "image": obj.image.url if obj.image else None,
                     "college": obj.college.id if obj.college else None
                 }
                 for obj in instance
@@ -140,7 +140,7 @@ class CollegeGalleryWriteSerializers(serializers.ModelSerializer):
         # ✅ If `instance` is a single object, return a single object representation
         return {
             "id": instance.id,
-            "image": request.build_absolute_uri(instance.image.url) if instance.image else None,
+            "image": instance.image.url if instance.image else None,
             "college": instance.college.id if instance.college else None
         }
 

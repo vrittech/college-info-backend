@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 24,
+            "activePatchIndex": 26,
             "patches": [
                 {
                     "date": 1739786154635,
@@ -104,6 +104,14 @@
                 {
                     "date": 1741511030346,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -148,9 +148,9 @@\n         super().save(*args, **kwargs)\n \n         # Update the Information model's featured_image field if this is the featured image\n         if self.is_featured and self.image:\n-            site_url = getattr(settings, \"SITE_URL\", \"https://basecollegeinfoapi.com\")  # Default fallback URL\n+            site_url = getattr(settings, \"SITE_URL\", \"https://base.collegeinfonepal.com/\")  # Default fallback URL\n             absolute_url = urljoin(site_url, self.image.url)  # Construct absolute URL\n \n             # Update the `featured_image` field of the related `Information` instance\n             self.information.featured_image = absolute_url\n"
+                },
+                {
+                    "date": 1741685297946,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -148,10 +148,10 @@\n         super().save(*args, **kwargs)\n \n         # Update the Information model's featured_image field if this is the featured image\n         if self.is_featured and self.image:\n-            site_url = getattr(settings, \"SITE_URL\", \"https://base.collegeinfonepal.com/\")  # Default fallback URL\n+            site_url = getattr(settings, \"SITE_URL\", \"https://base.collegeinfonepal.com\")  # Default fallback URL\n             absolute_url = urljoin(site_url, self.image.url)  # Construct absolute URL\n \n             # Update the `featured_image` field of the related `Information` instance\n-            self.information.featured_image = absolute_url\n+            self.information.featured_image = self.image.url\n             self.information.save(update_fields=['featured_image'])  # Save only the updated field\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1741685303190,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -148,10 +148,7 @@\n         super().save(*args, **kwargs)\n \n         # Update the Information model's featured_image field if this is the featured image\n         if self.is_featured and self.image:\n-            site_url = getattr(settings, \"SITE_URL\", \"https://base.collegeinfonepal.com\")  # Default fallback URL\n-            absolute_url = urljoin(site_url, self.image.url)  # Construct absolute URL\n-\n             # Update the `featured_image` field of the related `Information` instance\n             self.information.featured_image = self.image.url\n             self.information.save(update_fields=['featured_image'])  # Save only the updated field\n\\ No newline at end of file\n"
                 }
             ],
             "date": 1739786154635,

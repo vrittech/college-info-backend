@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 83,
+            "activePatchIndex": 86,
             "patches": [
                 {
                     "date": 1739512004648,
@@ -340,6 +340,18 @@
                 {
                     "date": 1741235724372,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,9 @@\n         ref_name = 'CollegeGallerySerializers'\n         fields = ['slug', 'id', 'name','dp_image','address']\n \n \n-### ✅ Read Serializer (for Listing Multiple Galleries) ###\n+\n class CollegeGalleryListSerializers(serializers.ModelSerializer):\n     college = CollegeSerializers(read_only=True)\n     # images = serializers.SerializerMethodField()  # Ensures `images` is the response key\n \n"
+                },
+                {
+                    "date": 1741684525740,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -130,9 +130,9 @@\n         if isinstance(instance, list):\n             return [\n                 {\n                     \"id\": obj.id,\n-                    \"image\": request.build_absolute_uri(obj.image.url) if obj.image else None,\n+                    \"image\": obj.image.url) if obj.image else None,\n                     \"college\": obj.college.id if obj.college else None\n                 }\n                 for obj in instance\n             ]\n"
+                },
+                {
+                    "date": 1741684530945,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -130,9 +130,9 @@\n         if isinstance(instance, list):\n             return [\n                 {\n                     \"id\": obj.id,\n-                    \"image\": obj.image.url) if obj.image else None,\n+                    \"image\": obj.image.url if obj.image else None,\n                     \"college\": obj.college.id if obj.college else None\n                 }\n                 for obj in instance\n             ]\n"
+                },
+                {
+                    "date": 1741684539108,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -139,8 +139,8 @@\n \n         # ✅ If `instance` is a single object, return a single object representation\n         return {\n             \"id\": instance.id,\n-            \"image\": request.build_absolute_uri(instance.image.url) if instance.image else None,\n+            \"image\": instance.image.url) if instance.image else None,\n             \"college\": instance.college.id if instance.college else None\n         }\n \n"
                 }
             ],
             "date": 1739512004648,

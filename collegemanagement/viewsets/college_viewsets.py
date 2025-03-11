@@ -95,7 +95,7 @@ class collegeViewsets(viewsets.ModelViewSet):
 
         # Construct response
         logos = [
-            {"slug": college.slug, "college_name": college.name, "dp_image_url": request.build_absolute_uri(college.dp_image.url)}
+            {"slug": college.slug, "college_name": college.name, "dp_image_url": college.dp_image.url}
             for college in paginated_colleges
         ]
 
@@ -258,7 +258,7 @@ class collegeViewsets(viewsets.ModelViewSet):
             seen_colleges.add(college.id)
 
             latest_images = CollegeGallery.objects.filter(college=college).order_by('-created_date')[:3]
-            images_array = [request.build_absolute_uri(image.image.url) for image in latest_images]
+            images_array = [image.image.url for image in latest_images]
 
             response_data.append({
                 "college": {
@@ -266,7 +266,7 @@ class collegeViewsets(viewsets.ModelViewSet):
                     "slug": college.slug,
                     "name": college.name,
                     "district": college.district.name if college.district else None,
-                    "dp_image": request.build_absolute_uri(college.dp_image.url) if college.dp_image else None,
+                    "dp_image": college.dp_image.url if college.dp_image else None,
                     "address": college.address,
                     "swiper_images": images_array
                 }

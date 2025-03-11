@@ -98,7 +98,7 @@ class eventViewsets(viewsets.ModelViewSet):
             "start_date": event_instance.start_date,
             "end_date": event_instance.end_date,
             "image": [
-            {"id": img.id, "image": request.build_absolute_uri(img.image.url)}
+            {"id": img.id, "image": img.image.url}
             for img in event_instance.image.all()
             ],
         }

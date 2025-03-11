@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 157,
+            "activePatchIndex": 160,
             "patches": [
                 {
                     "date": 1733718920520,
@@ -636,6 +636,18 @@
                 {
                     "date": 1741494057218,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -264,9 +264,9 @@\n                 \"college\": {\n                     \"id\": college.id,\n                     \"slug\": college.slug,\n                     \"name\": college.name,\n-                    \"district\":\n+                    \"district\": college.district.name ,\n                     \"dp_image\": request.build_absolute_uri(college.dp_image.url) if college.dp_image else None,\n                     \"address\": college.address,\n                     \"swiper_images\": images_array\n                 }\n"
+                },
+                {
+                    "date": 1741684555540,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -264,10 +264,10 @@\n                 \"college\": {\n                     \"id\": college.id,\n                     \"slug\": college.slug,\n                     \"name\": college.name,\n-                    \"district\": college.district.name ,\n-                    \"dp_image\": request.build_absolute_uri(college.dp_image.url) if college.dp_image else None,\n+                    \"district\": college.district.name if college.district else None,\n+                    \"dp_image\": college.dp_image.url) if college.dp_image else None,\n                     \"address\": college.address,\n                     \"swiper_images\": images_array\n                 }\n             })\n"
+                },
+                {
+                    "date": 1741684568212,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -257,17 +257,17 @@\n                 continue\n             seen_colleges.add(college.id)\n \n             latest_images = CollegeGallery.objects.filter(college=college).order_by('-created_date')[:3]\n-            images_array = [request.build_absolute_uri(image.image.url) for image in latest_images]\n+            images_array = [image.image.url) for image in latest_images]\n \n             response_data.append({\n                 \"college\": {\n                     \"id\": college.id,\n                     \"slug\": college.slug,\n                     \"name\": college.name,\n                     \"district\": college.district.name if college.district else None,\n-                    \"dp_image\": college.dp_image.url) if college.dp_image else None,\n+                    \"dp_image\": college.dp_image.url if college.dp_image else None,\n                     \"address\": college.address,\n                     \"swiper_images\": images_array\n                 }\n             })\n"
+                },
+                {
+                    "date": 1741684594454,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -94,9 +94,9 @@\n         paginated_colleges = paginator.paginate_queryset(colleges, request, view=self)\n \n         # Construct response\n         logos = [\n-            {\"slug\": college.slug, \"college_name\": college.name, \"dp_image_url\": request.build_absolute_uri(college.dp_image.url)}\n+            {\"slug\": college.slug, \"college_name\": college.name, \"dp_image_url\": college.dp_image.url)}\n             for college in paginated_colleges\n         ]\n \n         return paginator.get_paginated_response(logos)\n@@ -257,9 +257,9 @@\n                 continue\n             seen_colleges.add(college.id)\n \n             latest_images = CollegeGallery.objects.filter(college=college).order_by('-created_date')[:3]\n-            images_array = [image.image.url) for image in latest_images]\n+            images_array = [image.image.url for image in latest_images]\n \n             response_data.append({\n                 \"college\": {\n                     \"id\": college.id,\n"
                 }
             ],
             "date": 1733718920520,
