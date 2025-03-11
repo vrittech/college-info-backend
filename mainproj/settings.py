@@ -203,9 +203,8 @@ if USE_R2:
     AWS_S3_REGION_NAME = os.getenv("AWS_S3_REGION_NAME", "auto")  # Default to "auto"
     AWS_S3_ENDPOINT_URL = os.getenv("AWS_S3_ENDPOINT_URL")  # Cloudflare R2 Endpoint
     AWS_S3_CUSTOM_DOMAIN = os.getenv("AWS_S3_CUSTOM_DOMAIN")
-    
-    AWS_DEFAULT_ACL = None  # R2 does not support ACLs
 
+    AWS_DEFAULT_ACL = None  # Cloudflare R2 does not support ACLs
     AWS_S3_OBJECT_PARAMETERS = {'CacheControl': 'max-age=86400'}
     AWS_QUERYSTRING_AUTH = False  # Disable signed URLs for public access
     AWS_S3_FILE_OVERWRITE = False
@@ -214,18 +213,18 @@ if USE_R2:
     STATICFILES_LOCATION = 'static'
     MEDIAFILES_LOCATION = 'media'
 
-    # Storage Settings
+    # ✅ Using STORAGES (Fix for Django 4.2+)
     STORAGES = {
-        'default': {
-            'BACKEND': 'storages.backends.s3boto3.S3Boto3Storage'
+        "default": {
+            "BACKEND": "storages.backends.s3boto3.S3Boto3Storage"
         },
-        'staticfiles': {
-            'BACKEND': 'storages.backends.s3boto3.S3Boto3Storage',
-            'OPTIONS': {'location': STATICFILES_LOCATION}
+        "staticfiles": {
+            "BACKEND": "storages.backends.s3boto3.S3Boto3Storage",
+            "OPTIONS": {"location": STATICFILES_LOCATION}
         },
-        'media': {
-            'BACKEND': 'storages.backends.s3boto3.S3Boto3Storage',
-            'OPTIONS': {'location': MEDIAFILES_LOCATION}
+        "media": {
+            "BACKEND": "storages.backends.s3boto3.S3Boto3Storage",
+            "OPTIONS": {"location": MEDIAFILES_LOCATION}
         }
     }
 
@@ -246,9 +245,6 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')  # Ensure this directory exists
 ]
 
-
-
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
