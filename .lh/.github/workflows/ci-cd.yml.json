@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 50,
+            "activePatchIndex": 51,
             "patches": [
                 {
                     "date": 1733397109290,
@@ -208,6 +208,10 @@
                 {
                     "date": 1741770944303,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -73,9 +73,9 @@\n         ssh -o StrictHostKeyChecking=no root@$SERVER_IP \"cd $PROJECT_FOLDER && virtualenv venv && source venv/bin/activate && pip install -r requirements.txt && python manage.py migrate && python manage.py collectstatic --noinput \"\n         \n \n         #echo \"Running deployment commands on the server\" && \n-        # ssh -o StrictHostKeyChecking=no root@$SERVER_IP \"cd $PROJECT_FOLDER && virtualenv venv && source venv/bin/activate && pip install -r requirements.txt && python manage.py migrate && python manage.py collectstatic --noinput && screen -ls | grep $SCREEN_NAME | awk '{print $1}' | xargs -r -I{} screen -X -S {} quit && screen -dmS $SCREEN_NAME bash -c 'source venv/bin/activate && python manage.py runserver 0.0.0.0:$PORT'\"\n+        ssh -o StrictHostKeyChecking=no root@$SERVER_IP \"cd $PROJECT_FOLDER && virtualenv venv && source venv/bin/activate && pip install -r requirements.txt && python manage.py migrate && python manage.py collectstatic --noinput && screen -ls | grep $SCREEN_NAME | awk '{print $1}' | xargs -r -I{} screen -X -S {} quit && screen -dmS $SCREEN_NAME bash -c 'source venv/bin/activate && python manage.py runserver 0.0.0.0:$PORT'\"\n \n \n \n \n"
+                },
+                {
+                    "date": 1741771685677,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n         python-version: 3.10.12\n \n     - name: Upgrade pip and install setuptools\n       run: |\n-        python -m pip install --upgrade pip==21.2.4\n+        python -m pip install --upgrade pip\n         pip install --upgrade setuptools\n         # pip install autobahn\n         # pip install autobahn==23.6.1\n \n@@ -69,9 +69,9 @@\n         #scp -r -o StrictHostKeyChecking=no ./* root@$SERVER_IP:$PROJECT_FOLDER/\n \n         # Run deployment commands on the server\n         echo \"Running deployment commands on the server\"\n-        ssh -o StrictHostKeyChecking=no root@$SERVER_IP \"cd $PROJECT_FOLDER && virtualenv venv && source venv/bin/activate && pip install -r requirements.txt && python manage.py migrate && python manage.py collectstatic --noinput \"\n+        # ssh -o StrictHostKeyChecking=no root@$SERVER_IP \"cd $PROJECT_FOLDER && virtualenv venv && source venv/bin/activate && pip install -r requirements.txt && python manage.py migrate && python manage.py collectstatic --noinput \"\n         \n \n         #echo \"Running deployment commands on the server\" && \n         ssh -o StrictHostKeyChecking=no root@$SERVER_IP \"cd $PROJECT_FOLDER && virtualenv venv && source venv/bin/activate && pip install -r requirements.txt && python manage.py migrate && python manage.py collectstatic --noinput && screen -ls | grep $SCREEN_NAME | awk '{print $1}' | xargs -r -I{} screen -X -S {} quit && screen -dmS $SCREEN_NAME bash -c 'source venv/bin/activate && python manage.py runserver 0.0.0.0:$PORT'\"\n"
                 }
             ],
             "date": 1733397109290,
