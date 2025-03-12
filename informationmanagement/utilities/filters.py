@@ -1,5 +1,7 @@
 import django_filters
 from ..models import Information
+# from django.db.models import Q
+
 
 class InformationFilter(django_filters.FilterSet):
     """
@@ -14,6 +16,7 @@ class InformationFilter(django_filters.FilterSet):
     university_type = django_filters.CharFilter(method="filter_by_university_type")
     district = django_filters.BaseInFilter(field_name="district__id", lookup_expr="in")
     college = django_filters.BaseInFilter(field_name="college__id", lookup_expr="in")
+    discipline = django_filters.BaseInFilter(field_name="college__discipline__id", lookup_expr="in")
     faculty = django_filters.BaseInFilter(field_name="faculty__id", lookup_expr="in")
     information_tagging = django_filters.BaseInFilter(field_name="information_tagging__id", lookup_expr="in")
     information_category = django_filters.BaseInFilter(field_name="information_category__id", lookup_expr="in")
@@ -27,9 +30,15 @@ class InformationFilter(django_filters.FilterSet):
         model = Information
         fields = ['level', 'sublevel', 'course', 'affiliation', 'district', 'college',
                   'faculty', 'information_tagging', 'information_category','information_category_slug',
-                  'publish_date', 'active_period_start', 'active_period_end',"university_type"]
+                  'publish_date', 'active_period_start', 'active_period_end',"university_type","discipline"]
         
         
     def filter_by_university_type(self, queryset, name, value):
         """Filter by university type in Affiliation model"""
         return queryset.filter(affiliation__university_type__icontains=value).distinct()
+    
+    
+    # @property
+    # def qs(self):
+    #     # Get the filtered queryset and apply distinct()
+    #     return super().qs.distinct()
