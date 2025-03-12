@@ -23,6 +23,6 @@ django-celery-beat
 django-notifications-hq
 channels
 channels-redis
-django-storages
+django-storages==1.14.5
 boto3
 environ

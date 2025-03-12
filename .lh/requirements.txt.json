@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 27,
+            "activePatchIndex": 30,
             "patches": [
                 {
                     "date": 1726554854462,
@@ -116,6 +116,18 @@
                 {
                     "date": 1741675469915,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,6 +24,5 @@\n channels\n channels-redis\n django-storages\n boto3\n-environ\n-faker\n\\ No newline at end of file\n+environ\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1741771262443,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,7 +22,7 @@\n django-celery-beat\n django-notifications-hq\n channels\n channels-redis\n-django-storages\n+django-storages \n boto3\n environ\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1741771268767,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,7 +22,7 @@\n django-celery-beat\n django-notifications-hq\n channels\n channels-redis\n-django-storages ==\n+django-storages\n boto3\n environ\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1741771365515,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,7 +22,7 @@\n django-celery-beat\n django-notifications-hq\n channels\n channels-redis\n-django-storages=\n+django-storages==1.1.\n boto3\n environ\n\\ No newline at end of file\n"
                 }
             ],
             "date": 1726554854462,
