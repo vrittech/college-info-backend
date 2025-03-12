@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 49,
+            "activePatchIndex": 50,
             "patches": [
                 {
                     "date": 1733397109290,
@@ -204,6 +204,10 @@
                 {
                     "date": 1741770763523,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -40,18 +40,18 @@\n         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}\n         AWS_DEFAULT_REGION: ap-southeast-2\n         BACKEND_USER: backend\n         BACKEND_PASSWORD: backend\n-        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY_PROD }}\n+        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}\n         SERVER_IP: \"142.171.168.136\"\n         # SERVER_IP: \"82.29.167.247\"\n         PORT: \"8001\"\n         SCREEN_NAME: \"collegeinfo\"\n         PROJECT_FOLDER: \"/home/collegeinfo\"\n \n       run: |\n         mkdir -p ~/.ssh\n-        echo \"${{ secrets.SSH_PRIVATE_KEY_PROD }}\" > ~/.ssh/id_rsa\n+        echo \"${{ secrets.SSH_PRIVATE_KEY }}\" > ~/.ssh/id_rsa\n         chmod 600 ~/.ssh/id_rsa\n \n         # Install rsync\n         #sudo apt-get install -y rsync\n"
+                },
+                {
+                    "date": 1741770944303,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -73,9 +73,9 @@\n         ssh -o StrictHostKeyChecking=no root@$SERVER_IP \"cd $PROJECT_FOLDER && virtualenv venv && source venv/bin/activate && pip install -r requirements.txt && python manage.py migrate && python manage.py collectstatic --noinput \"\n         \n \n         #echo \"Running deployment commands on the server\" && \n-        # ssh -o StrictHostKeyChecking=no root@$SERVER_IP \"cd $PROJECT_FOLDER && virtualenv venv && source venv/bin/activate && pip install -r requirements.txt && python manage.py migrate && python manage.py collectstatic --noinput && screen -ls | grep $SCREEN_NAME | awk '{print $1}' | xargs -r -I{} screen -X -S {} quit && screen -dmS $SCREEN_NAME bash -c 'source venv/bin/activate && python manage.py runserver 0.0.0.0:$PORT'\"\n+        ssh -o StrictHostKeyChecking=no root@$SERVER_IP \"cd $PROJECT_FOLDER && virtualenv venv && source venv/bin/activate && pip install -r requirements.txt && python manage.py migrate && python manage.py collectstatic --noinput && screen -ls | grep $SCREEN_NAME | awk '{print $1}' | xargs -r -I{} screen -X -S {} quit && screen -dmS $SCREEN_NAME bash -c 'source venv/bin/activate && python manage.py runserver 0.0.0.0:$PORT'\"\n \n \n \n \n"
                 }
             ],
             "date": 1733397109290,
