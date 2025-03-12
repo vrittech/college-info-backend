@@ -41,16 +41,16 @@ jobs:
         AWS_DEFAULT_REGION: ap-southeast-2
         BACKEND_USER: backend
         BACKEND_PASSWORD: backend
-        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY_PROD }}
-        # SERVER_IP: "142.171.168.136"
-        SERVER_IP: "82.29.167.247"
+        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        SERVER_IP: "142.171.168.136"
+        # SERVER_IP: "82.29.167.247"
         PORT: "8001"
         SCREEN_NAME: "collegeinfo"
         PROJECT_FOLDER: "/home/collegeinfo"
 
       run: |
         mkdir -p ~/.ssh
-        echo "${{ secrets.SSH_PRIVATE_KEY_PROD }}" > ~/.ssh/id_rsa
+        echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
         chmod 600 ~/.ssh/id_rsa
 
         # Install rsync
