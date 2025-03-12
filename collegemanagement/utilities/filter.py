@@ -22,7 +22,7 @@ class CollegeFilter(django_filters.FilterSet):
     address = CharInFilter(field_name="address", lookup_expr="in")
     district = CharInFilter(field_name="district__name", lookup_expr="in")
     college_type = django_filters.CharFilter(field_name="college_type__id", lookup_expr="exact")
-    affiliated = django_filters.CharFilter(field_name="affiliated__id", lookup_expr="exact")
+    affiliated = django_filters.CharFilter(method="filter_by_affiliation")
     university_type = django_filters.CharFilter(field_name='affiliated__university_type', lookup_expr='icontains')
 
 
@@ -61,6 +61,13 @@ class CollegeFilter(django_filters.FilterSet):
         if value:
             facility_ids = value.split(',') if ',' in value else [value]
             queryset = queryset.filter(facilities__id__in=facility_ids).distinct()
+        return queryset
+    
+    def filter_by_affiliation(self, queryset, name, value):
+        """Filter by multiple facilities using comma-separated values"""
+        if value:
+            affiliated_ids = value.split(',') if ',' in value else [value]
+            queryset = queryset.filter(affiliated__id__in=affiliated_ids).distinct()
         return queryset
 
     class Meta:
