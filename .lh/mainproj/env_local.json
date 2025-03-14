@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 6,
+            "activePatchIndex": 9,
             "patches": [
                 {
                     "date": 1737957070194,
@@ -32,6 +32,18 @@
                 {
                     "date": 1741675560032,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,8 +19,15 @@\n # API_URL=http://localhost:8000\n \n SITE_URL=http://127.0.0.1:8000\n \n+# Cloudflare R2 Configuration\n+AWS_ACCESS_KEY_ID=ed274c7ba0e941640875507a86df92c8\n+AWS_SECRET_ACCESS_KEY=8ac893a940e7c0bb5c1133385de02f8865806b678a43223526090f9969f42b90\n+AWS_STORAGE_BUCKET_NAME=collegeinfo-bucket\n+AWS_S3_REGION_NAME=auto\n+AWS_S3_ENDPOINT_URL=https://0eb36d57e9131fec092a0e63d1ee3d2f.r2.cloudflarestorage.com/collegeinfo-bucket  # Replace YOUR_ACCOUNT_ID\n+AWS_S3_CUSTOM_DOMAIN=collegeinfo-bucket.0eb36d57e9131fec092a0e63d1ee3d2f.r2.cloudflarestorage.com  # Replace YOUR_ACCOUNT_ID\n \n \n \n \n"
+                },
+                {
+                    "date": 1741936378768,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,16 +18,15 @@\n # ENVIRONMENT=development\n # API_URL=http://localhost:8000\n \n SITE_URL=http://127.0.0.1:8000\n-\n # Cloudflare R2 Configuration\n AWS_ACCESS_KEY_ID=ed274c7ba0e941640875507a86df92c8\n AWS_SECRET_ACCESS_KEY=8ac893a940e7c0bb5c1133385de02f8865806b678a43223526090f9969f42b90\n AWS_STORAGE_BUCKET_NAME=collegeinfo-bucket\n AWS_S3_REGION_NAME=auto\n-AWS_S3_ENDPOINT_URL=https://0eb36d57e9131fec092a0e63d1ee3d2f.r2.cloudflarestorage.com/collegeinfo-bucket  # Replace YOUR_ACCOUNT_ID\n-AWS_S3_CUSTOM_DOMAIN=collegeinfo-bucket.0eb36d57e9131fec092a0e63d1ee3d2f.r2.cloudflarestorage.com  # Replace YOUR_ACCOUNT_ID\n+AWS_S3_ENDPOINT_URL=https://0eb36d57e9131fec092a0e63d1ee3d2f.r2.cloudflarestorage.com  # Private API Endpoint\n+# AWS_S3_CUSTOM_DOMAIN=pub-572de4d7dd8b4b7e9e32601b3ca4ea92.r2.dev  # Public URL for serving files\n+AWS_S3_CUSTOM_DOMAIN=media.collegeinfonepal.com  # Public URL for serving files\n \n \n \n-\n"
+                },
+                {
+                    "date": 1741936398045,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,15 +18,16 @@\n # ENVIRONMENT=development\n # API_URL=http://localhost:8000\n \n SITE_URL=http://127.0.0.1:8000\n+\n # Cloudflare R2 Configuration\n AWS_ACCESS_KEY_ID=ed274c7ba0e941640875507a86df92c8\n AWS_SECRET_ACCESS_KEY=8ac893a940e7c0bb5c1133385de02f8865806b678a43223526090f9969f42b90\n AWS_STORAGE_BUCKET_NAME=collegeinfo-bucket\n AWS_S3_REGION_NAME=auto\n AWS_S3_ENDPOINT_URL=https://0eb36d57e9131fec092a0e63d1ee3d2f.r2.cloudflarestorage.com  # Private API Endpoint\n # AWS_S3_CUSTOM_DOMAIN=pub-572de4d7dd8b4b7e9e32601b3ca4ea92.r2.dev  # Public URL for serving files\n-AWS_S3_CUSTOM_DOMAIN=media.collegeinfonepal.com  # Public URL for serving files\n+AWS_S3_CUSTOM_DOMAIN=\"media.collegeinfonepal.com  # Public URL for serving files\n \n \n \n"
+                },
+                {
+                    "date": 1741936415772,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -26,8 +26,8 @@\n AWS_STORAGE_BUCKET_NAME=collegeinfo-bucket\n AWS_S3_REGION_NAME=auto\n AWS_S3_ENDPOINT_URL=https://0eb36d57e9131fec092a0e63d1ee3d2f.r2.cloudflarestorage.com  # Private API Endpoint\n # AWS_S3_CUSTOM_DOMAIN=pub-572de4d7dd8b4b7e9e32601b3ca4ea92.r2.dev  # Public URL for serving files\n-AWS_S3_CUSTOM_DOMAIN=\"media.collegeinfonepal.com  # Public URL for serving files\n+AWS_S3_CUSTOM_DOMAIN: media.collegeinfonepal.com  # Public URL for serving files\n \n \n \n"
                 }
             ],
             "date": 1737957070194,
