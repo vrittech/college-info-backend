@@ -189,6 +189,10 @@ USE_TZ = True
 
 import os
 from pathlib import Path
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 # Build paths inside the project
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -204,72 +208,68 @@ if USE_R2:
     AWS_S3_ENDPOINT_URL = os.getenv("AWS_S3_ENDPOINT_URL")  # Cloudflare R2 Endpoint
     AWS_S3_CUSTOM_DOMAIN = os.getenv("AWS_S3_CUSTOM_DOMAIN")
 
-    AWS_DEFAULT_ACL = None  # Cloudflare R2 does not support ACLs
-    AWS_S3_OBJECT_PARAMETERS = {'CacheControl': 'max-age=86400'}
-    AWS_QUERYSTRING_AUTH = False  # Disable signed URLs for public access
-    AWS_S3_FILE_OVERWRITE = False
-    
-    DEFAULT_FILE_STORAGE = "mainproj.storages.R2Storage"
-
+    # ✅ Remove DEFAULT_FILE_STORAGE to avoid conflicts in Django 4.2+
+    # DEFAULT_FILE_STORAGE = "mainproj.storages.R2Storage"  # ❌ Remove this
 
     # Static and Media Settings for R2
-    STATICFILES_LOCATION = 'static'
-    MEDIAFILES_LOCATION = 'media'
+    STATICFILES_LOCATION = os.getenv("STATICFILES_LOCATION", "static")
+    MEDIAFILES_LOCATION = os.getenv("MEDIAFILES_LOCATION", "media")
 
     # ✅ Using STORAGES (Fix for Django 4.2+)
     STORAGES = {
         "default": {
             "BACKEND": "storages.backends.s3boto3.S3Boto3Storage",
             "OPTIONS": {
-                "access_key": os.getenv("AWS_ACCESS_KEY_ID"),
-                "secret_key": os.getenv("AWS_SECRET_ACCESS_KEY"),
-                "endpoint_url": os.getenv("AWS_S3_ENDPOINT_URL"),  # Cloudflare R2 Endpoint
-                "bucket_name": os.getenv("AWS_STORAGE_BUCKET_NAME"),
+                "access_key": AWS_ACCESS_KEY_ID,
+                "secret_key": AWS_SECRET_ACCESS_KEY,
+                "endpoint_url": AWS_S3_ENDPOINT_URL,  # Cloudflare R2 Endpoint
+                "bucket_name": AWS_STORAGE_BUCKET_NAME,
                 "default_acl": None,  # R2 does not support ACLs
                 "querystring_auth": False,  # Disables signed URLs for public access
                 "s3_file_overwrite": False,  # Prevents overwriting existing files
+                "object_parameters": {
+                    "CacheControl": "max-age=86400"  # Cache settings
+                },
             },
         },
         "staticfiles": {
             "BACKEND": "storages.backends.s3boto3.S3Boto3Storage",
             "OPTIONS": {
-                "access_key": os.getenv("AWS_ACCESS_KEY_ID"),
-                "secret_key": os.getenv("AWS_SECRET_ACCESS_KEY"),
-                "endpoint_url": os.getenv("AWS_S3_ENDPOINT_URL"),
-                "bucket_name": os.getenv("AWS_STORAGE_BUCKET_NAME"),
-                "location": os.getenv("STATICFILES_LOCATION", "static"),
+                "access_key": AWS_ACCESS_KEY_ID,
+                "secret_key": AWS_SECRET_ACCESS_KEY,
+                "endpoint_url": AWS_S3_ENDPOINT_URL,
+                "bucket_name": AWS_STORAGE_BUCKET_NAME,
+                "location": STATICFILES_LOCATION,
             },
         },
         "media": {
             "BACKEND": "storages.backends.s3boto3.S3Boto3Storage",
             "OPTIONS": {
-                "access_key": os.getenv("AWS_ACCESS_KEY_ID"),
-                "secret_key": os.getenv("AWS_SECRET_ACCESS_KEY"),
-                "endpoint_url": os.getenv("AWS_S3_ENDPOINT_URL"),
-                "bucket_name": os.getenv("AWS_STORAGE_BUCKET_NAME"),
-                "location": os.getenv("MEDIAFILES_LOCATION", "media"),
+                "access_key": AWS_ACCESS_KEY_ID,
+                "secret_key": AWS_SECRET_ACCESS_KEY,
+                "endpoint_url": AWS_S3_ENDPOINT_URL,
+                "bucket_name": AWS_STORAGE_BUCKET_NAME,
+                "location": MEDIAFILES_LOCATION,
             },
         },
     }
 
-
-    # URLs
+    # ✅ Use the correct URL format for static/media files
     STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{STATICFILES_LOCATION}/'
     MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{MEDIAFILES_LOCATION}/'
 
 else:
-    # Local Storage Settings
+    # Local Storage Settings (For Development)
     STATIC_URL = '/static/'
     MEDIA_URL = '/media/'
 
 # Common Static/Media Settings
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+STATIC_ROOT = BASE_DIR / "staticfiles"
+MEDIA_ROOT = BASE_DIR / "media"
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static')  # Ensure this directory exists
+    BASE_DIR / "static"  # Ensure this directory exists
 ]
-
 
 
 # Default primary key field type
