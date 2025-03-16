@@ -219,17 +219,39 @@ if USE_R2:
     # ✅ Using STORAGES (Fix for Django 4.2+)
     STORAGES = {
         "default": {
-            "BACKEND": "storages.backends.s3boto3.S3Boto3Storage"
+            "BACKEND": "storages.backends.s3boto3.S3Boto3Storage",
+            "OPTIONS": {
+                "access_key": os.getenv("AWS_ACCESS_KEY_ID"),
+                "secret_key": os.getenv("AWS_SECRET_ACCESS_KEY"),
+                "endpoint_url": os.getenv("AWS_S3_ENDPOINT_URL"),  # Cloudflare R2 Endpoint
+                "bucket_name": os.getenv("AWS_STORAGE_BUCKET_NAME"),
+                "default_acl": None,  # R2 does not support ACLs
+                "querystring_auth": False,  # Disables signed URLs for public access
+                "s3_file_overwrite": False,  # Prevents overwriting existing files
+            },
         },
         "staticfiles": {
             "BACKEND": "storages.backends.s3boto3.S3Boto3Storage",
-            "OPTIONS": {"location": STATICFILES_LOCATION}
+            "OPTIONS": {
+                "access_key": os.getenv("AWS_ACCESS_KEY_ID"),
+                "secret_key": os.getenv("AWS_SECRET_ACCESS_KEY"),
+                "endpoint_url": os.getenv("AWS_S3_ENDPOINT_URL"),
+                "bucket_name": os.getenv("AWS_STORAGE_BUCKET_NAME"),
+                "location": os.getenv("STATICFILES_LOCATION", "static"),
+            },
         },
         "media": {
             "BACKEND": "storages.backends.s3boto3.S3Boto3Storage",
-            "OPTIONS": {"location": MEDIAFILES_LOCATION}
-        }
+            "OPTIONS": {
+                "access_key": os.getenv("AWS_ACCESS_KEY_ID"),
+                "secret_key": os.getenv("AWS_SECRET_ACCESS_KEY"),
+                "endpoint_url": os.getenv("AWS_S3_ENDPOINT_URL"),
+                "bucket_name": os.getenv("AWS_STORAGE_BUCKET_NAME"),
+                "location": os.getenv("MEDIAFILES_LOCATION", "media"),
+            },
+        },
     }
+
 
     # URLs
     STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{STATICFILES_LOCATION}/'

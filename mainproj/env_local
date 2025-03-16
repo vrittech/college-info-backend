@@ -33,3 +33,5 @@ AWS_S3_CUSTOM_DOMAIN=media.collegeinfonepal.com  # Public URL for serving files
 
 
 
+STATICFILES_LOCATION=static
+MEDIAFILES_LOCATION=media
