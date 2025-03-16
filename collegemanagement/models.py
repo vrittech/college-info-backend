@@ -42,7 +42,7 @@ class College(SEOFields):
     is_show = models.BooleanField(default=False)
     is_verified = models.BooleanField(default=False)
     established_date = models.DateField(null= True,blank=True)
-    website_link = models.URLField(null= True,blank=True)
+    website_link = models.CharField(max_length=510,null= True,blank=True)
     address = models.CharField(max_length=255,null=True,blank=True)
     district = models.ForeignKey(District,on_delete=models.CASCADE,related_name='college_district',null=True,blank=True)
     phone_number = models.CharField(max_length=20,null=True,blank=True)

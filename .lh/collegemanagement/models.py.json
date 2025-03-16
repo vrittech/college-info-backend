@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 265,
+            "activePatchIndex": 268,
             "patches": [
                 {
                     "date": 1727170911785,
@@ -1068,6 +1068,18 @@
                 {
                     "date": 1742120894363,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -50,9 +50,9 @@\n     affiliated = models.ForeignKey(Affiliation, on_delete=models.CASCADE,related_name='college_affiliation',null=True,blank=True)\n     college_type = models.ForeignKey(CollegeType, on_delete=models.CASCADE,related_name='college_type',null=True,blank=True)\n     discipline = models.ManyToManyField(Discipline, related_name='college_discipline',blank=True)\n     # social_media = models.ManyToManyField(CollegeSocialMedia,blank=True)\n-    google_map_link = models.CharField(blank=True, null=True,)\n+    google_map_link = models.CharField(blank=True, null=True, max_length=1000)\n     latitude = models.CharField(max_length= 255,null=True,blank=True)\n     longitude = models.CharField(max_length= 255,null=True,blank=True)\n     about = models.TextField(null = True,blank=True)\n     brochure = models.FileField(upload_to='college/brochure/',null=True,blank=True)\n"
+                },
+                {
+                    "date": 1742126962972,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -41,9 +41,9 @@\n     name = models.CharField(max_length=255)\n     is_show = models.BooleanField(default=False)\n     is_verified = models.BooleanField(default=False)\n     established_date = models.DateField(null= True,blank=True)\n-    website_link = models.URLField(null= True,blank=True)\n+    website_link = models.CharField(null= True,blank=True)\n     address = models.CharField(max_length=255,null=True,blank=True)\n     district = models.ForeignKey(District,on_delete=models.CASCADE,related_name='college_district',null=True,blank=True)\n     phone_number = models.CharField(max_length=20,null=True,blank=True)\n     email = models.EmailField(max_length=255,null=True,blank=True)\n"
+                },
+                {
+                    "date": 1742126982501,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -41,9 +41,9 @@\n     name = models.CharField(max_length=255)\n     is_show = models.BooleanField(default=False)\n     is_verified = models.BooleanField(default=False)\n     established_date = models.DateField(null= True,blank=True)\n-    website_link = models.CharField(null= True,blank=True)\n+    website_link = models.CharField(max_length=255,null= True,blank=True)\n     address = models.CharField(max_length=255,null=True,blank=True)\n     district = models.ForeignKey(District,on_delete=models.CASCADE,related_name='college_district',null=True,blank=True)\n     phone_number = models.CharField(max_length=20,null=True,blank=True)\n     email = models.EmailField(max_length=255,null=True,blank=True)\n"
+                },
+                {
+                    "date": 1742126988942,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -41,9 +41,9 @@\n     name = models.CharField(max_length=255)\n     is_show = models.BooleanField(default=False)\n     is_verified = models.BooleanField(default=False)\n     established_date = models.DateField(null= True,blank=True)\n-    website_link = models.CharField(max_length=255,null= True,blank=True)\n+    website_link = models.CharField(max_length=2510,null= True,blank=True)\n     address = models.CharField(max_length=255,null=True,blank=True)\n     district = models.ForeignKey(District,on_delete=models.CASCADE,related_name='college_district',null=True,blank=True)\n     phone_number = models.CharField(max_length=20,null=True,blank=True)\n     email = models.EmailField(max_length=255,null=True,blank=True)\n"
                 }
             ],
             "date": 1727170911784,
