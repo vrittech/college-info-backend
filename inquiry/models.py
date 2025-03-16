@@ -26,8 +26,8 @@ class Inquiry(models.Model):
     message = models.TextField(blank=True, null=True, help_text="Message or query from the user.")
 
     # Timestamps
-    created_at = models.DateTimeField(auto_now_add=True, help_text="The time when the inquiry was created.")
-    updated_at = models.DateTimeField(auto_now=True, help_text="The last time the inquiry was updated.")
+    created_date = models.DateTimeField(auto_now_add=True, help_text="The time when the inquiry was created.")
+    updated_date = models.DateTimeField(auto_now=True, help_text="The last time the inquiry was updated.")
 
     def __str__(self):
         return f"Inquiry from {self.full_name} - {self.email}"
