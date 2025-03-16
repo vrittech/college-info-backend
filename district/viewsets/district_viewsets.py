@@ -20,7 +20,7 @@ class districtViewsets(viewsets.ModelViewSet):
     filterset_fields = {
         'id': ['exact'],
         'name': ['exact'],
-        'is_shown': ['exact'],
+        'is_show': ['exact'],
         'created_date': ['exact', 'gte', 'lte'],
     }
 

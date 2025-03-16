@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 8,
+            "activePatchIndex": 9,
             "patches": [
                 {
                     "date": 1733199415037,
@@ -40,6 +40,10 @@
                 {
                     "date": 1733642215110,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,4 +10,7 @@\n     def __str__(self):\n         return self.name\n     \n     class Meta:\n+        permissions = [\n+            \n+        ]\n"
+                },
+                {
+                    "date": 1742119281006,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,8 +2,9 @@\n \n # Create your models here.\n class Duration(models.Model):\n     name = models.CharField(max_length=255)\n+    is\n     \n     created_date = models.DateField(auto_now_add=True)\n     updated_date = models.DateTimeField(auto_now=True)\n     \n@@ -11,6 +12,6 @@\n         return self.name\n     \n     class Meta:\n         permissions = [\n-            \n+            ('manage_duration', 'Manage duration'),\n         ]\n"
                 }
             ],
             "date": 1733199415037,

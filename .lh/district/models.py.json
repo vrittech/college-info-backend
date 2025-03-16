@@ -1,0 +1,18 @@
+{
+    "sourceFile": "district/models.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1742119261249,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1742119261248,
+            "name": "Commit-0",
+            "content": "from django.db import models\n\n# Create your models here.\nclass District(models.Model):\n    name = models.CharField(max_length=255,null=True,blank=True)\n    is_show = models.BooleanField(default=False)\n    # description = models.TextField(null=True,blank=True)\n    # image = models.ImageField(upload_to='district/',null=True,blank=True)\n    created_date = models.DateField(auto_now_add=True, null=True, blank=True)\n    created_date_time = models.DateTimeField(auto_now_add=True, null=True, blank=True)\n    updated_date = models.DateTimeField(auto_now=True, null=True, blank=True)\n    \n    def __str__(self):\n        return self.name if self.name else \"Unnamed Dsitrict\"\n    \n    class Meta:\n        permissions = [\n            ('manage_district', 'Manage District'),\n        ]"
+        }
+    ]
+}

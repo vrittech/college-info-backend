@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 12,
+            "activePatchIndex": 13,
             "patches": [
                 {
                     "date": 1733481357804,
@@ -56,6 +56,10 @@
                 {
                     "date": 1740907055321,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,9 @@\n from mainproj.permissions import DynamicModelPermission\n \n class durationViewsets(viewsets.ModelViewSet):\n     serializer_class = DurationListSerializers\n-    permission_classes = [durationPermission]\n+    permission_classes = [DynamicModelPermission]\n     authentication_classes = [JWTAuthentication]\n     pagination_class = MyPageNumberPagination\n     queryset = Duration.objects.all().order_by('-id')\n \n"
+                },
+                {
+                    "date": 1742119318258,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,9 @@\n \n class durationViewsets(viewsets.ModelViewSet):\n     serializer_class = DurationListSerializers\n     permission_classes = [DynamicModelPermission]\n-    authentication_classes = [JWTAuthentication]\n+    # authentication_classes = [JWTAuthentication]\n     pagination_class = MyPageNumberPagination\n     queryset = Duration.objects.all().order_by('-id')\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n@@ -19,8 +19,9 @@\n \n     filterset_fields = {\n         'id': ['exact'],\n         'name': ['exact'],\n+        ''\n         'created_date': ['exact', 'gte', 'lte'],\n     }\n \n     def get_queryset(self):\n"
                 }
             ],
             "date": 1733481357804,

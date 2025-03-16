@@ -20,6 +20,7 @@ class durationViewsets(viewsets.ModelViewSet):
     filterset_fields = {
         'id': ['exact'],
         'name': ['exact'],
+        'is_show': ['exact'],
         'created_date': ['exact', 'gte', 'lte'],
     }
 
