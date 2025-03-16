@@ -51,7 +51,7 @@ class College(SEOFields):
     college_type = models.ForeignKey(CollegeType, on_delete=models.CASCADE,related_name='college_type',null=True,blank=True)
     discipline = models.ManyToManyField(Discipline, related_name='college_discipline',blank=True)
     # social_media = models.ManyToManyField(CollegeSocialMedia,blank=True)
-    google_map_link = models.URLField(blank=True, null=True)
+    google_map_link = models.CharField(blank=True, null=True, max_length=1000)
     latitude = models.CharField(max_length= 255,null=True,blank=True)
     longitude = models.CharField(max_length= 255,null=True,blank=True)
     about = models.TextField(null = True,blank=True)
