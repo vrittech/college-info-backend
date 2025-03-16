@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 14,
+            "activePatchIndex": 15,
             "patches": [
                 {
                     "date": 1726653942928,
@@ -64,6 +64,10 @@
                 {
                     "date": 1738149255419,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,9 @@\n     created_date_time = models.DateTimeField(auto_now_add=True, null=True, blank=True)\n     updated_date = models.DateTimeField(auto_now=True, null=True, blank=True)\n     \n     def __str__(self):\n-        return self.name\n+        return self.name if self.name else \"Unnamed\"\n     \n     class Meta:\n         permissions = [\n             ('manage_faculty', 'Manage faculty'),\n"
+                },
+                {
+                    "date": 1742119434880,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-from django.db import models\n+configuration is_shopfrom django.db import models\n \n # Create your models here.\n class Faculty(models.Model):\n     name = models.CharField(max_length=255,null=True,blank=True)\n"
                 }
             ],
             "date": 1726653942928,

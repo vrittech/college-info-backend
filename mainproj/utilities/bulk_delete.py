@@ -49,7 +49,7 @@ VALID_TYPES = {
     "facility": Facility,
     "college-facility": CollegeFacility,
     "faculty": Faculty,
-    "level": Level,
+    "college-level": Level,
     "sub-level": SubLevel,
     "social-media": SocialMedia,
     "super-admin-details": SuperAdminDetails,

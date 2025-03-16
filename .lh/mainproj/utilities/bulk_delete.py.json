@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 89,
+            "activePatchIndex": 91,
             "patches": [
                 {
                     "date": 1733737051062,
@@ -364,6 +364,14 @@
                 {
                     "date": 1742098788407,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -25,9 +25,9 @@\n from event.models import Event,EventCategory,EventGallery,EventOrganizer\n from inquiry.models import Inquiry \n from discipline.models import Discipline    \n from gallery.models import Gallery,Album \n-from duration\n+from duration.models import Duration\n \n VALID_TYPES = {\n     \"advertisement\": Advertisement,\n     \"affiliation\": Affiliation,\n@@ -61,8 +61,9 @@\n     \"inquiry\": Inquiry,\n     \"discipline\": Discipline,\n     \"album\": Album,\n     \"gallery\": Gallery,\n+    \"\"\n }\n \n class BulkDelete(APIView):\n     @swagger_auto_schema(\n"
+                },
+                {
+                    "date": 1742119981858,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -48,9 +48,9 @@\n     \"district\": District,\n     \"facility\": Facility,\n     \"college-facility\": CollegeFacility,\n     \"faculty\": Faculty,\n-    \"level\": Level,\n+    \"\"college-level\"\": Level,\n     \"sub-level\": SubLevel,\n     \"social-media\": SocialMedia,\n     \"super-admin-details\": SuperAdminDetails,\n     \"event\": Event,\n@@ -61,9 +61,9 @@\n     \"inquiry\": Inquiry,\n     \"discipline\": Discipline,\n     \"album\": Album,\n     \"gallery\": Gallery,\n-    \"\"\n+    \"duration\": Duration,\n }\n \n class BulkDelete(APIView):\n     @swagger_auto_schema(\n"
+                },
+                {
+                    "date": 1742119987292,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -48,9 +48,9 @@\n     \"district\": District,\n     \"facility\": Facility,\n     \"college-facility\": CollegeFacility,\n     \"faculty\": Faculty,\n-    \"\"college-level\"\": Level,\n+    \"college-level\": Level,\n     \"sub-level\": SubLevel,\n     \"social-media\": SocialMedia,\n     \"super-admin-details\": SuperAdminDetails,\n     \"event\": Event,\n"
                 }
             ],
             "date": 1733737051062,
