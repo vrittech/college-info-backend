@@ -1,0 +1,18 @@
+{
+    "sourceFile": "mainproj/utilities/seo.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1742126902860,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1742126902860,
+            "name": "Commit-0",
+            "content": "from django.db import models\n\nclass SEOFields(models.Model):\n    meta_title = models.CharField(max_length=255, blank=True, null=True, help_text=\"Title for search engines.\")\n    meta_tag = models.CharField(max_length=255, blank=True, null=True, help_text=\"Primary meta tag for SEO.\")\n    meta_description = models.TextField(blank=True, null=True, help_text=\"Short description for SEO.\")\n    meta_keywords = models.TextField(blank=True, null=True, help_text=\"Comma-separated keywords for SEO.\")\n    meta_author = models.CharField(max_length=255, blank=True, null=True, help_text=\"Author information for SEO.\")\n    canonical_url = models.URLField(blank=True, null=True, help_text=\"Canonical URL to avoid duplicate content.\")\n\n    # Open Graph (OG) Tags (Social Sharing)\n    og_title = models.CharField(max_length=255, blank=True, null=True, help_text=\"Title for social sharing.\")\n    og_description = models.TextField(blank=True, null=True, help_text=\"Description for social sharing.\")\n    og_url = models.CharField(blank=True, null=True, help_text=\"URL to share on social platforms.\")\n    og_image = models.ImageField(upload_to='college/og_image/', null=True, blank=True)\n    og_type = models.CharField(max_length=50, blank=True, null=True, help_text=\"Type of the OG content (e.g., website, article).\")\n    og_locale = models.CharField(max_length=10, blank=True, null=True, default=\"en_US\", help_text=\"Locale for OG tags (e.g., en_US).\")\n    \n    # Dublin Core Metadata\n    dc_title = models.CharField(max_length=255, blank=True, null=True, help_text=\"Title for Dublin Core Metadata.\")\n    dc_description = models.TextField(blank=True, null=True, help_text=\"Description for Dublin Core Metadata.\")\n    dc_language = models.CharField(max_length=10, blank=True, null=True, default=\"en\", help_text=\"Language code for Dublin Core Metadata (e.g., en, fr).\")\n\n    class Meta:\n        abstract = True  # Ensures this model is abstract and not a separate database table\n"
+        }
+    ]
+}
