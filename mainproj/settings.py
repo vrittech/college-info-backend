@@ -208,14 +208,18 @@ if USE_R2:
     AWS_S3_ENDPOINT_URL = os.getenv("AWS_S3_ENDPOINT_URL")  # Cloudflare R2 Endpoint
     AWS_S3_CUSTOM_DOMAIN = os.getenv("AWS_S3_CUSTOM_DOMAIN")
 
-    # ✅ Remove DEFAULT_FILE_STORAGE to avoid conflicts in Django 4.2+
-    # DEFAULT_FILE_STORAGE = "mainproj.storages.R2Storage"  # ❌ Remove this
+    # ✅ Ensure AWS credentials exist
+    if not AWS_ACCESS_KEY_ID or not AWS_SECRET_ACCESS_KEY:
+        raise Exception(" AWS credentials are missing. Check your .env file!")
+
+    # ✅ Correct way to prevent file overwriting
+    AWS_S3_FILE_OVERWRITE = False  # Cloudflare R2 does not support overwriting files
 
     # Static and Media Settings for R2
     STATICFILES_LOCATION = os.getenv("STATICFILES_LOCATION", "static")
     MEDIAFILES_LOCATION = os.getenv("MEDIAFILES_LOCATION", "media")
 
-    # ✅ Using STORAGES (Fix for Django 4.2+)
+    # ✅ Using STORAGES (Django 4.2+ Compatible)
     STORAGES = {
         "default": {
             "BACKEND": "storages.backends.s3boto3.S3Boto3Storage",
@@ -226,7 +230,6 @@ if USE_R2:
                 "bucket_name": AWS_STORAGE_BUCKET_NAME,
                 "default_acl": None,  # R2 does not support ACLs
                 "querystring_auth": False,  # Disables signed URLs for public access
-                "s3_file_overwrite": False,  # Prevents overwriting existing files
                 "object_parameters": {
                     "CacheControl": "max-age=86400"  # Cache settings
                 },
@@ -254,7 +257,7 @@ if USE_R2:
         },
     }
 
-    # ✅ Use the correct URL format for static/media files
+    # ✅ Define Static & Media URLs
     STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{STATICFILES_LOCATION}/'
     MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{MEDIAFILES_LOCATION}/'
 

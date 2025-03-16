@@ -1,0 +1,22 @@
+{
+    "sourceFile": "test.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 1,
+            "patches": [
+                {
+                    "date": 1742116896243,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1742116952840,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,15 +1,37 @@\n+import os\n import boto3\n-import os\n+from dotenv import load_dotenv\n \n+# ✅ Load environment variables\n+load_dotenv()\n+\n+# ✅ Retrieve credentials from environment variables\n+AWS_ACCESS_KEY_ID = os.getenv(\"AWS_ACCESS_KEY_ID\")\n+AWS_SECRET_ACCESS_KEY = os.getenv(\"AWS_SECRET_ACCESS_KEY\")\n+AWS_S3_ENDPOINT_URL = os.getenv(\"AWS_S3_ENDPOINT_URL\")\n+AWS_STORAGE_BUCKET_NAME = os.getenv(\"AWS_STORAGE_BUCKET_NAME\")\n+\n+# ✅ Debugging: Print variables to check if they are loaded\n+print(\"AWS_ACCESS_KEY_ID:\", AWS_ACCESS_KEY_ID)\n+print(\"AWS_SECRET_ACCESS_KEY:\", AWS_SECRET_ACCESS_KEY)\n+print(\"AWS_S3_ENDPOINT_URL:\", AWS_S3_ENDPOINT_URL)\n+print(\"AWS_STORAGE_BUCKET_NAME:\", AWS_STORAGE_BUCKET_NAME)\n+\n+# ✅ Ensure credentials exist\n+if not AWS_ACCESS_KEY_ID or not AWS_SECRET_ACCESS_KEY:\n+    raise Exception(\"❌ AWS credentials are missing. Check your .env file!\")\n+\n+# ✅ Initialize Boto3 S3 Client with R2 Credentials\n s3_client = boto3.client(\n     \"s3\",\n-    aws_access_key_id=os.getenv(\"AWS_ACCESS_KEY_ID\"),\n-    aws_secret_access_key=os.getenv(\"AWS_SECRET_ACCESS_KEY\"),\n-    endpoint_url=os.getenv(\"AWS_S3_ENDPOINT_URL\")\n+    aws_access_key_id=AWS_ACCESS_KEY_ID,\n+    aws_secret_access_key=AWS_SECRET_ACCESS_KEY,\n+    endpoint_url=AWS_S3_ENDPOINT_URL\n )\n \n+# ✅ Test Connection by Listing Buckets\n try:\n     response = s3_client.list_buckets()\n-    print(response)  # ✅ If this works, credentials are correct\n+    print(\"✅ Connection successful! Buckets:\", response)\n except Exception as e:\n-    print(f\"Error: {e}\")  # ❌ If this fails, check your credentials\n+    print(f\"❌ Error: {e}\")\n"
+                }
+            ],
+            "date": 1742116896243,
+            "name": "Commit-0",
+            "content": "import boto3\nimport os\n\ns3_client = boto3.client(\n    \"s3\",\n    aws_access_key_id=os.getenv(\"AWS_ACCESS_KEY_ID\"),\n    aws_secret_access_key=os.getenv(\"AWS_SECRET_ACCESS_KEY\"),\n    endpoint_url=os.getenv(\"AWS_S3_ENDPOINT_URL\")\n)\n\ntry:\n    response = s3_client.list_buckets()\n    print(response)  # ✅ If this works, credentials are correct\nexcept Exception as e:\n    print(f\"Error: {e}\")  # ❌ If this fails, check your credentials\n"
+        }
+    ]
+}
