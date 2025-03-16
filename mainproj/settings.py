@@ -208,6 +208,9 @@ if USE_R2:
     AWS_S3_OBJECT_PARAMETERS = {'CacheControl': 'max-age=86400'}
     AWS_QUERYSTRING_AUTH = False  # Disable signed URLs for public access
     AWS_S3_FILE_OVERWRITE = False
+    
+    DEFAULT_FILE_STORAGE = "mainproj.storages.R2Storage"
+
 
     # Static and Media Settings for R2
     STATICFILES_LOCATION = 'static'

@@ -1,0 +1,18 @@
+{
+    "sourceFile": "mainproj/storages.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1742110995207,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1742110995207,
+            "name": "Commit-0",
+            "content": "from django.core.files.storage import Storage\nimport boto3\nfrom botocore.exceptions import ClientError\nfrom django.conf import settings\n\n\nclass R2Storage(Storage):\n    \"\"\"Custom Django Storage Backend for Cloudflare R2\"\"\"\n\n    def __init__(self, *args, **kwargs):\n        self.s3_client = boto3.client(\n            \"s3\",\n            aws_access_key_id=settings.AWS_ACCESS_KEY_ID,\n            aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,\n            endpoint_url=settings.R2_ENDPOINT_URL\n        )\n        self.bucket_name = settings.R2_BUCKET_NAME\n        super().__init__(*args, **kwargs)\n\n    def _open(self, name, mode=\"rb\"):\n        \"\"\"Retrieve file from R2\"\"\"\n        try:\n            response = self.s3_client.get_object(Bucket=self.bucket_name, Key=name)\n            return response[\"Body\"]\n        except ClientError as e:\n            raise IOError(f\"Error retrieving file: {e}\")\n\n    def _save(self, name, content):\n        \"\"\"Upload file to R2\"\"\"\n        try:\n            self.s3_client.upload_fileobj(content, self.bucket_name, name)\n            return name\n        except ClientError as e:\n            raise IOError(f\"Error saving file: {e}\")\n\n    def exists(self, name):\n        \"\"\"Check if file exists in R2\"\"\"\n        try:\n            self.s3_client.head_object(Bucket=self.bucket_name, Key=name)\n            return True\n        except ClientError:\n            return False\n\n    def url(self, name):\n        \"\"\"Generate a presigned URL for accessing the file\"\"\"\n        return self.s3_client.generate_presigned_url(\n            \"get_object\",\n            Params={\"Bucket\": self.bucket_name, \"Key\": name},\n            ExpiresIn=3600,  # 1 hour\n        )\n"
+        }
+    ]
+}

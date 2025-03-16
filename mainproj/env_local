@@ -1,32 +1,35 @@
-# #DIGITAL OCEAN
+#DIGITAL OCEAN
 
-# #SECRET_KEY
-# SECRET_KEY='django-insecure-z^#)006uptp234kjj8092hpxe23#i^r(iz9ak8gc-4q_8-(z^2kja@t8e(dnz$2@prashanttab'
+#SECRET_KEY
+SECRET_KEY='django-insecure-z^#)006uptp234kjj8092hpxe23#i^r(iz9ak8gc-4q_8-(z^2kja@t8e(dnz$2@prashanttab'
 
-# ALLOWED_HOSTS = "127.0.0.1,localhost,0.0.0.0,192.168.1.10,*,"
-# CORS_ORIGIN_WHITELIST = "http://localhost:4200,http://192.168.1.122:5173,http://192.168.1.122,http://localhost:3000,https://collegeinfoapi.vrittechnologies.com,"#frontend ip
-# CSRF_TRUSTED_ORIGINS = "http://127.0.0.1,http://192.168.1.10,http://192.168.1.103,https://collegeinfoapi.vrittechnologies.com,"#backend ip
+ALLOWED_HOSTS = "127.0.0.1,localhost,0.0.0.0,192.168.1.10,*,"
+CORS_ORIGIN_WHITELIST = "http://localhost:4200,http://192.168.1.122:5173,http://192.168.1.122,http://localhost:3000,https://collegeinfoapi.vrittechnologies.com,"#frontend ip
+CSRF_TRUSTED_ORIGINS = "http://127.0.0.1,http://192.168.1.10,http://192.168.1.103,https://collegeinfoapi.vrittechnologies.com,"#backend ip
 
-# #Database
-# DATABASE_ENGINE=django.db.backends.postgresql
-# DATABASES_NAME=collegeinfo
-# DATABASE_USER=postgres
-# DATABASE_PASSWORD=md
-# DATABASE_HOST=localhost
-# DATABASE_PORT=5432
+#Database
+DATABASE_ENGINE=django.db.backends.postgresql
+DATABASES_NAME=collegeinfo
+DATABASE_USER=postgres
+DATABASE_PASSWORD=md
+DATABASE_HOST=localhost
+DATABASE_PORT=5432
 
-# # ENVIRONMENT=development
-# # API_URL=http://localhost:8000
+# ENVIRONMENT=development
+# API_URL=http://localhost:8000
 
-# SITE_URL=http://127.0.0.1:8000
-# # Cloudflare R2 Configuration
+SITE_URL=http://127.0.0.1:8000
+
+# Cloudflare R2 Configuration
 # AWS_ACCESS_KEY_ID=ed274c7ba0e941640875507a86df92c8
+AWS_ACCESS_KEY_ID=e6b8157f017da14a1a7d8b7d53c15291
 # AWS_SECRET_ACCESS_KEY=8ac893a940e7c0bb5c1133385de02f8865806b678a43223526090f9969f42b90
-# AWS_STORAGE_BUCKET_NAME=collegeinfo-bucket
-# AWS_S3_REGION_NAME=auto
-# AWS_S3_ENDPOINT_URL=https://0eb36d57e9131fec092a0e63d1ee3d2f.r2.cloudflarestorage.com  # Private API Endpoint
-# # AWS_S3_CUSTOM_DOMAIN=pub-572de4d7dd8b4b7e9e32601b3ca4ea92.r2.dev  # Public URL for serving files
-# AWS_S3_CUSTOM_DOMAIN=media.collegeinfonepal.com  # Public URL for serving files
+AWS_SECRET_ACCESS_KEY=573884270d0d92b58f7a420e9bf068e9c2b32979d7b18e799e911c550dccaf9b
+AWS_STORAGE_BUCKET_NAME=collegeinfo-bucket
+AWS_S3_REGION_NAME=auto
+AWS_S3_ENDPOINT_URL=https://0eb36d57e9131fec092a0e63d1ee3d2f.r2.cloudflarestorage.com  # Private API Endpoint
+# AWS_S3_CUSTOM_DOMAIN=pub-572de4d7dd8b4b7e9e32601b3ca4ea92.r2.dev  # Public URL for serving files
+AWS_S3_CUSTOM_DOMAIN=media.collegeinfonepal.com  # Public URL for serving files
 
 
 

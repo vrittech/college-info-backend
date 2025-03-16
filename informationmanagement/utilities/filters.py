@@ -25,12 +25,20 @@ class InformationFilter(django_filters.FilterSet):
     publish_date = django_filters.DateFromToRangeFilter(field_name="publish_date")
     active_period_start = django_filters.DateFromToRangeFilter(field_name="active_period_start")
     active_period_end = django_filters.DateFromToRangeFilter(field_name="active_period_end")
+    
+    created_date = django_filters.DateFilter(field_name="created_date", lookup_expr="exact")
+    created_date__gte = django_filters.DateFilter(field_name="created_date", lookup_expr="gte")
+    created_date__lte = django_filters.DateFilter(field_name="created_date", lookup_expr="lte")
+    
+    updated_date = django_filters.DateFilter(field_name="updated_date", lookup_expr="exact")
+    updated_date__gte = django_filters.DateFilter(field_name="updated_date", lookup_expr="gte")
+    updated_date__lte = django_filters.DateFilter(field_name="updated_date", lookup_expr="lte")
 
     class Meta:
         model = Information
         fields = ['level', 'sublevel', 'course', 'affiliation', 'district', 'college',
                   'faculty', 'information_tagging', 'information_category','information_category_slug',
-                  'publish_date', 'active_period_start', 'active_period_end',"university_type","discipline"]
+                  'publish_date', 'active_period_start', 'active_period_end',"university_type","discipline","created_date","created_date__gte","created_date__lte","updated_date","updated_date__gte","updated_date__lte"]
         
         
     def filter_by_university_type(self, queryset, name, value):
