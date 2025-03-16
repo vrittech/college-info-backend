@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 85,
+            "activePatchIndex": 89,
             "patches": [
                 {
                     "date": 1733737051062,
@@ -348,6 +348,22 @@
                 {
                     "date": 1741067156791,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -122,12 +122,12 @@\n             )\n \n         # Perform the bulk deletion\n         deleted_count = queryset.count()  # Count only the main objects\n-`    queryset.delete()  # Perform deletion\n+        queryset.delete()  # Perform deletion\n \n-    print(f\"Deleted {deleted_count} items of type '{delete_type}'.\")\n+        print(f\"Deleted {deleted_count} items of type '{delete_type}'.\")\n \n-    return Response(\n-        {\"message\": f\"Successfully deleted {deleted_count} items of type '{delete_type}'.\"},\n-        status=status.HTTP_200_OK\n-    )`\n+        return Response(\n+            {\"message\": f\"Successfully deleted {deleted_count} items of type '{delete_type}'.\"},\n+            status=status.HTTP_200_OK\n+        )\n"
+                },
+                {
+                    "date": 1742098762939,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -26,8 +26,9 @@\n from inquiry.models import Inquiry \n from discipline.models import Discipline    \n from gallery.models import Gallery,Album \n \n+\n VALID_TYPES = {\n     \"advertisement\": Advertisement,\n     \"affiliation\": Affiliation,\n     \"courses-and-fees\": CoursesAndFees,\n"
+                },
+                {
+                    "date": 1742098773091,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -25,10 +25,10 @@\n from event.models import Event,EventCategory,EventGallery,EventOrganizer\n from inquiry.models import Inquiry \n from discipline.models import Discipline    \n from gallery.models import Gallery,Album \n+ftom \n \n-\n VALID_TYPES = {\n     \"advertisement\": Advertisement,\n     \"affiliation\": Affiliation,\n     \"courses-and-fees\": CoursesAndFees,\n"
+                },
+                {
+                    "date": 1742098782206,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -25,9 +25,9 @@\n from event.models import Event,EventCategory,EventGallery,EventOrganizer\n from inquiry.models import Inquiry \n from discipline.models import Discipline    \n from gallery.models import Gallery,Album \n-ftom \n+from duration\n \n VALID_TYPES = {\n     \"advertisement\": Advertisement,\n     \"affiliation\": Affiliation,\n"
+                },
+                {
+                    "date": 1742098788407,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -25,9 +25,9 @@\n from event.models import Event,EventCategory,EventGallery,EventOrganizer\n from inquiry.models import Inquiry \n from discipline.models import Discipline    \n from gallery.models import Gallery,Album \n-from duration\n+from duration.models import Duration\n \n VALID_TYPES = {\n     \"advertisement\": Advertisement,\n     \"affiliation\": Affiliation,\n@@ -61,8 +61,9 @@\n     \"inquiry\": Inquiry,\n     \"discipline\": Discipline,\n     \"album\": Album,\n     \"gallery\": Gallery,\n+    \"\"\n }\n \n class BulkDelete(APIView):\n     @swagger_auto_schema(\n"
                 }
             ],
             "date": 1733737051062,

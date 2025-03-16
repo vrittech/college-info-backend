@@ -26,6 +26,7 @@ from event.models import Event,EventCategory,EventGallery,EventOrganizer
 from inquiry.models import Inquiry 
 from discipline.models import Discipline    
 from gallery.models import Gallery,Album 
+from duration.models import Duration
 
 VALID_TYPES = {
     "advertisement": Advertisement,
@@ -61,6 +62,7 @@ VALID_TYPES = {
     "discipline": Discipline,
     "album": Album,
     "gallery": Gallery,
+    "duration": Duration,
 }
 
 class BulkDelete(APIView):
