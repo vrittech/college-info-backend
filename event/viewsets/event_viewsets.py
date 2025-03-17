@@ -85,6 +85,7 @@ class eventViewsets(viewsets.ModelViewSet):
             "organizer": EventOrganizerRetrieveSerializers(event_instance.organizer.all(), many=True).data,
             "event_name": event_instance.event_name,
             "duration": event_instance.duration,
+            "duration_type": event_instance.duration_type,
             "event_type": event_instance.event_type,
             "slug": event_instance.slug,
             "venue": event_instance.venue,

@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 80,
+            "activePatchIndex": 83,
             "patches": [
                 {
                     "date": 1733481372824,
@@ -328,6 +328,18 @@
                 {
                     "date": 1741684848626,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -75,9 +75,9 @@\n         serializer = self.get_serializer(instance, data=request.data, partial=partial)\n         serializer.is_valid(raise_exception=True)\n         event_instance = serializer.save()\n \n-        return self.get_formatted_response(event_instance,request,status.HTTP_200_OK,request)\n+        return self.get_formatted_response(event_instance,status.HTTP_200_OK,request)\n \n     def get_formatted_response(self, event_instance, status,request):\n         \"\"\"Formats the response to match the expected structure.\"\"\"\n         response_data = {\n@@ -97,9 +97,9 @@\n             \"description\": event_instance.description,\n             \"start_date\": event_instance.start_date,\n             \"end_date\": event_instance.end_date,\n             \"image\": [\n-            {\"id\": img.id, \"image\": request.build_absolute_uri(img.image.url)}\n+            {\"id\": img.id, \"image\": img.image.url)}\n             for img in event_instance.image.all()\n             ],\n         }\n \n"
+                },
+                {
+                    "date": 1742195477837,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -84,8 +84,9 @@\n             \"category\": EventCategoryRetrieveSerializers(event_instance.category.all(), many=True).data,\n             \"organizer\": EventOrganizerRetrieveSerializers(event_instance.organizer.all(), many=True).data,\n             \"event_name\": event_instance.event_name,\n             \"duration\": event_instance.duration,\n+            \"\"\n             \"event_type\": event_instance.event_type,\n             \"slug\": event_instance.slug,\n             \"venue\": event_instance.venue,\n             \"offline_seat_limit\": event_instance.offline_seat_limit,\n@@ -97,9 +98,9 @@\n             \"description\": event_instance.description,\n             \"start_date\": event_instance.start_date,\n             \"end_date\": event_instance.end_date,\n             \"image\": [\n-            {\"id\": img.id, \"image\": img.image.url)}\n+            {\"id\": img.id, \"image\": img.image.url}\n             for img in event_instance.image.all()\n             ],\n         }\n \n"
+                },
+                {
+                    "date": 1742195485132,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -84,9 +84,9 @@\n             \"category\": EventCategoryRetrieveSerializers(event_instance.category.all(), many=True).data,\n             \"organizer\": EventOrganizerRetrieveSerializers(event_instance.organizer.all(), many=True).data,\n             \"event_name\": event_instance.event_name,\n             \"duration\": event_instance.duration,\n-            \"\"\n+            \"duration_type\"\n             \"event_type\": event_instance.event_type,\n             \"slug\": event_instance.slug,\n             \"venue\": event_instance.venue,\n             \"offline_seat_limit\": event_instance.offline_seat_limit,\n"
+                },
+                {
+                    "date": 1742195512005,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -84,9 +84,9 @@\n             \"category\": EventCategoryRetrieveSerializers(event_instance.category.all(), many=True).data,\n             \"organizer\": EventOrganizerRetrieveSerializers(event_instance.organizer.all(), many=True).data,\n             \"event_name\": event_instance.event_name,\n             \"duration\": event_instance.duration,\n-            \"duration_type\"\n+            \"duration_type\": event_instance.duration_type,\n             \"event_type\": event_instance.event_type,\n             \"slug\": event_instance.slug,\n             \"venue\": event_instance.venue,\n             \"offline_seat_limit\": event_instance.offline_seat_limit,\n"
                 }
             ],
             "date": 1733481372824,
