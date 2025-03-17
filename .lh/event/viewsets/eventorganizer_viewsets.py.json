@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 7,
+            "activePatchIndex": 15,
             "patches": [
                 {
                     "date": 1733729884443,
@@ -36,6 +36,38 @@
                 {
                     "date": 1740559347146,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,10 +7,10 @@\n from mainproj.permissions import DynamicModelPermission\n \n class eventorganizerViewsets(viewsets.ModelViewSet):\n     serializer_class = EventOrganizerListSerializers\n-    permission_classes = [eventPermission]\n-    authentication_classes = [JWTAuthentication]\n+    permission_classes = [DynamicModelPermission]\n+    # authentication_classes = [JWTAuthentication]\n     pagination_class = MyPageNumberPagination\n     queryset = EventOrganizer.objects.all().order_by('-id')\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n"
+                },
+                {
+                    "date": 1742188858303,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,9 +13,9 @@\n     pagination_class = MyPageNumberPagination\n     queryset = EventOrganizer.objects.all().order_by('-id')\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n-    search_fields = ['id']\n+    search_fields = ['id','name']\n     ordering_fields = ['id']\n \n     # filterset_fields = {\n     #     'id': ['exact'],\n"
+                },
+                {
+                    "date": 1742188881130,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,11 +16,11 @@\n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     search_fields = ['id','name']\n     ordering_fields = ['id']\n \n-    # filterset_fields = {\n-    #     'id': ['exact'],\n-    # }\n+    filterset_fields = {\n+        'id': ['exact'],\n+    }\n \n     def get_queryset(self):\n         queryset = super().get_queryset()\n         return queryset\n"
+                },
+                {
+                    "date": 1742188888540,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,8 +18,9 @@\n     ordering_fields = ['id']\n \n     filterset_fields = {\n         'id': ['exact'],\n+        \n     }\n \n     def get_queryset(self):\n         queryset = super().get_queryset()\n"
+                },
+                {
+                    "date": 1742188896156,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,8 +18,9 @@\n     ordering_fields = ['id']\n \n     filterset_fields = {\n         'id': ['exact'],\n+        'is_show': ['exact'],\n         \n     }\n \n     def get_queryset(self):\n"
+                },
+                {
+                    "date": 1742188912178,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,10 @@\n \n     filterset_fields = {\n         'id': ['exact'],\n         'is_show': ['exact'],\n-        \n+        'name': ['exact', 'contains'],\n+        'created_date': ['exact', 'range'],\n     }\n \n     def get_queryset(self):\n         queryset = super().get_queryset()\n"
+                },
+                {
+                    "date": 1742188970984,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,9 +14,9 @@\n     queryset = EventOrganizer.objects.all().order_by('-id')\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     search_fields = ['id','name']\n-    ordering_fields = ['id']\n+    ordering_fields = ['id','']\n \n     filterset_fields = {\n         'id': ['exact'],\n         'is_show': ['exact'],\n"
+                },
+                {
+                    "date": 1742188976087,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,15 +14,15 @@\n     queryset = EventOrganizer.objects.all().order_by('-id')\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     search_fields = ['id','name']\n-    ordering_fields = ['id','']\n+    ordering_fields = ['id','created_date']\n \n     filterset_fields = {\n         'id': ['exact'],\n         'is_show': ['exact'],\n         'name': ['exact', 'contains'],\n-        'created_date': ['exact', 'range'],\n+        'created_date': ['exact', 'gte', 'lte'],\n     }\n \n     def get_queryset(self):\n         queryset = super().get_queryset()\n"
+                },
+                {
+                    "date": 1742189074574,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n \n     filterset_fields = {\n         'id': ['exact'],\n         'is_show': ['exact'],\n-        'name': ['exact', 'contains'],\n+        'name': ['exact'],\n         'created_date': ['exact', 'gte', 'lte'],\n     }\n \n     def get_queryset(self):\n"
                 }
             ],
             "date": 1733729884443,

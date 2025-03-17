@@ -14,12 +14,15 @@ class eventorganizerViewsets(viewsets.ModelViewSet):
     queryset = EventOrganizer.objects.all().order_by('-id')
 
     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]
-    search_fields = ['id']
-    ordering_fields = ['id']
+    search_fields = ['id','name']
+    ordering_fields = ['id','created_date']
 
-    # filterset_fields = {
-    #     'id': ['exact'],
-    # }
+    filterset_fields = {
+        'id': ['exact'],
+        'is_show': ['exact'],
+        'name': ['exact'],
+        'created_date': ['exact', 'gte', 'lte'],
+    }
 
     def get_queryset(self):
         queryset = super().get_queryset()
