@@ -103,6 +103,8 @@ class GalleryWriteSerializers(serializers.ModelSerializer):
                         # Update album's featured image
                         album.featured_image = absolute_url
                         album.save(update_fields=['featured_image'])
+        else:
+            raise serializers.ValidationError({"image": "This field is required."})
 
         return gallery_instances
 
