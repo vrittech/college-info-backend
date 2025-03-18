@@ -72,41 +72,39 @@ class GalleryWriteSerializers(serializers.ModelSerializer):
         except Album.DoesNotExist:
             raise serializers.ValidationError({"album": "Invalid album ID."})
 
-        # Extract multiple images using keys like `image[0]`, `image[1]`
+        # Extract multiple images using keys like image[0], image[1]
         uploaded_files = [
             request.FILES[key] for key in request.FILES if key.startswith("image[")
         ]
 
         if not uploaded_files:
-            return []
+            raise serializers.ValidationError({"image": "This field is required."})
 
         # Check if this album already has a cover image
         has_cover = Gallery.objects.filter(album=album, is_cover=True).exists()
 
         gallery_instances = []
-        if uploaded_files:
-            for index, image_file in enumerate(uploaded_files):
-                if isinstance(image_file, InMemoryUploadedFile):
-                    is_first_image = index == 0 and not has_cover  # Ensure first image is cover
-                    
-                    # Create gallery instance but DO NOT access `.image.url` yet
-                    gallery_instance = Gallery(album=album, image=image_file, is_cover=is_first_image)
-                    gallery_instance.save()  # Explicitly save the instance first
-                    
-                    gallery_instances.append(gallery_instance)
+        for index, image_file in enumerate(uploaded_files):
+            if isinstance(image_file, InMemoryUploadedFile):
+                is_first_image = index == 0 and not has_cover  # Ensure first image is cover
+                
+                # Create gallery instance but DO NOT access .image.url yet
+                gallery_instance = Gallery(album=album, image=image_file, is_cover=is_first_image)
+                gallery_instance.save()  # Explicitly save the instance first
+                
+                gallery_instances.append(gallery_instance)
 
-                    # Ensure the image field is saved before accessing `.url`
-                    if is_first_image and request:
-                        gallery_instance.refresh_from_db()  # Ensure fresh data
-                        absolute_url = request.build_absolute_uri(gallery_instance.image.url)  # Correct absolute URL
-                        
-                        # Update album's featured image
-                        album.featured_image = absolute_url
-                        album.save(update_fields=['featured_image'])
-        else:
-            raise serializers.ValidationError({"image": "This field is required."})
+                # Ensure the image field is saved before accessing .url
+                if is_first_image and request:
+                    gallery_instance.refresh_from_db()  # Ensure fresh data
+                    absolute_url = request.build_absolute_uri(gallery_instance.image.url)  # Correct absolute URL
+                    
+                    # Update album's featured image
+                    album.featured_image = absolute_url
+                    album.save(update_fields=['featured_image'])
 
         return gallery_instances
+
 
     def update(self, instance, validated_data):
         """
