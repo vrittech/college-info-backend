@@ -62,7 +62,9 @@ class eventViewsets(viewsets.ModelViewSet):
         serializer.is_valid(raise_exception=True)
         event_instance = serializer.save()
 
-        return self.get_formatted_response(event_instance,status.HTTP_201_CREATED,request)
+        # Use the retrieve serializer for response formatting
+        response_serializer = EventRetrieveSerializers(event_instance, context={'request': request})
+        return Response(response_serializer.data, status=status.HTTP_201_CREATED)
 
     def update(self, request, *args, **kwargs):
         """
@@ -76,46 +78,9 @@ class eventViewsets(viewsets.ModelViewSet):
         serializer.is_valid(raise_exception=True)
         event_instance = serializer.save()
 
-        return self.get_formatted_response(event_instance,status.HTTP_200_OK,request)
-
-    def get_formatted_response(self, event_instance, status, request):
-        """Formats the response to match the expected structure."""
-        response_data = {
-            "public_id": str(event_instance.public_id),
-            "slug": event_instance.slug,
-            "event_name": event_instance.event_name,
-            "start_date": event_instance.start_date,
-            "end_date": event_instance.end_date,
-            "duration": event_instance.duration,
-            "duration_type": event_instance.duration_type,
-            "event_type": event_instance.event_type,
-            "venue": event_instance.venue,
-            "online_platform": event_instance.online_platform,
-            "online_seat_limit": event_instance.online_seat_limit,
-            "offline_seat_limit": event_instance.offline_seat_limit,
-            "is_offline_seat_limit": event_instance.is_offline_seat_limit,
-            "is_online_seat_limit": event_instance.is_online_seat_limit,
-            "is_registration": event_instance.is_registration,
-            "registration_link": event_instance.registration_link,
-            "registration_type": event_instance.registration_type,
-            "amount": str(event_instance.amount) if event_instance.amount else None,
-            "amount_type": event_instance.amount_type,
-            "amount_country": event_instance.amount_country,
-            "description": event_instance.description,
-            "is_featured_event": event_instance.is_featured_event,
-            "featured_image": event_instance.featured_image,
-            "category": EventCategoryRetrieveSerializers(event_instance.category.all(), many=True).data,
-            "organizer": EventOrganizerRetrieveSerializers(event_instance.organizer.all(), many=True).data,
-            "created_date_time": event_instance.created_date_time,
-            "created_date": event_instance.created_date,
-            "updated_date": event_instance.updated_date,
-            "image": [
-                {"id": img.id, "image": img.image.url}
-                for img in event_instance.image.all()
-            ],
-        }
-
-        return Response(response_data, status=status)
+        # Use the retrieve serializer for response formatting
+        response_serializer = EventRetrieveSerializers(event_instance, context={'request': request})
+        return Response(response_serializer.data, status=status.HTTP_200_OK)
 
 
     # @action(detail=False, methods=['get'], name="action_name", url_path="url_path")
