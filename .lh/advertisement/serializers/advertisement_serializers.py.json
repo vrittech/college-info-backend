@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 19,
+            "activePatchIndex": 24,
             "patches": [
                 {
                     "date": 1733479747479,
@@ -84,6 +84,26 @@
                 {
                     "date": 1742272879513,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,10 +22,17 @@\n \n \n \n class AdvertisementWriteSerializers(serializers.ModelSerializer):\n-    image = serializers.SerializerMethodField(required=False)  # Absolute URL for image\n-    placement = PlacementPositionSerializers(required=False)  # Include nested object\n+    image = serializers.SerializerMethodField()  # Absolute URL for image\n+    placement = PlacementPositionSerializers()  # Include nested object\n \n     class Meta:\n         model = Advertisement\n         fields = '__all__'  # Includes all fields + custom fields\n+\n+    def get_image(self, obj):\n+        \"\"\"Returns the absolute URL of the advertisement image\"\"\"\n+        request = self.context.get('request')  # Get request object\n+        if obj.image:\n+            return request.build_absolute_uri(obj.image.url) if request else urljoin(settings.SITE_URL, obj.image.url)\n+        return None  # If no image\n"
+                },
+                {
+                    "date": 1742272981617,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,17 +22,10 @@\n \n \n \n class AdvertisementWriteSerializers(serializers.ModelSerializer):\n-    image = serializers.SerializerMethodField()  # Absolute URL for image\n-    placement = PlacementPositionSerializers()  # Include nested object\n+    # image = serializers.SerializerMethodField(required=False)  # Absolute URL for image\n+    # placement = PlacementPositionSerializers(required=False)  # Include nested object\n \n     class Meta:\n         model = Advertisement\n         fields = '__all__'  # Includes all fields + custom fields\n-\n-    def get_image(self, obj):\n-        \"\"\"Returns the absolute URL of the advertisement image\"\"\"\n-        request = self.context.get('request')  # Get request object\n-        if obj.image:\n-            return request.build_absolute_uri(obj.image.url) if request else urljoin(settings.SITE_URL, obj.image.url)\n-        return None  # If no image\n"
+                },
+                {
+                    "date": 1742272993237,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,9 +23,9 @@\n \n \n class AdvertisementWriteSerializers(serializers.ModelSerializer):\n     # image = serializers.SerializerMethodField(required=False)  # Absolute URL for image\n-    # placement = PlacementPositionSerializers(required=False)  # Include nested object\n+    placement = PlacementPositionSerializers(required=False)  # Include nested object\n \n     class Meta:\n         model = Advertisement\n         fields = '__all__'  # Includes all fields + custom fields\n"
+                },
+                {
+                    "date": 1742273139274,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,9 +23,8 @@\n \n \n class AdvertisementWriteSerializers(serializers.ModelSerializer):\n     # image = serializers.SerializerMethodField(required=False)  # Absolute URL for image\n-    placement = PlacementPositionSerializers(required=False)  # Include nested object\n \n     class Meta:\n         model = Advertisement\n         fields = '__all__'  # Includes all fields + custom fields\n"
+                },
+                {
+                    "date": 1742273147421,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,8 +23,9 @@\n \n \n class AdvertisementWriteSerializers(serializers.ModelSerializer):\n     # image = serializers.SerializerMethodField(required=False)  # Absolute URL for image\n+    placement = PlacementPositionSerializers(required=False)  # Include nested object\n \n     class Meta:\n         model = Advertisement\n         fields = '__all__'  # Includes all fields + custom fields\n"
+                },
+                {
+                    "date": 1742273154927,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,9 +23,9 @@\n \n \n class AdvertisementWriteSerializers(serializers.ModelSerializer):\n     # image = serializers.SerializerMethodField(required=False)  # Absolute URL for image\n-    placement = PlacementPositionSerializers(required=False)  # Include nested object\n+    placement = PlacementPositionSerializers(required=False,read_only)  # Include nested object\n \n     class Meta:\n         model = Advertisement\n         fields = '__all__'  # Includes all fields + custom fields\n"
                 }
             ],
             "date": 1733479747479,
