@@ -24,7 +24,7 @@ class AdvertisementRetrieveSerializers(serializers.ModelSerializer):
 
 class AdvertisementWriteSerializers(serializers.ModelSerializer):
     # image = serializers.SerializerMethodField(required=False)  # Absolute URL for image
-    placement = PlacementPositionSerializers(required=False,read_only=True)  # Include nested object
+    placement = PlacementPositionSerializers(read_only=True)  # Include nested object
 
     class Meta:
         model = Advertisement
