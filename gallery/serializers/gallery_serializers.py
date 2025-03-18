@@ -84,24 +84,25 @@ class GalleryWriteSerializers(serializers.ModelSerializer):
         has_cover = Gallery.objects.filter(album=album, is_cover=True).exists()
 
         gallery_instances = []
-        for index, image_file in enumerate(uploaded_files):
-            if isinstance(image_file, InMemoryUploadedFile):
-                is_first_image = index == 0 and not has_cover  # Ensure first image is cover
-                
-                # Create gallery instance but DO NOT access `.image.url` yet
-                gallery_instance = Gallery(album=album, image=image_file, is_cover=is_first_image)
-                gallery_instance.save()  # Explicitly save the instance first
-                
-                gallery_instances.append(gallery_instance)
-
-                # Ensure the image field is saved before accessing `.url`
-                if is_first_image and request:
-                    gallery_instance.refresh_from_db()  # Ensure fresh data
-                    absolute_url = request.build_absolute_uri(gallery_instance.image.url)  # Correct absolute URL
+        if uploaded_files:
+            for index, image_file in enumerate(uploaded_files):
+                if isinstance(image_file, InMemoryUploadedFile):
+                    is_first_image = index == 0 and not has_cover  # Ensure first image is cover
                     
-                    # Update album's featured image
-                    album.featured_image = absolute_url
-                    album.save(update_fields=['featured_image'])
+                    # Create gallery instance but DO NOT access `.image.url` yet
+                    gallery_instance = Gallery(album=album, image=image_file, is_cover=is_first_image)
+                    gallery_instance.save()  # Explicitly save the instance first
+                    
+                    gallery_instances.append(gallery_instance)
+
+                    # Ensure the image field is saved before accessing `.url`
+                    if is_first_image and request:
+                        gallery_instance.refresh_from_db()  # Ensure fresh data
+                        absolute_url = request.build_absolute_uri(gallery_instance.image.url)  # Correct absolute URL
+                        
+                        # Update album's featured image
+                        album.featured_image = absolute_url
+                        album.save(update_fields=['featured_image'])
 
         return gallery_instances
 
