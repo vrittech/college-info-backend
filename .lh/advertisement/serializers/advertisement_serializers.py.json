@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 25,
+            "activePatchIndex": 28,
             "patches": [
                 {
                     "date": 1733479747479,
@@ -108,6 +108,18 @@
                 {
                     "date": 1742273428707,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,9 +23,9 @@\n \n \n class AdvertisementWriteSerializers(serializers.ModelSerializer):\n     # image = serializers.SerializerMethodField(required=False)  # Absolute URL for image\n-    placement = PlacementPositionSerializers(required=False,read_only)  # Include nested object\n+    placement = PlacementPositionSerializers(read_only=True)  # Include nested object\n \n     class Meta:\n         model = Advertisement\n         fields = '__all__'  # Includes all fields + custom fields\n"
+                },
+                {
+                    "date": 1742273832126,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,10 +22,8 @@\n \n \n \n class AdvertisementWriteSerializers(serializers.ModelSerializer):\n-    # image = serializers.SerializerMethodField(required=False)  # Absolute URL for image\n-    placement = PlacementPositionSerializers(read_only=True)  # Include nested object\n \n     class Meta:\n         model = Advertisement\n         fields = '__all__'  # Includes all fields + custom fields\n"
+                },
+                {
+                    "date": 1742274272152,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -25,5 +25,5 @@\n class AdvertisementWriteSerializers(serializers.ModelSerializer):\n \n     class Meta:\n         model = Advertisement\n-        fields = '__all__'  # Includes all fields + custom fields\n+        fields = '__all__' \n"
+                },
+                {
+                    "date": 1742274299457,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,8 +22,7 @@\n \n \n \n class AdvertisementWriteSerializers(serializers.ModelSerializer):\n-\n     class Meta:\n         model = Advertisement\n         fields = '__all__' \n"
                 }
             ],
             "date": 1733479747479,

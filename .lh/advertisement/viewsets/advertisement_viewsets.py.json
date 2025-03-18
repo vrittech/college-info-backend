@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 26,
+            "activePatchIndex": 27,
             "patches": [
                 {
                     "date": 1733481075583,
@@ -112,6 +112,10 @@
                 {
                     "date": 1741580891660,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,9 +15,9 @@\n     pagination_class = MyPageNumberPagination\n     queryset = Advertisement.objects.all().order_by('-id')\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n-    search_fields = ['id','name', 'link','placement', 'created_date', 'updated_date']\n+    search_fields = ['id','name', 'link', 'created_date', 'updated_date']\n     ordering_fields = ['id','name', 'link','placement', 'created_date', 'updated_date']\n \n     filterset_fields = {\n         'id': ['exact'],\n"
+                },
+                {
+                    "date": 1742274251833,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -41,5 +41,23 @@\n \n     # @action(detail=False, methods=['get'], name=\"action_name\", url_path=\"url_path\")\n     # def action_name(self, request, *args, **kwargs):\n     #     return super().list(request, *args, **kwargs)\n+    \n+     def create(self, request, *args, **kwargs):\n+        \"\"\"Handles creating an Advertisement and returns the full response\"\"\"\n+        serializer = self.get_serializer(data=request.data)\n+        serializer.is_valid(raise_exception=True)\n+        self.perform_create(serializer)\n+        retrieve_serializer = AdvertisementRetrieveSerializers(serializer.instance)\n+        return Response(retrieve_serializer.data, status=status.HTTP_201_CREATED)\n \n+    def update(self, request, *args, **kwargs):\n+        \"\"\"Handles updating an Advertisement and returns the full response\"\"\"\n+        partial = kwargs.pop('partial', False)  # Support for PATCH\n+        instance = self.get_object()\n+        serializer = self.get_serializer(instance, data=request.data, partial=partial)\n+        serializer.is_valid(raise_exception=True)\n+        self.perform_update(serializer)\n+        retrieve_serializer = AdvertisementRetrieveSerializers(instance)\n+        return Response(retrieve_serializer.data, status=status.HTTP_200_OK)\n+\n"
                 }
             ],
             "date": 1733481075583,
