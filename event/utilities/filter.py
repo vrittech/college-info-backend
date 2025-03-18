@@ -11,10 +11,18 @@ class EventFilter(filters.FilterSet):
     
     organizer_name = filters.CharFilter(field_name='organizer__name', lookup_expr='icontains')
     organizer_id = filters.NumberFilter(field_name='organizer__id')  # Filter by organizer ID
+    
+    created_date = filters.DateFilter(field_name="created_date", lookup_expr="exact")
+    created_date__gte = filters.DateFilter(field_name="created_date", lookup_expr="gte")
+    created_date__lte = filters.DateFilter(field_name="created_date", lookup_expr="lte")
+    
+    updated_date = filters.DateFilter(field_name="updated_date", lookup_expr="exact")
+    updated_date__gte = filters.DateFilter(field_name="updated_date", lookup_expr="gte")
+    updated_date__lte = filters.DateFilter(field_name="updated_date", lookup_expr="lte")
 
     class Meta:
         model = Event
-        fields = ['event_type', 'registration_link', 'is_featured_event', 'category','organizer','registration_type']
+        fields = ['event_type', 'registration_link', 'is_featured_event', 'category','organizer','registration_type','created_date','created_date__gte','created_date__lte','updated_date','updated_date__gte','updated_date__lte']
 
     def filter_registration_link(self, queryset, name, value):
         """
