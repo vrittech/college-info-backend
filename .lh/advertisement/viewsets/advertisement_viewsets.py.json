@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 27,
+            "activePatchIndex": 28,
             "patches": [
                 {
                     "date": 1733481075583,
@@ -116,6 +116,10 @@
                 {
                     "date": 1742274251833,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -41,5 +41,23 @@\n \n     # @action(detail=False, methods=['get'], name=\"action_name\", url_path=\"url_path\")\n     # def action_name(self, request, *args, **kwargs):\n     #     return super().list(request, *args, **kwargs)\n+    \n+     def create(self, request, *args, **kwargs):\n+        \"\"\"Handles creating an Advertisement and returns the full response\"\"\"\n+        serializer = self.get_serializer(data=request.data)\n+        serializer.is_valid(raise_exception=True)\n+        self.perform_create(serializer)\n+        retrieve_serializer = AdvertisementRetrieveSerializers(serializer.instance)\n+        return Response(retrieve_serializer.data, status=status.HTTP_201_CREATED)\n \n+    def update(self, request, *args, **kwargs):\n+        \"\"\"Handles updating an Advertisement and returns the full response\"\"\"\n+        partial = kwargs.pop('partial', False)  # Support for PATCH\n+        instance = self.get_object()\n+        serializer = self.get_serializer(instance, data=request.data, partial=partial)\n+        serializer.is_valid(raise_exception=True)\n+        self.perform_update(serializer)\n+        retrieve_serializer = AdvertisementRetrieveSerializers(instance)\n+        return Response(retrieve_serializer.data, status=status.HTTP_200_OK)\n+\n"
+                },
+                {
+                    "date": 1742275447465,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,8 +5,10 @@\n from ..serializers.advertisement_serializers import AdvertisementListSerializers, AdvertisementRetrieveSerializers, AdvertisementWriteSerializers\n from ..utilities.importbase import *\n from ..utilities.permissions import advertisementPermission\n from mainproj.permissions import DynamicModelPermission\n+from rest_framework import viewsets, status\n+from rest_framework.response import Response\n \n class advertisementViewsets(viewsets.ModelViewSet):\n     serializer_class = AdvertisementListSerializers\n     # permission_classes = [advertisementPermission]\n@@ -42,9 +44,9 @@\n     # @action(detail=False, methods=['get'], name=\"action_name\", url_path=\"url_path\")\n     # def action_name(self, request, *args, **kwargs):\n     #     return super().list(request, *args, **kwargs)\n     \n-     def create(self, request, *args, **kwargs):\n+    def create(self, request, *args, **kwargs):\n         \"\"\"Handles creating an Advertisement and returns the full response\"\"\"\n         serializer = self.get_serializer(data=request.data)\n         serializer.is_valid(raise_exception=True)\n         self.perform_create(serializer)\n"
                 }
             ],
             "date": 1733481075583,
