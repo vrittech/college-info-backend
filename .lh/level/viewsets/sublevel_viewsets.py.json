@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 4,
+            "activePatchIndex": 8,
             "patches": [
                 {
                     "date": 1733481935884,
@@ -24,6 +24,22 @@
                 {
                     "date": 1739509658814,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,11 @@\n from django_filters.rest_framework import DjangoFilterBackend\n from ..models import SubLevel\n from ..serializers.sublevel_serializers import SubLevelListSerializers, SubLevelRetrieveSerializers, SubLevelWriteSerializers\n from ..utilities.importbase import *\n+from mainproj.permissions import DynamicModelPermission\n \n+\n class sublevelViewsets(viewsets.ModelViewSet):\n     serializer_class = SubLevelListSerializers\n     # permission_classes = [levelPermission]\n     authentication_classes = [JWTAuthentication]\n"
+                },
+                {
+                    "date": 1742482580370,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,20 +8,23 @@\n \n \n class sublevelViewsets(viewsets.ModelViewSet):\n     serializer_class = SubLevelListSerializers\n-    # permission_classes = [levelPermission]\n+    permission_classes = [DynamicModelPermission]\n     authentication_classes = [JWTAuthentication]\n     pagination_class = MyPageNumberPagination\n     queryset = SubLevel.objects.all().order_by('-id')\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     search_fields = ['id']\n     ordering_fields = ['id']\n \n-    # filterset_fields = {\n-    #     'id': ['exact'],\n-    # }\n+   filterset_fields = {\n+        'id': ['exact'],\n+        'sublevel': ['exact'],\n+        'name': ['exact'],\n+        'created_date': ['exact', 'lte', 'gte'],\n+    }\n \n     def get_queryset(self):\n         queryset = super().get_queryset()\n         return queryset\n"
+                },
+                {
+                    "date": 1742482589077,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,17 +14,17 @@\n     pagination_class = MyPageNumberPagination\n     queryset = SubLevel.objects.all().order_by('-id')\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n-    search_fields = ['id']\n+    search_fields = ['id','']\n     ordering_fields = ['id']\n \n-   filterset_fields = {\n-        'id': ['exact'],\n-        'sublevel': ['exact'],\n-        'name': ['exact'],\n-        'created_date': ['exact', 'lte', 'gte'],\n-    }\n+    filterset_fields = {\n+            'id': ['exact'],\n+            'sublevel': ['exact'],\n+            'name': ['exact'],\n+            'created_date': ['exact', 'lte', 'gte'],\n+        }\n \n     def get_queryset(self):\n         queryset = super().get_queryset()\n         return queryset\n"
+                },
+                {
+                    "date": 1742482596273,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,9 +14,9 @@\n     pagination_class = MyPageNumberPagination\n     queryset = SubLevel.objects.all().order_by('-id')\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n-    search_fields = ['id','']\n+    search_fields = ['id','name']\n     ordering_fields = ['id']\n \n     filterset_fields = {\n             'id': ['exact'],\n"
+                },
+                {
+                    "date": 1742482602739,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,9 +14,9 @@\n     pagination_class = MyPageNumberPagination\n     queryset = SubLevel.objects.all().order_by('-id')\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n-    search_fields = ['id','name']\n+    search_fields = ['id','name', 'created_date',]\n     ordering_fields = ['id']\n \n     filterset_fields = {\n             'id': ['exact'],\n"
                 }
             ],
             "date": 1733481935884,
