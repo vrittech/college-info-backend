@@ -15,7 +15,7 @@ class GroupViewSet(viewsets.ModelViewSet):
     search_fields = ['id','name']
     ordering_fields = ['id','name']
     filterset_fields = {
-        'id': ['exact'],
+        'id': ['exact','in'],
         'name': ['exact'],
     }
     

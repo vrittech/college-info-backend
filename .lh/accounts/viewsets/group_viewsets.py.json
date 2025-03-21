@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 9,
+            "activePatchIndex": 10,
             "patches": [
                 {
                     "date": 1738669112140,
@@ -44,6 +44,10 @@
                 {
                     "date": 1741580973998,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -26,8 +26,8 @@\n             return super().get_queryset()\n         elif self.request.user.is_authenticated:\n             return super().get_queryset().filter(id=self.request.user.id)\n         else:\n-            return CustomUser.objects.none()\n+            return Group.objects.none()\n     \n \n \n"
+                },
+                {
+                    "date": 1742535771554,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,9 +14,9 @@\n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     search_fields = ['id','name']\n     ordering_fields = ['id','name']\n     filterset_fields = {\n-        'id': ['exact'],\n+        'id': ['exact','in'],\n         'name': ['exact'],\n     }\n     \n     def get_queryset(self):\n"
                 }
             ],
             "date": 1738669112140,
