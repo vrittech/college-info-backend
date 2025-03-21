@@ -21,6 +21,7 @@ class sublevelViewsets(viewsets.ModelViewSet):
     filterset_fields = {
             'id': ['exact'],
             'name': ['exact'],
+            'is_show': ['exact'],
             'created_date': ['exact', 'lte', 'gte'],
         }
 
