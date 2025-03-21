@@ -37,21 +37,14 @@ class GroupSerializer(serializers.ModelSerializer):
         return group
 
     def update(self, instance, validated_data):
-        # Get the permission IDs or default to an empty list if not provided
         permission_ids = validated_data.pop('permission_ids', [])
+        position = validated_data.pop('position', None)
 
-        # Ensure the permission_ids are integers (just in case the form data has invalid types)
-        permission_ids = [int(permission_id) for permission_id in permission_ids if isinstance(permission_id, (int, str))]
-
-        # Update the instance fields (if new values are provided in validated_data)
         instance.name = validated_data.get('name', instance.name)
-        
-        # Save the updated instance
         instance.save()
+        instance.permissions.set(permission_ids)
 
-        # Update the permissions for the instance
-        if permission_ids:
-            instance.permissions.set(permission_ids)
 
         return instance
+
 
