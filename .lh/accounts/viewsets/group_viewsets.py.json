@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 10,
+            "activePatchIndex": 14,
             "patches": [
                 {
                     "date": 1738669112140,
@@ -48,6 +48,22 @@
                 {
                     "date": 1742535771554,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,9 +14,9 @@\n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     search_fields = ['id','name']\n     ordering_fields = ['id','name']\n     filterset_fields = {\n-        'id': ['exact'],\n+        'id': ['exact','in'],\n         'name': ['exact'],\n     }\n     \n     def get_queryset(self):\n"
+                },
+                {
+                    "date": 1742536190490,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,9 +14,9 @@\n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     search_fields = ['id','name']\n     ordering_fields = ['id','name']\n     filterset_fields = {\n-        'id': ['exact','in'],\n+        'id': ['exact'],\n         'name': ['exact'],\n     }\n     \n     def get_queryset(self):\n"
+                },
+                {
+                    "date": 1742536433201,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,12 +13,9 @@\n     pagination_class = MyPageNumberPagination\n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     search_fields = ['id','name']\n     ordering_fields = ['id','name']\n-    filterset_fields = {\n-        'id': ['exact'],\n-        'name': ['exact'],\n-    }\n+   filterc\n     \n     def get_queryset(self):\n         if self.request.user.is_superuser:\n             return super().get_queryset()\n"
+                },
+                {
+                    "date": 1742536441001,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,8 +4,9 @@\n from ..serializers.group_serializers import GroupSerializer\n from ..utilities.pagination import MyPageNumberPagination\n from django_filters.rest_framework import DjangoFilterBackend\n from rest_framework.filters import SearchFilter, OrderingFilter\n+from \n \n class GroupViewSet(viewsets.ModelViewSet):\n     queryset = Group.objects.all().order_by('-id')\n     serializer_class = GroupSerializer\n@@ -13,9 +14,9 @@\n     pagination_class = MyPageNumberPagination\n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     search_fields = ['id','name']\n     ordering_fields = ['id','name']\n-   filterc\n+   filterclass = GroupFilter\n     \n     def get_queryset(self):\n         if self.request.user.is_superuser:\n             return super().get_queryset()\n"
+                },
+                {
+                    "date": 1742536446877,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,9 +4,9 @@\n from ..serializers.group_serializers import GroupSerializer\n from ..utilities.pagination import MyPageNumberPagination\n from django_filters.rest_framework import DjangoFilterBackend\n from rest_framework.filters import SearchFilter, OrderingFilter\n-from \n+from ..utilities.groupfilter import GroupFilter\n \n class GroupViewSet(viewsets.ModelViewSet):\n     queryset = Group.objects.all().order_by('-id')\n     serializer_class = GroupSerializer\n@@ -14,9 +14,9 @@\n     pagination_class = MyPageNumberPagination\n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     search_fields = ['id','name']\n     ordering_fields = ['id','name']\n-   filterclass = GroupFilter\n+    filterclass = GroupFilter\n     \n     def get_queryset(self):\n         if self.request.user.is_superuser:\n             return super().get_queryset()\n"
                 }
             ],
             "date": 1738669112140,

@@ -1,0 +1,54 @@
+{
+    "sourceFile": "accounts/utilities/groupfilter.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 9,
+            "patches": [
+                {
+                    "date": 1742536275174,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1742536296685,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n import django_filters\n from django_filters import rest_framework as filters\n-from .models import YourModel  # Replace with your actual model\n+from .models import Groups  # Replace with your actual model\n \n class YourModelFilter(django_filters.FilterSet):\n     id = filters.NumberInFilter(field_name='id', lookup_expr='in')  # Filters for multiple IDs\n     name = filters.CharFilter(field_name='name', lookup_expr='exact')  # Exact match for name\n"
+                },
+                {
+                    "date": 1742536301813,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n import django_filters\n from django_filters import rest_framework as filters\n-from .models import Groups  # Replace with your actual model\n+from ..models import Groups  # Replace with your actual model\n \n class YourModelFilter(django_filters.FilterSet):\n     id = filters.NumberInFilter(field_name='id', lookup_expr='in')  # Filters for multiple IDs\n     name = filters.CharFilter(field_name='name', lookup_expr='exact')  # Exact match for name\n"
+                },
+                {
+                    "date": 1742536310741,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n import django_filters\n from django_filters import rest_framework as filters\n-from ..models import Groups  # Replace with your actual model\n+from ..models import Group  # Replace with your actual model\n \n class YourModelFilter(django_filters.FilterSet):\n     id = filters.NumberInFilter(field_name='id', lookup_expr='in')  # Filters for multiple IDs\n     name = filters.CharFilter(field_name='name', lookup_expr='exact')  # Exact match for name\n@@ -10,6 +10,6 @@\n     updated_at = filters.DateFilter(field_name='updated_at', lookup_expr='lte')  # Filters updated before a specific date\n     price = filters.NumberFilter(field_name='price', lookup_expr='gte')  # Filters for prices greater than or equal to a value\n \n     class Meta:\n-        model = YourModel  # Replace with your actual model\n+        model = Group  # Replace with your actual model\n         fields = ['id', 'name', 'status', 'created_at', 'updated_at', 'price']  # List the fields you want to filter by\n"
+                },
+                {
+                    "date": 1742536338710,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,12 +4,7 @@\n \n class YourModelFilter(django_filters.FilterSet):\n     id = filters.NumberInFilter(field_name='id', lookup_expr='in')  # Filters for multiple IDs\n     name = filters.CharFilter(field_name='name', lookup_expr='exact')  # Exact match for name\n-    status = filters.CharFilter(field_name='status', lookup_expr='exact')  # Exact match for status\n-    created_at = filters.DateFilter(field_name='created_at', lookup_expr='gte')  # Filters created after a specific date\n-    updated_at = filters.DateFilter(field_name='updated_at', lookup_expr='lte')  # Filters updated before a specific date\n-    price = filters.NumberFilter(field_name='price', lookup_expr='gte')  # Filters for prices greater than or equal to a value\n-\n     class Meta:\n         model = Group  # Replace with your actual model\n         fields = ['id', 'name', 'status', 'created_at', 'updated_at', 'price']  # List the fields you want to filter by\n"
+                },
+                {
+                    "date": 1742536344080,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,5 +6,5 @@\n     id = filters.NumberInFilter(field_name='id', lookup_expr='in')  # Filters for multiple IDs\n     name = filters.CharFilter(field_name='name', lookup_expr='exact')  # Exact match for name\n     class Meta:\n         model = Group  # Replace with your actual model\n-        fields = ['id', 'name', 'status', 'created_at', 'updated_at', 'price']  # List the fields you want to filter by\n+        fields = ['id', 'name',]  # List the fields you want to filter by\n"
+                },
+                {
+                    "date": 1742536351434,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,9 @@\n import django_filters\n from django_filters import rest_framework as filters\n from ..models import Group  # Replace with your actual model\n \n-class YourModelFilter(django_filters.FilterSet):\n+class GroupFilter(django_filters.FilterSet):\n     id = filters.NumberInFilter(field_name='id', lookup_expr='in')  # Filters for multiple IDs\n     name = filters.CharFilter(field_name='name', lookup_expr='exact')  # Exact match for name\n     class Meta:\n         model = Group  # Replace with your actual model\n"
+                },
+                {
+                    "date": 1742536379773,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,15 @@\n import django_filters\n from django_filters import rest_framework as filters\n from ..models import Group  # Replace with your actual model\n \n+\n+class NumberInFilter(filters.BaseInFilter, filters.NumberFilter):\n+    pass\n+\n+class CharInFilter(filters.BaseInFilter, filters.CharFilter):\n+    pass\n+\n class GroupFilter(django_filters.FilterSet):\n     id = filters.NumberInFilter(field_name='id', lookup_expr='in')  # Filters for multiple IDs\n     name = filters.CharFilter(field_name='name', lookup_expr='exact')  # Exact match for name\n     class Meta:\n"
+                },
+                {
+                    "date": 1742536388824,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,8 +10,8 @@\n     pass\n \n class GroupFilter(django_filters.FilterSet):\n     id = filters.NumberInFilter(field_name='id', lookup_expr='in')  # Filters for multiple IDs\n-    name = filters.CharFilter(field_name='name', lookup_expr='exact')  # Exact match for name\n+    name = filters.CharInFilter(field_name='name', lookup_expr='exact')  # Exact match for name\n     class Meta:\n         model = Group  # Replace with your actual model\n         fields = ['id', 'name',]  # List the fields you want to filter by\n"
+                },
+                {
+                    "date": 1742536423465,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,8 @@\n import django_filters\n from django_filters import rest_framework as filters\n-from ..models import Group  # Replace with your actual model\n+from ..models import Group \n \n-\n class NumberInFilter(filters.BaseInFilter, filters.NumberFilter):\n     pass\n \n class CharInFilter(filters.BaseInFilter, filters.CharFilter):\n"
+                }
+            ],
+            "date": 1742536275174,
+            "name": "Commit-0",
+            "content": "import django_filters\nfrom django_filters import rest_framework as filters\nfrom .models import YourModel  # Replace with your actual model\n\nclass YourModelFilter(django_filters.FilterSet):\n    id = filters.NumberInFilter(field_name='id', lookup_expr='in')  # Filters for multiple IDs\n    name = filters.CharFilter(field_name='name', lookup_expr='exact')  # Exact match for name\n    status = filters.CharFilter(field_name='status', lookup_expr='exact')  # Exact match for status\n    created_at = filters.DateFilter(field_name='created_at', lookup_expr='gte')  # Filters created after a specific date\n    updated_at = filters.DateFilter(field_name='updated_at', lookup_expr='lte')  # Filters updated before a specific date\n    price = filters.NumberFilter(field_name='price', lookup_expr='gte')  # Filters for prices greater than or equal to a value\n\n    class Meta:\n        model = YourModel  # Replace with your actual model\n        fields = ['id', 'name', 'status', 'created_at', 'updated_at', 'price']  # List the fields you want to filter by\n"
+        }
+    ]
+}

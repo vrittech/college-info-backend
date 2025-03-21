@@ -5,6 +5,7 @@ from ..serializers.group_serializers import GroupSerializer
 from ..utilities.pagination import MyPageNumberPagination
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter, OrderingFilter
+from ..utilities.groupfilter import GroupFilter
 
 class GroupViewSet(viewsets.ModelViewSet):
     queryset = Group.objects.all().order_by('-id')
@@ -14,10 +15,7 @@ class GroupViewSet(viewsets.ModelViewSet):
     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]
     search_fields = ['id','name']
     ordering_fields = ['id','name']
-    filterset_fields = {
-        'id': ['exact','in'],
-        'name': ['exact'],
-    }
+    filterclass = GroupFilter
     
     def get_queryset(self):
         if self.request.user.is_superuser:
