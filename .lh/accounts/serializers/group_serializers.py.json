@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 4,
+            "activePatchIndex": 11,
             "patches": [
                 {
                     "date": 1739425730328,
@@ -24,6 +24,34 @@
                 {
                     "date": 1739425758427,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -44,11 +44,6 @@\n         instance.name = validated_data.get('name', instance.name)\n         instance.save()\n         instance.permissions.set(permission_ids)\n \n-        # Update or create the related GroupExtension for position\n-        if position:\n-            # extension, created = GroupExtension.objects.get_or_create(group=instance)\n-            extension.position = position\n-            extension.save()\n \n         return instance\n"
+                },
+                {
+                    "date": 1742538279069,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -26,9 +26,8 @@\n     #     return value\n \n     def create(self, validated_data):\n         permission_ids = validated_data.pop('permission_ids', [])\n-        position = validated_data.pop('position', None)\n \n         # Create the Group instance\n         group = Group.objects.create(**validated_data)\n         group.permissions.set(permission_ids)\n"
+                },
+                {
+                    "date": 1742538370836,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -37,9 +37,8 @@\n         return group\n \n     def update(self, instance, validated_data):\n         permission_ids = validated_data.pop('permission_ids', [])\n-        position = validated_data.pop('position', None)\n \n         instance.name = validated_data.get('name', instance.name)\n         instance.save()\n         instance.permissions.set(permission_ids)\n"
+                },
+                {
+                    "date": 1742538387287,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -38,9 +38,9 @@\n \n     def update(self, instance, validated_data):\n         permission_ids = validated_data.pop('permission_ids', [])\n \n-        instance.name = validated_data.get('name', instance.name)\n+        instance.name = validated_data.get('id', instance.name)\n         instance.save()\n         instance.permissions.set(permission_ids)\n \n \n"
+                },
+                {
+                    "date": 1742538397850,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -38,9 +38,9 @@\n \n     def update(self, instance, validated_data):\n         permission_ids = validated_data.pop('permission_ids', [])\n \n-        instance.name = validated_data.get('id', instance.name)\n+        instance.name = validated_data.get('name', instance.name)\n         instance.save()\n         instance.permissions.set(permission_ids)\n \n \n"
+                },
+                {
+                    "date": 1742538533713,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -36,12 +36,23 @@\n         # GroupExtension.objects.create(group=group, position=position or group.id)\n         return group\n \n     def update(self, instance, validated_data):\n-        permission_ids = validated_data.pop('permission_ids', [])\n+    # Get the permission IDs or default to an empty list if not provided\n+    permission_ids = validated_data.pop('permission_ids', [])\n+    position = validated_data.pop('position', None)\n \n-        instance.name = validated_data.get('name', instance.name)\n-        instance.save()\n+    # Ensure the permission_ids are integers (just in case the form data has invalid types)\n+    permission_ids = [int(permission_id) for permission_id in permission_ids if isinstance(permission_id, (int, str))]\n+\n+    # Update the instance fields (if new values are provided in validated_data)\n+    instance.name = validated_data.get('name', instance.name)\n+    \n+    # Save the updated instance\n+    instance.save()\n+\n+    # Update the permissions for the instance\n+    if permission_ids:\n         instance.permissions.set(permission_ids)\n \n+    return instance\n \n-        return instance\n"
+                },
+                {
+                    "date": 1742538538946,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -36,23 +36,23 @@\n         # GroupExtension.objects.create(group=group, position=position or group.id)\n         return group\n \n     def update(self, instance, validated_data):\n-    # Get the permission IDs or default to an empty list if not provided\n-    permission_ids = validated_data.pop('permission_ids', [])\n-    position = validated_data.pop('position', None)\n+        # Get the permission IDs or default to an empty list if not provided\n+        permission_ids = validated_data.pop('permission_ids', [])\n+        position = validated_data.pop('position', None)\n \n-    # Ensure the permission_ids are integers (just in case the form data has invalid types)\n-    permission_ids = [int(permission_id) for permission_id in permission_ids if isinstance(permission_id, (int, str))]\n+        # Ensure the permission_ids are integers (just in case the form data has invalid types)\n+        permission_ids = [int(permission_id) for permission_id in permission_ids if isinstance(permission_id, (int, str))]\n \n-    # Update the instance fields (if new values are provided in validated_data)\n-    instance.name = validated_data.get('name', instance.name)\n-    \n-    # Save the updated instance\n-    instance.save()\n+        # Update the instance fields (if new values are provided in validated_data)\n+        instance.name = validated_data.get('name', instance.name)\n+        \n+        # Save the updated instance\n+        instance.save()\n \n-    # Update the permissions for the instance\n-    if permission_ids:\n-        instance.permissions.set(permission_ids)\n+        # Update the permissions for the instance\n+        if permission_ids:\n+            instance.permissions.set(permission_ids)\n \n-    return instance\n+        return instance\n \n"
+                },
+                {
+                    "date": 1742538558057,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -38,9 +38,8 @@\n \n     def update(self, instance, validated_data):\n         # Get the permission IDs or default to an empty list if not provided\n         permission_ids = validated_data.pop('permission_ids', [])\n-        position = validated_data.pop('position', None)\n \n         # Ensure the permission_ids are integers (just in case the form data has invalid types)\n         permission_ids = [int(permission_id) for permission_id in permission_ids if isinstance(permission_id, (int, str))]\n \n"
                 }
             ],
             "date": 1739425730328,
