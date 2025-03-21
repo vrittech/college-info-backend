@@ -14,6 +14,7 @@ class CustomUserFilter(django_filters.FilterSet):
     phone = django_filters.CharFilter(lookup_expr='icontains')
     position = django_filters.NumberFilter()
     is_active = django_filters.BooleanFilter()
+    is_staff = django_filters.BooleanFilter()
     is_verified = django_filters.BooleanFilter()
     college = django_filters.NumberFilter(field_name="college__id")  # Filter by college ID
     social_media = django_filters.CharFilter(method='filter_social_media')
@@ -29,7 +30,7 @@ class CustomUserFilter(django_filters.FilterSet):
     class Meta:
         model = CustomUser
         fields = [
-            'first_name', 'last_name', 'email', 'phone', 'position',
+            'first_name','is_staff', 'last_name', 'email', 'phone', 'position',
             'is_active', 'is_verified', 'college', 'social_media', 'groups',
             'user_permissions', 'created_date__gte', 'created_date__lte',
             'updated_date__gte', 'updated_date__lte'
