@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 11,
+            "activePatchIndex": 13,
             "patches": [
                 {
                     "date": 1742536275174,
@@ -52,6 +52,14 @@
                 {
                     "date": 1742536573779,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,8 +9,8 @@\n     pass\n \n class GroupFilter(django_filters.FilterSet):\n     id = NumberInFilter(field_name='id', lookup_expr='in')  # Filters for multiple IDs\n-    name = filters.CharInFilter(field_name='name', lookup_expr='exact')  # Exact match for name\n+    name = CharInFilter(field_name='name', lookup_expr='exact')  # Exact match for name\n     class Meta:\n         model = Group  # Replace with your actual model\n         fields = ['id', 'name',]  # List the fields you want to filter by\n"
+                },
+                {
+                    "date": 1742536952142,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,9 @@\n class CharInFilter(filters.BaseInFilter, filters.CharFilter):\n     pass\n \n class GroupFilter(django_filters.FilterSet):\n-    id = NumberInFilter(field_name='id', lookup_expr='in')  # Filters for multiple IDs\n+    role = NumberInFilter(field_name='id', lookup_expr='in')  # Filters for multiple IDs\n     name = CharInFilter(field_name='name', lookup_expr='exact')  # Exact match for name\n     class Meta:\n         model = Group  # Replace with your actual model\n         fields = ['id', 'name',]  # List the fields you want to filter by\n"
+                },
+                {
+                    "date": 1742537011309,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,16 +1,17 @@\n import django_filters\n from django_filters import rest_framework as filters\n-from ..models import Group \n+from ..models import Group\n \n class NumberInFilter(filters.BaseInFilter, filters.NumberFilter):\n     pass\n \n class CharInFilter(filters.BaseInFilter, filters.CharFilter):\n     pass\n \n class GroupFilter(django_filters.FilterSet):\n-    role = NumberInFilter(field_name='id', lookup_expr='in')  # Filters for multiple IDs\n+    role = NumberInFilter(field_name='role', lookup_expr='in')  # Assuming 'role' is the field name in the Group model\n     name = CharInFilter(field_name='name', lookup_expr='exact')  # Exact match for name\n+    \n     class Meta:\n         model = Group  # Replace with your actual model\n-        fields = ['id', 'name',]  # List the fields you want to filter by\n+        fields = ['role', 'name']  # List the fields you want to filter by\n"
                 }
             ],
             "date": 1742536275174,

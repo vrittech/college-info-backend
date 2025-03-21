@@ -15,7 +15,7 @@ class GroupViewSet(viewsets.ModelViewSet):
     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]
     search_fields = ['id','name']
     ordering_fields = ['id','name']
-    filterclass = GroupFilter
+    filterset_class = GroupFilter
     
     def get_queryset(self):
         if self.request.user.is_superuser:
