@@ -9,9 +9,9 @@ class CharInFilter(filters.BaseInFilter, filters.CharFilter):
     pass
 
 class GroupFilter(django_filters.FilterSet):
-    role = NumberInFilter(field_name='role', lookup_expr='in')  # Assuming 'role' is the field name in the Group model
+    id = NumberInFilter(field_name='id', lookup_expr='in')  # Assuming 'role' is the field name in the Group model
     name = CharInFilter(field_name='name', lookup_expr='exact')  # Exact match for name
     
     class Meta:
         model = Group  # Replace with your actual model
-        fields = ['role', 'name']  # List the fields you want to filter by
+        fields = ['id', 'name']
