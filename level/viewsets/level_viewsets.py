@@ -21,6 +21,7 @@ class levelViewsets(viewsets.ModelViewSet):
         'id': ['exact'],
         'sublevel': ['exact'],
         'name': ['exact'],
+        'is_show': ['exact'],
         'created_date': ['exact', 'lte', 'gte'],
     }
 

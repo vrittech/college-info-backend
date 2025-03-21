@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 45,
+            "activePatchIndex": 47,
             "patches": [
                 {
                     "date": 1726653956970,
@@ -188,6 +188,14 @@
                 {
                     "date": 1742532342685,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,9 +5,9 @@\n     \n class SubLevel(models.Model):\n     \n     name = models.CharField(max_length=255,null=True,blank=True)\n-    # description = models.TextField(null=True,blank=True)\n+    is\n     image = models.ImageField(upload_to='level/',null=True,blank=True)\n     created_date = models.DateField(auto_now_add=True, null=True, blank=True)\n     created_date_time = models.DateTimeField(auto_now_add=True, null=True, blank=True)\n     updated_date = models.DateTimeField(auto_now=True, null=True, blank=True)\n"
+                },
+                {
+                    "date": 1742533256436,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,11 +3,10 @@\n # Create your models here.\n \n     \n class SubLevel(models.Model):\n-    \n     name = models.CharField(max_length=255,null=True,blank=True)\n-    is\n+    is_show = models.BooleanField(default=False)\n     image = models.ImageField(upload_to='level/',null=True,blank=True)\n     created_date = models.DateField(auto_now_add=True, null=True, blank=True)\n     created_date_time = models.DateTimeField(auto_now_add=True, null=True, blank=True)\n     updated_date = models.DateTimeField(auto_now=True, null=True, blank=True)\n"
+                },
+                {
+                    "date": 1742533336977,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,8 +23,9 @@\n class Level(models.Model):\n     sublevel = models.ManyToManyField(SubLevel,related_name='sublevel_level',blank=True)\n     name = models.CharField(max_length=255,null=True,blank=True)\n     description = models.TextField(null=True,blank=True)\n+    is_show = models.BooleanField(default=False)\n     image = models.ImageField(upload_to='level/',null=True,blank=True)\n     created_date = models.DateField(auto_now_add=True, null=True, blank=True)\n     created_date_time = models.DateTimeField(auto_now_add=True, null=True, blank=True)\n     updated_date = models.DateTimeField(auto_now=True, null=True, blank=True)\n"
                 }
             ],
             "date": 1726653956970,

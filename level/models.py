@@ -4,7 +4,6 @@ from django.db import models
 
     
 class SubLevel(models.Model):
-    
     name = models.CharField(max_length=255,null=True,blank=True)
     is_show = models.BooleanField(default=False)
     image = models.ImageField(upload_to='level/',null=True,blank=True)
@@ -25,6 +24,7 @@ class Level(models.Model):
     sublevel = models.ManyToManyField(SubLevel,related_name='sublevel_level',blank=True)
     name = models.CharField(max_length=255,null=True,blank=True)
     description = models.TextField(null=True,blank=True)
+    is_show = models.BooleanField(default=False)
     image = models.ImageField(upload_to='level/',null=True,blank=True)
     created_date = models.DateField(auto_now_add=True, null=True, blank=True)
     created_date_time = models.DateTimeField(auto_now_add=True, null=True, blank=True)
