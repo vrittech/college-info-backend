@@ -14,12 +14,11 @@ class levelViewsets(viewsets.ModelViewSet):
     queryset = Level.objects.all().order_by('-id')
 # ('sublevel', 'name', 'description', 'image', 'created_date', 'created_date_time', )
     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]
-    search_fields = ['id','sublevel__name', 'name', 'description', 'created_date', 'created_date_time',]
-    ordering_fields = ['id']
+    search_fields = ['id','name', 'description', 'created_date', 'created_date_time',]
+    ordering_fields = ['id','name', 'created_date']
 
     filterset_fields = {
         'id': ['exact'],
-        'sublevel': ['exact'],
         'name': ['exact'],
         'is_show': ['exact'],
         'created_date': ['exact', 'lte', 'gte'],

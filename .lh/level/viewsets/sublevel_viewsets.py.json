@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 11,
+            "activePatchIndex": 15,
             "patches": [
                 {
                     "date": 1733481935884,
@@ -52,6 +52,22 @@
                 {
                     "date": 1742532396733,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,9 +20,9 @@\n \n     filterset_fields = {\n             'id': ['exact'],\n             'name': ['exact'],\n-            is\n+            \"is_show: ['exact'],\n             'created_date': ['exact', 'lte', 'gte'],\n         }\n \n     def get_queryset(self):\n"
+                },
+                {
+                    "date": 1742533649252,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,9 +20,10 @@\n \n     filterset_fields = {\n             'id': ['exact'],\n             'name': ['exact'],\n-            \"is_show: ['exact'],\n+            \n+            'is_show': ['exact'],\n             'created_date': ['exact', 'lte', 'gte'],\n         }\n \n     def get_queryset(self):\n"
+                },
+                {
+                    "date": 1742533694650,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,15 +14,15 @@\n     pagination_class = MyPageNumberPagination\n     queryset = SubLevel.objects.all().order_by('-id')\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n-    search_fields = ['id','name', 'created_date',]\n+    search_fields = ['id','name', 'created_date']\n     ordering_fields = ['id']\n \n     filterset_fields = {\n             'id': ['exact'],\n             'name': ['exact'],\n-            \n+            'level': ['exact'],\n             'is_show': ['exact'],\n             'created_date': ['exact', 'lte', 'gte'],\n         }\n \n"
+                },
+                {
+                    "date": 1742533703146,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,9 +14,9 @@\n     pagination_class = MyPageNumberPagination\n     queryset = SubLevel.objects.all().order_by('-id')\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n-    search_fields = ['id','name', 'created_date']\n+    search_fields = ['id','name', 'created_date', 'level__name',]\n     ordering_fields = ['id']\n \n     filterset_fields = {\n             'id': ['exact'],\n"
+                },
+                {
+                    "date": 1742533709736,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,10 +14,10 @@\n     pagination_class = MyPageNumberPagination\n     queryset = SubLevel.objects.all().order_by('-id')\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n-    search_fields = ['id','name', 'created_date', 'level__name',]\n-    ordering_fields = ['id']\n+    search_fields = ['id','name', 'created_date', 'level__name']\n+    ordering_fields = ['id',]\n \n     filterset_fields = {\n             'id': ['exact'],\n             'name': ['exact'],\n"
                 }
             ],
             "date": 1733481935884,
