@@ -33,12 +33,21 @@ class CustomUserViewSet(viewsets.ModelViewSet):
 
 
     def get_queryset(self):
+        queryset = super().get_queryset()
+        
+        # Exclude the superuser from the queryset, but do not delete them
         if self.request.user.is_superuser:
-            return super().get_queryset()
+            return queryset.exclude(id=self.request.user.id)
+        
+        # If the user is staff, return all users, excluding the superuser
         elif self.request.user.is_staff:
-            return super().get_queryset()
+            return queryset.exclude(is_superuser=True)
+        
+        # If the user is authenticated but not staff, return only their own record
         elif self.request.user.is_authenticated:
-            return super().get_queryset().filter(id=self.request.user.id)
+            return queryset.filter(id=self.request.user.id)
+        
+        # If the user is not authenticated, return no results
         else:
             return CustomUser.objects.none()
 
