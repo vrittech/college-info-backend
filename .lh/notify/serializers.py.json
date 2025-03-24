@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 11,
+            "activePatchIndex": 14,
             "patches": [
                 {
                     "date": 1739869326773,
@@ -52,6 +52,18 @@
                 {
                     "date": 1740896487624,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,9 @@\n         fields = ['id', 'first_name', 'last_name', 'email']\n \n class NotificationSerializer(serializers.ModelSerializer):\n     # Custom fields\n-    user_details = UserSerializer(read_only=True)\n+    user_details = serializers.SerializerMethodField(read_only=True)\n     formatted_timestamp = serializers.SerializerMethodField(read_only=True)\n     is_read = serializers.SerializerMethodField(read_only=True)\n \n     class Meta:\n"
+                },
+                {
+                    "date": 1742801393045,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -41,9 +41,10 @@\n     def get_formatted_timestamp(self, obj):\n         \"\"\"\n         Return a formatted timestamp.\n         \"\"\"\n-        return obj.timestamp.strftime(\"%Y-%m-%d %H:%M:%S\")\n+        local_timestamp = localtime(obj.timestamp)  # Converts to local timezone (from settings.py)\n+    return local_timestamp.strftime(\"%Y-%m-%d %H:%M:%S\")\n \n     def get_is_read(self, obj):\n         \"\"\"\n         Check if the current user has read the notification.\n"
+                },
+                {
+                    "date": 1742801398540,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -42,9 +42,9 @@\n         \"\"\"\n         Return a formatted timestamp.\n         \"\"\"\n         local_timestamp = localtime(obj.timestamp)  # Converts to local timezone (from settings.py)\n-    return local_timestamp.strftime(\"%Y-%m-%d %H:%M:%S\")\n+        return local_timestamp.strftime(\"%Y-%m-%d %H:%M:%S\")\n \n     def get_is_read(self, obj):\n         \"\"\"\n         Check if the current user has read the notification.\n"
+                },
+                {
+                    "date": 1742801410012,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,10 @@\n from rest_framework import serializers\n from .models import Notification\n from accounts.models import CustomUser as User\n+from django.utils.timezone import localtime\n \n+\n class UserSerializer(serializers.ModelSerializer):\n     class Meta:\n         model = User\n         fields = ['id', 'first_name', 'last_name', 'email']\n"
                 }
             ],
             "date": 1739869326773,

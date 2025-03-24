@@ -1,6 +1,8 @@
 from rest_framework import serializers
 from .models import Notification
 from accounts.models import CustomUser as User
+from django.utils.timezone import localtime
+
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -42,7 +44,8 @@ class NotificationSerializer(serializers.ModelSerializer):
         """
         Return a formatted timestamp.
         """
-        return obj.timestamp.strftime("%Y-%m-%d %H:%M:%S")
+        local_timestamp = localtime(obj.timestamp)  # Converts to local timezone (from settings.py)
+        return local_timestamp.strftime("%Y-%m-%d %H:%M:%S")
 
     def get_is_read(self, obj):
         """

@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 60,
+            "activePatchIndex": 61,
             "patches": [
                 {
                     "date": 1739869421688,
@@ -248,6 +248,10 @@
                 {
                     "date": 1742799889248,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,10 +18,9 @@\n     \"\"\"\n     Retrieve the current request user from middleware (for authenticated users).\n     Returns None if the request is from an unauthorized user.\n     \"\"\"\n-    from .middleware import get_current_user\n-    return get_current_authenticated_user\n+    return get_current_authenticated_user()\n \n def should_notify(instance, action):\n     \"\"\"\n     Check if a notification should be sent based on the instance's model and action.\n"
+                },
+                {
+                    "date": 1742801218814,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n     Retrieve the current request user from middleware (for authenticated users).\n     Returns None if the request is from an unauthorized user.\n     \"\"\"\n     return get_current_authenticated_user()\n-\n+f\n def should_notify(instance, action):\n     \"\"\"\n     Check if a notification should be sent based on the instance's model and action.\n     \"\"\"\n"
                 }
             ],
             "date": 1739869421688,
