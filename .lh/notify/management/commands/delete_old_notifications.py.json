@@ -1,0 +1,22 @@
+{
+    "sourceFile": "notify/management/commands/delete_old_notifications.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 1,
+            "patches": [
+                {
+                    "date": 1742801849914,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1742801855630,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,8 @@\n from django.core.management.base import BaseCommand\n from django.utils import timezone\n from datetime import timedelta\n-from your_app.models import Notification  # Replace with your actual Notification model\n+from notify.models import Notification  # Replace with your actual Notification model\n \n class Command(BaseCommand):\n     help = \"Deletes notifications older than 7 days.\"\n \n"
+                }
+            ],
+            "date": 1742801849914,
+            "name": "Commit-0",
+            "content": "from django.core.management.base import BaseCommand\nfrom django.utils import timezone\nfrom datetime import timedelta\nfrom your_app.models import Notification  # Replace with your actual Notification model\n\nclass Command(BaseCommand):\n    help = \"Deletes notifications older than 7 days.\"\n\n    def handle(self, *args, **kwargs):\n        # Calculate the date 7 days ago\n        cutoff_date = timezone.now() - timedelta(days=7)\n\n        # Delete notifications older than 7 days\n        deleted_count, _ = Notification.objects.filter(timestamp__lt=cutoff_date).delete()\n\n        self.stdout.write(self.style.SUCCESS(f\"Successfully deleted {deleted_count} old notifications.\"))"
+        }
+    ]
+}
