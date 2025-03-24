@@ -10,6 +10,7 @@ class CaptureUserMiddleware:
         self.get_response = get_response
 
     def __call__(self, request):
+        print(f"[Middleware] Setting user in thread local: {request.user}")
         _request_user.value = request.user
         response = self.get_response(request)
         return response

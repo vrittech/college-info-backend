@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 7,
+            "activePatchIndex": 14,
             "patches": [
                 {
                     "date": 1739871159447,
@@ -36,6 +36,34 @@
                 {
                     "date": 1740894386561,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,5 +17,5 @@\n def get_current_user():\n     \"\"\"\n     Retrieve the request user.\n     \"\"\"\n-    return request.user\n+    return getattr(_request_user, \"value\", None)\n"
+                },
+                {
+                    "date": 1742798600423,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,8 +9,9 @@\n     def __init__(self, get_response):\n         self.get_response = get_response\n \n     def __call__(self, request):\n+          logger.debug(f\"[Middleware] Setting user in thread local: {request.user}\")\n         _request_user.value = request.user\n         response = self.get_response(request)\n         return response\n \n"
+                },
+                {
+                    "date": 1742798606474,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,9 +9,9 @@\n     def __init__(self, get_response):\n         self.get_response = get_response\n \n     def __call__(self, request):\n-          logger.debug(f\"[Middleware] Setting user in thread local: {request.user}\")\n+         print(f\"[Middleware] Setting user in thread local: {request.user}\")\n         _request_user.value = request.user\n         response = self.get_response(request)\n         return response\n \n"
+                },
+                {
+                    "date": 1742798611815,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,9 +9,9 @@\n     def __init__(self, get_response):\n         self.get_response = get_response\n \n     def __call__(self, request):\n-         print(f\"[Middleware] Setting user in thread local: {request.user}\")\n+        print(f\"[Middleware] Setting user in thread local: {request.user}\")\n         _request_user.value = request.user\n         response = self.get_response(request)\n         return response\n \n"
+                },
+                {
+                    "date": 1742799573563,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,8 +10,12 @@\n         self.get_response = get_response\n \n     def __call__(self, request):\n         print(f\"[Middleware] Setting user in thread local: {request.user}\")\n+        user = get_current_authenticated_user()\n+if user:\n+    print(f\"*******************************************Current user: {user.username}\")\n+\n         _request_user.value = request.user\n         response = self.get_response(request)\n         return response\n \n"
+                },
+                {
+                    "date": 1742799599641,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,8 @@\n import threading\n+from django_currentuser.middleware import get_current_authenticated_user\n \n+\n _request_user = threading.local()\n \n class CaptureUserMiddleware:\n     \"\"\"\n@@ -11,10 +13,10 @@\n \n     def __call__(self, request):\n         print(f\"[Middleware] Setting user in thread local: {request.user}\")\n         user = get_current_authenticated_user()\n-if user:\n-    print(f\"*******************************************Current user: {user.username}\")\n+        if user:\n+            print(f\"*******************************************Current user: {user.username}\")\n \n         _request_user.value = request.user\n         response = self.get_response(request)\n         return response\n"
+                },
+                {
+                    "date": 1742800375717,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,11 +12,8 @@\n         self.get_response = get_response\n \n     def __call__(self, request):\n         print(f\"[Middleware] Setting user in thread local: {request.user}\")\n-        user = get_current_authenticated_user()\n-        if user:\n-            print(f\"*******************************************Current user: {user.username}\")\n \n         _request_user.value = request.user\n         response = self.get_response(request)\n         return response\n"
+                },
+                {
+                    "date": 1742800386116,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,6 @@\n import threading\n-from django_currentuser.middleware import get_current_authenticated_user\n \n-\n _request_user = threading.local()\n \n class CaptureUserMiddleware:\n     \"\"\"\n@@ -12,9 +10,8 @@\n         self.get_response = get_response\n \n     def __call__(self, request):\n         print(f\"[Middleware] Setting user in thread local: {request.user}\")\n-\n         _request_user.value = request.user\n         response = self.get_response(request)\n         return response\n \n"
                 }
             ],
             "date": 1739871159447,

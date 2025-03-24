@@ -63,6 +63,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'django_filters',
     'accounts',
+    'django_currentuser',
     'accountsmanagement',
     'setupemail',
     'gallery',
@@ -113,9 +114,10 @@ MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django_currentuser.middleware.ThreadLocalUserMiddleware',
     'notify.middleware.CaptureUserMiddleware',
 ]
 
@@ -368,6 +370,7 @@ NOTIFICATION_MODELS = {
     "coursesandfees.coursesandfees": ["created", "updated", "deleted"], 
     "inquiry.inquiry": ["created", "updated", "deleted"], 
     "collegemanagement.collegegallery": ["created", "updated", "deleted"],  
+    "level.level": ["created", "updated", "deleted"],
 }
 
 PUBLIC_NOTIFICATION_MODELS = [
@@ -385,6 +388,6 @@ PUBLIC_NOTIFICATION_MODELS = [
 EMAIL_HOST_USER = 'vritprashant@gmail.com'
 SITE_URL = os.getenv('SITE_URL')
 
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-USE_X_FORWARDED_HOST = True
-SECURE_SSL_REDIRECT = True
+# SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+# USE_X_FORWARDED_HOST = True
+# SECURE_SSL_REDIRECT = True

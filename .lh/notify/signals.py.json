@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 36,
+            "activePatchIndex": 60,
             "patches": [
                 {
                     "date": 1739869421688,
@@ -152,6 +152,102 @@
                 {
                     "date": 1741498483267,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -70,9 +70,9 @@\n     identifier = str(getattr(instance, 'slug', getattr(instance, 'id', 'unknown')))\n     title = f\"{model_name.capitalize()} {action.capitalize()}\"\n \n     # Casual message (short and user-friendly)\n-    casual_message = f\"{user.first_name()} {action} a {model_name}.\" if user and user.is_authenticated else f\"A {model_name} was {action} by an unauthorized user.\"\n+    casual_message = f\"{user.first_name} {action} a {model_name}.\" if user and user.is_authenticated else f\"A {model_name} was {action} by an unauthorized user.\"\n \n     # Detailed message (includes object data)\n     object_data = {\n         \"id\": instance.id,\n"
+                },
+                {
+                    "date": 1742796771770,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -30,9 +30,9 @@\n     print(f\"🔍 Model name: {model_name}\")\n     print(f\"🔍 NOTIFICATION_MODELS: {notification_models_lower}\")\n \n     if model_name in notification_models_lower and action in notification_models_lower[model_name]:\n-        print(f\"✅ Notification should be sent for {model_name} with action: {action}\")\n+        print(f\"Notification should be sent for {model_name} with action: {action}\")\n         return True\n \n     print(f\"❌ Notification should NOT be sent for {model_name} with action: {action}\")\n     return False\n"
+                },
+                {
+                    "date": 1742796777326,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -33,9 +33,9 @@\n     if model_name in notification_models_lower and action in notification_models_lower[model_name]:\n         print(f\"Notification should be sent for {model_name} with action: {action}\")\n         return True\n \n-    print(f\"❌ Notification should NOT be sent for {model_name} with action: {action}\")\n+    print(f\"Notification should NOT be sent for {model_name} with action: {action}\")\n     return False\n \n def get_notification_receivers(instance, user):\n     \"\"\"\n@@ -46,12 +46,12 @@\n     print(f\"🔍 Determining notification receivers for {instance._meta.model_name}\")\n \n     receivers = []\n     if user and user.is_authenticated:\n-        print(f\"✅ User is authenticated: {user.email}\")\n+        print(f\" User is authenticated: {user.email}\")\n         receivers.append(user)  # Notify the user themselves\n     else:\n-        print(f\"❌ User is not authenticated or no user found.\")\n+        print(f\"User is not authenticated or no user found.\")\n \n     # Always notify superadmins\n     superadmins = User.objects.filter(is_superuser=True)\n     print(f\"🔍 Superadmins to notify: {superadmins.count()}\")\n"
+                },
+                {
+                    "date": 1742796784187,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -53,12 +53,12 @@\n         print(f\"User is not authenticated or no user found.\")\n \n     # Always notify superadmins\n     superadmins = User.objects.filter(is_superuser=True)\n-    print(f\"🔍 Superadmins to notify: {superadmins.count()}\")\n+    print(f Superadmins to notify: {superadmins.count()}\")\n     receivers.extend(superadmins)\n \n-    print(f\"✅ Final receivers: {[r.email for r in receivers]}\")\n+    print(f\"Final receivers: {[r.email for r in receivers]}\")\n     return list(set(receivers))  # Remove duplicates\n \n def create_notification(instance, action, user):\n     \"\"\"\n"
+                },
+                {
+                    "date": 1742796791063,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -53,9 +53,9 @@\n         print(f\"User is not authenticated or no user found.\")\n \n     # Always notify superadmins\n     superadmins = User.objects.filter(is_superuser=True)\n-    print(f Superadmins to notify: {superadmins.count()}\")\n+    print(f\"Superadmins to notify: {superadmins.count()}\")\n     receivers.extend(superadmins)\n \n     print(f\"Final receivers: {[r.email for r in receivers]}\")\n     return list(set(receivers))  # Remove duplicates\n"
+                },
+                {
+                    "date": 1742796798496,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -101,9 +101,9 @@\n         print(f\"🔍 Notifications to create: {len(notifications)}\")\n         Notification.objects.bulk_create(notifications)\n         print(f\"✅ Notifications successfully created for {len(notifications)} receivers\")\n     except Exception as e:\n-        print(f\"❌ Error creating notification: {e}\")\n+        print(f\"Error creating notification: {e}\")\n \n @receiver(post_save)\n def handle_post_save(sender, instance, created, **kwargs):\n     \"\"\"\n"
+                },
+                {
+                    "date": 1742796805167,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -97,11 +97,11 @@\n                 timestamp=now(),\n             )\n             for receiver in receivers if receiver.has_perm(permission_codename) or model_name in settings.PUBLIC_NOTIFICATION_MODELS\n         ]\n-        print(f\"🔍 Notifications to create: {len(notifications)}\")\n+        print(f\"Notifications to create: {len(notifications)}\")\n         Notification.objects.bulk_create(notifications)\n-        print(f\"✅ Notifications successfully created for {len(notifications)} receivers\")\n+        print(f\"Notifications successfully created for {len(notifications)} receivers\")\n     except Exception as e:\n         print(f\"Error creating notification: {e}\")\n \n @receiver(post_save)\n@@ -112,9 +112,9 @@\n     print(f\"🔍 post_save signal triggered for {sender.__name__}\")\n \n     action = ACTION_CREATED if created else ACTION_UPDATED\n     if should_notify(instance, action):\n-        print(f\"✅ Should notify for {sender.__name__} with action: {action}\")\n+        print(f\"Should notify for {sender.__name__} with action: {action}\")\n         user = get_current_user()\n         create_notification(instance, action, user)\n     else:\n         print(f\"❌ Should NOT notify for {sender.__name__} with action: {action}\")\n"
+                },
+                {
+                    "date": 1742796812112,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -116,19 +116,19 @@\n         print(f\"Should notify for {sender.__name__} with action: {action}\")\n         user = get_current_user()\n         create_notification(instance, action, user)\n     else:\n-        print(f\"❌ Should NOT notify for {sender.__name__} with action: {action}\")\n+        print(f\"Should NOT notify for {sender.__name__} with action: {action}\")\n \n @receiver(post_delete)\n def handle_post_delete(sender, instance, **kwargs):\n     \"\"\"\n     Handle post_delete signal to create notifications for successful deletions.\n     \"\"\"\n-    print(f\"🔍 post_delete signal triggered for {sender.__name__}\")\n+    print(f\"post_delete signal triggered for {sender.__name__}\")\n \n     if should_notify(instance, ACTION_DELETED):\n-        print(f\"✅ Should notify for {sender.__name__} with action: {ACTION_DELETED}\")\n+        print(f\"Should notify for {sender.__name__} with action: {ACTION_DELETED}\")\n         user = get_current_user()\n\\ No newline at end of file\n         create_notification(instance, ACTION_DELETED, user)\n     else:\n-        print(f\"❌ Should NOT notify for {sender.__name__} with action: {ACTION_DELETED}\")\n+        print(f\"Should NOT notify for {sender.__name__} with action: {ACTION_DELETED}\")\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1742796822610,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -63,9 +63,9 @@\n def create_notification(instance, action, user):\n     \"\"\"\n     Generic function to create a notification with both casual and detailed messages.\n     \"\"\"\n-    print(f\"🔍 Creating notification for {instance._meta.model_name} with action: {action}\")\n+    print(f\"Creating notification for {instance._meta.model_name} with action: {action}\")\n \n     model_name = instance._meta.model_name.lower()\n     identifier = str(getattr(instance, 'slug', getattr(instance, 'id', 'unknown')))\n     title = f\"{model_name.capitalize()} {action.capitalize()}\"\n@@ -108,9 +108,9 @@\n def handle_post_save(sender, instance, created, **kwargs):\n     \"\"\"\n     Handle post_save signal to create notifications for successful creations or updates.\n     \"\"\"\n-    print(f\"🔍 post_save signal triggered for {sender.__name__}\")\n+    print(f\"post_save signal triggered for {sender.__name__}\")\n \n     action = ACTION_CREATED if created else ACTION_UPDATED\n     if should_notify(instance, action):\n         print(f\"Should notify for {sender.__name__} with action: {action}\")\n"
+                },
+                {
+                    "date": 1742796830522,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,9 +27,9 @@\n \n     model_name = f\"{instance._meta.app_label}.{instance._meta.model_name}\".lower()\n     notification_models_lower = {k.lower(): v for k, v in settings.NOTIFICATION_MODELS.items()}\n     print(f\"🔍 Model name: {model_name}\")\n-    print(f\"🔍 NOTIFICATION_MODELS: {notification_models_lower}\")\n+    print(f\"NOTIFICATION_MODELS: {notification_models_lower}\")\n \n     if model_name in notification_models_lower and action in notification_models_lower[model_name]:\n         print(f\"Notification should be sent for {model_name} with action: {action}\")\n         return True\n@@ -42,9 +42,9 @@\n     Determine notification recipients.\n     - If the user is authenticated, notify the user and superadmins.\n     - If the user is not authenticated, notify superadmins only.\n     \"\"\"\n-    print(f\"🔍 Determining notification receivers for {instance._meta.model_name}\")\n+    print(f\"Determining notification receivers for {instance._meta.model_name}\")\n \n     receivers = []\n     if user and user.is_authenticated:\n         print(f\" User is authenticated: {user.email}\")\n"
+                },
+                {
+                    "date": 1742798221990,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,13 +22,13 @@\n def should_notify(instance, action):\n     \"\"\"\n     Check if a notification should be sent based on the instance's model and action.\n     \"\"\"\n-    print(f\"🔍 Checking if notification should be sent for {instance._meta.model_name} with action: {action}\")\n+    print(f\"Checking if notification should be sent for {instance._meta.model_name} with action: {action}\")\n \n     model_name = f\"{instance._meta.app_label}.{instance._meta.model_name}\".lower()\n     notification_models_lower = {k.lower(): v for k, v in settings.NOTIFICATION_MODELS.items()}\n-    print(f\"🔍 Model name: {model_name}\")\n+    print(f\"Model name: {model_name}\")\n     print(f\"NOTIFICATION_MODELS: {notification_models_lower}\")\n \n     if model_name in notification_models_lower and action in notification_models_lower[model_name]:\n         print(f\"Notification should be sent for {model_name} with action: {action}\")\n@@ -45,8 +45,9 @@\n     \"\"\"\n     print(f\"Determining notification receivers for {instance._meta.model_name}\")\n \n     receivers = []\n+    print\n     if user and user.is_authenticated:\n         print(f\" User is authenticated: {user.email}\")\n         receivers.append(user)  # Notify the user themselves\n     else:\n"
+                },
+                {
+                    "date": 1742798228112,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -45,9 +45,9 @@\n     \"\"\"\n     print(f\"Determining notification receivers for {instance._meta.model_name}\")\n \n     receivers = []\n-    print\n+    print(req)\n     if user and user.is_authenticated:\n         print(f\" User is authenticated: {user.email}\")\n         receivers.append(user)  # Notify the user themselves\n     else:\n"
+                },
+                {
+                    "date": 1742798234401,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,8 +5,9 @@\n from accounts.models import CustomUser as User\n from .models import Notification\n import json\n \n+\n # Constants\n ACTION_CREATED = \"created\"\n ACTION_UPDATED = \"updated\"\n ACTION_DELETED = \"deleted\"\n@@ -45,9 +46,9 @@\n     \"\"\"\n     print(f\"Determining notification receivers for {instance._meta.model_name}\")\n \n     receivers = []\n-    print(req)\n+    print(request.user)\n     if user and user.is_authenticated:\n         print(f\" User is authenticated: {user.email}\")\n         receivers.append(user)  # Notify the user themselves\n     else:\n"
+                },
+                {
+                    "date": 1742798240728,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,10 +4,10 @@\n from django.utils.timezone import now\n from accounts.models import CustomUser as User\n from .models import Notification\n import json\n+import requests\n \n-\n # Constants\n ACTION_CREATED = \"created\"\n ACTION_UPDATED = \"updated\"\n ACTION_DELETED = \"deleted\"\n@@ -46,9 +46,9 @@\n     \"\"\"\n     print(f\"Determining notification receivers for {instance._meta.model_name}\")\n \n     receivers = []\n-    print(request.user)\n+    print(requests.user)\n     if user and user.is_authenticated:\n         print(f\" User is authenticated: {user.email}\")\n         receivers.append(user)  # Notify the user themselves\n     else:\n"
+                },
+                {
+                    "date": 1742798247390,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -46,9 +46,9 @@\n     \"\"\"\n     print(f\"Determining notification receivers for {instance._meta.model_name}\")\n \n     receivers = []\n-    print(requests.user)\n+    print(requests.user,\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\")\n     if user and user.is_authenticated:\n         print(f\" User is authenticated: {user.email}\")\n         receivers.append(user)  # Notify the user themselves\n     else:\n"
+                },
+                {
+                    "date": 1742798256503,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -46,9 +46,9 @@\n     \"\"\"\n     print(f\"Determining notification receivers for {instance._meta.model_name}\")\n \n     receivers = []\n-    print(requests.user,\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\")\n+    print(requests.user,\"\"\"\"\"\"\"\"\"\"\"\"\"qdqedeqqqeqeq\")\n     if user and user.is_authenticated:\n         print(f\" User is authenticated: {user.email}\")\n         receivers.append(user)  # Notify the user themselves\n     else:\n"
+                },
+                {
+                    "date": 1742798261633,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -46,9 +46,9 @@\n     \"\"\"\n     print(f\"Determining notification receivers for {instance._meta.model_name}\")\n \n     receivers = []\n-    print(requests.user,\"\"\"\"\"\"\"\"\"\"\"\"\"qdqedeqqqeqeq\")\n+    print(requests.user,\"qdqedeqqqeqeq\")\n     if user and user.is_authenticated:\n         print(f\" User is authenticated: {user.email}\")\n         receivers.append(user)  # Notify the user themselves\n     else:\n"
+                },
+                {
+                    "date": 1742798268792,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -46,9 +46,9 @@\n     \"\"\"\n     print(f\"Determining notification receivers for {instance._meta.model_name}\")\n \n     receivers = []\n-    print(requests.user,\"qdqedeqqqeqeq\")\n+    print(requests.user,\"qdqedeqqqeqeq@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\")\n     if user and user.is_authenticated:\n         print(f\" User is authenticated: {user.email}\")\n         receivers.append(user)  # Notify the user themselves\n     else:\n"
+                },
+                {
+                    "date": 1742798421733,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -46,9 +46,9 @@\n     \"\"\"\n     print(f\"Determining notification receivers for {instance._meta.model_name}\")\n \n     receivers = []\n-    print(requests.user,\"qdqedeqqqeqeq@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\")\n+    print(,\"qdqedeqqqeqeq@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\")\n     if user and user.is_authenticated:\n         print(f\" User is authenticated: {user.email}\")\n         receivers.append(user)  # Notify the user themselves\n     else:\n"
+                },
+                {
+                    "date": 1742798927768,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,8 +5,9 @@\n from accounts.models import CustomUser as User\n from .models import Notification\n import json\n import requests\n+from django_currentuser.middleware import get_current_authenticated_user\n \n # Constants\n ACTION_CREATED = \"created\"\n ACTION_UPDATED = \"updated\"\n@@ -46,9 +47,9 @@\n     \"\"\"\n     print(f\"Determining notification receivers for {instance._meta.model_name}\")\n \n     receivers = []\n-    print(,\"qdqedeqqqeqeq@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\")\n+    \n     if user and user.is_authenticated:\n         print(f\" User is authenticated: {user.email}\")\n         receivers.append(user)  # Notify the user themselves\n     else:\n"
+                },
+                {
+                    "date": 1742798968050,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,8 +7,12 @@\n import json\n import requests\n from django_currentuser.middleware import get_current_authenticated_user\n \n+user = get_current_authenticated_user()\n+if user:\n+    print(f\"Current user: {user.username}\")\n+\n # Constants\n ACTION_CREATED = \"created\"\n ACTION_UPDATED = \"updated\"\n ACTION_DELETED = \"deleted\"\n"
+                },
+                {
+                    "date": 1742798975913,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,9 +9,9 @@\n from django_currentuser.middleware import get_current_authenticated_user\n \n user = get_current_authenticated_user()\n if user:\n-    print(f\"Current user: {user.username}\")\n+    print(f\"*******************************************Current user: {user.username}\")\n \n # Constants\n ACTION_CREATED = \"created\"\n ACTION_UPDATED = \"updated\"\n"
+                },
+                {
+                    "date": 1742799550906,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,11 +7,8 @@\n import json\n import requests\n from django_currentuser.middleware import get_current_authenticated_user\n \n-user = get_current_authenticated_user()\n-if user:\n-    print(f\"*******************************************Current user: {user.username}\")\n \n # Constants\n ACTION_CREATED = \"created\"\n ACTION_UPDATED = \"updated\"\n"
+                },
+                {
+                    "date": 1742799880625,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n     Retrieve the current request user from middleware (for authenticated users).\n     Returns None if the request is from an unauthorized user.\n     \"\"\"\n     from .middleware import get_current_user\n-    return get_current_user()\n+    return get_current_authenticated_user\n \n def should_notify(instance, action):\n     \"\"\"\n     Check if a notification should be sent based on the instance's model and action.\n"
+                },
+                {
+                    "date": 1742799889248,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,10 +18,9 @@\n     \"\"\"\n     Retrieve the current request user from middleware (for authenticated users).\n     Returns None if the request is from an unauthorized user.\n     \"\"\"\n-    from .middleware import get_current_user\n-    return get_current_authenticated_user\n+    return get_current_authenticated_user()\n \n def should_notify(instance, action):\n     \"\"\"\n     Check if a notification should be sent based on the instance's model and action.\n"
                 }
             ],
             "date": 1739869421688,
