@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 15,
+            "activePatchIndex": 20,
             "patches": [
                 {
                     "date": 1733481935884,
@@ -68,6 +68,26 @@
                 {
                     "date": 1742533709736,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,10 +14,10 @@\n     pagination_class = MyPageNumberPagination\n     queryset = SubLevel.objects.all().order_by('-id')\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n-    search_fields = ['id','name', 'created_date', 'level__name',]\n-    ordering_fields = ['id']\n+    search_fields = ['id','name', 'created_date', 'level__name']\n+    ordering_fields = ['id',]\n \n     filterset_fields = {\n             'id': ['exact'],\n             'name': ['exact'],\n"
+                },
+                {
+                    "date": 1742810654277,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,17 +15,17 @@\n     queryset = SubLevel.objects.all().order_by('-id')\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     search_fields = ['id','name', 'created_date', 'level__name']\n-    ordering_fields = ['id',]\n+    ordering_fields = ['id', 'name', 'created_date', 'level__name']\n \n-    filterset_fields = {\n-            'id': ['exact'],\n-            'name': ['exact'],\n-            'level': ['exact'],\n-            'is_show': ['exact'],\n-            'created_date': ['exact', 'lte', 'gte'],\n-        }\n+    # filterset_fields = {\n+    #         'id': ['exact'],\n+    #         'name': ['exact'],\n+    #         'level': ['exact'],\n+    #         'is_show': ['exact'],\n+    #         'created_date': ['exact', 'lte', 'gte'],\n+    #     }\n \n     def get_queryset(self):\n         queryset = super().get_queryset()\n         return queryset\n"
+                },
+                {
+                    "date": 1742810661865,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,8 +16,9 @@\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     search_fields = ['id','name', 'created_date', 'level__name']\n     ordering_fields = ['id', 'name', 'created_date', 'level__name']\n+    filterset_\n \n     # filterset_fields = {\n     #         'id': ['exact'],\n     #         'name': ['exact'],\n"
+                },
+                {
+                    "date": 1742810668929,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,9 +16,9 @@\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     search_fields = ['id','name', 'created_date', 'level__name']\n     ordering_fields = ['id', 'name', 'created_date', 'level__name']\n-    filterset_\n+    filterset_class = SubLevelFilter\n \n     # filterset_fields = {\n     #         'id': ['exact'],\n     #         'name': ['exact'],\n"
+                },
+                {
+                    "date": 1742810674368,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,8 +4,9 @@\n from ..models import SubLevel\n from ..serializers.sublevel_serializers import SubLevelListSerializers, SubLevelRetrieveSerializers, SubLevelWriteSerializers\n from ..utilities.importbase import *\n from mainproj.permissions import DynamicModelPermission\n+from ..u\n \n \n class sublevelViewsets(viewsets.ModelViewSet):\n     serializer_class = SubLevelListSerializers\n"
+                },
+                {
+                    "date": 1742810715045,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,9 +4,9 @@\n from ..models import SubLevel\n from ..serializers.sublevel_serializers import SubLevelListSerializers, SubLevelRetrieveSerializers, SubLevelWriteSerializers\n from ..utilities.importbase import *\n from mainproj.permissions import DynamicModelPermission\n-from ..u\n+from ..utilities.sublevel_filter import SubLevelFilter\n \n \n class sublevelViewsets(viewsets.ModelViewSet):\n     serializer_class = SubLevelListSerializers\n"
                 }
             ],
             "date": 1733481935884,

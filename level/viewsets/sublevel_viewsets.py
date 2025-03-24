@@ -5,6 +5,7 @@ from ..models import SubLevel
 from ..serializers.sublevel_serializers import SubLevelListSerializers, SubLevelRetrieveSerializers, SubLevelWriteSerializers
 from ..utilities.importbase import *
 from mainproj.permissions import DynamicModelPermission
+from ..utilities.sublevel_filter import SubLevelFilter
 
 
 class sublevelViewsets(viewsets.ModelViewSet):
@@ -17,14 +18,15 @@ class sublevelViewsets(viewsets.ModelViewSet):
     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]
     search_fields = ['id','name', 'created_date', 'level__name']
     ordering_fields = ['id', 'name', 'created_date', 'level__name']
+    filterset_class = SubLevelFilter
 
-    filterset_fields = {
-            'id': ['exact'],
-            'name': ['exact'],
-            'level': ['exact'],
-            'is_show': ['exact'],
-            'created_date': ['exact', 'lte', 'gte'],
-        }
+    # filterset_fields = {
+    #         'id': ['exact'],
+    #         'name': ['exact'],
+    #         'level': ['exact'],
+    #         'is_show': ['exact'],
+    #         'created_date': ['exact', 'lte', 'gte'],
+    #     }
 
     def get_queryset(self):
         queryset = super().get_queryset()
