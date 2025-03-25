@@ -51,7 +51,7 @@ class Affiliation(SEOFields):
     latitude = models.CharField(max_length=100, null=True, blank=True) 
     longitude = models.CharField(max_length=100, null=True, blank=True) 
     address = models.CharField(max_length=500,null=True,blank=True)
-    district = models.ForeignKey(District,on_delete=models.CASCADE, related_name='affiliation_district')
+    district = models.ForeignKey(District,on_delete=models.CASCADE, related_name='affiliation_district',null=True)
     university_type = models.CharField(
         max_length=10,  # Set a maximum length appropriate for the choice values
         choices=UNIVERSITY_TYPE_CHOICES,
