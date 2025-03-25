@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 22,
+            "activePatchIndex": 24,
             "patches": [
                 {
                     "date": 1739786438931,
@@ -96,6 +96,14 @@
                 {
                     "date": 1741332584760,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,9 @@\n \n class CustomUser(AbstractUser):\n     first_name = models.CharField(max_length=250, null=True, blank=True)\n     last_name = models.CharField(max_length=250, null=True, blank=True)\n-    full_name = models.CharField(max_length=250, null=True, blank=True)\n+    # full_name = models.CharField(max_length=250, null=True, blank=True)\n     college = models.ForeignKey(College, null=True, on_delete=models.SET_NULL, related_name='user', blank=True)\n     social_media = models.ManyToManyField(SocialMedia, blank=True)\n     email = models.EmailField(max_length=250, unique=True)\n     position = models.PositiveIntegerField(default=0)\n@@ -36,9 +36,9 @@\n     USERNAME_FIELD = 'email'\n     REQUIRED_FIELDS = ['username']  # Remove 'username' from required fields\n \n     created_date = models.DateTimeField(auto_now_add=True)\n-    updated_at = models.DateTimeField(auto_now=True)\n+    updated_date = models.DateTimeField(auto_now=True)\n \n     def save(self, *args, **kwargs):\n         # Auto-set first_name and last_name from full_name\n         if self.full_name:\n"
+                },
+                {
+                    "date": 1742886406461,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n     remarks = models.CharField(max_length=200,null=True,default = '')\n     is_verified = models.BooleanField(default=False)\n     \n     groups = models.ManyToManyField(\n-        Group,\n+        Group, on\n         related_name=\"customuser_groups\",  # Custom related name\n         blank=True\n     )\n     user_permissions = models.ManyToManyField(\n"
+                },
+                {
+                    "date": 1742886414111,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n     remarks = models.CharField(max_length=200,null=True,default = '')\n     is_verified = models.BooleanField(default=False)\n     \n     groups = models.ManyToManyField(\n-        Group, on\n+        Group,\n         related_name=\"customuser_groups\",  # Custom related name\n         blank=True\n     )\n     user_permissions = models.ManyToManyField(\n"
                 }
             ],
             "date": 1739786438931,

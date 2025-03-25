@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 26,
+            "activePatchIndex": 27,
             "patches": [
                 {
                     "date": 1738669112140,
@@ -112,6 +112,10 @@
                 {
                     "date": 1742884015515,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -30,24 +30,25 @@\n             return Group.objects.none()\n     \n \n \n-    def perform_protection_check(self, instance):\n-            if instance.name.lower() == \"college admin\":\n-                raise PermissionDenied(\"You are not allowed to perform any action on the 'College Admin' group.\")\n+    @staticmethod\n+    def perform_protection_check(instance):\n+        if instance.name.lower() == \"college admin\":\n+            raise PermissionDenied(\"You are not allowed to perform any action on the 'College Admin' group.\")\n \n     def get_object(self):\n         instance = super().get_object()\n         self.perform_protection_check(instance)\n         return instance\n \n     def destroy(self, request, *args, **kwargs):\n-        self.get_object()  # Will raise if College Admin\n+        self.get_object()\n         return super().destroy(request, *args, **kwargs)\n \n     def update(self, request, *args, **kwargs):\n-        self.get_object()  # Will raise if College Admin\n+        self.get_object()\n         return super().update(request, *args, **kwargs)\n \n     def partial_update(self, request, *args, **kwargs):\n-        self.get_object()  # Will raise if College Admin\n+        self.get_object()\n         return super().partial_update(request, *args, **kwargs)\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1742886587174,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -41,9 +41,28 @@\n         self.perform_protection_check(instance)\n         return instance\n \n     def destroy(self, request, *args, **kwargs):\n-        self.get_object()\n+        instance = self.get_object()\n+        related_models = []\n+\n+        for model in apps.get_models():\n+            for field in model._meta.get_fields():\n+                if isinstance(field, (ForeignKey, ManyToManyField)) and field.related_model == Group:\n+                    filter_kwargs = {f\"{field.name}__in\": [instance]}\n+                    if model.objects.filter(**filter_kwargs).exists():\n+                        related_models.append(f\"{model._meta.app_label}.{model.__name__}\")\n+\n+        if related_models:\n+            return Response(\n+                {\n+                    \"detail\": \"This group is being used in the following models. \"\n+                              \"Please update/remove those references before deletion.\",\n+                    \"used_in_models\": related_models\n+                },\n+                status=status.HTTP_400_BAD_REQUEST\n+            )\n+\n         return super().destroy(request, *args, **kwargs)\n \n     def update(self, request, *args, **kwargs):\n         self.get_object()\n"
                 }
             ],
             "date": 1738669112140,

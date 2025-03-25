@@ -42,7 +42,26 @@ class GroupViewSet(viewsets.ModelViewSet):
         return instance
 
     def destroy(self, request, *args, **kwargs):
-        self.get_object()
+        instance = self.get_object()
+        related_models = []
+
+        for model in apps.get_models():
+            for field in model._meta.get_fields():
+                if isinstance(field, (ForeignKey, ManyToManyField)) and field.related_model == Group:
+                    filter_kwargs = {f"{field.name}__in": [instance]}
+                    if model.objects.filter(**filter_kwargs).exists():
+                        related_models.append(f"{model._meta.app_label}.{model.__name__}")
+
+        if related_models:
+            return Response(
+                {
+                    "detail": "This group is being used in the following models. "
+                              "Please update/remove those references before deletion.",
+                    "used_in_models": related_models
+                },
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
         return super().destroy(request, *args, **kwargs)
 
     def update(self, request, *args, **kwargs):
