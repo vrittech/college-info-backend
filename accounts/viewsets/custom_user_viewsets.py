@@ -33,21 +33,12 @@ class CustomUserViewSet(viewsets.ModelViewSet):
 
 
     def get_queryset(self):
-        queryset = super().get_queryset()
-        
-        # Exclude the superuser from the queryset, but do not delete them
         if self.request.user.is_superuser:
-            return queryset.exclude(id=self.request.user.id)
-        
-        # If the user is staff, return all users, excluding the superuser
+            return super().get_queryset()
         elif self.request.user.is_staff:
-            return queryset.exclude(is_superuser=True)
-        
-        # If the user is authenticated but not staff, return only their own record
+            return super().get_queryset()
         elif self.request.user.is_authenticated:
-            return queryset.filter(id=self.request.user.id)
-        
-        # If the user is not authenticated, return no results
+            return super().get_queryset().filter(id=self.request.user.id)
         else:
             return CustomUser.objects.none()
 
@@ -64,6 +55,14 @@ class CustomUserViewSet(viewsets.ModelViewSet):
         elif self.action in ['changePassword']:
             return CustomUserChangePasswordSerializers
         return CustomUserReadSerializer
+    
+
+
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        if instance.is_superuser:
+            raise PermissionDenied(detail="Cannot delete a superuser.")
+        return super().destroy(request, *args, **kwargs)
     
     @action(detail=False, methods=['post'], name="changePassword", url_path="change-password",permission_classes=[IsAuthenticated])
     def changePassword(self, request, *args, **kwargs):
