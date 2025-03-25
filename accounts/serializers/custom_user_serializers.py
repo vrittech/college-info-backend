@@ -247,15 +247,73 @@ class CustomUserWriteSerializersCollegeAdmin(serializers.ModelSerializer):
         #     "view_inquiry"  # ✅ As requested
         # ]
         permissions_to_assign = [
-            "add_customuser", "change_customuser", "view_customuser",
-            "add_college", "change_college", "view_college",
-            "add_collegegallery", "change_collegegallery", "delete_collegegallery", "view_collegegallery",
-            "add_collegefaqs", "change_collegefaqs", "delete_collegefaqs", "view_collegefaqs",
-            "add_facility", "change_facility", "delete_facility", "view_facility",
-            "add_coursesandfees", "change_coursesandfees", "delete_coursesandfees", "view_coursesandfees",
-            "add_contact", "change_contact", "view_contact",
-            "add_requestsubmission", "change_requestsubmission", "view_requestsubmission","view_inquiry",
-        ]
+                # Custom User
+                "add_customuser", "change_customuser", "view_customuser",
+
+                # Affiliation
+                "view_affiliation",
+
+                # College
+                "add_college", "change_college", "view_college",
+
+                # College FAQs
+                "add_collegefaqs", "change_collegefaqs", "delete_collegefaqs", "view_collegefaqs",
+
+                # College Gallery
+                "add_collegegallery", "change_collegegallery", "delete_collegegallery", "view_collegegallery",
+
+                # College Type
+                "add_collegetype", "change_collegetype", "delete_collegetype", "view_collegetype",
+
+                # Contact
+                "add_contact", "change_contact", "view_contact",
+
+                # Course
+                "view_course",
+
+                # Course Curriculum File
+                "view_coursecurriculumfile",
+
+                # Courses and Fees
+                "add_coursesandfees", "change_coursesandfees", "delete_coursesandfees", "view_coursesandfees",
+
+                # Discipline
+                "view_discipline",
+
+                # District
+                "view_district",
+
+                # Event
+                "view_event",
+                "view_eventcategory",
+
+                # College Facility
+                "add_collegefacility", "change_collegefacility", "delete_collegefacility", "view_collegefacility",
+
+                # Facility (general)
+                "view_facility",
+
+                # Faculty
+                "view_faculty",
+
+                # Inquiry
+                "add_inquiry", "change_inquiry", "view_inquiry",
+
+                # Level and Sublevel
+                "view_level", "view_sublevel",
+
+                # Notification
+                "view_notification",
+
+                # Request Submission
+                "add_requestsubmission", "change_requestsubmission", "delete_requestsubmission", "view_requestsubmission",
+
+                # College Social Media
+                "add_collegesocialmedia", "change_collegesocialmedia", "delete_collegesocialmedia", "view_collegesocialmedia",
+
+                # Social Media
+                "view_socialmedia",
+            ]
 
 
         for perm_name in permissions_to_assign:
