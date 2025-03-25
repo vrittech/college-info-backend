@@ -20,6 +20,8 @@ from django_filters.rest_framework import DjangoFilterBackend
 from mainproj.permissions import *
 from mainproj.permissions import DynamicModelPermission
 from rest_framework.permissions import IsAuthenticated,AllowAny
+from rest_framework.exceptions import PermissionDenied
+
 
 class CustomUserViewSet(viewsets.ModelViewSet):
     queryset = CustomUser.objects.all().order_by('-id')
