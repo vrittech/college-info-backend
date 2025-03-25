@@ -31,21 +31,24 @@ class GroupViewSet(viewsets.ModelViewSet):
     
 
 
-    def perform_protection_check(self, instance):
-            if instance.name.lower() == "college admin":
-                raise PermissionDenied("You are not allowed to edit or delete the 'College Admin' group.")
+    @staticmethod
+    def perform_protection_check(instance):
+        if instance.name.lower() == "college admin":
+            raise PermissionDenied("You are not allowed to perform any action on the 'College Admin' group.")
+
+    def get_object(self):
+        instance = super().get_object()
+        self.perform_protection_check(instance)
+        return instance
 
     def destroy(self, request, *args, **kwargs):
-        instance = self.get_object()
-        self.perform_protection_check(instance)
+        self.get_object()
         return super().destroy(request, *args, **kwargs)
 
     def update(self, request, *args, **kwargs):
-        instance = self.get_object()
-        self.perform_protection_check(instance)
+        self.get_object()
         return super().update(request, *args, **kwargs)
 
     def partial_update(self, request, *args, **kwargs):
-        instance = self.get_object()
-        self.perform_protection_check(instance)
+        self.get_object()
         return super().partial_update(request, *args, **kwargs)

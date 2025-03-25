@@ -5,6 +5,8 @@ from rest_framework import status
 
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
+from rest_framework.exceptions import PermissionDenied
+from accounts.viewsets.group_viewsets import GroupViewSet 
 
 from advertisement.models import Advertisement
 from affiliation.models import Affiliation
@@ -90,11 +92,9 @@ class BulkDelete(APIView):
         }
     )
     def post(self, request, *args, **kwargs):
-        # Extract 'delete_ids' and 'type' from request data
         delete_ids = request.data.get('delete_ids')
         delete_type = request.data.get('type')
 
-        # Validate input: Check for missing or invalid input
         if not delete_ids or not isinstance(delete_ids, list) or not all(isinstance(id, int) for id in delete_ids):
             return Response(
                 {"error": "Invalid 'delete_ids'. Provide a list of integers."},
@@ -107,13 +107,9 @@ class BulkDelete(APIView):
                 status=status.HTTP_400_BAD_REQUEST
             )
 
-        # Get the model based on delete_type
         model = VALID_TYPES[delete_type]
-        
-        # Fetch the queryset based on the provided IDs
         queryset = model.objects.filter(id__in=delete_ids)
 
-        # Check if any of the delete_ids do not exist
         existing_ids = list(queryset.values_list('id', flat=True))
         missing_ids = set(delete_ids) - set(existing_ids)
 
@@ -123,13 +119,24 @@ class BulkDelete(APIView):
                 status=status.HTTP_400_BAD_REQUEST
             )
 
-        # Perform the bulk deletion
-        deleted_count = queryset.count()  # Count only the main objects
-        queryset.delete()  # Perform deletion
+        skipped_ids = []
+        deletable_objects = []
 
-        print(f"Deleted {deleted_count} items of type '{delete_type}'.")
+        for instance in queryset:
+            try:
+                if isinstance(instance, Group):
+                    GroupViewSet.perform_protection_check(instance)
+                deletable_objects.append(instance)
+            except PermissionDenied:
+                skipped_ids.append(instance.id)
 
-        return Response(
-            {"message": f"Successfully deleted {deleted_count} items of type '{delete_type}'."},
-            status=status.HTTP_200_OK
-        )
+        if deletable_objects:
+            model.objects.filter(id__in=[obj.id for obj in deletable_objects]).delete()
+
+        deleted_count = len(deletable_objects)
+
+        return Response({
+            "message": f"Successfully deleted {deleted_count} items of type '{delete_type}'.",
+            "skipped_ids": skipped_ids,
+            "note": "Some items were skipped due to protection rules." if skipped_ids else None
+        }, status=status.HTTP_200_OK)
