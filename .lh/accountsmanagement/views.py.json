@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 36,
+            "activePatchIndex": 38,
             "patches": [
                 {
                     "date": 1726555479443,
@@ -152,6 +152,14 @@
                 {
                     "date": 1741253347173,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,8 +10,9 @@\n from django.core.mail import send_mail\n from django.contrib.auth.hashers import check_password\n from django.template.loader import render_to_string\n from .serializers import CustomChangePasswordSerializer\n+\n # from booking.models import DestinationBook\n \n # from django.db.models.signals import post_save\n from django.dispatch import receiver\n"
+                },
+                {
+                    "date": 1742882727900,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -48,9 +48,9 @@\n         \n             otp = self.generate_otp(user.id)\n \n             reset_verification = \"verification\"\n-            subject = 'Collete Info Nepal OTP'\n+            subject = 'College Info Nepal OTP'\n             if '@' in email:\n                 email = user.email\n                 sendMail(email, otp,subject,reset_verification)\n             else:\n"
+                },
+                {
+                    "date": 1742882737218,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -74,9 +74,9 @@\n         \n class EmailChangeGetOtpView(generics.GenericAPIView):\n     def generate_otp(self,user):\n         # Generate a random 6-digit OTP\n-        return \"123456\"\n+        # return \"123456\"\n         user = str(user)\n         return user[0]+''.join(random.choices(string.digits, k=4)) + user[-1]\n     \n     serializer_class = EmailChangeGetOtpSerializer\n"
                 }
             ],
             "date": 1726555479443,

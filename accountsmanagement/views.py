@@ -49,7 +49,7 @@ class EmailCheckView(generics.GenericAPIView):
             otp = self.generate_otp(user.id)
 
             reset_verification = "verification"
-            subject = 'Collete Info Nepal OTP'
+            subject = 'College Info Nepal OTP'
             if '@' in email:
                 email = user.email
                 sendMail(email, otp,subject,reset_verification)
@@ -75,7 +75,7 @@ class EmailCheckView(generics.GenericAPIView):
 class EmailChangeGetOtpView(generics.GenericAPIView):
     def generate_otp(self,user):
         # Generate a random 6-digit OTP
-        return "123456"
+        # return "123456"
         user = str(user)
         return user[0]+''.join(random.choices(string.digits, k=4)) + user[-1]
     
