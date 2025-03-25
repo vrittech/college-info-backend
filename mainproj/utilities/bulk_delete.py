@@ -60,6 +60,7 @@ VALID_TYPES = {
     "inquiry": Inquiry,
     "discipline": Discipline,
     "album": Album,
+    'group': Group,
     "gallery": Gallery,
     "duration": Duration,
 }

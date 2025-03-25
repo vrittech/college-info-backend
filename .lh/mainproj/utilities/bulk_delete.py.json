@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 92,
+            "activePatchIndex": 93,
             "patches": [
                 {
                     "date": 1733737051062,
@@ -376,6 +376,10 @@
                 {
                     "date": 1742881165471,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -56,9 +56,8 @@\n     \"event\": Event,\n     \"event-category\": EventCategory,\n     \"event-gallery\": EventGallery,\n     \"event-organizer\": EventOrganizer,\n-    \"group\": Group,\n     \"inquiry\": Inquiry,\n     \"discipline\": Discipline,\n     \"album\": Album,\n     \"gallery\": Gallery,\n"
+                },
+                {
+                    "date": 1742882558149,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -59,8 +59,9 @@\n     \"event-organizer\": EventOrganizer,\n     \"inquiry\": Inquiry,\n     \"discipline\": Discipline,\n     \"album\": Album,\n+    ''\n     \"gallery\": Gallery,\n     \"duration\": Duration,\n }\n \n"
                 }
             ],
             "date": 1733737051062,
