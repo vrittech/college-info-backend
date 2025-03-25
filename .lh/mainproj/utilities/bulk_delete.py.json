@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 91,
+            "activePatchIndex": 92,
             "patches": [
                 {
                     "date": 1733737051062,
@@ -372,6 +372,10 @@
                 {
                     "date": 1742119987292,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -48,9 +48,9 @@\n     \"district\": District,\n     \"facility\": Facility,\n     \"college-facility\": CollegeFacility,\n     \"faculty\": Faculty,\n-    \"\"college-level\"\": Level,\n+    \"college-level\": Level,\n     \"sub-level\": SubLevel,\n     \"social-media\": SocialMedia,\n     \"super-admin-details\": SuperAdminDetails,\n     \"event\": Event,\n"
+                },
+                {
+                    "date": 1742881165471,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -56,9 +56,8 @@\n     \"event\": Event,\n     \"event-category\": EventCategory,\n     \"event-gallery\": EventGallery,\n     \"event-organizer\": EventOrganizer,\n-    \"group\": Group,\n     \"inquiry\": Inquiry,\n     \"discipline\": Discipline,\n     \"album\": Album,\n     \"gallery\": Gallery,\n"
                 }
             ],
             "date": 1733737051062,

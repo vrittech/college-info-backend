@@ -57,7 +57,6 @@ VALID_TYPES = {
     "event-category": EventCategory,
     "event-gallery": EventGallery,
     "event-organizer": EventOrganizer,
-    "group": Group,
     "inquiry": Inquiry,
     "discipline": Discipline,
     "album": Album,
