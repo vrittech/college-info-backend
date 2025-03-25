@@ -31,27 +31,31 @@ class NotificationViewSet(viewsets.ModelViewSet):
     def mark_all_as_read(self, request, *args, **kwargs):
         """Mark all notifications as read for the requesting user."""
         try:
-            print("🔍 mark_all_as_read action triggered")  # Debugging
-            print(f"🔍 Current user: {request.user}")  # Debugging
+            print("🔍 mark_all_as_read action triggered")
+            print(f"🔍 Current user: {request.user}")
 
             if not request.user.is_authenticated:
                 return Response({"error": "Authentication required"}, status=status.HTTP_401_UNAUTHORIZED)
 
             # Get all notifications for the current user that haven't been read by them
             notifications = Notification.objects.filter(user=request.user).exclude(read_by=request.user)
-            print(f"🔍 Notifications to mark as read: {notifications.count()}")  # Debugging
+            count = notifications.count()  # Get the count BEFORE modifying the queryset
+            print(f"🔍 Notifications to mark as read: {count}")
 
             # Add the current user to the read_by field of each notification
             for notification in notifications:
                 notification.read_by.add(request.user)
-                print(f"🔍 Marked notification {notification.id} as read for user {request.user}")  # Debugging
+                print(f"🔍 Marked notification {notification.id} as read for user {request.user}")
 
-            count = notifications.count()
             return Response({"message": f"{count} notifications marked as read"}, status=status.HTTP_200_OK)
         except Exception as e:
             logger.error(f"Error in mark_all_as_read(): {str(e)}", exc_info=True)
-            return Response({"error": "An error occurred while marking notifications as read."},
-                            status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response(
+                {"error": "An error occurred while marking notifications as read."},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
+
+
 
     @action(detail=False, methods=['delete'], name="Delete All Notifications", url_path="delete_all")
     def delete_all(self, request, *args, **kwargs):

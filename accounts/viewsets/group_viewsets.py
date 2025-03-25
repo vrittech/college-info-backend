@@ -7,6 +7,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter, OrderingFilter
 from ..utilities.groupfilter import GroupFilter
 from rest_framework.exceptions import PermissionDenied
+from accounts.models import CustomUser as User
 
 
 class GroupViewSet(viewsets.ModelViewSet):
@@ -45,18 +46,25 @@ class GroupViewSet(viewsets.ModelViewSet):
         instance = self.get_object()
         related_models = []
 
+        # Check if any user is assigned to this group
+        if User.objects.filter(groups=instance).exists():
+            related_models.append(f"{User._meta.app_label}.{User.__name__}")
+
+        # Optionally check other models if you still want
         for model in apps.get_models():
             for field in model._meta.get_fields():
                 if isinstance(field, (ForeignKey, ManyToManyField)) and field.related_model == Group:
-                    filter_kwargs = {f"{field.name}__in": [instance]}
+                    filter_kwargs = {f"{field.name}": instance}
                     if model.objects.filter(**filter_kwargs).exists():
-                        related_models.append(f"{model._meta.app_label}.{model.__name__}")
+                        model_label = f"{model._meta.app_label}.{model.__name__}"
+                        if model_label not in related_models:
+                            related_models.append(model_label)
 
         if related_models:
             return Response(
                 {
                     "detail": "This group is being used in the following models. "
-                              "Please update/remove those references before deletion.",
+                            "Please update/remove those references before deletion.",
                     "used_in_models": related_models
                 },
                 status=status.HTTP_400_BAD_REQUEST
