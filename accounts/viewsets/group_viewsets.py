@@ -6,6 +6,8 @@ from ..utilities.pagination import MyPageNumberPagination
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter, OrderingFilter
 from ..utilities.groupfilter import GroupFilter
+from rest_framework.exceptions import PermissionDenied
+
 
 class GroupViewSet(viewsets.ModelViewSet):
     queryset = Group.objects.all().order_by('-id')
@@ -29,3 +31,21 @@ class GroupViewSet(viewsets.ModelViewSet):
     
 
 
+    def perform_protection_check(self, instance):
+            if instance.name.lower() == "college admin":
+                raise PermissionDenied("You are not allowed to edit or delete the 'College Admin' group.")
+
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        self.perform_protection_check(instance)
+        return super().destroy(request, *args, **kwargs)
+
+    def update(self, request, *args, **kwargs):
+        instance = self.get_object()
+        self.perform_protection_check(instance)
+        return super().update(request, *args, **kwargs)
+
+    def partial_update(self, request, *args, **kwargs):
+        instance = self.get_object()
+        self.perform_protection_check(instance)
+        return super().partial_update(request, *args, **kwargs)

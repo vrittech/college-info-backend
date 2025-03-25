@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 15,
+            "activePatchIndex": 21,
             "patches": [
                 {
                     "date": 1738669112140,
@@ -68,6 +68,30 @@
                 {
                     "date": 1742537064801,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,9 +14,9 @@\n     pagination_class = MyPageNumberPagination\n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     search_fields = ['id','name']\n     ordering_fields = ['id','name']\n-    filterclass = GroupFilter\n+    filterset_class = GroupFilter\n     \n     def get_queryset(self):\n         if self.request.user.is_superuser:\n             return super().get_queryset()\n"
+                },
+                {
+                    "date": 1742881392308,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -28,4 +28,22 @@\n             return Group.objects.none()\n     \n \n \n+ef perform_protection_check(self, instance):\n+        if instance.name.lower() == \"college admin\":\n+            raise PermissionDenied(\"You are not allowed to edit or delete the 'College Admin' group.\")\n+\n+    def destroy(self, request, *args, **kwargs):\n+        instance = self.get_object()\n+        self.perform_protection_check(instance)\n+        return super().destroy(request, *args, **kwargs)\n+\n+    def update(self, request, *args, **kwargs):\n+        instance = self.get_object()\n+        self.perform_protection_check(instance)\n+        return super().update(request, *args, **kwargs)\n+\n+    def partial_update(self, request, *args, **kwargs):\n+        instance = self.get_object()\n+        self.perform_protection_check(instance)\n+        return super().partial_update(request, *args, **kwargs)\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1742881399936,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -28,22 +28,22 @@\n             return Group.objects.none()\n     \n \n \n-ef perform_protection_check(self, instance):\n-        if instance.name.lower() == \"college admin\":\n-            raise PermissionDenied(\"You are not allowed to edit or delete the 'College Admin' group.\")\n+    def perform_protection_check(self, instance):\n+            if instance.name.lower() == \"college admin\":\n+                raise PermissionDenied(\"You are not allowed to edit or delete the 'College Admin' group.\")\n \n-    def destroy(self, request, *args, **kwargs):\n-        instance = self.get_object()\n-        self.perform_protection_check(instance)\n-        return super().destroy(request, *args, **kwargs)\n+        def destroy(self, request, *args, **kwargs):\n+            instance = self.get_object()\n+            self.perform_protection_check(instance)\n+            return super().destroy(request, *args, **kwargs)\n \n-    def update(self, request, *args, **kwargs):\n-        instance = self.get_object()\n\\ No newline at end of file\n-        self.perform_protection_check(instance)\n-        return super().update(request, *args, **kwargs)\n+        def update(self, request, *args, **kwargs):\n+            instance = self.get_object()\n+            self.perform_protection_check(instance)\n+            return super().update(request, *args, **kwargs)\n \n-    def partial_update(self, request, *args, **kwargs):\n-        instance = self.get_object()\n-        self.perform_protection_check(instance)\n-        return super().partial_update(request, *args, **kwargs)\n+        def partial_update(self, request, *args, **kwargs):\n+            instance = self.get_object()\n+            self.perform_protection_check(instance)\n+            return super().partial_update(request, *args, **kwargs)\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1742881406247,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -28,9 +28,9 @@\n             return Group.objects.none()\n     \n \n \n-    def perform_protection_check(self, instance):\n+            def perform_protection_check(self, instance):\n             if instance.name.lower() == \"college admin\":\n                 raise PermissionDenied(\"You are not allowed to edit or delete the 'College Admin' group.\")\n \n         def destroy(self, request, *args, **kwargs):\n"
+                },
+                {
+                    "date": 1742881415224,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -28,9 +28,9 @@\n             return Group.objects.none()\n     \n \n \n-            def perform_protection_check(self, instance):\n+    def perform_protection_check(self, instance):\n             if instance.name.lower() == \"college admin\":\n                 raise PermissionDenied(\"You are not allowed to edit or delete the 'College Admin' group.\")\n \n         def destroy(self, request, *args, **kwargs):\n"
+                },
+                {
+                    "date": 1742881421650,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -32,18 +32,18 @@\n     def perform_protection_check(self, instance):\n             if instance.name.lower() == \"college admin\":\n                 raise PermissionDenied(\"You are not allowed to edit or delete the 'College Admin' group.\")\n \n-        def destroy(self, request, *args, **kwargs):\n-            instance = self.get_object()\n-            self.perform_protection_check(instance)\n-            return super().destroy(request, *args, **kwargs)\n+    def destroy(self, request, *args, **kwargs):\n+        instance = self.get_object()\n+        self.perform_protection_check(instance)\n+        return super().destroy(request, *args, **kwargs)\n \n-        def update(self, request, *args, **kwargs):\n-            instance = self.get_object()\n-            self.perform_protection_check(instance)\n-            return super().update(request, *args, **kwargs)\n+    def update(self, request, *args, **kwargs):\n\\ No newline at end of file\n+        instance = self.get_object()\n+        self.perform_protection_check(instance)\n+        return super().update(request, *args, **kwargs)\n \n-        def partial_update(self, request, *args, **kwargs):\n-            instance = self.get_object()\n-            self.perform_protection_check(instance)\n-            return super().partial_update(request, *args, **kwargs)\n+    def partial_update(self, request, *args, **kwargs):\n+        instance = self.get_object()\n+        self.perform_protection_check(instance)\n+        return super().partial_update(request, *args, **kwargs)\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1742881428848,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,9 +5,11 @@\n from ..utilities.pagination import MyPageNumberPagination\n from django_filters.rest_framework import DjangoFilterBackend\n from rest_framework.filters import SearchFilter, OrderingFilter\n from ..utilities.groupfilter import GroupFilter\n+from rest_framework.exceptions import PermissionDenied\n \n+\n class GroupViewSet(viewsets.ModelViewSet):\n     queryset = Group.objects.all().order_by('-id')\n     serializer_class = GroupSerializer\n     permission_classes = [IsAdminUser]\n"
                 }
             ],
             "date": 1738669112140,
