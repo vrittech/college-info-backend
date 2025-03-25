@@ -232,21 +232,31 @@ class CustomUserWriteSerializersCollegeAdmin(serializers.ModelSerializer):
         print("Group name:", g_name,Group.objects.filter(name=g_name).exists())
         
         college_admin_group, created = Group.objects.get_or_create(name=g_name) # Get or create group   "
-        print(college_admin_group,"@@@@@###################")
 
         # ✅ Always assign permissions (even if the group already exists)
         #TODO: Fix this as this is not assign the group second time
+        #   permissions_to_assign = [
+        #     "add_customuser", "change_customuser", "view_customuser",
+        #     "add_college", "change_college", "view_college",
+        #     "add_collegegallery", "change_collegegallery", "delete_collegegallery", "view_collegegallery",
+        #     "add_collegefaqs", "change_collegefaqs", "delete_collegefaqs", "view_collegefaqs",
+        #     "add_facility", "change_facility", "delete_facility", "view_facility",
+        #     "add_coursesandfees", "change_coursesandfees", "delete_coursesandfees", "view_coursesandfees",
+        #     "add_contact", "change_contact", "view_contact",
+        #     "add_requestsubmission", "change_requestsubmission", "view_requestsubmission",
+        #     "view_inquiry"  # ✅ As requested
+        # ]
         permissions_to_assign = [
-            "add_requestsubmission", "change_requestsubmission", "view_requestsubmission",
+            "add_customuser", "change_customuser", "view_customuser",
             "add_college", "change_college", "view_college",
-            "add_coursesandfees", "change_coursesandfees", "delete_coursesandfees", "view_coursesandfees",
-            "add_facility", "change_facility", "delete_facility", "view_facility",
             "add_collegegallery", "change_collegegallery", "delete_collegegallery", "view_collegegallery",
             "add_collegefaqs", "change_collegefaqs", "delete_collegefaqs", "view_collegefaqs",
-            "view_inquiry",
+            "add_facility", "change_facility", "delete_facility", "view_facility",
+            "add_coursesandfees", "change_coursesandfees", "delete_coursesandfees", "view_coursesandfees",
             "add_contact", "change_contact", "view_contact",
-            "add_customuser", "change_customuser", "view_customuser",
+            "add_requestsubmission", "change_requestsubmission", "view_requestsubmission","view_inquiry",
         ]
+
 
         for perm_name in permissions_to_assign:
             try:
