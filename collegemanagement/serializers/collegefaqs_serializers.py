@@ -4,6 +4,7 @@ from ..models import CollegeFaqs,College
 class CollegeSerializers(serializers.ModelSerializer):
     class Meta:
         model = College
+        ref_name = 'CollegeFaqsSerializers'
         fields = ['id','slug','name']
 
 class CollegeFaqsListSerializers(serializers.ModelSerializer):
