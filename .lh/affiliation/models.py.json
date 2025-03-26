@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 4,
+            "activePatchIndex": 5,
             "patches": [
                 {
                     "date": 1739786292549,
@@ -24,6 +24,10 @@
                 {
                     "date": 1742127033078,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -45,9 +45,9 @@\n     public_id = models.UUIDField(default=uuid.uuid4,editable=False,unique=True)\n     slug = models.SlugField(max_length=255, unique=True, null=True, blank=True)\n     name = models.CharField(max_length=255,null=True,blank=True,unique=True)\n     established_year = models.IntegerField(default=now().year,validators=[validate_year])\n-    website_url = models.URLField(max_length=500, blank=True, null=True)\n+    website_url = models.CharField(max_length=500, blank=True, null=True)\n     google_map_embed_url = models.CharField(max_length=5000, blank=True, null=True)\n     latitude = models.CharField(max_length=100, null=True, blank=True) \n     longitude = models.CharField(max_length=100, null=True, blank=True) \n     address = models.CharField(max_length=500,null=True,blank=True)\n"
+                },
+                {
+                    "date": 1742962910910,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -50,9 +50,9 @@\n     google_map_embed_url = models.CharField(max_length=5000, blank=True, null=True)\n     latitude = models.CharField(max_length=100, null=True, blank=True) \n     longitude = models.CharField(max_length=100, null=True, blank=True) \n     address = models.CharField(max_length=500,null=True,blank=True)\n-    district = models.ForeignKey(District,on_delete=models.CASCADE, related_name='affiliation_district')\n+    district = models.ForeignKey(District,on_delete=models.CASCADE, related_name='affiliation_district',null=True,b)\n     university_type = models.CharField(\n         max_length=10,  # Set a maximum length appropriate for the choice values\n         choices=UNIVERSITY_TYPE_CHOICES,\n         default='local'\n"
                 }
             ],
             "date": 1739786292549,
