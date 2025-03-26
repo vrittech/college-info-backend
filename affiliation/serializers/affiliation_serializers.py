@@ -85,7 +85,7 @@ class AffiliationRetrieveSerializers(serializers.ModelSerializer):
 
 class AffiliationWriteSerializers(serializers.ModelSerializer):
     # Accept ForeignKey and ManyToMany fields as IDs
-    district = serializers.PrimaryKeyRelatedField(queryset=District.objects.all(),required=False,allow_null=True,allow_empty=True)
+    district = serializers.PrimaryKeyRelatedField(queryset=District.objects.all(),required=False,allow_null=True)
     certification = serializers.PrimaryKeyRelatedField(queryset=Certification.objects.all(), many=True)
 
     class Meta:
