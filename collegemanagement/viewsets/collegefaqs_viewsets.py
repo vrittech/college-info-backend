@@ -20,6 +20,7 @@ class collegefaqsViewsets(viewsets.ModelViewSet):
 
     filterset_fields = {
         'id': ['exact'],
+        'college': ['exact'],
         'college__slug': ['exact'],
         'created_date': ['exact', 'lte', 'gte'],
         'updated_date': ['exact', 'lte', 'gte'],
