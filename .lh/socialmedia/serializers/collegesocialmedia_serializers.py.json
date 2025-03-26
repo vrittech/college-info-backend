@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 35,
+            "activePatchIndex": 36,
             "patches": [
                 {
                     "date": 1739856941559,
@@ -148,6 +148,10 @@
                 {
                     "date": 1740986198237,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -29,10 +29,8 @@\n         model = CollegeSocialMedia\n         fields = '__all__'\n \n class CollegeSocialMediaWriteSerializers(serializers.ModelSerializer):\n-    college = CollegeSerializers(read_only=True)\n-    name = SocialMediaSerializers(read_only=True)\n     class Meta:\n         model = CollegeSocialMedia\n         fields = '__all__'\n         \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1742975052190,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,9 +5,9 @@\n \n class SocialMediaSerializers(serializers.ModelSerializer):\n     class Meta:\n         model = SocialMedia\n-        fields = ['id','name','link']\n+        fields = ['id','name','link','icon']\n         \n class CollegeSerializers(serializers.ModelSerializer):\n     class Meta:\n         model = College\n"
                 }
             ],
             "date": 1739856941559,

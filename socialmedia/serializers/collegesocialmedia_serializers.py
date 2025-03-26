@@ -6,7 +6,7 @@ from collegemanagement.models import College
 class SocialMediaSerializers(serializers.ModelSerializer):
     class Meta:
         model = SocialMedia
-        fields = ['id','name','link']
+        fields = ['id','name','link','icon']
         
 class CollegeSerializers(serializers.ModelSerializer):
     class Meta:
