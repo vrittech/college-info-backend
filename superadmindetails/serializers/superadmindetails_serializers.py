@@ -4,12 +4,13 @@ from ..models import SuperAdminDetails
 class SuperAdminDetailsListSerializers(serializers.ModelSerializer):
     class Meta:
         model = SuperAdminDetails
-        fields = '__all__'
+        fields = ['name', 'email', 'phone_number', 'location', 'messenger_link', 'facebook_link', 'x_link', 'youtube_link', 'linkedin_link',]
+        
 
 class SuperAdminDetailsRetrieveSerializers(serializers.ModelSerializer):
     class Meta:
         model = SuperAdminDetails
-        fields = '__all__'
+        fields = ['name', 'email', 'phone_number', 'location', 'messenger_link', 'facebook_link', 'x_link', 'youtube_link', 'linkedin_link',]
 
 class SuperAdminDetailsWriteSerializers(serializers.ModelSerializer):
     class Meta:

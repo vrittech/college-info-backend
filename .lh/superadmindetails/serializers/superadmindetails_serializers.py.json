@@ -1,0 +1,30 @@
+{
+    "sourceFile": "superadmindetails/serializers/superadmindetails_serializers.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 3,
+            "patches": [
+                {
+                    "date": 1743058247418,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1743058255642,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,9 +4,9 @@\n class SuperAdminDetailsListSerializers(serializers.ModelSerializer):\n     class Meta:\n         model = SuperAdminDetails\n         fields = '__all__'\n-        \n+        ( )\n \n class SuperAdminDetailsRetrieveSerializers(serializers.ModelSerializer):\n     class Meta:\n         model = SuperAdminDetails\n"
+                },
+                {
+                    "date": 1743058262448,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,10 +3,10 @@\n \n class SuperAdminDetailsListSerializers(serializers.ModelSerializer):\n     class Meta:\n         model = SuperAdminDetails\n-        fields = '__all__'\n-        ( )\n+        fields = ['name', 'email', 'phone_number', 'location', 'messenger_link', 'facebook_link', 'x_link', 'youtube_link', 'linkedin_link',]\n+        \n \n class SuperAdminDetailsRetrieveSerializers(serializers.ModelSerializer):\n     class Meta:\n         model = SuperAdminDetails\n"
+                },
+                {
+                    "date": 1743058271046,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,9 +9,9 @@\n \n class SuperAdminDetailsRetrieveSerializers(serializers.ModelSerializer):\n     class Meta:\n         model = SuperAdminDetails\n-        fields = '__all__'\n+        fields = ['name', 'email', 'phone_number', 'location', 'messenger_link', 'facebook_link', 'x_link', 'youtube_link', 'linkedin_link',]\n \n class SuperAdminDetailsWriteSerializers(serializers.ModelSerializer):\n     class Meta:\n         model = SuperAdminDetails\n"
+                }
+            ],
+            "date": 1743058247418,
+            "name": "Commit-0",
+            "content": "from rest_framework import serializers\nfrom ..models import SuperAdminDetails\n\nclass SuperAdminDetailsListSerializers(serializers.ModelSerializer):\n    class Meta:\n        model = SuperAdminDetails\n        fields = '__all__'\n        \n\nclass SuperAdminDetailsRetrieveSerializers(serializers.ModelSerializer):\n    class Meta:\n        model = SuperAdminDetails\n        fields = '__all__'\n\nclass SuperAdminDetailsWriteSerializers(serializers.ModelSerializer):\n    class Meta:\n        model = SuperAdminDetails\n        fields = '__all__'"
+        }
+    ]
+}
