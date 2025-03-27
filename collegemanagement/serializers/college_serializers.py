@@ -68,7 +68,7 @@ class DistrictSerializer(serializers.ModelSerializer):
 class AffiliationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Affiliation
-        fields = ['id', 'name', 'established_year','address']
+        fields = ['id','slug', 'name', 'established_year','address']
 
 # Nested serializer for CollegeType
 class FormStepProgressSerializer(serializers.ModelSerializer):

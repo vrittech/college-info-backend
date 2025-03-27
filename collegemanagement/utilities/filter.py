@@ -23,7 +23,9 @@ class CollegeFilter(django_filters.FilterSet):
     district = CharInFilter(field_name="district__name", lookup_expr="in")
     college_type = django_filters.CharFilter(field_name="college_type__id", lookup_expr="exact")
     affiliated = django_filters.CharFilter(method="filter_by_affiliation")
+    affiliated_slug = django_filters.CharFilter(method="filter_by_affiliation_slug")
     university_type = django_filters.CharFilter(field_name='affiliated__university_type', lookup_expr='icontains')
+    courses = django_filters.CharFilter(method="filter_by_courses")
 
 
     # Date and year range filters
@@ -60,7 +62,14 @@ class CollegeFilter(django_filters.FilterSet):
         """Filter by multiple facilities using comma-separated values"""
         if value:
             facility_ids = value.split(',') if ',' in value else [value]
-            queryset = queryset.filter(facilities__id__in=facility_ids).distinct()
+            queryset = queryset.filter(college_facilities__id__in=facility_ids).distinct()
+        return queryset
+    
+    def filter_by_courses(self, queryset, name, value):
+        """Filter by multiple facilities using comma-separated values"""
+        if value:
+            course_ids = value.split(',') if ',' in value else [value]
+            queryset = queryset.filter(college_courses_and_fees__course__id__in=course_ids).distinct()
         return queryset
     
     def filter_by_affiliation(self, queryset, name, value):
@@ -69,11 +78,18 @@ class CollegeFilter(django_filters.FilterSet):
             affiliated_ids = value.split(',') if ',' in value else [value]
             queryset = queryset.filter(affiliated__id__in=affiliated_ids).distinct()
         return queryset
+    
+    def filter_by_affiliation_slug(self, queryset, name, value):
+        """Filter by multiple facilities using comma-separated values"""
+        if value:
+            affiliated_slug = value.split(',') if ',' in value else [value]
+            queryset = queryset.filter(affiliated__slug__in=affiliated_slug).distinct()
+        return queryset
 
     class Meta:
         model = College
         fields = [
             "id", "name", "address", "district", "college_type", "affiliated",
             "established_date", "created_date", "updated_date", 'is_verified',
-            "phone_number", "email", "is_show", "discipline", "facilities","university_type"
+            "phone_number", "email", "is_show", "discipline", "college_facilities","university_type","courses","affiliated_slug"
         ]
