@@ -186,6 +186,13 @@ class EventWriteSerializers(serializers.ModelSerializer):
 
         # Extract multiple images from `images[0]`, `images[1]`, ...
         images_data = [file for key, file in request.FILES.items() if key.startswith("image[")]
+        
+        for index, image_file in enumerate(images_data):
+            EventGallery.objects.create(
+                event=event,
+                image=image_file,
+                is_featured=(index == 0)  # Set only the first image as featured
+            )
 
         # Create the Event instance
         event = super().create(validated_data)

@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 99,
+            "activePatchIndex": 102,
             "patches": [
                 {
                     "date": 1733477390024,
@@ -404,6 +404,18 @@
                 {
                     "date": 1741685010598,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -162,16 +162,16 @@\n             attrs['image'] = instance.image\n \n         return attrs\n \n-    def get_absolute_url(self, image_field):\n-            \"\"\"\n-            Returns the absolute URL for the given image field.\n-            \"\"\"\n-            request = self.context.get('request')\n-            if request and image_field:\n-                return image_field.url)  # Ensure we use .url\n-            return image_field.url if image_field else None  # Fallback in case request is missing\n+    # def get_absolute_url(self, image_field):\n+    #         \"\"\"\n+    #         Returns the absolute URL for the given image field.\n+    #         \"\"\"\n+    #         request = self.context.get('request')\n+    #         if request and image_field:\n+    #             return image_field.url)  # Ensure we use .url\n+    #         return image_field.url if image_field else None  # Fallback in case request is missing\n \n \n     @transaction.atomic\n     def create(self, validated_data):\n"
+                },
+                {
+                    "date": 1743058998936,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -185,8 +185,15 @@\n         organizer_ids = validated_data.pop(\"organizer\", [])\n \n         # Extract multiple images from `images[0]`, `images[1]`, ...\n         images_data = [file for key, file in request.FILES.items() if key.startswith(\"image[\")]\n+        \n+        for index, image_file in enumerate(images_data):\n+            InformationGallery.objects.create(\n+                information=information,\n+                image=image_file,\n+                is_featured=(index == 0)  # Set only the first image as featured\n+            )\n \n         # Create the Event instance\n         event = super().create(validated_data)\n \n"
+                },
+                {
+                    "date": 1743059004979,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -187,9 +187,9 @@\n         # Extract multiple images from `images[0]`, `images[1]`, ...\n         images_data = [file for key, file in request.FILES.items() if key.startswith(\"image[\")]\n         \n         for index, image_file in enumerate(images_data):\n-            InformationGallery.objects.create(\n+            EventGallery.objects.create(\n                 information=information,\n                 image=image_file,\n                 is_featured=(index == 0)  # Set only the first image as featured\n             )\n"
+                },
+                {
+                    "date": 1743059011092,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -188,9 +188,9 @@\n         images_data = [file for key, file in request.FILES.items() if key.startswith(\"image[\")]\n         \n         for index, image_file in enumerate(images_data):\n             EventGallery.objects.create(\n-                information=information,\n+                event=event,\n                 image=image_file,\n                 is_featured=(index == 0)  # Set only the first image as featured\n             )\n \n"
                 }
             ],
             "date": 1733477390024,
