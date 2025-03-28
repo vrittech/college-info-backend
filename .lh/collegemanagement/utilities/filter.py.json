@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 60,
+            "activePatchIndex": 62,
             "patches": [
                 {
                     "date": 1739940081389,
@@ -248,6 +248,14 @@
                 {
                     "date": 1743136283278,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -73,8 +73,9 @@\n             queryset = queryset.filter(college_courses_and_fees__course__id__in=course_ids).distinct()\n         return queryset\n     \n     def filter_by_courses_slug(self, queryset, name, value):\n+        \n     \n     def filter_by_affiliation(self, queryset, name, value):\n         \"\"\"Filter by multiple facilities using comma-separated values\"\"\"\n         if value:\n"
+                },
+                {
+                    "date": 1743136332503,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -73,9 +73,13 @@\n             queryset = queryset.filter(college_courses_and_fees__course__id__in=course_ids).distinct()\n         return queryset\n     \n     def filter_by_courses_slug(self, queryset, name, value):\n-        \n+        \"\"\"Filter by multiple facilities using comma-separated values\"\"\"\n+        if value:\n+            course_slug = value.split(',') if ',' in value else [value]\n+            queryset = queryset.filter(college_courses_and_fees__course__slug__in=course_slug).distinct()\n+        return queryset\n     \n     def filter_by_affiliation(self, queryset, name, value):\n         \"\"\"Filter by multiple facilities using comma-separated values\"\"\"\n         if value:\n@@ -95,5 +99,6 @@\n         fields = [\n             \"id\", \"name\", \"address\", \"district\", \"college_type\", \"affiliated\",\n             \"established_date\", \"created_date\", \"updated_date\", 'is_verified',\n             \"phone_number\", \"email\", \"is_show\", \"discipline\", \"college_facilities\",\"university_type\",\"courses\",\"affiliated_slug\"\n+            \n         ]\n"
+                },
+                {
+                    "date": 1743136338847,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -99,6 +99,6 @@\n         fields = [\n             \"id\", \"name\", \"address\", \"district\", \"college_type\", \"affiliated\",\n             \"established_date\", \"created_date\", \"updated_date\", 'is_verified',\n             \"phone_number\", \"email\", \"is_show\", \"discipline\", \"college_facilities\",\"university_type\",\"courses\",\"affiliated_slug\"\n-            \n+            \"course\"\n         ]\n"
                 }
             ],
             "date": 1739940081389,
