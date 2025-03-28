@@ -26,6 +26,7 @@ class CollegeFilter(django_filters.FilterSet):
     affiliated_slug = django_filters.CharFilter(method="filter_by_affiliation_slug")
     university_type = django_filters.CharFilter(field_name='affiliated__university_type', lookup_expr='icontains')
     courses = django_filters.CharFilter(method="filter_by_courses")
+    courses_slug = django_filters.CharFilter(method="filter_by_courses_slug")
 
 
     # Date and year range filters
@@ -70,6 +71,13 @@ class CollegeFilter(django_filters.FilterSet):
         if value:
             course_ids = value.split(',') if ',' in value else [value]
             queryset = queryset.filter(college_courses_and_fees__course__id__in=course_ids).distinct()
+        return queryset
+    
+    def filter_by_courses_slug(self, queryset, name, value):
+        """Filter by multiple facilities using comma-separated values"""
+        if value:
+            course_slug = value.split(',') if ',' in value else [value]
+            queryset = queryset.filter(college_courses_and_fees__course__slug__in=course_slug).distinct()
         return queryset
     
     def filter_by_affiliation(self, queryset, name, value):
