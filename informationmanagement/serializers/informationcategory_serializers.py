@@ -17,6 +17,8 @@ class InformationCategoryListSerializers(serializers.ModelSerializer):
         extra_kwargs = {
             'image': {'required': False, 'allow_null': True}
         }
+        def get_information_count(self, obj):
+            return obj.information_set.count()
 
 class InformationCategoryRetrieveSerializers(serializers.ModelSerializer):
     class Meta:
@@ -34,6 +36,8 @@ class InformationCategoryRetrieveSerializers(serializers.ModelSerializer):
         extra_kwargs = {
             'image': {'required': False, 'allow_null': True}
         }
+        def get_information_count(self, obj):
+            return obj.information_set.count()
 
 class InformationCategoryWriteSerializers(serializers.ModelSerializer):
     class Meta:
