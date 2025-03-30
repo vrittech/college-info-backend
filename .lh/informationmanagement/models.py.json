@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 26,
+            "activePatchIndex": 27,
             "patches": [
                 {
                     "date": 1739786154635,
@@ -112,6 +112,10 @@
                 {
                     "date": 1741685303190,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -148,10 +148,7 @@\n         super().save(*args, **kwargs)\n \n         # Update the Information model's featured_image field if this is the featured image\n         if self.is_featured and self.image:\n-            site_url = getattr(settings, \"SITE_URL\", \"https://base.collegeinfonepal.com\")  # Default fallback URL\n-            absolute_url = urljoin(site_url, self.image.url)  # Construct absolute URL\n-\n             # Update the `featured_image` field of the related `Information` instance\n             self.information.featured_image = self.image.url\n             self.information.save(update_fields=['featured_image'])  # Save only the updated field\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1743324852068,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -46,8 +46,13 @@\n \n \n     def __str__(self):\n        return self.name if self.name else \"Unnamed\"\n+   \n+   @property\n+    def information_count(self):\n+        \"\"\"Returns the count of information items associated with this category\"\"\"\n+        return self.information_set.count()\n     \n     def save(self, *args, **kwargs):\n         # If is_show is being set to True, check the current count of True entries\n         if self.is_show:\n"
                 }
             ],
             "date": 1739786154635,

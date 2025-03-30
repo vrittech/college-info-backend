@@ -47,6 +47,11 @@ class InformationCategory(models.Model):
 
     def __str__(self):
        return self.name if self.name else "Unnamed"
+   
+    @property
+    def information_count(self):
+        """Returns the count of information items associated with this category"""
+        return self.information_set.count()
     
     def save(self, *args, **kwargs):
         # If is_show is being set to True, check the current count of True entries

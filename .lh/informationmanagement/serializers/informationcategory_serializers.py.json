@@ -1,0 +1,30 @@
+{
+    "sourceFile": "informationmanagement/serializers/informationcategory_serializers.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 3,
+            "patches": [
+                {
+                    "date": 1743325286502,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1743325300308,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,21 +3,17 @@\n \n class InformationCategoryListSerializers(serializers.ModelSerializer):\n     class Meta:\n         model = InformationCategory\n-        fields = fields = [\n+        fields = [\n             'id', \n             'name', \n             'slug', \n             'is_show', \n             'image',\n             'information_count',  # Include the count\n             'created_date',       # Optional\n         ]\n-        # Optional: Make 'image' return full URL\n-        extra_kwargs = {\n-            'image': {'required': False, 'allow_null': True}\n-        }\n \n class InformationCategoryRetrieveSerializers(serializers.ModelSerializer):\n     class Meta:\n         model = InformationCategory\n"
+                },
+                {
+                    "date": 1743325337253,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,13 +12,29 @@\n             'image',\n             'information_count',  # Include the count\n             'created_date',       # Optional\n         ]\n+        # Optional: Make 'image' return full URL\n+        extra_kwargs = {\n+            'image': {'required': False, 'allow_null': True}\n+        }\n \n class InformationCategoryRetrieveSerializers(serializers.ModelSerializer):\n     class Meta:\n         model = InformationCategory\n-        fields = '__all__'\n+          fields = [\n+            'id', \n+            'name', \n+            'slug', \n+            'is_show', \n+            'image',\n+            'information_count',  # Include the count\n+            'created_date',       # Optional\n+        ]\n+        # Optional: Make 'image' return full URL\n+        extra_kwargs = {\n+            'image': {'required': False, 'allow_null': True}\n+        }\n \n class InformationCategoryWriteSerializers(serializers.ModelSerializer):\n     class Meta:\n         model = InformationCategory\n"
+                },
+                {
+                    "date": 1743325343339,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,9 +20,9 @@\n \n class InformationCategoryRetrieveSerializers(serializers.ModelSerializer):\n     class Meta:\n         model = InformationCategory\n-          fields = [\n+        fields = [\n             'id', \n             'name', \n             'slug', \n             'is_show', \n"
+                }
+            ],
+            "date": 1743325286502,
+            "name": "Commit-0",
+            "content": "from rest_framework import serializers\nfrom ..models import InformationCategory\n\nclass InformationCategoryListSerializers(serializers.ModelSerializer):\n    class Meta:\n        model = InformationCategory\n        fields = fields = [\n            'id', \n            'name', \n            'slug', \n            'is_show', \n            'image',\n            'information_count',  # Include the count\n            'created_date',       # Optional\n        ]\n        # Optional: Make 'image' return full URL\n        extra_kwargs = {\n            'image': {'required': False, 'allow_null': True}\n        }\n\nclass InformationCategoryRetrieveSerializers(serializers.ModelSerializer):\n    class Meta:\n        model = InformationCategory\n        fields = '__all__'\n\nclass InformationCategoryWriteSerializers(serializers.ModelSerializer):\n    class Meta:\n        model = InformationCategory\n        fields = '__all__'"
+        }
+    ]
+}
