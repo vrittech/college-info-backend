@@ -45,7 +45,7 @@ class CollegeFilter(django_filters.FilterSet):
     phone_number = CharInFilter(field_name="phone_number", lookup_expr="in")
     email = CharInFilter(field_name="email", lookup_expr="in")
     is_show = django_filters.BooleanFilter(field_name="is_show")
-    is_verified = django_filters.BooleanFilter(field_name="is_show")
+    is_verified = django_filters.BooleanFilter(field_name="is_verified")
 
     # ManyToMany fields filtering using comma-separated values
     discipline = django_filters.CharFilter(method="filter_by_disciplines")
