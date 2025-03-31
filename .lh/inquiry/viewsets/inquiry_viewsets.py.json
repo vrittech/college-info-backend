@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 44,
+            "activePatchIndex": 45,
             "patches": [
                 {
                     "date": 1733481893066,
@@ -184,6 +184,10 @@
                 {
                     "date": 1741066455020,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -33,9 +33,9 @@\n         if self.request.user.is_authenticated:\n             if self.request.user.is_superuser:\n                 return queryset  # Superusers get all records\n             else:\n-                return queryset.filter(college=self.request.user.college)  # Normal users get their college data only\n+                return queryset.filter(colleges=self.request.user.college)  # Normal users get their college data only\n \n     def get_serializer_class(self):\n         if self.action in ['create', 'update', 'partial_update']:\n             return InquiryWriteSerializers\n"
+                },
+                {
+                    "date": 1743414597334,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,9 +23,9 @@\n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     filterset_class = InquiryFilter\n     search_fields = ['id', 'full_name', 'email', 'phone', 'courses__name', 'colleges__name']  # Searchable fields\n     ordering_fields = ['id', 'full_name', 'created_at', 'updated_at']  # Orderable fields\n-    ordering = ['id']  # Default ordering\n+    ordering = ['-id']  # Default ordering\n \n     def get_queryset(self):\n         \"\"\"Admins see all data, normal users see only their college's data\"\"\"\n         queryset = super().get_queryset()\n"
                 }
             ],
             "date": 1733481893066,

@@ -24,7 +24,7 @@ class inquiryViewsets(viewsets.ModelViewSet):
     filterset_class = InquiryFilter
     search_fields = ['id', 'full_name', 'email', 'phone', 'courses__name', 'colleges__name']  # Searchable fields
     ordering_fields = ['id', 'full_name', 'created_at', 'updated_at']  # Orderable fields
-    ordering = ['id']  # Default ordering
+    ordering = ['-id']  # Default ordering
 
     def get_queryset(self):
         """Admins see all data, normal users see only their college's data"""
