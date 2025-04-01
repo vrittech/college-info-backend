@@ -16,6 +16,7 @@ class CourseFilter(filters.FilterSet):
     faculty = NumberInFilter(field_name='faculty__id', lookup_expr='in')
     level = NumberInFilter(field_name='level__id', lookup_expr='in')
     affiliation = NumberInFilter(field_name='affiliation__id', lookup_expr='in')
+    affiliation_slug = django_filters.CharFilter(method="filter_by_affiliation_slug")
     university_type = django_filters.CharFilter(field_name='affiliation__university_type', lookup_expr='icontains')
     description = CharInFilter(field_name='description', lookup_expr='in')
     course_shortdescription = CharInFilter(field_name='course_shortdescription', lookup_expr='in')
@@ -44,3 +45,10 @@ class CourseFilter(filters.FilterSet):
             'affiliation', 'description', 'discipline', 'course_shortdescription',
             'course_outcome', 'eligibility_criteria', 'created_date', 'updated_date','university_type'
         ]
+        
+    def filter_by_affiliation_slug(self, queryset, name, value):
+        """Filter by multiple facilities using comma-separated values"""
+        if value:
+            affiliation_slug = value.split(',') if ',' in value else [value]
+            queryset = queryset.filter(affiliation__slug__in=affiliation_slug).distinct()
+        return queryset

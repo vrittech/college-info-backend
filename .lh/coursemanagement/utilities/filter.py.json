@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 20,
+            "activePatchIndex": 25,
             "patches": [
                 {
                     "date": 1739267387711,
@@ -88,6 +88,26 @@
                 {
                     "date": 1741590319862,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -41,6 +41,6 @@\n         model = Course\n         fields = [\n             'id', 'name', 'abbreviation', 'duration', 'faculty', 'level',\n             'affiliation', 'description', 'discipline', 'course_shortdescription',\n-            'course_outcome', 'eligibility_criteria', 'created_date', 'updated_date',\"university_type\"\n+            'course_outcome', 'eligibility_criteria', 'created_date', 'updated_date','university_type'\n         ]\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1743481904004,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,8 +15,9 @@\n     duration = NumberInFilter(field_name='duration__id', lookup_expr='in')\n     faculty = NumberInFilter(field_name='faculty__id', lookup_expr='in')\n     level = NumberInFilter(field_name='level__id', lookup_expr='in')\n     affiliation = NumberInFilter(field_name='affiliation__id', lookup_expr='in')\n+    affiliated_slug = django_filters.CharFilter(method=\"filter_by_affiliation_slug\")\n     university_type = django_filters.CharFilter(field_name='affiliation__university_type', lookup_expr='icontains')\n     description = CharInFilter(field_name='description', lookup_expr='in')\n     course_shortdescription = CharInFilter(field_name='course_shortdescription', lookup_expr='in')\n     course_outcome = CharInFilter(field_name='course_outcome', lookup_expr='in')\n"
+                },
+                {
+                    "date": 1743481910357,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,9 +15,9 @@\n     duration = NumberInFilter(field_name='duration__id', lookup_expr='in')\n     faculty = NumberInFilter(field_name='faculty__id', lookup_expr='in')\n     level = NumberInFilter(field_name='level__id', lookup_expr='in')\n     affiliation = NumberInFilter(field_name='affiliation__id', lookup_expr='in')\n-    affiliated_slug = django_filters.CharFilter(method=\"filter_by_affiliation_slug\")\n+    affiliation_slug = django_filters.CharFilter(method=\"filter_by_affiliation_slug\")\n     university_type = django_filters.CharFilter(field_name='affiliation__university_type', lookup_expr='icontains')\n     description = CharInFilter(field_name='description', lookup_expr='in')\n     course_shortdescription = CharInFilter(field_name='course_shortdescription', lookup_expr='in')\n     course_outcome = CharInFilter(field_name='course_outcome', lookup_expr='in')\n"
+                },
+                {
+                    "date": 1743481958650,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -43,5 +43,12 @@\n         fields = [\n             'id', 'name', 'abbreviation', 'duration', 'faculty', 'level',\n             'affiliation', 'description', 'discipline', 'course_shortdescription',\n             'course_outcome', 'eligibility_criteria', 'created_date', 'updated_date','university_type'\n-        ]\n\\ No newline at end of file\n+        ]\n+        \n+    def filter_by_affiliation_slug(self, queryset, name, value):\n+        \"\"\"Filter by multiple facilities using comma-separated values\"\"\"\n+        if value:\n+            affiliated_slug = value.split(',') if ',' in value else [value]\n+            queryset = queryset.filter(affiliated__slug__in=affiliated_slug).distinct()\n+        return queryset\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1743481965782,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -48,7 +48,7 @@\n         \n     def filter_by_affiliation_slug(self, queryset, name, value):\n         \"\"\"Filter by multiple facilities using comma-separated values\"\"\"\n         if value:\n-            affiliated_slug = value.split(',') if ',' in value else [value]\n+            affiliation_slug = value.split(',') if ',' in value else [value]\n             queryset = queryset.filter(affiliated__slug__in=affiliated_slug).distinct()\n         return queryset\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1743481973461,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -49,6 +49,6 @@\n     def filter_by_affiliation_slug(self, queryset, name, value):\n         \"\"\"Filter by multiple facilities using comma-separated values\"\"\"\n         if value:\n             affiliation_slug = value.split(',') if ',' in value else [value]\n-            queryset = queryset.filter(affiliated__slug__in=affiliated_slug).distinct()\n+            queryset = queryset.filter(affiliation__slug__in=affiliation_slug).distinct()\n         return queryset\n\\ No newline at end of file\n"
                 }
             ],
             "date": 1739267387711,
