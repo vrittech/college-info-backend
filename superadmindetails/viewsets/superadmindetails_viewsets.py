@@ -12,7 +12,7 @@ from rest_framework import status
 class superadmindetailsViewsets(viewsets.ModelViewSet):
     serializer_class = SuperAdminDetailsListSerializers
     permission_classes = [superadmindetailsPermission]
-    authentication_classes = [JWTAuthentication]
+    # authentication_classes = [JWTAuthentication]
     pagination_class = MyPageNumberPagination
     queryset = SuperAdminDetails.objects.all().order_by('-id')
 # ('name', 'email', 'phone_number', 'location', 'social_media_links', 'created_at', 'updated_at', )

@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 28,
+            "activePatchIndex": 29,
             "patches": [
                 {
                     "date": 1733482016443,
@@ -120,6 +120,10 @@
                 {
                     "date": 1743070461695,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -43,9 +43,9 @@\n     # def action_name(self, request, *args, **kwargs):\n     #     return super().list(request, *args, **kwargs)\n         \n \n-    @action(detail=False, methods=['post'], name=\"create-update\", url_path=\"create-super-admindetails\")\n+    @action(detail=False, methods=['post'], name=\"create-update\", url_path=\"create-super-admin-details\")\n     def create_update_about_us(self, request, *args, **kwargs):\n         # Retrieve data from request\n         description = request.data.get('description', None)\n         name = request.data.get('name', None)\n"
+                },
+                {
+                    "date": 1743654795585,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,9 +11,9 @@\n \n class superadmindetailsViewsets(viewsets.ModelViewSet):\n     serializer_class = SuperAdminDetailsListSerializers\n     permission_classes = [superadmindetailsPermission]\n-    authentication_classes = [JWTAuthentication]\n+    # authentication_classes = [JWTAuthentication]\n     pagination_class = MyPageNumberPagination\n     queryset = SuperAdminDetails.objects.all().order_by('-id')\n # ('name', 'email', 'phone_number', 'location', 'social_media_links', 'created_at', 'updated_at', )\n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n"
                 }
             ],
             "date": 1733482016443,
