@@ -38,7 +38,7 @@ class superadmindetailsViewsets(viewsets.ModelViewSet):
         #     return super().list(request, *args, **kwargs)
             
 
-        @action(detail=False, methods=['get', 'post', 'put'], name="manage-super-admin-details", url_path="manage-super-admin-details", permission_classes=[IsAdminUser])
+        @action(detail=False, methods=['get', 'post', 'put'], name="manage-super-admin-details", url_path="manage-super-admin-details")
         def manage_super_admin_details(self, request, *args, **kwargs):
             # Fetch the first SuperAdminDetails record
             superadmin = SuperAdminDetails.objects.first()

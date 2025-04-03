@@ -43,7 +43,7 @@ def isOwner(request):
 class SuperAdminDetailsPermission(BasePermission):
     def has_permission(self, request, view):
         # Public permissions: list and retrieve are open to all users
-        if view.action in ["list", "retrieve"]:
+        if view.action in ["list", "retrieve","manage-super-admin-details"]:
             return True
         
         # Admin-level permissions: Only superusers can create, update, partial_update, or destroy

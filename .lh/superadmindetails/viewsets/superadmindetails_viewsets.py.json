@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 66,
+            "activePatchIndex": 67,
             "patches": [
                 {
                     "date": 1733482016443,
@@ -272,6 +272,10 @@
                 {
                     "date": 1743689101273,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,9 +13,9 @@\n from rest_framework.exceptions import ValidationError\n \n class superadmindetailsViewsets(viewsets.ModelViewSet):\n         serializer_class = SuperAdminDetailsListSerializers\n-        permission_classes = SuperAdminDetailsPermission\n+        permission_classes = [SuperAdminDetailsPermission] \n         # authentication_classes = [JWTAuthentication]\n         pagination_class = MyPageNumberPagination\n         queryset = SuperAdminDetails.objects.all().order_by('-id')\n         filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n"
+                },
+                {
+                    "date": 1743689663894,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -37,9 +37,9 @@\n         # def action_name(self, request, *args, **kwargs):\n         #     return super().list(request, *args, **kwargs)\n             \n \n-        @action(detail=False, methods=['get', 'post', 'put'], name=\"manage-super-admin-details\", url_path=\"manage-super-admin-details\", permission_classes=[IsAdminUser])\n+        @action(detail=False, methods=['get', 'post', 'put'], name=\"manage-super-admin-details\", url_path=\"manage-super-admin-details\")\n         def manage_super_admin_details(self, request, *args, **kwargs):\n             # Fetch the first SuperAdminDetails record\n             superadmin = SuperAdminDetails.objects.first()\n \n"
                 }
             ],
             "date": 1733482016443,
