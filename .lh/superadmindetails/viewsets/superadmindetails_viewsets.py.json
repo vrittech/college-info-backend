@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 29,
+            "activePatchIndex": 32,
             "patches": [
                 {
                     "date": 1733482016443,
@@ -124,6 +124,18 @@
                 {
                     "date": 1743654795585,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,9 +11,9 @@\n \n class superadmindetailsViewsets(viewsets.ModelViewSet):\n     serializer_class = SuperAdminDetailsListSerializers\n     permission_classes = [superadmindetailsPermission]\n-    authentication_classes = [JWTAuthentication]\n+    # authentication_classes = [JWTAuthentication]\n     pagination_class = MyPageNumberPagination\n     queryset = SuperAdminDetails.objects.all().order_by('-id')\n # ('name', 'email', 'phone_number', 'location', 'social_media_links', 'created_at', 'updated_at', )\n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n"
+                },
+                {
+                    "date": 1743654834962,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,9 +16,9 @@\n     pagination_class = MyPageNumberPagination\n     queryset = SuperAdminDetails.objects.all().order_by('-id')\n # ('name', 'email', 'phone_number', 'location', 'social_media_links', 'created_at', 'updated_at', )\n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n-    search_fields = ['id','name', 'email', 'phone_number', 'location', 'social_media_links', 'created_at', 'updated_at']\n+    search_fields = ['id','name', 'email']\n     ordering_fields = ['id','name', 'phone_number', 'location', 'social_media_links', 'created_at', 'updated_at']\n \n     filterset_fields = {\n         'id': ['exact'],\n"
+                },
+                {
+                    "date": 1743654841321,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,9 +17,9 @@\n     queryset = SuperAdminDetails.objects.all().order_by('-id')\n # ('name', 'email', 'phone_number', 'location', 'social_media_links', 'created_at', 'updated_at', )\n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     search_fields = ['id','name', 'email']\n-    ordering_fields = ['id','name', 'phone_number', 'location', 'social_media_links', 'created_at', 'updated_at']\n+    ordering_fields = ['id','name', 'phone_number', 'location', 'social_media_links', 'cre]\n \n     filterset_fields = {\n         'id': ['exact'],\n         'name': ['exact'],\n"
+                },
+                {
+                    "date": 1743654849145,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,18 +17,10 @@\n     queryset = SuperAdminDetails.objects.all().order_by('-id')\n # ('name', 'email', 'phone_number', 'location', 'social_media_links', 'created_at', 'updated_at', )\n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     search_fields = ['id','name', 'email']\n-    ordering_fields = ['id','name', 'phone_number', 'location', 'social_media_links', 'cre]\n+    ordering_fields = ['id','name']\n \n-    filterset_fields = {\n-        'id': ['exact'],\n-        'name': ['exact'],\n-        'location': ['exact'],\n-        'created_at': ['exact', 'gte', 'lte'],\n-        'updated_at': ['exact', 'gte', 'lte'],\n-    }\n-\n     def get_queryset(self):\n         queryset = super().get_queryset()\n         return queryset\n \n"
                 }
             ],
             "date": 1733482016443,

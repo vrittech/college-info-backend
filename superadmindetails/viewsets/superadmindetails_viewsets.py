@@ -17,16 +17,8 @@ class superadmindetailsViewsets(viewsets.ModelViewSet):
     queryset = SuperAdminDetails.objects.all().order_by('-id')
 # ('name', 'email', 'phone_number', 'location', 'social_media_links', 'created_at', 'updated_at', )
     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]
-    search_fields = ['id','name', 'email', 'phone_number', 'location', 'social_media_links', 'created_at', 'updated_at']
-    ordering_fields = ['id','name', 'phone_number', 'location', 'social_media_links', 'created_at', 'updated_at']
-
-    filterset_fields = {
-        'id': ['exact'],
-        'name': ['exact'],
-        'location': ['exact'],
-        'created_at': ['exact', 'gte', 'lte'],
-        'updated_at': ['exact', 'gte', 'lte'],
-    }
+    search_fields = ['id','name', 'email']
+    ordering_fields = ['id','name']
 
     def get_queryset(self):
         queryset = super().get_queryset()
