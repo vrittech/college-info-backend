@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 61,
+            "activePatchIndex": 65,
             "patches": [
                 {
                     "date": 1733482016443,
@@ -252,6 +252,22 @@
                 {
                     "date": 1743656683445,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,9 +16,8 @@\n         permission_classes = [IsAdminUser]\n         # authentication_classes = [JWTAuthentication]\n         pagination_class = MyPageNumberPagination\n         queryset = SuperAdminDetails.objects.all().order_by('-id')\n-    # ('name', 'email', 'phone_number', 'location', 'social_media_links', 'created_at', 'updated_at', )\n         filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n         search_fields = ['id','name', 'email']\n         ordering_fields = ['id','name']\n \n"
+                },
+                {
+                    "date": 1743674482240,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,9 +12,9 @@\n from rest_framework.exceptions import ValidationError\n \n class superadmindetailsViewsets(viewsets.ModelViewSet):\n         serializer_class = SuperAdminDetailsListSerializers\n-        permission_classes = [IsAdminUser]\n+        permission_classes = [SuperAdminDetailsPermission]\n         # authentication_classes = [JWTAuthentication]\n         pagination_class = MyPageNumberPagination\n         queryset = SuperAdminDetails.objects.all().order_by('-id')\n         filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n"
+                },
+                {
+                    "date": 1743674488549,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,9 +12,9 @@\n from rest_framework.exceptions import ValidationError\n \n class superadmindetailsViewsets(viewsets.ModelViewSet):\n         serializer_class = SuperAdminDetailsListSerializers\n-        permission_classes = [SuperAdminDetailsPermission]\n+        permission_classes = SuperAdminDetailsPermission\n         # authentication_classes = [JWTAuthentication]\n         pagination_class = MyPageNumberPagination\n         queryset = SuperAdminDetails.objects.all().order_by('-id')\n         filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n"
+                },
+                {
+                    "date": 1743674493702,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,8 +3,9 @@\n from django_filters.rest_framework import DjangoFilterBackend\n from ..models import SuperAdminDetails\n from ..serializers.superadmindetails_serializers import SuperAdminDetailsListSerializers, SuperAdminDetailsRetrieveSerializers, SuperAdminDetailsWriteSerializers\n from ..utilities.importbase import *\n+from ..utilities.importbase import *\n from mainproj.permissions import DynamicModelPermission\n from rest_framework.decorators import action\n from rest_framework.response import Response\n from rest_framework import status\n"
+                },
+                {
+                    "date": 1743674500515,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,9 @@\n from django_filters.rest_framework import DjangoFilterBackend\n from ..models import SuperAdminDetails\n from ..serializers.superadmindetails_serializers import SuperAdminDetailsListSerializers, SuperAdminDetailsRetrieveSerializers, SuperAdminDetailsWriteSerializers\n from ..utilities.importbase import *\n-from ..utilities.importbase import *\n+from ..utilities.permissions import *\n from mainproj.permissions import DynamicModelPermission\n from rest_framework.decorators import action\n from rest_framework.response import Response\n from rest_framework import status\n"
                 }
             ],
             "date": 1733482016443,

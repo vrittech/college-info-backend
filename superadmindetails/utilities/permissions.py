@@ -40,17 +40,18 @@ def isOwner(request):
 #         return True
 #     return False
 
-class superadmindetailsPermission(BasePermission):
+class SuperAdminDetailsPermission(BasePermission):
     def has_permission(self, request, view):
-        if view.action in ["list"]:
+        # Public permissions: list and retrieve are open to all users
+        if view.action in ["list", "retrieve"]:
             return True
-        elif view.action in ['retrieve']:
-            return True
-        elif view.action in ['create','update']:
-            return AdminLevel(request) #second level
-            return ObjectBOwner(request) #third level
-        elif view.action == "partial_update":
-            return AdminLevel(request)
-        elif view.action == 'destroy':
-            return AdminLevel(request)
+        
+        # Admin-level permissions: Only superusers can create, update, partial_update, or destroy
+        elif view.action in ['create', 'update', 'partial_update', 'destroy']:
+            return self.is_superuser(request)
 
+        return False
+
+    def is_superuser(self, request):
+        # Logic to check if the user is a superuser
+        return request.user.is_superuser
