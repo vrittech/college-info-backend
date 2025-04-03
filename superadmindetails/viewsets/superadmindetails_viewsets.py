@@ -14,7 +14,7 @@ from rest_framework.exceptions import ValidationError
 
 class superadmindetailsViewsets(viewsets.ModelViewSet):
         serializer_class = SuperAdminDetailsListSerializers
-        permission_classes = SuperAdminDetailsPermission
+        permission_classes = [SuperAdminDetailsPermission] 
         # authentication_classes = [JWTAuthentication]
         pagination_class = MyPageNumberPagination
         queryset = SuperAdminDetails.objects.all().order_by('-id')
