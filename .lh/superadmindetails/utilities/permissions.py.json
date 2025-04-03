@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 13,
+            "activePatchIndex": 14,
             "patches": [
                 {
                     "date": 1739258699658,
@@ -60,6 +60,10 @@
                 {
                     "date": 1743674477184,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -39,18 +39,19 @@\n #     if company.exists():\n #         return True\n #     return False\n \n-class superadmindetailsPermission(BasePermission):\n+class SuperAdminDetailsPermission(BasePermission):\n     def has_permission(self, request, view):\n-        if view.action in [\"list\"]:\n+        # Public permissions: list and retrieve are open to all users\n+        if view.action in [\"list\", \"retrieve\"]:\n             return True\n-        elif view.action in ['retrieve']:\n-            return True\n-        elif view.action in ['create','update']:\n-            return AdminLevel(request) #second level\n-            return ObjectBOwner(request) #third level\n-        elif view.action == \"partial_update\":\n-            return AdminLevel(request)\n-        elif view.action == 'destroy':\n-            return AdminLevel(request)\n+        \n+        # Admin-level permissions: Only superusers can create, update, partial_update, or destroy\n+        elif view.action in ['create', 'update', 'partial_update', 'destroy']:\n+            return self.is_superuser(request)\n \n+        return False\n+\n+    def is_superuser(self, request):\n+        # Logic to check if the user is a superuser\n+        return request.user.is_superuser\n"
+                },
+                {
+                    "date": 1743675140984,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -51,7 +51,8 @@\n             return self.is_superuser(request)\n \n         return False\n \n+\n     def is_superuser(self, request):\n         # Logic to check if the user is a superuser\n         return request.user.is_superuser\n"
                 }
             ],
             "date": 1739258699658,

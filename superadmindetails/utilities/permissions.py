@@ -52,6 +52,7 @@ class SuperAdminDetailsPermission(BasePermission):
 
         return False
 
+
     def is_superuser(self, request):
         # Logic to check if the user is a superuser
         return request.user.is_superuser
