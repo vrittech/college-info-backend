@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 67,
+            "activePatchIndex": 69,
             "patches": [
                 {
                     "date": 1733482016443,
@@ -276,6 +276,14 @@
                 {
                     "date": 1743689663894,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -37,9 +37,9 @@\n         # def action_name(self, request, *args, **kwargs):\n         #     return super().list(request, *args, **kwargs)\n             \n \n-        @action(detail=False, methods=['get', 'post', 'put'], name=\"manage-super-admin-details\", url_path=\"manage-super-admin-details\", permission_classes=[IsAdminUser])\n+        @action(detail=False, methods=['get', 'post', 'put'], name=\"manage-super-admin-details\", url_path=\"manage-super-admin-details\")\n         def manage_super_admin_details(self, request, *args, **kwargs):\n             # Fetch the first SuperAdminDetails record\n             superadmin = SuperAdminDetails.objects.first()\n \n"
+                },
+                {
+                    "date": 1743690124818,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -37,9 +37,9 @@\n         # def action_name(self, request, *args, **kwargs):\n         #     return super().list(request, *args, **kwargs)\n             \n \n-        @action(detail=False, methods=['get', 'post', 'put'], name=\"manage-super-admin-details\", url_path=\"manage-super-admin-details\")\n+        @action(detail=False, methods=['get', 'post', 'put'], name=\"manage-super-admin-details\", url_path=\"manage-super-admin-details\",permission_classes)\n         def manage_super_admin_details(self, request, *args, **kwargs):\n             # Fetch the first SuperAdminDetails record\n             superadmin = SuperAdminDetails.objects.first()\n \n"
+                },
+                {
+                    "date": 1743690130264,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -37,9 +37,9 @@\n         # def action_name(self, request, *args, **kwargs):\n         #     return super().list(request, *args, **kwargs)\n             \n \n-        @action(detail=False, methods=['get', 'post', 'put'], name=\"manage-super-admin-details\", url_path=\"manage-super-admin-details\",permission_classes)\n+        @action(detail=False, methods=['get', 'post', 'put'], name=\"manage-super-admin-details\", url_path=\"manage-super-admin-details\",permission_classes=[All])\n         def manage_super_admin_details(self, request, *args, **kwargs):\n             # Fetch the first SuperAdminDetails record\n             superadmin = SuperAdminDetails.objects.first()\n \n"
                 }
             ],
             "date": 1733482016443,
