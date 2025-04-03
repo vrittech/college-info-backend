@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 32,
+            "activePatchIndex": 36,
             "patches": [
                 {
                     "date": 1733482016443,
@@ -136,6 +136,22 @@
                 {
                     "date": 1743654849145,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,18 +17,10 @@\n     queryset = SuperAdminDetails.objects.all().order_by('-id')\n # ('name', 'email', 'phone_number', 'location', 'social_media_links', 'created_at', 'updated_at', )\n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     search_fields = ['id','name', 'email']\n-    ordering_fields = ['id','name', 'phone_number', 'location', 'social_media_links', 'cre]\n+    ordering_fields = ['id','name']\n \n-    filterset_fields = {\n-        'id': ['exact'],\n-        'name': ['exact'],\n-        'location': ['exact'],\n-        'created_at': ['exact', 'gte', 'lte'],\n-        'updated_at': ['exact', 'gte', 'lte'],\n-    }\n-\n     def get_queryset(self):\n         queryset = super().get_queryset()\n         return queryset\n \n"
+                },
+                {
+                    "date": 1743655152030,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,9 @@\n from rest_framework import status\n \n class superadmindetailsViewsets(viewsets.ModelViewSet):\n     serializer_class = SuperAdminDetailsListSerializers\n-    permission_classes = [superadmindetailsPermission]\n+    permission_classes = [Is]\n     # authentication_classes = [JWTAuthentication]\n     pagination_class = MyPageNumberPagination\n     queryset = SuperAdminDetails.objects.all().order_by('-id')\n # ('name', 'email', 'phone_number', 'location', 'social_media_links', 'created_at', 'updated_at', )\n"
+                },
+                {
+                    "date": 1743655162293,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,9 @@\n from rest_framework import status\n \n class superadmindetailsViewsets(viewsets.ModelViewSet):\n     serializer_class = SuperAdminDetailsListSerializers\n-    permission_classes = [Is]\n+    permission_classes = [IsAdminUser]\n     # authentication_classes = [JWTAuthentication]\n     pagination_class = MyPageNumberPagination\n     queryset = SuperAdminDetails.objects.all().order_by('-id')\n # ('name', 'email', 'phone_number', 'location', 'social_media_links', 'created_at', 'updated_at', )\n"
+                },
+                {
+                    "date": 1743655168663,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,8 +8,9 @@\n from rest_framework.decorators import action\n from rest_framework.response import Response\n from rest_framework import status\n \n+\n class superadmindetailsViewsets(viewsets.ModelViewSet):\n     serializer_class = SuperAdminDetailsListSerializers\n     permission_classes = [IsAdminUser]\n     # authentication_classes = [JWTAuthentication]\n"
+                },
+                {
+                    "date": 1743655174110,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,10 +7,10 @@\n from mainproj.permissions import DynamicModelPermission\n from rest_framework.decorators import action\n from rest_framework.response import Response\n from rest_framework import status\n+from rest_framework.permissions import AllowAny\n \n-\n class superadmindetailsViewsets(viewsets.ModelViewSet):\n     serializer_class = SuperAdminDetailsListSerializers\n     permission_classes = [IsAdminUser]\n     # authentication_classes = [JWTAuthentication]\n"
                 }
             ],
             "date": 1733482016443,

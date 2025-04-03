@@ -8,10 +8,11 @@ from mainproj.permissions import DynamicModelPermission
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.permissions import AllowAny,IsAdminUser
 
 class superadmindetailsViewsets(viewsets.ModelViewSet):
     serializer_class = SuperAdminDetailsListSerializers
-    permission_classes = [superadmindetailsPermission]
+    permission_classes = [IsAdminUser]
     # authentication_classes = [JWTAuthentication]
     pagination_class = MyPageNumberPagination
     queryset = SuperAdminDetails.objects.all().order_by('-id')
