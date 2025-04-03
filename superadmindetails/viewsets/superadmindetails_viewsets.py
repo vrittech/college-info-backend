@@ -40,7 +40,6 @@ class superadmindetailsViewsets(viewsets.ModelViewSet):
     @action(detail=False, methods=['post'], name="create-update", url_path="create-super-admin-details",permission_classes=[IsAdminUser])
     def create_update_about_us(self, request, *args, **kwargs):
         # Retrieve data from request
-        description = request.data.get('description', None)
         name = request.data.get('name', None)
         email = request.data.get('email', None)
         phone_number = request.data.get('phone_number', None)
@@ -51,9 +50,6 @@ class superadmindetailsViewsets(viewsets.ModelViewSet):
         youtube_link = request.data.get('youtube_link', None)
         linkedin_link = request.data.get('linkedin_link', None)
 
-        # Validate required fields
-        if not description:
-            return Response({"error": "Description is required."}, status=status.HTTP_400_BAD_REQUEST)
 
         # Check if SuperAdminDetails exists
         superadmin = SuperAdminDetails.objects.all()
