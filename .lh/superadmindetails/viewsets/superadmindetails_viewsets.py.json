@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 37,
+            "activePatchIndex": 39,
             "patches": [
                 {
                     "date": 1733482016443,
@@ -156,6 +156,14 @@
                 {
                     "date": 1743655200772,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,9 @@\n from mainproj.permissions import DynamicModelPermission\n from rest_framework.decorators import action\n from rest_framework.response import Response\n from rest_framework import status\n-from rest_framework.permissions import AllowAny\n+from rest_framework.permissions import AllowAny,IsAdminUser\n \n class superadmindetailsViewsets(viewsets.ModelViewSet):\n     serializer_class = SuperAdminDetailsListSerializers\n     permission_classes = [IsAdminUser]\n@@ -36,9 +36,9 @@\n     # def action_name(self, request, *args, **kwargs):\n     #     return super().list(request, *args, **kwargs)\n         \n \n-    @action(detail=False, methods=['post'], name=\"create-update\", url_path=\"create-super-admin-details\")\n+    @action(detail=False, methods=['post'], name=\"create-update\", url_path=\"create-super-admin-details\",)\n     def create_update_about_us(self, request, *args, **kwargs):\n         # Retrieve data from request\n         description = request.data.get('description', None)\n         name = request.data.get('name', None)\n"
+                },
+                {
+                    "date": 1743655512575,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -36,9 +36,9 @@\n     # def action_name(self, request, *args, **kwargs):\n     #     return super().list(request, *args, **kwargs)\n         \n \n-    @action(detail=False, methods=['post'], name=\"create-update\", url_path=\"create-super-admin-details\",)\n+    @action(detail=False, methods=['post'], name=\"create-update\", url_path=\"create-super-admin-details\",permission_classes=[IsAdminUser])\n     def create_update_about_us(self, request, *args, **kwargs):\n         # Retrieve data from request\n         description = request.data.get('description', None)\n         name = request.data.get('name', None)\n@@ -60,9 +60,8 @@\n \n         if superadmin.exists():\n             # Update the existing SuperAdminDetails entry\n             superadmin = superadmin.first()\n-            superadmin.description = description\n             superadmin.name = name if name else superadmin.name\n             superadmin.email = email if email else superadmin.email\n             superadmin.phone_number = phone_number if phone_number else superadmin.phone_number\n             superadmin.location = location if location else superadmin.location\n"
+                },
+                {
+                    "date": 1743655519633,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -75,9 +75,8 @@\n             return Response({\"message\": \"SuperAdminDetails updated successfully.\"}, status=status.HTTP_200_OK)\n         else:\n             # Create a new SuperAdminDetails entry\n             new_superadmin = SuperAdminDetails.objects.create(\n-                description=description,\n                 name=name,\n                 email=email,\n                 phone_number=phone_number,\n                 location=location,\n"
                 }
             ],
             "date": 1733482016443,

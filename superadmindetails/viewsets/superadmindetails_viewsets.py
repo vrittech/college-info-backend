@@ -61,7 +61,6 @@ class superadmindetailsViewsets(viewsets.ModelViewSet):
         if superadmin.exists():
             # Update the existing SuperAdminDetails entry
             superadmin = superadmin.first()
-            superadmin.description = description
             superadmin.name = name if name else superadmin.name
             superadmin.email = email if email else superadmin.email
             superadmin.phone_number = phone_number if phone_number else superadmin.phone_number
@@ -77,7 +76,6 @@ class superadmindetailsViewsets(viewsets.ModelViewSet):
         else:
             # Create a new SuperAdminDetails entry
             new_superadmin = SuperAdminDetails.objects.create(
-                description=description,
                 name=name,
                 email=email,
                 phone_number=phone_number,
