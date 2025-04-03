@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 16,
+            "activePatchIndex": 17,
             "patches": [
                 {
                     "date": 1739258699658,
@@ -72,6 +72,10 @@
                 {
                     "date": 1743689676936,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -42,9 +42,9 @@\n \n class SuperAdminDetailsPermission(BasePermission):\n     def has_permission(self, request, view):\n         # Public permissions: list and retrieve are open to all users\n-        if view.action in [\"list\", \"retrieve\",\"manage-\"]:\n+        if view.action in [\"list\", \"retrieve\",\"manage-super-admin-details\"]:\n             return True\n         \n         # Admin-level permissions: Only superusers can create, update, partial_update, or destroy\n         elif view.action in ['create', 'update', 'partial_update', 'destroy']:\n"
+                },
+                {
+                    "date": 1743689706893,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -42,9 +42,9 @@\n \n class SuperAdminDetailsPermission(BasePermission):\n     def has_permission(self, request, view):\n         # Public permissions: list and retrieve are open to all users\n-        if view.action in [\"list\", \"retrieve\",\"manage-super-admin-details\"]:\n+        if view.action in [\"list\", \"retrieve\",\"]:\n             return True\n         \n         # Admin-level permissions: Only superusers can create, update, partial_update, or destroy\n         elif view.action in ['create', 'update', 'partial_update', 'destroy']:\n"
                 }
             ],
             "date": 1739258699658,
