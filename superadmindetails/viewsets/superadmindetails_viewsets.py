@@ -9,7 +9,7 @@ from mainproj.permissions import DynamicModelPermission
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework import status
-from rest_framework.permissions import AllowAny,IsAdminUser
+from rest_framework.permissions import AllowAny,IsAdminUser,BasePermission
 from rest_framework.exceptions import ValidationError
 
 class superadmindetailsViewsets(viewsets.ModelViewSet):
@@ -32,13 +32,25 @@ class superadmindetailsViewsets(viewsets.ModelViewSet):
             elif self.action == 'retrieve':
                 return SuperAdminDetailsRetrieveSerializers
             return super().get_serializer_class()
+        
+        class IsSuperAdmin(BasePermission):
+            """
+            Custom permission to allow only superusers to update or create SuperAdminDetails.
+            """
+            def has_permission(self, request, view):
+                # Allow any user to retrieve super admin details (GET method)
+                if request.method == 'GET':
+                    return True
+                
+                # Allow only superusers to create or update (POST/PUT methods)
+                return request.user and request.user.is_superuser
 
         # @action(detail=False, methods=['get'], name="action_name", url_path="url_path")
         # def action_name(self, request, *args, **kwargs):
         #     return super().list(request, *args, **kwargs)
             
 
-        @action(detail=False, methods=['get', 'post', 'put'], name="manage-super-admin-details", url_path="manage-super-admin-details",permission_classes=[AllowAny])
+        @action(detail=False, methods=['get', 'post', 'put'], name="manage-super-admin-details", url_path="manage-super-admin-details",permission_classes=[IsSuperAdmin])
         def manage_super_admin_details(self, request, *args, **kwargs):
             # Fetch the first SuperAdminDetails record
             superadmin = SuperAdminDetails.objects.first()
