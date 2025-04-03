@@ -37,7 +37,7 @@ class superadmindetailsViewsets(viewsets.ModelViewSet):
     #     return super().list(request, *args, **kwargs)
         
 
-    @action(detail=False, methods=['post'], name="create-update", url_path="create-super-admin-details")
+    @action(detail=False, methods=['post'], name="create-update", url_path="create-super-admin-details",permission_classes=[IsAdminUser])
     def create_update_about_us(self, request, *args, **kwargs):
         # Retrieve data from request
         description = request.data.get('description', None)
