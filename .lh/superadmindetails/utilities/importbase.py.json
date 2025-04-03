@@ -1,0 +1,18 @@
+{
+    "sourceFile": "superadmindetails/utilities/importbase.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1743675285957,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1743675285957,
+            "name": "Commit-0",
+            "content": "from rest_framework import viewsets\n\nfrom ..utilities.pagination import MyPageNumberPagination\nfrom ..utilities.permissions import SuperAdminDetailsPermission\nfrom rest_framework.filters import SearchFilter,OrderingFilter\nfrom django_filters.rest_framework import DjangoFilterBackend\nfrom rest_framework_simplejwt.authentication import JWTAuthentication"
+        }
+    ]
+}
