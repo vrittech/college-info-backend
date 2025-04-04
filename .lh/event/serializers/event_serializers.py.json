@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 106,
+            "activePatchIndex": 107,
             "patches": [
                 {
                     "date": 1733477390024,
@@ -432,6 +432,10 @@
                 {
                     "date": 1743749307188,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -204,35 +204,35 @@\n         return event\n \n \n     @transaction.atomic\n-def update(self, instance, validated_data):\n-    \"\"\"\n-    Handles full (PUT) and partial (PATCH) updates for events.\n-    Supports new image uploads and Many-to-Many relationship updates.\n-    \"\"\"\n-    request = self.context.get(\"request\")\n+    def update(self, instance, validated_data):\n+        \"\"\"\n+        Handles full (PUT) and partial (PATCH) updates for events.\n+        Supports new image uploads and Many-to-Many relationship updates.\n+        \"\"\"\n+        request = self.context.get(\"request\")\n \n-    # Extract Many-to-Many fields\n-    category_ids = validated_data.pop(\"category\", None)\n-    organizer_ids = validated_data.pop(\"organizer\", None)\n+        # Extract Many-to-Many fields\n+        category_ids = validated_data.pop(\"category\", None)\n+        organizer_ids = validated_data.pop(\"organizer\", None)\n \n-    # Extract multiple images from `images[0]`, `images[1]`, ...\n-    images_data = [file for key, file in request.FILES.items() if key.startswith(\"image[\")]\n+        # Extract multiple images from `images[0]`, `images[1]`, ...\n+        images_data = [file for key, file in request.FILES.items() if key.startswith(\"image[\")]\n \n-    # Update the event instance\n-    instance = super().update(instance, validated_data)\n+        # Update the event instance\n+        instance = super().update(instance, validated_data)\n \n-    # Update Many-to-Many relationships if provided\n\\ No newline at end of file\n-    if category_ids is not None:\n-        instance.category.set(category_ids)\n-    if organizer_ids is not None:\n-        instance.organizer.set(organizer_ids)\n+        # Update Many-to-Many relationships if provided\n+        if category_ids is not None:\n+            instance.category.set(category_ids)\n+        if organizer_ids is not None:\n+            instance.organizer.set(organizer_ids)\n \n-    # Handle the images - if you want to remove old ones, uncomment the following line:\n-    # EventGallery.objects.filter(event=instance).delete()  # Remove old images (if needed)\n+        # Handle the images - if you want to remove old ones, uncomment the following line:\n+        # EventGallery.objects.filter(event=instance).delete()  # Remove old images (if needed)\n \n-    # Save new images in EventGallery\n-    for image_file in images_data:\n-        EventGallery.objects.create(event=instance, image=image_file)\n+        # Save new images in EventGallery\n+        for image_file in images_data:\n+            EventGallery.objects.create(event=instance, image=image_file)\n \n-    return instance\n+        return instance\n"
+                },
+                {
+                    "date": 1743750406072,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -193,9 +193,9 @@\n         for index, image_file in enumerate(images_data):\n             EventGallery.objects.create(\n                 event=event,\n                 image=image_file,\n-                is_featured=(index == 0)  # Set only the first image as featured\n+                is_featured_image=(index == 0)  # Set only the first image as featured\n             )\n \n         # Assign Many-to-Many relationships\n         event.category.set(category_ids)\n"
                 }
             ],
             "date": 1733477390024,

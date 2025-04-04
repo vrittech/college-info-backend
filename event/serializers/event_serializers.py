@@ -194,7 +194,7 @@ class EventWriteSerializers(serializers.ModelSerializer):
             EventGallery.objects.create(
                 event=event,
                 image=image_file,
-                is_featured=(index == 0)  # Set only the first image as featured
+                is_featured_image=(index == 0)  # Set only the first image as featured
             )
 
         # Assign Many-to-Many relationships
