@@ -184,9 +184,12 @@ class EventWriteSerializers(serializers.ModelSerializer):
         category_ids = validated_data.pop("category", [])
         organizer_ids = validated_data.pop("organizer", [])
 
+        # Create the Event instance first
+        event = super().create(validated_data)
+
         # Extract multiple images from `images[0]`, `images[1]`, ...
         images_data = [file for key, file in request.FILES.items() if key.startswith("image[")]
-        
+
         for index, image_file in enumerate(images_data):
             EventGallery.objects.create(
                 event=event,
@@ -194,18 +197,12 @@ class EventWriteSerializers(serializers.ModelSerializer):
                 is_featured=(index == 0)  # Set only the first image as featured
             )
 
-        # Create the Event instance
-        event = super().create(validated_data)
-
         # Assign Many-to-Many relationships
         event.category.set(category_ids)
         event.organizer.set(organizer_ids)
 
-        # Save images in EventGallery
-        for image_file in images_data:
-            EventGallery.objects.create(event=event, image=image_file)
-
         return event
+
 
     @transaction.atomic
     def update(self, instance, validated_data):
@@ -230,6 +227,9 @@ class EventWriteSerializers(serializers.ModelSerializer):
             instance.category.set(category_ids)
         if organizer_ids is not None:
             instance.organizer.set(organizer_ids)
+
+        # Handle the images - if you want to remove old ones, uncomment the following line:
+        # EventGallery.objects.filter(event=instance).delete()  # Remove old images (if needed)
 
         # Save new images in EventGallery
         for image_file in images_data:
