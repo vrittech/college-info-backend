@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 16,
+            "activePatchIndex": 19,
             "patches": [
                 {
                     "date": 1733312045672,
@@ -72,6 +72,18 @@
                 {
                     "date": 1742118730892,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -25,10 +25,13 @@\n     # Additional Message\n     message = models.TextField(blank=True, null=True, help_text=\"Message or query from the user.\")\n \n     # Timestamps\n-    created_date = models.DateTimeField(auto_now_add=True, help_text=\"The time when the inquiry was created.\")\n-    updated_at = models.DateTimeField(auto_now=True, help_text=\"The last time the inquiry was updated.\")\n+    \n+    \n+    \n+    = models.DateTimeField(auto_now_add=True, help_text=\"The time when the inquiry was created.\")\n+    updated_date = models.DateTimeField(auto_now=True, help_text=\"The last time the inquiry was updated.\")\n \n     def __str__(self):\n         return f\"Inquiry from {self.full_name} - {self.email}\"\n     \n"
+                },
+                {
+                    "date": 1743751064757,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,19 +18,16 @@\n     email = models.EmailField(help_text=\"Email address of the inquirer.\")\n     phone = models.CharField(max_length=15, help_text=\"Phone number of the inquirer.\")\n \n     # Relationships to College and Course\n-    courses = models.ManyToManyField(Course, related_name=\"inquiries\", help_text=\"Courses the user is interested in.\")\n+    courses = models.ManyToManyField(Course, related_name=\"inquiries\", help_text=\"Courses the user is interested in.\",)\n     colleges = models.ManyToManyField(College, related_name=\"inquiries\", help_text=\"Colleges the user is interested in.\")\n \n     # Additional Message\n     message = models.TextField(blank=True, null=True, help_text=\"Message or query from the user.\")\n \n     # Timestamps\n-    \n-    \n-    \n-    = models.DateTimeField(auto_now_add=True, help_text=\"The time when the inquiry was created.\")\n+    created_date = models.DateTimeField(auto_now_add=True, help_text=\"The time when the inquiry was created.\")\n     updated_date = models.DateTimeField(auto_now=True, help_text=\"The last time the inquiry was updated.\")\n \n     def __str__(self):\n         return f\"Inquiry from {self.full_name} - {self.email}\"\n"
+                },
+                {
+                    "date": 1743751071746,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,10 +18,10 @@\n     email = models.EmailField(help_text=\"Email address of the inquirer.\")\n     phone = models.CharField(max_length=15, help_text=\"Phone number of the inquirer.\")\n \n     # Relationships to College and Course\n-    courses = models.ManyToManyField(Course, related_name=\"inquiries\", help_text=\"Courses the user is interested in.\",)\n-    colleges = models.ManyToManyField(College, related_name=\"inquiries\", help_text=\"Colleges the user is interested in.\")\n+    courses = models.ManyToManyField(Course, related_name=\"inquiries\", help_text=\"Courses the user is interested in.\", blank=True)\n+    colleges = models.ManyToManyField(College, related_name=\"inquiries\", help_text=\"Colleges the user is interested in.\"l,)\n \n     # Additional Message\n     message = models.TextField(blank=True, null=True, help_text=\"Message or query from the user.\")\n \n"
+                },
+                {
+                    "date": 1743751080913,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n     phone = models.CharField(max_length=15, help_text=\"Phone number of the inquirer.\")\n \n     # Relationships to College and Course\n     courses = models.ManyToManyField(Course, related_name=\"inquiries\", help_text=\"Courses the user is interested in.\", blank=True)\n-    colleges = models.ManyToManyField(College, related_name=\"inquiries\", help_text=\"Colleges the user is interested in.\"l,)\n+    colleges = models.ManyToManyField(College, related_name=\"inquiries\", help_text=\"Colleges the user is interested in.\", blank=True)\n \n     # Additional Message\n     message = models.TextField(blank=True, null=True, help_text=\"Message or query from the user.\")\n \n"
                 }
             ],
             "date": 1733312045672,
