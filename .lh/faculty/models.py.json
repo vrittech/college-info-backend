@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 15,
+            "activePatchIndex": 20,
             "patches": [
                 {
                     "date": 1726653942928,
@@ -68,6 +68,26 @@
                 {
                     "date": 1742119434880,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-from django.db import models\n+configuration is_shopfrom django.db import models\n \n # Create your models here.\n class Faculty(models.Model):\n     name = models.CharField(max_length=255,null=True,blank=True)\n"
+                },
+                {
+                    "date": 1743917127283,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,8 @@\n-configuration is_shopfrom django.db import models\n+from django.db import models\n \n # Create your models here.\n+\"\"\"\"\"\"\n class Faculty(models.Model):\n     name = models.CharField(max_length=255,null=True,blank=True)\n     is_show = models.BooleanField(default=False)\n     # description = models.TextField(null=True,blank=True)\n"
+                },
+                {
+                    "date": 1743917138748,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,8 @@\n from django.db import models\n \n # Create your models here.\n-\"\"\"\"\"\"\n+\"\"\"In frontend the faculty is being used as Degree\"\"\"\n class Faculty(models.Model):\n     name = models.CharField(max_length=255,null=True,blank=True)\n     is_show = models.BooleanField(default=False)\n     # description = models.TextField(null=True,blank=True)\n"
+                },
+                {
+                    "date": 1743917218163,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,8 @@\n from django.db import models\n \n # Create your models here.\n-\"\"\"In frontend the faculty is being used as Degree\"\"\"\n+#\"\"\"In frontend the faculty is being used as Degree\"\"\"\n class Faculty(models.Model):\n     name = models.CharField(max_length=255,null=True,blank=True)\n     is_show = models.BooleanField(default=False)\n     # description = models.TextField(null=True,blank=True)\n"
+                },
+                {
+                    "date": 1743917224304,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,8 @@\n from django.db import models\n \n # Create your models here.\n-#\"\"\"In frontend the faculty is being used as Degree\"\"\"\n+#In frontend the faculty is being used as Degree\"\"\"\n class Faculty(models.Model):\n     name = models.CharField(max_length=255,null=True,blank=True)\n     is_show = models.BooleanField(default=False)\n     # description = models.TextField(null=True,blank=True)\n"
+                },
+                {
+                    "date": 1743917230616,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,8 @@\n from django.db import models\n \n # Create your models here.\n-#In frontend the faculty is being used as Degree\"\"\"\n+# In frontend the faculty is being used as Degree\n class Faculty(models.Model):\n     name = models.CharField(max_length=255,null=True,blank=True)\n     is_show = models.BooleanField(default=False)\n     # description = models.TextField(null=True,blank=True)\n"
                 }
             ],
             "date": 1726653942928,

@@ -9,6 +9,7 @@ import uuid
 from django.utils.text import slugify
 
 # Create your models here.
+#In frontend the faculty is being used as Degree
 class Course(SEOFields):
     public_id = models.UUIDField(default=uuid.uuid4,editable=False,unique=True)
     slug = models.SlugField(max_length=255, unique=True, null=True, blank=True)
