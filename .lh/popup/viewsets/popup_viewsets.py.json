@@ -1,0 +1,74 @@
+{
+    "sourceFile": "popup/viewsets/popup_viewsets.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 14,
+            "patches": [
+                {
+                    "date": 1743919890540,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1743919897977,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,10 +8,10 @@\n class popupViewsets(viewsets.ModelViewSet):\n     serializer_class = PopupListSerializers\n     # permission_classes = [popupPermission]\n     # authentication_classes = [JWTAuthentication]\n-    #pagination_class = MyPageNumberPagination\n-    queryset = Popup.objects.all().order_by('-created_at')\n+    pagination_class = MyPageNumberPagination\n+    queryset = Popup.objects.all().order_by('-id')\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     search_fields = ['id']\n     ordering_fields = ['id']\n"
+                },
+                {
+                    "date": 1743919907551,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,8 +3,9 @@\n from django_filters.rest_framework import DjangoFilterBackend\n from ..models import Popup\n from ..serializers.popup_serializers import PopupListSerializers, PopupRetrieveSerializers, PopupWriteSerializers\n from ..utilities.importbase import *\n+from main\n \n class popupViewsets(viewsets.ModelViewSet):\n     serializer_class = PopupListSerializers\n     # permission_classes = [popupPermission]\n"
+                },
+                {
+                    "date": 1743919912940,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,9 @@\n from django_filters.rest_framework import DjangoFilterBackend\n from ..models import Popup\n from ..serializers.popup_serializers import PopupListSerializers, PopupRetrieveSerializers, PopupWriteSerializers\n from ..utilities.importbase import *\n-from main\n+from mainproj.permissions import DynamicModelPermission\n \n class popupViewsets(viewsets.ModelViewSet):\n     serializer_class = PopupListSerializers\n     # permission_classes = [popupPermission]\n"
+                },
+                {
+                    "date": 1743919918051,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,9 @@\n from mainproj.permissions import DynamicModelPermission\n \n class popupViewsets(viewsets.ModelViewSet):\n     serializer_class = PopupListSerializers\n-    # permission_classes = [popupPermission]\n+    permission_classes = [DynamicModelPermission]\n     # authentication_classes = [JWTAuthentication]\n     pagination_class = MyPageNumberPagination\n     queryset = Popup.objects.all().order_by('-id')\n \n"
+                },
+                {
+                    "date": 1743919925878,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,11 +16,11 @@\n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     search_fields = ['id']\n     ordering_fields = ['id']\n \n-    # filterset_fields = {\n-    #     'id': ['exact'],\n-    # }\n+    filterset_fields = {\n+        'id': ['exact'],\n+    }\n \n     def get_queryset(self):\n         queryset = super().get_queryset()\n         #return queryset.filter(user_id=self.request.user.id)\n"
+                },
+                {
+                    "date": 1743919937237,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,8 +18,10 @@\n     ordering_fields = ['id']\n \n     filterset_fields = {\n         'id': ['exact'],\n+        'name': ['exact', 'icontains'],\n+        created_date': ['exact', 'year__gt', 'year__lt'],\n     }\n \n     def get_queryset(self):\n         queryset = super().get_queryset()\n"
+                },
+                {
+                    "date": 1743919943247,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n \n     filterset_fields = {\n         'id': ['exact'],\n         'name': ['exact', 'icontains'],\n-        created_date': ['exact', 'year__gt', 'year__lt'],\n+        created_date: \n     }\n \n     def get_queryset(self):\n         queryset = super().get_queryset()\n"
+                },
+                {
+                    "date": 1743919949216,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n \n     filterset_fields = {\n         'id': ['exact'],\n         'name': ['exact', 'icontains'],\n-        created_date: \n+        'created_date': \n     }\n \n     def get_queryset(self):\n         queryset = super().get_queryset()\n"
+                },
+                {
+                    "date": 1743919958066,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n \n     filterset_fields = {\n         'id': ['exact'],\n         'name': ['exact', 'icontains'],\n-        'created_date': \n+        'created_date': ['exact']\n     }\n \n     def get_queryset(self):\n         queryset = super().get_queryset()\n"
+                },
+                {
+                    "date": 1743919965200,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n \n     filterset_fields = {\n         'id': ['exact'],\n         'name': ['exact', 'icontains'],\n-        'created_date': ['exact']\n+        'created_date': ['exact',]\n     }\n \n     def get_queryset(self):\n         queryset = super().get_queryset()\n"
+                },
+                {
+                    "date": 1743919971418,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n \n     filterset_fields = {\n         'id': ['exact'],\n         'name': ['exact', 'icontains'],\n-        'created_date': ['exact',]\n+        'created_date': ['exact','gte`', 'lte'],\n     }\n \n     def get_queryset(self):\n         queryset = super().get_queryset()\n"
+                },
+                {
+                    "date": 1743919977739,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,10 @@\n \n     filterset_fields = {\n         'id': ['exact'],\n         'name': ['exact', 'icontains'],\n-        'created_date': ['exact','gte`', 'lte'],\n+        'created_date': ['exact','gte', 'lte'],\n+        \n     }\n \n     def get_queryset(self):\n         queryset = super().get_queryset()\n"
+                },
+                {
+                    "date": 1743919989071,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,11 +18,12 @@\n     ordering_fields = ['id']\n \n     filterset_fields = {\n         'id': ['exact'],\n-        'name': ['exact', 'icontains'],\n         'created_date': ['exact','gte', 'lte'],\n-        \n+        'updated_date': ['exact','gte', 'lte'],\n+        'is_show': ['exact'],\n+        'is_skipable': ['exact'],\n     }\n \n     def get_queryset(self):\n         queryset = super().get_queryset()\n"
+                },
+                {
+                    "date": 1743920005394,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -26,9 +26,9 @@\n     }\n \n     def get_queryset(self):\n         queryset = super().get_queryset()\n-        #return queryset.filter(user_id=self.request.user.id)\n+        return queryset\n \n     def get_serializer_class(self):\n         if self.action in ['create', 'update', 'partial_update']:\n             return PopupWriteSerializers\n"
+                }
+            ],
+            "date": 1743919890540,
+            "name": "Commit-0",
+            "content": "from rest_framework import viewsets\nfrom rest_framework.filters import SearchFilter, OrderingFilter\nfrom django_filters.rest_framework import DjangoFilterBackend\nfrom ..models import Popup\nfrom ..serializers.popup_serializers import PopupListSerializers, PopupRetrieveSerializers, PopupWriteSerializers\nfrom ..utilities.importbase import *\n\nclass popupViewsets(viewsets.ModelViewSet):\n    serializer_class = PopupListSerializers\n    # permission_classes = [popupPermission]\n    # authentication_classes = [JWTAuthentication]\n    #pagination_class = MyPageNumberPagination\n    queryset = Popup.objects.all().order_by('-created_at')\n\n    filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n    search_fields = ['id']\n    ordering_fields = ['id']\n\n    # filterset_fields = {\n    #     'id': ['exact'],\n    # }\n\n    def get_queryset(self):\n        queryset = super().get_queryset()\n        #return queryset.filter(user_id=self.request.user.id)\n\n    def get_serializer_class(self):\n        if self.action in ['create', 'update', 'partial_update']:\n            return PopupWriteSerializers\n        elif self.action == 'retrieve':\n            return PopupRetrieveSerializers\n        return super().get_serializer_class()\n\n    # @action(detail=False, methods=['get'], name=\"action_name\", url_path=\"url_path\")\n    # def action_name(self, request, *args, **kwargs):\n    #     return super().list(request, *args, **kwargs)\n\n"
+        }
+    ]
+}

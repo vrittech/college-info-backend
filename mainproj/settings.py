@@ -92,6 +92,7 @@ INSTALLED_APPS = [
     'notify',
     'setting',
     'customgallery',
+    'popup',
     # 'notifications',  # Django Notifications HQ
     # 'channels',  # Required for real-time updates (Django Channels)
 ]

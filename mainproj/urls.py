@@ -55,6 +55,7 @@ from collegemanagement.routers.routers import router as collegemanagement_router
 from facilities.routers.routers import router as facilities_router
 # from admissionopen.routers.routers import router as admissionopen_router
 from coursesandfees.routers.routers import router as coursesandfees_router
+from popup.routers.routers import router as popup_router
 # from location.routers.routers import router as location_router
 # from preparationinquiries.routers.routers import router as preparationinquiries_router
 # from collegeandcourseinquiries.routers.routers import router as collegeandcourseinquiries_router
@@ -70,6 +71,7 @@ position_management_viewset = PositionManagementViewSet.as_view({
 })
 
 router.registry.extend(requestsubmission_router.registry)
+router.registry.extend(popup_router.registry)
 router.registry.extend(coursemanagement_router.registry)
 router.registry.extend(socialmedia_router.registry)
 # router.registry.extend(setupemail_router.registry)

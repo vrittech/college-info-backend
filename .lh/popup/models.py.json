@@ -1,0 +1,98 @@
+{
+    "sourceFile": "popup/models.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 20,
+            "patches": [
+                {
+                    "date": 1743918272268,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1743918388699,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,4 +1,7 @@\n+from django.db import models\n+\n+# Create your models here.\n class Popup(models.Model):\n     title = models.CharField(max_length = 200,null = True)\n     image = models.ImageField(upload_to='components/popup', null=True, blank=True)\n     url = models.URLField(null=True, blank=True)\n"
+                },
+                {
+                    "date": 1743918399713,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,17 +1,35 @@\n from django.db import models\n \n-# Create your models here.\n+class PlacementPosition(models.Model):\n+    placement_name = models.CharField(max_length=255,null=True,blank=True) \n+    duration_in_seconds = models.IntegerField(default=0)  # Time in seconds\n+    created_date = models.DateTimeField(auto_now_add=True)\n+    updated_date = models.DateTimeField(auto_now=True)\n+\n+    def __str__(self):\n+        return self.placement_name\n+    \n+    class Meta:\n+        permissions = [\n+            ('manage_placementposition', 'Manage Placement Position'),\n+        ]\n+\n\\ No newline at end of file\n+\n class Popup(models.Model):\n-    title = models.CharField(max_length = 200,null = True)\n-    image = models.ImageField(upload_to='components/popup', null=True, blank=True)\n-    url = models.URLField(null=True, blank=True)\n-    \n-    created_date = models.DateField(auto_now_add=True, null = True,blank = True)\n-    created_date_time = models.DateTimeField(auto_now_add=True, null = True,blank = True)\n+    name = models.CharField(max_length=255)\n+    link = models.URLField(null=True,blank=True)\n+    is_show = models.BooleanField(default=False)\n+    image = models.ImageField(upload_to='ads/',null=True,blank=True)\n+    placement = models.ForeignKey(PlacementPosition, on_delete=models.CASCADE)\n+    created_date = models.DateField(auto_now_add=True)\n     updated_date = models.DateTimeField(auto_now=True)\n+    # duration_in_seconds = models.IntegerField(default=0)  # Time in seconds for the ad\n+\n+    def __str__(self):\n+        return self.name\n+    class Meta:\n+        permissions = [\n+            ('manage_advertisement', 'Manage Advertisement'),\n+        ]\n     \n-    def save(self, *args, **kwargs):\n-        # Check if title length exceeds the max_length\n-        if self.title and len(self.title) > 200:\n-            raise ValidationError({'title': 'The title cannot exceed 200 characters.'})\n-        super().save(*args, **kwargs)\n+ \n"
+                },
+                {
+                    "date": 1743918405939,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n from django.db import models\n \n-class PlacementPosition(models.Model):\n+class PopupD(models.Model):\n     placement_name = models.CharField(max_length=255,null=True,blank=True) \n     duration_in_seconds = models.IntegerField(default=0)  # Time in seconds\n     created_date = models.DateTimeField(auto_now_add=True)\n     updated_date = models.DateTimeField(auto_now=True)\n@@ -31,5 +31,5 @@\n         permissions = [\n             ('manage_advertisement', 'Manage Advertisement'),\n         ]\n     \n- \n\\ No newline at end of file\n+ \n"
+                },
+                {
+                    "date": 1743918415645,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,34 @@\n+from django.db import models\n+\n+class PopupDuration(models.Model):\n+    duration_in_seconds = models.IntegerField(default=0)  # Time in seconds\n+    created_date = models.DateTimeField(auto_now_add=True)\n+    updated_date = models.DateTimeField(auto_now=True)\n+\n+    def __str__(self):\n+        return self.placement_name\n+    \n+    class Meta:\n+        permissions = [\n+            ('manage_placementposition', 'Manage Placement Position'),\n+        ]\n+\n+\n+class Popup(models.Model):\n+    name = models.CharField(max_length=255)\n+    link = models.URLField(null=True,blank=True)\n+    is_show = models.BooleanField(default=False)\n+    image = models.ImageField(upload_to='ads/',null=True,blank=True)\n+    placement = models.ForeignKey(PlacementPosition, on_delete=models.CASCADE)\n+    created_date = models.DateField(auto_now_add=True)\n+    updated_date = models.DateTimeField(auto_now=True)\n+    # duration_in_seconds = models.IntegerField(default=0)  # Time in seconds for the ad\n+\n+    def __str__(self):\n+        return self.name\n+    class Meta:\n+        permissions = [\n+            ('manage_advertisement', 'Manage Advertisement'),\n+        ]\n+    \n+ \n"
+                },
+                {
+                    "date": 1743918424395,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,8 @@\n from django.db import models\n \n class PopupDuration(models.Model):\n-    duration_in_seconds = models.IntegerField(default=0)  # Time in seconds\n+    duration_in_seconds = models.IntegerField(default=0)\n     created_date = models.DateTimeField(auto_now_add=True)\n     updated_date = models.DateTimeField(auto_now=True)\n \n     def __str__(self):\n@@ -31,39 +31,4 @@\n             ('manage_advertisement', 'Manage Advertisement'),\n         ]\n     \n  \n-from django.db import models\n-\n-class PopupD(models.Model):\n-    placement_name = models.CharField(max_length=255,null=True,blank=True) \n-    duration_in_seconds = models.IntegerField(default=0)  # Time in seconds\n-    created_date = models.DateTimeField(auto_now_add=True)\n-    updated_date = models.DateTimeField(auto_now=True)\n-\n-    def __str__(self):\n-        return self.placement_name\n-    \n-    class Meta:\n-        permissions = [\n-            ('manage_placementposition', 'Manage Placement Position'),\n-        ]\n-\n-\n-class Popup(models.Model):\n-    name = models.CharField(max_length=255)\n-    link = models.URLField(null=True,blank=True)\n-    is_show = models.BooleanField(default=False)\n-    image = models.ImageField(upload_to='ads/',null=True,blank=True)\n-    placement = models.ForeignKey(PlacementPosition, on_delete=models.CASCADE)\n-    created_date = models.DateField(auto_now_add=True)\n-    updated_date = models.DateTimeField(auto_now=True)\n-    # duration_in_seconds = models.IntegerField(default=0)  # Time in seconds for the ad\n-\n-    def __str__(self):\n-        return self.name\n-    class Meta:\n-        permissions = [\n-            ('manage_advertisement', 'Manage Advertisement'),\n-        ]\n-    \n- \n"
+                },
+                {
+                    "date": 1743918429879,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,9 @@\n from django.db import models\n \n class PopupDuration(models.Model):\n     duration_in_seconds = models.IntegerField(default=0)\n+    is_skipable = models.BooleanField(default=False)\n     created_date = models.DateTimeField(auto_now_add=True)\n     updated_date = models.DateTimeField(auto_now=True)\n \n     def __str__(self):\n"
+                },
+                {
+                    "date": 1743918441727,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n     name = models.CharField(max_length=255)\n     link = models.URLField(null=True,blank=True)\n     is_show = models.BooleanField(default=False)\n     image = models.ImageField(upload_to='ads/',null=True,blank=True)\n-    placement = models.ForeignKey(PlacementPosition, on_delete=models.CASCADE)\n+    placement = models.ForeignKey(PopupDuration, on_delete=models.CASCADE)\n     created_date = models.DateField(auto_now_add=True)\n     updated_date = models.DateTimeField(auto_now=True)\n     # duration_in_seconds = models.IntegerField(default=0)  # Time in seconds for the ad\n \n"
+                },
+                {
+                    "date": 1743918449042,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n     name = models.CharField(max_length=255)\n     link = models.URLField(null=True,blank=True)\n     is_show = models.BooleanField(default=False)\n     image = models.ImageField(upload_to='ads/',null=True,blank=True)\n-    placement = models.ForeignKey(PopupDuration, on_delete=models.CASCADE)\n+    popup_duration = models.ForeignKey(PopupDuration, on_delete=models.CASCADE)\n     created_date = models.DateField(auto_now_add=True)\n     updated_date = models.DateTimeField(auto_now=True)\n     # duration_in_seconds = models.IntegerField(default=0)  # Time in seconds for the ad\n \n"
+                },
+                {
+                    "date": 1743919027689,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,9 +15,8 @@\n         ]\n \n \n class Popup(models.Model):\n-    name = models.CharField(max_length=255)\n     link = models.URLField(null=True,blank=True)\n     is_show = models.BooleanField(default=False)\n     image = models.ImageField(upload_to='ads/',null=True,blank=True)\n     popup_duration = models.ForeignKey(PopupDuration, on_delete=models.CASCADE)\n"
+                },
+                {
+                    "date": 1743919039480,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,9 @@\n         return self.placement_name\n     \n     class Meta:\n         permissions = [\n-            ('manage_placementposition', 'Manage Placement Position'),\n+            ('manage_popup', 'Manage Placement Position'),\n         ]\n \n \n class Popup(models.Model):\n"
+                },
+                {
+                    "date": 1743919049599,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,9 @@\n         return self.placement_name\n     \n     class Meta:\n         permissions = [\n-            ('manage_popup', 'Manage Placement Position'),\n+            ('manage_popupduration', 'Manage Popup Position'),\n         ]\n \n \n class Popup(models.Model):\n"
+                },
+                {
+                    "date": 1743919062427,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,9 @@\n         return self.placement_name\n     \n     class Meta:\n         permissions = [\n-            ('manage_popupduration', 'Manage Popup Position'),\n+            ('manage_popupduration', 'Manage Popup Duration'),\n         ]\n \n \n class Popup(models.Model):\n@@ -27,8 +27,8 @@\n     def __str__(self):\n         return self.name\n     class Meta:\n         permissions = [\n-            ('manage_advertisement', 'Manage Advertisement'),\n+            ('manage_popup', 'Manage Advertisement'),\n         ]\n     \n  \n"
+                },
+                {
+                    "date": 1743919074783,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,17 +18,17 @@\n class Popup(models.Model):\n     link = models.URLField(null=True,blank=True)\n     is_show = models.BooleanField(default=False)\n     image = models.ImageField(upload_to='ads/',null=True,blank=True)\n-    popup_duration = models.ForeignKey(PopupDuration, on_delete=models.CASCADE)\n+    popup_duration = models.ForeignKey(PopupDuration, on_delete=models.Null)\n     created_date = models.DateField(auto_now_add=True)\n     updated_date = models.DateTimeField(auto_now=True)\n     # duration_in_seconds = models.IntegerField(default=0)  # Time in seconds for the ad\n \n     def __str__(self):\n         return self.name\n     class Meta:\n         permissions = [\n-            ('manage_popup', 'Manage Advertisement'),\n+            ('manage_popup', 'Manage Popup'),\n         ]\n     \n  \n"
+                },
+                {
+                    "date": 1743919108929,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,10 +17,10 @@\n \n class Popup(models.Model):\n     link = models.URLField(null=True,blank=True)\n     is_show = models.BooleanField(default=False)\n-    image = models.ImageField(upload_to='ads/',null=True,blank=True)\n-    popup_duration = models.ForeignKey(PopupDuration, on_delete=models.Null)\n+    image = models.ImageField(upload_to='popups/',null=True,blank=True)\n+    popup_duration = models.ForeignKey(PopupDuration, on_delete=models.SET_NULL, null=True, blank=True)\n     created_date = models.DateField(auto_now_add=True)\n     updated_date = models.DateTimeField(auto_now=True)\n     # duration_in_seconds = models.IntegerField(default=0)  # Time in seconds for the ad\n \n"
+                },
+                {
+                    "date": 1743919583301,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,8 @@\n from django.db import models\n \n class PopupDuration(models.Model):\n-    duration_in_seconds = models.IntegerField(default=0)\n-    is_skipable = models.BooleanField(default=False)\n+    \n     created_date = models.DateTimeField(auto_now_add=True)\n     updated_date = models.DateTimeField(auto_now=True)\n \n     def __str__(self):\n"
+                },
+                {
+                    "date": 1743919591253,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,11 +14,13 @@\n         ]\n \n \n class Popup(models.Model):\n+    is_show = models.BooleanField(default=False)\n     link = models.URLField(null=True,blank=True)\n-    is_show = models.BooleanField(default=False)\n     image = models.ImageField(upload_to='popups/',null=True,blank=True)\n+    duration_in_seconds = models.IntegerField(default=0)\n+    is_skipable = models.BooleanField(default=False)\n     popup_duration = models.ForeignKey(PopupDuration, on_delete=models.SET_NULL, null=True, blank=True)\n     created_date = models.DateField(auto_now_add=True)\n     updated_date = models.DateTimeField(auto_now=True)\n     # duration_in_seconds = models.IntegerField(default=0)  # Time in seconds for the ad\n"
+                },
+                {
+                    "date": 1743919600553,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,27 +1,11 @@\n from django.db import models\n-\n-class PopupDuration(models.Model):\n-    \n-    created_date = models.DateTimeField(auto_now_add=True)\n-    updated_date = models.DateTimeField(auto_now=True)\n-\n-    def __str__(self):\n-        return self.placement_name\n-    \n-    class Meta:\n-        permissions = [\n-            ('manage_popupduration', 'Manage Popup Duration'),\n-        ]\n-\n-\n class Popup(models.Model):\n     is_show = models.BooleanField(default=False)\n     link = models.URLField(null=True,blank=True)\n     image = models.ImageField(upload_to='popups/',null=True,blank=True)\n     duration_in_seconds = models.IntegerField(default=0)\n     is_skipable = models.BooleanField(default=False)\n-    popup_duration = models.ForeignKey(PopupDuration, on_delete=models.SET_NULL, null=True, blank=True)\n     created_date = models.DateField(auto_now_add=True)\n     updated_date = models.DateTimeField(auto_now=True)\n     # duration_in_seconds = models.IntegerField(default=0)  # Time in seconds for the ad\n \n"
+                },
+                {
+                    "date": 1743919613749,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,9 +6,8 @@\n     duration_in_seconds = models.IntegerField(default=0)\n     is_skipable = models.BooleanField(default=False)\n     created_date = models.DateField(auto_now_add=True)\n     updated_date = models.DateTimeField(auto_now=True)\n-    # duration_in_seconds = models.IntegerField(default=0)  # Time in seconds for the ad\n \n     def __str__(self):\n         return self.name\n     class Meta:\n"
+                },
+                {
+                    "date": 1743919619306,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,7 @@\n from django.db import models\n class Popup(models.Model):\n+    name \n     is_show = models.BooleanField(default=False)\n     link = models.URLField(null=True,blank=True)\n     image = models.ImageField(upload_to='popups/',null=True,blank=True)\n     duration_in_seconds = models.IntegerField(default=0)\n"
+                },
+                {
+                    "date": 1743919657902,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,12 +1,12 @@\n from django.db import models\n class Popup(models.Model):\n-    name \n-    is_show = models.BooleanField(default=False)\n+    name = models.CharField(max_length=255)\n     link = models.URLField(null=True,blank=True)\n     image = models.ImageField(upload_to='popups/',null=True,blank=True)\n     duration_in_seconds = models.IntegerField(default=0)\n     is_skipable = models.BooleanField(default=False)\n+    is_show = models.BooleanField(default=False)\n     created_date = models.DateField(auto_now_add=True)\n     updated_date = models.DateTimeField(auto_now=True)\n \n     def __str__(self):\n"
+                }
+            ],
+            "date": 1743918272268,
+            "name": "Commit-0",
+            "content": "class Popup(models.Model):\n    title = models.CharField(max_length = 200,null = True)\n    image = models.ImageField(upload_to='components/popup', null=True, blank=True)\n    url = models.URLField(null=True, blank=True)\n    \n    created_date = models.DateField(auto_now_add=True, null = True,blank = True)\n    created_date_time = models.DateTimeField(auto_now_add=True, null = True,blank = True)\n    updated_date = models.DateTimeField(auto_now=True)\n    \n    def save(self, *args, **kwargs):\n        # Check if title length exceeds the max_length\n        if self.title and len(self.title) > 200:\n            raise ValidationError({'title': 'The title cannot exceed 200 characters.'})\n        super().save(*args, **kwargs)"
+        }
+    ]
+}

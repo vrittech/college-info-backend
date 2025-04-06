@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 18,
+            "activePatchIndex": 27,
             "patches": [
                 {
                     "date": 1739684343218,
@@ -80,6 +80,42 @@
                 {
                     "date": 1741080567550,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -116,9 +116,8 @@\n       **{'x-logo': {'url': 'https://collegeinfoapi.vrittechnologies.com/media/gallery/images/College_Info_Nepal.png'}},\n    ),\n    public=True,\n    permission_classes=[permissions.AllowAny],\n-   schemes=['http', 'https'],\n )\n \n urlpatterns = [\n     path('admin/', admin.site.urls),\n"
+                },
+                {
+                    "date": 1743919756242,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -133,5 +133,7 @@\n     path('api/drag-item/', position_management_viewset, name='position_management_drag_item'),\n ]\n if settings.DEBUG:\n     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)\n-    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)  # for development\n\\ No newline at end of file\n+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)  # for development\n+#*********This is popup router registered by autoapi*********\n+from popup.routers.routers import router as popup_router\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1743919762119,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -135,5 +135,4 @@\n if settings.DEBUG:\n     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)\n     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)  # for development\n #*********This is popup router registered by autoapi*********\n-from popup.routers.routers import router as popup_router\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1743919768984,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -54,8 +54,9 @@\n from collegemanagement.routers.routers import router as collegemanagement_router\n from facilities.routers.routers import router as facilities_router\n # from admissionopen.routers.routers import router as admissionopen_router\n from coursesandfees.routers.routers import router as coursesandfees_router\n+from popup.routers.routers import router as popup_router\n # from location.routers.routers import router as location_router\n # from preparationinquiries.routers.routers import router as preparationinquiries_router\n # from collegeandcourseinquiries.routers.routers import router as collegeandcourseinquiries_router\n from discipline.routers.routers import router as discipline_router\n"
+                },
+                {
+                    "date": 1743919775486,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -135,5 +135,4 @@\n ]\n if settings.DEBUG:\n     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)\n     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)  # for development\n-#*********This is popup router registered by autoapi*********\n"
+                },
+                {
+                    "date": 1743919783618,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -70,8 +70,9 @@\n     'get': 'draggable'  # Map the 'get' request to the draggable action\n })\n \n router.registry.extend(requestsubmission_router.registry)\n+\n router.registry.extend(coursemanagement_router.registry)\n router.registry.extend(socialmedia_router.registry)\n # router.registry.extend(setupemail_router.registry)\n # router.registry.extend(semester_router.registry)\n"
+                },
+                {
+                    "date": 1743919789075,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -70,9 +70,9 @@\n     'get': 'draggable'  # Map the 'get' request to the draggable action\n })\n \n router.registry.extend(requestsubmission_router.registry)\n-\n+router.\n router.registry.extend(coursemanagement_router.registry)\n router.registry.extend(socialmedia_router.registry)\n # router.registry.extend(setupemail_router.registry)\n # router.registry.extend(semester_router.registry)\n"
+                },
+                {
+                    "date": 1743919794201,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -70,9 +70,9 @@\n     'get': 'draggable'  # Map the 'get' request to the draggable action\n })\n \n router.registry.extend(requestsubmission_router.registry)\n-router.\n+router.regist\n router.registry.extend(coursemanagement_router.registry)\n router.registry.extend(socialmedia_router.registry)\n # router.registry.extend(setupemail_router.registry)\n # router.registry.extend(semester_router.registry)\n"
+                },
+                {
+                    "date": 1743919802907,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -70,9 +70,9 @@\n     'get': 'draggable'  # Map the 'get' request to the draggable action\n })\n \n router.registry.extend(requestsubmission_router.registry)\n-router.regist\n+router.registry.extend(accounts_router.registry)\n router.registry.extend(coursemanagement_router.registry)\n router.registry.extend(socialmedia_router.registry)\n # router.registry.extend(setupemail_router.registry)\n # router.registry.extend(semester_router.registry)\n"
+                },
+                {
+                    "date": 1743919812109,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -70,9 +70,9 @@\n     'get': 'draggable'  # Map the 'get' request to the draggable action\n })\n \n router.registry.extend(requestsubmission_router.registry)\n-router.registry.extend(accounts_router.registry)\n+router.registry.extend(popup_router.registry)\n router.registry.extend(coursemanagement_router.registry)\n router.registry.extend(socialmedia_router.registry)\n # router.registry.extend(setupemail_router.registry)\n # router.registry.extend(semester_router.registry)\n"
                 }
             ],
             "date": 1739684343218,

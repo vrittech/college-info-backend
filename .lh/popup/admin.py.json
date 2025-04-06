@@ -1,0 +1,22 @@
+{
+    "sourceFile": "popup/admin.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 1,
+            "patches": [
+                {
+                    "date": 1743920227304,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1743920233493,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,4 +1,5 @@\n from django.contrib import admin\n+from .models import Popup\n \n \n # Register your models here.\n"
+                }
+            ],
+            "date": 1743920227304,
+            "name": "Commit-0",
+            "content": "from django.contrib import admin\n\n\n# Register your models here.\n"
+        }
+    ]
+}
