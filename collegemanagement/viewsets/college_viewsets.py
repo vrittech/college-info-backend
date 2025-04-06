@@ -59,14 +59,22 @@ class collegeViewsets(viewsets.ModelViewSet):
 
     
     def get_queryset(self):
-        # print(self.action)
         queryset = super().get_queryset()
         request = self.request
-        if request.user.is_superuser:
+        user = request.user
+
+        
+        # Apply visibility filter for non-admin users in list/retrieve actions
+        if self.action in ['list', 'retrieve'] and not request.user.is_superuser:
+            queryset = queryset.filter(is_show=True)
+        
+        # Apply permission-based filtering
+        if user.is_superuser or user.has_perm('collegemanagement.manage_college'):
             return queryset
         elif request.user.has_perm('collegemanagement.change_college'):
             return queryset.filter(user=request.user)
-        return queryset
+        
+        return queryset.filter(is_show=True)  # Default case for unprivileged users
 
     def get_serializer_class(self):
         if self.action in ['create', 'update', 'partial_update']:
