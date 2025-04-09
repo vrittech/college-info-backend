@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 1,
+            "activePatchIndex": 2,
             "patches": [
                 {
                     "date": 1739939989473,
@@ -12,6 +12,10 @@
                 {
                     "date": 1739939994785,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n import django_filters\n from django.db.models import Q\n-from .models import Affiliation\n+from ..models import Affiliation\n from coursemanagement.models import Course\n from certification.models import Certification\n \n class CharInFilter(django_filters.BaseInFilter, django_filters.CharFilter):\n"
+                },
+                {
+                    "date": 1744214216050,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,9 @@\n class NumberInFilter(django_filters.BaseInFilter, django_filters.NumberFilter):\n     pass\n \n class AffiliationFilter(django_filters.FilterSet):\n-    id = django_filters.UUIDFilter(field_name=\"public_id\", lookup_expr=\"exact\")\n+    id = django_filters.UUIDFilter(field_name=\"id\", lookup_expr=\"exact\")\n \n     # Support multiple values using `in` lookup\n     name = CharInFilter(field_name=\"name\", lookup_expr=\"in\")\n     address = CharInFilter(field_name=\"address\", lookup_expr=\"in\")\n"
                 }
             ],
             "date": 1739939989473,
