@@ -20,7 +20,7 @@ class CollegeFilter(django_filters.FilterSet):
     # Support multiple values using `in` lookup
     name = CharInFilter(field_name="name", lookup_expr="in")
     address = CharInFilter(field_name="address", lookup_expr="in")
-    district = CharInFilter(field_name="district__name", lookup_expr="in")
+    district = CharInFilter(field_name="district__id", lookup_expr="in")
     college_type = django_filters.CharFilter(field_name="college_type__id", lookup_expr="exact")
     affiliated = django_filters.CharFilter(method="filter_by_affiliation")
     affiliated_slug = django_filters.CharFilter(method="filter_by_affiliation_slug")

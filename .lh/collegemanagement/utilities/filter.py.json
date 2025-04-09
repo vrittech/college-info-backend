@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 63,
+            "activePatchIndex": 64,
             "patches": [
                 {
                     "date": 1739940081389,
@@ -260,6 +260,10 @@
                 {
                     "date": 1743328228711,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -44,9 +44,9 @@\n \n     phone_number = CharInFilter(field_name=\"phone_number\", lookup_expr=\"in\")\n     email = CharInFilter(field_name=\"email\", lookup_expr=\"in\")\n     is_show = django_filters.BooleanFilter(field_name=\"is_show\")\n-    is_verified = django_filters.BooleanFilter(field_name=\"is_show\")\n+    is_verified = django_filters.BooleanFilter(field_name=\"is_verified\")\n \n     # ManyToMany fields filtering using comma-separated values\n     discipline = django_filters.CharFilter(method=\"filter_by_disciplines\")\n     facilities = django_filters.CharFilter(method=\"filter_by_facilities\")\n@@ -98,7 +98,7 @@\n         model = College\n         fields = [\n             \"id\", \"name\", \"address\", \"district\", \"college_type\", \"affiliated\",\n             \"established_date\", \"created_date\", \"updated_date\", 'is_verified',\n-            \"phone_number\", \"email\", \"is_show\", \"discipline\", \"college_facilities\",\"university_type\",\"courses\",\"affiliated_slug\"\n-            \"course\"\n+            \"phone_number\", \"email\", \"is_show\", \"discipline\", \"college_facilities\",\"university_type\",\"courses\",\"affiliated_slug\",\n+            \"courses_slug\"\n         ]\n"
+                },
+                {
+                    "date": 1744193190956,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n \n     # Support multiple values using `in` lookup\n     name = CharInFilter(field_name=\"name\", lookup_expr=\"in\")\n     address = CharInFilter(field_name=\"address\", lookup_expr=\"in\")\n-    district = CharInFilter(field_name=\"district__name\", lookup_expr=\"in\")\n+    district = CharInFilter(field_name=\"district__id\", lookup_expr=\"in\")\n     college_type = django_filters.CharFilter(field_name=\"college_type__id\", lookup_expr=\"exact\")\n     affiliated = django_filters.CharFilter(method=\"filter_by_affiliation\")\n     affiliated_slug = django_filters.CharFilter(method=\"filter_by_affiliation_slug\")\n     university_type = django_filters.CharFilter(field_name='affiliated__university_type', lookup_expr='icontains')\n"
                 }
             ],
             "date": 1739940081389,
