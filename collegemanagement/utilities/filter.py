@@ -116,6 +116,6 @@ class CollegeFilter(django_filters.FilterSet):
         fields = [
             "id", "name", "address", "district", "college_type", "affiliated",
             "established_date", "created_date", "updated_date", 'is_verified',
-            "phone_number", "email","level", "is_show", "discipline", "college_facilities","university_type","courses","affiliated_slug",
+            "phone_number", "email","level","faculty", "is_show", "discipline", "college_facilities","university_type","courses","affiliated_slug",
             "courses_slug"
         ]
