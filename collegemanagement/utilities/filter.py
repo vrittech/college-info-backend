@@ -19,6 +19,8 @@ class CollegeFilter(django_filters.FilterSet):
 
     # Support multiple values using `in` lookup
     name = CharInFilter(field_name="name", lookup_expr="in")
+    level = django_filters.CharFilter(method="filter_by_level")
+    faculty = django_filters.CharFilter(method="filter_by_faculty")
     address = CharInFilter(field_name="address", lookup_expr="in")
     district = CharInFilter(field_name="district__id", lookup_expr="in")
     college_type = django_filters.CharFilter(field_name="college_type__id", lookup_expr="exact")
@@ -80,6 +82,21 @@ class CollegeFilter(django_filters.FilterSet):
             queryset = queryset.filter(college_courses_and_fees__course__slug__in=course_slug).distinct()
         return queryset
     
+    def filter_by_level(self, queryset, name, value):
+        """Filter by multiple Level using comma-separated values"""
+        if value:
+            level_ids = value.split(',') if ',' in value else [value]
+            queryset = queryset.filter(college_courses_and_fees__course__level__id__in=level_ids).distinct()
+        return queryset
+    
+    def filter_by_faculty(self, queryset, name, value):
+        """Filter by multiple Level using comma-separated values"""
+        if value:
+            faculty_ids = value.split(',') if ',' in value else [value]
+            queryset = queryset.filter(college_courses_and_fees__course__faculty__id__in=faculty_ids).distinct()
+        return queryset
+    
+    
     def filter_by_affiliation(self, queryset, name, value):
         """Filter by multiple facilities using comma-separated values"""
         if value:
@@ -99,6 +116,6 @@ class CollegeFilter(django_filters.FilterSet):
         fields = [
             "id", "name", "address", "district", "college_type", "affiliated",
             "established_date", "created_date", "updated_date", 'is_verified',
-            "phone_number", "email", "is_show", "discipline", "college_facilities","university_type","courses","affiliated_slug",
+            "phone_number", "email","level", "is_show", "discipline", "college_facilities","university_type","courses","affiliated_slug",
             "courses_slug"
         ]

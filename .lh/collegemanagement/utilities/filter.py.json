@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 64,
+            "activePatchIndex": 77,
             "patches": [
                 {
                     "date": 1739940081389,
@@ -264,6 +264,58 @@
                 {
                     "date": 1744193190956,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n \n     # Support multiple values using `in` lookup\n     name = CharInFilter(field_name=\"name\", lookup_expr=\"in\")\n     address = CharInFilter(field_name=\"address\", lookup_expr=\"in\")\n-    district = CharInFilter(field_name=\"district__name\", lookup_expr=\"in\")\n+    district = CharInFilter(field_name=\"district__id\", lookup_expr=\"in\")\n     college_type = django_filters.CharFilter(field_name=\"college_type__id\", lookup_expr=\"exact\")\n     affiliated = django_filters.CharFilter(method=\"filter_by_affiliation\")\n     affiliated_slug = django_filters.CharFilter(method=\"filter_by_affiliation_slug\")\n     university_type = django_filters.CharFilter(field_name='affiliated__university_type', lookup_expr='icontains')\n"
+                },
+                {
+                    "date": 1744361557086,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,8 +18,9 @@\n     id = django_filters.UUIDFilter(field_name=\"public_id\", lookup_expr=\"exact\")\n \n     # Support multiple values using `in` lookup\n     name = CharInFilter(field_name=\"name\", lookup_expr=\"in\")\n+    \n     address = CharInFilter(field_name=\"address\", lookup_expr=\"in\")\n     district = CharInFilter(field_name=\"district__id\", lookup_expr=\"in\")\n     college_type = django_filters.CharFilter(field_name=\"college_type__id\", lookup_expr=\"exact\")\n     affiliated = django_filters.CharFilter(method=\"filter_by_affiliation\")\n"
+                },
+                {
+                    "date": 1744361565400,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,9 +18,9 @@\n     id = django_filters.UUIDFilter(field_name=\"public_id\", lookup_expr=\"exact\")\n \n     # Support multiple values using `in` lookup\n     name = CharInFilter(field_name=\"name\", lookup_expr=\"in\")\n-    \n+    level = C\n     address = CharInFilter(field_name=\"address\", lookup_expr=\"in\")\n     district = CharInFilter(field_name=\"district__id\", lookup_expr=\"in\")\n     college_type = django_filters.CharFilter(field_name=\"college_type__id\", lookup_expr=\"exact\")\n     affiliated = django_filters.CharFilter(method=\"filter_by_affiliation\")\n"
+                },
+                {
+                    "date": 1744361572547,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,9 +18,9 @@\n     id = django_filters.UUIDFilter(field_name=\"public_id\", lookup_expr=\"exact\")\n \n     # Support multiple values using `in` lookup\n     name = CharInFilter(field_name=\"name\", lookup_expr=\"in\")\n-    level = C\n+    level = CharInFilter(field_name=\"level__id\", lookup_expr=\"in\")\n     address = CharInFilter(field_name=\"address\", lookup_expr=\"in\")\n     district = CharInFilter(field_name=\"district__id\", lookup_expr=\"in\")\n     college_type = django_filters.CharFilter(field_name=\"college_type__id\", lookup_expr=\"exact\")\n     affiliated = django_filters.CharFilter(method=\"filter_by_affiliation\")\n"
+                },
+                {
+                    "date": 1744361767202,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -80,8 +80,16 @@\n             course_slug = value.split(',') if ',' in value else [value]\n             queryset = queryset.filter(college_courses_and_fees__course__slug__in=course_slug).distinct()\n         return queryset\n     \n+        def filter_by_courses_slug(self, queryset, name, value):\n+        \"\"\"Filter by multiple facilities using comma-separated values\"\"\"\n+        if value:\n+            course_slug = value.split(',') if ',' in value else [value]\n+            queryset = queryset.filter(college_courses_and_fees__course__slug__in=course_slug).distinct()\n+        return queryset\n+    \n+    \n     def filter_by_affiliation(self, queryset, name, value):\n         \"\"\"Filter by multiple facilities using comma-separated values\"\"\"\n         if value:\n             affiliated_ids = value.split(',') if ',' in value else [value]\n"
+                },
+                {
+                    "date": 1744361776802,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -80,9 +80,9 @@\n             course_slug = value.split(',') if ',' in value else [value]\n             queryset = queryset.filter(college_courses_and_fees__course__slug__in=course_slug).distinct()\n         return queryset\n     \n-        def filter_by_courses_slug(self, queryset, name, value):\n+    def filter_by_level(self, queryset, name, value):\n         \"\"\"Filter by multiple facilities using comma-separated values\"\"\"\n         if value:\n             course_slug = value.split(',') if ',' in value else [value]\n             queryset = queryset.filter(college_courses_and_fees__course__slug__in=course_slug).distinct()\n"
+                },
+                {
+                    "date": 1744361808641,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -84,9 +84,9 @@\n     def filter_by_level(self, queryset, name, value):\n         \"\"\"Filter by multiple facilities using comma-separated values\"\"\"\n         if value:\n             course_slug = value.split(',') if ',' in value else [value]\n-            queryset = queryset.filter(college_courses_and_fees__course__slug__in=course_slug).distinct()\n+            queryset = queryset.filter(college_courses_and_fees__course__level__in=course_slug).distinct()\n         return queryset\n     \n     \n     def filter_by_affiliation(self, queryset, name, value):\n"
+                },
+                {
+                    "date": 1744361835880,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -76,9 +76,9 @@\n     \n     def filter_by_courses_slug(self, queryset, name, value):\n         \"\"\"Filter by multiple facilities using comma-separated values\"\"\"\n         if value:\n-            course_slug = value.split(',') if ',' in value else [value]\n+            level = value.split(',') if ',' in value else [value]\n             queryset = queryset.filter(college_courses_and_fees__course__slug__in=course_slug).distinct()\n         return queryset\n     \n     def filter_by_level(self, queryset, name, value):\n"
+                },
+                {
+                    "date": 1744361843843,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -76,10 +76,10 @@\n     \n     def filter_by_courses_slug(self, queryset, name, value):\n         \"\"\"Filter by multiple facilities using comma-separated values\"\"\"\n         if value:\n-            level = value.split(',') if ',' in value else [value]\n-            queryset = queryset.filter(college_courses_and_fees__course__slug__in=course_slug).distinct()\n+            level_ids = value.split(',') if ',' in value else [value]\n+            queryset = queryset.filter(college_courses_and_fees__course__slug__in=level).distinct()\n         return queryset\n     \n     def filter_by_level(self, queryset, name, value):\n         \"\"\"Filter by multiple facilities using comma-separated values\"\"\"\n"
+                },
+                {
+                    "date": 1744361885172,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -77,16 +77,16 @@\n     def filter_by_courses_slug(self, queryset, name, value):\n         \"\"\"Filter by multiple facilities using comma-separated values\"\"\"\n         if value:\n             level_ids = value.split(',') if ',' in value else [value]\n-            queryset = queryset.filter(college_courses_and_fees__course__slug__in=level).distinct()\n+            queryset = queryset.filter(college_courses_and_fees__course__slug__in=level_ids).distinct()\n         return queryset\n     \n     def filter_by_level(self, queryset, name, value):\n         \"\"\"Filter by multiple facilities using comma-separated values\"\"\"\n         if value:\n-            course_slug = value.split(',') if ',' in value else [value]\n-            queryset = queryset.filter(college_courses_and_fees__course__level__in=course_slug).distinct()\n+                    level_ids = value.split(',') if ',' in value else [value]\n+            queryset = queryset.filter(college_courses_and_fees__course__slug__in=level_ids).distinct()\n         return queryset\n     \n     \n     def filter_by_affiliation(self, queryset, name, value):\n"
+                },
+                {
+                    "date": 1744361890686,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -83,9 +83,9 @@\n     \n     def filter_by_level(self, queryset, name, value):\n         \"\"\"Filter by multiple facilities using comma-separated values\"\"\"\n         if value:\n-                    level_ids = value.split(',') if ',' in value else [value]\n+            level_ids = value.split(',') if ',' in value else [value]\n             queryset = queryset.filter(college_courses_and_fees__course__slug__in=level_ids).distinct()\n         return queryset\n     \n     \n"
+                },
+                {
+                    "date": 1744361897710,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -76,10 +76,10 @@\n     \n     def filter_by_courses_slug(self, queryset, name, value):\n         \"\"\"Filter by multiple facilities using comma-separated values\"\"\"\n         if value:\n-            level_ids = value.split(',') if ',' in value else [value]\n-            queryset = queryset.filter(college_courses_and_fees__course__slug__in=level_ids).distinct()\n+            course_slug = value.split(',') if ',' in value else [value]\n+            queryset = queryset.filter(college_courses_and_fees__course__slug__in=course_slug).distinct()\n         return queryset\n     \n     def filter_by_level(self, queryset, name, value):\n         \"\"\"Filter by multiple facilities using comma-separated values\"\"\"\n"
+                },
+                {
+                    "date": 1744361912975,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -84,9 +84,9 @@\n     def filter_by_level(self, queryset, name, value):\n         \"\"\"Filter by multiple facilities using comma-separated values\"\"\"\n         if value:\n             level_ids = value.split(',') if ',' in value else [value]\n-            queryset = queryset.filter(college_courses_and_fees__course__leve__in=level_ids).distinct()\n+            queryset = queryset.filter(college_courses_and_fees__course__level__in=level_ids).distinct()\n         return queryset\n     \n     \n     def filter_by_affiliation(self, queryset, name, value):\n"
+                },
+                {
+                    "date": 1744362013758,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -107,7 +107,7 @@\n         model = College\n         fields = [\n             \"id\", \"name\", \"address\", \"district\", \"college_type\", \"affiliated\",\n             \"established_date\", \"created_date\", \"updated_date\", 'is_verified',\n-            \"phone_number\", \"email\", \"is_show\", \"discipline\", \"college_facilities\",\"university_type\",\"courses\",\"affiliated_slug\",\n+            \"phone_number\", \"email\",\"l\" \"is_show\", \"discipline\", \"college_facilities\",\"university_type\",\"courses\",\"affiliated_slug\",\n             \"courses_slug\"\n         ]\n"
                 }
             ],
             "date": 1739940081389,
