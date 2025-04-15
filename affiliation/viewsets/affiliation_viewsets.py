@@ -52,9 +52,12 @@ class affiliationViewsets(viewsets.ModelViewSet):
         #TODO only super user can view this data
         if self.request.user.is_superuser:
             queryset = self.queryset
+            return queryset
         else:
             queryset = self.queryset.filter(user=self.request.user)
-        return queryset
+            return queryset
+        
+        return None
 
     def get_serializer_class(self):
         if self.action in ['create', 'update', 'partial_update']:
