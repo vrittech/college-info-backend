@@ -11,8 +11,7 @@ class NumberInFilter(django_filters.BaseInFilter, django_filters.NumberFilter):
     pass
 
 class AffiliationFilter(django_filters.FilterSet):
-    id = NumberInFilter(field_name="id", lookup_expr="exact")
-
+    id = NumberInFilter(field_name="id", lookup_expr="in")
     # Support multiple values using `in` lookup
     name = CharInFilter(field_name="name", lookup_expr="in")
     address = CharInFilter(field_name="address", lookup_expr="in")
