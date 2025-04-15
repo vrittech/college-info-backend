@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 19,
+            "activePatchIndex": 20,
             "patches": [
                 {
                     "date": 1733741246630,
@@ -84,6 +84,10 @@
                 {
                     "date": 1744690715551,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,9 +13,9 @@\n     pagination_class = MyPageNumberPagination\n     queryset = RequestSubmission.objects.all().order_by('-id')\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n-    search_fields = ['id','subject','description','user__username','user__first_name','user__last_name'] \n+    search_fields = ['id','subject','description','user__username','user__first_name'] \n     ordering_fields =  ['id','subject','description']\n \n     filterset_fields = {\n         'id': ['exact'],\n"
+                },
+                {
+                    "date": 1744727966120,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,9 @@\n \n class requestsubmissionViewsets(viewsets.ModelViewSet):\n     serializer_class = RequestSubmissionListSerializers\n     permission_classes = [DynamicModelPermission]\n-    authentication_classes = [JWTAuthentication]\n+    # authentication_classes = [JWTAuthentication]\n     pagination_class = MyPageNumberPagination\n     queryset = RequestSubmission.objects.all().order_by('-id')\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n"
                 }
             ],
             "date": 1733741246630,
