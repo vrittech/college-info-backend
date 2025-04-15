@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 43,
+            "activePatchIndex": 54,
             "patches": [
                 {
                     "date": 1733481192866,
@@ -180,6 +180,50 @@
                 {
                     "date": 1741071850886,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,9 +5,11 @@\n from ..serializers.affiliation_serializers import AffiliationListSerializers, AffiliationRetrieveSerializers, AffiliationWriteSerializers\n from ..utilities.importbase import *\n from mainproj.permissions import DynamicModelPermission\n from ..utilities.filter import AffiliationFilter\n+from django.shortcuts import get_object_or_404\n \n+\n class affiliationViewsets(viewsets.ModelViewSet):\n     serializer_class = AffiliationListSerializers\n     # permission_classes = [affiliationPermission]\n     permission_classes = [DynamicModelPermission]\n@@ -21,9 +23,9 @@\n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     search_fields = ['id','name','address','created_date']\n     ordering_fields = ['id','name','address','created_date','updated_date']\n     \n-        def get_object(self):\n+    def get_object(self):\n         \"\"\"\n         Override get_object to allow lookup by either 'id' or 'slug'.\n         \"\"\"\n         queryset = self.get_queryset()\n"
+                },
+                {
+                    "date": 1744728277829,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -47,8 +47,9 @@\n     #     'updated_date': ['exact','gte','lte'],\n     # }\n # ('name', 'established_year', '.year,validators', 'google_map_embed_url', 'latitude', 'longitude', 'address', 'district', 'university_type', 'certification', 'phone_number', 'email', 'description', 'logo_image', 'cover_image', 'created_date', 'updated_date', )\n     def get_queryset(self):\n+        \n         queryset = super().get_queryset()\n         return queryset\n \n     def get_serializer_class(self):\n"
+                },
+                {
+                    "date": 1744728284277,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -47,9 +47,9 @@\n     #     'updated_date': ['exact','gte','lte'],\n     # }\n # ('name', 'established_year', '.year,validators', 'google_map_embed_url', 'latitude', 'longitude', 'address', 'district', 'university_type', 'certification', 'phone_number', 'email', 'description', 'logo_image', 'cover_image', 'created_date', 'updated_date', )\n     def get_queryset(self):\n-        \n+        #TOD\n         queryset = super().get_queryset()\n         return queryset\n \n     def get_serializer_class(self):\n"
+                },
+                {
+                    "date": 1744728296306,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -47,9 +47,9 @@\n     #     'updated_date': ['exact','gte','lte'],\n     # }\n # ('name', 'established_year', '.year,validators', 'google_map_embed_url', 'latitude', 'longitude', 'address', 'district', 'university_type', 'certification', 'phone_number', 'email', 'description', 'logo_image', 'cover_image', 'created_date', 'updated_date', )\n     def get_queryset(self):\n-        #TOD\n+        #TODO only super user can view\n         queryset = super().get_queryset()\n         return queryset\n \n     def get_serializer_class(self):\n"
+                },
+                {
+                    "date": 1744728302774,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -47,9 +47,9 @@\n     #     'updated_date': ['exact','gte','lte'],\n     # }\n # ('name', 'established_year', '.year,validators', 'google_map_embed_url', 'latitude', 'longitude', 'address', 'district', 'university_type', 'certification', 'phone_number', 'email', 'description', 'logo_image', 'cover_image', 'created_date', 'updated_date', )\n     def get_queryset(self):\n-        #TODO only super user can view\n+        #TODO only super user can view this data\n         queryset = super().get_queryset()\n         return queryset\n \n     def get_serializer_class(self):\n"
+                },
+                {
+                    "date": 1744728307952,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -48,8 +48,9 @@\n     # }\n # ('name', 'established_year', '.year,validators', 'google_map_embed_url', 'latitude', 'longitude', 'address', 'district', 'university_type', 'certification', 'phone_number', 'email', 'description', 'logo_image', 'cover_image', 'created_date', 'updated_date', )\n     def get_queryset(self):\n         #TODO only super user can view this data\n+        if \n         queryset = super().get_queryset()\n         return queryset\n \n     def get_serializer_class(self):\n"
+                },
+                {
+                    "date": 1744728313038,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -48,9 +48,10 @@\n     # }\n # ('name', 'established_year', '.year,validators', 'google_map_embed_url', 'latitude', 'longitude', 'address', 'district', 'university_type', 'certification', 'phone_number', 'email', 'description', 'logo_image', 'cover_image', 'created_date', 'updated_date', )\n     def get_queryset(self):\n         #TODO only super user can view this data\n-        if \n+        if self.request.user.is_superuser:\n+            queryset = self.queryset\n         queryset = super().get_queryset()\n         return queryset\n \n     def get_serializer_class(self):\n"
+                },
+                {
+                    "date": 1744728322250,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -50,9 +50,10 @@\n     def get_queryset(self):\n         #TODO only super user can view this data\n         if self.request.user.is_superuser:\n             queryset = self.queryset\n-        queryset = super().get_queryset()\n+        \n+        \n         return queryset\n \n     def get_serializer_class(self):\n         if self.action in ['create', 'update', 'partial_update']:\n"
+                },
+                {
+                    "date": 1744728330776,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -47,11 +47,13 @@\n     #     'updated_date': ['exact','gte','lte'],\n     # }\n # ('name', 'established_year', '.year,validators', 'google_map_embed_url', 'latitude', 'longitude', 'address', 'district', 'university_type', 'certification', 'phone_number', 'email', 'description', 'logo_image', 'cover_image', 'created_date', 'updated_date', )\n     def get_queryset(self):\n+        queryset = super().get_queryset()\n         #TODO only super user can view this data\n         if self.request.user.is_superuser:\n             queryset = self.queryset\n+        else\n         \n         \n         return queryset\n \n"
+                },
+                {
+                    "date": 1744728336600,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -52,10 +52,10 @@\n         #TODO only super user can view this data\n         if self.request.user.is_superuser:\n             queryset = self.queryset\n         else\n+        queryset = self.queryset.filter(user=self.request.user)\n         \n-        \n         return queryset\n \n     def get_serializer_class(self):\n         if self.action in ['create', 'update', 'partial_update']:\n"
+                },
+                {
+                    "date": 1744728348426,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -51,11 +51,12 @@\n         queryset = super().get_queryset()\n         #TODO only super user can view this data\n         if self.request.user.is_superuser:\n             queryset = self.queryset\n-        else\n-        queryset = self.queryset.filter(user=self.request.user)\n+        else:\n+        q   queryset = self.queryset.filter(user=self.request.user)\n         \n+        \n         return queryset\n \n     def get_serializer_class(self):\n         if self.action in ['create', 'update', 'partial_update']:\n"
+                },
+                {
+                    "date": 1744728354723,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -52,9 +52,9 @@\n         #TODO only super user can view this data\n         if self.request.user.is_superuser:\n             queryset = self.queryset\n         else:\n-           queryset = self.queryset.filter(user=self.request.user)\n+            queryset = self.queryset.filter(user=self.request.user)\n         \n         \n         return queryset\n \n"
                 }
             ],
             "date": 1733481192866,

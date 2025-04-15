@@ -49,6 +49,11 @@ class affiliationViewsets(viewsets.ModelViewSet):
 # ('name', 'established_year', '.year,validators', 'google_map_embed_url', 'latitude', 'longitude', 'address', 'district', 'university_type', 'certification', 'phone_number', 'email', 'description', 'logo_image', 'cover_image', 'created_date', 'updated_date', )
     def get_queryset(self):
         queryset = super().get_queryset()
+        #TODO only super user can view this data
+        if self.request.user.is_superuser:
+            queryset = self.queryset
+        else:
+            queryset = self.queryset.filter(user=self.request.user)
         return queryset
 
     def get_serializer_class(self):
