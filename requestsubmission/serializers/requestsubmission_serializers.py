@@ -1,11 +1,18 @@
 from rest_framework import serializers
 from ..models import RequestSubmission
 from accounts.models import CustomUser
+from collegemanagement.models import College
+
+class CollegeCustomUserRequestSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = College
+        fields = ['id','slug', 'name']
 
 class CustomUserRequestSerializers(serializers.ModelSerializer):
+    college = CollegeCustomUserRequestSerializers(read_only=True)
     class Meta:
         model = CustomUser
-        fields = ['id', 'email', 'first_name', 'last_name','college__name']
+        fields = ['id', 'email', 'first_name', 'last_name','college']
 
 class RequestSubmissionListSerializers(serializers.ModelSerializer):
     user = CustomUserRequestSerializers(read_only=True)

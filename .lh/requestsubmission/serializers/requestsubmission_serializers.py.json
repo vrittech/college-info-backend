@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 11,
+            "activePatchIndex": 18,
             "patches": [
                 {
                     "date": 1744690539814,
@@ -52,6 +52,34 @@
                 {
                     "date": 1744726702577,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,9 +13,9 @@\n         model = RequestSubmission\n         fields = '__all__'\n \n class RequestSubmissionRetrieveSerializers(serializers.ModelSerializer):\n-    \n+    user = CustomUserRequestSerializers(read_only=True)\n     class Meta:\n         model = RequestSubmission\n         fields = '__all__'\n \n"
+                },
+                {
+                    "date": 1744727034580,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,9 +4,9 @@\n \n class CustomUserRequestSerializers(serializers.ModelSerializer):\n     class Meta:\n         model = CustomUser\n-        fields = ['id', 'email', 'first_name', 'last_name','college__name']\n+        fields = ['id', 'email', 'first_name', 'last_name','college']\n \n class RequestSubmissionListSerializers(serializers.ModelSerializer):\n     user = CustomUserRequestSerializers(read_only=True)\n     class Meta:\n"
+                },
+                {
+                    "date": 1744727045864,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,11 @@\n from rest_framework import serializers\n from ..models import RequestSubmission\n from accounts.models import CustomUser\n+from collegemanagement.models import College\n \n+class College\n+\n class CustomUserRequestSerializers(serializers.ModelSerializer):\n     class Meta:\n         model = CustomUser\n         fields = ['id', 'email', 'first_name', 'last_name','college']\n"
+                },
+                {
+                    "date": 1744727052671,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,9 @@\n from ..models import RequestSubmission\n from accounts.models import CustomUser\n from collegemanagement.models import College\n \n-class College\n+class CollegeCustomUserRequestSerializers(serializers.ModelSerializer):\n \n class CustomUserRequestSerializers(serializers.ModelSerializer):\n     class Meta:\n         model = CustomUser\n"
+                },
+                {
+                    "date": 1744727059739,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,10 +3,14 @@\n from accounts.models import CustomUser\n from collegemanagement.models import College\n \n class CollegeCustomUserRequestSerializers(serializers.ModelSerializer):\n+    class Meta:\n+        model = College\n+        fields = ['id', 'name']\n \n class CustomUserRequestSerializers(serializers.ModelSerializer):\n+    college \n     class Meta:\n         model = CustomUser\n         fields = ['id', 'email', 'first_name', 'last_name','college']\n \n"
+                },
+                {
+                    "date": 1744727067989,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,14 +8,15 @@\n         model = College\n         fields = ['id', 'name']\n \n class CustomUserRequestSerializers(serializers.ModelSerializer):\n-    college \n+    college = CollegeCustomUserRequestSerializers(read_only=True)\n     class Meta:\n         model = CustomUser\n         fields = ['id', 'email', 'first_name', 'last_name','college']\n \n class RequestSubmissionListSerializers(serializers.ModelSerializer):\n+    college = CollegeCustomUserRequestSerializers(read_only=True)\n     user = CustomUserRequestSerializers(read_only=True)\n     class Meta:\n         model = RequestSubmission\n         fields = '__all__'\n"
+                },
+                {
+                    "date": 1744727076337,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,9 +14,8 @@\n         model = CustomUser\n         fields = ['id', 'email', 'first_name', 'last_name','college']\n \n class RequestSubmissionListSerializers(serializers.ModelSerializer):\n-    college = CollegeCustomUserRequestSerializers(read_only=True)\n     user = CustomUserRequestSerializers(read_only=True)\n     class Meta:\n         model = RequestSubmission\n         fields = '__all__'\n"
+                },
+                {
+                    "date": 1744727093454,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,9 +5,9 @@\n \n class CollegeCustomUserRequestSerializers(serializers.ModelSerializer):\n     class Meta:\n         model = College\n-        fields = ['id', 'name']\n+        fields = ['id','slug' 'name']\n \n class CustomUserRequestSerializers(serializers.ModelSerializer):\n     college = CollegeCustomUserRequestSerializers(read_only=True)\n     class Meta:\n"
                 }
             ],
             "date": 1744690539814,
