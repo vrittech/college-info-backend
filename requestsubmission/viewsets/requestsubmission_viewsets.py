@@ -24,8 +24,17 @@ class requestsubmissionViewsets(viewsets.ModelViewSet):
     }
 
     def get_queryset(self):
-        queryset = super().get_queryset()
-        return queryset
+        if not self.request.user.is_authenticated:
+            return None  # Return None if the user is not authenticated
+        
+        queryset = super().get_queryset()  # Get the base queryset
+        
+        # TODO only superuser can view this data
+        if self.request.user.is_superuser:
+            return queryset  # Return the base queryset for superusers
+        else:
+            return queryset.filter(user=self.request.user)  # Filter queryset for non-superusers
+
 
     def get_serializer_class(self):
         if self.action in ['create', 'update', 'partial_update']:

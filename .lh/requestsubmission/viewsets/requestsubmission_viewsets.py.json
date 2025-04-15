@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 20,
+            "activePatchIndex": 25,
             "patches": [
                 {
                     "date": 1733741246630,
@@ -88,6 +88,26 @@
                 {
                     "date": 1744727966120,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,9 @@\n \n class requestsubmissionViewsets(viewsets.ModelViewSet):\n     serializer_class = RequestSubmissionListSerializers\n     permission_classes = [DynamicModelPermission]\n-    authentication_classes = [JWTAuthentication]\n+    # authentication_classes = [JWTAuthentication]\n     pagination_class = MyPageNumberPagination\n     queryset = RequestSubmission.objects.all().order_by('-id')\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n"
+                },
+                {
+                    "date": 1744728713772,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,11 +22,19 @@\n         'user': ['exact'],\n         'subject': ['exact'],\n     }\n \n-    def get_queryset(self):\n+  def get_queryset(self):\n         queryset = super().get_queryset()\n-        return queryset\n+        #TODO only super user can view this data\n+        if self.request.user.is_superuser:\n+            queryset = self.queryset\n+            return queryset\n+        else:\n+            queryset = self.queryset.filter(user=self.request.user)\n+            return queryset\n+        \n+        return None\n \n     def get_serializer_class(self):\n         if self.action in ['create', 'update', 'partial_update']:\n             return RequestSubmissionWriteSerializers\n"
+                },
+                {
+                    "date": 1744728720052,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,19 +22,19 @@\n         'user': ['exact'],\n         'subject': ['exact'],\n     }\n \n-  def get_queryset(self):\n+    def get_queryset(self):\n         queryset = super().get_queryset()\n-        #TODO only super user can view this data\n-        if self.request.user.is_superuser:\n-            queryset = self.queryset\n-            return queryset\n-        else:\n-            queryset = self.queryset.filter(user=self.request.user)\n-            return queryset\n-        \n-        return None\n+            #TODO only super user can view this data\n+            if self.request.user.is_superuser:\n+                queryset = self.queryset\n+                return queryset\n+            else:\n+                queryset = self.queryset.filter(user=self.request.user)\n+                return queryset\n+            \n+            return None\n \n     def get_serializer_class(self):\n         if self.action in ['create', 'update', 'partial_update']:\n             return RequestSubmissionWriteSerializers\n"
+                },
+                {
+                    "date": 1744728725730,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,19 +22,19 @@\n         'user': ['exact'],\n         'subject': ['exact'],\n     }\n \n-    def get_queryset(self):\n+  def get_queryset(self):\n         queryset = super().get_queryset()\n-            #TODO only super user can view this data\n-            if self.request.user.is_superuser:\n-                queryset = self.queryset\n-                return queryset\n-            else:\n-                queryset = self.queryset.filter(user=self.request.user)\n-                return queryset\n-            \n-            return None\n+        #TODO only super user can view this data\n+        if self.request.user.is_superuser:\n+            queryset = self.queryset\n+            return queryset\n+        else:\n+            queryset = self.queryset.filter(user=self.request.user)\n+            return queryset\n+        \n+        return None\n \n     def get_serializer_class(self):\n         if self.action in ['create', 'update', 'partial_update']:\n             return RequestSubmissionWriteSerializers\n"
+                },
+                {
+                    "date": 1744728734854,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,9 +22,10 @@\n         'user': ['exact'],\n         'subject': ['exact'],\n     }\n \n-  def get_queryset(self):\n+    def get_queryset(self):\n+        \n         queryset = super().get_queryset()\n         #TODO only super user can view this data\n         if self.request.user.is_superuser:\n             queryset = self.queryset\n"
+                },
+                {
+                    "date": 1744728816830,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,20 +23,20 @@\n         'subject': ['exact'],\n     }\n \n     def get_queryset(self):\n-        \n-        queryset = super().get_queryset()\n-        #TODO only super user can view this data\n-        if self.request.user.is_superuser:\n-            queryset = self.queryset\n-            return queryset\n-        else:\n-            queryset = self.queryset.filter(user=self.request.user)\n-            return queryset\n-        \n-        return None\n+    if not self.request.user.is_authenticated:\n+        return None  # Return None if the user is not authenticated\n+    \n+    queryset = super().get_queryset()  # Get the base queryset\n+    \n+    # TODO only superuser can view this data\n+    if self.request.user.is_superuser:\n+        return queryset  # Return the base queryset for superusers\n+    else:\n+        return queryset.filter(user=self.request.user)  # Filter queryset for non-superusers\n \n+\n     def get_serializer_class(self):\n         if self.action in ['create', 'update', 'partial_update']:\n             return RequestSubmissionWriteSerializers\n         elif self.action == 'retrieve':\n"
                 }
             ],
             "date": 1733741246630,
