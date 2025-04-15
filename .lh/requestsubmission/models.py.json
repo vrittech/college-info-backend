@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 9,
+            "activePatchIndex": 13,
             "patches": [
                 {
                     "date": 1733741080442,
@@ -44,6 +44,22 @@
                 {
                     "date": 1739344047400,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,6 +10,6 @@\n     def __str__(self):\n         return self.subject \n     class Meta:\n         permissions = [\n-            (\"manage_requestsubmission\", \"Manage Event Gallery\"),\n+            (\"manage_requestsubmission\", \"Manage Request Submission\"),\n         ]\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1744690241041,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,9 @@\n from django.db import models\n \n # Create your models here.\n class RequestSubmission(models.Model):\n+    \n     subject = models.CharField(max_length=255)\n     message =models.TextField()\n     created_date = models.DateField(auto_now_add=True)\n     updated_date = models.DateField(auto_now=True)\n"
+                },
+                {
+                    "date": 1744690336120,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,9 @@\n from django.db import models\n \n # Create your models here.\n class RequestSubmission(models.Model):\n-    \n+    user = \n     subject = models.CharField(max_length=255)\n     message =models.TextField()\n     created_date = models.DateField(auto_now_add=True)\n     updated_date = models.DateField(auto_now=True)\n"
+                },
+                {
+                    "date": 1744690344881,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,6 @@\n from django.db import models\n+from accounts.models import CustomUser\n \n # Create your models here.\n class RequestSubmission(models.Model):\n     user = \n"
+                },
+                {
+                    "date": 1744690355109,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,9 @@\n from accounts.models import CustomUser\n \n # Create your models here.\n class RequestSubmission(models.Model):\n-    user = \n+    user = models\n     subject = models.CharField(max_length=255)\n     message =models.TextField()\n     created_date = models.DateField(auto_now_add=True)\n     updated_date = models.DateField(auto_now=True)\n"
                 }
             ],
             "date": 1733741080442,

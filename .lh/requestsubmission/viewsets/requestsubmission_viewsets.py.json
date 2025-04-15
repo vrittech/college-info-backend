@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 9,
+            "activePatchIndex": 19,
             "patches": [
                 {
                     "date": 1733741246630,
@@ -44,6 +44,46 @@
                 {
                     "date": 1739509698470,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,9 @@\n from django_filters.rest_framework import DjangoFilterBackend\n from ..models import RequestSubmission\n from ..serializers.requestsubmission_serializers import RequestSubmissionListSerializers, RequestSubmissionRetrieveSerializers, RequestSubmissionWriteSerializers\n from ..utilities.importbase import *\n-from mainproj.\n+from mainproj.permissions impo\n \n class requestsubmissionViewsets(viewsets.ModelViewSet):\n     serializer_class = RequestSubmissionListSerializers\n     permission_classes = [requestsubmissionPermission]\n"
+                },
+                {
+                    "date": 1744690573721,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,13 +3,13 @@\n from django_filters.rest_framework import DjangoFilterBackend\n from ..models import RequestSubmission\n from ..serializers.requestsubmission_serializers import RequestSubmissionListSerializers, RequestSubmissionRetrieveSerializers, RequestSubmissionWriteSerializers\n from ..utilities.importbase import *\n-from mainproj.permissions impo\n+from mainproj.permissions import DynamicModelPermission\n \n class requestsubmissionViewsets(viewsets.ModelViewSet):\n     serializer_class = RequestSubmissionListSerializers\n-    permission_classes = [requestsubmissionPermission]\n+    permission_classes = [DynamicModelPermission]\n     authentication_classes = [JWTAuthentication]\n     pagination_class = MyPageNumberPagination\n     queryset = RequestSubmission.objects.all().order_by('-id')\n \n@@ -31,8 +31,13 @@\n             return RequestSubmissionWriteSerializers\n         elif self.action == 'retrieve':\n             return RequestSubmissionRetrieveSerializers\n         return super().get_serializer_class()\n+    \n+        def get_serializer_context(self):\n+        context = super().get_serializer_context()\n+        context.update({'request': self.request})  # 👈 Pass request to serializer\n+        return context\n \n     # @action(detail=False, methods=['get'], name=\"action_name\", url_path=\"url_path\")\n     # def action_name(self, request, *args, **kwargs):\n     #     return super().list(request, *args, **kwargs)\n"
+                },
+                {
+                    "date": 1744690580281,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -32,9 +32,9 @@\n         elif self.action == 'retrieve':\n             return RequestSubmissionRetrieveSerializers\n         return super().get_serializer_class()\n     \n-        def get_serializer_context(self):\n+    def get_serializer_context(self):\n         context = super().get_serializer_context()\n         context.update({'request': self.request})  # 👈 Pass request to serializer\n         return context\n \n"
+                },
+                {
+                    "date": 1744690586572,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -34,9 +34,9 @@\n         return super().get_serializer_class()\n     \n     def get_serializer_context(self):\n         context = super().get_serializer_context()\n-        context.update({'request': self.request})  # 👈 Pass request to serializer\n+        context.update({'request': self.request})  # Pass request to serializer\n         return context\n \n     # @action(detail=False, methods=['get'], name=\"action_name\", url_path=\"url_path\")\n     # def action_name(self, request, *args, **kwargs):\n"
+                },
+                {
+                    "date": 1744690652946,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,8 +18,9 @@\n     ordering_fields =  ['id','subject','description']\n \n     filterset_fields = {\n         'id': ['exact'],\n+        user\n         'subject': ['exact'],\n     }\n \n     def get_queryset(self):\n"
+                },
+                {
+                    "date": 1744690658581,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,9 +18,9 @@\n     ordering_fields =  ['id','subject','description']\n \n     filterset_fields = {\n         'id': ['exact'],\n-        user\n+        'user': ['exact'],\n         'subject': ['exact'],\n     }\n \n     def get_queryset(self):\n"
+                },
+                {
+                    "date": 1744690665122,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,9 +13,9 @@\n     pagination_class = MyPageNumberPagination\n     queryset = RequestSubmission.objects.all().order_by('-id')\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n-    search_fields = ['id','subject','description']\n+    search_fields = ['id','subject','description','']\n     ordering_fields =  ['id','subject','description']\n \n     filterset_fields = {\n         'id': ['exact'],\n"
+                },
+                {
+                    "date": 1744690672067,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,9 +13,9 @@\n     pagination_class = MyPageNumberPagination\n     queryset = RequestSubmission.objects.all().order_by('-id')\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n-    search_fields = ['id','subject','description','']\n+    search_fields = ['id','subject','description','user__username',''] \n     ordering_fields =  ['id','subject','description']\n \n     filterset_fields = {\n         'id': ['exact'],\n"
+                },
+                {
+                    "date": 1744690682342,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,9 +13,9 @@\n     pagination_class = MyPageNumberPagination\n     queryset = RequestSubmission.objects.all().order_by('-id')\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n-    search_fields = ['id','subject','description','user__username',''] \n+    search_fields = ['id','subject','description','user__username','user__'] \n     ordering_fields =  ['id','subject','description']\n \n     filterset_fields = {\n         'id': ['exact'],\n"
+                },
+                {
+                    "date": 1744690687972,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,9 +13,9 @@\n     pagination_class = MyPageNumberPagination\n     queryset = RequestSubmission.objects.all().order_by('-id')\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n-    search_fields = ['id','subject','description','user__username','user__'] \n+    search_fields = ['id','subject','description','user__username','user__first_name','user__last_name'] \n     ordering_fields =  ['id','subject','description']\n \n     filterset_fields = {\n         'id': ['exact'],\n"
+                },
+                {
+                    "date": 1744690715551,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,9 +13,9 @@\n     pagination_class = MyPageNumberPagination\n     queryset = RequestSubmission.objects.all().order_by('-id')\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n-    search_fields = ['id','subject','description','user__username','user__first_name','user__last_name'] \n+    search_fields = ['id','subject','description','user__username','user__first_name'] \n     ordering_fields =  ['id','subject','description']\n \n     filterset_fields = {\n         'id': ['exact'],\n"
                 }
             ],
             "date": 1733741246630,

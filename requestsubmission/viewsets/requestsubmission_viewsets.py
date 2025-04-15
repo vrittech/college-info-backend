@@ -14,11 +14,12 @@ class requestsubmissionViewsets(viewsets.ModelViewSet):
     queryset = RequestSubmission.objects.all().order_by('-id')
 
     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]
-    search_fields = ['id','subject','description']
+    search_fields = ['id','subject','description','user__username','user__first_name'] 
     ordering_fields =  ['id','subject','description']
 
     filterset_fields = {
         'id': ['exact'],
+        'user': ['exact'],
         'subject': ['exact'],
     }
 
@@ -32,6 +33,11 @@ class requestsubmissionViewsets(viewsets.ModelViewSet):
         elif self.action == 'retrieve':
             return RequestSubmissionRetrieveSerializers
         return super().get_serializer_class()
+    
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        context.update({'request': self.request})  # Pass request to serializer
+        return context
 
     # @action(detail=False, methods=['get'], name="action_name", url_path="url_path")
     # def action_name(self, request, *args, **kwargs):

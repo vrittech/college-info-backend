@@ -1,0 +1,22 @@
+{
+    "sourceFile": "requestsubmission/serializers/requestsubmission_serializers.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 1,
+            "patches": [
+                {
+                    "date": 1744690539814,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1744690550463,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,9 +13,9 @@\n \n class RequestSubmissionWriteSerializers(serializers.ModelSerializer):\n     class Meta:\n         model = RequestSubmission\n-        exclude = ['user']  # 👈 Exclude user from writable fields\n+        exclude = ['user']  # Exclude user from writable fields\n \n     def create(self, validated_data):\n         # user will be passed via context from the viewset\n         request = self.context.get('request')\n"
+                }
+            ],
+            "date": 1744690539814,
+            "name": "Commit-0",
+            "content": "from rest_framework import serializers\nfrom ..models import RequestSubmission\n\nclass RequestSubmissionListSerializers(serializers.ModelSerializer):\n    class Meta:\n        model = RequestSubmission\n        fields = '__all__'\n\nclass RequestSubmissionRetrieveSerializers(serializers.ModelSerializer):\n    class Meta:\n        model = RequestSubmission\n        fields = '__all__'\n\nclass RequestSubmissionWriteSerializers(serializers.ModelSerializer):\n    class Meta:\n        model = RequestSubmission\n        exclude = ['user']  # 👈 Exclude user from writable fields\n\n    def create(self, validated_data):\n        # user will be passed via context from the viewset\n        request = self.context.get('request')\n        if request and hasattr(request, 'user'):\n            validated_data['user'] = request.user\n        return super().create(validated_data)\n\n    def update(self, instance, validated_data):\n        # Don't allow user to be updated manually\n        validated_data.pop('user', None)\n        return super().update(instance, validated_data)\n"
+        }
+    ]
+}
