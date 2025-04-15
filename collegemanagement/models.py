@@ -47,7 +47,7 @@ class College(SEOFields):
     district = models.ForeignKey(District,on_delete=models.SET_NULL,related_name='college_district',null=True,blank=True)
     phone_number = models.CharField(max_length=20,null=True,blank=True)
     email = models.EmailField(max_length=255,null=True,blank=True)
-    affiliated = models.ForeignKey(Affiliation, on_delete=models.SET_NULL,related_name='college_affiliation',null=True,blank=True)
+    affiliated = models.ManyToManyField(Affiliation,blank='True')
     college_type = models.ForeignKey(CollegeType, on_delete=models.SET_NULL,related_name='college_type',null=True,blank=True)
     discipline = models.ManyToManyField(Discipline, related_name='college_discipline',blank=True)
     # social_media = models.ManyToManyField(CollegeSocialMedia,blank=True)

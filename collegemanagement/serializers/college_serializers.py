@@ -68,6 +68,7 @@ class DistrictSerializer(serializers.ModelSerializer):
 class AffiliationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Affiliation
+        ref_name = 'CollegeAffiliationSerializers'
         fields = ['id','slug', 'name', 'established_year','address']
 
 # Nested serializer for CollegeType
@@ -104,7 +105,7 @@ class SocialMediaSerializer(serializers.ModelSerializer):
 # Serializer for listing college details (basic view)
 class CollegeListSerializers(serializers.ModelSerializer):
     district = DistrictSerializer(read_only=True)  # Nested object for related model
-    affiliated = AffiliationSerializer(read_only=True)  # Nested object for related model
+    affiliated = AffiliationSerializer(many=True,read_only=True)  # Nested object for related model
     college_type = CollegeTypeSerializer(read_only=True)  # Nested object for related model
     discipline = DisciplineSerializer(many=True,read_only=True)  # Nested objects for ManyToMany
     social_media = SocialMediaSerializer(many=True,read_only=True)  # Nested objects for ManyToMany
@@ -121,7 +122,7 @@ class CollegeListSerializers(serializers.ModelSerializer):
 # Serializer for retrieving complete college details (detailed view)
 class CollegeRetrieveSerializers(serializers.ModelSerializer):
     district = DistrictSerializer(read_only=True)  # Nested object for related model
-    affiliated = AffiliationSerializer(read_only=True)  # Nested object for related model
+    affiliated = AffiliationSerializer(many=True,read_only=True)  # Nested object for related model
     college_type = CollegeTypeSerializer(read_only=True)  # Nested object for related model
     discipline = DisciplineSerializer(many=True,read_only=True)  # Nested objects for ManyToMany
     social_media = SocialMediaSerializer(many=True,read_only=True)  # Nested objects for ManyToMany
@@ -146,7 +147,7 @@ class CollegeWriteSerializers(serializers.ModelSerializer):
     def to_internal_value(self, data):
             """Convert certification input from string to list using str_to_list."""
             data = str_to_list(data, 'discipline')  # Convert string to list for certification
-            # data = str_to_list(data, 'facilities')  
+            data = str_to_list(data, 'affiliated')  
             return super().to_internal_value(data)
 
     def create(self, validated_data):
@@ -156,9 +157,15 @@ class CollegeWriteSerializers(serializers.ModelSerializer):
         # ✅ Convert and clean discipline_ids
         request_data = str_to_list(request.data, "discipline")
         discipline_ids = request_data.get("discipline", [])
+        
+        # ✅ Convert and clean affiliated_ids
+        request_data = str_to_list(request.data, "affiliated")
+        affiliated_ids = request_data.get("affiliated", [])
+        print("affiliated_ids@############", affiliated_ids)
 
         # ✅ Remove ManyToMany fields from validated_data
         validated_data.pop("discipline", None)
+        validated_data.pop("affiliated", None)
 
         # ✅ Create College instance
         college = College.objects.create(**validated_data)
@@ -166,36 +173,44 @@ class CollegeWriteSerializers(serializers.ModelSerializer):
         # ✅ Set ManyToMany relationships, ensuring only valid IDs are used
         if discipline_ids:
             college.discipline.set(Discipline.objects.filter(id__in=discipline_ids))
+        
+        # ✅ Set ManyToMany relationships for affiliated
+        if affiliated_ids:
+            print("affiliated!!!!!!!!!", affiliated_ids)
+            college.affiliated.set(Affiliation.objects.filter(id__in=affiliated_ids))
 
         return college
+
 
     def update(self, instance, validated_data):
         """Handles updating a college and returns full objects in response."""
         request = self.context.get("request")
 
-        # ✅ Ensure discipline and facilities are properly formatted
+        # ✅ Ensure discipline and affiliated are properly formatted
         request_data = str_to_list(request.data, "discipline")
-        # request_data = str_to_list(request_data, "facilities")
-
+        request_data = str_to_list(request.data, "affiliated")
+        
         discipline_ids = request_data.get("discipline", [])
-        # facilities_ids = request_data.get("facilities", [])
+        affiliated_ids = request_data.get("affiliated", [])
 
         # ✅ Exclude ManyToMany fields from direct assignment
-        many_to_many_fields = {"discipline"}
+        many_to_many_fields = {"discipline", "affiliated"}
 
         for attr, value in validated_data.items():
             if attr not in many_to_many_fields:  # ✅ Skip ManyToMany fields
                 setattr(instance, attr, value)
         instance.save()
 
-        # ✅ Update ManyToMany relationships separately
+        # ✅ Update ManyToMany relationships separately for discipline
         if discipline_ids:
             instance.discipline.set(Discipline.objects.filter(id__in=discipline_ids))
 
-        # if facilities_ids:
-        #     instance.facilities.set(Facility.objects.filter(id__in=facilities_ids))
+        # ✅ Update ManyToMany relationships separately for affiliated
+        if affiliated_ids:
+            instance.affiliated.set(Affiliation.objects.filter(id__in=affiliated_ids))
 
         return instance
+
 
 
 
@@ -209,12 +224,8 @@ class CollegeWriteSerializers(serializers.ModelSerializer):
 
         # Replace IDs with full nested objects for foreign key fields
         response["district"] = DistrictSerializer(instance.district).data
-        response["affiliated"] = AffiliationSerializer(instance.affiliated).data
+        response["affiliated"] = AffiliationSerializer(instance.affiliated.all(), many=True).data
         response["college_type"] = CollegeTypeSerializer(instance.college_type).data
-        response["step_counter"] = (
-            FormStepProgressSerializer(instance.step_counter).data if instance.step_counter else None
-        )
-
         # Replace IDs with full nested objects for many-to-many fields
         response["discipline"] = DisciplineSerializer(instance.discipline.all(), many=True).data
         # response["social_media"] = SocialMediaSerializer(instance.social_media.all(), many=True).data

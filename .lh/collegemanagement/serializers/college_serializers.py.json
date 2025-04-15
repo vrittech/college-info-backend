@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 179,
+            "activePatchIndex": 180,
             "patches": [
                 {
                     "date": 1733477116456,
@@ -724,6 +724,10 @@
                 {
                     "date": 1740996786868,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -153,9 +153,9 @@\n \n     class Meta:\n         model = College\n         fields = '__all__'\n-        read_\n+        read_only\n         \n     def to_internal_value(self, data):\n             \"\"\"Convert certification input from string to list using str_to_list.\"\"\"\n             data = str_to_list(data, 'discipline')  # Convert string to list for certification\n"
+                },
+                {
+                    "date": 1744707808039,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -186,9 +186,9 @@\n         # request_data = str_to_list(request_data, \"facilities\")\n \n         # facilities_ids = request_data.get(\"facilities\", [])\n         discipline_ids = request_data.get(\"discipline\", [])\n-        affiliated_ids = request_data.get(\"discipline\", [])\n+        affiliated_ids = request_data.get(\"af\", [])\n \n         # ✅ Exclude ManyToMany fields from direct assignment\n         many_to_many_fields = {\"discipline\",\"affiliated\"} \n \n"
                 }
             ],
             "date": 1733477116456,

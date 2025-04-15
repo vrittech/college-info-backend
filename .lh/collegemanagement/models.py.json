@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 271,
+            "activePatchIndex": 274,
             "patches": [
                 {
                     "date": 1727170911785,
@@ -1092,6 +1092,18 @@
                 {
                     "date": 1743745228260,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -43,12 +43,12 @@\n     is_verified = models.BooleanField(default=False)\n     established_date = models.DateField(null= True,blank=True)\n     website_link = models.CharField(max_length=510,null= True,blank=True)\n     address = models.CharField(max_length=255,null=True,blank=True)\n-    district = models.ForeignKey(District,on_delete=models.CASCADE,related_name='college_district',null=True,blank=True)\n+    district = models.ForeignKey(District,on_delete=models.SET_NULL,related_name='college_district',null=True,blank=True)\n     phone_number = models.CharField(max_length=20,null=True,blank=True)\n     email = models.EmailField(max_length=255,null=True,blank=True)\n-    affiliated = models.ForeignKey(Affiliation, on_delete=models.Set,related_name='college_affiliation',null=True,blank=True)\n+    affiliated = models.ForeignKey(Affiliation, on_delete=models.SET_NULL,related_name='college_affiliation',null=True,blank=True)\n     college_type = models.ForeignKey(CollegeType, on_delete=models.SET_NULL,related_name='college_type',null=True,blank=True)\n     discipline = models.ManyToManyField(Discipline, related_name='college_discipline',blank=True)\n     # social_media = models.ManyToManyField(CollegeSocialMedia,blank=True)\n     google_map_link = models.CharField(blank=True, null=True, max_length=1000)\n"
+                },
+                {
+                    "date": 1744707642017,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -46,9 +46,9 @@\n     address = models.CharField(max_length=255,null=True,blank=True)\n     district = models.ForeignKey(District,on_delete=models.SET_NULL,related_name='college_district',null=True,blank=True)\n     phone_number = models.CharField(max_length=20,null=True,blank=True)\n     email = models.EmailField(max_length=255,null=True,blank=True)\n-    affiliated = models.ForeignKey(Affiliation, on_delete=models.SET_NULL,related_name='college_affiliation',null=True,blank=True)\n+    affiliated = models.ManyToManyField(Affiliation, on_delete=models.SET_NULL,related_name='college_affiliation',null=True,blank=True)\n     college_type = models.ForeignKey(CollegeType, on_delete=models.SET_NULL,related_name='college_type',null=True,blank=True)\n     discipline = models.ManyToManyField(Discipline, related_name='college_discipline',blank=True)\n     # social_media = models.ManyToManyField(CollegeSocialMedia,blank=True)\n     google_map_link = models.CharField(blank=True, null=True, max_length=1000)\n"
+                },
+                {
+                    "date": 1744707649426,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -46,9 +46,9 @@\n     address = models.CharField(max_length=255,null=True,blank=True)\n     district = models.ForeignKey(District,on_delete=models.SET_NULL,related_name='college_district',null=True,blank=True)\n     phone_number = models.CharField(max_length=20,null=True,blank=True)\n     email = models.EmailField(max_length=255,null=True,blank=True)\n-    affiliated = models.ManyToManyField(Affiliation, on_delete=models.SET_NULL,related_name='college_affiliation',null=True,blank=True)\n+    affiliated = models.ManyToManyField(Affiliationrelated_name='college_affiliation',null=True,blank=True)\n     college_type = models.ForeignKey(CollegeType, on_delete=models.SET_NULL,related_name='college_type',null=True,blank=True)\n     discipline = models.ManyToManyField(Discipline, related_name='college_discipline',blank=True)\n     # social_media = models.ManyToManyField(CollegeSocialMedia,blank=True)\n     google_map_link = models.CharField(blank=True, null=True, max_length=1000)\n"
+                },
+                {
+                    "date": 1744707658127,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -46,9 +46,9 @@\n     address = models.CharField(max_length=255,null=True,blank=True)\n     district = models.ForeignKey(District,on_delete=models.SET_NULL,related_name='college_district',null=True,blank=True)\n     phone_number = models.CharField(max_length=20,null=True,blank=True)\n     email = models.EmailField(max_length=255,null=True,blank=True)\n-    affiliated = models.ManyToManyField(Affiliationrelated_name='college_affiliation',null=True,blank=True)\n+    affiliated = models.ManyToManyField(Affiliation,blank=)\n     college_type = models.ForeignKey(CollegeType, on_delete=models.SET_NULL,related_name='college_type',null=True,blank=True)\n     discipline = models.ManyToManyField(Discipline, related_name='college_discipline',blank=True)\n     # social_media = models.ManyToManyField(CollegeSocialMedia,blank=True)\n     google_map_link = models.CharField(blank=True, null=True, max_length=1000)\n"
                 }
             ],
             "date": 1727170911784,
