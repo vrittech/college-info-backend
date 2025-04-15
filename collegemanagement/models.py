@@ -90,7 +90,7 @@ class College(SEOFields):
     def get_profile_completion_percentage(self):
         # Required fields (must be filled)
         required_fields = [
-            'name', 'district', 'affiliated', 'college_type'
+            'name', 'district', 'college_type'
         ]
 
         # Non-required fields (optional but contribute)
@@ -103,6 +103,7 @@ class College(SEOFields):
         # Related fields (foreign keys and many-to-many relationships)
         related_fields = [
             'discipline',  # Many-to-many field
+            'affiliated',  # Many-to-many field
         ]
 
         # Calculate completion for required fields

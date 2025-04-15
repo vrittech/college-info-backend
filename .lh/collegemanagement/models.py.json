@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 274,
+            "activePatchIndex": 277,
             "patches": [
                 {
                     "date": 1727170911785,
@@ -1104,6 +1104,18 @@
                 {
                     "date": 1744707658127,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -46,9 +46,9 @@\n     address = models.CharField(max_length=255,null=True,blank=True)\n     district = models.ForeignKey(District,on_delete=models.SET_NULL,related_name='college_district',null=True,blank=True)\n     phone_number = models.CharField(max_length=20,null=True,blank=True)\n     email = models.EmailField(max_length=255,null=True,blank=True)\n-    affiliated = models.ManyToManyField(Affiliationrelated_name='college_affiliation',null=True,blank=True)\n+    affiliated = models.ManyToManyField(Affiliation,blank=)\n     college_type = models.ForeignKey(CollegeType, on_delete=models.SET_NULL,related_name='college_type',null=True,blank=True)\n     discipline = models.ManyToManyField(Discipline, related_name='college_discipline',blank=True)\n     # social_media = models.ManyToManyField(CollegeSocialMedia,blank=True)\n     google_map_link = models.CharField(blank=True, null=True, max_length=1000)\n"
+                },
+                {
+                    "date": 1744709327758,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -46,9 +46,9 @@\n     address = models.CharField(max_length=255,null=True,blank=True)\n     district = models.ForeignKey(District,on_delete=models.SET_NULL,related_name='college_district',null=True,blank=True)\n     phone_number = models.CharField(max_length=20,null=True,blank=True)\n     email = models.EmailField(max_length=255,null=True,blank=True)\n-    affiliated = models.ManyToManyField(Affiliation,blank=)\n+    affiliated = models.ManyToManyField(Affiliation,blank='True')\n     college_type = models.ForeignKey(CollegeType, on_delete=models.SET_NULL,related_name='college_type',null=True,blank=True)\n     discipline = models.ManyToManyField(Discipline, related_name='college_discipline',blank=True)\n     # social_media = models.ManyToManyField(CollegeSocialMedia,blank=True)\n     google_map_link = models.CharField(blank=True, null=True, max_length=1000)\n@@ -101,9 +101,10 @@\n         ]\n \n         # Related fields (foreign keys and many-to-many relationships)\n         related_fields = [\n-            'discipline',  # Many-to-many field\n+            'discipline',\n+            # Many-to-many field\n         ]\n \n         # Calculate completion for required fields\n         completed_required_fields = sum(1 for field in required_fields if getattr(self, field, None))\n"
+                },
+                {
+                    "date": 1744709340848,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -101,10 +101,10 @@\n         ]\n \n         # Related fields (foreign keys and many-to-many relationships)\n         related_fields = [\n-            'discipline',\n-            # Many-to-many field\n+            'discipline',  # Many-to-many field\n+            'affiliated',  # Many-to-many field\n         ]\n \n         # Calculate completion for required fields\n         completed_required_fields = sum(1 for field in required_fields if getattr(self, field, None))\n"
+                },
+                {
+                    "date": 1744709392117,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -89,9 +89,9 @@\n     @property\n     def get_profile_completion_percentage(self):\n         # Required fields (must be filled)\n         required_fields = [\n-            'name', 'district', 'affiliated', 'college_type'\n+            'name', 'district',  'college_type'\n         ]\n \n         # Non-required fields (optional but contribute)\n         non_required_fields = [\n"
                 }
             ],
             "date": 1727170911784,

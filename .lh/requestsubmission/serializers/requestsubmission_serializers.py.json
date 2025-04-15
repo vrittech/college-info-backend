@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 1,
+            "activePatchIndex": 11,
             "patches": [
                 {
                     "date": 1744690539814,
@@ -12,6 +12,46 @@
                 {
                     "date": 1744690550463,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,9 +13,9 @@\n \n class RequestSubmissionWriteSerializers(serializers.ModelSerializer):\n     class Meta:\n         model = RequestSubmission\n-        exclude = ['user']  # 👈 Exclude user from writable fields\n+        exclude = ['user']  # Exclude user from writable fields\n \n     def create(self, validated_data):\n         # user will be passed via context from the viewset\n         request = self.context.get('request')\n"
+                },
+                {
+                    "date": 1744726608467,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,7 @@\n from rest_framework import serializers\n from ..models import RequestSubmission\n+from accounts\n \n class RequestSubmissionListSerializers(serializers.ModelSerializer):\n     class Meta:\n         model = RequestSubmission\n"
+                },
+                {
+                    "date": 1744726617528,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n from rest_framework import serializers\n from ..models import RequestSubmission\n-from accounts\n+from accounts.models import CustomUser\n \n class RequestSubmissionListSerializers(serializers.ModelSerializer):\n     class Meta:\n         model = RequestSubmission\n"
+                },
+                {
+                    "date": 1744726627320,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,10 @@\n from rest_framework import serializers\n from ..models import RequestSubmission\n from accounts.models import CustomUser\n \n+class C\n+\n class RequestSubmissionListSerializers(serializers.ModelSerializer):\n     class Meta:\n         model = RequestSubmission\n         fields = '__all__'\n"
+                },
+                {
+                    "date": 1744726635755,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,9 @@\n from rest_framework import serializers\n from ..models import RequestSubmission\n from accounts.models import CustomUser\n \n-class C\n+class CustomUserRequestSerializers(serializers.ModelSerializer):\n \n class RequestSubmissionListSerializers(serializers.ModelSerializer):\n     class Meta:\n         model = RequestSubmission\n"
+                },
+                {
+                    "date": 1744726642051,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,8 +2,11 @@\n from ..models import RequestSubmission\n from accounts.models import CustomUser\n \n class CustomUserRequestSerializers(serializers.ModelSerializer):\n+    class Meta:\n+        model = CustomUser\n+        fields = ['id', 'email', 'first_name', 'last_name']\n \n class RequestSubmissionListSerializers(serializers.ModelSerializer):\n     class Meta:\n         model = RequestSubmission\n"
+                },
+                {
+                    "date": 1744726669870,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,9 +4,9 @@\n \n class CustomUserRequestSerializers(serializers.ModelSerializer):\n     class Meta:\n         model = CustomUser\n-        fields = ['id', 'email', 'first_name', 'last_name']\n+        fields = ['id', 'email', 'first_name', 'last_name','']\n \n class RequestSubmissionListSerializers(serializers.ModelSerializer):\n     class Meta:\n         model = RequestSubmission\n"
+                },
+                {
+                    "date": 1744726675713,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,9 +4,9 @@\n \n class CustomUserRequestSerializers(serializers.ModelSerializer):\n     class Meta:\n         model = CustomUser\n-        fields = ['id', 'email', 'first_name', 'last_name','']\n+        fields = ['id', 'email', 'first_name', 'last_name','college__name']\n \n class RequestSubmissionListSerializers(serializers.ModelSerializer):\n     class Meta:\n         model = RequestSubmission\n"
+                },
+                {
+                    "date": 1744726690312,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,8 +7,9 @@\n         model = CustomUser\n         fields = ['id', 'email', 'first_name', 'last_name','college__name']\n \n class RequestSubmissionListSerializers(serializers.ModelSerializer):\n+    user = CustomUserRequestSerializers(read_only=True)\n     class Meta:\n         model = RequestSubmission\n         fields = '__all__'\n \n"
+                },
+                {
+                    "date": 1744726696861,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,8 +13,9 @@\n         model = RequestSubmission\n         fields = '__all__'\n \n class RequestSubmissionRetrieveSerializers(serializers.ModelSerializer):\n+    \n     class Meta:\n         model = RequestSubmission\n         fields = '__all__'\n \n"
+                },
+                {
+                    "date": 1744726702577,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,9 +13,9 @@\n         model = RequestSubmission\n         fields = '__all__'\n \n class RequestSubmissionRetrieveSerializers(serializers.ModelSerializer):\n-    \n+    user = CustomUserRequestSerializers(read_only=True)\n     class Meta:\n         model = RequestSubmission\n         fields = '__all__'\n \n"
                 }
             ],
             "date": 1744690539814,

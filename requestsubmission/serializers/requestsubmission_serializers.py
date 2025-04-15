@@ -1,12 +1,20 @@
 from rest_framework import serializers
 from ..models import RequestSubmission
+from accounts.models import CustomUser
+
+class CustomUserRequestSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = CustomUser
+        fields = ['id', 'email', 'first_name', 'last_name','college__name']
 
 class RequestSubmissionListSerializers(serializers.ModelSerializer):
+    user = CustomUserRequestSerializers(read_only=True)
     class Meta:
         model = RequestSubmission
         fields = '__all__'
 
 class RequestSubmissionRetrieveSerializers(serializers.ModelSerializer):
+    user = CustomUserRequestSerializers(read_only=True)
     class Meta:
         model = RequestSubmission
         fields = '__all__'
