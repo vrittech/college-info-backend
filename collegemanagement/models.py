@@ -38,9 +38,10 @@ class College(SEOFields):
     slug = models.SlugField(max_length=255, unique=True, null=True, blank=True)
     banner_image = models.ImageField(upload_to='college/banner/',null=True,blank=True)
     dp_image = models.ImageField(upload_to='college/dp/',null=True,blank=True)
+    priority = models.IntegerField(null=True,blank=True)
     name = models.CharField(max_length=255)
     is_show = models.BooleanField(default=False)
-    is_verified = models.BooleanField(default=False)
+    is_verified = models.BooleanField(default=False) #whether to do featured or not
     established_date = models.DateField(null= True,blank=True)
     website_link = models.CharField(max_length=510,null= True,blank=True)
     address = models.CharField(max_length=255,null=True,blank=True)

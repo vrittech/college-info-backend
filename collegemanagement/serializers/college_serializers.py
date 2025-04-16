@@ -144,11 +144,33 @@ class CollegeWriteSerializers(serializers.ModelSerializer):
         model = College
         fields = '__all__'
         
+    def validate_priority(self, value):
+        """
+        Validate that priority is unique when not null/blank.
+        Allow null/blank values but enforce uniqueness for non-null values.
+        """
+        if value is None or value == '':
+            return value
+            
+        # Get the instance being updated (if it exists)
+        instance = getattr(self, 'instance', None)
+        
+        # Check for duplicates excluding the current instance
+        queryset = College.objects.filter(priority=value)
+        if instance and instance.pk:
+            queryset = queryset.exclude(pk=instance.pk)
+        
+        if queryset.exists():
+            raise serializers.ValidationError("A college with this priority already exists.")
+        
+        return value
+        
     def to_internal_value(self, data):
             """Convert certification input from string to list using str_to_list."""
             data = str_to_list(data, 'discipline')  # Convert string to list for certification
             data = str_to_list(data, 'affiliated')  
             return super().to_internal_value(data)
+        
 
     def create(self, validated_data):
         """Handles creating a college and returns full objects in response."""
@@ -161,7 +183,6 @@ class CollegeWriteSerializers(serializers.ModelSerializer):
         # ✅ Convert and clean affiliated_ids
         request_data = str_to_list(request.data, "affiliated")
         affiliated_ids = request_data.get("affiliated", [])
-        print("affiliated_ids@############", affiliated_ids)
 
         # ✅ Remove ManyToMany fields from validated_data
         validated_data.pop("discipline", None)
@@ -176,7 +197,6 @@ class CollegeWriteSerializers(serializers.ModelSerializer):
         
         # ✅ Set ManyToMany relationships for affiliated
         if affiliated_ids:
-            print("affiliated!!!!!!!!!", affiliated_ids)
             college.affiliated.set(Affiliation.objects.filter(id__in=affiliated_ids))
 
         return college
@@ -208,14 +228,8 @@ class CollegeWriteSerializers(serializers.ModelSerializer):
         # ✅ Update ManyToMany relationships separately for affiliated
         if affiliated_ids:
             instance.affiliated.set(Affiliation.objects.filter(id__in=affiliated_ids))
-
+            
         return instance
-
-
-
-
-
-
 
     def to_representation(self, instance):
         """Customize the response to include full objects for related fields."""
@@ -232,6 +246,9 @@ class CollegeWriteSerializers(serializers.ModelSerializer):
         # response["facilities"] = FacilitySerializer(instance.facilities.all(), many=True).data
 
         return response
+    
+    def validate(self, attrs):
+        return super().validate(attrs)
 
 
 class CollegeAdminWriteSerializers(serializers.ModelSerializer):

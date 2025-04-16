@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 277,
+            "activePatchIndex": 281,
             "patches": [
                 {
                     "date": 1727170911785,
@@ -1116,6 +1116,22 @@
                 {
                     "date": 1744709392117,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -89,9 +89,9 @@\n     @property\n     def get_profile_completion_percentage(self):\n         # Required fields (must be filled)\n         required_fields = [\n-            'name', 'district', 'affiliated', 'college_type'\n+            'name', 'district',  'college_type'\n         ]\n \n         # Non-required fields (optional but contribute)\n         non_required_fields = [\n"
+                },
+                {
+                    "date": 1744784397730,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -37,8 +37,9 @@\n     public_id = models.UUIDField(default=uuid.uuid4,editable=False,unique=True)\n     slug = models.SlugField(max_length=255, unique=True, null=True, blank=True)\n     banner_image = models.ImageField(upload_to='college/banner/',null=True,blank=True)\n     dp_image = models.ImageField(upload_to='college/dp/',null=True,blank=True)\n+    prio\n     name = models.CharField(max_length=255)\n     is_show = models.BooleanField(default=False)\n     is_verified = models.BooleanField(default=False)\n     established_date = models.DateField(null= True,blank=True)\n@@ -89,9 +90,9 @@\n     @property\n     def get_profile_completion_percentage(self):\n         # Required fields (must be filled)\n         required_fields = [\n-            'name', 'district',  'college_type'\n+            'name', 'district', 'college_type'\n         ]\n \n         # Non-required fields (optional but contribute)\n         non_required_fields = [\n"
+                },
+                {
+                    "date": 1744785373089,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -37,9 +37,9 @@\n     public_id = models.UUIDField(default=uuid.uuid4,editable=False,unique=True)\n     slug = models.SlugField(max_length=255, unique=True, null=True, blank=True)\n     banner_image = models.ImageField(upload_to='college/banner/',null=True,blank=True)\n     dp_image = models.ImageField(upload_to='college/dp/',null=True,blank=True)\n-    prio\n+    priority = models.IntegerField()\n     name = models.CharField(max_length=255)\n     is_show = models.BooleanField(default=False)\n     is_verified = models.BooleanField(default=False)\n     established_date = models.DateField(null= True,blank=True)\n"
+                },
+                {
+                    "date": 1744786857303,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -37,12 +37,12 @@\n     public_id = models.UUIDField(default=uuid.uuid4,editable=False,unique=True)\n     slug = models.SlugField(max_length=255, unique=True, null=True, blank=True)\n     banner_image = models.ImageField(upload_to='college/banner/',null=True,blank=True)\n     dp_image = models.ImageField(upload_to='college/dp/',null=True,blank=True)\n-    priority = models.IntegerField()\n+    priority = models.IntegerField(null=True,blank=True)\n     name = models.CharField(max_length=255)\n     is_show = models.BooleanField(default=False)\n-    is_verified = models.BooleanField(default=False)\n+    is_verified = models.BooleanField(default=False) #whether to do \n     established_date = models.DateField(null= True,blank=True)\n     website_link = models.CharField(max_length=510,null= True,blank=True)\n     address = models.CharField(max_length=255,null=True,blank=True)\n     district = models.ForeignKey(District,on_delete=models.SET_NULL,related_name='college_district',null=True,blank=True)\n"
+                },
+                {
+                    "date": 1744786863558,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -40,9 +40,9 @@\n     dp_image = models.ImageField(upload_to='college/dp/',null=True,blank=True)\n     priority = models.IntegerField(null=True,blank=True)\n     name = models.CharField(max_length=255)\n     is_show = models.BooleanField(default=False)\n-    is_verified = models.BooleanField(default=False) #whether to do \n+    is_verified = models.BooleanField(default=False) #whether to do featured or not\n     established_date = models.DateField(null= True,blank=True)\n     website_link = models.CharField(max_length=510,null= True,blank=True)\n     address = models.CharField(max_length=255,null=True,blank=True)\n     district = models.ForeignKey(District,on_delete=models.SET_NULL,related_name='college_district',null=True,blank=True)\n"
                 }
             ],
             "date": 1727170911784,

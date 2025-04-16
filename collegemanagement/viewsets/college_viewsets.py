@@ -18,6 +18,8 @@ from rest_framework.permissions import AllowAny
 from django.shortcuts import get_object_or_404
 from django.shortcuts import get_object_or_404
 from django.db.models import Q
+from django.db.models import Case, When, IntegerField
+
 
 
 class collegeViewsets(viewsets.ModelViewSet):
@@ -58,23 +60,58 @@ class collegeViewsets(viewsets.ModelViewSet):
         return get_object_or_404(queryset, slug=lookup_value)  # Otherwise, lookup by slug
 
     
-    def get_queryset(self):
-        queryset = super().get_queryset()
-        request = self.request
-        user = request.user
+    # def get_queryset(self):
+    #     queryset = super().get_queryset()
+    #     request = self.request
+    #     user = request.user
 
         
+    #     # Apply visibility filter for non-admin users in list/retrieve actions
+    #     if self.action in ['list', 'retrieve'] and not request.user.is_superuser:
+    #         queryset = queryset.filter(is_show=True)
+        
+    #     # Apply permission-based filtering
+    #     if user.is_superuser or user.has_perm('collegemanagement.manage_college'):
+    #         return queryset
+    #     elif request.user.has_perm('collegemanagement.change_college'):
+    #         return queryset.filter(user=request.user)
+        
+    #     return queryset.filter(is_show=True)  # Default case for unprivileged users
+    
+    def get_queryset(self):
+        # Start with base queryset
+        queryset = College.objects.all()
+        request = self.request
+        user = request.user
+        
         # Apply visibility filter for non-admin users in list/retrieve actions
-        if self.action in ['list', 'retrieve'] and not request.user.is_superuser:
+        if self.action in ['list', 'retrieve'] and not user.is_superuser:
             queryset = queryset.filter(is_show=True)
         
         # Apply permission-based filtering
         if user.is_superuser or user.has_perm('collegemanagement.manage_college'):
-            return queryset
-        elif request.user.has_perm('collegemanagement.change_college'):
-            return queryset.filter(user=request.user)
+            pass  # No additional filtering for superusers/managers
+        elif user.has_perm('collegemanagement.change_college'):
+            queryset = queryset.filter(user=user)
+        else:
+            queryset = queryset.filter(is_show=True)  # Default case for unprivileged users
         
-        return queryset.filter(is_show=True)  # Default case for unprivileged users
+        # Custom ordering - priority colleges first, then by created_date
+        if self.action == 'list':
+            queryset = queryset.order_by(
+                '-priority',  # Colleges with priority set come first (highest priority first)
+                '-created_date'  # Then by newest created date
+            )
+            # This ensures NULL priorities come after non-NULL ones
+            queryset = queryset.annotate(
+                priority_null=Case(
+                    When(priority__isnull=True, then=1),
+                    default=0,
+                    output_field=IntegerField()
+                )
+            ).order_by('priority_null', '-priority', '-created_date')
+        
+        return queryset
 
     def get_serializer_class(self):
         if self.action in ['create', 'update', 'partial_update']:
@@ -281,4 +318,71 @@ class collegeViewsets(viewsets.ModelViewSet):
             })
 
         return paginator.get_paginated_response(response_data) 
+    
+    
+    @action(detail=False, methods=['get', 'patch'], url_path='update-priorities')
+    def update_riorities(self, request, *args, **kwargs):
+        if request.method == 'GET':
+                queryset = self.filter_queryset(self.get_queryset())
+                page = self.paginate_queryset(queryset)
+                if page is not None:
+                    serializer = self.get_serializer(page, many=True)
+                    return self.get_paginated_response(serializer.data)
+                serializer = self.get_serializer(queryset, many=True)
+                return Response(serializer.data)
+        
+        elif request.method == 'PATCH':
+            # PATCH method - Update priorities (your existing code)
+            updates = request.data
+            
+            if not isinstance(updates, list):
+                return Response(
+                    {'error': 'Expected a list of college updates'},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+
+            # Validate all updates have IDs and priority
+            for item in updates:
+                if 'id' not in item or 'priority' not in item:
+                    return Response(
+                        {'error': 'Each item must contain both "id" and "priority"'},
+                        status=status.HTTP_400_BAD_REQUEST
+                    )
+
+            college_ids = [item['id'] for item in updates]
+            
+            # Get existing colleges (only those we need to update)
+            colleges = College.objects.filter(id__in=college_ids)
+            college_map = {college.id: college for college in colleges}
+
+            # Check for invalid IDs
+            invalid_ids = set(college_ids) - set(college_map.keys())
+            if invalid_ids:
+                return Response(
+                    {'error': f'Invalid college IDs: {invalid_ids}'},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+
+            # Apply updates
+            updated_colleges = []
+            for update in updates:
+                college = college_map[update['id']]
+                college.priority = update['priority']
+                updated_colleges.append(college)
+
+            # Bulk update only the priority field
+            College.objects.bulk_update(updated_colleges, ['priority'])
+
+            # Return the updated colleges
+            result = [
+                {
+                    'id': college.id,
+                    'name': college.name,
+                    'slug': college.slug,
+                    'priority': college.priority
+                }
+                for college in updated_colleges
+            ]
+
+            return Response(result, status=status.HTTP_200_OK)
 
