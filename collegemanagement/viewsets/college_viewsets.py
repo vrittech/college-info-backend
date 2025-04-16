@@ -318,70 +318,123 @@ class collegeViewsets(viewsets.ModelViewSet):
 
         return paginator.get_paginated_response(response_data) 
     
-    
+
     @action(detail=False, methods=['get', 'patch'], url_path='update-priorities')
-    def update_riorities(self, request, *args, **kwargs):
+    def update_priorities(self, request, *args, **kwargs):
         if request.method == 'GET':
-                queryset = self.filter_queryset(self.get_queryset())
-                page = self.paginate_queryset(queryset)
-                if page is not None:
-                    serializer = self.get_serializer(page, many=True)
-                    return self.get_paginated_response(serializer.data)
-                serializer = self.get_serializer(queryset, many=True)
-                return Response(serializer.data)
+            # Handle GET request - fetching data
+            queryset = self.filter_queryset(self.get_queryset())
+            page = self.paginate_queryset(queryset)
+            if page is not None:
+                serializer = self.get_serializer(page, many=True)
+                return self.get_paginated_response(serializer.data)
+            serializer = self.get_serializer(queryset, many=True)
+            return Response(serializer.data)
         
         elif request.method == 'PATCH':
-            # PATCH method - Update priorities 
-            updates = request.data
-            
-            if not isinstance(updates, list):
+            # PATCH method - Update a single college's priority
+            update = request.data  # Expecting a single update object, not a list
+
+            if not isinstance(update, dict):
                 return Response(
-                    {'error': 'Expected a list of college updates'},
+                    {'error': 'Expected an object for college update'},
                     status=status.HTTP_400_BAD_REQUEST
                 )
 
-            # Validate all updates have IDs and priority
-            for item in updates:
-                if 'id' not in item or 'priority' not in item:
-                    return Response(
-                        {'error': 'Each item must contain both "id" and "priority"'},
-                        status=status.HTTP_400_BAD_REQUEST
-                    )
-
-            college_ids = [item['id'] for item in updates]
-            
-            # Get existing colleges (only those we need to update)
-            colleges = College.objects.filter(id__in=college_ids)
-            college_map = {college.id: college for college in colleges}
-
-            # Check for invalid IDs
-            invalid_ids = set(college_ids) - set(college_map.keys())
-            if invalid_ids:
+            # Validate that the update contains both 'id' and 'priority'
+            if 'id' not in update or 'priority' not in update:
                 return Response(
-                    {'error': f'Invalid college IDs: {invalid_ids}'},
+                    {'error': 'Both "id" and "priority" must be provided'},
                     status=status.HTTP_400_BAD_REQUEST
                 )
 
-            # Apply updates
-            updated_colleges = []
-            for update in updates:
-                college = college_map[update['id']]
-                college.priority = update['priority']
-                updated_colleges.append(college)
+            # Get the college to be updated
+            try:
+                college = College.objects.get(id=update['id'])
+            except College.DoesNotExist:
+                return Response(
+                    {'error': f'College with ID {update["id"]} not found'},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
 
-            # Bulk update only the priority field
-            College.objects.bulk_update(updated_colleges, ['priority'])
+            # Update the college's priority
+            college.priority = update['priority']
+            college.save()  # Save the updated college
 
-            # Return the updated colleges
-            result = [
-                {
-                    'id': college.id,
-                    'name': college.name,
-                    'slug': college.slug,
-                    'priority': college.priority
-                }
-                for college in updated_colleges
-            ]
+            # Return the updated college data
+            result = {
+                'id': college.id,
+                'name': college.name,
+                'slug': college.slug,
+                'priority': college.priority
+            }
 
             return Response(result, status=status.HTTP_200_OK)
+
+    #TODO Bulk updates of priorities
+    # @action(detail=False, methods=['get', 'patch'], url_path='update-priorities')
+    # def update_riorities(self, request, *args, **kwargs):
+    #     if request.method == 'GET':
+    #             queryset = self.filter_queryset(self.get_queryset())
+    #             page = self.paginate_queryset(queryset)
+    #             if page is not None:
+    #                 serializer = self.get_serializer(page, many=True)
+    #                 return self.get_paginated_response(serializer.data)
+    #             serializer = self.get_serializer(queryset, many=True)
+    #             return Response(serializer.data)
+        
+    #     elif request.method == 'PATCH':
+    #         # PATCH method - Update priorities 
+    #         updates = request.data
+            
+    #         if not isinstance(updates, list):
+    #             return Response(
+    #                 {'error': 'Expected a list of college updates'},
+    #                 status=status.HTTP_400_BAD_REQUEST
+    #             )
+
+    #         # Validate all updates have IDs and priority
+    #         for item in updates:
+    #             if 'id' not in item or 'priority' not in item:
+    #                 return Response(
+    #                     {'error': 'Each item must contain both "id" and "priority"'},
+    #                     status=status.HTTP_400_BAD_REQUEST
+    #                 )
+
+    #         college_ids = [item['id'] for item in updates]
+            
+    #         # Get existing colleges (only those we need to update)
+    #         colleges = College.objects.filter(id__in=college_ids)
+    #         college_map = {college.id: college for college in colleges}
+
+    #         # Check for invalid IDs
+    #         invalid_ids = set(college_ids) - set(college_map.keys())
+    #         if invalid_ids:
+    #             return Response(
+    #                 {'error': f'Invalid college IDs: {invalid_ids}'},
+    #                 status=status.HTTP_400_BAD_REQUEST
+    #             )
+
+    #         # Apply updates
+    #         updated_colleges = []
+    #         for update in updates:
+    #             college = college_map[update['id']]
+    #             college.priority = update['priority']
+    #             updated_colleges.append(college)
+
+    #         # Bulk update only the priority field
+    #         College.objects.bulk_update(updated_colleges, ['priority'])
+
+    #         # Return the updated colleges
+    #         result = [
+    #             {
+    #                 'id': college.id,
+    #                 'name': college.name,
+    #                 'slug': college.slug,
+    #                 'priority': college.priority
+    #             }
+    #             for college in updated_colleges
+    #         ]
+
+    #         return Response(result, status=status.HTTP_200_OK)
 
