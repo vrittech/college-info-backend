@@ -352,6 +352,13 @@ class collegeViewsets(viewsets.ModelViewSet):
                     status=status.HTTP_400_BAD_REQUEST
                 )
 
+            # Check if the new priority already exists for another college
+            if College.objects.filter(priority=update['priority']).exists():
+                return Response(
+                    {'error': f'Priority {update["priority"]} is already assigned to another college'},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+
             # Get the college to be updated
             try:
                 college = College.objects.get(id=update['id'])
