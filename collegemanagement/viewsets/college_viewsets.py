@@ -346,18 +346,26 @@ class collegeViewsets(viewsets.ModelViewSet):
                 )
 
             # Validate that the update contains both 'id' and 'priority'
-            if 'id' not in update or 'priority' not in update:
+            if 'id' not in update:
                 return Response(
-                    {'error': 'Both "id" and "priority" must be provided'},
+                    {'error': '"id" must be provided'},
                     status=status.HTTP_400_BAD_REQUEST
                 )
 
-            # Check if the new priority already exists for another college
-            if College.objects.filter(priority=update['priority']).exists():
-                return Response(
-                    {'error': f'Priority {update["priority"]} is already assigned to another college'},
-                    status=status.HTTP_400_BAD_REQUEST
-                )
+            # Get the priority value (allow blank or null)
+            priority_value = update.get('priority', None)  # Defaults to None if not provided
+
+            # If priority is blank, set it to None (i.e., clear priority)
+            if priority_value == '':
+                priority_value = None
+
+            # If priority is not NULL, ensure it's unique
+            if priority_value is not None:
+                if College.objects.filter(priority=priority_value).exclude(id=update['id']).exists():
+                    return Response(
+                        {'error': f'Priority {priority_value} is already assigned to another college'},
+                        status=status.HTTP_400_BAD_REQUEST
+                    )
 
             # Get the college to be updated
             try:
@@ -369,7 +377,7 @@ class collegeViewsets(viewsets.ModelViewSet):
                 )
 
             # Update the college's priority
-            college.priority = update['priority']
+            college.priority = priority_value  # Set it to None if blank or NULL
             college.save()  # Save the updated college
 
             # Return the updated college data
