@@ -79,7 +79,7 @@ class collegeViewsets(viewsets.ModelViewSet):
     #     return queryset.filter(is_show=True)  # Default case for unprivileged users
     
     def get_queryset(self):
-        # Start with base queryset
+        # Start with base querys
         queryset = College.objects.all()
         request = self.request
         user = request.user
