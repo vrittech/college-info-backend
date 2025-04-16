@@ -96,18 +96,22 @@ class collegeViewsets(viewsets.ModelViewSet):
         else:
             queryset = queryset.filter(is_show=True)  # Default case for unprivileged users
         
+        # Get the highest priority in the database
+        max_priority = queryset.aggregate(Max('priority'))['priority__max'] or 0
+
         # Custom ordering - first by priority, then by verified status, and lastly by created_date
         if self.action == 'list':
             queryset = queryset.annotate(
                 priority_null=Case(
-                    When(priority__isnull=True, then=1),  # Handle NULL priority values
-                    default=0,
+                    When(priority__isnull=True, then=max_priority + 1),  # Assign a priority that is higher than any existing priority
+                    default=0,  # Normal priorities will be 0
                     output_field=IntegerField()
                 )
             ).order_by(
-                '-priority',           # First, colleges with the highest priority first
-                '-is_verified',        # Then, sort by verification status (true/false)
-                '-created_date'        # Finally, by the newest created date (latest first)
+                'priority_null',      # First, NULL priorities come after non-NULL ones
+                'priority',           # Then, colleges with the lowest priority first (highest priority)
+                '-is_verified',       # Then, sort by verification status (verified first)
+                '-created_date'       # Finally, by the newest created date (latest first)
             )
             
         return queryset
