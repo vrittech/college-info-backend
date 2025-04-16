@@ -208,6 +208,7 @@ class SendEmailVerificationLink(APIView):
         # Send the token via email
         subject = 'Email Verification Token'
         verify_url = f"{site_f}/user-verification-success?pk={encoded_pk}&token={token}"
+        # verify_url = f"https://admin.collegeinfonepal.com/otp?email={email}&otp={token}"
         subject = 'Email Verification Link '
         reset_verification = "verification"
         sendMail(email,verify_url,subject,reset_verification)
@@ -226,16 +227,15 @@ def sendMail(email, otp, subject, reset_verification):
             <table align="center" cellpadding="0" cellspacing="0" border="0" width="100%" style="max-width: 600px; font-family: Arial, sans-serif; background: #f5f5f5; padding: 20px; border-radius: 6px;">
                 <tr>
                     <td align="center" bgcolor="#FFFFFF" style="padding: 20px;">
-                        <img src="https://collegeinfoapi.vrittechnologies.com/media/gallery/images/College_Info_Nepal.png" alt="College Info Nepal Logo" width="150" style="display: block; margin: 0 auto;">
+                        <img src="https://media.collegeinfonepal.com/gallery/images/Default_Color_from_College_Info_Nepal.png" alt="College Info Nepal Logo" width="150" style="display: block; margin: 0 auto;">
                         <p style="color: #1CA3FD; font-weight: 600; font-size: 18px; margin-top: 20px;">College Info Nepal</p>
                         <p style="color: #1CA3FD; font-weight: 600; font-size: 18px; margin-top: 20px;">Please Verify Your Account</p>
                         <p style="text-align: center; font-weight: 400;">Use the OTP code below to verify your account:</p>
-                        <div style="font-size: 32px; font-weight: bold; letter-spacing: 15px; margin: 20px 0; display: inline-block; border: 2px dashed #042a44; padding: 10px 20px; border-radius: 10px; color: #1CA3FD;">{otp}</div>
-                        <a href="{reset_verification}" style="text-decoration: none; background: #1CA3FD; color: #FFFFFF; padding: 10px 20px; border-radius: 6px; display: inline-block; margin-top: 15px; font-weight: bold;">Verify Your Account</a>
+                        <div style="font-size: 32px; font-weight: bold; letter-spacing: 15px; margin: 20px 0; display: inline-block; border: 2px dashed #042a44; padding: 10px 20px; border-radius: 10px; color: #1CA3FD;">{otp}</div><br/>
+                        <a href="https://admin.collegeinfonepal.com/otp?email={email}&otp={otp}" style="text-decoration: none; background: #1CA3FD; color: #FFFFFF; padding: 10px 20px; border-radius: 6px; display: inline-block; margin-top: 15px; font-weight: bold;">Verify Your Account</a>
                         <p style="text-align: center; margin-top: 20px;">If you did not request this, please ignore this email.</p>
-                        <p style="text-align: center; margin-top: 20px;">For support, visit <a href="https://collegeinfonp.com/" style="text-decoration: none; color: #1CA3FD; font-weight: 600;">https://collegeinfonp.com/</a></p>
-                        <p style="margin: 0; text-align: center;"><span style="font-weight: 600;">Tel:</span> +977 01-5244366</p>
-                        <p style="margin: 0; text-align: center;"><span style="font-weight: 600;">Phone:</span> +977 9802348565 <span style="font-weight: 600; margin-left: 10px;">E-mail:</span> support@collegeinfonp.com</p>
+                        <p style="text-align: center; margin-top: 20px;">For support, visit <a href="https://collegeinfonepal.com/" style="text-decoration: none; color: #1CA3FD; font-weight: 600;">https://collegeinfonepal.com/</a></p>
+                        <p style="margin: 0; text-align: center;"><span style="font-weight: 600;">Phone:</span> <a href="tel:+977-9745450062">+977-9745450062</a> <span style="font-weight: 600; margin-left: 10px;">E-mail:</span> <a href="mailto:collegeinfonepal@gmail.com">collegeinfonepal@gmail.com</a></p>
                     </td>
                 </tr>
             </table>
@@ -247,15 +247,14 @@ def sendMail(email, otp, subject, reset_verification):
             <table align="center" cellpadding="0" cellspacing="0" border="0" width="100%" style="max-width: 600px; font-family: Arial, sans-serif; background: #f5f5f5; padding: 20px; border-radius: 6px;">
                 <tr>
                     <td align="center" bgcolor="#FFFFFF" style="padding: 20px;">
-                        <img src="https://collegeinfoapi.vrittechnologies.com/media/gallery/images/College_Info_Nepal.png" alt="College Info Nepal Logo" width="150" style="display: block; margin: 0 auto;">
+                        <img src="https://media.collegeinfonepal.com/gallery/images/Default_Color_from_College_Info_Nepal.png" alt="College Info Nepal Logo" width="150" style="display: block; margin: 0 auto;">
                         <p style="color: #1CA3FD; font-weight: 600; font-size: 18px; margin-top: 20px;">College Info Nepal</p>
                         <p style="color: #1CA3FD; font-weight: 600; font-size: 18px; margin-top: 20px;">Reset Your Password</p>
                         <p style="text-align: center; font-weight: 400;">Your OTP code to reset your password is:</p>
                         <div style="font-size: 32px; font-weight: bold; letter-spacing: 15px; margin: 20px 0; display: inline-block; border: 2px dashed #042a44; padding: 10px 20px; border-radius: 10px; color: #1CA3FD;">{otp}</div>
                         <p style="text-align: center; margin-top: 20px;">If you did not request this, please ignore this email.</p>
-                        <p style="text-align: center; margin-top: 20px;">For support, visit <a href="https://collegeinfonp.com/" style="text-decoration: none; color: #1CA3FD; font-weight: 600;">https://collegeinfonp.com/</a></p>
-                        <p style="margin: 0; text-align: center;"><span style="font-weight: 600;">Tel:</span> +977 01-5244366</p>
-                        <p style="margin: 0; text-align: center;"><span style="font-weight: 600;">Phone:</span> +977 9802348565 <span style="font-weight: 600; margin-left: 10px;">E-mail:</span> support@collegeinfonp.com</p>
+                        <p style="text-align: center; margin-top: 20px;">For support, visit <a href="https://collegeinfonepal.com/" style="text-decoration: none; color: #1CA3FD; font-weight: 600;">https://collegeinfonepal.com/</a></p>
+                        <p style="margin: 0; text-align: center;"><span style="font-weight: 600;">Phone:</span> <a href="tel:+977-9745450062">+977-9745450062</a> <span style="font-weight: 600; margin-left: 10px;">E-mail:</span> <a href="mailto:collegeinfonepal@gmail.com">collegeinfonepal@gmail.com</a></p>
                     </td>
                 </tr>
             </table>
@@ -397,7 +396,7 @@ class PasswordResetView(generics.GenericAPIView):
 
                     email_type = "reset_password"
                     
-                    subject = 'Everest Thrill Password Reset OTP'
+                    subject = 'College Info Nepal Password Reset OTP'
                     if '@' in email:
                         email = user.email
                         sendPasswordResetMail(email, otp,subject,email_type,user)
