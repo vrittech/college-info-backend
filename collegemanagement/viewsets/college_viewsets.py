@@ -18,7 +18,7 @@ from rest_framework.permissions import AllowAny
 from django.shortcuts import get_object_or_404
 from django.shortcuts import get_object_or_404
 from django.db.models import Q
-from django.db.models import Case, When, IntegerField
+from django.db.models import Case, When, IntegerField, Max
 
 
 
