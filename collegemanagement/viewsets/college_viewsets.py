@@ -96,21 +96,20 @@ class collegeViewsets(viewsets.ModelViewSet):
         else:
             queryset = queryset.filter(is_show=True)  # Default case for unprivileged users
         
-        # Custom ordering - priority colleges first, then by created_date
+        # Custom ordering - first by priority, then by verified status, and lastly by created_date
         if self.action == 'list':
-            queryset = queryset.order_by(
-                '-priority',  # Colleges with priority set come first (highest priority first)
-                '-created_date'  # Then by newest created date
-            )
-            # This ensures NULL priorities come after non-NULL ones
             queryset = queryset.annotate(
                 priority_null=Case(
-                    When(priority__isnull=True, then=1),
+                    When(priority__isnull=True, then=1),  # Handle NULL priority values
                     default=0,
                     output_field=IntegerField()
                 )
-            ).order_by('priority_null', '-priority', '-created_date')
-        
+            ).order_by(
+                '-priority',           # First, colleges with the highest priority first
+                '-is_verified',        # Then, sort by verification status (true/false)
+                '-created_date'        # Finally, by the newest created date (latest first)
+            )
+            
         return queryset
 
     def get_serializer_class(self):
@@ -332,7 +331,7 @@ class collegeViewsets(viewsets.ModelViewSet):
                 return Response(serializer.data)
         
         elif request.method == 'PATCH':
-            # PATCH method - Update priorities (your existing code)
+            # PATCH method - Update priorities 
             updates = request.data
             
             if not isinstance(updates, list):
