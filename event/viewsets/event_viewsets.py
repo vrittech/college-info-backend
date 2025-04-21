@@ -29,7 +29,7 @@ class eventViewsets(viewsets.ModelViewSet):
     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]
     search_fields = ['id', 'event_name', 'venue', 'category__name', 'organizer__name']  # Fields to search
     ordering_fields = ['id', 'event_name', 'start_date', 'end_date', 'is_featured_event']  # Fields to sort
-    ordering = ['-id']  # Default ordering
+    ordering = ['start_date']  # Default ordering
     filterset_class = EventFilter
     
     def get_object(self):

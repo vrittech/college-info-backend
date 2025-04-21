@@ -26,3 +26,4 @@ channels-redis
 django-storages==1.14.5
 boto3
 django-currentuser
+django-crontab

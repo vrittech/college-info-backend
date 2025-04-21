@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 90,
+            "activePatchIndex": 92,
             "patches": [
                 {
                     "date": 1733481372824,
@@ -368,6 +368,14 @@
                 {
                     "date": 1742275976058,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -57,31 +57,31 @@\n             return EventRetrieveSerializers\n         return super().get_serializer_class()\n     \n     def create(self, request, *args, **kwargs):\n-    serializer = self.get_serializer(data=request.data)\n-    serializer.is_valid(raise_exception=True)\n-    event_instance = serializer.save()\n+        serializer = self.get_serializer(data=request.data)\n+        serializer.is_valid(raise_exception=True)\n+        event_instance = serializer.save()\n \n-    # Use the retrieve serializer for response formatting\n-    response_serializer = EventRetrieveSerializers(event_instance, context={'request': request})\n-    return Response(response_serializer.data, status=status.HTTP_201_CREATED)\n+        # Use the retrieve serializer for response formatting\n+        response_serializer = EventRetrieveSerializers(event_instance, context={'request': request})\n+        return Response(response_serializer.data, status=status.HTTP_201_CREATED)\n \n-def update(self, request, *args, **kwargs):\n-    \"\"\"\n-    Handles PUT (full update) and PATCH (partial update).\n-    Ensures that new images and Many-to-Many relationships are updated correctly.\n-    \"\"\"\n-    partial = kwargs.pop('partial', False)\n-    instance = self.get_object()\n+    def update(self, request, *args, **kwargs):\n+        \"\"\"\n+        Handles PUT (full update) and PATCH (partial update).\n+        Ensures that new images and Many-to-Many relationships are updated correctly.\n+        \"\"\"\n+        partial = kwargs.pop('partial', False)\n+        instance = self.get_object()\n \n-    serializer = self.get_serializer(instance, data=request.data, partial=partial)\n-    serializer.is_valid(raise_exception=True)\n-    event_instance = serializer.save()\n+        serializer = self.get_serializer(instance, data=request.data, partial=partial)\n+        serializer.is_valid(raise_exception=True)\n+        event_instance = serializer.save()\n \n-    # Use the retrieve serializer for response formatting\n-    response_serializer = EventRetrieveSerializers(event_instance, context={'request': request})\n-    return Response(response_serializer.data, status=status.HTTP_200_OK)\n+        # Use the retrieve serializer for response formatting\n+        response_serializer = EventRetrieveSerializers(event_instance, context={'request': request})\n+        return Response(response_serializer.data, status=status.HTTP_200_OK)\n \n \n     # @action(detail=False, methods=['get'], name=\"action_name\", url_path=\"url_path\")\n     # def action_name(self, request, *args, **kwargs):\n"
+                },
+                {
+                    "date": 1745229427292,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -28,9 +28,9 @@\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     search_fields = ['id', 'event_name', 'venue', 'category__name', 'organizer__name']  # Fields to search\n     ordering_fields = ['id', 'event_name', 'start_date', 'end_date', 'is_featured_event']  # Fields to sort\n-    ordering = ['-id']  # Default ordering\n+    ordering = ['-start_date']  # Default ordering\n     filterset_class = EventFilter\n     \n     def get_object(self):\n         \"\"\"\n"
+                },
+                {
+                    "date": 1745229919250,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -28,9 +28,9 @@\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     search_fields = ['id', 'event_name', 'venue', 'category__name', 'organizer__name']  # Fields to search\n     ordering_fields = ['id', 'event_name', 'start_date', 'end_date', 'is_featured_event']  # Fields to sort\n-    ordering = ['-start_date']  # Default ordering\n+    ordering = ['start_date']  # Default ordering\n     filterset_class = EventFilter\n     \n     def get_object(self):\n         \"\"\"\n"
                 }
             ],
             "date": 1733481372824,

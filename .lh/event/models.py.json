@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 188,
+            "activePatchIndex": 190,
             "patches": [
                 {
                     "date": 1726568467190,
@@ -760,6 +760,14 @@
                 {
                     "date": 1741685246531,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -143,11 +143,7 @@\n         # Save the instance first to get a valid `image.url`\n         super().save(*args, **kwargs)\n \n         if self.is_featured_image and self.image:\n-            # Ensure SITE_URL is set in settings\n-            site_url = getattr(settings, \"SITE_URL\", \"https://base.collegeinfonepal.com\")  # Default fallback\n-            absolute_url = urljoin(site_url, self.image.url)  # Construct absolute URL\n-\n             # Save to event's featured_image field\n             self.event.featured_image =  self.image.url\n             self.event.save(update_fields=['featured_image'])  # Update only the featured_image field\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1745229939175,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -67,8 +67,9 @@\n     event_name = models.CharField(max_length=255)\n     start_date = models.DateTimeField(null=True,blank=True)\n     end_date = models.DateTimeField(null=True,blank=True)\n     duration = models.CharField(max_length=255)\n+    is\n     duration_type = models.CharField(max_length=255, blank=True, null=True)\n     TYPE_CHOICES = [\n         ('physical', 'Physical'),\n         ('online', 'Online'),\n"
+                },
+                {
+                    "date": 1745229944554,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -67,9 +67,9 @@\n     event_name = models.CharField(max_length=255)\n     start_date = models.DateTimeField(null=True,blank=True)\n     end_date = models.DateTimeField(null=True,blank=True)\n     duration = models.CharField(max_length=255)\n-    is\n+    is_expired = models.BooleanField(default=False)\n     duration_type = models.CharField(max_length=255, blank=True, null=True)\n     TYPE_CHOICES = [\n         ('physical', 'Physical'),\n         ('online', 'Online'),\n"
                 }
             ],
             "date": 1726568467190,

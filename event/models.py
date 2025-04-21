@@ -68,6 +68,7 @@ class Event(SEOFields):
     start_date = models.DateTimeField(null=True,blank=True)
     end_date = models.DateTimeField(null=True,blank=True)
     duration = models.CharField(max_length=255)
+    is_expired = models.BooleanField(default=False)
     duration_type = models.CharField(max_length=255, blank=True, null=True)
     TYPE_CHOICES = [
         ('physical', 'Physical'),

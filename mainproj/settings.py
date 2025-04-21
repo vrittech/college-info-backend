@@ -92,6 +92,7 @@ INSTALLED_APPS = [
     'notify',
     'setting',
     'customgallery',
+    'django_crontab',
     'popup',
     # 'notifications',  # Django Notifications HQ
     # 'channels',  # Required for real-time updates (Django Channels)
@@ -393,3 +394,7 @@ SMS_KEY_PASSWORD = ""
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 USE_X_FORWARDED_HOST = True
 SECURE_SSL_REDIRECT = True
+
+CRONJOBS = [
+    ('0 * * * *', 'event.management.commands.check_expired_events')
+]

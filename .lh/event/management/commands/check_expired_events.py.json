@@ -1,0 +1,26 @@
+{
+    "sourceFile": "event/management/commands/check_expired_events.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 2,
+            "patches": [
+                {
+                    "date": 1745230919136,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1745230924617,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,8 @@\n # management/commands/check_expired_events.py\n from django.core.management.base import BaseCommand\n from datetime import datetime\n-from your_app.models import Event  # replace 'your_app' with your app name\n+from event.models import Event  # replace 'your_app' with your app name\n \n class Command(BaseCommand):\n     help = 'Check and update expired events'\n \n"
+                },
+                {
+                    "date": 1745230930475,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,8 @@\n # management/commands/check_expired_events.py\n from django.core.management.base import BaseCommand\n from datetime import datetime\n-from event.models import Event  # replace 'your_app' with your app name\n+from event.models import Event  \n \n class Command(BaseCommand):\n     help = 'Check and update expired events'\n \n"
+                }
+            ],
+            "date": 1745230919136,
+            "name": "Commit-0",
+            "content": "# management/commands/check_expired_events.py\nfrom django.core.management.base import BaseCommand\nfrom datetime import datetime\nfrom your_app.models import Event  # replace 'your_app' with your app name\n\nclass Command(BaseCommand):\n    help = 'Check and update expired events'\n\n    def handle(self, *args, **kwargs):\n        expired_events = Event.objects.filter(end_date__lt=datetime.now(), is_expired=False)\n        \n        # Update is_expired to True for all expired events\n        expired_events.update(is_expired=True)\n        \n        self.stdout.write(self.style.SUCCESS(f'Successfully updated {expired_events.count()} expired events.'))\n"
+        }
+    ]
+}

@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 2,
+            "activePatchIndex": 4,
             "patches": [
                 {
                     "date": 1741154787264,
@@ -16,6 +16,14 @@
                 {
                     "date": 1741158253119,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n from django.db.models.signals import post_save\n from django.dispatch import receiver\n-from .models import Event\n+from .models import EventGallery\n \n @receiver(post_save, sender=Event)\n def set_position_same_as_id(sender, instance, created, **kwargs):\n     if created and instance.position != instance.id:\n"
+                },
+                {
+                    "date": 1745230343473,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,25 @@\n from django.db.models.signals import post_save\n from django.dispatch import receiver\n from .models import EventGallery\n \n-@receiver(post_save, sender=Event)\n+@receiver(post_save, sender=EventGallery)\n def set_position_same_as_id(sender, instance, created, **kwargs):\n     if created and instance.position != instance.id:\n         instance.position = instance.id\n         instance.save()\n+# signals.py\n+from django.db.models.signals import pre_save\n+from django.dispatch import receiver\n+from .models import Event\n+from datetime import datetime\n+\n+@receiver(pre_save, sender=Event)\n+def check_event_expiration(sender, instance, **kwargs):\n+    \"\"\"\n+    Update the is_expired field based on the end_date.\n+    This will be triggered whenever an Event is saved.\n+    \"\"\"\n+    if instance.end_date and instance.end_date < datetime.now():\n+        instance.is_expired = True\n+    else:\n+        instance.is_expired = False\n"
+                },
+                {
+                    "date": 1745230350309,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,18 +1,18 @@\n from django.db.models.signals import post_save\n from django.dispatch import receiver\n from .models import EventGallery\n+# signals.py\n+from django.db.models.signals import pre_save\n+from django.dispatch import receiver\n+from .models import Event\n+from datetime import datetime\n \n @receiver(post_save, sender=EventGallery)\n def set_position_same_as_id(sender, instance, created, **kwargs):\n     if created and instance.position != instance.id:\n         instance.position = instance.id\n         instance.save()\n-# signals.py\n-from django.db.models.signals import pre_save\n-from django.dispatch import receiver\n-from .models import Event\n-from datetime import datetime\n \n @receiver(pre_save, sender=Event)\n def check_event_expiration(sender, instance, **kwargs):\n     \"\"\"\n"
                 }
             ],
             "date": 1741154787264,
