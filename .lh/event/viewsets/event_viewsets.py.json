@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 92,
+            "activePatchIndex": 97,
             "patches": [
                 {
                     "date": 1733481372824,
@@ -376,6 +376,26 @@
                 {
                     "date": 1745229919250,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -28,9 +28,9 @@\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     search_fields = ['id', 'event_name', 'venue', 'category__name', 'organizer__name']  # Fields to search\n     ordering_fields = ['id', 'event_name', 'start_date', 'end_date', 'is_featured_event']  # Fields to sort\n-    ordering = ['-start_date']  # Default ordering\n+    ordering = ['start_date']  # Default ordering\n     filterset_class = EventFilter\n     \n     def get_object(self):\n         \"\"\"\n"
+                },
+                {
+                    "date": 1745231894495,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,9 +22,9 @@\n     serializer_class = EventListSerializers\n     permission_classes = [DynamicModelPermission]\n     # authentication_classes = [JWTAuthentication]\n     pagination_class = MyPageNumberPagination\n-    queryset = Event.objects.all().order_by('-id')\n+    queryset = Event.objects.filter(is_expired=False).order_by('start_date')\n     lookup_field = \"slug\"\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     search_fields = ['id', 'event_name', 'venue', 'category__name', 'organizer__name']  # Fields to search\n"
+                },
+                {
+                    "date": 1745231909702,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,9 +22,9 @@\n     serializer_class = EventListSerializers\n     permission_classes = [DynamicModelPermission]\n     # authentication_classes = [JWTAuthentication]\n     pagination_class = MyPageNumberPagination\n-    queryset = Event.objects.filter(is_expired=False).order_by('start_date')\n+    queryset = Event.objects.all()\n     lookup_field = \"slug\"\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     search_fields = ['id', 'event_name', 'venue', 'category__name', 'organizer__name']  # Fields to search\n"
+                },
+                {
+                    "date": 1745231992299,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -28,9 +28,9 @@\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     search_fields = ['id', 'event_name', 'venue', 'category__name', 'organizer__name']  # Fields to search\n     ordering_fields = ['id', 'event_name', 'start_date', 'end_date', 'is_featured_event']  # Fields to sort\n-    ordering = ['start_date']  # Default ordering\n+    ordering = ['is_expired', 'start_date']\n     filterset_class = EventFilter\n     \n     def get_object(self):\n         \"\"\"\n"
+                },
+                {
+                    "date": 1745232000193,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,9 +22,9 @@\n     serializer_class = EventListSerializers\n     permission_classes = [DynamicModelPermission]\n     # authentication_classes = [JWTAuthentication]\n     pagination_class = MyPageNumberPagination\n-    queryset = Event.objects.all()\n+    queryset = Event.objects.all().order\n     lookup_field = \"slug\"\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     search_fields = ['id', 'event_name', 'venue', 'category__name', 'organizer__name']  # Fields to search\n"
+                },
+                {
+                    "date": 1745232006305,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,9 +22,9 @@\n     serializer_class = EventListSerializers\n     permission_classes = [DynamicModelPermission]\n     # authentication_classes = [JWTAuthentication]\n     pagination_class = MyPageNumberPagination\n-    queryset = Event.objects.all().order\n+    queryset = Event.objects.all().order_by(s)\n     lookup_field = \"slug\"\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     search_fields = ['id', 'event_name', 'venue', 'category__name', 'organizer__name']  # Fields to search\n"
                 }
             ],
             "date": 1733481372824,

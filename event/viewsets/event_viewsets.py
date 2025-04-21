@@ -23,13 +23,13 @@ class eventViewsets(viewsets.ModelViewSet):
     permission_classes = [DynamicModelPermission]
     # authentication_classes = [JWTAuthentication]
     pagination_class = MyPageNumberPagination
-    queryset = Event.objects.all().order_by('-id')
+    queryset = Event.objects.all().order_by('start_date')
     lookup_field = "slug"
 
     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]
     search_fields = ['id', 'event_name', 'venue', 'category__name', 'organizer__name']  # Fields to search
     ordering_fields = ['id', 'event_name', 'start_date', 'end_date', 'is_featured_event']  # Fields to sort
-    ordering = ['start_date']  # Default ordering
+    ordering = ['is_expired', 'start_date']
     filterset_class = EventFilter
     
     def get_object(self):

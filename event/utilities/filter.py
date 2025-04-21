@@ -14,6 +14,7 @@ class EventFilter(filters.FilterSet):
     
     registration_link = filters.BooleanFilter(method='filter_registration_link')
     is_featured_event = filters.BooleanFilter()
+    is_expired = filters.BooleanFilter()
     
     category_name = filters.CharFilter(field_name='category__name', lookup_expr='icontains')
     category_id = NumberInFilter(field_name='category__id', lookup_expr='in')  # Accepts multiple IDs
@@ -32,7 +33,7 @@ class EventFilter(filters.FilterSet):
     class Meta:
         model = Event
         fields = [
-            'event_type', 'registration_link', 'is_featured_event',
+            'event_type', 'registration_link','is_expired', 'is_featured_event',
             'category_name', 'category_id', 'organizer_name', 'organizer_id',
             'registration_type', 'created_date', 'created_date__gte', 'created_date__lte',
             'updated_date', 'updated_date__gte', 'updated_date__lte',
