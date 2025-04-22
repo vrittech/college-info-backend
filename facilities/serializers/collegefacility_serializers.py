@@ -11,7 +11,7 @@ class CollegeSerializers(serializers.ModelSerializer):
 class FacilitySerializers(serializers.ModelSerializer):
     class Meta:
         model = Facility
-        fields = ['id', 'name']
+        fields = '__all__'
         ref_name = 'CollegeFacilitySerializers'
 
 class CollegeFacilityListSerializers(serializers.ModelSerializer):
