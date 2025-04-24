@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 25,
+            "activePatchIndex": 34,
             "patches": [
                 {
                     "date": 1739267387711,
@@ -108,6 +108,42 @@
                 {
                     "date": 1743481973461,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -49,6 +49,6 @@\n     def filter_by_affiliation_slug(self, queryset, name, value):\n         \"\"\"Filter by multiple facilities using comma-separated values\"\"\"\n         if value:\n             affiliation_slug = value.split(',') if ',' in value else [value]\n-            queryset = queryset.filter(affiliated__slug__in=affiliated_slug).distinct()\n+            queryset = queryset.filter(affiliation__slug__in=affiliation_slug).distinct()\n         return queryset\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1745486802903,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -50,5 +50,12 @@\n         \"\"\"Filter by multiple facilities using comma-separated values\"\"\"\n         if value:\n             affiliation_slug = value.split(',') if ',' in value else [value]\n             queryset = queryset.filter(affiliation__slug__in=affiliation_slug).distinct()\n+        return queryset\n+    \n+        def filter_by_courses(self, queryset, name, value):\n+        \"\"\"Filter by multiple facilities using comma-separated values\"\"\"\n+        if value:\n+            course_ids = value.split(',') if ',' in value else [value]\n+            queryset = queryset.filter(college_courses_and_fees__course__id__in=course_ids).distinct()\n         return queryset\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1745486810364,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -52,9 +52,9 @@\n             affiliation_slug = value.split(',') if ',' in value else [value]\n             queryset = queryset.filter(affiliation__slug__in=affiliation_slug).distinct()\n         return queryset\n     \n-        def filter_by_courses(self, queryset, name, value):\n+    def filter_by_colleges(self, queryset, name, value):\n         \"\"\"Filter by multiple facilities using comma-separated values\"\"\"\n         if value:\n             course_ids = value.split(',') if ',' in value else [value]\n             queryset = queryset.filter(college_courses_and_fees__course__id__in=course_ids).distinct()\n"
+                },
+                {
+                    "date": 1745486827220,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -56,6 +56,6 @@\n     def filter_by_colleges(self, queryset, name, value):\n         \"\"\"Filter by multiple facilities using comma-separated values\"\"\"\n         if value:\n             course_ids = value.split(',') if ',' in value else [value]\n-            queryset = queryset.filter(college_courses_and_fees__course__id__in=course_ids).distinct()\n+            queryset = queryset.filter(college_courses_and_fees__college__id__in=course_ids).distinct()\n         return queryset\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1745487012400,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -56,6 +56,6 @@\n     def filter_by_colleges(self, queryset, name, value):\n         \"\"\"Filter by multiple facilities using comma-separated values\"\"\"\n         if value:\n             course_ids = value.split(',') if ',' in value else [value]\n-            queryset = queryset.filter(college_courses_and_fees__college__id__in=course_ids).distinct()\n+            queryset = queryset.filter(college_courses_and_fees__college__id__in=college_ids).distinct()\n         return queryset\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1745487049540,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -55,7 +55,7 @@\n     \n     def filter_by_colleges(self, queryset, name, value):\n         \"\"\"Filter by multiple facilities using comma-separated values\"\"\"\n         if value:\n-            course_ids = value.split(',') if ',' in value else [value]\n+            college_ids = value.split(',') if ',' in value else [value]\n             queryset = queryset.filter(college_courses_and_fees__college__id__in=college_ids).distinct()\n         return queryset\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1745487075581,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -56,6 +56,6 @@\n     def filter_by_colleges(self, queryset, name, value):\n         \"\"\"Filter by multiple facilities using comma-separated values\"\"\"\n         if value:\n             college_ids = value.split(',') if ',' in value else [value]\n-            queryset = queryset.filter(college_courses_and_fees__college__id__in=college_ids).distinct()\n+            queryset = queryset.filter(courses_and_fees__college__id__in=college_ids).distinct()\n         return queryset\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1745487264007,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,9 +24,9 @@\n     eligibility_criteria = CharInFilter(field_name='eligibility_criteria', lookup_expr='in')\n     created_date = django_filters.DateFilter(field_name=\"created_date\", lookup_expr=\"exact\")\n     created_date__gte = django_filters.DateFilter(field_name=\"created_date\", lookup_expr=\"gte\")\n     created_date__lte = django_filters.DateFilter(field_name=\"created_date\", lookup_expr=\"lte\")\n-    \n+     courses = django_filters.CharFilter(method=\"filter_by_courses\")\n     updated_date = django_filters.DateFilter(field_name=\"updated_date\", lookup_expr=\"exact\")\n     updated_date__gte = django_filters.DateFilter(field_name=\"updated_date\", lookup_expr=\"gte\")\n     updated_date__lte = django_filters.DateFilter(field_name=\"updated_date\", lookup_expr=\"lte\")\n \n"
+                },
+                {
+                    "date": 1745487270832,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,9 +24,9 @@\n     eligibility_criteria = CharInFilter(field_name='eligibility_criteria', lookup_expr='in')\n     created_date = django_filters.DateFilter(field_name=\"created_date\", lookup_expr=\"exact\")\n     created_date__gte = django_filters.DateFilter(field_name=\"created_date\", lookup_expr=\"gte\")\n     created_date__lte = django_filters.DateFilter(field_name=\"created_date\", lookup_expr=\"lte\")\n-     courses = django_filters.CharFilter(method=\"filter_by_courses\")\n+    college = django_filters.CharFilter(method=\"filter_by_courses\")\n     updated_date = django_filters.DateFilter(field_name=\"updated_date\", lookup_expr=\"exact\")\n     updated_date__gte = django_filters.DateFilter(field_name=\"updated_date\", lookup_expr=\"gte\")\n     updated_date__lte = django_filters.DateFilter(field_name=\"updated_date\", lookup_expr=\"lte\")\n \n"
+                },
+                {
+                    "date": 1745487277640,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,9 +24,9 @@\n     eligibility_criteria = CharInFilter(field_name='eligibility_criteria', lookup_expr='in')\n     created_date = django_filters.DateFilter(field_name=\"created_date\", lookup_expr=\"exact\")\n     created_date__gte = django_filters.DateFilter(field_name=\"created_date\", lookup_expr=\"gte\")\n     created_date__lte = django_filters.DateFilter(field_name=\"created_date\", lookup_expr=\"lte\")\n-    college = django_filters.CharFilter(method=\"filter_by_courses\")\n+    college = django_filters.CharFilter(method=\"filter_by_colleges\")\n     updated_date = django_filters.DateFilter(field_name=\"updated_date\", lookup_expr=\"exact\")\n     updated_date__gte = django_filters.DateFilter(field_name=\"updated_date\", lookup_expr=\"gte\")\n     updated_date__lte = django_filters.DateFilter(field_name=\"updated_date\", lookup_expr=\"lte\")\n \n"
                 }
             ],
             "date": 1739267387711,

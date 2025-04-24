@@ -90,7 +90,7 @@ class EmailChangeGetOtpView(generics.GenericAPIView):
             otp = self.generate_otp(user.id)
 
             reset_verification = "reset_email"
-            subject = 'Pacific OTP'
+            subject = 'College Info Nepal OTP'
             if '@' in email:
                 email = user.email
                 sendMail(serializer.data["second_email"], otp,subject,reset_verification)

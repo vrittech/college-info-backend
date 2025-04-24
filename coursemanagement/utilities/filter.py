@@ -25,7 +25,7 @@ class CourseFilter(filters.FilterSet):
     created_date = django_filters.DateFilter(field_name="created_date", lookup_expr="exact")
     created_date__gte = django_filters.DateFilter(field_name="created_date", lookup_expr="gte")
     created_date__lte = django_filters.DateFilter(field_name="created_date", lookup_expr="lte")
-    
+    college = django_filters.CharFilter(method="filter_by_colleges")
     updated_date = django_filters.DateFilter(field_name="updated_date", lookup_expr="exact")
     updated_date__gte = django_filters.DateFilter(field_name="updated_date", lookup_expr="gte")
     updated_date__lte = django_filters.DateFilter(field_name="updated_date", lookup_expr="lte")
@@ -51,4 +51,11 @@ class CourseFilter(filters.FilterSet):
         if value:
             affiliation_slug = value.split(',') if ',' in value else [value]
             queryset = queryset.filter(affiliation__slug__in=affiliation_slug).distinct()
+        return queryset
+    
+    def filter_by_colleges(self, queryset, name, value):
+        """Filter by multiple facilities using comma-separated values"""
+        if value:
+            college_ids = value.split(',') if ',' in value else [value]
+            queryset = queryset.filter(courses_and_fees__college__id__in=college_ids).distinct()
         return queryset
