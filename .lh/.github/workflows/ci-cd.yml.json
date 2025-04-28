@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 62,
+            "activePatchIndex": 65,
             "patches": [
                 {
                     "date": 1733397109290,
@@ -256,6 +256,18 @@
                 {
                     "date": 1745231496769,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -69,14 +69,14 @@\n         #scp -r -o StrictHostKeyChecking=no ./* root@$SERVER_IP:$PROJECT_FOLDER/\n \n         # Run deployment commands on the server\n         echo \"Running deployment commands on the server\"\n-        # ssh -o StrictHostKeyChecking=no root@$SERVER_IP \"cd $PROJECT_FOLDER && virtualenv venv && source venv/bin/activate && pip install -r requirements.txt && python manage.py migrate && python manage.py collectstatic --noinput \"\n+        ssh -o StrictHostKeyChecking=no root@$SERVER_IP \"cd $PROJECT_FOLDER && virtualenv venv && source venv/bin/activate && pip install -r requirements.txt && python manage.py migrate && python manage.py collectstatic --noinput \"\n         \n         \n \n         #echo \"Running deployment commands on the server\" && \n-        # ssh -o StrictHostKeyChecking=no root@$SERVER_IP \"cd $PROJECT_FOLDER && virtualenv venv && source venv/bin/activate && pip install -r requirements.txt && python manage.py migrate && python manage.py collectstatic --noinput && screen -ls | grep $SCREEN_NAME | awk '{print $1}' | xargs -r -I{} screen -X -S {} quit && screen -dmS $SCREEN_NAME bash -c 'source venv/bin/activate && python manage.py runserver 0.0.0.0:$PORT'\"\n+        ssh -o StrictHostKeyChecking=no root@$SERVER_IP \"cd $PROJECT_FOLDER && virtualenv venv && source venv/bin/activate && pip install -r requirements.txt && python manage.py migrate && python manage.py collectstatic --noinput && screen -ls | grep $SCREEN_NAME | awk '{print $1}' | xargs -r -I{} screen -X -S {} quit && screen -dmS $SCREEN_NAME bash -c 'source venv/bin/activate && python manage.py runserver 0.0.0.0:$PORT'\"\n \n \n \n \n"
+                },
+                {
+                    "date": 1745849557331,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -21,8 +21,9 @@\n     - name: Upgrade pip and install setuptools\n       run: |\n         python -m pip install --upgrade pip\n         pip install --upgrade setuptools\n+        \n         # pip install autobahn\n         # pip install autobahn==23.6.1\n \n     - name: Install dependencies\n@@ -74,9 +75,9 @@\n         \n         \n \n         #echo \"Running deployment commands on the server\" && \n-        ssh -o StrictHostKeyChecking=no root@$SERVER_IP \"cd $PROJECT_FOLDER && virtualenv venv && source venv/bin/activate && pip install -r requirements.txt && python manage.py migrate && python manage.py collectstatic --noinput && screen -ls | grep $SCREEN_NAME | awk '{print $1}' | xargs -r -I{} screen -X -S {} quit && screen -dmS $SCREEN_NAME bash -c 'source venv/bin/activate && python manage.py runserver 0.0.0.0:$PORT'\"\n+        # ssh -o StrictHostKeyChecking=no root@$SERVER_IP \"cd $PROJECT_FOLDER && virtualenv venv && source venv/bin/activate && pip install -r requirements.txt && python manage.py migrate && python manage.py collectstatic --noinput && screen -ls | grep $SCREEN_NAME | awk '{print $1}' | xargs -r -I{} screen -X -S {} quit && screen -dmS $SCREEN_NAME bash -c 'source venv/bin/activate && python manage.py runserver 0.0.0.0:$PORT'\"\n \n \n \n \n"
+                },
+                {
+                    "date": 1745849565227,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,10 +20,10 @@\n \n     - name: Upgrade pip and install setuptools\n       run: |\n         python -m pip install --upgrade pip\n+        \n         pip install --upgrade setuptools\n-        \n         # pip install autobahn\n         # pip install autobahn==23.6.1\n \n     - name: Install dependencies\n"
+                },
+                {
+                    "date": 1745849581094,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,12 +20,12 @@\n \n     - name: Upgrade pip and install setuptools\n       run: |\n         python -m pip install --upgrade pip\n-        \n+        pip cache purge\n         pip install --upgrade setuptools\n         # pip install autobahn\n-        # pip install autobahn==23.6.1\n+        pip install autobahn==23.6.1\n \n     - name: Install dependencies\n       run: |\n         # python -m pip install --upgrade pip\n"
                 }
             ],
             "date": 1733397109290,
