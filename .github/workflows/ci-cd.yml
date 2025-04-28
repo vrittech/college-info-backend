@@ -24,7 +24,7 @@ jobs:
         pip cache purge
         pip install --upgrade setuptools
         pip install autobahn
-        pip install autobahn==23.6.1
+        # pip install autobahn==23.6.1
 
     - name: Install dependencies
       run: |

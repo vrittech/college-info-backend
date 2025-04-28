@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 65,
+            "activePatchIndex": 66,
             "patches": [
                 {
                     "date": 1733397109290,
@@ -268,6 +268,10 @@
                 {
                     "date": 1745849581094,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,12 +20,12 @@\n \n     - name: Upgrade pip and install setuptools\n       run: |\n         python -m pip install --upgrade pip\n-        \n+        pip cache purge\n         pip install --upgrade setuptools\n         # pip install autobahn\n-        # pip install autobahn==23.6.1\n+        pip install autobahn==23.6.1\n \n     - name: Install dependencies\n       run: |\n         # python -m pip install --upgrade pip\n"
+                },
+                {
+                    "date": 1745849730843,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,10 +22,10 @@\n       run: |\n         python -m pip install --upgrade pip\n         pip cache purge\n         pip install --upgrade setuptools\n-        # pip install autobahn\n-        pip install autobahn==23.6.1\n+        pip install autobahn\n+        # pip install autobahn==23.6.1\n \n     - name: Install dependencies\n       run: |\n         # python -m pip install --upgrade pip\n"
                 }
             ],
             "date": 1733397109290,
