@@ -20,7 +20,7 @@ gevent==24.2.1
 celery==5.4.0
 redis==5.0.0
 django-celery-beat
-django-notifications-hq
+# django-notifications-hq
 channels
 channels-redis
 django-storages==1.14.5
