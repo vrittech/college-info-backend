@@ -21,7 +21,6 @@ jobs:
     - name: Upgrade pip and install setuptools
       run: |
         python -m pip install --upgrade pip
-        pip cache purge
         pip install --upgrade setuptools
         pip install autobahn
         # pip install autobahn==23.6.1
