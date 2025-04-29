@@ -1,0 +1,38 @@
+{
+    "sourceFile": "level/serializers/sublevel_serializers.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 5,
+            "patches": [
+                {
+                    "date": 1745908222421,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1745908236773,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,12 @@\n from rest_framework import serializers\n from ..models import SubLevel, Level\n \n-class\n+class LevelSerializers(serializers.ModelSerializer):\n+    class Meta:\n+        model = Level\n+        fields = ['id', 'name','']\n+        ref_name = 'LevelSerializers'\n \n class SubLevelListSerializers(serializers.ModelSerializer):\n     class Meta:\n         model = SubLevel\n"
+                },
+                {
+                    "date": 1745908246976,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,9 @@\n \n class LevelSerializers(serializers.ModelSerializer):\n     class Meta:\n         model = Level\n-        fields = ['id', 'name','']\n+        fields = ['id', 'name', 'image']\n         ref_name = 'LevelSerializers'\n \n class SubLevelListSerializers(serializers.ModelSerializer):\n     class Meta:\n"
+                },
+                {
+                    "date": 1745908258861,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,9 @@\n \n class LevelSerializers(serializers.ModelSerializer):\n     class Meta:\n         model = Level\n-        fields = ['id', 'name', 'image']\n+        fields = ['id', 'name']\n         ref_name = 'LevelSerializers'\n \n class SubLevelListSerializers(serializers.ModelSerializer):\n     class Meta:\n"
+                },
+                {
+                    "date": 1745908264456,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,8 +7,9 @@\n         fields = ['id', 'name']\n         ref_name = 'LevelSerializers'\n \n class SubLevelListSerializers(serializers.ModelSerializer):\n+    level\n     class Meta:\n         model = SubLevel\n         fields = '__all__'\n \n"
+                },
+                {
+                    "date": 1745908277778,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,14 +7,15 @@\n         fields = ['id', 'name']\n         ref_name = 'LevelSerializers'\n \n class SubLevelListSerializers(serializers.ModelSerializer):\n-    level\n+    level = LevelSerializers(read_only=True)\n     class Meta:\n         model = SubLevel\n         fields = '__all__'\n \n class SubLevelRetrieveSerializers(serializers.ModelSerializer):\n+     level = LevelSerializers(read_only=True)\n     class Meta:\n         model = SubLevel\n         fields = '__all__'\n \n"
+                }
+            ],
+            "date": 1745908222421,
+            "name": "Commit-0",
+            "content": "from rest_framework import serializers\nfrom ..models import SubLevel, Level\n\nclass\n\nclass SubLevelListSerializers(serializers.ModelSerializer):\n    class Meta:\n        model = SubLevel\n        fields = '__all__'\n\nclass SubLevelRetrieveSerializers(serializers.ModelSerializer):\n    class Meta:\n        model = SubLevel\n        fields = '__all__'\n\nclass SubLevelWriteSerializers(serializers.ModelSerializer):\n    class Meta:\n        model = SubLevel\n        fields = '__all__'"
+        }
+    ]
+}
