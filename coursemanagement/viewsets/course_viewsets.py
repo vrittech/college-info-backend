@@ -20,7 +20,7 @@ class courseViewsets(viewsets.ModelViewSet):
     lookup_field = "slug"
 
     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]
-    search_fields = ['id','name', 'abbreviation','slug' ]
+    search_fields = ['id','name', 'abbreviation','slug','discipline__name', 'level__name', 'affiliation__name', 'faculty__name']
     ordering_fields = ['id','name', 'abbreviation' ,'created_date', 'updated_date' ]
     filterset_class= CourseFilter
     # ('name', 'abbreviation', 'duration', 'faculties', 'level', 'discipline', 'description', 'course_shortdescription', 'course_outcome', 'course_curriculum', 'eligibility_criteria', 'image', 'curriculum_file_upload', 'created_date', 'updated_date', )

@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 61,
+            "activePatchIndex": 66,
             "patches": [
                 {
                     "date": 1733481275577,
@@ -252,6 +252,26 @@
                 {
                     "date": 1745849308449,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n     queryset = Course.objects.all().order_by('-id')\n     lookup_field = \"slug\"\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n-    search_fields = ['id','name', 'abbreviation' ]\n+    search_fields = ['id','name', 'abbreviation', ]\n     ordering_fields = ['id','name', 'abbreviation' ,'created_date', 'updated_date' ]\n     filterset_class= CourseFilter\n     # ('name', 'abbreviation', 'duration', 'faculties', 'level', 'discipline', 'description', 'course_shortdescription', 'course_outcome', 'course_curriculum', 'eligibility_criteria', 'image', 'curriculum_file_upload', 'created_date', 'updated_date', )\n \n"
+                },
+                {
+                    "date": 1745901967622,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n     queryset = Course.objects.all().order_by('-id')\n     lookup_field = \"slug\"\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n-    search_fields = ['id','name', 'abbreviation', ]\n+    search_fields = ['id','name', 'abbreviation','slug','' ]\n     ordering_fields = ['id','name', 'abbreviation' ,'created_date', 'updated_date' ]\n     filterset_class= CourseFilter\n     # ('name', 'abbreviation', 'duration', 'faculties', 'level', 'discipline', 'description', 'course_shortdescription', 'course_outcome', 'course_curriculum', 'eligibility_criteria', 'image', 'curriculum_file_upload', 'created_date', 'updated_date', )\n \n"
+                },
+                {
+                    "date": 1745901981017,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n     queryset = Course.objects.all().order_by('-id')\n     lookup_field = \"slug\"\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n-    search_fields = ['id','name', 'abbreviation','slug','' ]\n+    search_fields = ['id','name', 'abbreviation','slug','disci' ]\n     ordering_fields = ['id','name', 'abbreviation' ,'created_date', 'updated_date' ]\n     filterset_class= CourseFilter\n     # ('name', 'abbreviation', 'duration', 'faculties', 'level', 'discipline', 'description', 'course_shortdescription', 'course_outcome', 'course_curriculum', 'eligibility_criteria', 'image', 'curriculum_file_upload', 'created_date', 'updated_date', )\n \n"
+                },
+                {
+                    "date": 1745901989642,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n     queryset = Course.objects.all().order_by('-id')\n     lookup_field = \"slug\"\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n-    search_fields = ['id','name', 'abbreviation','slug','disci' ]\n+    search_fields = ['id','name', 'abbreviation','slug','discipline__name', 'level__name', 'created_date', 'updated_date']\n     ordering_fields = ['id','name', 'abbreviation' ,'created_date', 'updated_date' ]\n     filterset_class= CourseFilter\n     # ('name', 'abbreviation', 'duration', 'faculties', 'level', 'discipline', 'description', 'course_shortdescription', 'course_outcome', 'course_curriculum', 'eligibility_criteria', 'image', 'curriculum_file_upload', 'created_date', 'updated_date', )\n \n"
+                },
+                {
+                    "date": 1745901995478,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n     queryset = Course.objects.all().order_by('-id')\n     lookup_field = \"slug\"\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n-    search_fields = ['id','name', 'abbreviation','slug','discipline__name', 'level__name', 'created_date', 'updated_date']\n+    search_fields = ['id','name', 'abbreviation','slug','discipline__name', 'level__name', ]\n     ordering_fields = ['id','name', 'abbreviation' ,'created_date', 'updated_date' ]\n     filterset_class= CourseFilter\n     # ('name', 'abbreviation', 'duration', 'faculties', 'level', 'discipline', 'description', 'course_shortdescription', 'course_outcome', 'course_curriculum', 'eligibility_criteria', 'image', 'curriculum_file_upload', 'created_date', 'updated_date', )\n \n"
+                },
+                {
+                    "date": 1745902006152,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n     queryset = Course.objects.all().order_by('-id')\n     lookup_field = \"slug\"\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n-    search_fields = ['id','name', 'abbreviation','slug','discipline__name', 'level__name', ]\n+    search_fields = ['id','name', 'abbreviation','slug','discipline__name', 'level__name', 'affiliation']\n     ordering_fields = ['id','name', 'abbreviation' ,'created_date', 'updated_date' ]\n     filterset_class= CourseFilter\n     # ('name', 'abbreviation', 'duration', 'faculties', 'level', 'discipline', 'description', 'course_shortdescription', 'course_outcome', 'course_curriculum', 'eligibility_criteria', 'image', 'curriculum_file_upload', 'created_date', 'updated_date', )\n \n"
                 }
             ],
             "date": 1733481275577,
