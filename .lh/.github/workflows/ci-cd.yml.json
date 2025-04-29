@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 67,
+            "activePatchIndex": 70,
             "patches": [
                 {
                     "date": 1733397109290,
@@ -276,6 +276,18 @@
                 {
                     "date": 1745902214832,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,9 +20,8 @@\n \n     - name: Upgrade pip and install setuptools\n       run: |\n         python -m pip install --upgrade pip\n-        pip cache purge\n         pip install --upgrade setuptools\n         pip install autobahn\n         # pip install autobahn==23.6.1\n \n"
+                },
+                {
+                    "date": 1745917941281,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,9 +27,9 @@\n \n     - name: Install dependencies\n       run: |\n         # python -m pip install --upgrade pip\n-        pip install -r requirements.txt --use-deprecated=legacy-resolver\n+        pip install -r requirements.txt\n \n     - name: Run tests\n       run: |\n         python manage.py test\n"
+                },
+                {
+                    "date": 1745917974013,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,13 +24,18 @@\n         pip install --upgrade setuptools\n         pip install autobahn\n         # pip install autobahn==23.6.1\n \n+        - name: Install system dependencies\n+      run: |\n+        sudo apt-get update\n+        sudo apt-get install -y build-essential libpq-dev python3-dev\n+\n     - name: Install dependencies\n       run: |\n-        # python -m pip install --upgrade pip\n         pip install -r requirements.txt\n \n+\n     - name: Run tests\n       run: |\n         python manage.py test\n \n"
+                },
+                {
+                    "date": 1745917979305,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,9 +24,9 @@\n         pip install --upgrade setuptools\n         pip install autobahn\n         # pip install autobahn==23.6.1\n \n-        - name: Install system dependencies\n+    - name: Install system dependencies\n       run: |\n         sudo apt-get update\n         sudo apt-get install -y build-essential libpq-dev python3-dev\n \n"
                 }
             ],
             "date": 1733397109290,
