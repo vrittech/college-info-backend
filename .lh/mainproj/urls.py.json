@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 27,
+            "activePatchIndex": 31,
             "patches": [
                 {
                     "date": 1739684343218,
@@ -116,6 +116,22 @@
                 {
                     "date": 1743919812109,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -70,9 +70,9 @@\n     'get': 'draggable'  # Map the 'get' request to the draggable action\n })\n \n router.registry.extend(requestsubmission_router.registry)\n-router.registry.extend(accounts_router.registry)\n+router.registry.extend(popup_router.registry)\n router.registry.extend(coursemanagement_router.registry)\n router.registry.extend(socialmedia_router.registry)\n # router.registry.extend(setupemail_router.registry)\n # router.registry.extend(semester_router.registry)\n"
+                },
+                {
+                    "date": 1746096763905,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -117,9 +117,9 @@\n       license=openapi.License(name=\"No License\"),\n       **{'x-logo': {'url': 'https://collegeinfoapi.vrittechnologies.com/media/gallery/images/College_Info_Nepal.png'}},\n    ),\n    public=True,\n-   permission_classes=[permissions.AllowAny],\n+   permission_classes=[permissions.is],\n )\n \n urlpatterns = [\n     path('admin/', admin.site.urls),\n"
+                },
+                {
+                    "date": 1746096769680,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -117,9 +117,9 @@\n       license=openapi.License(name=\"No License\"),\n       **{'x-logo': {'url': 'https://collegeinfoapi.vrittechnologies.com/media/gallery/images/College_Info_Nepal.png'}},\n    ),\n    public=True,\n-   permission_classes=[permissions.is],\n+   permission_classes=[permissions.isA],\n )\n \n urlpatterns = [\n     path('admin/', admin.site.urls),\n"
+                },
+                {
+                    "date": 1746096775211,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -117,9 +117,9 @@\n       license=openapi.License(name=\"No License\"),\n       **{'x-logo': {'url': 'https://collegeinfoapi.vrittechnologies.com/media/gallery/images/College_Info_Nepal.png'}},\n    ),\n    public=True,\n-   permission_classes=[permissions.isA],\n+   permission_classes=[permissions.IsAuthenticatedor],\n )\n \n urlpatterns = [\n     path('admin/', admin.site.urls),\n"
+                },
+                {
+                    "date": 1746096783775,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -117,9 +117,9 @@\n       license=openapi.License(name=\"No License\"),\n       **{'x-logo': {'url': 'https://collegeinfoapi.vrittechnologies.com/media/gallery/images/College_Info_Nepal.png'}},\n    ),\n    public=True,\n-   permission_classes=[permissions.IsAuthenticatedor],\n+   permission_classes=[permissions.IsAuthenticatedOrReadOnly],\n )\n \n urlpatterns = [\n     path('admin/', admin.site.urls),\n"
                 }
             ],
             "date": 1739684343218,

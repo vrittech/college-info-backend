@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 66,
+            "activePatchIndex": 67,
             "patches": [
                 {
                     "date": 1733481275577,
@@ -272,6 +272,10 @@
                 {
                     "date": 1745902006152,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n     queryset = Course.objects.all().order_by('-id')\n     lookup_field = \"slug\"\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n-    search_fields = ['id','name', 'abbreviation','slug','discipline__name', 'level__name', ]\n+    search_fields = ['id','name', 'abbreviation','slug','discipline__name', 'level__name', 'affiliation']\n     ordering_fields = ['id','name', 'abbreviation' ,'created_date', 'updated_date' ]\n     filterset_class= CourseFilter\n     # ('name', 'abbreviation', 'duration', 'faculties', 'level', 'discipline', 'description', 'course_shortdescription', 'course_outcome', 'course_curriculum', 'eligibility_criteria', 'image', 'curriculum_file_upload', 'created_date', 'updated_date', )\n \n"
+                },
+                {
+                    "date": 1746096722353,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,13 +15,13 @@\n     serializer_class = CourseListSerializers\n     permission_classes = [DynamicModelPermission]\n     # authentication_classes = [JWTAuthentication]\n     pagination_class = MyPageNumberPagination\n-    queryset = Course.objects.all().order_by('-id')\n+    queryset = Course.objects.all().order_by('-updated_date')\n     lookup_field = \"slug\"\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n-    search_fields = ['id','name', 'abbreviation','slug','discipline__name', 'level__name', 'affiliation']\n+    search_fields = ['id','name', 'abbreviation','slug','discipline__name', 'level__name', 'affiliation__name', 'faculty__name']\n     ordering_fields = ['id','name', 'abbreviation' ,'created_date', 'updated_date' ]\n     filterset_class= CourseFilter\n     # ('name', 'abbreviation', 'duration', 'faculties', 'level', 'discipline', 'description', 'course_shortdescription', 'course_outcome', 'course_curriculum', 'eligibility_criteria', 'image', 'curriculum_file_upload', 'created_date', 'updated_date', )\n \n"
                 }
             ],
             "date": 1733481275577,

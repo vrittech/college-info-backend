@@ -16,7 +16,7 @@ class courseViewsets(viewsets.ModelViewSet):
     permission_classes = [DynamicModelPermission]
     # authentication_classes = [JWTAuthentication]
     pagination_class = MyPageNumberPagination
-    queryset = Course.objects.all().order_by('-id')
+    queryset = Course.objects.all().order_by('-updated_date')
     lookup_field = "slug"
 
     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]
