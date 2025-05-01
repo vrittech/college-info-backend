@@ -117,8 +117,8 @@ schema_view = get_schema_view(
       license=openapi.License(name="No License"),
       **{'x-logo': {'url': 'https://collegeinfoapi.vrittechnologies.com/media/gallery/images/College_Info_Nepal.png'}},
    ),
-   public=True,
-   permission_classes=[permissions.IsAuthenticatedOrReadOnly],
+   public=False,
+   permission_classes=[permissions.IsAuthenticated],
 )
 
 urlpatterns = [

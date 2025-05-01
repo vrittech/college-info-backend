@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 31,
+            "activePatchIndex": 33,
             "patches": [
                 {
                     "date": 1739684343218,
@@ -132,6 +132,14 @@
                 {
                     "date": 1746096783775,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -117,9 +117,9 @@\n       license=openapi.License(name=\"No License\"),\n       **{'x-logo': {'url': 'https://collegeinfoapi.vrittechnologies.com/media/gallery/images/College_Info_Nepal.png'}},\n    ),\n    public=True,\n-   permission_classes=[permissions.IsAuthenticatedor],\n+   permission_classes=[permissions.IsAuthenticatedOrReadOnly],\n )\n \n urlpatterns = [\n     path('admin/', admin.site.urls),\n"
+                },
+                {
+                    "date": 1746097606552,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -117,9 +117,9 @@\n       license=openapi.License(name=\"No License\"),\n       **{'x-logo': {'url': 'https://collegeinfoapi.vrittechnologies.com/media/gallery/images/College_Info_Nepal.png'}},\n    ),\n    public=True,\n-   permission_classes=[permissions.IsAuthenticatedOrReadOnly],\n+   permission_classes=[permissions.IsAuthenticated],\n )\n \n urlpatterns = [\n     path('admin/', admin.site.urls),\n"
+                },
+                {
+                    "date": 1746097612746,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -116,9 +116,9 @@\n       contact=openapi.Contact(email=\"prashantkarna21@gmail.com\"),\n       license=openapi.License(name=\"No License\"),\n       **{'x-logo': {'url': 'https://collegeinfoapi.vrittechnologies.com/media/gallery/images/College_Info_Nepal.png'}},\n    ),\n-   public=True,\n+   public=False,\n    permission_classes=[permissions.IsAuthenticated],\n )\n \n urlpatterns = [\n"
                 }
             ],
             "date": 1739684343218,
