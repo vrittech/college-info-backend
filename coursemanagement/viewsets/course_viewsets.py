@@ -17,6 +17,26 @@ from django.core.cache import cache
 
 cache_time = 900 # 300 is 5 minute
 
+from functools import wraps
+from rest_framework import viewsets
+
+def conditional_cache(cache_time, key_prefix):
+    """
+    Apply cache_page decorator only if user is not authenticated.
+    """
+    def decorator(view_func):
+        @wraps(view_func)
+        def _wrapped_view(self, request, *args, **kwargs):
+            if not request.user.is_authenticated:
+                # User is not authenticated, apply caching
+                cached_view = method_decorator(cache_page(cache_time, key_prefix=key_prefix))(type(self).list)
+                return cached_view(self, request, *args, **kwargs)
+            else:
+                # User is authenticated, don't use cache
+                return view_func(self, request, *args, **kwargs)
+        return _wrapped_view
+    return decorator
+
 class courseViewsets(viewsets.ModelViewSet):
     serializer_class = CourseListSerializers
     permission_classes = [DynamicModelPermission]
@@ -67,10 +87,14 @@ class courseViewsets(viewsets.ModelViewSet):
         elif self.action == 'retrieve':
             return CourseRetrieveSerializers
         return super().get_serializer_class()
-    @method_decorator(cache_page(cache_time,key_prefix="Course"))
+    
+    # @method_decorator(cache_page(cache_time,key_prefix="Course"))
+    @conditional_cache(cache_time=cache_time, key_prefix="Course")  # Cache for 15 minutes
     def list(self, request, *args, **kwargs):
         print("using without cache")
         return super().list(request, *args, **kwargs)
+
+    
 
     # @action(detail=False, methods=['get'], name="action_name", url_path="url_path")
     # def action_name(self, request, *args, **kwargs):
