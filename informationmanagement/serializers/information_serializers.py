@@ -105,7 +105,7 @@ class InformationCategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = InformationCategory
         ref_name = 'information_categories'
-        fields = '__all__'
+        fields = ['id','slug', 'name', 'is_show', 'image']
 
 # 🔹 Serializers for File & Image Uploads
 class InformationGallerySerializer(serializers.ModelSerializer):

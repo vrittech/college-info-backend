@@ -17,6 +17,11 @@ from django.utils.http import urlsafe_base64_encode
 from django.urls import reverse
 import requests
 
+from django.views.decorators.cache import cache_page
+from django.utils.decorators import method_decorator
+
+cache_time = 1800  # 15 minutes
+
 
 class eventViewsets(viewsets.ModelViewSet):
     serializer_class = EventListSerializers
@@ -56,6 +61,38 @@ class eventViewsets(viewsets.ModelViewSet):
         elif self.action == 'retrieve':
             return EventRetrieveSerializers
         return super().get_serializer_class()
+    
+    # List action caching
+    def _list(self, request, *args, **kwargs):
+        """Actual list implementation"""
+        print("Event List - uncached version")
+        return super().list(request, *args, **kwargs)
+
+    @method_decorator(cache_page(cache_time, key_prefix="EventList"))
+    def _cached_list(self, request, *args, **kwargs):
+        """Cached version of list"""
+        return self._list(request, *args, **kwargs)
+
+    def list(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return self._cached_list(request, *args, **kwargs)
+        return self._list(request, *args, **kwargs)
+
+    # Retrieve action caching
+    def _retrieve(self, request, *args, **kwargs):
+        """Actual retrieve implementation"""
+        print("Event Retrieve - uncached version")
+        return super().retrieve(request, *args, **kwargs)
+
+    @method_decorator(cache_page(cache_time, key_prefix="EventRetrieve"))
+    def _cached_retrieve(self, request, *args, **kwargs):
+        """Cached version of retrieve"""
+        return self._retrieve(request, *args, **kwargs)
+
+    def retrieve(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return self._cached_retrieve(request, *args, **kwargs)
+        return self._retrieve(request, *args, **kwargs)
     
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)

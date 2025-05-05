@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 63,
+            "activePatchIndex": 65,
             "patches": [
                 {
                     "date": 1739869421688,
@@ -260,6 +260,14 @@
                 {
                     "date": 1746422310447,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -63,9 +63,9 @@\n     print(f\"Final receivers: {[r.email for r in receivers]}\")\n     return list(set(receivers))  # Remove duplicates\n \n def create_notification(instance, action, user):\n-    \n+    return True\n     \"\"\"\n     Generic function to create a notification with both casual and detailed messages.\n     \"\"\"\n     print(f\"Creating notification for {instance._meta.model_name} with action: {action}\")\n"
+                },
+                {
+                    "date": 1746436073117,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -63,9 +63,9 @@\n     print(f\"Final receivers: {[r.email for r in receivers]}\")\n     return list(set(receivers))  # Remove duplicates\n \n def create_notification(instance, action, user):\n-    return True\n+    # return True\n     \"\"\"\n     Generic function to create a notification with both casual and detailed messages.\n     \"\"\"\n     print(f\"Creating notification for {instance._meta.model_name} with action: {action}\")\n"
+                },
+                {
+                    "date": 1746437281067,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -63,9 +63,8 @@\n     print(f\"Final receivers: {[r.email for r in receivers]}\")\n     return list(set(receivers))  # Remove duplicates\n \n def create_notification(instance, action, user):\n-    # return True\n     \"\"\"\n     Generic function to create a notification with both casual and detailed messages.\n     \"\"\"\n     print(f\"Creating notification for {instance._meta.model_name} with action: {action}\")\n"
                 }
             ],
             "date": 1739869421688,

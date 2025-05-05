@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 97,
+            "activePatchIndex": 99,
             "patches": [
                 {
                     "date": 1733481372824,
@@ -396,6 +396,14 @@
                 {
                     "date": 1745232006305,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,9 +22,9 @@\n     serializer_class = EventListSerializers\n     permission_classes = [DynamicModelPermission]\n     # authentication_classes = [JWTAuthentication]\n     pagination_class = MyPageNumberPagination\n-    queryset = Event.objects.all().order\n+    queryset = Event.objects.all().order_by(s)\n     lookup_field = \"slug\"\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     search_fields = ['id', 'event_name', 'venue', 'category__name', 'organizer__name']  # Fields to search\n"
+                },
+                {
+                    "date": 1746435808017,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,9 +22,9 @@\n     serializer_class = EventListSerializers\n     permission_classes = [DynamicModelPermission]\n     # authentication_classes = [JWTAuthentication]\n     pagination_class = MyPageNumberPagination\n-    queryset = Event.objects.all().order_by(s)\n+    queryset = Event.objects.all().order_by('start_date')\n     lookup_field = \"slug\"\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     search_fields = ['id', 'event_name', 'venue', 'category__name', 'organizer__name']  # Fields to search\n@@ -56,8 +56,40 @@\n         elif self.action == 'retrieve':\n             return EventRetrieveSerializers\n         return super().get_serializer_class()\n     \n+    # List action caching\n+    def _list(self, request, *args, **kwargs):\n+        \"\"\"Actual list implementation\"\"\"\n+        print(\"Event List - uncached version\")\n+        return super().list(request, *args, **kwargs)\n+\n+    @method_decorator(cache_page(cache_time, key_prefix=\"EventList\"))\n+    def _cached_list(self, request, *args, **kwargs):\n+        \"\"\"Cached version of list\"\"\"\n+        return self._list(request, *args, **kwargs)\n+\n+    def list(self, request, *args, **kwargs):\n+        if not request.user.is_authenticated:\n+            return self._cached_list(request, *args, **kwargs)\n+        return self._list(request, *args, **kwargs)\n+\n+    # Retrieve action caching\n+    def _retrieve(self, request, *args, **kwargs):\n+        \"\"\"Actual retrieve implementation\"\"\"\n+        print(\"Event Retrieve - uncached version\")\n+        return super().retrieve(request, *args, **kwargs)\n+\n+    @method_decorator(cache_page(cache_time, key_prefix=\"EventRetrieve\"))\n+    def _cached_retrieve(self, request, *args, **kwargs):\n+        \"\"\"Cached version of retrieve\"\"\"\n+        return self._retrieve(request, *args, **kwargs)\n+\n+    def retrieve(self, request, *args, **kwargs):\n+        if not request.user.is_authenticated:\n+            return self._cached_retrieve(request, *args, **kwargs)\n+        return self._retrieve(request, *args, **kwargs)\n+    \n     def create(self, request, *args, **kwargs):\n         serializer = self.get_serializer(data=request.data)\n         serializer.is_valid(raise_exception=True)\n         event_instance = serializer.save()\n"
+                },
+                {
+                    "date": 1746435823330,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,9 +16,14 @@\n from django.utils.http import urlsafe_base64_encode\n from django.urls import reverse\n import requests\n \n+from django.views.decorators.cache import cache_page\n+from django.utils.decorators import method_decorator\n \n+cache_time = 900  # 15 minutes\n+\n+\n class eventViewsets(viewsets.ModelViewSet):\n     serializer_class = EventListSerializers\n     permission_classes = [DynamicModelPermission]\n     # authentication_classes = [JWTAuthentication]\n"
                 }
             ],
             "date": 1733481372824,

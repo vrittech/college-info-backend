@@ -64,7 +64,6 @@ def get_notification_receivers(instance, user):
     return list(set(receivers))  # Remove duplicates
 
 def create_notification(instance, action, user):
-    return True
     """
     Generic function to create a notification with both casual and detailed messages.
     """

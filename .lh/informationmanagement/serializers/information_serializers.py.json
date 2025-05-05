@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 193,
+            "activePatchIndex": 198,
             "patches": [
                 {
                     "date": 1733485840683,
@@ -780,6 +780,26 @@
                 {
                     "date": 1741685124786,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -218,12 +218,12 @@\n             return file_field\n \n         # If the field is a Django ImageField/FileField, get its URL\n         if hasattr(file_field, 'url'):\n-            return file_field.url\n+            return request.build_absolute_uri(file_field.url) if request else f\"{settings.MEDIA_URL}{file_field.url}\"\n \n         # Otherwise, assume it's a relative URL string and prepend MEDIA_URL\n-        return file_field\n+        return request.build_absolute_uri(file_field) if request else f\"{settings.MEDIA_URL}{file_field}\"\n \n \n     # def get_information_gallery(self, obj):\n     #     return [img.image.url for img in obj.information_gallery.all()]\n"
+                },
+                {
+                    "date": 1746437154572,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -104,9 +104,9 @@\n class InformationCategorySerializer(serializers.ModelSerializer):\n     class Meta:\n         model = InformationCategory\n         ref_name = 'information_categories'\n-        fields = '__all__'\n+        fields = \n \n # 🔹 Serializers for File & Image Uploads\n class InformationGallerySerializer(serializers.ModelSerializer):\n     class Meta:\n"
+                },
+                {
+                    "date": 1746437161860,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -104,9 +104,9 @@\n class InformationCategorySerializer(serializers.ModelSerializer):\n     class Meta:\n         model = InformationCategory\n         ref_name = 'information_categories'\n-        fields = \n+        fields = [('slug', 'name', 'is_show', 'image', )]\n \n # 🔹 Serializers for File & Image Uploads\n class InformationGallerySerializer(serializers.ModelSerializer):\n     class Meta:\n"
+                },
+                {
+                    "date": 1746437168498,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -104,9 +104,9 @@\n class InformationCategorySerializer(serializers.ModelSerializer):\n     class Meta:\n         model = InformationCategory\n         ref_name = 'information_categories'\n-        fields = [('slug', 'name', 'is_show', 'image', )]\n+        fields = ['id','slug', 'name', 'is_show', 'image', )]\n \n # 🔹 Serializers for File & Image Uploads\n class InformationGallerySerializer(serializers.ModelSerializer):\n     class Meta:\n"
+                },
+                {
+                    "date": 1746437243261,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -104,9 +104,9 @@\n class InformationCategorySerializer(serializers.ModelSerializer):\n     class Meta:\n         model = InformationCategory\n         ref_name = 'information_categories'\n-        fields = ['id','slug', 'name', 'is_show', 'image', )]\n+        fields = ['id','slug', 'name', 'is_show', 'image']\n \n # 🔹 Serializers for File & Image Uploads\n class InformationGallerySerializer(serializers.ModelSerializer):\n     class Meta:\n@@ -157,10 +157,13 @@\n \n     class Meta:\n         model = Information\n         fields = '__all__'\n+        \n \n \n+\n+\n class InformationRetrieveSerializers(serializers.ModelSerializer):\n     level = LevelSerializer(many=True, read_only=True)\n     sublevel = SubLevelSerializer(many=True, read_only=True)\n     course = CourseSerializer(many=True, read_only=True)\n"
+                },
+                {
+                    "date": 1746437252617,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -157,13 +157,10 @@\n \n     class Meta:\n         model = Information\n         fields = '__all__'\n-        \n \n \n-\n-\n class InformationRetrieveSerializers(serializers.ModelSerializer):\n     level = LevelSerializer(many=True, read_only=True)\n     sublevel = SubLevelSerializer(many=True, read_only=True)\n     course = CourseSerializer(many=True, read_only=True)\n"
                 }
             ],
             "date": 1733485840683,

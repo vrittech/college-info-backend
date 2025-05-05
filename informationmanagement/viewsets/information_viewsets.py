@@ -12,6 +12,12 @@ from mainproj.permissions import DynamicModelPermission
 from django.shortcuts import get_object_or_404
 
 
+from django.views.decorators.cache import cache_page
+from django.utils.decorators import method_decorator
+
+cache_time = 1800  # 15 minutes
+
+
 class informationViewsets(viewsets.ModelViewSet):
     permission_classes = [DynamicModelPermission]
     pagination_class = MyPageNumberPagination
@@ -48,26 +54,49 @@ class informationViewsets(viewsets.ModelViewSet):
             return InformationRetrieveSerializers
         return InformationListSerializers
 
+    # List action caching
+    def _list(self, request, *args, **kwargs):
+        """Actual list implementation"""
+        print("Information List - uncached version")
+        return super().list(request, *args, **kwargs)
+
+    @method_decorator(cache_page(cache_time, key_prefix="InformationList"))
+    def _cached_list(self, request, *args, **kwargs):
+        """Cached version of list"""
+        return self._list(request, *args, **kwargs)
+
+    def list(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return self._cached_list(request, *args, **kwargs)
+        return self._list(request, *args, **kwargs)
+
+    # Retrieve action caching
+    def _retrieve(self, request, *args, **kwargs):
+        """Actual retrieve implementation"""
+        print("Information Retrieve - uncached version")
+        return super().retrieve(request, *args, **kwargs)
+
+    @method_decorator(cache_page(cache_time, key_prefix="InformationRetrieve"))
+    def _cached_retrieve(self, request, *args, **kwargs):
+        """Cached version of retrieve"""
+        return self._retrieve(request, *args, **kwargs)
+
+    def retrieve(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return self._cached_retrieve(request, *args, **kwargs)
+        return self._retrieve(request, *args, **kwargs)
+
     def create(self, request, *args, **kwargs):
-        """
-        Handles creating a new Information object.
-        Returns the full object data using InformationRetrieveSerializers.
-        """
+        """Create with retrieve serializer response"""
         serializer = self.get_serializer(data=request.data, context={'request': request})
         serializer.is_valid(raise_exception=True)
         instance = serializer.save()
-
         return Response(InformationRetrieveSerializers(instance).data, status=status.HTTP_201_CREATED)
 
     def update(self, request, *args, **kwargs):
-        """
-        Handles updating an existing Information object.
-        Returns the updated object data using InformationRetrieveSerializers.
-        """
+        """Update with retrieve serializer response"""
         instance = self.get_object()
         serializer = self.get_serializer(instance, data=request.data, context={'request': request}, partial=True)
         serializer.is_valid(raise_exception=True)
         instance = serializer.save()
-
         return Response(InformationRetrieveSerializers(instance).data, status=status.HTTP_200_OK)
-

@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 13,
+            "activePatchIndex": 15,
             "patches": [
                 {
                     "date": 1733481540329,
@@ -60,6 +60,14 @@
                 {
                     "date": 1740907126434,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,9 @@\n \n class albumViewsets(viewsets.ModelViewSet):\n     serializer_class = AlbumListSerializers\n     permission_classes = [DynamicModelPermission]\n-    authentication_classes = [JWTAuthentication]\n+    # authentication_classes = [JWTAuthentication]\n     pagination_class = MyPageNumberPagination\n     queryset = Album.objects.all().order_by('-id')\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n"
+                },
+                {
+                    "date": 1746436888255,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -32,9 +32,41 @@\n             return AlbumWriteSerializers\n         elif self.action == 'retrieve':\n             return AlbumRetrieveSerializers\n         return super().get_serializer_class()\n+    \n+    # List action caching\n+    def _list(self, request, *args, **kwargs):\n+        \"\"\"Actual list implementation\"\"\"\n+        print(\"Album List - uncached version\")\n+        return super().list(request, *args, **kwargs)\n \n+    @method_decorator(cache_page(cache_time, key_prefix=\"AlbumList\"))\n+    def _cached_list(self, request, *args, **kwargs):\n+        \"\"\"Cached version of list\"\"\"\n+        return self._list(request, *args, **kwargs)\n+\n+    def list(self, request, *args, **kwargs):\n+        if not request.user.is_authenticated:\n+            return self._cached_list(request, *args, **kwargs)\n+        return self._list(request, *args, **kwargs)\n+\n+    # Retrieve action caching\n+    def _retrieve(self, request, *args, **kwargs):\n+        \"\"\"Actual retrieve implementation\"\"\"\n+        print(\"Album Retrieve - uncached version\")\n+        return super().retrieve(request, *args, **kwargs)\n+\n+    @method_decorator(cache_page(cache_time, key_prefix=\"AlbumRetrieve\"))\n+    def _cached_retrieve(self, request, *args, **kwargs):\n+        \"\"\"Cached version of retrieve\"\"\"\n+        return self._retrieve(request, *args, **kwargs)\n+\n+    def retrieve(self, request, *args, **kwargs):\n+        if not request.user.is_authenticated:\n+            return self._cached_retrieve(request, *args, **kwargs)\n+        return self._retrieve(request, *args, **kwargs)\n+\n     # @action(detail=False, methods=['get'], name=\"action_name\", url_path=\"url_path\")\n     # def action_name(self, request, *args, **kwargs):\n     #     return super().list(request, *args, **kwargs)\n \n"
+                },
+                {
+                    "date": 1746436897866,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,9 +4,13 @@\n from ..models import Album\n from ..serializers.album_serializers import AlbumListSerializers, AlbumRetrieveSerializers, AlbumWriteSerializers\n from ..utilities.importbase import *\n from mainproj.permissions import DynamicModelPermission\n+from django.views.decorators.cache import cache_page\n+from django.utils.decorators import method_decorator\n \n+cache_time = 900  # 15 minutes\n+\n class albumViewsets(viewsets.ModelViewSet):\n     serializer_class = AlbumListSerializers\n     permission_classes = [DynamicModelPermission]\n     # authentication_classes = [JWTAuthentication]\n"
                 }
             ],
             "date": 1733481540329,
