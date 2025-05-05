@@ -120,7 +120,6 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django_currentuser.middleware.ThreadLocalUserMiddleware',
-    'notify.middleware.CaptureUserMiddleware',
 ]
 
 ROOT_URLCONF = 'mainproj.urls'
