@@ -1,0 +1,18 @@
+{
+    "sourceFile": "mainproj/wsgi.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1746420717548,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1746420717548,
+            "name": "Commit-0",
+            "content": "\"\"\"\nWSGI config for collegeinfo project.\n\nIt exposes the WSGI callable as a module-level variable named ``application``.\n\nFor more information on this file, see\nhttps://docs.djangoproject.com/en/4.2/howto/deployment/wsgi/\n\"\"\"\n\nimport os\n\nfrom django.core.wsgi import get_wsgi_application\n\nos.environ.setdefault('DJANGO_SETTINGS_MODULE', 'cmainproj.settings')\n\napplication = get_wsgi_application()\n"
+        }
+    ]
+}

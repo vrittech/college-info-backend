@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 33,
+            "activePatchIndex": 34,
             "patches": [
                 {
                     "date": 1739684343218,
@@ -140,6 +140,10 @@
                 {
                     "date": 1746097612746,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -116,9 +116,9 @@\n       contact=openapi.Contact(email=\"prashantkarna21@gmail.com\"),\n       license=openapi.License(name=\"No License\"),\n       **{'x-logo': {'url': 'https://collegeinfoapi.vrittechnologies.com/media/gallery/images/College_Info_Nepal.png'}},\n    ),\n-   public=True,\n+   public=False,\n    permission_classes=[permissions.IsAuthenticated],\n )\n \n urlpatterns = [\n"
+                },
+                {
+                    "date": 1746112872975,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -119,9 +119,9 @@\n    ),\n    public=False,\n    permission_classes=[permissions.IsAuthenticated],\n )\n-\n+ \n urlpatterns = [\n     path('admin/', admin.site.urls),\n     path('api/', include(router.urls)),\n     path('api/',include('accountsmanagement.urls')),\n"
                 }
             ],
             "date": 1739684343218,
