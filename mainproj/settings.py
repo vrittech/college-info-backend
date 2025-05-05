@@ -27,6 +27,25 @@ else:
     dotenv_path = os.path.join(os.path.dirname(__file__), 'env_local') #this is local env
 load_dotenv(dotenv_path)
 
+print(current_os,"Current OS")
+if current_os == "Linux" and server_type == "AWS":
+    CACHES = {
+        'default': {
+            'BACKEND': 'django_redis.cache.RedisCache',
+            'LOCATION': 'redis://127.0.0.1:6379/1',
+            'OPTIONS': {
+                'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+            }
+        }
+    }
+else:
+    CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'unique-snowflake',  # Unique identifier for your cache
+        }
+    }
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
@@ -119,7 +138,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    # 'django_currentuser.middleware.ThreadLocalUserMiddleware',
+    'django_currentuser.middleware.ThreadLocalUserMiddleware',
 ]
 
 ROOT_URLCONF = 'mainproj.urls'
@@ -390,9 +409,9 @@ SITE_URL = os.getenv('SITE_URL')
 
 SMS_KEY_PASSWORD = ""
 
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-USE_X_FORWARDED_HOST = True
-SECURE_SSL_REDIRECT = True
+# SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+# USE_X_FORWARDED_HOST = True
+# SECURE_SSL_REDIRECT = True
 
 CRONJOBS = [
     ('0 * * * *', 'event.management.commands.check_expired_events')

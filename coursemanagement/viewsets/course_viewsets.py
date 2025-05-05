@@ -2,7 +2,7 @@ from rest_framework import viewsets
 from rest_framework.filters import SearchFilter, OrderingFilter
 from django_filters.rest_framework import DjangoFilterBackend
 from ..models import Course
-from ..serializers.course_serializers import CourseListSerializers, CourseRetrieveSerializers, CourseWriteSerializers
+from ..serializers.course_serializers import CourseListSerializers, CourseRetrieveSerializers, CourseWriteSerializers,CourseListAdminSerializers
 from ..utilities.importbase import *
 from ..utilities.filter import CourseFilter
 from mainproj.permissions import DynamicModelPermission
@@ -10,6 +10,12 @@ from rest_framework.decorators import action
 from django.shortcuts import get_object_or_404
 
 from rest_framework.response import Response
+
+from django.views.decorators.cache import cache_page
+from django.utils.decorators import method_decorator
+from django.core.cache import cache
+
+cache_time = 900 # 300 is 5 minute
 
 class courseViewsets(viewsets.ModelViewSet):
     serializer_class = CourseListSerializers
@@ -57,10 +63,14 @@ class courseViewsets(viewsets.ModelViewSet):
 
     def get_serializer_class(self):
         if self.action in ['create', 'update', 'partial_update']:
-            return CourseWriteSerializers
+            return CourseWriteSerializers    
         elif self.action == 'retrieve':
             return CourseRetrieveSerializers
         return super().get_serializer_class()
+    @method_decorator(cache_page(cache_time,key_prefix="Course"))
+    def list(self, request, *args, **kwargs):
+        print("using without cache")
+        return super().list(request, *args, **kwargs)
 
     # @action(detail=False, methods=['get'], name="action_name", url_path="url_path")
     # def action_name(self, request, *args, **kwargs):

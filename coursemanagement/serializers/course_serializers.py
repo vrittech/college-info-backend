@@ -114,6 +114,20 @@ class CourseListSerializers(serializers.ModelSerializer):
         model = Course
         fields = '__all__'
 
+class CourseListAdminSerializers(serializers.ModelSerializer):
+    # Nested serializers for related fields
+    affiliation = AffiliationSerializer(read_only=True)
+    duration = DurationSerializer(read_only=True)
+    faculty = FacultySerializer(read_only=True)
+    level = LevelSerializer(read_only=True)
+    discipline = DisciplineSerializer(many=True,read_only=True)
+    curriculum_file_upload = CourseCurriculumFileSerializer(many=True, read_only=True)
+    
+
+    class Meta:
+        model = Course
+        fields = '__all__'
+
 
 class CourseRetrieveSerializers(serializers.ModelSerializer):
     # Nested serializers for related fields
