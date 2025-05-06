@@ -74,6 +74,12 @@ class AffiliationListSerializers(serializers.ModelSerializer):
     class Meta:
         model = Affiliation
         fields = '__all__'
+        
+class AffiliationListUserSerializers(serializers.ModelSerializer):
+    district = DistrictSerializers(read_only=True)
+    class Meta:
+        model = Affiliation
+        fields = ['slug','name','logo_image','cover_image','district','address']
 
 class AffiliationRetrieveSerializers(serializers.ModelSerializer):
     district = DistrictSerializers(read_only=True)

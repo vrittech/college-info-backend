@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 20,
+            "activePatchIndex": 22,
             "patches": [
                 {
                     "date": 1737957070194,
@@ -88,6 +88,14 @@
                 {
                     "date": 1744709012223,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -30,10 +30,7 @@\n AWS_S3_ENDPOINT_URL=https://0eb36d57e9131fec092a0e63d1ee3d2f.r2.cloudflarestorage.com  # Private API Endpoint\n # AWS_S3_CUSTOM_DOMAIN=pub-572de4d7dd8b4b7e9e32601b3ca4ea92.r2.dev  # Public URL for serving files\n AWS_S3_CUSTOM_DOMAIN=media.collegeinfonepal.com  # Public URL for serving files\n \n-STATICFILES_LOCATION=static\n-MEDIAFILES_LOCATION=media\n \n-\n STATICFILES_LOCATION=static\n MEDIAFILES_LOCATION=media\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1746508044379,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,8 +9,9 @@\n \n #Database\n DATABASE_ENGINE=django.db.backends.postgresql\n DATABASES_NAME=collegeinfo\n+DATABASES_NAME=collegeinfo\n DATABASE_USER=postgres\n DATABASE_PASSWORD=md\n DATABASE_HOST=localhost\n DATABASE_PORT=5432\n"
+                },
+                {
+                    "date": 1746508050052,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,10 +8,10 @@\n CSRF_TRUSTED_ORIGINS = \"http://127.0.0.1,http://192.168.1.10,http://192.168.1.103,https://collegeinfoapi.vrittechnologies.com,\"#backend ip\n \n #Database\n DATABASE_ENGINE=django.db.backends.postgresql\n-DATABASES_NAME=collegeinfo\n-DATABASES_NAME=collegeinfo\n+; DATABASES_NAME=collegeinfo\n+DATABASES_NAME=collegeinfoprod\n DATABASE_USER=postgres\n DATABASE_PASSWORD=md\n DATABASE_HOST=localhost\n DATABASE_PORT=5432\n"
                 }
             ],
             "date": 1737957070194,

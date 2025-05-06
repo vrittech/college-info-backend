@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 95,
+            "activePatchIndex": 99,
             "patches": [
                 {
                     "date": 1733481275577,
@@ -388,6 +388,22 @@
                 {
                     "date": 1746434987524,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,9 +14,9 @@\n from django.views.decorators.cache import cache_page\n from django.utils.decorators import method_decorator\n from django.core.cache import cache\n \n-cache_time = 900 # 300 is 5 minute\n+cache_time = 1800 # 300 is 5 minute\n \n from functools import wraps\n from rest_framework import viewsets\n \n"
+                },
+                {
+                    "date": 1746506068105,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,9 @@\n from rest_framework import viewsets\n from rest_framework.filters import SearchFilter, OrderingFilter\n from django_filters.rest_framework import DjangoFilterBackend\n from ..models import Course\n-from ..serializers.course_serializers import CourseListSerializers, CourseRetrieveSerializers, CourseWriteSerializers,CourseListAdminSerializers\n+from ..serializers.course_serializers import CourseListSerializers, CourseRetrieveSerializers, CourseWriteSerializers,CourseListUserSerializers\n from ..utilities.importbase import *\n from ..utilities.filter import CourseFilter\n from mainproj.permissions import DynamicModelPermission\n from rest_framework.decorators import action\n"
+                },
+                {
+                    "date": 1746506075136,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -81,8 +81,10 @@\n         queryset = super().get_queryset()\n         return queryset\n \n     def get_serializer_class(self):\n+        \n+        \n         if self.action in ['create', 'update', 'partial_update']:\n             return CourseWriteSerializers    \n         elif self.action == 'retrieve':\n             return CourseRetrieveSerializers\n"
+                },
+                {
+                    "date": 1746506080640,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -81,10 +81,10 @@\n         queryset = super().get_queryset()\n         return queryset\n \n     def get_serializer_class(self):\n+        if not self.request.user.is_authenticated:\n         \n-        \n         if self.action in ['create', 'update', 'partial_update']:\n             return CourseWriteSerializers    \n         elif self.action == 'retrieve':\n             return CourseRetrieveSerializers\n"
+                },
+                {
+                    "date": 1746507598555,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -81,9 +81,10 @@\n         queryset = super().get_queryset()\n         return queryset\n \n     def get_serializer_class(self):\n-        if not self.request.user.is_authenticated:\n+        if not self.request.user.is_authenticated and self.action == 'list'\n+            return CourseListUserSerializers\n         \n         if self.action in ['create', 'update', 'partial_update']:\n             return CourseWriteSerializers    \n         elif self.action == 'retrieve':\n"
                 }
             ],
             "date": 1733481275577,

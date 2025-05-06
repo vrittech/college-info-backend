@@ -4,7 +4,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.response import Response
 from ..models import Information
 from ..serializers.information_serializers import (
-    InformationListSerializers, InformationRetrieveSerializers, InformationWriteSerializers
+    InformationListSerializers, InformationRetrieveSerializers, InformationWriteSerializers,InformationListUserSerializers
 )
 from ..utilities.filters import InformationFilter
 from ..utilities.pagination import MyPageNumberPagination
@@ -47,6 +47,9 @@ class informationViewsets(viewsets.ModelViewSet):
         return queryset
 
     def get_serializer_class(self):
+        if not self.request.user.is_authenticated and self.action == 'list':
+            return InformationListUserSerializers
+        
         """Return different serializers for different actions"""
         if self.action in ['create', 'update', 'partial_update']:
             return InformationWriteSerializers

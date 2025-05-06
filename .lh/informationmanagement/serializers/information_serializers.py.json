@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 198,
+            "activePatchIndex": 205,
             "patches": [
                 {
                     "date": 1733485840683,
@@ -800,6 +800,34 @@
                 {
                     "date": 1746437252617,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -157,13 +157,10 @@\n \n     class Meta:\n         model = Information\n         fields = '__all__'\n-        \n \n \n-\n-\n class InformationRetrieveSerializers(serializers.ModelSerializer):\n     level = LevelSerializer(many=True, read_only=True)\n     sublevel = SubLevelSerializer(many=True, read_only=True)\n     course = CourseSerializer(many=True, read_only=True)\n"
+                },
+                {
+                    "date": 1746506159361,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -158,9 +158,26 @@\n     class Meta:\n         model = Information\n         fields = '__all__'\n \n+class InformationListSerializers(serializers.ModelSerializer):\n+    level = LevelSerializer(many=True, read_only=True)\n+    sublevel = SubLevelSerializer(many=True, read_only=True)\n+    course = CourseSerializer(many=True, read_only=True)\n+    affiliation = AffiliationSerializer(many=True, read_only=True)\n+    district = DistrictSerializer(many=True, read_only=True)\n+    college = CollegeSerializer(many=True, read_only=True)\n+    faculty = FacultySerializer(many=True, read_only=True)\n+    information_tagging = InformationTaggingSerializer(many=True, read_only=True)\n+    information_category = InformationCategorySerializer(many=True, read_only=True)\n+    \n+    information_gallery = InformationGallerySerializer(many=True, read_only=True)\n+    information_files = InformationFilesSerializer(many=True, read_only=True)\n \n+    class Meta:\n+        model = Information\n+        fields = '__all__'\n+\n class InformationRetrieveSerializers(serializers.ModelSerializer):\n     level = LevelSerializer(many=True, read_only=True)\n     sublevel = SubLevelSerializer(many=True, read_only=True)\n     course = CourseSerializer(many=True, read_only=True)\n"
+                },
+                {
+                    "date": 1746506256410,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -174,9 +174,9 @@\n     information_files = InformationFilesSerializer(many=True, read_only=True)\n \n     class Meta:\n         model = Information\n-        fields = '__all__'\n+        fields = []\n \n class InformationRetrieveSerializers(serializers.ModelSerializer):\n     level = LevelSerializer(many=True, read_only=True)\n     sublevel = SubLevelSerializer(many=True, read_only=True)\n"
+                },
+                {
+                    "date": 1746506266862,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -174,9 +174,9 @@\n     information_files = InformationFilesSerializer(many=True, read_only=True)\n \n     class Meta:\n         model = Information\n-        fields = []\n+        fields = ['slug'title',]\n \n class InformationRetrieveSerializers(serializers.ModelSerializer):\n     level = LevelSerializer(many=True, read_only=True)\n     sublevel = SubLevelSerializer(many=True, read_only=True)\n"
+                },
+                {
+                    "date": 1746506295988,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -174,9 +174,9 @@\n     information_files = InformationFilesSerializer(many=True, read_only=True)\n \n     class Meta:\n         model = Information\n-        fields = ['slug'title',]\n+        fields = ['slug','title',featured_image]\n \n class InformationRetrieveSerializers(serializers.ModelSerializer):\n     level = LevelSerializer(many=True, read_only=True)\n     sublevel = SubLevelSerializer(many=True, read_only=True)\n"
+                },
+                {
+                    "date": 1746506302008,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -174,9 +174,9 @@\n     information_files = InformationFilesSerializer(many=True, read_only=True)\n \n     class Meta:\n         model = Information\n-        fields = ['slug','title',featured_image]\n+        fields = ['slug','title','featured_image']\n \n class InformationRetrieveSerializers(serializers.ModelSerializer):\n     level = LevelSerializer(many=True, read_only=True)\n     sublevel = SubLevelSerializer(many=True, read_only=True)\n"
+                },
+                {
+                    "date": 1746506309567,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -159,24 +159,24 @@\n         model = Information\n         fields = '__all__'\n \n class InformationListSerializers(serializers.ModelSerializer):\n-    level = LevelSerializer(many=True, read_only=True)\n-    sublevel = SubLevelSerializer(many=True, read_only=True)\n-    course = CourseSerializer(many=True, read_only=True)\n-    affiliation = AffiliationSerializer(many=True, read_only=True)\n-    district = DistrictSerializer(many=True, read_only=True)\n-    college = CollegeSerializer(many=True, read_only=True)\n-    faculty = FacultySerializer(many=True, read_only=True)\n-    information_tagging = InformationTaggingSerializer(many=True, read_only=True)\n-    information_category = InformationCategorySerializer(many=True, read_only=True)\n+    # level = LevelSerializer(many=True, read_only=True)\n+    # sublevel = SubLevelSerializer(many=True, read_only=True)\n+    # course = CourseSerializer(many=True, read_only=True)\n+    # affiliation = AffiliationSerializer(many=True, read_only=True)\n+    # district = DistrictSerializer(many=True, read_only=True)\n+    # college = CollegeSerializer(many=True, read_only=True)\n+    # faculty = FacultySerializer(many=True, read_only=True)\n+    # information_tagging = InformationTaggingSerializer(many=True, read_only=True)\n+    # information_category = InformationCategorySerializer(many=True, read_only=True)\n     \n-    information_gallery = InformationGallerySerializer(many=True, read_only=True)\n-    information_files = InformationFilesSerializer(many=True, read_only=True)\n+    # information_gallery = InformationGallerySerializer(many=True, read_only=True)\n+    # information_files = InformationFilesSerializer(many=True, read_only=True)\n \n     class Meta:\n         model = Information\n-        fields = ['slug','title','featured_image']\n+        fields = ['slug','title','featured_image',']\n \n class InformationRetrieveSerializers(serializers.ModelSerializer):\n     level = LevelSerializer(many=True, read_only=True)\n     sublevel = SubLevelSerializer(many=True, read_only=True)\n"
+                },
+                {
+                    "date": 1746506323057,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -158,9 +158,9 @@\n     class Meta:\n         model = Information\n         fields = '__all__'\n \n-class InformationListSerializers(serializers.ModelSerializer):\n+class InformationListUserSerializers(serializers.ModelSerializer):\n     # level = LevelSerializer(many=True, read_only=True)\n     # sublevel = SubLevelSerializer(many=True, read_only=True)\n     # course = CourseSerializer(many=True, read_only=True)\n     # affiliation = AffiliationSerializer(many=True, read_only=True)\n@@ -174,9 +174,9 @@\n     # information_files = InformationFilesSerializer(many=True, read_only=True)\n \n     class Meta:\n         model = Information\n-        fields = ['slug','title','featured_image',']\n+        fields = ['slug','title','featured_image']\n \n class InformationRetrieveSerializers(serializers.ModelSerializer):\n     level = LevelSerializer(many=True, read_only=True)\n     sublevel = SubLevelSerializer(many=True, read_only=True)\n"
                 }
             ],
             "date": 1733485840683,

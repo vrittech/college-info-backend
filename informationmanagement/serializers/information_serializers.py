@@ -159,6 +159,23 @@ class InformationListSerializers(serializers.ModelSerializer):
         model = Information
         fields = '__all__'
 
+class InformationListUserSerializers(serializers.ModelSerializer):
+    # level = LevelSerializer(many=True, read_only=True)
+    # sublevel = SubLevelSerializer(many=True, read_only=True)
+    # course = CourseSerializer(many=True, read_only=True)
+    # affiliation = AffiliationSerializer(many=True, read_only=True)
+    # district = DistrictSerializer(many=True, read_only=True)
+    # college = CollegeSerializer(many=True, read_only=True)
+    # faculty = FacultySerializer(many=True, read_only=True)
+    # information_tagging = InformationTaggingSerializer(many=True, read_only=True)
+    # information_category = InformationCategorySerializer(many=True, read_only=True)
+    
+    # information_gallery = InformationGallerySerializer(many=True, read_only=True)
+    # information_files = InformationFilesSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Information
+        fields = ['slug','title','featured_image']
 
 class InformationRetrieveSerializers(serializers.ModelSerializer):
     level = LevelSerializer(many=True, read_only=True)

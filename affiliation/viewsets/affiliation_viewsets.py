@@ -2,7 +2,7 @@ from rest_framework import viewsets
 from rest_framework.filters import SearchFilter, OrderingFilter
 from django_filters.rest_framework import DjangoFilterBackend
 from ..models import Affiliation
-from ..serializers.affiliation_serializers import AffiliationListSerializers, AffiliationRetrieveSerializers, AffiliationWriteSerializers
+from ..serializers.affiliation_serializers import AffiliationListSerializers, AffiliationRetrieveSerializers, AffiliationWriteSerializers,AffiliationListUserSerializers
 from ..utilities.importbase import *
 from mainproj.permissions import DynamicModelPermission
 from ..utilities.filter import AffiliationFilter
@@ -58,6 +58,9 @@ class affiliationViewsets(viewsets.ModelViewSet):
         return queryset
 
     def get_serializer_class(self):
+        if not self.request.user.is_authenticated and self.action == 'list':
+            return AffiliationListUserSerializers
+        
         if self.action in ['create', 'update', 'partial_update']:
             return AffiliationWriteSerializers
         elif self.action == 'retrieve':

@@ -2,7 +2,7 @@ from rest_framework import viewsets
 from rest_framework.filters import SearchFilter, OrderingFilter
 from django_filters.rest_framework import DjangoFilterBackend
 from ..models import Course
-from ..serializers.course_serializers import CourseListSerializers, CourseRetrieveSerializers, CourseWriteSerializers,CourseListAdminSerializers
+from ..serializers.course_serializers import CourseListSerializers, CourseRetrieveSerializers, CourseWriteSerializers,CourseListUserSerializers
 from ..utilities.importbase import *
 from ..utilities.filter import CourseFilter
 from mainproj.permissions import DynamicModelPermission
@@ -82,6 +82,9 @@ class courseViewsets(viewsets.ModelViewSet):
         return queryset
 
     def get_serializer_class(self):
+        if not self.request.user.is_authenticated and self.action == 'list':
+            return CourseListUserSerializers
+        
         if self.action in ['create', 'update', 'partial_update']:
             return CourseWriteSerializers    
         elif self.action == 'retrieve':

@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 191,
+            "activePatchIndex": 200,
             "patches": [
                 {
                     "date": 1733718920520,
@@ -772,6 +772,42 @@
                 {
                     "date": 1746434944995,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,9 +22,9 @@\n \n from django.views.decorators.cache import cache_page\n from django.utils.decorators import method_decorator\n \n-cache_time = 900  # 15 minutes\n+cache_time = 1800  # 15 minutes\n \n \n \n class collegeViewsets(viewsets.ModelViewSet):\n"
+                },
+                {
+                    "date": 1746505500167,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -121,16 +121,24 @@\n             \n         return queryset\n \n     def get_serializer_class(self):\n-        if self.action in ['create', 'update', 'partial_update']:\n-            return CollegeWriteSerializers\n-        elif self.action == 'retrieve':\n-            return CollegeRetrieveSerializers\n-        elif self.action in ['college_creation']:\n-            return CollegeAdminWriteSerializers\n-        return super().get_serializer_class()\n+    # Check if the user is authenticated\n+    if not self.request.user.is_authenticated:\n+        # If user is not authenticated, return the CollegeListUserSerializers\n+        return CollegeListUserSerializers\n+\n+    # If the user is authenticated, proceed with your original logic\n+    if self.action in ['create', 'update', 'partial_update']:\n+        return CollegeWriteSerializers\n+    elif self.action == 'retrieve':\n+        return CollegeRetrieveSerializers\n+    elif self.action == 'college_creation':\n+        return CollegeAdminWriteSerializers\n     \n+    # Default serializer class for other actions\n+    return super().get_serializer_class()\n+    \n     # List action caching\n     def _list(self, request, *args, **kwargs):\n         \"\"\"Actual list implementation\"\"\"\n         print(\"List - uncached version\")\n"
+                },
+                {
+                    "date": 1746505505521,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -121,24 +121,24 @@\n             \n         return queryset\n \n     def get_serializer_class(self):\n-    # Check if the user is authenticated\n-    if not self.request.user.is_authenticated:\n-        # If user is not authenticated, return the CollegeListUserSerializers\n-        return CollegeListUserSerializers\n+        # Check if the user is authenticated\n+        if not self.request.user.is_authenticated:\n+            # If user is not authenticated, return the CollegeListUserSerializers\n+            return CollegeListUserSerializers\n \n-    # If the user is authenticated, proceed with your original logic\n-    if self.action in ['create', 'update', 'partial_update']:\n-        return CollegeWriteSerializers\n-    elif self.action == 'retrieve':\n-        return CollegeRetrieveSerializers\n-    elif self.action == 'college_creation':\n-        return CollegeAdminWriteSerializers\n+        # If the user is authenticated, proceed with your original logic\n+        if self.action in ['create', 'update', 'partial_update']:\n+            return CollegeWriteSerializers\n+        elif self.action == 'retrieve':\n+            return CollegeRetrieveSerializers\n+        elif self.action == 'college_creation':\n+            return CollegeAdminWriteSerializers\n+        \n+        # Default serializer class for other actions\n+        return super().get_serializer_class()\n     \n-    # Default serializer class for other actions\n-    return super().get_serializer_class()\n-    \n     # List action caching\n     def _list(self, request, *args, **kwargs):\n         \"\"\"Actual list implementation\"\"\"\n         print(\"List - uncached version\")\n"
+                },
+                {
+                    "date": 1746505513556,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,9 @@\n from rest_framework import viewsets\n from rest_framework.filters import SearchFilter, OrderingFilter\n from django_filters.rest_framework import DjangoFilterBackend\n from ..models import College,CollegeGallery\n-from ..serializers.college_serializers import CollegeListSerializers, CollegeRetrieveSerializers, CollegeWriteSerializers, CollegeAdminWriteSerializers\n+from ..serializers.college_serializers import CollegeListSerializers, CollegeRetrieveSerializers, CollegeWriteSerializers, CollegeAdminWriteSerializers,Colle\n from ..utilities.importbase import *\n from rest_framework.decorators import action\n from rest_framework.response import Response\n from mainproj.permissions import DynamicModelPermission\n"
+                },
+                {
+                    "date": 1746505569530,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,9 @@\n from rest_framework import viewsets\n from rest_framework.filters import SearchFilter, OrderingFilter\n from django_filters.rest_framework import DjangoFilterBackend\n from ..models import College,CollegeGallery\n-from ..serializers.college_serializers import CollegeListSerializers, CollegeRetrieveSerializers, CollegeWriteSerializers, CollegeAdminWriteSerializers,Colle\n+from ..serializers.college_serializers import CollegeListSerializers, CollegeRetrieveSerializers, CollegeWriteSerializers, CollegeAdminWriteSerializers,CollegeListUserSerializers\n from ..utilities.importbase import *\n from rest_framework.decorators import action\n from rest_framework.response import Response\n from mainproj.permissions import DynamicModelPermission\n@@ -130,9 +130,9 @@\n         # If the user is authenticated, proceed with your original logic\n         if self.action in ['create', 'update', 'partial_update']:\n             return CollegeWriteSerializers\n         elif self.action == 'retrieve':\n-            return CollegeRetrieveSerializers\n+            return  \n         elif self.action == 'college_creation':\n             return CollegeAdminWriteSerializers\n         \n         # Default serializer class for other actions\n"
+                },
+                {
+                    "date": 1746507494707,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -130,9 +130,9 @@\n         # If the user is authenticated, proceed with your original logic\n         if self.action in ['create', 'update', 'partial_update']:\n             return CollegeWriteSerializers\n         elif self.action == 'retrieve':\n-            return  \n+            return  CollegeListUserSerializers\n         elif self.action == 'college_creation':\n             return CollegeAdminWriteSerializers\n         \n         # Default serializer class for other actions\n"
+                },
+                {
+                    "date": 1746507503207,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -130,9 +130,9 @@\n         # If the user is authenticated, proceed with your original logic\n         if self.action in ['create', 'update', 'partial_update']:\n             return CollegeWriteSerializers\n         elif self.action == 'retrieve':\n-            return  CollegeListUserSerializers\n+            return  CollegeRetrieveSerializers\n         elif self.action == 'college_creation':\n             return CollegeAdminWriteSerializers\n         \n         # Default serializer class for other actions\n"
+                },
+                {
+                    "date": 1746507535044,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -122,9 +122,9 @@\n         return queryset\n \n     def get_serializer_class(self):\n         # Check if the user is authenticated\n-        if not self.request.user.is_authenticated:\n+        if not self.request.user.is_authenticated and :\n             # If user is not authenticated, return the CollegeListUserSerializers\n             return CollegeListUserSerializers\n \n         # If the user is authenticated, proceed with your original logic\n"
+                },
+                {
+                    "date": 1746507542485,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -122,9 +122,9 @@\n         return queryset\n \n     def get_serializer_class(self):\n         # Check if the user is authenticated\n-        if not self.request.user.is_authenticated and :\n+        if not self.request.user.is_authenticated and self:\n             # If user is not authenticated, return the CollegeListUserSerializers\n             return CollegeListUserSerializers\n \n         # If the user is authenticated, proceed with your original logic\n"
+                },
+                {
+                    "date": 1746507550999,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -122,9 +122,9 @@\n         return queryset\n \n     def get_serializer_class(self):\n         # Check if the user is authenticated\n-        if not self.request.user.is_authenticated and self:\n+        if not self.request.user.is_authenticated and self.action ==:\n             # If user is not authenticated, return the CollegeListUserSerializers\n             return CollegeListUserSerializers\n \n         # If the user is authenticated, proceed with your original logic\n"
                 }
             ],
             "date": 1733718920520,

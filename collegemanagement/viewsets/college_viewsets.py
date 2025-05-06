@@ -2,7 +2,7 @@ from rest_framework import viewsets
 from rest_framework.filters import SearchFilter, OrderingFilter
 from django_filters.rest_framework import DjangoFilterBackend
 from ..models import College,CollegeGallery
-from ..serializers.college_serializers import CollegeListSerializers, CollegeRetrieveSerializers, CollegeWriteSerializers, CollegeAdminWriteSerializers
+from ..serializers.college_serializers import CollegeListSerializers, CollegeRetrieveSerializers, CollegeWriteSerializers, CollegeAdminWriteSerializers,CollegeListUserSerializers
 from ..utilities.importbase import *
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -122,12 +122,20 @@ class collegeViewsets(viewsets.ModelViewSet):
         return queryset
 
     def get_serializer_class(self):
+        # Check if the user is authenticated
+        if not self.request.user.is_authenticated and self.action == 'list':
+            # If user is not authenticated, return the CollegeListUserSerializers
+            return CollegeListUserSerializers
+
+        # If the user is authenticated, proceed with your original logic
         if self.action in ['create', 'update', 'partial_update']:
             return CollegeWriteSerializers
         elif self.action == 'retrieve':
-            return CollegeRetrieveSerializers
-        elif self.action in ['college_creation']:
+            return  CollegeRetrieveSerializers
+        elif self.action == 'college_creation':
             return CollegeAdminWriteSerializers
+        
+        # Default serializer class for other actions
         return super().get_serializer_class()
     
     # List action caching
