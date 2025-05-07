@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 34,
+            "activePatchIndex": 42,
             "patches": [
                 {
                     "date": 1739684343218,
@@ -144,6 +144,38 @@
                 {
                     "date": 1746112872975,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -119,9 +119,9 @@\n    ),\n    public=False,\n    permission_classes=[permissions.IsAuthenticated],\n )\n-\n+ \n urlpatterns = [\n     path('admin/', admin.site.urls),\n     path('api/', include(router.urls)),\n     path('api/',include('accountsmanagement.urls')),\n"
+                },
+                {
+                    "date": 1746594097771,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -119,9 +119,9 @@\n    ),\n    public=False,\n    permission_classes=[permissions.IsAuthenticated],\n )\n- \n+\n urlpatterns = [\n     path('admin/', admin.site.urls),\n     path('api/', include(router.urls)),\n     path('api/',include('accountsmanagement.urls')),\n@@ -132,8 +132,9 @@\n     path('api/import-excel/<str:type>/',ImportExcel.as_view(),name=\"import_excel\"),\n     path('api/bulk-delete/', BulkDelete.as_view(), name=\"bulk_delete\"),\n     path(\"api/\", include(\"notify.urls\")),\n     path('api/drag-item/', position_management_viewset, name='position_management_drag_item'),\n+     path('api/r2-files/', R2FileAPIView.as_view(), name='r2-files'),\n ]\n if settings.DEBUG:\n     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)\n     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)  # for development\n"
+                },
+                {
+                    "date": 1746594104354,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -132,9 +132,9 @@\n     path('api/import-excel/<str:type>/',ImportExcel.as_view(),name=\"import_excel\"),\n     path('api/bulk-delete/', BulkDelete.as_view(), name=\"bulk_delete\"),\n     path(\"api/\", include(\"notify.urls\")),\n     path('api/drag-item/', position_management_viewset, name='position_management_drag_item'),\n-     path('api/r2-files/', R2FileAPIView.as_view(), name='r2-files'),\n+     path('api/r2-files/', BucketAPIView.as_view(), name='r2-files'),\n ]\n if settings.DEBUG:\n     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)\n     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)  # for development\n"
+                },
+                {
+                    "date": 1746594110660,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -61,8 +61,9 @@\n # from collegeandcourseinquiries.routers.routers import router as collegeandcourseinquiries_router\n from discipline.routers.routers import router as discipline_router\n # from notifications.routers.routers import router as notifications_router\n from mainproj.utilities.position_management import PositionManagementViewSet\n+from \n \n \n router = routers.DefaultRouter()\n \n"
+                },
+                {
+                    "date": 1746594116647,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -61,9 +61,9 @@\n # from collegeandcourseinquiries.routers.routers import router as collegeandcourseinquiries_router\n from discipline.routers.routers import router as discipline_router\n # from notifications.routers.routers import router as notifications_router\n from mainproj.utilities.position_management import PositionManagementViewSet\n-from \n+from bucketimages.\n \n \n router = routers.DefaultRouter()\n \n"
+                },
+                {
+                    "date": 1746594127355,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -61,9 +61,9 @@\n # from collegeandcourseinquiries.routers.routers import router as collegeandcourseinquiries_router\n from discipline.routers.routers import router as discipline_router\n # from notifications.routers.routers import router as notifications_router\n from mainproj.utilities.position_management import PositionManagementViewSet\n-from bucketimages.\n+from bucketimages.views import BucketAPIView\n \n \n router = routers.DefaultRouter()\n \n@@ -133,9 +133,9 @@\n     path('api/import-excel/<str:type>/',ImportExcel.as_view(),name=\"import_excel\"),\n     path('api/bulk-delete/', BulkDelete.as_view(), name=\"bulk_delete\"),\n     path(\"api/\", include(\"notify.urls\")),\n     path('api/drag-item/', position_management_viewset, name='position_management_drag_item'),\n-     path('api/r2-files/', BucketAPIView.as_view(), name='r2-files'),\n+     path('api//', BucketAPIView.as_view(), name='r2-files'),\n ]\n if settings.DEBUG:\n     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)\n     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)  # for development\n"
+                },
+                {
+                    "date": 1746594135602,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -133,9 +133,9 @@\n     path('api/import-excel/<str:type>/',ImportExcel.as_view(),name=\"import_excel\"),\n     path('api/bulk-delete/', BulkDelete.as_view(), name=\"bulk_delete\"),\n     path(\"api/\", include(\"notify.urls\")),\n     path('api/drag-item/', position_management_viewset, name='position_management_drag_item'),\n-     path('api//', BucketAPIView.as_view(), name='r2-files'),\n+     path('api/bucket-images/', BucketAPIView.as_view(), name='r2-files'),\n ]\n if settings.DEBUG:\n     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)\n     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)  # for development\n"
+                },
+                {
+                    "date": 1746594143885,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -133,9 +133,9 @@\n     path('api/import-excel/<str:type>/',ImportExcel.as_view(),name=\"import_excel\"),\n     path('api/bulk-delete/', BulkDelete.as_view(), name=\"bulk_delete\"),\n     path(\"api/\", include(\"notify.urls\")),\n     path('api/drag-item/', position_management_viewset, name='position_management_drag_item'),\n-     path('api/bucket-images/', BucketAPIView.as_view(), name='r2-files'),\n+     path('api/bucket-data/', BucketAPIView.as_view(), name='r2-files'),\n ]\n if settings.DEBUG:\n     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)\n     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)  # for development\n"
+                },
+                {
+                    "date": 1746594326565,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -133,9 +133,9 @@\n     path('api/import-excel/<str:type>/',ImportExcel.as_view(),name=\"import_excel\"),\n     path('api/bulk-delete/', BulkDelete.as_view(), name=\"bulk_delete\"),\n     path(\"api/\", include(\"notify.urls\")),\n     path('api/drag-item/', position_management_viewset, name='position_management_drag_item'),\n-     path('api/bucket-data/', BucketAPIView.as_view(), name='r2-files'),\n+    path('api/bucket-data/', BucketAPIView.as_view(), name='r2-files'),\n ]\n if settings.DEBUG:\n     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)\n     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)  # for development\n"
                 }
             ],
             "date": 1739684343218,

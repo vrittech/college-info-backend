@@ -62,6 +62,7 @@ from popup.routers.routers import router as popup_router
 from discipline.routers.routers import router as discipline_router
 # from notifications.routers.routers import router as notifications_router
 from mainproj.utilities.position_management import PositionManagementViewSet
+from bucketimages.views import BucketAPIView
 
 
 router = routers.DefaultRouter()
@@ -133,6 +134,7 @@ urlpatterns = [
     path('api/bulk-delete/', BulkDelete.as_view(), name="bulk_delete"),
     path("api/", include("notify.urls")),
     path('api/drag-item/', position_management_viewset, name='position_management_drag_item'),
+    path('api/bucket-data/', BucketAPIView.as_view(), name='r2-files'),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
