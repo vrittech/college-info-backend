@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 44,
+            "activePatchIndex": 46,
             "patches": [
                 {
                     "date": 1739684343218,
@@ -184,6 +184,14 @@
                 {
                     "date": 1746598703662,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -118,9 +118,9 @@\n       license=openapi.License(name=\"No License\"),\n       **{'x-logo': {'url': 'https://collegeinfoapi.vrittechnologies.com/media/gallery/images/College_Info_Nepal.png'}},\n    ),\n    public=True,\n-   permission_classes=[permissions.IsAuthenticated],\n+   permission_classes=[permissions.AllowAny],\n )\n \n urlpatterns = [\n     path('admin/', admin.site.urls),\n"
+                },
+                {
+                    "date": 1746602144809,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -125,10 +125,10 @@\n urlpatterns = [\n     path('admin/', admin.site.urls),\n     path('api/', include(router.urls)),\n     path('api/',include('accountsmanagement.urls')),\n-    path('', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),\n-    path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),\n+    # path('', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),\n+    # path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),\n     path('api-auth/', include('rest_framework.urls')),\n     path('api/accounts/',include('accounts.urls')),\n     path('api/import-excel/<str:type>/',ImportExcel.as_view(),name=\"import_excel\"),\n     path('api/bulk-delete/', BulkDelete.as_view(), name=\"bulk_delete\"),\n"
+                },
+                {
+                    "date": 1746602167774,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -127,9 +127,9 @@\n     path('api/', include(router.urls)),\n     path('api/',include('accountsmanagement.urls')),\n     # path('', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),\n     # path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),\n-    path('api-auth/', include('rest_framework.urls')),\n+    # path('api-auth/', include('rest_framework.urls')),\n     path('api/accounts/',include('accounts.urls')),\n     path('api/import-excel/<str:type>/',ImportExcel.as_view(),name=\"import_excel\"),\n     path('api/bulk-delete/', BulkDelete.as_view(), name=\"bulk_delete\"),\n     path(\"api/\", include(\"notify.urls\")),\n"
                 }
             ],
             "date": 1739684343218,
