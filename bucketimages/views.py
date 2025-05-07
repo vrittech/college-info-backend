@@ -34,6 +34,14 @@ class BucketAPIView(APIView):
     DEFAULT_PAGE_SIZE = 50
     # Maximum page size allowed
     MAX_PAGE_SIZE = 1000
+    EXCLUDED_PATHS = [
+        'backup/',
+        '/backup/',
+        'database/backup/',
+        '/database/backup/'
+        'backup/database/',
+        '/backup/database/'
+    ]
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -41,7 +49,7 @@ class BucketAPIView(APIView):
         self._s3_client = None
         
     def get_queryset(self):
-        # Build cache key based on all filter parameters
+        """Get filtered list of files excluding backup paths"""
         cache_key = f"bucket_files_{self.request.query_params.urlencode()}"
         cached_data = cache.get(cache_key)
         
@@ -53,7 +61,7 @@ class BucketAPIView(APIView):
         start_date = self.request.query_params.get('start_date')
         end_date = self.request.query_params.get('end_date')
         
-        # Convert dates to datetime objects once
+        # Convert dates to datetime objects
         start_date_dt = datetime.strptime(start_date, '%Y-%m-%d') if start_date else None
         end_date_dt = datetime.strptime(end_date, '%Y-%m-%d') if end_date else None
         
@@ -61,18 +69,16 @@ class BucketAPIView(APIView):
         files = []
         list_params = {
             'Bucket': settings.AWS_STORAGE_BUCKET_NAME,
-            'Prefix': name_filter.lower() if name_filter else '',  # Case-insensitive search
-            'MaxKeys': 1000  # Limit number of results per request
+            'Prefix': name_filter.lower() if name_filter else '',
+            'MaxKeys': 1000
         }
         
-        # Paginate through results for large buckets
         while True:
             response = s3_client.list_objects_v2(**list_params)
             
-            # Process and filter objects
             for obj in response.get('Contents', []):
-                # Skip files in /backup folder
-                if obj['Key'].startswith('backup/') or obj['Key'].startswith('/backup/'):
+                # Skip any files in excluded paths (case insensitive)
+                if any(excluded.lower() in obj['Key'].lower() for excluded in self.EXCLUDED_PATHS):
                     continue
                     
                 last_modified = obj['LastModified']
@@ -91,15 +97,12 @@ class BucketAPIView(APIView):
                         'LastModified': last_modified
                     })
             
-            # Check if there are more results
             if not response.get('IsTruncated'):
                 break
                 
             list_params['ContinuationToken'] = response['NextContinuationToken']
         
-        # Cache the filtered results
-        cache.set(cache_key, files, timeout=300)  # Cache for 5 minutes
-        
+        cache.set(cache_key, files, timeout=300)
         return files
 
     def _get_r2_client(self):
@@ -236,20 +239,22 @@ class BucketAPIView(APIView):
         }
 
     def _get_cached_file_list(self):
-        """Get cached file list or fetch fresh if not available"""
+        """Get cached file list excluding backup paths"""
         cache_key = f"bucket_contents_{settings.AWS_STORAGE_BUCKET_NAME}"
         cached_data = cache.get(cache_key)
         
         if cached_data:
             return cached_data['files'], cached_data['last_updated']
         
-        # Not in cache, fetch from R2
         start_time = time.time()
         s3_client = self._get_r2_client()
         response = s3_client.list_objects_v2(Bucket=settings.AWS_STORAGE_BUCKET_NAME)
-        files = response.get('Contents', [])
         
-        # Prepare data for caching (ensure it's serializable)
+        # Filter out excluded paths
+        files = [obj for obj in response.get('Contents', []) 
+                if not any(excluded.lower() in obj['Key'].lower() 
+                          for excluded in self.EXCLUDED_PATHS)]
+        
         cacheable_files = []
         for file in files:
             cacheable_files.append({
@@ -258,7 +263,6 @@ class BucketAPIView(APIView):
                 'LastModified': file['LastModified'].isoformat()
             })
         
-        # Cache the result
         cache.set(cache_key, {
             'files': cacheable_files,
             'last_updated': time.time()
