@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 42,
+            "activePatchIndex": 44,
             "patches": [
                 {
                     "date": 1739684343218,
@@ -176,6 +176,14 @@
                 {
                     "date": 1746594326565,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -133,9 +133,9 @@\n     path('api/import-excel/<str:type>/',ImportExcel.as_view(),name=\"import_excel\"),\n     path('api/bulk-delete/', BulkDelete.as_view(), name=\"bulk_delete\"),\n     path(\"api/\", include(\"notify.urls\")),\n     path('api/drag-item/', position_management_viewset, name='position_management_drag_item'),\n-     path('api/bucket-data/', BucketAPIView.as_view(), name='r2-files'),\n+    path('api/bucket-data/', BucketAPIView.as_view(), name='r2-files'),\n ]\n if settings.DEBUG:\n     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)\n     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)  # for development\n"
+                },
+                {
+                    "date": 1746598697477,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -117,9 +117,9 @@\n       contact=openapi.Contact(email=\"prashantkarna21@gmail.com\"),\n       license=openapi.License(name=\"No License\"),\n       **{'x-logo': {'url': 'https://collegeinfoapi.vrittechnologies.com/media/gallery/images/College_Info_Nepal.png'}},\n    ),\n-   public=False,\n+   public=True,\n    permission_classes=[permissions.IsAuthenticated],\n )\n \n urlpatterns = [\n"
+                },
+                {
+                    "date": 1746598703662,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -118,9 +118,9 @@\n       license=openapi.License(name=\"No License\"),\n       **{'x-logo': {'url': 'https://collegeinfoapi.vrittechnologies.com/media/gallery/images/College_Info_Nepal.png'}},\n    ),\n    public=True,\n-   permission_classes=[permissions.IsAuthenticated],\n+   permission_classes=[permissions.AllowAny],\n )\n \n urlpatterns = [\n     path('admin/', admin.site.urls),\n"
                 }
             ],
             "date": 1739684343218,
