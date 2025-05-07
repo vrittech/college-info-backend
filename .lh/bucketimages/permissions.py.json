@@ -1,0 +1,34 @@
+{
+    "sourceFile": "bucketimages/permissions.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 4,
+            "patches": [
+                {
+                    "date": 1746596325509,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1746596793235,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,5 +14,5 @@\n             return request.user and request.user.is_superuser\n         \n         # Allow POST requests (upload) for authenticated users by default\n         # Modify this if you want different behavior for POST\n-        return request.user and request.user.is_authenticated\n\\ No newline at end of file\n+        return request.user and request.user.is_sta\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1746596810875,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,13 +6,13 @@\n     \"\"\"\n     def has_permission(self, request, view):\n         # Allow all authenticated users for GET, HEAD, OPTIONS requests\n         if request.method in permissions.SAFE_METHODS:\n-            return request.user and request.user.is_authenticated\n+            return request.user and request.user.is_staff\n         \n         # For DELETE requests, only allow superusers\n         if request.method == 'DELETE':\n             return request.user and request.user.is_superuser\n         \n         # Allow POST requests (upload) for authenticated users by default\n         # Modify this if you want different behavior for POST\n\\ No newline at end of file\n-        return request.user and request.user.is_sta\n+        return request.user and request.user.is_staff\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1746596940015,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,5 +14,5 @@\n             return request.user and request.user.is_superuser\n         \n         # Allow POST requests (upload) for authenticated users by default\n         # Modify this if you want different behavior for POST\n-        return request.user and request.user.is_staff\n\\ No newline at end of file\n+        return request.user and request.user.is_authe\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1746596945499,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,13 +6,13 @@\n     \"\"\"\n     def has_permission(self, request, view):\n         # Allow all authenticated users for GET, HEAD, OPTIONS requests\n         if request.method in permissions.SAFE_METHODS:\n-            return request.user and request.user.is_staff\n+            return request.user and request.user.is_authenticated\n         \n         # For DELETE requests, only allow superusers\n         if request.method == 'DELETE':\n             return request.user and request.user.is_superuser\n         \n         # Allow POST requests (upload) for authenticated users by default\n         # Modify this if you want different behavior for POST\n\\ No newline at end of file\n-        return request.user and request.user.is_authe\n+        return request.user and request.user.is_authenticated\n\\ No newline at end of file\n"
+                }
+            ],
+            "date": 1746596325509,
+            "name": "Commit-0",
+            "content": "from rest_framework import permissions\n\nclass ViewOnlyOrSuperuserDelete(permissions.BasePermission):\n    \"\"\"\n    Allows authenticated users to view data, but only superusers can delete.\n    \"\"\"\n    def has_permission(self, request, view):\n        # Allow all authenticated users for GET, HEAD, OPTIONS requests\n        if request.method in permissions.SAFE_METHODS:\n            return request.user and request.user.is_authenticated\n        \n        # For DELETE requests, only allow superusers\n        if request.method == 'DELETE':\n            return request.user and request.user.is_superuser\n        \n        # Allow POST requests (upload) for authenticated users by default\n        # Modify this if you want different behavior for POST\n        return request.user and request.user.is_authenticated"
+        }
+    ]
+}

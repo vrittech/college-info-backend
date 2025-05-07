@@ -1,0 +1,38 @@
+{
+    "sourceFile": "bucketimages/filter.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 5,
+            "patches": [
+                {
+                    "date": 1746597041363,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1746597049319,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,4 +1,8 @@\n+from rest_framework.generics import ListAPIView\n+from rest_framework import filters\n+from django_filters.rest_framework import DjangoFilterBackend\n+from django_filters import FilterSet, DateFilter, CharFilter\n class BucketFileFilter(FilterSet):\n     start_date = DateFilter(field_name='last_modified', lookup_expr='gte')\n     end_date = DateFilter(field_name='last_modified', lookup_expr='lte')\n     name = CharFilter(field_name='name', lookup_expr='icontains')\n"
+                },
+                {
+                    "date": 1746597239856,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,8 @@\n-from rest_framework.generics import ListAPIView\n-from rest_framework import filters\n-from django_filters.rest_framework import DjangoFilterBackend\n+\n from django_filters import FilterSet, DateFilter, CharFilter\n class BucketFileFilter(FilterSet):\n+    \n     start_date = DateFilter(field_name='last_modified', lookup_expr='gte')\n     end_date = DateFilter(field_name='last_modified', lookup_expr='lte')\n     name = CharFilter(field_name='name', lookup_expr='icontains')\n \n"
+                },
+                {
+                    "date": 1746597248084,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,8 @@\n \n from django_filters import FilterSet, DateFilter, CharFilter\n class BucketFileFilter(FilterSet):\n-    \n+    date \n     start_date = DateFilter(field_name='last_modified', lookup_expr='gte')\n     end_date = DateFilter(field_name='last_modified', lookup_expr='lte')\n     name = CharFilter(field_name='name', lookup_expr='icontains')\n \n"
+                },
+                {
+                    "date": 1746597253143,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,8 @@\n \n from django_filters import FilterSet, DateFilter, CharFilter\n class BucketFileFilter(FilterSet):\n-    date \n+    date = DateFilter(field_name='last_modified', lookup_expr='exact')\n     start_date = DateFilter(field_name='last_modified', lookup_expr='gte')\n     end_date = DateFilter(field_name='last_modified', lookup_expr='lte')\n     name = CharFilter(field_name='name', lookup_expr='icontains')\n \n"
+                },
+                {
+                    "date": 1746597261830,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,5 +7,5 @@\n     name = CharFilter(field_name='name', lookup_expr='icontains')\n \n     class Meta:\n         model = None  # We'll set this dynamically\n-        fields = ['name', 'start_date', 'end_date']\n\\ No newline at end of file\n+        fields = ['name', 'start_date', 'end_date','date']\n\\ No newline at end of file\n"
+                }
+            ],
+            "date": 1746597041363,
+            "name": "Commit-0",
+            "content": "class BucketFileFilter(FilterSet):\n    start_date = DateFilter(field_name='last_modified', lookup_expr='gte')\n    end_date = DateFilter(field_name='last_modified', lookup_expr='lte')\n    name = CharFilter(field_name='name', lookup_expr='icontains')\n\n    class Meta:\n        model = None  # We'll set this dynamically\n        fields = ['name', 'start_date', 'end_date']"
+        }
+    ]
+}

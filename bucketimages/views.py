@@ -9,13 +9,25 @@ from django.core.cache import cache
 import logging
 import math
 import time
+from .permissions import ViewOnlyOrSuperuserDelete
+from rest_framework import filters
+from .filter import BucketFileFilter
+from django_filters.rest_framework import DjangoFilterBackend
 
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
+from datetime import datetime
+from django.core.cache import cache
 
 logger = logging.getLogger(__name__)
 
 class BucketAPIView(APIView):
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
+    filterset_class = BucketFileFilter
+    search_fields = ['name']  # Fields to search in
+    ordering_fields = ['name', 'size', 'last_modified']  # Fields that can be ordered
+    ordering = ['-last_modified']  # Default ordering
+    permission_classes = [ViewOnlyOrSuperuserDelete]
     # Cache timeout in seconds (5 minutes)
     CACHE_TIMEOUT = 300
     # Default page size
@@ -27,6 +39,64 @@ class BucketAPIView(APIView):
         super().__init__(*args, **kwargs)
         # Initialize the client when the view is created
         self._s3_client = None
+        
+    def get_queryset(self):
+        # Build cache key based on all filter parameters
+        cache_key = f"bucket_files_{self.request.query_params.urlencode()}"
+        cached_data = cache.get(cache_key)
+        
+        if cached_data:
+            return cached_data
+
+        # Get filter parameters
+        name_filter = self.request.query_params.get('name', '')
+        start_date = self.request.query_params.get('start_date')
+        end_date = self.request.query_params.get('end_date')
+        
+        # Convert dates to datetime objects once
+        start_date_dt = datetime.strptime(start_date, '%Y-%m-%d') if start_date else None
+        end_date_dt = datetime.strptime(end_date, '%Y-%m-%d') if end_date else None
+        
+        s3_client = self._get_r2_client()
+        files = []
+        list_params = {
+            'Bucket': settings.AWS_STORAGE_BUCKET_NAME,
+            'Prefix': name_filter.lower() if name_filter else '',  # Case-insensitive search
+            'MaxKeys': 1000  # Limit number of results per request
+        }
+        
+        # Paginate through results for large buckets
+        while True:
+            response = s3_client.list_objects_v2(**list_params)
+            
+            # Process and filter objects
+            for obj in response.get('Contents', []):
+                last_modified = obj['LastModified']
+                
+                # Apply date filters
+                date_ok = True
+                if start_date_dt and last_modified < start_date_dt:
+                    date_ok = False
+                if end_date_dt and last_modified > end_date_dt:
+                    date_ok = False
+                    
+                if date_ok:
+                    files.append({
+                        'Key': obj['Key'],
+                        'Size': obj['Size'],
+                        'LastModified': last_modified
+                    })
+            
+            # Check if there are more results
+            if not response.get('IsTruncated'):
+                break
+                
+            list_params['ContinuationToken'] = response['NextContinuationToken']
+        
+        # Cache the filtered results
+        cache.set(cache_key, files, timeout=300)  # Cache for 5 minutes
+        
+        return files
 
     def _get_r2_client(self):
         """Initialize and return an R2 client"""
@@ -63,6 +133,25 @@ class BucketAPIView(APIView):
         missing_config = [key for key in required_config if not getattr(settings, key, None)]
         if missing_config:
             raise ValueError(f"Missing R2 configuration: {', '.join(missing_config)}")
+    
+    def _invalidate_cache(self):
+        """
+        Invalidate all cached file listings and individual file caches
+        """
+        # Delete all cached file listings
+        keys = cache.keys('bucket_files_*') or []
+        keys.extend(cache.keys('bucket_contents_*') or [])
+        
+        # Delete all cached file metadata
+        file_keys = cache.keys('file_head_*') or []
+        keys.extend(file_keys)
+        
+        # Delete all cached URLs
+        url_keys = cache.keys('file_url_*') or []
+        keys.extend(url_keys)
+        
+        if keys:
+            cache.delete_many(keys)
 
     def _get_file_url(self, file_name):
         """Generate file URL with caching"""
@@ -448,6 +537,9 @@ class BucketAPIView(APIView):
             cache.delete(f"file_head_{file_name}")
             cache.delete(f"file_url_{file_name}")
             
+             # Invalidate all relevant caches
+            self._invalidate_cache()
+            
             return Response(
                 {
                     'message': 'File uploaded successfully',
@@ -495,7 +587,6 @@ class BucketAPIView(APIView):
         operation_description="Delete a file from R2 storage bucket. Invalidates cache for the bucket listing."
     )
     def delete(self, request, *args, **kwargs):
-        """Delete a file from R2 bucket with cache invalidation"""
         file_name = request.query_params.get('file_name')
         if not file_name:
             return Response(
@@ -511,10 +602,8 @@ class BucketAPIView(APIView):
                 Key=file_name
             )
             
-            # Invalidate relevant cache entries
-            cache.delete(f"bucket_contents_{settings.AWS_STORAGE_BUCKET_NAME}")
-            cache.delete(f"file_head_{file_name}")
-            cache.delete(f"file_url_{file_name}")
+            # Invalidate all relevant caches
+            self._invalidate_cache()
             
             return Response(
                 {'message': f'File {file_name} deleted successfully'},
@@ -526,3 +615,4 @@ class BucketAPIView(APIView):
                 {'error': str(e)},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
+            
