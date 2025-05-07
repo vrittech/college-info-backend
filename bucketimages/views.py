@@ -71,6 +71,10 @@ class BucketAPIView(APIView):
             
             # Process and filter objects
             for obj in response.get('Contents', []):
+                # Skip files in /backup folder
+                if obj['Key'].startswith('backup/') or obj['Key'].startswith('/backup/'):
+                    continue
+                    
                 last_modified = obj['LastModified']
                 
                 # Apply date filters
