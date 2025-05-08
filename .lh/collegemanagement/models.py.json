@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 281,
+            "activePatchIndex": 282,
             "patches": [
                 {
                     "date": 1727170911785,
@@ -1132,6 +1132,10 @@
                 {
                     "date": 1744786863558,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -40,9 +40,9 @@\n     dp_image = models.ImageField(upload_to='college/dp/',null=True,blank=True)\n     priority = models.IntegerField(null=True,blank=True)\n     name = models.CharField(max_length=255)\n     is_show = models.BooleanField(default=False)\n-    is_verified = models.BooleanField(default=False) #whether to do \n+    is_verified = models.BooleanField(default=False) #whether to do featured or not\n     established_date = models.DateField(null= True,blank=True)\n     website_link = models.CharField(max_length=510,null= True,blank=True)\n     address = models.CharField(max_length=255,null=True,blank=True)\n     district = models.ForeignKey(District,on_delete=models.SET_NULL,related_name='college_district',null=True,blank=True)\n"
+                },
+                {
+                    "date": 1746687853784,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -36,9 +36,9 @@\n class College(SEOFields):\n     public_id = models.UUIDField(default=uuid.uuid4,editable=False,unique=True)\n     slug = models.SlugField(max_length=255, unique=True, null=True, blank=True)\n     banner_image = models.ImageField(upload_to='college/banner/',null=True,blank=True)\n-    dp_image = models.ImageField(upload_to='college/dp/',null=True,blank=True)\n+    banner_image = models.ImageField(upload_to='college/dp/',null=True,blank=True)\n     priority = models.IntegerField(null=True,blank=True)\n     name = models.CharField(max_length=255)\n     is_show = models.BooleanField(default=False)\n     is_verified = models.BooleanField(default=False) #whether to do featured or not\n"
                 }
             ],
             "date": 1727170911784,

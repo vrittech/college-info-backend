@@ -38,7 +38,7 @@ from formprogress.routers.routers import router as formprogress_router
 from inquiry.routers.routers import router as inquiry_router
 from superadmindetails.routers.routers import router as superadmindetails_router
 from requestsubmission.routers.routers import router as requestsubmission_router
-
+from bucketimages.routers.routers import router as bucketimages_router
 # from semester.routers.routers import router as semester_router
 from level.routers.routers import router as level_router
 from informationmanagement.routers.routers import router as informationmanagement_router
@@ -62,7 +62,7 @@ from popup.routers.routers import router as popup_router
 from discipline.routers.routers import router as discipline_router
 # from notifications.routers.routers import router as notifications_router
 from mainproj.utilities.position_management import PositionManagementViewSet
-from bucketimages.views import BucketAPIView
+# from bucketimages.views import BucketAPIView
 
 
 router = routers.DefaultRouter()
@@ -104,6 +104,7 @@ router.registry.extend(formprogress_router.registry)
 router.registry.extend(inquiry_router.registry)
 router.registry.extend(superadmindetails_router.registry)
 # router.registry.extend(notifications_router.registry)
+router.registry.extend(bucketimages_router.registry)
 
 from mainproj.utilities.import_excel import ImportExcel
 from mainproj.utilities.bulk_delete import BulkDelete
@@ -126,15 +127,15 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
     path('api/',include('accountsmanagement.urls')),
-    # path('', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
-    # path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
-    # path('api-auth/', include('rest_framework.urls')),
+    path('', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+    path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
+    path('api-auth/', include('rest_framework.urls')),
     path('api/accounts/',include('accounts.urls')),
     path('api/import-excel/<str:type>/',ImportExcel.as_view(),name="import_excel"),
     path('api/bulk-delete/', BulkDelete.as_view(), name="bulk_delete"),
     path("api/", include("notify.urls")),
     path('api/drag-item/', position_management_viewset, name='position_management_drag_item'),
-    path('api/bucket-data/', BucketAPIView.as_view(), name='r2-files'),
+    # path('api/bucket-data/', BucketAPIView.as_view(), name='r2-files'),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

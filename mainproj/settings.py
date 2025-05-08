@@ -96,7 +96,7 @@ INSTALLED_APPS = [
     'certification',
     'socialmedia',
     'coursemanagement',
-    # 'drfapigenerator',
+    'drfapigenerator',
     'collegemanagement',
     'facilities',
     'discipline',
@@ -113,6 +113,7 @@ INSTALLED_APPS = [
     'customgallery',
     'django_crontab',
     'popup',
+    'bucketimages',
     # 'notifications',  # Django Notifications HQ
     # 'channels',  # Required for real-time updates (Django Channels)
 ]
