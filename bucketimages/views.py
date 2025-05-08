@@ -13,7 +13,7 @@ from .permissions import ViewOnlyOrSuperuserDelete
 from rest_framework import filters
 from .filter import BucketFileFilter
 from django_filters.rest_framework import DjangoFilterBackend
-
+import hashlib
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
 from datetime import datetime
@@ -24,7 +24,7 @@ logger = logging.getLogger(__name__)
 class BucketAPIView(APIView):
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
     filterset_class = BucketFileFilter
-    search_fields = ['name']  # Fields to search in
+    search_fields = ['Key'] 
     ordering_fields = ['name', 'size', 'last_modified']  # Fields that can be ordered
     ordering = ['-last_modified']  # Default ordering
     permission_classes = [ViewOnlyOrSuperuserDelete]
@@ -48,63 +48,93 @@ class BucketAPIView(APIView):
         # Initialize the client when the view is created
         self._s3_client = None
         
-    def get_queryset(self):
-        """Get filtered list of files excluding backup paths"""
-        cache_key = f"bucket_files_{self.request.query_params.urlencode()}"
-        cached_data = cache.get(cache_key)
-        
-        if cached_data:
-            return cached_data
-
-        # Get filter parameters
-        name_filter = self.request.query_params.get('name', '')
-        start_date = self.request.query_params.get('start_date')
-        end_date = self.request.query_params.get('end_date')
-        
-        # Convert dates to datetime objects
-        start_date_dt = datetime.strptime(start_date, '%Y-%m-%d') if start_date else None
-        end_date_dt = datetime.strptime(end_date, '%Y-%m-%d') if end_date else None
-        
+    def get_base_queryset(self):
+        """Get all non-excluded files from S3 without any filtering"""
         s3_client = self._get_r2_client()
         files = []
         list_params = {
             'Bucket': settings.AWS_STORAGE_BUCKET_NAME,
-            'Prefix': name_filter.lower() if name_filter else '',
             'MaxKeys': 1000
         }
-        
+
         while True:
             response = s3_client.list_objects_v2(**list_params)
-            
             for obj in response.get('Contents', []):
-                # Skip any files in excluded paths (case insensitive)
-                if any(excluded.lower() in obj['Key'].lower() for excluded in self.EXCLUDED_PATHS):
-                    continue
-                    
-                last_modified = obj['LastModified']
-                
-                # Apply date filters
-                date_ok = True
-                if start_date_dt and last_modified < start_date_dt:
-                    date_ok = False
-                if end_date_dt and last_modified > end_date_dt:
-                    date_ok = False
-                    
-                if date_ok:
+                key = obj['Key']
+                if not any(excl.lower() in key.lower() for excl in self.EXCLUDED_PATHS):
                     files.append({
-                        'Key': obj['Key'],
+                        'Key': key,
                         'Size': obj['Size'],
-                        'LastModified': last_modified
+                        'LastModified': obj['LastModified'],
+                        'Extension': key.split('.')[-1].lower() if '.' in key else ''
                     })
-            
             if not response.get('IsTruncated'):
                 break
-                
             list_params['ContinuationToken'] = response['NextContinuationToken']
-        
-        cache.set(cache_key, files, timeout=300)
         return files
 
+    def apply_search(self, files, search_term):
+        """Apply search filtering to files"""
+        if not search_term:
+            return files
+        
+        search_term = search_term.lower().strip()
+        search_ext = search_term.lstrip('.')
+        
+        results = []
+        for file in files:
+            key = file['Key'].lower()
+            file_ext = file['Extension']
+            
+            # Exact path match
+            if search_term == key:
+                results.append(file)
+                continue
+                
+            # Extension match (with or without dot)
+            if search_ext and search_ext == file_ext:
+                results.append(file)
+                continue
+                
+            # Partial match in filename
+            if search_term in key:
+                results.append(file)
+                
+        return results
+
+    def apply_filters(self, files, start_date=None, end_date=None):
+        """Apply date filtering to files"""
+        if not start_date and not end_date:
+            return files
+            
+        try:
+            start_date_dt = datetime.strptime(start_date, '%Y-%m-%d') if start_date else None
+            end_date_dt = datetime.strptime(end_date, '%Y-%m-%d') if end_date else None
+        except ValueError:
+            return files
+            
+        return [
+            file for file in files
+            if ((not start_date_dt or file['LastModified'] >= start_date_dt) and
+                (not end_date_dt or file['LastModified'] <= end_date_dt))
+        ]
+
+    def get_queryset(self):
+        """Main method combining all functionality"""
+        search_term = self.request.query_params.get('search', '').strip()
+        start_date = self.request.query_params.get('start_date')
+        end_date = self.request.query_params.get('end_date')
+        
+        # Get base queryset (consider adding caching here)
+        files = self.get_base_queryset()
+        
+        # Apply search
+        files = self.apply_search(files, search_term)
+        
+        # Apply date filters
+        files = self.apply_filters(files, start_date, end_date)
+        
+        return files
     def _get_r2_client(self):
         """Initialize and return an R2 client"""
         if not all([

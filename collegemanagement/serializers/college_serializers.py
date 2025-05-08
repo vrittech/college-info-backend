@@ -186,64 +186,38 @@ class CollegeWriteSerializers(serializers.ModelSerializer):
             return super().to_internal_value(data)
         
 
-    def create(self, validated_data):
-        """Handles creating a college and returns full objects in response."""
+    def update(self, instance, validated_data):
+        """Handles updating a college and returns full objects in response (mirroring create logic)."""
         request = self.context.get("request")
 
         # ✅ Convert and clean discipline_ids
         request_data = str_to_list(request.data, "discipline")
         discipline_ids = request_data.get("discipline", [])
-        
+        print(discipline_ids, "!!!!!!!!!!!!!!!!!!!!!!!!discipline_ids")
+
         # ✅ Convert and clean affiliated_ids
         request_data = str_to_list(request.data, "affiliated")
         affiliated_ids = request_data.get("affiliated", [])
+        print(affiliated_ids, "!!!!!!!!!!!!!!!!!!!!!!!!affiliated_ids")
 
         # ✅ Remove ManyToMany fields from validated_data
         validated_data.pop("discipline", None)
         validated_data.pop("affiliated", None)
 
-        # ✅ Create College instance
-        college = College.objects.create(**validated_data)
-
-        # ✅ Set ManyToMany relationships, ensuring only valid IDs are used
-        if discipline_ids:
-            college.discipline.set(Discipline.objects.filter(id__in=discipline_ids))
-        
-        # ✅ Set ManyToMany relationships for affiliated
-        if affiliated_ids:
-            college.affiliated.set(Affiliation.objects.filter(id__in=affiliated_ids))
-
-        return college
-
-
-    def update(self, instance, validated_data):
-        """Handles updating a college and returns full objects in response."""
-        request = self.context.get("request")
-
-        # ✅ Ensure discipline and affiliated are properly formatted
-        request_data = str_to_list(request.data, "discipline")
-        request_data = str_to_list(request.data, "affiliated")
-        
-        discipline_ids = request_data.get("discipline", [])
-        affiliated_ids = request_data.get("affiliated", [])
-
-        # ✅ Exclude ManyToMany fields from direct assignment
-        many_to_many_fields = {"discipline", "affiliated"}
-
+        # ✅ Update fields directly (except M2M)
         for attr, value in validated_data.items():
-            if attr not in many_to_many_fields:  # ✅ Skip ManyToMany fields
-                setattr(instance, attr, value)
+            setattr(instance, attr, value)
         instance.save()
 
-        # ✅ Update ManyToMany relationships separately for discipline
+        # ✅ Set ManyToMany relationships
         if discipline_ids:
             instance.discipline.set(Discipline.objects.filter(id__in=discipline_ids))
 
-        # ✅ Update ManyToMany relationships separately for affiliated
         if affiliated_ids:
             instance.affiliated.set(Affiliation.objects.filter(id__in=affiliated_ids))
-            
+
         return instance
+
 
     def to_representation(self, instance):
         """Customize the response to include full objects for related fields."""

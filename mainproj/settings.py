@@ -416,3 +416,5 @@ SMS_KEY_PASSWORD = ""
 CRONJOBS = [
     ('0 * * * *', 'event.management.commands.check_expired_events')
 ]
+
+CACHE_KEY_PREFIX = 'ci_'
