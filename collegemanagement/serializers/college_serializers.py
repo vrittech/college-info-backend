@@ -180,6 +180,7 @@ class CollegeWriteSerializers(serializers.ModelSerializer):
         return value
         
     def to_internal_value(self, data):
+            print("to internal")
             """Convert certification input from string to list using str_to_list."""
             data = str_to_list(data, 'discipline')  # Convert string to list for certification
             data = str_to_list(data, 'affiliated')  
@@ -190,26 +191,43 @@ class CollegeWriteSerializers(serializers.ModelSerializer):
         """Handles updating a college and returns full objects in response (mirroring create logic)."""
         request = self.context.get("request")
 
-        # ✅ Convert and clean discipline_ids
+        # Convert and clean discipline_ids
         request_data = str_to_list(request.data, "discipline")
         discipline_ids = request_data.get("discipline", [])
-        print(discipline_ids, "!!!!!!!!!!!!!!!!!!!!!!!!discipline_ids")
 
-        # ✅ Convert and clean affiliated_ids
+        # Convert and clean affiliated_ids
         request_data = str_to_list(request.data, "affiliated")
         affiliated_ids = request_data.get("affiliated", [])
-        print(affiliated_ids, "!!!!!!!!!!!!!!!!!!!!!!!!affiliated_ids")
 
-        # ✅ Remove ManyToMany fields from validated_data
+        # Handle file fields more gracefully
+        file_fields = ['banner_image', 'dp_image', 'brochure', 'og_image']
+        for field in file_fields:
+            if field in request.data:
+                print(field, "Field found")
+                # Skip if the value is a string error message (e.g., from a previous validation failure)
+                if isinstance(request.data[field], str):
+                    continue
+                # Handle file deletion case (accepting null/undefined from JavaScript)
+                if request.data[field] in [None, '', 'null', 'undefined']:  # Accept JavaScript null/undefined
+                    old_file = getattr(instance, field)
+                    if old_file:
+                        old_file.delete()
+                    setattr(instance, field, None)
+                # Handle file upload case (validate if the file is actually uploaded)
+                elif hasattr(request.data[field], 'file'):  # Check if it's a valid file object
+                    setattr(instance, field, request.data[field])
+                validated_data.pop(field, None)
+
+        # Remove ManyToMany fields from validated_data
         validated_data.pop("discipline", None)
         validated_data.pop("affiliated", None)
 
-        # ✅ Update fields directly (except M2M)
+        # Update fields directly (except M2M)
         for attr, value in validated_data.items():
             setattr(instance, attr, value)
         instance.save()
 
-        # ✅ Set ManyToMany relationships
+        # Set ManyToMany relationships
         if discipline_ids:
             instance.discipline.set(Discipline.objects.filter(id__in=discipline_ids))
 
@@ -217,6 +235,7 @@ class CollegeWriteSerializers(serializers.ModelSerializer):
             instance.affiliated.set(Affiliation.objects.filter(id__in=affiliated_ids))
 
         return instance
+
 
 
     def to_representation(self, instance):
@@ -230,9 +249,6 @@ class CollegeWriteSerializers(serializers.ModelSerializer):
         response["college_type"] = CollegeTypeSerializer(instance.college_type).data
         # Replace IDs with full nested objects for many-to-many fields
         response["discipline"] = DisciplineSerializer(instance.discipline.all(), many=True).data
-        # response["social_media"] = SocialMediaSerializer(instance.social_media.all(), many=True).data
-        # response["facilities"] = FacilitySerializer(instance.facilities.all(), many=True).data
-
         return response
     
     def validate(self, attrs):

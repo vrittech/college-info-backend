@@ -434,6 +434,29 @@ class collegeViewsets(viewsets.ModelViewSet):
             }
 
             return Response(result, status=status.HTTP_200_OK)
+        
+        
+    @action(detail=True, methods=['get'], permission_classes=[AllowAny], url_path="delete-files")
+    def delete_files(self, request, college_slug=None, *args, **kwargs):
+        field_name = request.query_params.get("field_name")
+        
+        # Valid fields for deletion
+        valid_fields = ['og_image', 'dp_image', 'brochure']
+        
+        # Ensure field_name is valid
+        if field_name not in valid_fields:
+            return Response({"detail": "Invalid field name."}, status=status.HTTP_400_BAD_REQUEST)
+        
+        # Fetch the college object
+        college = self.get_object()
+
+        # Check if the field exists and delete it
+        if hasattr(college, field_name):
+            setattr(college, field_name, None)
+            college.save()
+            return Response("Successfully Deleted", status=status.HTTP_200_OK)
+        else:
+            return Response({"detail": "Field not found on the object."}, status=status.HTTP_400_BAD_REQUEST)
 
     #TODO Bulk updates of priorities
     # @action(detail=False, methods=['get', 'patch'], url_path='update-priorities')

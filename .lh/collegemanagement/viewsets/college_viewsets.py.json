@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 200,
+            "activePatchIndex": 219,
             "patches": [
                 {
                     "date": 1733718920520,
@@ -808,6 +808,82 @@
                 {
                     "date": 1746507550999,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -122,9 +122,9 @@\n         return queryset\n \n     def get_serializer_class(self):\n         # Check if the user is authenticated\n-        if not self.request.user.is_authenticated and self:\n+        if not self.request.user.is_authenticated and self.action ==:\n             # If user is not authenticated, return the CollegeListUserSerializers\n             return CollegeListUserSerializers\n \n         # If the user is authenticated, proceed with your original logic\n"
+                },
+                {
+                    "date": 1747217901945,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -122,9 +122,9 @@\n         return queryset\n \n     def get_serializer_class(self):\n         # Check if the user is authenticated\n-        if not self.request.user.is_authenticated and self.action ==:\n+        if not self.request.user.is_authenticated and self.action == 'list':\n             # If user is not authenticated, return the CollegeListUserSerializers\n             return CollegeListUserSerializers\n \n         # If the user is authenticated, proceed with your original logic\n@@ -433,9 +433,22 @@\n                 'priority': college.priority\n             }\n \n             return Response(result, status=status.HTTP_200_OK)\n+        \n+        \n+    # @action(detail=False, methods=['get'],permission_classes=[AllowAny], url_path=\"latest/(?P<college_slug>[^/]+)\")\n+    # def latest_college_images(self, request, college_slug=None, *args, **kwargs):\n+    #     # Fetch the college using slug\n+    #     college = get_object_or_404(College, slug=college_slug)\n \n+    #     # Get the latest 5 images of the specified college\n+    #     images = CollegeGallery.objects.filter(college=college).order_by('-created_date')[:5]\n+\n+    #     # Serialize and return the data as a flat array\n+    #     serializer = CollegeGalleryRetrieveSerializers(images, many=True)\n+    #     return Response(serializer.data)\n+\n     #TODO Bulk updates of priorities\n     # @action(detail=False, methods=['get', 'patch'], url_path='update-priorities')\n     # def update_riorities(self, request, *args, **kwargs):\n     #     if request.method == 'GET':\n"
+                },
+                {
+                    "date": 1747217911433,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -435,19 +435,19 @@\n \n             return Response(result, status=status.HTTP_200_OK)\n         \n         \n-    # @action(detail=False, methods=['get'],permission_classes=[AllowAny], url_path=\"latest/(?P<college_slug>[^/]+)\")\n-    # def latest_college_images(self, request, college_slug=None, *args, **kwargs):\n-    #     # Fetch the college using slug\n-    #     college = get_object_or_404(College, slug=college_slug)\n+    @action(detail=get, methods=['get'],permission_classes=[AllowAny], url_path=\"latest/(?P<college_slug>[^/]+)\")\n+    def latest_college_images(self, request, college_slug=None, *args, **kwargs):\n+        # Fetch the college using slug\n+        college = get_object_or_404(College, slug=college_slug)\n \n-    #     # Get the latest 5 images of the specified college\n-    #     images = CollegeGallery.objects.filter(college=college).order_by('-created_date')[:5]\n+        # Get the latest 5 images of the specified college\n+        images = CollegeGallery.objects.filter(college=college).order_by('-created_date')[:5]\n \n-    #     # Serialize and return the data as a flat array\n-    #     serializer = CollegeGalleryRetrieveSerializers(images, many=True)\n-    #     return Response(serializer.data)\n+        # Serialize and return the data as a flat array\n+        serializer = CollegeGalleryRetrieveSerializers(images, many=True)\n+        return Response(serializer.data)\n \n     #TODO Bulk updates of priorities\n     # @action(detail=False, methods=['get', 'patch'], url_path='update-priorities')\n     # def update_riorities(self, request, *args, **kwargs):\n"
+                },
+                {
+                    "date": 1747217933606,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -435,9 +435,9 @@\n \n             return Response(result, status=status.HTTP_200_OK)\n         \n         \n-    @action(detail=get, methods=['get'],permission_classes=[AllowAny], url_path=\"latest/(?P<college_slug>[^/]+)\")\n+    @action(detail=True, methods=['post'],permission_classes=[AllowAny], url_path=\"latest/(?P<college_slug>[^/]+)\")\n     def latest_college_images(self, request, college_slug=None, *args, **kwargs):\n         # Fetch the college using slug\n         college = get_object_or_404(College, slug=college_slug)\n \n"
+                },
+                {
+                    "date": 1747217939141,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -437,16 +437,9 @@\n         \n         \n     @action(detail=True, methods=['post'],permission_classes=[AllowAny], url_path=\"latest/(?P<college_slug>[^/]+)\")\n     def latest_college_images(self, request, college_slug=None, *args, **kwargs):\n-        # Fetch the college using slug\n-        college = get_object_or_404(College, slug=college_slug)\n-\n-        # Get the latest 5 images of the specified college\n-        images = CollegeGallery.objects.filter(college=college).order_by('-created_date')[:5]\n-\n-        # Serialize and return the data as a flat array\n-        serializer = CollegeGalleryRetrieveSerializers(images, many=True)\n+        \n         return Response(serializer.data)\n \n     #TODO Bulk updates of priorities\n     # @action(detail=False, methods=['get', 'patch'], url_path='update-priorities')\n"
+                },
+                {
+                    "date": 1747217950949,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -437,9 +437,9 @@\n         \n         \n     @action(detail=True, methods=['post'],permission_classes=[AllowAny], url_path=\"latest/(?P<college_slug>[^/]+)\")\n     def latest_college_images(self, request, college_slug=None, *args, **kwargs):\n-        \n+        image_name = \n         return Response(serializer.data)\n \n     #TODO Bulk updates of priorities\n     # @action(detail=False, methods=['get', 'patch'], url_path='update-priorities')\n"
+                },
+                {
+                    "date": 1747217959362,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -437,9 +437,9 @@\n         \n         \n     @action(detail=True, methods=['post'],permission_classes=[AllowAny], url_path=\"latest/(?P<college_slug>[^/]+)\")\n     def latest_college_images(self, request, college_slug=None, *args, **kwargs):\n-        image_name = \n+        image_name = request.data.get(\"field_name\")\n         return Response(serializer.data)\n \n     #TODO Bulk updates of priorities\n     # @action(detail=False, methods=['get', 'patch'], url_path='update-priorities')\n"
+                },
+                {
+                    "date": 1747217965511,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -437,9 +437,9 @@\n         \n         \n     @action(detail=True, methods=['post'],permission_classes=[AllowAny], url_path=\"latest/(?P<college_slug>[^/]+)\")\n     def latest_college_images(self, request, college_slug=None, *args, **kwargs):\n-        image_name = request.data.get(\"field_name\")\n+        field_name = request.data.get(\"\")\n         return Response(serializer.data)\n \n     #TODO Bulk updates of priorities\n     # @action(detail=False, methods=['get', 'patch'], url_path='update-priorities')\n"
+                },
+                {
+                    "date": 1747217991322,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -438,8 +438,9 @@\n         \n     @action(detail=True, methods=['post'],permission_classes=[AllowAny], url_path=\"latest/(?P<college_slug>[^/]+)\")\n     def latest_college_images(self, request, college_slug=None, *args, **kwargs):\n         field_name = request.data.get(\"\")\n+        \n         return Response(serializer.data)\n \n     #TODO Bulk updates of priorities\n     # @action(detail=False, methods=['get', 'patch'], url_path='update-priorities')\n"
+                },
+                {
+                    "date": 1747217999882,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -438,9 +438,9 @@\n         \n     @action(detail=True, methods=['post'],permission_classes=[AllowAny], url_path=\"latest/(?P<college_slug>[^/]+)\")\n     def latest_college_images(self, request, college_slug=None, *args, **kwargs):\n         field_name = request.data.get(\"\")\n-        \n+        obj\n         return Response(serializer.data)\n \n     #TODO Bulk updates of priorities\n     # @action(detail=False, methods=['get', 'patch'], url_path='update-priorities')\n"
+                },
+                {
+                    "date": 1747218008719,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -438,9 +438,10 @@\n         \n     @action(detail=True, methods=['post'],permission_classes=[AllowAny], url_path=\"latest/(?P<college_slug>[^/]+)\")\n     def latest_college_images(self, request, college_slug=None, *args, **kwargs):\n         field_name = request.data.get(\"\")\n-        obj\n+        object = self.get_object()\n+        object.\n         return Response(serializer.data)\n \n     #TODO Bulk updates of priorities\n     # @action(detail=False, methods=['get', 'patch'], url_path='update-priorities')\n"
+                },
+                {
+                    "date": 1747218014897,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -439,9 +439,9 @@\n     @action(detail=True, methods=['post'],permission_classes=[AllowAny], url_path=\"latest/(?P<college_slug>[^/]+)\")\n     def latest_college_images(self, request, college_slug=None, *args, **kwargs):\n         field_name = request.data.get(\"\")\n         object = self.get_object()\n-        object.\n+        object.field_name = \n         return Response(serializer.data)\n \n     #TODO Bulk updates of priorities\n     # @action(detail=False, methods=['get', 'patch'], url_path='update-priorities')\n"
+                },
+                {
+                    "date": 1747218021360,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -439,9 +439,10 @@\n     @action(detail=True, methods=['post'],permission_classes=[AllowAny], url_path=\"latest/(?P<college_slug>[^/]+)\")\n     def latest_college_images(self, request, college_slug=None, *args, **kwargs):\n         field_name = request.data.get(\"\")\n         object = self.get_object()\n-        object.field_name = \n+        object.field_name = None\n+        object.save()\n         return Response(serializer.data)\n \n     #TODO Bulk updates of priorities\n     # @action(detail=False, methods=['get', 'patch'], url_path='update-priorities')\n"
+                },
+                {
+                    "date": 1747218032851,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -437,9 +437,9 @@\n         \n         \n     @action(detail=True, methods=['post'],permission_classes=[AllowAny], url_path=\"latest/(?P<college_slug>[^/]+)\")\n     def latest_college_images(self, request, college_slug=None, *args, **kwargs):\n-        field_name = request.data.get(\"\")\n+        field_name = request.data.get(\"field_name\")\n         object = self.get_object()\n         object.field_name = None\n         object.save()\n         return Response(serializer.data)\n"
+                },
+                {
+                    "date": 1747218040800,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -438,8 +438,9 @@\n         \n     @action(detail=True, methods=['post'],permission_classes=[AllowAny], url_path=\"latest/(?P<college_slug>[^/]+)\")\n     def latest_college_images(self, request, college_slug=None, *args, **kwargs):\n         field_name = request.data.get(\"field_name\")\n+        if field_name == \"og\"\n         object = self.get_object()\n         object.field_name = None\n         object.save()\n         return Response(serializer.data)\n"
+                },
+                {
+                    "date": 1747218049209,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -438,11 +438,11 @@\n         \n     @action(detail=True, methods=['post'],permission_classes=[AllowAny], url_path=\"latest/(?P<college_slug>[^/]+)\")\n     def latest_college_images(self, request, college_slug=None, *args, **kwargs):\n         field_name = request.data.get(\"field_name\")\n-        if field_name == \"og\"\n+        if field_name == \"og_image\"::\n         object = self.get_object()\n-        object.field_name = None\n+        object.og_image = None\n         object.save()\n         return Response(serializer.data)\n \n     #TODO Bulk updates of priorities\n"
+                },
+                {
+                    "date": 1747218055376,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -438,11 +438,11 @@\n         \n     @action(detail=True, methods=['post'],permission_classes=[AllowAny], url_path=\"latest/(?P<college_slug>[^/]+)\")\n     def latest_college_images(self, request, college_slug=None, *args, **kwargs):\n         field_name = request.data.get(\"field_name\")\n-        if field_name == \"og_image\"::\n-        object = self.get_object()\n-        object.og_image = None\n+        if field_name == \"og_image\":\n+            object = self.get_object()\n+            object.og_image = None\n         object.save()\n         return Response(serializer.data)\n \n     #TODO Bulk updates of priorities\n"
+                },
+                {
+                    "date": 1747218062210,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -441,9 +441,10 @@\n         field_name = request.data.get(\"field_name\")\n         if field_name == \"og_image\":\n             object = self.get_object()\n             object.og_image = None\n-        object.save()\n+            object.save()\n+        \n         return Response(serializer.data)\n \n     #TODO Bulk updates of priorities\n     # @action(detail=False, methods=['get', 'patch'], url_path='update-priorities')\n"
+                },
+                {
+                    "date": 1747218068597,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -444,9 +444,9 @@\n             object.og_image = None\n             object.save()\n         elif field_name == \"dp_image\":\n             object = self.get_object()\n-            \n+            object.dp_image = None\n         return Response(serializer.data)\n \n     #TODO Bulk updates of priorities\n     # @action(detail=False, methods=['get', 'patch'], url_path='update-priorities')\n"
+                },
+                {
+                    "date": 1747218086970,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -446,9 +446,9 @@\n         elif field_name == \"dp_image\":\n             object = self.get_object()\n             object.dp_image = None\n             object.save()\n-        elif\n+        elif field_name ==\n         return Response(serializer.data)\n \n     #TODO Bulk updates of priorities\n     # @action(detail=False, methods=['get', 'patch'], url_path='update-priorities')\n"
                 }
             ],
             "date": 1733718920520,
