@@ -126,7 +126,7 @@ class CourseListUserSerializers(serializers.ModelSerializer):
 
     class Meta:
         model = Course
-        fields = ['slug','name','affiliation','duration']
+        fields = ['id','slug','name','affiliation','duration']
 
 class CourseRetrieveSerializers(serializers.ModelSerializer):
     # Nested serializers for related fields
