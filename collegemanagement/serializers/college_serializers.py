@@ -130,7 +130,7 @@ class CollegeListUserSerializers(serializers.ModelSerializer):
 
     class Meta:
         model = College
-        fields = ['slug','name','dp_image','is_verified','address','district','affiliated','banner_image']
+        fields = ['id','slug','name','dp_image','is_verified','address','district','affiliated','banner_image']
 
 
 # Serializer for retrieving complete college details (detailed view)
