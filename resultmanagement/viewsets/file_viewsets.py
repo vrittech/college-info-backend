@@ -8,6 +8,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from mainproj.permissions import DynamicModelPermission
 import pandas as pd
+import numpy as np
 
 class fileViewsets(viewsets.ModelViewSet):
     serializer_class = FileListSerializers
@@ -74,7 +75,6 @@ class fileViewsets(viewsets.ModelViewSet):
 
         # 4) Read the first row to get column names
         try:
-            # rewind in case Django has read some bytes already
             uploaded_file.seek(0)
             if file_type == 'csv':
                 df_header = pd.read_csv(uploaded_file, nrows=1)
@@ -104,8 +104,11 @@ class fileViewsets(viewsets.ModelViewSet):
                 status=status.HTTP_400_BAD_REQUEST
             )
 
-        sample_sliced = df_sample.iloc[:, :3]
-        sample_preview = sample_sliced.iloc[:3, :3]
+        # Handle edge cases for NaN and infinity values
+        df_sample.replace([np.nan, np.inf, -np.inf], None, inplace=True)
+
+        sample_sliced = df_sample.iloc[:, :3]  # Select only the first three columns
+        sample_preview = sample_sliced.iloc[:3, :3]  # Take a 3x3 sample
         preview_records = sample_preview.to_dict(orient='records')
 
         # 6) Return file_id + column headers + preview
@@ -118,6 +121,7 @@ class fileViewsets(viewsets.ModelViewSet):
             },
             status=status.HTTP_201_CREATED
         )
+
        
 
 
