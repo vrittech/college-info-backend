@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 55,
+            "activePatchIndex": 58,
             "patches": [
                 {
                     "date": 1739684343218,
@@ -228,6 +228,18 @@
                 {
                     "date": 1746687042057,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -126,11 +126,11 @@\n urlpatterns = [\n     path('admin/', admin.site.urls),\n     path('api/', include(router.urls)),\n     path('api/',include('accountsmanagement.urls')),\n-    # path('', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),\n-    # path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),\n-    # path('api-auth/', include('rest_framework.urls')),\n+    path('', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),\n+    path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),\n+    path('api-auth/', include('rest_framework.urls')),\n     path('api/accounts/',include('accounts.urls')),\n     path('api/import-excel/<str:type>/',ImportExcel.as_view(),name=\"import_excel\"),\n     path('api/bulk-delete/', BulkDelete.as_view(), name=\"bulk_delete\"),\n     path(\"api/\", include(\"notify.urls\")),\n"
+                },
+                {
+                    "date": 1749103642175,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -138,5 +138,8 @@\n     # path('api/bucket-data/', BucketAPIView.as_view(), name='r2-files'),\n ]\n if settings.DEBUG:\n     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)\n-    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)  # for development\n\\ No newline at end of file\n+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)  # for development\n+#*********This is resultmanagement router registered by autoapi*********\n+\n+urlpatterns.append(path('api/',include(resultmanagement_router.urls)))\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1749103652243,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -39,8 +39,9 @@\n from superadmindetails.routers.routers import router as superadmindetails_router\n from requestsubmission.routers.routers import router as requestsubmission_router\n from bucketimages.routers.routers import router as bucketimages_router\n # from semester.routers.routers import router as semester_router\n+from resultmanagement.routers.routers import router as resultmanagement_router\n from level.routers.routers import router as level_router\n from informationmanagement.routers.routers import router as informationmanagement_router\n from affiliation.routers.routers import router as affiliation_router\n from certification.routers.routers import router as certification_router\n@@ -139,7 +140,4 @@\n ]\n if settings.DEBUG:\n     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)\n     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)  # for development\n-#*********This is resultmanagement router registered by autoapi*********\n-\n-urlpatterns.append(path('api/',include(resultmanagement_router.urls)))\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1749103658257,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -94,9 +94,9 @@\n router.registry.extend(coursesandfees_router.registry)\n # router.registry.extend(location_router.registry)\n # router.registry.extend(preparationinquiries_router.registry)\n # router.registry.extend(collegeandcourseinquiries_router.registry)\n-\n+router\n router.registry.extend(discipline_router.registry)\n router.registry.extend(accounts_router.registry)\n router.registry.extend(contact_router.registry)\n router.registry.extend(advertisement_router.registry)\n"
                 }
             ],
             "date": 1739684343218,

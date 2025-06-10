@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 9,
+            "activePatchIndex": 17,
             "patches": [
                 {
                     "date": 1733481090199,
@@ -44,6 +44,38 @@
                 {
                     "date": 1740910883506,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,9 +11,9 @@\n     # permission_classes = [advertisementPermission]\n     permission_classes = [DynamicModelPermission]\n     # authentication_classes = [JWTAuthentication]\n     pagination_class = MyPageNumberPagination\n-    queryset = PlacementPosition.objects.all().order_by('-placement_name')\n+    queryset = PlacementPosition.objects.all().order_by('placement_name')\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     search_fields = ['id']\n     ordering_fields = ['id']\n"
+                },
+                {
+                    "date": 1749204807040,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,9 +11,9 @@\n     # permission_classes = [advertisementPermission]\n     permission_classes = [DynamicModelPermission]\n     # authentication_classes = [JWTAuthentication]\n     pagination_class = MyPageNumberPagination\n-    queryset = PlacementPosition.objects.all().order_by('placement_name')\n+    queryset = PlacementPosition.objects.all().order_by('id')\n \n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     search_fields = ['id']\n     ordering_fields = ['id']\n"
+                },
+                {
+                    "date": 1749357272684,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,11 +17,11 @@\n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     search_fields = ['id']\n     ordering_fields = ['id']\n \n-    # filterset_fields = {\n-    #     'id': ['exact'],\n-    # }\n+    filterset_fields = {\n+        'id': ['exact'],\n+    }\n \n     def get_queryset(self):\n         queryset = super().get_queryset()\n         return queryset\n"
+                },
+                {
+                    "date": 1749357277803,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,8 +19,9 @@\n     ordering_fields = ['id']\n \n     filterset_fields = {\n         'id': ['exact'],\n+        adv_ty\n     }\n \n     def get_queryset(self):\n         queryset = super().get_queryset()\n"
+                },
+                {
+                    "date": 1749357284893,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n     ordering_fields = ['id']\n \n     filterset_fields = {\n         'id': ['exact'],\n-        adv_ty\n+        'adv_type: ['exact'],\n     }\n \n     def get_queryset(self):\n         queryset = super().get_queryset()\n"
+                },
+                {
+                    "date": 1749357417698,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n     ordering_fields = ['id']\n \n     filterset_fields = {\n         'id': ['exact'],\n-        'adv_type: ['exact'],\n+        'adv_type': ['exact'],\n     }\n \n     def get_queryset(self):\n         queryset = super().get_queryset()\n@@ -32,9 +32,11 @@\n             return PlacementPositionWriteSerializers\n         elif self.action == 'retrieve':\n             return PlacementPositionRetrieveSerializers\n         return super().get_serializer_class()\n+    \n \n+\n     # @action(detail=False, methods=['get'], name=\"action_name\", url_path=\"url_path\")\n     # def action_name(self, request, *args, **kwargs):\n     #     return super().list(request, *args, **kwargs)\n \n"
+                },
+                {
+                    "date": 1749357422723,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -34,8 +34,9 @@\n             return PlacementPositionRetrieveSerializers\n         return super().get_serializer_class()\n     \n \n+    def update\n \n     # @action(detail=False, methods=['get'], name=\"action_name\", url_path=\"url_path\")\n     # def action_name(self, request, *args, **kwargs):\n     #     return super().list(request, *args, **kwargs)\n"
+                },
+                {
+                    "date": 1749357449313,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,9 @@\n \n class placementpositionViewsets(viewsets.ModelViewSet):\n     serializer_class = PlacementPositionListSerializers\n     # permission_classes = [advertisementPermission]\n-    permission_classes = [DynamicModelPermission]\n+    # permission_classes = [DynamicModelPermission]\n     # authentication_classes = [JWTAuthentication]\n     pagination_class = MyPageNumberPagination\n     queryset = PlacementPosition.objects.all().order_by('id')\n \n@@ -34,9 +34,10 @@\n             return PlacementPositionRetrieveSerializers\n         return super().get_serializer_class()\n     \n \n-    def update\n+    def update(self, request, *args, **kwargs):\n+        return super().update(request, *args, **kwargs)\n \n     # @action(detail=False, methods=['get'], name=\"action_name\", url_path=\"url_path\")\n     # def action_name(self, request, *args, **kwargs):\n     #     return super().list(request, *args, **kwargs)\n"
+                },
+                {
+                    "date": 1749357461408,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,9 @@\n \n class placementpositionViewsets(viewsets.ModelViewSet):\n     serializer_class = PlacementPositionListSerializers\n     # permission_classes = [advertisementPermission]\n-    # permission_classes = [DynamicModelPermission]\n+    permission_classes = [DynamicModelPermission]\n     # authentication_classes = [JWTAuthentication]\n     pagination_class = MyPageNumberPagination\n     queryset = PlacementPosition.objects.all().order_by('id')\n \n"
                 }
             ],
             "date": 1733481090198,

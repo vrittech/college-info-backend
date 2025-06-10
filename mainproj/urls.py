@@ -40,6 +40,7 @@ from superadmindetails.routers.routers import router as superadmindetails_router
 from requestsubmission.routers.routers import router as requestsubmission_router
 from bucketimages.routers.routers import router as bucketimages_router
 # from semester.routers.routers import router as semester_router
+from resultmanagement.routers.routers import router as resultmanagement_router
 from level.routers.routers import router as level_router
 from informationmanagement.routers.routers import router as informationmanagement_router
 from affiliation.routers.routers import router as affiliation_router
@@ -94,7 +95,7 @@ router.registry.extend(coursesandfees_router.registry)
 # router.registry.extend(location_router.registry)
 # router.registry.extend(preparationinquiries_router.registry)
 # router.registry.extend(collegeandcourseinquiries_router.registry)
-
+router.registry.extend(resultmanagement_router.registry)
 router.registry.extend(discipline_router.registry)
 router.registry.extend(accounts_router.registry)
 router.registry.extend(contact_router.registry)

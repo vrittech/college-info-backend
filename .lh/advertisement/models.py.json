@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 55,
+            "activePatchIndex": 77,
             "patches": [
                 {
                     "date": 1733373617417,
@@ -228,6 +228,94 @@
                 {
                     "date": 1741254178188,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,9 +20,9 @@\n     link = models.URLField(null=True,blank=True)\n     is_show = models.BooleanField(default=False)\n     image = models.ImageField(upload_to='ads/',null=True,blank=True)\n     placement = models.ForeignKey(PlacementPosition, on_delete=models.CASCADE)\n-    created_date = models.DateTimeField(auto_now_add=True)\n+    created_date = models.DateField(auto_now_add=True)\n     updated_date = models.DateTimeField(auto_now=True)\n     # duration_in_seconds = models.IntegerField(default=0)  # Time in seconds for the ad\n \n     def __str__(self):\n"
+                },
+                {
+                    "date": 1749189502276,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,8 +17,9 @@\n \n class Advertisement(models.Model):\n     name = models.CharField(max_length=255)\n     link = models.URLField(null=True,blank=True)\n+    t\n     is_show = models.BooleanField(default=False)\n     image = models.ImageField(upload_to='ads/',null=True,blank=True)\n     placement = models.ForeignKey(PlacementPosition, on_delete=models.CASCADE)\n     created_date = models.DateField(auto_now_add=True)\n"
+                },
+                {
+                    "date": 1749189512363,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,9 +17,9 @@\n \n class Advertisement(models.Model):\n     name = models.CharField(max_length=255)\n     link = models.URLField(null=True,blank=True)\n-    t\n+    type = models.\n     is_show = models.BooleanField(default=False)\n     image = models.ImageField(upload_to='ads/',null=True,blank=True)\n     placement = models.ForeignKey(PlacementPosition, on_delete=models.CASCADE)\n     created_date = models.DateField(auto_now_add=True)\n"
+                },
+                {
+                    "date": 1749189519189,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,11 +15,12 @@\n         ]\n \n \n class Advertisement(models.Model):\n+    TYPE\n     name = models.CharField(max_length=255)\n     link = models.URLField(null=True,blank=True)\n-    type = models.\n+    # type = models.\n     is_show = models.BooleanField(default=False)\n     image = models.ImageField(upload_to='ads/',null=True,blank=True)\n     placement = models.ForeignKey(PlacementPosition, on_delete=models.CASCADE)\n     created_date = models.DateField(auto_now_add=True)\n"
+                },
+                {
+                    "date": 1749189524353,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,9 +15,11 @@\n         ]\n \n \n class Advertisement(models.Model):\n-    TYPE\n+    TYPE_CHOICES = [\n+        \n+    ]\n     name = models.CharField(max_length=255)\n     link = models.URLField(null=True,blank=True)\n     # type = models.\n     is_show = models.BooleanField(default=False)\n"
+                },
+                {
+                    "date": 1749189531454,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,9 +16,9 @@\n \n \n class Advertisement(models.Model):\n     TYPE_CHOICES = [\n-        \n+        ('')\n     ]\n     name = models.CharField(max_length=255)\n     link = models.URLField(null=True,blank=True)\n     # type = models.\n"
+                },
+                {
+                    "date": 1749189536780,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,9 +16,9 @@\n \n \n class Advertisement(models.Model):\n     TYPE_CHOICES = [\n-        ('')\n+        ('normal', 'Normal'),\n     ]\n     name = models.CharField(max_length=255)\n     link = models.URLField(null=True,blank=True)\n     # type = models.\n"
+                },
+                {
+                    "date": 1749189543603,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,8 +17,10 @@\n \n class Advertisement(models.Model):\n     TYPE_CHOICES = [\n         ('normal', 'Normal'),\n+        ('sticky', 'Sticky'),\n+        ('popup', 'Popup'),\n     ]\n     name = models.CharField(max_length=255)\n     link = models.URLField(null=True,blank=True)\n     # type = models.\n"
+                },
+                {
+                    "date": 1749189552125,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,10 +17,9 @@\n \n class Advertisement(models.Model):\n     TYPE_CHOICES = [\n         ('normal', 'Normal'),\n-        ('sticky', 'Sticky'),\n-        ('popup', 'Popup'),\n+        ('resukl', 'Sticky')\n     ]\n     name = models.CharField(max_length=255)\n     link = models.URLField(null=True,blank=True)\n     # type = models.\n"
+                },
+                {
+                    "date": 1749189559545,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,9 +17,9 @@\n \n class Advertisement(models.Model):\n     TYPE_CHOICES = [\n         ('normal', 'Normal'),\n-        ('resukl', 'Sticky')\n+        ('result', 'result')\n     ]\n     name = models.CharField(max_length=255)\n     link = models.URLField(null=True,blank=True)\n     # type = models.\n"
+                },
+                {
+                    "date": 1749189569468,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -21,9 +21,9 @@\n         ('result', 'result')\n     ]\n     name = models.CharField(max_length=255)\n     link = models.URLField(null=True,blank=True)\n-    # type = models.\n+    type = models.\n     is_show = models.BooleanField(default=False)\n     image = models.ImageField(upload_to='ads/',null=True,blank=True)\n     placement = models.ForeignKey(PlacementPosition, on_delete=models.CASCADE)\n     created_date = models.DateField(auto_now_add=True)\n"
+                },
+                {
+                    "date": 1749189575269,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -21,9 +21,9 @@\n         ('result', 'result')\n     ]\n     name = models.CharField(max_length=255)\n     link = models.URLField(null=True,blank=True)\n-    type = models.\n+    type = models.Choices(TYPE_CHOICES, default='normal')\n     is_show = models.BooleanField(default=False)\n     image = models.ImageField(upload_to='ads/',null=True,blank=True)\n     placement = models.ForeignKey(PlacementPosition, on_delete=models.CASCADE)\n     created_date = models.DateField(auto_now_add=True)\n"
+                },
+                {
+                    "date": 1749189582987,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -21,9 +21,9 @@\n         ('result', 'result')\n     ]\n     name = models.CharField(max_length=255)\n     link = models.URLField(null=True,blank=True)\n-    type = models.Choices(TYPE_CHOICES, default='normal')\n+    adv_type = models.Choices(TYPE_CHOICES, default='normal')\n     is_show = models.BooleanField(default=False)\n     image = models.ImageField(upload_to='ads/',null=True,blank=True)\n     placement = models.ForeignKey(PlacementPosition, on_delete=models.CASCADE)\n     created_date = models.DateField(auto_now_add=True)\n"
+                },
+                {
+                    "date": 1749189608929,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,9 +17,9 @@\n \n class Advertisement(models.Model):\n     TYPE_CHOICES = [\n         ('normal', 'Normal'),\n-        ('result', 'result')\n+        ('result', 'Result')\n     ]\n     name = models.CharField(max_length=255)\n     link = models.URLField(null=True,blank=True)\n     adv_type = models.Choices(TYPE_CHOICES, default='normal')\n"
+                },
+                {
+                    "date": 1749189696301,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -21,9 +21,13 @@\n         ('result', 'Result')\n     ]\n     name = models.CharField(max_length=255)\n     link = models.URLField(null=True,blank=True)\n-    adv_type = models.Choices(TYPE_CHOICES, default='normal')\n+       adv_type = models.CharField(\n+        max_length=10,\n+        choices=TYPE_CHOICES,\n+        default='normal'\n+    )\n     is_show = models.BooleanField(default=False)\n     image = models.ImageField(upload_to='ads/',null=True,blank=True)\n     placement = models.ForeignKey(PlacementPosition, on_delete=models.CASCADE)\n     created_date = models.DateField(auto_now_add=True)\n"
+                },
+                {
+                    "date": 1749189701421,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -21,9 +21,9 @@\n         ('result', 'Result')\n     ]\n     name = models.CharField(max_length=255)\n     link = models.URLField(null=True,blank=True)\n-       adv_type = models.CharField(\n+    adv_type = models.CharField(\n         max_length=10,\n         choices=TYPE_CHOICES,\n         default='normal'\n     )\n"
+                },
+                {
+                    "date": 1749356192390,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -31,9 +31,9 @@\n     image = models.ImageField(upload_to='ads/',null=True,blank=True)\n     placement = models.ForeignKey(PlacementPosition, on_delete=models.CASCADE)\n     created_date = models.DateField(auto_now_add=True)\n     updated_date = models.DateTimeField(auto_now=True)\n-    # duration_in_seconds = models.IntegerField(default=0)  # Time in seconds for the ad\n+    duration_in_seconds = models.IntegerField(default=0)  # Time in seconds for the ad\n \n     def __str__(self):\n         return self.name\n     class Meta:\n"
+                },
+                {
+                    "date": 1749357108081,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -31,9 +31,9 @@\n     image = models.ImageField(upload_to='ads/',null=True,blank=True)\n     placement = models.ForeignKey(PlacementPosition, on_delete=models.CASCADE)\n     created_date = models.DateField(auto_now_add=True)\n     updated_date = models.DateTimeField(auto_now=True)\n-    duration_in_seconds = models.IntegerField(default=0)  # Time in seconds for the ad\n+    # duration_in_seconds = models.IntegerField(default=0)  # Time in seconds for the ad\n \n     def __str__(self):\n         return self.name\n     class Meta:\n"
+                },
+                {
+                    "date": 1749357114118,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,8 +2,9 @@\n \n class PlacementPosition(models.Model):\n     placement_name = models.CharField(max_length=255,null=True,blank=True) \n     duration_in_seconds = models.IntegerField(default=0)  # Time in seconds\n+    type = models.CharField(max_length=255,null=True,blank=True)\n     created_date = models.DateTimeField(auto_now_add=True)\n     updated_date = models.DateTimeField(auto_now=True)\n \n     def __str__(self):\n"
+                },
+                {
+                    "date": 1749357121700,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,10 +1,14 @@\n from django.db import models\n \n class PlacementPosition(models.Model):\n+      TYPE_CHOICES = [\n+        ('normal', 'Normal'),\n+        ('result', 'Result')\n+    ]\n     placement_name = models.CharField(max_length=255,null=True,blank=True) \n     duration_in_seconds = models.IntegerField(default=0)  # Time in seconds\n-    type = models.CharField(max_length=255,null=True,blank=True)\n+    type \n     created_date = models.DateTimeField(auto_now_add=True)\n     updated_date = models.DateTimeField(auto_now=True)\n \n     def __str__(self):\n"
+                },
+                {
+                    "date": 1749357134592,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,14 +1,18 @@\n from django.db import models\n \n class PlacementPosition(models.Model):\n-      TYPE_CHOICES = [\n+    TYPE_CHOICES = [\n         ('normal', 'Normal'),\n         ('result', 'Result')\n     ]\n     placement_name = models.CharField(max_length=255,null=True,blank=True) \n     duration_in_seconds = models.IntegerField(default=0)  # Time in seconds\n-    type \n+    adv_type = models.CharField(\n+        max_length=10,\n+        choices=TYPE_CHOICES,\n+        default='normal'\n+    )\n     created_date = models.DateTimeField(auto_now_add=True)\n     updated_date = models.DateTimeField(auto_now=True)\n \n     def __str__(self):\n"
+                },
+                {
+                    "date": 1749358250583,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -42,10 +42,10 @@\n     created_date = models.DateField(auto_now_add=True)\n     updated_date = models.DateTimeField(auto_now=True)\n     # duration_in_seconds = models.IntegerField(default=0)  # Time in seconds for the ad\n \n-    def __str__(self):\n-        return self.name\n+    # def __str__(self):\n+    #     return self.name\n     class Meta:\n         permissions = [\n             ('manage_advertisement', 'Manage Advertisement'),\n         ]\n"
+                },
+                {
+                    "date": 1749358265204,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,10 +14,10 @@\n     )\n     created_date = models.DateTimeField(auto_now_add=True)\n     updated_date = models.DateTimeField(auto_now=True)\n \n-    def __str__(self):\n-        return self.placement_name\n+    # def __str__(self):\n+    #     return self.placement_name\n     \n     class Meta:\n         permissions = [\n             ('manage_placementposition', 'Manage Placement Position'),\n"
                 }
             ],
             "date": 1733373617417,

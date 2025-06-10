@@ -1,0 +1,42 @@
+{
+    "sourceFile": "resultmanagement/serializers/result_serializers.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 6,
+            "patches": [
+                {
+                    "date": 1749107332593,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1749107343477,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,9 +9,9 @@\n class ResultRetrieveSerializers(serializers.ModelSerializer):\n     class Meta:\n         model = Result\n         fields = '__all__'\n-        \n+        ('symbol_no', 'dateofbirth', 'cgpa', 'remarks', )\n \n class ResultWriteSerializers(serializers.ModelSerializer):\n     class Meta:\n         model = Result\n"
+                },
+                {
+                    "date": 1749107349173,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,9 +9,9 @@\n class ResultRetrieveSerializers(serializers.ModelSerializer):\n     class Meta:\n         model = Result\n         fields = '__all__'\n-        ('symbol_no', 'dateofbirth', 'cgpa', 'remarks', )\n+        ( )\n \n class ResultWriteSerializers(serializers.ModelSerializer):\n     class Meta:\n         model = Result\n"
+                },
+                {
+                    "date": 1749107354419,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,9 @@\n \n class ResultRetrieveSerializers(serializers.ModelSerializer):\n     class Meta:\n         model = Result\n-        fields = '__all__'\n+        fields = ['symbol_no', 'dateofbirth', 'cgpa', 'remarks',]\n         ( )\n \n class ResultWriteSerializers(serializers.ModelSerializer):\n     class Meta:\n"
+                },
+                {
+                    "date": 1749107359873,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,18 @@\n+from rest_framework import serializers\n+from ..models import Result\n+\n+class ResultListSerializers(serializers.ModelSerializer):\n+    class Meta:\n+        model = Result\n+        fields = '__all__'\n+\n+class ResultRetrieveSerializers(serializers.ModelSerializer):\n+    class Meta:\n+        model = Result\n+        fields = ['id','symbol_no', 'dateofbirth', 'cgpa', 'remarks',]\n+        ( )\n+\n+class ResultWriteSerializers(serializers.ModelSerializer):\n+    class Meta:\n+        model = Result\n+        fields = '__all__'\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1749107365732,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,28 +9,9 @@\n class ResultRetrieveSerializers(serializers.ModelSerializer):\n     class Meta:\n         model = Result\n         fields = ['id','symbol_no', 'dateofbirth', 'cgpa', 'remarks',]\n-        ( )\n \n class ResultWriteSerializers(serializers.ModelSerializer):\n     class Meta:\n         model = Result\n-        fields = '__all__'\n-from rest_framework import serializers\n-from ..models import Result\n-\n-class ResultListSerializers(serializers.ModelSerializer):\n-    class Meta:\n-        model = Result\n-        fields = '__all__'\n-\n-class ResultRetrieveSerializers(serializers.ModelSerializer):\n-    class Meta:\n-        model = Result\n-        fields = ['symbol_no', 'dateofbirth', 'cgpa', 'remarks',]\n-        ( )\n-\n-class ResultWriteSerializers(serializers.ModelSerializer):\n-    class Meta:\n-        model = Result\n         fields = '__all__'\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1749107376767,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,14 +3,14 @@\n \n class ResultListSerializers(serializers.ModelSerializer):\n     class Meta:\n         model = Result\n-        fields = '__all__'\n+        fields = ['id','symbol_no', 'dateofbirth', 'cgpa', 'remarks']\n \n class ResultRetrieveSerializers(serializers.ModelSerializer):\n     class Meta:\n         model = Result\n-        fields = ['id','symbol_no', 'dateofbirth', 'cgpa', 'remarks',]\n+        fields = ['id','symbol_no', 'dateofbirth', 'cgpa', 'remarks']\n \n class ResultWriteSerializers(serializers.ModelSerializer):\n     class Meta:\n         model = Result\n"
+                }
+            ],
+            "date": 1749107332593,
+            "name": "Commit-0",
+            "content": "from rest_framework import serializers\nfrom ..models import Result\n\nclass ResultListSerializers(serializers.ModelSerializer):\n    class Meta:\n        model = Result\n        fields = '__all__'\n\nclass ResultRetrieveSerializers(serializers.ModelSerializer):\n    class Meta:\n        model = Result\n        fields = '__all__'\n        \n\nclass ResultWriteSerializers(serializers.ModelSerializer):\n    class Meta:\n        model = Result\n        fields = '__all__'"
+        }
+    ]
+}

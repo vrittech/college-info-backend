@@ -25,6 +25,7 @@ class advertisementViewsets(viewsets.ModelViewSet):
         'id': ['exact'],
         'name': ['exact'],
         'is_show': ['exact'],
+        'adv_type': ['exact'],
         'placement': ['exact'],
         'created_date': ['exact','gte','lte'],
         'updated_date': ['exact','gte','lte'],

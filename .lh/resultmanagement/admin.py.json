@@ -1,0 +1,26 @@
+{
+    "sourceFile": "resultmanagement/admin.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 2,
+            "patches": [
+                {
+                    "date": 1749103808200,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1749103814908,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,4 +1,4 @@\n from django.contrib import admin\n \n # Register your models here.\n-from ..\n\\ No newline at end of file\n+from .models import Result\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1749103820118,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,4 +1,6 @@\n from django.contrib import admin\n \n # Register your models here.\n-from .models import Result\n\\ No newline at end of file\n+from .models import Result, File\n+admin.site.register(Result)\n+admin.site.register(File)\n"
+                }
+            ],
+            "date": 1749103808200,
+            "name": "Commit-0",
+            "content": "from django.contrib import admin\n\n# Register your models here.\nfrom .."
+        }
+    ]
+}

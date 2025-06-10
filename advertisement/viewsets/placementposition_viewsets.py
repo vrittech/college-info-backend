@@ -12,15 +12,16 @@ class placementpositionViewsets(viewsets.ModelViewSet):
     permission_classes = [DynamicModelPermission]
     # authentication_classes = [JWTAuthentication]
     pagination_class = MyPageNumberPagination
-    queryset = PlacementPosition.objects.all().order_by('placement_name')
+    queryset = PlacementPosition.objects.all().order_by('id')
 
     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]
     search_fields = ['id']
     ordering_fields = ['id']
 
-    # filterset_fields = {
-    #     'id': ['exact'],
-    # }
+    filterset_fields = {
+        'id': ['exact'],
+        'adv_type': ['exact'],
+    }
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -32,6 +33,10 @@ class placementpositionViewsets(viewsets.ModelViewSet):
         elif self.action == 'retrieve':
             return PlacementPositionRetrieveSerializers
         return super().get_serializer_class()
+    
+
+    def update(self, request, *args, **kwargs):
+        return super().update(request, *args, **kwargs)
 
     # @action(detail=False, methods=['get'], name="action_name", url_path="url_path")
     # def action_name(self, request, *args, **kwargs):

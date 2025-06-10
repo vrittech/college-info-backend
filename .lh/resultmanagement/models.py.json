@@ -1,0 +1,194 @@
+{
+    "sourceFile": "resultmanagement/models.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 44,
+            "patches": [
+                {
+                    "date": 1749098698850,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1749098704882,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,4 +1,11 @@\n from django.db import models\n \n+\n+\n\\ No newline at end of file\n+\n # Create your models here.\n-class \n+class Result(models.Model):\n+    roll = models.CharField(max_length=10)\n+    name = models.CharField(max_length=100)\n+    subject = models.CharField(max_length=100)\n+    marks = models.IntegerField()\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1749098710435,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,10 +1,9 @@\n from django.db import models\n \n \n \n-\n-# Create your models here.\n+class File \n class Result(models.Model):\n     roll = models.CharField(max_length=10)\n     name = models.CharField(max_length=100)\n     subject = models.CharField(max_length=100)\n"
+                },
+                {
+                    "date": 1749098718610,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,10 @@\n from django.db import models\n \n \n \n-class File \n+class File (models.Model):\n+    file = models.FileField(upload_to='media/result') \n class Result(models.Model):\n     roll = models.CharField(max_length=10)\n     name = models.CharField(max_length=100)\n     subject = models.CharField(max_length=100)\n"
+                },
+                {
+                    "date": 1749098724257,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,9 @@\n \n \n \n class File (models.Model):\n-    file = models.FileField(upload_to='media/result') \n+    file = models.FileField(upload_to='media/result/    =') \n class Result(models.Model):\n     roll = models.CharField(max_length=10)\n     name = models.CharField(max_length=100)\n     subject = models.CharField(max_length=100)\n"
+                },
+                {
+                    "date": 1749098730930,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,9 @@\n \n \n \n class File (models.Model):\n-    file = models.FileField(upload_to='media/result/    =') \n+    file = models.FileField(upload_to='media/result/',) \n class Result(models.Model):\n     roll = models.CharField(max_length=10)\n     name = models.CharField(max_length=100)\n     subject = models.CharField(max_length=100)\n"
+                },
+                {
+                    "date": 1749098736021,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,9 @@\n \n \n \n class File (models.Model):\n-    file = models.FileField(upload_to='media/result/',) \n+    file = models.FileField(upload_to='media/result/', null=True, blank=True),help \n class Result(models.Model):\n     roll = models.CharField(max_length=10)\n     name = models.CharField(max_length=100)\n     subject = models.CharField(max_length=100)\n"
+                },
+                {
+                    "date": 1749098741800,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,9 @@\n \n \n \n class File (models.Model):\n-    file = models.FileField(upload_to='media/result/', null=True, blank=True),help \n+    file = models.FileField(upload_to='media/result/', null=True, blank=True),help_text=\"Upload your result  file\" \n class Result(models.Model):\n     roll = models.CharField(max_length=10)\n     name = models.CharField(max_length=100)\n     subject = models.CharField(max_length=100)\n"
+                },
+                {
+                    "date": 1749098908674,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,9 @@\n \n \n \n class File (models.Model):\n-    file = models.FileField(upload_to='media/result/', null=True, blank=True),help_text=\"Upload your result  file\" \n+    file = models.FileField(upload_to='media/result/', null=True, blank=True),help_text=\"Upload your result file here\", \n class Result(models.Model):\n     roll = models.CharField(max_length=10)\n     name = models.CharField(max_length=100)\n     subject = models.CharField(max_length=100)\n"
+                },
+                {
+                    "date": 1749098914334,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,9 @@\n \n \n \n class File (models.Model):\n-    file = models.FileField(upload_to='media/result/', null=True, blank=True),help_text=\"Upload your result file here\", \n+    file = models.FileField(upload_to='media/result/', null=True, blank=True),help_text=\"Upload your result file here\",max_length=100 \n class Result(models.Model):\n     roll = models.CharField(max_length=10)\n     name = models.CharField(max_length=100)\n     subject = models.CharField(max_length=100)\n"
+                },
+                {
+                    "date": 1749098925216,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,9 @@\n \n \n \n class File (models.Model):\n-    file = models.FileField(upload_to='media/result/', null=True, blank=True),help_text=\"Upload your result file here\",max_length=100 \n+    file = models.FileField(upload_to='media/result/', null=True, blank=True,help_text=\"Upload your result file here\",max_length=1000) \n class Result(models.Model):\n     roll = models.CharField(max_length=10)\n     name = models.CharField(max_length=100)\n     subject = models.CharField(max_length=100)\n"
+                },
+                {
+                    "date": 1749098931293,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,8 +3,9 @@\n \n \n class File (models.Model):\n     file = models.FileField(upload_to='media/result/', null=True, blank=True,help_text=\"Upload your result file here\",max_length=1000) \n+    \n class Result(models.Model):\n     roll = models.CharField(max_length=10)\n     name = models.CharField(max_length=100)\n     subject = models.CharField(max_length=100)\n"
+                },
+                {
+                    "date": 1749098936873,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,8 +3,9 @@\n \n \n class File (models.Model):\n     file = models.FileField(upload_to='media/result/', null=True, blank=True,help_text=\"Upload your result file here\",max_length=1000) \n+    created_at = models.DateTimeField(auto_now_add=True)\n     \n class Result(models.Model):\n     roll = models.CharField(max_length=10)\n     name = models.CharField(max_length=100)\n"
+                },
+                {
+                    "date": 1749098945007,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,9 +4,9 @@\n \n class File (models.Model):\n     file = models.FileField(upload_to='media/result/', null=True, blank=True,help_text=\"Upload your result file here\",max_length=1000) \n     created_at = models.DateTimeField(auto_now_add=True)\n-    \n+    update\n class Result(models.Model):\n     roll = models.CharField(max_length=10)\n     name = models.CharField(max_length=100)\n     subject = models.CharField(max_length=100)\n"
+                },
+                {
+                    "date": 1749098952307,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,10 +3,10 @@\n \n \n class File (models.Model):\n     file = models.FileField(upload_to='media/result/', null=True, blank=True,help_text=\"Upload your result file here\",max_length=1000) \n-    created_at = models.DateTimeField(auto_now_add=True)\n-    update\n+    created_date = models.DateTimeField(auto_now_add=True)\n+    updated_date\n class Result(models.Model):\n     roll = models.CharField(max_length=10)\n     name = models.CharField(max_length=100)\n     subject = models.CharField(max_length=100)\n"
+                },
+                {
+                    "date": 1749098957424,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,9 +4,11 @@\n \n class File (models.Model):\n     file = models.FileField(upload_to='media/result/', null=True, blank=True,help_text=\"Upload your result file here\",max_length=1000) \n     created_date = models.DateTimeField(auto_now_add=True)\n-    updated_date\n+    updated_date = models.DateTimeField(auto_now=True)\n+    \n+    \n class Result(models.Model):\n     roll = models.CharField(max_length=10)\n     name = models.CharField(max_length=100)\n     subject = models.CharField(max_length=100)\n"
+                },
+                {
+                    "date": 1749098963204,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,9 +6,9 @@\n     file = models.FileField(upload_to='media/result/', null=True, blank=True,help_text=\"Upload your result file here\",max_length=1000) \n     created_date = models.DateTimeField(auto_now_add=True)\n     updated_date = models.DateTimeField(auto_now=True)\n     \n-    \n+    def __str__\n class Result(models.Model):\n     roll = models.CharField(max_length=10)\n     name = models.CharField(max_length=100)\n     subject = models.CharField(max_length=100)\n"
+                },
+                {
+                    "date": 1749098971206,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,9 +6,10 @@\n     file = models.FileField(upload_to='media/result/', null=True, blank=True,help_text=\"Upload your result file here\",max_length=1000) \n     created_date = models.DateTimeField(auto_now_add=True)\n     updated_date = models.DateTimeField(auto_now=True)\n     \n-    def __str__\n+    def __str__(self):\n+        return \n class Result(models.Model):\n     roll = models.CharField(max_length=10)\n     name = models.CharField(max_length=100)\n     subject = models.CharField(max_length=100)\n"
+                },
+                {
+                    "date": 1749098978252,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,9 @@\n     created_date = models.DateTimeField(auto_now_add=True)\n     updated_date = models.DateTimeField(auto_now=True)\n     \n     def __str__(self):\n-        return \n+        return self\n class Result(models.Model):\n     roll = models.CharField(max_length=10)\n     name = models.CharField(max_length=100)\n     subject = models.CharField(max_length=100)\n"
+                },
+                {
+                    "date": 1749098986173,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,9 @@\n     created_date = models.DateTimeField(auto_now_add=True)\n     updated_date = models.DateTimeField(auto_now=True)\n     \n     def __str__(self):\n-        return self\n+        return self.file\n class Result(models.Model):\n     roll = models.CharField(max_length=10)\n     name = models.CharField(max_length=100)\n     subject = models.CharField(max_length=100)\n"
+                },
+                {
+                    "date": 1749098994490,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,9 @@\n     created_date = models.DateTimeField(auto_now_add=True)\n     updated_date = models.DateTimeField(auto_now=True)\n     \n     def __str__(self):\n-        return self.file\n+        return self.file.\n class Result(models.Model):\n     roll = models.CharField(max_length=10)\n     name = models.CharField(max_length=100)\n     subject = models.CharField(max_length=100)\n"
+                },
+                {
+                    "date": 1749099012927,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,10 +7,9 @@\n     created_date = models.DateTimeField(auto_now_add=True)\n     updated_date = models.DateTimeField(auto_now=True)\n     \n     def __str__(self):\n-        return self.file.\n+        return self.file.name\n class Result(models.Model):\n-    roll = models.CharField(max_length=10)\n     name = models.CharField(max_length=100)\n     subject = models.CharField(max_length=100)\n     marks = models.IntegerField()\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1749099021191,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,7 +9,7 @@\n     \n     def __str__(self):\n         return self.file.name\n class Result(models.Model):\n-    name = models.CharField(max_length=100)\n+    name = models.CharField(max_length=512)\n     subject = models.CharField(max_length=100)\n     marks = models.IntegerField()\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1749099034242,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,6 +10,7 @@\n     def __str__(self):\n         return self.file.name\n class Result(models.Model):\n     name = models.CharField(max_length=512)\n+    symbol\n     subject = models.CharField(max_length=100)\n     marks = models.IntegerField()\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1749099040386,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,7 +10,7 @@\n     def __str__(self):\n         return self.file.name\n class Result(models.Model):\n     name = models.CharField(max_length=512)\n-    symbol\n+    symbol_no = models.CharField(max_length=100)\n     subject = models.CharField(max_length=100)\n     marks = models.IntegerField()\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1749099049061,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,6 +11,7 @@\n         return self.file.name\n class Result(models.Model):\n     name = models.CharField(max_length=512)\n     symbol_no = models.CharField(max_length=100)\n+    date\n     subject = models.CharField(max_length=100)\n     marks = models.IntegerField()\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1749099054681,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,7 +11,7 @@\n         return self.file.name\n class Result(models.Model):\n     name = models.CharField(max_length=512)\n     symbol_no = models.CharField(max_length=100)\n-    date\n+    dateofbirth = models.DateField()\n     subject = models.CharField(max_length=100)\n     marks = models.IntegerField()\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1749099061656,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,7 +11,7 @@\n         return self.file.name\n class Result(models.Model):\n     name = models.CharField(max_length=512)\n     symbol_no = models.CharField(max_length=100)\n-    dateofbirth = models.DateField()\n+    dateofbirth = models.CharField()\n     subject = models.CharField(max_length=100)\n     marks = models.IntegerField()\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1749099067152,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,7 +11,7 @@\n         return self.file.name\n class Result(models.Model):\n     name = models.CharField(max_length=512)\n     symbol_no = models.CharField(max_length=100)\n-    dateofbirth = models.CharField()\n+    dateofbirth = models.CharField(max_length=)\n     subject = models.CharField(max_length=100)\n     marks = models.IntegerField()\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1749099075238,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,7 +11,7 @@\n         return self.file.name\n class Result(models.Model):\n     name = models.CharField(max_length=512)\n     symbol_no = models.CharField(max_length=100)\n-    dateofbirth = models.CharField(max_length=)\n+    dateofbirth = models.CharField(max_length=100, null=``)\n     subject = models.CharField(max_length=100)\n     marks = models.IntegerField()\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1749099081338,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,7 +11,7 @@\n         return self.file.name\n class Result(models.Model):\n     name = models.CharField(max_length=512)\n     symbol_no = models.CharField(max_length=100)\n-    dateofbirth = models.CharField(max_length=100, null=``)\n+    dateofbirth = models.CharField(max_length=100, null=True, blank=True)\n     subject = models.CharField(max_length=100)\n     marks = models.IntegerField()\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1749099087037,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,8 +10,8 @@\n     def __str__(self):\n         return self.file.name\n class Result(models.Model):\n     name = models.CharField(max_length=512)\n-    symbol_no = models.CharField(max_length=100)\n+    symbol_no = models.CharField(max_length=100,null = True)\n     dateofbirth = models.CharField(max_length=100, null=True, blank=True)\n     subject = models.CharField(max_length=100)\n     marks = models.IntegerField()\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1749099096001,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,9 +9,9 @@\n     \n     def __str__(self):\n         return self.file.name\n class Result(models.Model):\n-    name = models.CharField(max_length=512)\n-    symbol_no = models.CharField(max_length=100,null = True)\n+    name = models.CharField(max_length=512,null = True, blank = True)\n+    symbol_no = models.CharField(max_length=100,null = True, blank = True)\n     dateofbirth = models.CharField(max_length=100, null=True, blank=True)\n     subject = models.CharField(max_length=100)\n     marks = models.IntegerField()\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1749099101402,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,6 +12,6 @@\n class Result(models.Model):\n     name = models.CharField(max_length=512,null = True, blank = True)\n     symbol_no = models.CharField(max_length=100,null = True, blank = True)\n     dateofbirth = models.CharField(max_length=100, null=True, blank=True)\n-    subject = models.CharField(max_length=100)\n+    subject = models.CharField(max_length=100,null = True, blank = True)\n     marks = models.IntegerField()\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1749099114053,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,5 +13,5 @@\n     name = models.CharField(max_length=512,null = True, blank = True)\n     symbol_no = models.CharField(max_length=100,null = True, blank = True)\n     dateofbirth = models.CharField(max_length=100, null=True, blank=True)\n     subject = models.CharField(max_length=100,null = True, blank = True)\n-    marks = models.IntegerField()\n\\ No newline at end of file\n+    cgps = models.IntegerField(null = True, blank = True)\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1749099128216,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,5 +13,6 @@\n     name = models.CharField(max_length=512,null = True, blank = True)\n     symbol_no = models.CharField(max_length=100,null = True, blank = True)\n     dateofbirth = models.CharField(max_length=100, null=True, blank=True)\n     subject = models.CharField(max_length=100,null = True, blank = True)\n-    cgps = models.IntegerField(null = True, blank = True)\n\\ No newline at end of file\n+    cgpa = models.CharField(null = True, blank = True)\n+    remarks\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1749099134246,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,5 +14,7 @@\n     symbol_no = models.CharField(max_length=100,null = True, blank = True)\n     dateofbirth = models.CharField(max_length=100, null=True, blank=True)\n     subject = models.CharField(max_length=100,null = True, blank = True)\n     cgpa = models.CharField(null = True, blank = True)\n-    remarks\n\\ No newline at end of file\n+    remarks = models.CharField(null = True, blank = True)\n+    created_date = models.DateTimeField(auto_now_add=True)\n+    \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1749099141270,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,5 +16,7 @@\n     subject = models.CharField(max_length=100,null = True, blank = True)\n     cgpa = models.CharField(null = True, blank = True)\n     remarks = models.CharField(null = True, blank = True)\n     created_date = models.DateTimeField(auto_now_add=True)\n-    \n\\ No newline at end of file\n+    updated_date = models.DateTimeField(auto_now=True)\n+    \n+    def __str\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1749099147668,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,13 +10,15 @@\n     def __str__(self):\n         return self.file.name\n class Result(models.Model):\n     name = models.CharField(max_length=512,null = True, blank = True)\n+    file \n     symbol_no = models.CharField(max_length=100,null = True, blank = True)\n     dateofbirth = models.CharField(max_length=100, null=True, blank=True)\n     subject = models.CharField(max_length=100,null = True, blank = True)\n     cgpa = models.CharField(null = True, blank = True)\n     remarks = models.CharField(null = True, blank = True)\n     created_date = models.DateTimeField(auto_now_add=True)\n     updated_date = models.DateTimeField(auto_now=True)\n     \n\\ No newline at end of file\n-    def __str\n+    def __str__(self):\n+        return self.name\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1749099657521,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,16 +3,17 @@\n \n \n class File (models.Model):\n     file = models.FileField(upload_to='media/result/', null=True, blank=True,help_text=\"Upload your result file here\",max_length=1000) \n+    is_active\n     created_date = models.DateTimeField(auto_now_add=True)\n     updated_date = models.DateTimeField(auto_now=True)\n     \n     def __str__(self):\n         return self.file.name\n class Result(models.Model):\n     name = models.CharField(max_length=512,null = True, blank = True)\n-    file \n+    file = models.ForeignKey(File, on_delete=models.CASCADE,null = True, blank = True)\n     symbol_no = models.CharField(max_length=100,null = True, blank = True)\n     dateofbirth = models.CharField(max_length=100, null=True, blank=True)\n     subject = models.CharField(max_length=100,null = True, blank = True)\n     cgpa = models.CharField(null = True, blank = True)\n"
+                },
+                {
+                    "date": 1749099664039,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,9 @@\n \n \n class File (models.Model):\n     file = models.FileField(upload_to='media/result/', null=True, blank=True,help_text=\"Upload your result file here\",max_length=1000) \n-    is_active\n+    is_active = models.BooleanField(default=False)\n     created_date = models.DateTimeField(auto_now_add=True)\n     updated_date = models.DateTimeField(auto_now=True)\n     \n     def __str__(self):\n"
+                },
+                {
+                    "date": 1749099983457,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,9 +14,8 @@\n     name = models.CharField(max_length=512,null = True, blank = True)\n     file = models.ForeignKey(File, on_delete=models.CASCADE,null = True, blank = True)\n     symbol_no = models.CharField(max_length=100,null = True, blank = True)\n     dateofbirth = models.CharField(max_length=100, null=True, blank=True)\n-    subject = models.CharField(max_length=100,null = True, blank = True)\n     cgpa = models.CharField(null = True, blank = True)\n     remarks = models.CharField(null = True, blank = True)\n     created_date = models.DateTimeField(auto_now_add=True)\n     updated_date = models.DateTimeField(auto_now=True)\n"
+                },
+                {
+                    "date": 1749101948647,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,8 +11,9 @@\n     def __str__(self):\n         return self.file.name\n class Result(models.Model):\n     name = models.CharField(max_length=512,null = True, blank = True)\n+    \n     file = models.ForeignKey(File, on_delete=models.CASCADE,null = True, blank = True)\n     symbol_no = models.CharField(max_length=100,null = True, blank = True)\n     dateofbirth = models.CharField(max_length=100, null=True, blank=True)\n     cgpa = models.CharField(null = True, blank = True)\n"
+                },
+                {
+                    "date": 1749101955309,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,9 +11,9 @@\n     def __str__(self):\n         return self.file.name\n class Result(models.Model):\n     name = models.CharField(max_length=512,null = True, blank = True)\n-    \n+    mapped_json \n     file = models.ForeignKey(File, on_delete=models.CASCADE,null = True, blank = True)\n     symbol_no = models.CharField(max_length=100,null = True, blank = True)\n     dateofbirth = models.CharField(max_length=100, null=True, blank=True)\n     cgpa = models.CharField(null = True, blank = True)\n"
+                },
+                {
+                    "date": 1749105361911,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,25 +1,37 @@\n from django.db import models\n \n+class File(models.Model):\n+    file = models.FileField(\n+        upload_to=\"media/result/\",\n+        null=True,\n+        blank=True,\n+        help_text=\"Upload your result file here\",\n+        max_length=1000\n+    )\n+    # Now store mapping JSON on File, not on Result:\n+    mapped_json = models.JSONField(null=True, blank=True)\n \n-\n-class File (models.Model):\n-    file = models.FileField(upload_to='media/result/', null=True, blank=True,help_text=\"Upload your result file here\",max_length=1000) \n     is_active = models.BooleanField(default=False)\n     created_date = models.DateTimeField(auto_now_add=True)\n     updated_date = models.DateTimeField(auto_now=True)\n-    \n+\n     def __str__(self):\n         return self.file.name\n+\n+\n\\ No newline at end of file\n class Result(models.Model):\n-    name = models.CharField(max_length=512,null = True, blank = True)\n-    mapped_json = models.JSONField(null = True, blank = True)\n-    file = models.ForeignKey(File, on_delete=models.CASCADE,null = True, blank = True)\n-    symbol_no = models.CharField(max_length=100,null = True, blank = True)\n+    name = models.CharField(max_length=512, null=True, blank=True)\n+    # Remove mapped_json from here:\n+    # mapped_json = models.JSONField(null=True, blank=True)\n+\n+    file = models.ForeignKey(File, on_delete=models.CASCADE, null=True, blank=True)\n+    symbol_no = models.CharField(max_length=100, null=True, blank=True)\n     dateofbirth = models.CharField(max_length=100, null=True, blank=True)\n-    cgpa = models.CharField(null = True, blank = True)\n-    remarks = models.CharField(null = True, blank = True)\n+    cgpa = models.CharField(max_length=100, null=True, blank=True)\n+    remarks = models.CharField(max_length=512, null=True, blank=True)\n+\n     created_date = models.DateTimeField(auto_now_add=True)\n     updated_date = models.DateTimeField(auto_now=True)\n-    \n+\n     def __str__(self):\n-        return self.name\n+        return self.name or f\"Result #{self.pk}\"\n"
+                }
+            ],
+            "date": 1749098698850,
+            "name": "Commit-0",
+            "content": "from django.db import models\n\n# Create your models here.\nclass "
+        }
+    ]
+}
