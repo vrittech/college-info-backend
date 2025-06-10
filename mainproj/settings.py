@@ -96,7 +96,7 @@ INSTALLED_APPS = [
     'certification',
     'socialmedia',
     'coursemanagement',
-    'drfapigenerator',
+    # 'drfapigenerator',
     'collegemanagement',
     'facilities',
     'discipline',
