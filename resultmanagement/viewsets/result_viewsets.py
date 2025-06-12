@@ -26,7 +26,7 @@ from ..serializers.result_serializers import (
 from ..utilities.permissions import resultmanagementPermission
 from ..utilities.pagination import MyPageNumberPagination
 
-CACHE_TTL = 60 * 60 * 24 * 5   # cache for 5 days 
+CACHE_TTL = 60 * 60 * 24 * 20   # cache for 20 days 
 
 
 class resultViewsets(viewsets.ModelViewSet):
