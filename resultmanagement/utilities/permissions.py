@@ -42,15 +42,15 @@ def isOwner(request):
 
 class resultmanagementPermission(BasePermission):
     def has_permission(self, request, view):
-        if view.action in ["list"]:
+        # Public actions
+        if view.action in ["list", "retrieve"]:
             return True
-        elif view.action in ['retrieve']:
-            return isOwner(request)
-        elif view.action in ['create','update']:
-            return isOwner(request) #second level
-            return ObjectBOwner(request) #third level
-        elif view.action == "partial_update":
-            return view.get_object().user_id == request.user.id
-        elif view.action == 'destroy':
-            return isOwner(request)
+
+        # Restricted actions: Only for superuser or staff
+        if view.action in ["create", "update", "partial_update", "destroy"]:
+            return request.user.is_authenticated and (
+                request.user.is_superuser or request.user.is_staff
+            )
+
+        return False
 

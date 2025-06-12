@@ -12,13 +12,13 @@ import numpy as np
 
 class fileViewsets(viewsets.ModelViewSet):
     serializer_class = FileListSerializers
-    permission_classes = [DynamicModelPermission]
+    permission_classes = [resultmanagementPermission]
     # authentication_classes = [JWTAuthentication]
     pagination_class = MyPageNumberPagination
     queryset = File.objects.all().order_by('-id')
 
     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]
-    search_fields = ['id']
+    search_fields = ['id','name']
     ordering_fields = ['id']
 
     filterset_fields = {

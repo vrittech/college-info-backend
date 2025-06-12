@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 82,
+            "activePatchIndex": 91,
             "patches": [
                 {
                     "date": 1749099839879,
@@ -336,6 +336,42 @@
                 {
                     "date": 1749540533016,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -41,9 +41,9 @@\n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     filterset_fields = {\n         'id': ['exact'],\n         'symbol_no': ['exact'],\n-        \n+        'file'\n         'created_date': ['exact', 'gte', 'lte'],\n         'updated_date': ['exact', 'gte', 'lte'],\n     }\n \n"
+                },
+                {
+                    "date": 1749650718246,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -38,12 +38,13 @@\n     serializer_class = ResultListSerializers\n     # permission_classes = [DynamicModelPermission]\n     pagination_class = MyPageNumberPagination\n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n+    search_fields = ['id','name']\n     filterset_fields = {\n         'id': ['exact'],\n         'symbol_no': ['exact'],\n-        'file'\n+        'file': ['exact'],\n         'created_date': ['exact', 'gte', 'lte'],\n         'updated_date': ['exact', 'gte', 'lte'],\n     }\n \n"
+                },
+                {
+                    "date": 1749650753828,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -38,9 +38,9 @@\n     serializer_class = ResultListSerializers\n     # permission_classes = [DynamicModelPermission]\n     pagination_class = MyPageNumberPagination\n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n-    search_fields = ['id','name']\n+    search_fields = ['id''symbol_no', 'dateofbirth', 'cgpa', 'remarks']\n     filterset_fields = {\n         'id': ['exact'],\n         'symbol_no': ['exact'],\n         'file': ['exact'],\n"
+                },
+                {
+                    "date": 1749650758996,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -38,9 +38,9 @@\n     serializer_class = ResultListSerializers\n     # permission_classes = [DynamicModelPermission]\n     pagination_class = MyPageNumberPagination\n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n-    search_fields = ['id''symbol_no', 'dateofbirth', 'cgpa', 'remarks']\n+    search_fields = ['id','symbol_no', 'dateofbirth', 'cgpa', 'remarks']\n     filterset_fields = {\n         'id': ['exact'],\n         'symbol_no': ['exact'],\n         'file': ['exact'],\n"
+                },
+                {
+                    "date": 1749650784948,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -38,9 +38,9 @@\n     serializer_class = ResultListSerializers\n     # permission_classes = [DynamicModelPermission]\n     pagination_class = MyPageNumberPagination\n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n-    search_fields = ['id','symbol_no', 'dateofbirth', 'cgpa', 'remarks']\n+    search_fields = ['id','symbol_no', 'dateofbirth', 'cgpa', 'remarks','student_name']\n     filterset_fields = {\n         'id': ['exact'],\n         'symbol_no': ['exact'],\n         'file': ['exact'],\n"
+                },
+                {
+                    "date": 1749650795332,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -46,10 +46,8 @@\n         'file': ['exact'],\n         'created_date': ['exact', 'gte', 'lte'],\n         'updated_date': ['exact', 'gte', 'lte'],\n     }\n-\n-\n     def get_serializer_class(self):\n         if self.action in [\"create\", \"update\", \"partial_update\"]:\n             return ResultWriteSerializers\n         elif self.action == \"retrieve\":\n"
+                },
+                {
+                    "date": 1749650940972,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -38,9 +38,9 @@\n     serializer_class = ResultListSerializers\n     # permission_classes = [DynamicModelPermission]\n     pagination_class = MyPageNumberPagination\n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n-    search_fields = ['id','symbol_no', 'dateofbirth', 'cgpa', 'remarks','student_name']\n+    search_fields = ['id','symbol_no', 'dateofbirth', 'cgpa', 'remarks','student_name','']\n     filterset_fields = {\n         'id': ['exact'],\n         'symbol_no': ['exact'],\n         'file': ['exact'],\n"
+                },
+                {
+                    "date": 1749650946937,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -38,9 +38,9 @@\n     serializer_class = ResultListSerializers\n     # permission_classes = [DynamicModelPermission]\n     pagination_class = MyPageNumberPagination\n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n-    search_fields = ['id','symbol_no', 'dateofbirth', 'cgpa', 'remarks','student_name','']\n+    search_fields = ['id','symbol_no', 'dateofbirth', 'cgpa', 'remarks','student_name','file']\n     filterset_fields = {\n         'id': ['exact'],\n         'symbol_no': ['exact'],\n         'file': ['exact'],\n"
+                },
+                {
+                    "date": 1749650953954,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -38,9 +38,10 @@\n     serializer_class = ResultListSerializers\n     # permission_classes = [DynamicModelPermission]\n     pagination_class = MyPageNumberPagination\n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n-    search_fields = ['id','symbol_no', 'dateofbirth', 'cgpa', 'remarks','student_name','file']\n+    search_fields = ['id','symbol_no', 'dateofbirth', 'cgpa', 'remarks','student_name','file__name']\n+    \n     filterset_fields = {\n         'id': ['exact'],\n         'symbol_no': ['exact'],\n         'file': ['exact'],\n"
+                },
+                {
+                    "date": 1749713648679,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -35,13 +35,12 @@\n     plus a custom POST /api/results/bulk-import/ for batch‐importing a CSV/Excel file.\n     \"\"\"\n     queryset = Result.objects.all().order_by(\"symbol_no\")\n     serializer_class = ResultListSerializers\n-    # permission_classes = [DynamicModelPermission]\n+    permission_classes = [DynamicModelPermission]\n     pagination_class = MyPageNumberPagination\n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     search_fields = ['id','symbol_no', 'dateofbirth', 'cgpa', 'remarks','student_name','file__name']\n-    \n     filterset_fields = {\n         'id': ['exact'],\n         'symbol_no': ['exact'],\n         'file': ['exact'],\n"
                 }
             ],
             "date": 1749099839879,

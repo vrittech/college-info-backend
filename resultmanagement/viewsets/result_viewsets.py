@@ -36,9 +36,10 @@ class resultViewsets(viewsets.ModelViewSet):
     """
     queryset = Result.objects.all().order_by("symbol_no")
     serializer_class = ResultListSerializers
-    # permission_classes = [DynamicModelPermission]
+    permission_classes = [resultmanagementPermission]
     pagination_class = MyPageNumberPagination
     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]
+    search_fields = ['id','symbol_no', 'dateofbirth', 'cgpa', 'remarks','student_name','file__name']
     filterset_fields = {
         'id': ['exact'],
         'symbol_no': ['exact'],
@@ -46,8 +47,6 @@ class resultViewsets(viewsets.ModelViewSet):
         'created_date': ['exact', 'gte', 'lte'],
         'updated_date': ['exact', 'gte', 'lte'],
     }
-
-
     def get_serializer_class(self):
         if self.action in ["create", "update", "partial_update"]:
             return ResultWriteSerializers
