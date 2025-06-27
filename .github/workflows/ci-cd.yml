@@ -63,29 +63,29 @@ jobs:
 
         # Create necessary directories on the server
         echo "Create necessary directories on the server"
-        # ssh -o StrictHostKeyChecking=no root@$SERVER_IP "sudo apt-get install -y python3-venv"
-        ssh -o StrictHostKeyChecking=no root@$SERVER_IP "mkdir -p $PROJECT_FOLDER"
+        # ssh -o StrictHostKeyChecking=no ubuntu@$SERVER_IP "sudo apt-get install -y python3-venv"
+        ssh -o StrictHostKeyChecking=no ubuntu@$SERVER_IP "mkdir -p $PROJECT_FOLDER"
 
         # Use rsync to copy only changed files
         echo "Use rsync to copy only changed files"
-        rsync -avz --delete --exclude='__pycache__/' --exclude='venv/' --exclude='db.sqlite3' --exclude='env/' --exclude='staticfiles/' --exclude='media/' --exclude='.git/' -e "ssh -o StrictHostKeyChecking=no" ./ root@$SERVER_IP:$PROJECT_FOLDER/
+        rsync -avz --delete --exclude='__pycache__/' --exclude='venv/' --exclude='db.sqlite3' --exclude='env/' --exclude='staticfiles/' --exclude='media/' --exclude='.git/' -e "ssh -o StrictHostKeyChecking=no" ./ ubuntu@$SERVER_IP:$PROJECT_FOLDER/
 
         #copy and replace all files to cicd folder
-        #scp -r -o StrictHostKeyChecking=no ./* root@$SERVER_IP:$PROJECT_FOLDER/
+        #scp -r -o StrictHostKeyChecking=no ./* ubuntu@$SERVER_IP:$PROJECT_FOLDER/
 
         # Run deployment commands on the server
         echo "Running deployment commands on the server"
-        ssh -o StrictHostKeyChecking=no root@$SERVER_IP "cd $PROJECT_FOLDER && virtualenv venv && source venv/bin/activate && pip install -r requirements.txt && python manage.py migrate && python manage.py collectstatic --noinput "
+        ssh -o StrictHostKeyChecking=no ubuntu@$SERVER_IP "cd $PROJECT_FOLDER && virtualenv venv && source venv/bin/activate && pip install -r requirements.txt && python manage.py migrate && python manage.py collectstatic --noinput "
         
         
 
         #echo "Running deployment commands on the server" && 
-        # ssh -o StrictHostKeyChecking=no root@$SERVER_IP "cd $PROJECT_FOLDER && virtualenv venv && source venv/bin/activate && pip install -r requirements.txt && python manage.py migrate && python manage.py collectstatic --noinput && screen -ls | grep $SCREEN_NAME | awk '{print $1}' | xargs -r -I{} screen -X -S {} quit && screen -dmS $SCREEN_NAME bash -c 'source venv/bin/activate && python manage.py runserver 0.0.0.0:$PORT'"
+        # ssh -o StrictHostKeyChecking=no ubuntu@$SERVER_IP "cd $PROJECT_FOLDER && virtualenv venv && source venv/bin/activate && pip install -r requirements.txt && python manage.py migrate && python manage.py collectstatic --noinput && screen -ls | grep $SCREEN_NAME | awk '{print $1}' | xargs -r -I{} screen -X -S {} quit && screen -dmS $SCREEN_NAME bash -c 'source venv/bin/activate && python manage.py runserver 0.0.0.0:$PORT'"
 
 
 
 
-        # ssh -o StrictHostKeyChecking=no root@$SERVER_IP "
+        # ssh -o StrictHostKeyChecking=no ubuntu@$SERVER_IP "
         #     cd $PROJECT_FOLDER &&
         #     virtualenv venv &&
         #     source venv/bin/activate &&
