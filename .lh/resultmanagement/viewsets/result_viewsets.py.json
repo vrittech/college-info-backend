@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 95,
+            "activePatchIndex": 100,
             "patches": [
                 {
                     "date": 1749099839879,
@@ -388,6 +388,26 @@
                 {
                     "date": 1751024281554,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -25,9 +25,10 @@\n )\n from ..utilities.permissions import resultmanagementPermission\n from ..utilities.pagination import MyPageNumberPagination\n \n-CACHE_TTL = 60 * 60 * 24 * 20   # cache for 20 days\n+CACHE_TTL = 60 * 5  # 5 minutes in seconds\n+   # cache for 20 days\n \n \n class resultViewsets(viewsets.ModelViewSet):\n     \"\"\"\n"
+                },
+                {
+                    "date": 1751024441359,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -26,9 +26,8 @@\n from ..utilities.permissions import resultmanagementPermission\n from ..utilities.pagination import MyPageNumberPagination\n \n CACHE_TTL = 60 * 5  # 5 minutes in seconds\n-   # cache for 20 days\n \n \n class resultViewsets(viewsets.ModelViewSet):\n     \"\"\"\n@@ -54,15 +53,15 @@\n         elif self.action == \"retrieve\":\n             return ResultRetrieveSerializers\n         return super().get_serializer_class()\n     \n-    @method_decorator(cache_page(CACHE_TTL), name=\"list\")\n-    def list(self, request, *args, **kwargs):\n-        return super().list(request, *args, **kwargs)\n+    # @method_decorator(cache_page(CACHE_TTL), name=\"list\")\n+    # def list(self, request, *args, **kwargs):\n+    #     return super().list(request, *args, **kwargs)\n \n-    @method_decorator(cache_page(CACHE_TTL), name=\"retrieve\")\n-    def retrieve(self, request, *args, **kwargs):\n-        return super().retrieve(request, *args, **kwargs)\n+    # @method_decorator(cache_page(CACHE_TTL), name=\"retrieve\")\n+    # def retrieve(self, request, *args, **kwargs):\n+    #     return super().retrieve(request, *args, **kwargs)\n \n     @action(\n         detail=False,\n         methods=[\"post\"],\n"
+                },
+                {
+                    "date": 1751024526963,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -25,9 +25,9 @@\n )\n from ..utilities.permissions import resultmanagementPermission\n from ..utilities.pagination import MyPageNumberPagination\n \n-CACHE_TTL = 60 * 5  # 5 minutes in seconds\n+# CACHE_TTL = 60 * 5  # 5 minutes in seconds\n \n \n class resultViewsets(viewsets.ModelViewSet):\n     \"\"\"\n"
+                },
+                {
+                    "date": 1751024536174,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -53,15 +53,15 @@\n         elif self.action == \"retrieve\":\n             return ResultRetrieveSerializers\n         return super().get_serializer_class()\n     \n-    # @method_decorator(cache_page(CACHE_TTL), name=\"list\")\n-    # def list(self, request, *args, **kwargs):\n-    #     return super().list(request, *args, **kwargs)\n+    @method_decorator(cache_page(CACHE_TTL), name=\"list\")\n+    def list(self, request, *args, **kwargs):\n+        return super().list(request, *args, **kwargs)\n \n-    # @method_decorator(cache_page(CACHE_TTL), name=\"retrieve\")\n-    # def retrieve(self, request, *args, **kwargs):\n-    #     return super().retrieve(request, *args, **kwargs)\n+    @method_decorator(cache_page(CACHE_TTL), name=\"retrieve\")\n+    def retrieve(self, request, *args, **kwargs):\n+        return super().retrieve(request, *args, **kwargs)\n \n     @action(\n         detail=False,\n         methods=[\"post\"],\n"
+                },
+                {
+                    "date": 1751024705894,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -25,9 +25,9 @@\n )\n from ..utilities.permissions import resultmanagementPermission\n from ..utilities.pagination import MyPageNumberPagination\n \n-# CACHE_TTL = 60 * 5  # 5 minutes in seconds\n+CACHE_TTL = 60 * 5  # 5 minutes in seconds\n \n \n class resultViewsets(viewsets.ModelViewSet):\n     \"\"\"\n@@ -53,15 +53,15 @@\n         elif self.action == \"retrieve\":\n             return ResultRetrieveSerializers\n         return super().get_serializer_class()\n     \n-    @method_decorator(cache_page(CACHE_TTL), name=\"list\")\n-    def list(self, request, *args, **kwargs):\n-        return super().list(request, *args, **kwargs)\n+    # @method_decorator(cache_page(CACHE_TTL), name=\"list\")\n+    # def list(self, request, *args, **kwargs):\n+    #     return super().list(request, *args, **kwargs)\n \n-    @method_decorator(cache_page(CACHE_TTL), name=\"retrieve\")\n-    def retrieve(self, request, *args, **kwargs):\n-        return super().retrieve(request, *args, **kwargs)\n+    # @method_decorator(cache_page(CACHE_TTL), name=\"retrieve\")\n+    # def retrieve(self, request, *args, **kwargs):\n+    #     return super().retrieve(request, *args, **kwargs)\n \n     @action(\n         detail=False,\n         methods=[\"post\"],\n"
+                },
+                {
+                    "date": 1751024754687,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -25,9 +25,9 @@\n )\n from ..utilities.permissions import resultmanagementPermission\n from ..utilities.pagination import MyPageNumberPagination\n \n-CACHE_TTL = 60 * 5  # 5 minutes in seconds\n+# CACHE_TTL = 60 * 5  # 5 minutes in seconds\n \n \n class resultViewsets(viewsets.ModelViewSet):\n     \"\"\"\n@@ -53,15 +53,15 @@\n         elif self.action == \"retrieve\":\n             return ResultRetrieveSerializers\n         return super().get_serializer_class()\n     \n-    # @method_decorator(cache_page(CACHE_TTL), name=\"list\")\n-    # def list(self, request, *args, **kwargs):\n-    #     return super().list(request, *args, **kwargs)\n+    @method_decorator(cache_page(CACHE_TTL), name=\"list\")\n+    def list(self, request, *args, **kwargs):\n+        return super().list(request, *args, **kwargs)\n \n-    # @method_decorator(cache_page(CACHE_TTL), name=\"retrieve\")\n-    # def retrieve(self, request, *args, **kwargs):\n-    #     return super().retrieve(request, *args, **kwargs)\n+    @method_decorator(cache_page(CACHE_TTL), name=\"retrieve\")\n+    def retrieve(self, request, *args, **kwargs):\n+        return super().retrieve(request, *args, **kwargs)\n \n     @action(\n         detail=False,\n         methods=[\"post\"],\n"
                 }
             ],
             "date": 1749099839879,
