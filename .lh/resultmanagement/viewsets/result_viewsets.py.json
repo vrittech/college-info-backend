@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 92,
+            "activePatchIndex": 95,
             "patches": [
                 {
                     "date": 1749099839879,
@@ -376,6 +376,18 @@
                 {
                     "date": 1749721639733,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -25,9 +25,9 @@\n )\n from ..utilities.permissions import resultmanagementPermission\n from ..utilities.pagination import MyPageNumberPagination\n \n-CACHE_TTL = 60 * 60 * 24 * 5   # cache for 5 days \n+CACHE_TTL = 60 * 60 * 24 * 20   # cache for 5 days \n \n \n class resultViewsets(viewsets.ModelViewSet):\n     \"\"\"\n@@ -35,9 +35,9 @@\n     plus a custom POST /api/results/bulk-import/ for batch‐importing a CSV/Excel file.\n     \"\"\"\n     queryset = Result.objects.all().order_by(\"symbol_no\")\n     serializer_class = ResultListSerializers\n-    permission_classes = [DynamicModelPermission]\n+    permission_classes = [resultmanagementPermission]\n     pagination_class = MyPageNumberPagination\n     filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]\n     search_fields = ['id','symbol_no', 'dateofbirth', 'cgpa', 'remarks','student_name','file__name']\n     filterset_fields = {\n"
+                },
+                {
+                    "date": 1751024255964,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -25,9 +25,9 @@\n )\n from ..utilities.permissions import resultmanagementPermission\n from ..utilities.pagination import MyPageNumberPagination\n \n-CACHE_TTL = 60 * 60 * 24 * 20   # cache for 5 days \n+CACHE_TTL = 60 * 60 * 24 *    # cache for 20 days \n \n \n class resultViewsets(viewsets.ModelViewSet):\n     \"\"\"\n"
+                },
+                {
+                    "date": 1751024261863,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -25,9 +25,9 @@\n )\n from ..utilities.permissions import resultmanagementPermission\n from ..utilities.pagination import MyPageNumberPagination\n \n-CACHE_TTL = 60 * 60 * 24 *    # cache for 20 days \n+CACHE_TTL = 60 * 60 * 24 * 20   # cache for 20 days\n \n \n class resultViewsets(viewsets.ModelViewSet):\n     \"\"\"\n"
+                },
+                {
+                    "date": 1751024281554,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -25,9 +25,10 @@\n )\n from ..utilities.permissions import resultmanagementPermission\n from ..utilities.pagination import MyPageNumberPagination\n \n-CACHE_TTL = 60 * 60 * 24 * 20   # cache for 20 days\n+CACHE_TTL = 60 * 5  # 5 minutes in seconds\n+   # cache for 20 days\n \n \n class resultViewsets(viewsets.ModelViewSet):\n     \"\"\"\n"
                 }
             ],
             "date": 1749099839879,
