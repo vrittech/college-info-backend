@@ -47,7 +47,7 @@ jobs:
         BACKEND_USER: backend
         BACKEND_PASSWORD: backend
         SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY_RESULT}}
-        SERVER_IP: "3.107.90.36"
+        SERVER_IP: "13.237.94.113"
         # SERVER_IP: "82.29.167.247"
         PORT: "8001"
         SCREEN_NAME: "collegeinfo"
