@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 77,
+            "activePatchIndex": 81,
             "patches": [
                 {
                     "date": 1733397109290,
@@ -316,6 +316,22 @@
                 {
                     "date": 1751028951007,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -50,9 +50,9 @@\n         SERVER_IP: \"54.253.102.115\"\n         # SERVER_IP: \"82.29.167.247\"\n         PORT: \"8001\"\n         SCREEN_NAME: \"collegeinfo\"\n-        PROJECT_FOLDER: \"/home/collegeinfo\"\n+        PROJECT_FOLDER: \"/home/ubun/collegeinfo\"\n \n       run: |\n         mkdir -p ~/.ssh\n         echo \"${{ secrets.SSH_PRIVATE_KEY_RESULT}}\" > ~/.ssh/id_rsa\n"
+                },
+                {
+                    "date": 1751036540843,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -46,13 +46,13 @@\n         AWS_DEFAULT_REGION: ap-southeast-2\n         BACKEND_USER: backend\n         BACKEND_PASSWORD: backend\n         SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY_RESULT}}\n-        SERVER_IP: \"54.253.102.115\"\n+        SERVER_IP: \"1\"\n         # SERVER_IP: \"82.29.167.247\"\n         PORT: \"8001\"\n         SCREEN_NAME: \"collegeinfo\"\n-        PROJECT_FOLDER: \"/home/ubun/collegeinfo\"\n+        PROJECT_FOLDER: \"/home/ubuntu/collegeinfo\"\n \n       run: |\n         mkdir -p ~/.ssh\n         echo \"${{ secrets.SSH_PRIVATE_KEY_RESULT}}\" > ~/.ssh/id_rsa\n"
+                },
+                {
+                    "date": 1751036580690,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -46,9 +46,9 @@\n         AWS_DEFAULT_REGION: ap-southeast-2\n         BACKEND_USER: backend\n         BACKEND_PASSWORD: backend\n         SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY_RESULT}}\n-        SERVER_IP: \"1\"\n+        SERVER_IP: \"13.237.94.113\"\n         # SERVER_IP: \"82.29.167.247\"\n         PORT: \"8001\"\n         SCREEN_NAME: \"collegeinfo\"\n         PROJECT_FOLDER: \"/home/ubuntu/collegeinfo\"\n"
+                },
+                {
+                    "date": 1751037072539,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -46,9 +46,9 @@\n         AWS_DEFAULT_REGION: ap-southeast-2\n         BACKEND_USER: backend\n         BACKEND_PASSWORD: backend\n         SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY_RESULT}}\n-        SERVER_IP: \"13.237.94.113\"\n+        SERVER_IP: \"\"\n         # SERVER_IP: \"82.29.167.247\"\n         PORT: \"8001\"\n         SCREEN_NAME: \"collegeinfo\"\n         PROJECT_FOLDER: \"/home/ubuntu/collegeinfo\"\n"
+                },
+                {
+                    "date": 1751037168101,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -46,9 +46,9 @@\n         AWS_DEFAULT_REGION: ap-southeast-2\n         BACKEND_USER: backend\n         BACKEND_PASSWORD: backend\n         SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY_RESULT}}\n-        SERVER_IP: \"\"\n+        SERVER_IP: \"3.107.90.36\"\n         # SERVER_IP: \"82.29.167.247\"\n         PORT: \"8001\"\n         SCREEN_NAME: \"collegeinfo\"\n         PROJECT_FOLDER: \"/home/ubuntu/collegeinfo\"\n"
                 }
             ],
             "date": 1733397109290,

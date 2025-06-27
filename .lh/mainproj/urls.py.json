@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 58,
+            "activePatchIndex": 61,
             "patches": [
                 {
                     "date": 1739684343218,
@@ -240,6 +240,18 @@
                 {
                     "date": 1749103658257,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -94,9 +94,9 @@\n router.registry.extend(coursesandfees_router.registry)\n # router.registry.extend(location_router.registry)\n # router.registry.extend(preparationinquiries_router.registry)\n # router.registry.extend(collegeandcourseinquiries_router.registry)\n-\n+router\n router.registry.extend(discipline_router.registry)\n router.registry.extend(accounts_router.registry)\n router.registry.extend(contact_router.registry)\n router.registry.extend(advertisement_router.registry)\n"
+                },
+                {
+                    "date": 1751035955194,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -94,9 +94,9 @@\n router.registry.extend(coursesandfees_router.registry)\n # router.registry.extend(location_router.registry)\n # router.registry.extend(preparationinquiries_router.registry)\n # router.registry.extend(collegeandcourseinquiries_router.registry)\n-router\n+router.registry.extend(resultmanagement_router.registry)\n router.registry.extend(discipline_router.registry)\n router.registry.extend(accounts_router.registry)\n router.registry.extend(contact_router.registry)\n router.registry.extend(advertisement_router.registry)\n@@ -133,9 +133,9 @@\n     path('api-auth/', include('rest_framework.urls')),\n     path('api/accounts/',include('accounts.urls')),\n     path('api/import-excel/<str:type>/',ImportExcel.as_view(),name=\"import_excel\"),\n     path('api/bulk-delete/', BulkDelete.as_view(), name=\"bulk_delete\"),\n-    path(\"api/\", include(\"notify.urls\")),\n+    # path(\"api/\", include(\"notify.urls\")),\n     path('api/drag-item/', position_management_viewset, name='position_management_drag_item'),\n     # path('api/bucket-data/', BucketAPIView.as_view(), name='r2-files'),\n ]\n if settings.DEBUG:\n"
+                },
+                {
+                    "date": 1751036212768,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -133,9 +133,9 @@\n     path('api-auth/', include('rest_framework.urls')),\n     path('api/accounts/',include('accounts.urls')),\n     path('api/import-excel/<str:type>/',ImportExcel.as_view(),name=\"import_excel\"),\n     path('api/bulk-delete/', BulkDelete.as_view(), name=\"bulk_delete\"),\n-    # path(\"api/\", include(\"notify.urls\")),\n+    path(\"api/\", include(\"notify.urls\")),\n     path('api/drag-item/', position_management_viewset, name='position_management_drag_item'),\n     # path('api/bucket-data/', BucketAPIView.as_view(), name='r2-files'),\n ]\n if settings.DEBUG:\n"
+                },
+                {
+                    "date": 1751036223840,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -133,9 +133,9 @@\n     path('api-auth/', include('rest_framework.urls')),\n     path('api/accounts/',include('accounts.urls')),\n     path('api/import-excel/<str:type>/',ImportExcel.as_view(),name=\"import_excel\"),\n     path('api/bulk-delete/', BulkDelete.as_view(), name=\"bulk_delete\"),\n-    path(\"api/\", include(\"notify.urls\")),\n+    # path(\"api/\", include(\"notify.urls\")),\n     path('api/drag-item/', position_management_viewset, name='position_management_drag_item'),\n     # path('api/bucket-data/', BucketAPIView.as_view(), name='r2-files'),\n ]\n if settings.DEBUG:\n"
                 }
             ],
             "date": 1739684343218,
