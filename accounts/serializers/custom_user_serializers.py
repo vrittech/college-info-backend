@@ -7,6 +7,7 @@ from socialmedia.models import SocialMedia
 from accounts.models import CustomUser as User
 from collegemanagement.models import College
 import ast
+from rest_framework.exceptions import PermissionDenied
 
 
 # User = get_user_model()
@@ -137,8 +138,13 @@ class CustomUserWriteSerializer(serializers.ModelSerializer):
         request = self.context.get('request')
 
         if 'is_superuser' in validated_data:
-            if not request or not request.user.is_superuser:
-                validated_data.pop('is_superuser')
+            if not request or not request.user.is_authenticated  or not request.user.is_superuser:
+                raise PermissionDenied("Only superusers can set 'is_superuser'.")
+        if 'is_staff' in validated_data:
+            if not request or not request.user.is_authenticated  or not request.user.is_superuser:
+                raise PermissionDenied("Only superusers can set 'is_staff'.")
+
+
 
         # Create user
         user = User.objects.create(**validated_data)
@@ -147,7 +153,7 @@ class CustomUserWriteSerializer(serializers.ModelSerializer):
             user.set_password(password)
 
         # Assign groups
-        if request and request.user.is_superuser:
+        if request and request.user.is_authenticated and request.user.is_superuser:
             group_ids = [group.id if hasattr(group, 'id') else group for group in groups]
             user.groups.set(group_ids)  
 
@@ -167,8 +173,11 @@ class CustomUserWriteSerializer(serializers.ModelSerializer):
 
     # Only allow superusers to update 'is_superuser'
         if 'is_superuser' in validated_data:
-            if not request or not request.user.is_superuser:
-                validated_data.pop('is_superuser')
+            if not request or not request.user.is_authenticated  or not request.user.is_superuser:
+                raise PermissionDenied("Only superusers can set 'is_superuser'.")
+        if 'is_staff' in validated_data:
+            if not request or not request.user.is_authenticated  or not request.user.is_superuser:
+                raise PermissionDenied("Only superusers can set 'is_staff'.")
 
 
         # Update user fields
@@ -179,7 +188,7 @@ class CustomUserWriteSerializer(serializers.ModelSerializer):
             instance.set_password(password)
 
         # Convert groups into primary keys if they are objects
-        if request and request.user.is_superuser:
+        if request and request.user.is_authenticated and request.user.is_superuser:
             group_ids = [group.id if hasattr(group, 'id') else group for group in groups]
             instance.groups.set(group_ids)
 
