@@ -46,7 +46,7 @@ jobs:
         AWS_DEFAULT_REGION: ap-southeast-2
         BACKEND_USER: backend
         BACKEND_PASSWORD: backend
-        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY_PROD}}
+        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY}}
         SERVER_IP: "107.174.60.24"
         # SERVER_IP: "82.29.167.247"
         PORT: "8001"
