@@ -125,7 +125,6 @@ class CustomUserWriteSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = '__all__'
-        exclude = ['is_superuser']
         extra_kwargs = {
             'password': {'write_only': True}
         }
@@ -135,6 +134,11 @@ class CustomUserWriteSerializer(serializers.ModelSerializer):
         groups = validated_data.pop('groups', [])
         social_media_data = validated_data.pop('social_media', [])
         password = validated_data.pop('password', None)
+        request = self.context.get('request')
+
+        if 'is_superuser' in validated_data:
+            if not request or not request.user.is_superuser:
+                validated_data.pop('is_superuser')
 
         # Create user
         user = User.objects.create(**validated_data)
@@ -143,8 +147,9 @@ class CustomUserWriteSerializer(serializers.ModelSerializer):
             user.set_password(password)
 
         # Assign groups
-        group_ids = [group.id if hasattr(group, 'id') else group for group in groups]
-        user.groups.set(group_ids)  
+        if request and request.user.is_superuser:
+            group_ids = [group.id if hasattr(group, 'id') else group for group in groups]
+            user.groups.set(group_ids)  
 
         # Assign social media (assuming it's ManyToMany)
         if social_media_data:
@@ -158,6 +163,14 @@ class CustomUserWriteSerializer(serializers.ModelSerializer):
         social_media_data = validated_data.pop('social_media', [])
         password = validated_data.pop('password', None)
 
+        request = self.context.get('request')
+
+    # Only allow superusers to update 'is_superuser'
+        if 'is_superuser' in validated_data:
+            if not request or not request.user.is_superuser:
+                validated_data.pop('is_superuser')
+
+
         # Update user fields
         for attr, value in validated_data.items():
             setattr(instance, attr, value)
@@ -166,8 +179,9 @@ class CustomUserWriteSerializer(serializers.ModelSerializer):
             instance.set_password(password)
 
         # Convert groups into primary keys if they are objects
-        group_ids = [group.id if hasattr(group, 'id') else group for group in groups]
-        instance.groups.set(group_ids)
+        if request and request.user.is_superuser:
+            group_ids = [group.id if hasattr(group, 'id') else group for group in groups]
+            instance.groups.set(group_ids)
 
         # Assign social media (if present)
         if social_media_data:
