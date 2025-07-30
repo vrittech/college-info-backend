@@ -66,6 +66,7 @@ from mainproj.utilities.position_management import PositionManagementViewSet
 # from bucketimages.views import BucketAPIView
 
 
+
 router = routers.DefaultRouter()
 
 position_management_viewset = PositionManagementViewSet.as_view({
@@ -124,11 +125,15 @@ schema_view = get_schema_view(
    permission_classes=[permissions.AllowAny],
 )
 
+def api_root_disabled(request):
+    return HttpResponseNotFound("API root is disabled.")
+
 urlpatterns = [
     # path('admin/', admin.site.urls),
+    path('api/', api_root_disabled),    
     path('api/', include(router.urls)),
     path('api/',include('accountsmanagement.urls')),
-    path('', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+    # path('', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
     path('api-auth/', include('rest_framework.urls')),
     path('api/accounts/',include('accounts.urls')),
