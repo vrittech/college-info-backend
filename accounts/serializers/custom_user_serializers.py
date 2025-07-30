@@ -125,6 +125,7 @@ class CustomUserWriteSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = '__all__'
+        exclude = ['is_superuser']
         extra_kwargs = {
             'password': {'write_only': True}
         }
