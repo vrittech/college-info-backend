@@ -51,7 +51,7 @@ jobs:
         # SERVER_IP: "82.29.167.247"
         PORT: "8001"
         SCREEN_NAME: "collegeinfo"
-        PROJECT_FOLDER: "/home/ubuntu/collegeinfo"
+        PROJECT_FOLDER: "/home/collegeinfo"
 
       run: |
         mkdir -p ~/.ssh
